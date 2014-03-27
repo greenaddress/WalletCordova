@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">Vous avez des dépôts expirés, tant que vous ne re-déposez ou réclamez pas ces fonds aucune transaction ne pourra être effectuée. </p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Re-dépôt transaction simple (moins cher)</a><br />
+    		frais (estimation): (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Re-dépôt une transaction par sortie (meilleure confidentialité)</a><br />
+    		frais (estimation): (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transactions)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Fermer</button>
+</div>

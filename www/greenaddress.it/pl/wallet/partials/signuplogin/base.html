@@ -1,0 +1,58 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+            <div class="create-modal-header" ng-hide="wallet.redeem_key">
+                Nie posiadasz jeszcze konta? <a href="#/create">Utwórz nowy Portfel</a>
+            </div>
+            <div class="create-modal-body text-center">
+                <div ng-include="wallet.signuplogin_header"></div>
+                <hr>
+                <div class="subtitle">Zaloguj się by mieć pełny dostęp do swojego portfela</div>
+                <form class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}">
+                    <div class="control-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-1">
+                                <input ng-show="state.has_pin" class="form-control pin" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="Kod PIN" ng-model="use_pin_data.pin" />
+                            </div>
+                            <div class="col-sm-1">
+                                <p ng-show="state.has_pin" class="form-control-static">lub</p>
+                            </div>
+                            <div class="col-sm-7">
+                                
+                                <span class="input-group">
+                                    <input class="form-control" ng-disabled="is_loading" ng-model="state.mnemonic" placeholder="hasło-mnemonik" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default" ng-click="read_qr_code()"><i class="glyphicon glyphicon-qrcode"></i> Skanuj kod QR</a>
+                                    </span>
+                                </span>
+                                
+                                <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Nieprawidłowy mnemonik: (( state.mnemonic_error ))</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!wallet.send_to_receiving_id">
+                        <hr>
+                        <div class="subtitle">Zaloguj w trybie Tylko-do-Odczytu</div>
+                        
+                        <a href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
+                        
+                        
+                        <a href="" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Własny login</a>
+                        
+                        <a href="" class="btn btn-twitter" disabled><i class="icon-twitter"></i> Twitter<span class="coming-soon">Dostępne wkrótce</span></a>
+                        
+                    </div>
+                    <hr>
+                    <button type="submit" ng-disabled="is_loading || (state.seed_progress && !state.login_error)"
+                            class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
+                            href="#" id="restore-wallet-continue">
+                        <span ng-hide="state.seed_progress || state.login_error">Zaloguj się do swojego Portfela</span>
+                        <span ng-show="state.seed_progress && !state.login_error">Przetwarzanie ... (( state.seed_progress ))%</span>
+                        <span ng-show="state.login_error">Błąd, spróbuj ponownie</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

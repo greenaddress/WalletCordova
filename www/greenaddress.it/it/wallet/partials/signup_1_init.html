@@ -1,0 +1,60 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+
+            <div class="create-modal-header">
+                <span class="pull-left">Hai già un account?
+                    
+                    <a href="/wallet">Per piacere accedi per usare il tuo portafogli</a></span>
+                    
+                Passo 1 di 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+                <div class="title">Ora puoi vantarti di avere un portafoglio Bitcoin<br>
+                    <small>Per piacere completa questi 4 passaggi per configurare e per rendere sicuro il tuo portafoglio.</small>
+                </div>
+                <hr>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">La tua passphrase mnemonica</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic info" ng-hide="signup.mnemonic">Generating mnemonic, please wait...</div>
+                <hr>
+                <p>Per piacere scrivi e non perdere queste parole perchè non possono essere recuperate altrimenti. <b>Non salviamo queste parole sui nostri server dunque non possiamo aiutarti a recuperarle se le perdi!</b></p>
+            </div>
+
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+                <label for="checkbox-confirmation">
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Confermo che la mia passphrase è al sicuro e aderisco<a href="/tos" target="_blank">Termini di Servizio</a>
+                </label>
+                <br>
+                <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</button>
+                
+                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
+                
+                <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Continua!</a>
+                <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Continua!</a>
+            </div>
+
+            <div class="create-modal-footer" ng-show="signup.unexpected_error">
+                <a class="btn btn-danger login-submit" href="" ng-click="signup.try_again()">
+                    Error:  (( signup.unexpected_error )).  Click to try again
+                </a>
+            </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="printable">
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
+    <p>La passphrase per accedere al tuo portafoglio è:</p>
+    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Salva questa pagina in un posto sicuro</i></p>
+</div>

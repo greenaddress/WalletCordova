@@ -1,0 +1,29 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Paso 4 de 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">No haga compromisos sobre seguridad<br><small>Autenticación de doble factor </small></div>
+                <div ng-controller="TwoFactorSetupController" ng-include="'file:///android_asset/www/greenaddress.it/es/wallet/partials/wallet_2fa.html'"></div>
+                <hr class="double">
+                <p>Recomendamos altamente que configure la Autenticación de Doble Factor. Esta función hara que tu Wallet sea mucho más segura y le permitira hacer uso de funciones adicionales como Límites de Pagos o Pagos Diferidos. </p>
+                <p>Si lo configura como emitir una transacción debera no solo acceder a tu Wallet sino también confirmar con un código enviado a tu email, SMS o Google Authenticator.</p>
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.twofac_in_progress}">
+                    Ir a mi Wallet
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

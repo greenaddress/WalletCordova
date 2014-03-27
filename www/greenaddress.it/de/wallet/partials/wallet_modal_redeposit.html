@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">Sie haben einige abgelaufene Einlagen. Bis Sie diese nicht erneut einlegen oder sie abheben sind keine Transaktionen erlaubt</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Erneut einlegen als einzelne Transaktion (günstiger)</a><br />
+    		geschätzte Gebühr: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Erneut einlegen als eine Transaktion pro Ausgabe (bessere Privatsphäre)</a><br />
+    		geschätzte Gebühr: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> Transaktionen)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Schließen</button>
+</div>

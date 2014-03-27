@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">You have some expired deposits. Unless you re-deposit or redeem them, no transactions will be allowed</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Redeposit as single transaction (cheaper)</a><br />
+    		estimated fee: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Redeposit as one transaction per output (better privacy)</a><br />
+    		estimated fee: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transactions)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Close</button>
+</div>

@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">Posiadasz wygasłe depozyty. Dopóki ich ponownie nie zdeponujesz lub odbierzesz, żadne transakcje nie będą dozwolone</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Zdeponuj ponownie jako pojedynczą transakcję (tańsze)</a><br />
+    		szacowana opłata: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Zdeponuj ponownie jako jedną transakcję na każde wyjście (lepsza prywatność)</a><br />
+    		szacowana opłata: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transakcje)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Zamknij</button>
+</div>

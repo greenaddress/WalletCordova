@@ -1,0 +1,17 @@
+<div class="alert alert-error" ng-show="nfc_error">
+    Il y a eu une erreur lors de l'écriture sur le tag NFC :  (( nfc_error.reason ))
+</div>
+<div class="modal-body text-center" ng-show="(( !nfc_init_error && nfc_init_succeeded < 3 ))">
+    <p>Initialisation du lecteur de tag NFC</p>
+</div>
+<div class="modal-body text-center" ng-show="(( nfc_init_succeeded == 3 ))">
+    <p>Gardez votre (vos) tag(s) près de votre appareil pour l'écriture sur votre porte-monnaie !</p>
+    <p>Tags écrits :  (( num_tags_written ))</p>
+    <p>Tags formattés :  (( num_tags_formatted ))</p>
+</div>
+<div class="modal-body text-center" ng-show="(( nfc_init_error ))">
+    <p>Votre NFC n'est pas activé ou pas disponible. Si possible activez-le dans les paramètres.</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Fermer</button>
+</div>

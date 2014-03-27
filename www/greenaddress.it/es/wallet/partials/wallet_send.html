@@ -1,0 +1,99 @@
+<div class="row hidden-xs hidden-sm">
+  <div class="col-md-12">
+    <div class="header">
+      Enviar dinero<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="recipient">Destinatario</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+            </span>
+            <input ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Ingrese la dirección bitcoin, email o nombre de cuenta de Facebook del destinatario"
+                    typeahead="item as item.name for item in addressbook.items | filter:$viewValue | limitTo:8" />
+            
+            <span class="input-group-btn">
+              <a class="btn btn-default" ng-click="send_tx.read_qr_code()"><i class="glyphicon glyphicon-qrcode"></i> Leer QR</a>
+            </span>
+            
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-hide="send_tx.recipient_is_btcaddr() || wallet.send_unencrypted">
+        <label class="col-sm-2 control-label" for="recipient">Frase de encriptación</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input ng-model="send_tx.passphrase" class="form-control" type="text" />
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Monto</label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-xs-6 col-sm-5 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">((wallet.unit))</span>
+                <input class="form-control" type="text" ng-model="send_tx.amount" placeholder="0.0000" />
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-5 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">(( wallet.fiat_currency ))</span>
+                <input class="form-control" type="text" ng-model="send_tx.amount_fiat" placeholder="0.00" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-hide="wallet.send_from">
+        <div class="col-sm-offset-2 col-sm-10">
+          <label class="text-petty radio-inline" style="padding:0 5px 0 0;">
+            Comisión (<span>((10000|format_btc:wallet.unit))</span> / kB) a pagar por:
+          </label>
+          <div style="display: inline-block;">
+            <label class="radio-inline" style="padding-top:0;">
+              <input type="radio" ng-model="send_tx.add_fee" value="sender" />
+              <span>Mi</span>
+            </label>
+            <label class="radio-inline" style="padding-top:0;">
+              <input type="radio" ng-model="send_tx.add_fee" value="recipient" checked />
+              <span>Destinatario</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <hr class="double">
+      <button ng-disabled="send_tx.sending" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href="">Enviar dinero</button>
+    </form>
+  </div>
+</div>
+
+<!--
+<ul>
+  <li>amount: <input type="text" ng-model="send_tx.amount" /></li>
+
+  <li ng-show="!send_tx.encrypted_key">
+      <a class="btn btn-xs btn-primary" href="" ng-click="send_tx.send_to_priv()">Send to a new private key</a>
+      with passphrase: <input type="text" ng-model="send_tx.passphrase" />
+  </li>
+  <li ng-show="send_tx.encrypted_key !== undefined">
+      Encrypted key: (( send_tx.encrypted_key || "calculando" )) <a href="" ng-click="send_tx.send_to_priv_done()">done</a>
+      <div ng-show="send_tx.encrypted_key">
+          Send to email: <input type="email" ng-model="send_tx.email" /> <a href="" ng-click="send_tx.send_to_email()" ng-show="!send_tx.sending_email">send</a>
+      </div>
+  </li>
+  <li>to address: <input type="text" ng-model="send_tx.to_addr" /></li>
+</ul>
+<a class="btn btn-primary" href="" ng-click="send_tx.send()">Send</a>
+
+<a class="btn" ng-click="send_tx.read_qr_code()">Leer QR</a>
+
+-->

@@ -1,0 +1,41 @@
+<div class="row hidden-xs hidden-sm">
+  <div class="col-md-12">
+    <div class="header">
+      Saldo<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="sub-header">
+      (( wallet.unit ))
+      <!-- <span class="header-options">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="">Rok</a></li>
+          <li><a href="">Miesiąc</a></li>
+          <li><a href="">Tydzień</a></li>
+        </ul>
+      </span> -->
+    </div>
+    <div id="btc_graph" class="graph"></div>
+  </div>
+  <!-- <div class="col-md-6">
+    <div class="sub-header">
+      EUR
+      <span class="header-options">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="">Rok</a></li>
+          <li><a href="">Miesiąc</a></li>
+          <li><a href="">Tydzień</a></li>
+        </ul>
+      </span>
+    </div>
+    <div class="graph"><img class="img-responsive" src="/static/img/pages/index/preview.png"></div>
+  </div> -->
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="sub-header">Twoje ostatnie transakcje</div>
+    <div ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_transactions_table.html'"></div>
+  </div>
+</div>

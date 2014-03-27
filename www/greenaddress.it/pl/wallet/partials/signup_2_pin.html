@@ -1,0 +1,54 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Krok 2 z 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Szybki i bezpieczny dostęp do Twojego Portfela<br><small>Aby zapewnić sobie bezpieczny i szybki dostęp z tego urządzenia ustaw swój kod PIN</small></div>
+                <hr>
+                <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
+                    <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <label class="col-sm-5 control-label" for="id_pin">Kod PIN</label>
+                        <div class="col-sm-4">
+                            <input class="form-control pin" type="tel" mask-input
+                                   id="id_pin" name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                                   placeholder="czterocyfrowy numer" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                        </div>
+                        <input type="submit" class="hide" submitter />
+                    </div>
+                </form>
+                <hr>
+                <p>
+                Dostęp za pośrednictwem kodu PIN umożliwia szybie logowanie przy jednoczesnym zachowaniu wysokich standardów bezpieczeństwa.      PIN ustanawia 256-bitowe hasło AES, które usuniemy gdy 3 próby podania PIN nie powiodą się, zmuszając Ci do dostarczenia pełnego mnemoniku. Proste, wygodne i bezpieczne, więc nie wahaj się!
+                </p>
+            </div>
+
+            <div class="create-modal-footer">
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress < 100">
+                    Generowanie kluczy Twojego portfela, proszę czekaj ... (( signup.seed_progress ))%
+                </span>
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
+                    Proszę czekać, logowanie...
+                </span>
+                <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                    Zabierz mnie do mojego portfela i pomiń wszystkie kroki!
+                </a>
+                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100}">
+                    <span ng-hide="signup.setting_pin" ng-class="{disabled: !signup.logged_in || signup.login_failed}">Kod PIN ustawiony, przejdź do kroku 3</span>
+                    <span ng-show="signup.setting_pin">Ustawianie kodu PIN...</span>
+                </a>
+                <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
+                    <span>Pomiń ustawianie kodu PIN i kontynuuj</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

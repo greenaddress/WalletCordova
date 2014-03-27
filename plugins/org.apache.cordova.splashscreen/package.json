@@ -1,0 +1,14 @@
+{
+    "version": "0.2.7",
+    "name": "org.apache.cordova.splashscreen",
+    "cordova_name": "Splashscreen",
+    "description": "Cordova Splashscreen Plugin",
+    "license": "Apache 2.0",
+    "repo": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-splashscreen.git",
+    "issue": "https://issues.apache.org/jira/browse/CB/component/12320653",
+    "keywords": [
+        "cordova",
+        "splashscreen"
+    ],
+    "engines": []
+}

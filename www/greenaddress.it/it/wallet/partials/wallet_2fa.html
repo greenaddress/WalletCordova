@@ -1,0 +1,191 @@
+<ul class="nav nav-tabs">
+  <li ng-class="{active: twofactor_state.twofactor_type == 'email'}">
+      <a href="" ng-click="show_email_auth()">Email</a>
+  </li>
+  <li ng-class="{active: twofactor_state.twofactor_type == 'gauth'}">
+      <a href="" class="hidden-xs" ng-click="show_gauth()">Google Authenticator</a>
+      <a href="" class="visible-xs" ng-click="show_gauth()">GA</a>
+  </li>
+  <li ng-class="{active: twofactor_state.twofactor_type == 'sms'}">
+      <a href="" ng-click="show_sms_auth()">SMS</a>
+  </li>
+  <li ng-class="{active: twofactor_state.twofactor_type == 'phone'}">
+      <a href="" ng-click="show_phone_auth()">Telefono</a>
+  </li>
+</ul>
+
+<div ng-show="twofactor_state.twofactor_type == 'gauth'">
+    <p class="well" ng-show="twofactor_state.twofac_gauth_switch">
+        Google Authenticator è attivo.
+    </p>
+    <div ng-show="!twofactor_state.twofac_gauth_switch" ng-if="twofactor_state.google_secret_url">
+        <div class="row">
+            <div class="col-sm-4">
+                <dt>1) Installa l'app</dt>
+                <dd>
+                    Installare l'app sul tuo dispositivo. Per Android all'<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google play</a>mentre per iOS all'<a href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8" target="_blank">Apple Store.</a>
+                </dd>
+            </div>
+            <div class="col-sm-4">
+                <dt>2) Aggiungi un account</dt>
+                <dd>
+                    Aggiungi un account all'app Google Authenticator e leggi il codice QR qui sotto o altrimenti inserisci questo codice: 
+                    <div class="text-center"><button class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</button></div>
+                </dd>
+            </div>
+            <div class="col-sm-4">
+                <dt>3) Conferma codice</dt>
+                <dd>
+                    L'app di Google vi fara' vedere un numero che serve per completare la procedura, per piacere inseriscilo qui: 
+                </dd>
+            </div>
+        </div>
+        <hr class="hidden-xs">
+        <div class="row">
+            <div class="col-sm-12">
+                <form role="form" class="form-horizontal" ng-submit="enable_twofac_gauth()">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="wallet-google-conf-code">Codice di autenticazione</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input ng-model="twofactor_state.twofac_gauth_code" class="form-control pin" type="tel" mask-input
+                                    required="required" maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/"
+                                    id="wallet-google-conf-code" placeholder="Per piacere inserisci qui il codice ricevuto"  />
+                                <span class="input-group-btn">
+                                    <input ng-disabled="!twofactor_state.twofac_gauth_code" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="twofactor_state.twofactor_type == 'email'">
+    <p class="well" ng-show="twofactor_state.twofac_email_switch">
+        L'autenticazione a due fattori via email è attiva.
+    </p>
+    <div ng-show="!twofactor_state.twofac_email_switch">
+        <div ng-show="!twofactor_state.email_set">
+            <form role="form" class="form-horizontal" ng-submit="start_enabling_email()" style="margin:25px 0;">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="wallet-twofac-email">Il tuo indirizzo email:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input class="form-control" ng-model="twofactor_state.new_twofac_email"
+                                id="wallet-twofac-email" type="email" name="email" required="required"
+                                placeholder="Per favore inserisci la tua email" />
+                            <span class="input-group-btn">
+                                <input ng-disabled="!twofactor_state.new_twofac_email || twofactor_state.enabling_email" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-show="twofactor_state.email_set">
+            <p>
+                Hai bisogno di fornire il codice che ti abbiamo inviato via email per configurare l'autenticazione a due fattori. Per piacere controlla la tua email e inserisci il codice.
+            </p>
+            <form role="form" class="form-horizontal" ng-submit="enable_twofac_email()" style="margin:25px 0;">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="wallet-email-conf-code">Codice email</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input ng-model="twofactor_state.twofac_email_code" class="form-control pin" type="tel" mask-input required="required"
+                                maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-email-conf-code"
+                                placeholder="Per piacere inserisci qui il codice ricevuto" />
+                            <span class="input-group-btn">
+                                <input ng-disabled="!twofactor_state.twofac_email_code" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/><a href="" class="btn btn-warning" ng-click="cancel_twofac_email()">Annulla</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-show="twofactor_state.twofactor_type == 'sms'">
+    <p class="well" ng-show="twofactor_state.twofac_sms_switch">L'autenticazione a due fattori via SMS è attiva.</p>
+    <div ng-show="!twofactor_state.twofac_sms_switch">
+        <div ng-show="!twofactor_state.sms_set">
+            <form role="form" class="form-horizontal" ng-submit="start_enabling_sms()" style="margin:25px 0;">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="wallet-twofac-sms">Il tuo numero di telefono:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input class="form-control" ng-model="twofactor_state.new_twofac_sms" id="wallet-twofac-sms"
+                                type="tel" name="phone" required="required" placeholder="Inserisci qui il tuo numero di telefono incluso il codice paese (ad es: +39...)" />
+                            <span class="input-group-btn">
+                                <input ng-disabled="!twofactor_state.new_twofac_sms || twofactor_state.enabling_sms" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-show="twofactor_state.sms_set">
+            <p>Hai bisogno di fornire il codice che ti abbiamo inviato via SMS per configurare l'autenticazione a due fattori. Per piacere controlla gli SMS e inserisci il codice.
+            </p>
+            <form role="form" class="form-horizontal" ng-submit="enable_twofac_sms()" style="margin:25px 0;">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="wallet-sms-conf-code">codice SMS:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input ng-model="twofactor_state.twofac_sms_code" class="form-control pin" type="tel" mask-input required="required"
+                                maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-sms-conf-code"
+                                placeholder="Per piacere inserisci qui il codice ricevuto" />
+                            <span class="input-group-btn">
+                                <input ng-disabled="!twofactor_state.twofac_sms_code" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/><a href="" class="btn btn-warning" ng-click="cancel_twofac_sms()">Annulla</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-show="twofactor_state.twofactor_type == 'phone'">
+    <p class="well" ng-show="twofactor_state.twofac_phone_switch">L'autenticazione a due fattori via chiamata è attiva.</p>
+    <div ng-show="!twofactor_state.twofac_phone_switch">
+        <div ng-show="!twofactor_state.phone_set">
+            <form role="form" class="form-horizontal" ng-submit="start_enabling_phone()" style="margin:25px 0;">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="wallet-twofac-phone">Il tuo numero di telefono:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input class="form-control" ng-model="twofactor_state.new_twofac_phone" name="phone" id="wallet-twofac-phone"
+                                type="tel" required="required" placeholder="Inserisci qui il tuo numero di telefono incluso il codice paese (ad es: +39...)" />
+                            <span class="input-group-btn">
+                                <input ng-disabled="!twofactor_state.new_twofac_phone || twofactor_state.enabling_phone" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-show="twofactor_state.phone_set">
+            <p>Hai bisogno di fornire il codice che ti abbiamo inviato via SMS per configurare l'autenticazione a due fattori.<br> Per piacere controlla gli SMS e inserisci il codice.
+            </p>
+            <form role="form" class="form-horizontal" ng-submit="enable_twofac_phone()" style="margin:25px 0;">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="wallet-phone-conf-code">Codice Telefono</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input ng-model="twofactor_state.twofac_phone_code" class="form-control pin" type="tel" mask-input required="required"
+                                maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-phone-conf-code"
+                                placeholder="Per piacere inserisci qui il codice ricevuto" />
+                            <span class="input-group-btn">
+                                <input ng-disabled="!twofactor_state.twofac_phone_code" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita"/><a href="" class="btn btn-warning" ng-click="cancel_twofac_phone()">Annulla</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

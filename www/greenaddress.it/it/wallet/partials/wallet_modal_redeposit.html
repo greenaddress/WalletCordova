@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">Hai alcuni depositi scaduti. A meno che non li ridepositi o incassi, non potrai effettuare altra transazioni</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Rideposita una singola transazione (più economico)</a><br />
+    		commissioni stimate: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Rideposita come singola transazione per output (privacy migliore)</a><br />
+    		commissioni stimate: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transazioni)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Chiudi</button>
+</div>

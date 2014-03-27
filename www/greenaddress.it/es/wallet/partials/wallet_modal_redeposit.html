@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">Hay depósitos expirados. No se permitiran transacciones hasta que no re-depositar o redimirlos.</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Volver a depositar en una única transacción (más económico)</a><br />
+    		comisión estimada: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Volver a depositar con una transacción por Salida (mejor privacidad)</a><br />
+    		comisión estimada: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transacciones)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Cerrar</button>
+</div>

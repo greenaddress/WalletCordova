@@ -1,0 +1,27 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">Tú puede crear una clave PIN de 4 dígitos para utilizar</p>
+        <hr>
+        <form ng-submit="set_pin(form.$valid)" name="form" class="form-horizontal">
+            <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                <label for="pinId" class="col-sm-5 control-label">Ingrese tu PIN</label>
+                <div class="col-sm-4">
+                    <input clickfix focus-on="usePinModal" type="tel" mask-input class="form-control pin" required="required"
+                           name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                           ng-model="state.new_pin_value" />
+                    <input type="submit" class="hide" submitter />
+                    <div class="help-block"><i class="glyphicon glyphicon-info-sign"></i> El PIN debe ser un número de 4 dígitos</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Cancelar</button>
+            <button class="btn btn-primary" ng-click="submit_me()">Confirmar PIN</button>
+        </div>
+    </div>
+
+</div>

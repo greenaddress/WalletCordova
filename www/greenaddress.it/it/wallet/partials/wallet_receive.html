@@ -1,0 +1,83 @@
+<div class="row hidden-xs hidden-sm">
+  <div class="col-md-12">
+    <div class="header">
+      Ricevi<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Ammontare</label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-xs-6 col-sm-5 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">(( wallet.unit ))</span>
+                <input class="form-control" type="text" id="amount" ng-model="receive.amount" placeholder="0.0000" />
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-5 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">(( wallet.fiat_currency ))</span>
+                <input class="form-control" type="text" ng-model="receive.amount_fiat" placeholder="0.00" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="double">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Indirizzo Bitcoin</label>
+        <div class="col-sm-10">
+          <p class="form-control-static payment-url break-all" style="display:inline-block;">
+              <a href="((receive.bitcoin_uri))" onclick="return false;">((receive.bitcoin_uri))</a>
+          </p>
+          <div class="pull-right">
+            <button class="btn btn-info btn-block-xs" ng-click="show_bitcoin_uri()" ng-hide="receive.bitcoin_uri">Show URI and address</button>
+            <a class="btn btn-default btn-block-xs" ng-click="show_bitcoin_uri(true)"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</a>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-show="receive.bitcoin_uri">
+        <label class="col-sm-2 control-label" for="amount">Indirizzo</label>
+        <div class="col-sm-10">
+          <p class="form-control-static payment-url break-all" style="display:inline-block;">
+              ((receive.bitcoin_address))
+          </p>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Indirizzo permanente per pagamenti</label>
+        <div class="col-sm-10">
+          <p class="form-control-static payment-url break-all" style="display:inline-block;">
+              <a href="((receive.payment_url))" onclick="return false;">((receive.payment_url))</a>
+          </p>
+          <div class="pull-right">
+            <a class="btn btn-default btn-block-xs" ng-click="show_url_qr(receive.payment_url)"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</a>
+          </div>
+        </div>
+      </div>
+      <div ng-show="receive.show_sweep">
+        <hr>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="id_privkey_wif">La chiave privata per l'indirizzo in WIF</label>
+          <div class="col-sm-10">
+            <div class="col-sm-10">
+              <input ng-model="receive.privkey_wif" class="form-control" type="text" id="id_privkey_wif" placeholder="Inserisci qui la chiave privata dei fondi da acquisire">
+            </div>
+            <div class="pull-right">
+              <a class="btn btn-default btn-block-xs" ng-class="{disabled: receive.sweeping}" ng-click="receive.sweep()">Acquisisci</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="pull-right">
+            <a class="btn btn-default btn-block-xs" ng-click="receive.show_previous_addresses()"><i class="glyphicon glyphicon-time"></i> Mostra tutti gli indirizzi generati fino ad oggi</a>
+          </div>
+    </form>
+  </div>
+</div>

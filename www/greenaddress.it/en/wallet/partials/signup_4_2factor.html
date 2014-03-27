@@ -1,0 +1,29 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Step 4 of 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Don't compromise on security<br><small>Set up two factor authentication</small></div>
+                <div ng-controller="TwoFactorSetupController" ng-include="'file:///android_asset/www/greenaddress.it/en/wallet/partials/wallet_2fa.html'"></div>
+                <hr class="double">
+                <p>We strongly suggest you to set up two factor authentication, this will make your wallet much more secure and will let you some additional features such as Spending Limits and Delayed Payments.</p>
+                <p>If you set it up to issue a transaction you will not only need to login to your wallet but also confirm it with a code sent to you via email, SMS or google authenticator as per your choice.</p>
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.twofac_in_progress}">
+                    Take me to my wallet!
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

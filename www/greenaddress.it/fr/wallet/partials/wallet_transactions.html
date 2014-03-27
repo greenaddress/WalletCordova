@@ -1,0 +1,24 @@
+<div class="row hidden-xs hidden-sm">
+  <div class="col-md-12">
+    <div class="header">
+      Transactions<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="header-options">
+      <ul class="nav nav-pills">
+        <li ng-class="{active: wallet.transactions.limiter.cur_limit[0] == '10'}"><a href="" ng-click="wallet.transactions.limiter.last10()">10 derniers éléments</a></li>
+        <li ng-class="{active: wallet.transactions.limiter.cur_limit.toString() == ['months', 1].toString()}"><a href="" ng-click="wallet.transactions.limiter.lastnmonths(1)">Le mois dernier</a></li>
+        <li ng-class="{active: wallet.transactions.limiter.cur_limit.toString() == ['months', 3].toString()}"><a href="" ng-click="wallet.transactions.limiter.lastnmonths(3)">Les 3 derniers mois</a></li>
+        <li ng-class="{active: wallet.transactions.limiter.cur_limit[0] == 'all'}"><a href="" ng-click="wallet.transactions.limiter.all()">Tout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_transactions_table.html'"></div>
+  </div>
+</div>

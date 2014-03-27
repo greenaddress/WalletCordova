@@ -1,0 +1,29 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Passo 4 di 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Non rischiare con la sicurezza<br><small>Autenticazione a due fattori</small></div>
+                <div ng-controller="TwoFactorSetupController" ng-include="'file:///android_asset/www/greenaddress.it/it/wallet/partials/wallet_2fa.html'"></div>
+                <hr class="double">
+                <p>Ti suggeriamo vivamente di abilitare un'autenticazione a due fattori, questo renderà il tuo portafoglio molto più sicuro e ti permetterà di usare Limiti e Ritardi</p>
+                <p>L'autenticazione a due fattori ti sarà richiesta anche per inviare denaro non solo per accedere al tuo portafoglio.</p>
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.twofac_in_progress}">
+                    Portami subito al mio portafoglio!
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

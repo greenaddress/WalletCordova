@@ -1,0 +1,9 @@
+<div class="modal-body text-center">
+    <p>Le QR code pour l'accès Google Authenticator à votre porte-monnaie est : </p>
+    <p><qr size="212" text="twofactor_state.google_secret_url"></qr></p>
+    <p>Vous pouvez aussi recopier le code manuellement : </p>
+    <p>(( twofactor_state.google_secret_key ))</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Fermer</button>
+</div>

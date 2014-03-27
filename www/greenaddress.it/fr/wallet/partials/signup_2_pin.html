@@ -1,0 +1,54 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Etape 2 sur 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Connexion rapide au porte-monnaie<br><small>Pour un accès rapide et sécurisé depuis cet appareil, créez un code PIN</small></div>
+                <hr>
+                <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
+                    <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <label class="col-sm-5 control-label" for="id_pin">Code PIN</label>
+                        <div class="col-sm-4">
+                            <input class="form-control pin" type="tel" mask-input
+                                   id="id_pin" name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                                   placeholder="Nombre à 4 chiffres" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                        </div>
+                        <input type="submit" class="hide" submitter />
+                    </div>
+                </form>
+                <hr>
+                <p>
+                La connexion avec un code PIN permet de se connecter rapidement sans pénaliser la sécurité. Le code PIN protège un mot de passe aléatoire AES 256 qui sera supprimé au bout de trois PIN incorrects, ce qui vous obligera à renseigner votre passphrase mnémonique. Facile, pratique et sécurisé, à utiliser !
+                </p>
+            </div>
+
+            <div class="create-modal-footer">
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress < 100">
+                    Génération des clés de votre porte-monnaie, merci de patienter... ... (( signup.seed_progress ))%
+                </span>
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
+                    Connexion en cours, merci de patienter
+                </span>
+                <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                    Ignorez tout ça et montrez moi mon porte-monnaie !
+                </a>
+                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100}">
+                    <span ng-hide="signup.setting_pin" ng-class="{disabled: !signup.logged_in || signup.login_failed}">PIN créé, prêt pour l'étape 3</span>
+                    <span ng-show="signup.setting_pin">Création du code PIN...</span>
+                </a>
+                <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
+                    <span>Ignorer le PIN et continuer</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

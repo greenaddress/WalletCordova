@@ -1,0 +1,9 @@
+platforms/android/assets
+ant-build
+ant-gen
+local.properties
+.DS_Store
+*.class
+*.d
+.staging
+my-release-key.keystore

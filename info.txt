@@ -1,0 +1,3 @@
+cordova build --release
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore platforms/android/bin/*.apk greenaddressit
+zipalign -v 4 platforms/android/bin/*.apk GreenAddressItReleaseSignedAligned.apk 

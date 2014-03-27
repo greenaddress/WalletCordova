@@ -1,0 +1,29 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Schritt 4 von 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Machen Sie keine Kompromisse bezüglich Sicherheit<br><small>Richten Sie Zwei-Faktor-Authentifikation ein</small></div>
+                <div ng-controller="TwoFactorSetupController" ng-include="'file:///android_asset/www/greenaddress.it/de/wallet/partials/wallet_2fa.html'"></div>
+                <hr class="double">
+                <p>Wir empfehlen dringen dass Sie Zwei-Faktor-Authentifikation einrichten, dies wird Ihre Brieftasche viel sicherer machen und wird zusätzliche Funktionen frei schalten wie Ausgabegrenzen und verzögerte Zahlungen.</p>
+                <p>Wenn sie diese einrichten müssen Sie, um eine Transaktion zu vollziehen, sich nicht nur anmelden sondern jene mit einem Code bestätigen, der an Sie gesendet wird per Email, SMS oder Google Authenticator, wie Sie es wünschen.</p>
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.twofac_in_progress}">
+                    Zu meiner Brieftasche!
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

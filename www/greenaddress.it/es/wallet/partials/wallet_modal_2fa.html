@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3>Please provide two factor authentication code</h3>
+</div>
+<div submittable>
+    <div class="modal-body">
+        <p>Debe ingresar el código de autenticación de doble factor para realizar esta acción</p>
+        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method, gauth_code: twofac.gauth_code})"><div class="control-group">
+            <div ng-hide="twofac.codes_requested[twofac.twofactor_method] || twofac.gauth_only">
+                <p>Seleccione un método de autenticación: <br/>
+                <label clickfix ng-repeat="method in twofactor_methods">
+                    <input clickfix type="radio" name="twofactor_method" ng-model="twofac.twofactor_method" ng-disabled="twofac.requesting_code" ng-value="method">
+                    (( twofactor_method_names[method] ))<br/>
+                </label>
+            </div>
+            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Please enter your (( twofactor_method_names[twofac.twofactor_method] )) authentication code which we have just sent to you.</p>
+            
+            <div class="form-inline" ng-show="twofac.twofactor_method == 'gauth' || twofac.codes_requested[twofac.twofactor_method]">
+                <p>Please enter the  (( twofactor_method_names[twofac.twofactor_method] ))  code:
+                <input clickfix focus-on="twoFactorModal" class="form-control pin" type="tel" mask-input required="required"
+                   maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" ng-model="twofac.twofactor_code" /></p>
+            </div>
+            <div ng-hide="twofac.twofactor_method == 'gauth' || twofac.codes_requested[twofac.twofactor_method]">
+                <input type="button" class="btn btn-primary" value="Request code" ng-click="twofac.request_code()" ng-disabled="twofac.requesting_code" />
+            </div>
+            <input type="submit" style="position: absolute; top: -10000px; left: -10000px;" submitter />
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="btn-group pull-right">
+            <button class="btn btn-primary" ng-click="submit_me()" ng-show="twofac.twofactor_code">OK</button>
+            <button class="btn btn-secondary" ng-click="$dismiss()">Cancelar</button>
+        </div>
+    </div>
+</div>

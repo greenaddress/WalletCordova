@@ -1,0 +1,62 @@
+<div class="row hidden-xs hidden-sm">
+  <div class="col-md-12">
+    <div class="header">
+      Książka adresowa<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+    </div>
+  </div>
+</div>
+<div ng-controller="AddressBookController">
+<div class="row" ng-show="wallet.hdwallet.secret_exponent_bytes">
+  <div class="col-md-12">
+    <div class="header-options">
+      <a href="" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i> Dodaj nową pozycję</a>
+    </div>
+  </div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-striped" id="id_addressbook">
+			<thead>
+				<th></th>
+				<th><a href="">Nazwa</a></th>
+				<th><a href="">Adres</a></th>
+				<th ng-show="wallet.hdwallet.secret_exponent_bytes"></th>
+			</thead>
+	  
+			<tbody>
+				<!-- TODO: move to modal -->
+				<tr ng-show="addressbook.new_item" submittable>
+				<td></td>
+				<td><form ng-submit="submit_me()" class="inline">
+				<input type="text" ng-model="addressbook.new_item.name" focus-on="addrbook_new_item" />
+				</form></td>
+				<td><form ng-submit="save()" class="inline">
+				<input type="text" required="required" ng-model="addressbook.new_item.address" />
+				<input type="submit" class="hide" submitter />
+				</form></td>
+				<td><a href="" ng-click="submit_me()">Save</a></td>
+				</tr>
+				<tr ng-class="{danger: item.name == route.name}" submittable addressbook-item ng-repeat="item in addressbook.items | startFrom:(route.page-1)*20 | limitTo:20"></tr>
+				<tr ng-hide="addressbook.items.length || is_loading">
+					<td colspan="5"><small class="text-muted"><i>Twoja książka adresowa jest pusta</i></small></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<ul class="pagination">
+		  <li ng-class="{disabled: route.page == 1}">
+		  	<a ng-hide="route.page == 1" ng-href="#/address-book/(( route.page - 1 ))">&laquo;</a>
+		  	<a ng-show="route.page == 1" href="">&laquo;</a>
+		  </li>
+		  <li ng-class="{active: route.page == page}" ng-repeat="page in addressbook.pages"><a ng-href="#/address-book/(( page ))">(( page ))</a></li>
+		  <li ng-class="{disabled: route.page == addressbook.num_pages}">
+		  	<a ng-hide="route.page == addressbook.num_pages" ng-href="#/address-book/(( route.page + 1 ))">&raquo;</a>
+		  	<a ng-show="route.page == addressbook.num_pages" href="">&raquo;</a>
+		  </li>
+		</ul>
+	</div>
+</div>
+</div>

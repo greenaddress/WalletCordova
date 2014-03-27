@@ -1,0 +1,42 @@
+<table class="table table-striped" ng-init="(reversed = true) && (order_by = 'ts')">
+  <thead>
+    <tr>
+      <th><a href="" ng-click="order_by=='ts' ? (reversed = !reversed) : (order_by = 'ts')">
+        <i ng-show="order_by == 'ts'" class="glyphicon"
+        ng-class="{'glyphicon-chevron-down': reversed, 'glyphicon-chevron-up': !reversed}"></i> Date</a></th>
+      <th>Description</th>
+      <th class="text-right"><a href="" ng-click="order_by == 'value_sort' ? (reversed = !reversed) : (order_by = 'value_sort')"><i ng-show="order_by == 'value_sort'" class="glyphicon"
+        ng-class="{'glyphicon-chevron-down': reversed, 'glyphicon-chevron-up': !reversed}"></i>(( wallet.unit ))</a></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <tr ng-repeat="transaction in wallet.transactions.list | limitTo:wallet.transactions.limit | orderBy:order_by:reversed">
+      <td class="date">(( transaction.ts|date:"dd/MM/yyyy" ))</td>
+      <td>
+        <div class="desc">
+          <a href="" ng-show="details" ng-click="details(transaction)">(( transaction.description ))</a>
+          <span ng-hide="details">(( transaction.description ))</span>
+          <div class="info">
+              <span class="label label-default" ng-show="transaction.confirmations == 0">unconfirmed</span>
+              <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) confirmations</span>
+              <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
+                <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;
+                    <a href="" ng-click="redeem(transaction)">take funds back</a>
+                </span>
+                <span ng-hide="transaction.sent_back || transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">claimed</span>
+              </span>
+          </div>
+        </div>
+      </td>
+      <td class="amount">
+        <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc:wallet.unit ))</span>
+        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc:wallet.unit ))</span><br>
+        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( wallet.transactions.fiat_currency ))</span>
+      </td>
+    </tr>
+    <tr ng-hide="wallet.transactions.list || wallet.transactions === undefined">
+      <td colspan="3"><small class="text-muted"><i>No transactions found...</i></small></td>
+    </tr>
+  </tbody>
+</table>

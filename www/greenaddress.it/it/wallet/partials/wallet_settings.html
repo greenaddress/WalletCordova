@@ -1,0 +1,459 @@
+  <div class="row">
+  <div class="col-md-12">
+    <div class="header">
+      Configurazione
+      <form role="form" class="form-inline pull-right" style="margin:0;">
+        <div class="form-group">
+          Cambia la lingua a&nbsp;
+          <select ng-model="settings.language">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+            <option value="pl">Polski</option>
+          </select>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row currencies" ng-show="settings.available_currencies">
+  <div class="col-md-3">
+    <div class="sub-header">Valuta</div>
+    <div class="sub-header-desc">Seleziona la tua moneta e la fonte per il cambio</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+      <div class="form-group">
+        <label class="control-label">Fonte per il cambio</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <button ng-repeat="(exchange, available) in settings.available_currencies.per_exchange" type="button" class="btn btn-xs btn-default" ng-class="{'btn-primary': settings.exchange == exchange, 'btn-default': settings.exchange != exchange}" ng-model="settings.exchange" btn-radio="exchange" ng-disabled="settings.updating_exchange || available.indexOf(settings.currency) == -1">(( exchanges[exchange] ))</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <form role="form" class="form-inline">
+      <div class="form-group">
+        <label class="control-label">Visualizza ammontare in</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <button ng-repeat="currency in settings.available_currencies.all" type="button" class="btn btn-xs" ng-class="{'btn-primary': settings.currency == currency, 'btn-default': settings.currency != currency}" ng-model="settings.currency" btn-radio="currency" ng-disabled="settings.updating_currency || settings.available_currencies.per_exchange[settings.exchange].indexOf(currency) == -1">(( currency ))</button>
+        </div>
+      </div>
+      <br />
+      <div class="form-group">
+        <label class="control-label">e</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <button ng-repeat="unit in settings.available_units" type="button" class="btn btn-xs" ng-class="{'btn-primary': settings.unit == unit, 'btn-default': settings.unit != unit}" ng-model="settings.unit" btn-radio="unit" ng-disabled="settings.updating_unit">(( unit ))</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Notifiche</div>
+    <div class="sub-header-desc">Le notifiche offrono una sicurezza migliorata se configurate per i movimenti in uscita e aggiornamenti istantanei quando configurate per i movimenti in entrata</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+    <div ng-class="{grayedout: !wallet.twofac_email_switch}">
+      <div class="form-group">
+        <label class="control-label">Manda notifica di transazioni in ingresso via</label>
+      </div>
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="settings.notifications.email_incoming" ng-disabled="settings.updating_ntf_email_incoming || !wallet.twofac_email_switch">
+          <span class="switch"></span>
+          email
+        </label>
+      </div><!--
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch">
+          <span class="switch"></span>
+          SMS
+        </label>
+      </div> -->
+    </div>
+    <hr>
+    <div ng-class="{grayedout: !wallet.twofac_email_switch}">
+        <div class="form-group">
+          <label class="control-label">Manda notifica di transazioni in uscita via</label>
+        </div>
+        <div class="form-group">
+          <label class="switch">
+              <input type="checkbox" class="switch" ng-model="settings.notifications.email_outgoing" ng-disabled="settings.updating_ntf_email_outgoing || !wallet.twofac_email_switch">
+              <span class="switch"></span>
+              email
+          </label>
+        </div><!--
+        <div class="form-group">
+          <label class="switch">
+            <input type="checkbox" class="switch">
+            <span class="switch"></span>
+            SMS
+          </label>
+        </div> -->
+      </div>
+      <div ng-hide="wallet.twofac_email_switch">
+        <hr>
+        <small class="label label-info"><strong>NOTA</strong>: Hai bisogno di aver abilitato l'autenticazione a due fattori via email per usare questa funzionalità.</small>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="TwoFactorSetupController">
+  <div class="col-md-3">
+    <div class="sub-header">Autentificazione a due fattori</div>
+    <div class="sub-header-desc">Imposta uno o tutte le autenticazioni a due fattori: potrai scegliere quale usare!</div>
+  </div>
+  <div class="col-md-9" submittable>
+    <form role="form" class="form-horizontal" ng-submit="submit_email()">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_email_switch" ng-disabled="twofactor_state.toggling_email">
+                <span class="switch"></span>
+                Email
+            </label>
+            <input type="submit" style="position: absolute; left: -10000px;" />
+            <div ng-show="twofactor_state.toggling_email == 'initial' && !twofactor_state.email_set" class="col-sm-9">
+                <label class="col-sm-4 control-label" for="wallet-google-conf-code">Il tuo indirizzo email:</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input class="form-control" ng-model="twofactor_state.new_twofac_email"
+                            id="wallet-twofac-email" type="email" name="email" ng-required="!twofactor_state.email_set"
+                            placeholder="Per favore inserisci la tua email" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.new_twofac_email || twofactor_state.enabling_email" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="(twofactor_state.toggling_email == 'enabling' || twofactor_state.toggling_email == 'initial') && twofactor_state.email_set" class="col-sm-9">
+                <p>
+                    You need to provide one code from your email to set up the two factor authentication.<br>                    Please open your email and provide the code.
+                </p>
+                <label class="col-sm-4 control-label" for="wallet-email-conf-code">Codice email</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_email_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.email_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-email-conf-code"
+                            placeholder="Per piacere inserisci qui il codice ricevuto" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_email_code || twofactor_state.toggling_email == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_email()" ng-class="{disabled: twofactor_state.toggling_email == 'enabling'}">Annulla</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+      <hr>
+    <form role="form" class="form-horizontal" ng-submit="submit_gauth()">
+        <div class="form-group">
+            <label class="switch col-sm-4">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_gauth_switch" ng-disabled="twofactor_state.toggling_gauth">
+                <span class="switch"></span>
+                Google Authenticator
+            </label>
+            <div ng-show="twofactor_state.toggling_gauth == 'enabling' || twofactor_state.toggling_gauth == 'initial'" class="col-sm-8">
+                <p>You need to provide one Google Authenticator code to set up the two factor authentication.<br>                    Please scan the QR code below, and provide the code.
+                </p>
+                <div class="text-center"><a href="" class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</a></div>
+                <label class="col-sm-2 control-label" for="wallet-gauth-conf-code">Code</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_gauth_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.gauth_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-gauth-conf-code"
+                            placeholder="Per piacere inserisci qui il codice ricevuto" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_gauth_code || twofactor_state.toggling_gauth == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_gauth()" ng-class="{disabled: twofactor_state.toggling_gauth == 'enabling'}">Annulla</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+      <hr>
+    <form role="form" class="form-horizontal" ng-submit="submit_sms()">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_sms_switch" ng-disabled="twofactor_state.toggling_sms">
+                <span class="switch"></span>
+                SMS
+            </label>
+            <input type="submit" style="position: absolute; left: -10000px;" />
+            <div ng-show="twofactor_state.toggling_sms == 'initial' && !twofactor_state.sms_set" class="col-sm-9">
+                <label class="col-sm-4 control-label" for="wallet-google-conf-code">Il tuo numero di telefono:</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input class="form-control" ng-model="twofactor_state.new_twofac_sms"
+                            id="wallet-twofac-sms" type="tel" name="phone" ng-required="!twofactor_state.sms_set"
+                            placeholder="Inserisci qui il tuo numero di telefono incluso il codice paese (ad es: +39...)" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.new_twofac_sms || twofactor_state.enabling_sms" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="(twofactor_state.toggling_sms == 'enabling' || twofactor_state.toggling_sms == 'initial') && twofactor_state.sms_set" class="col-sm-9">
+                <p>You need to provide one SMS code to set up the two factor authentication.<br>                    Please check your phone and provide the code.
+                </p>
+                <label class="col-sm-4 control-label" for="wallet-sms-conf-code">codice SMS:</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_sms_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.sms_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-sms-conf-code"
+                            placeholder="Per piacere inserisci qui il codice ricevuto" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_sms_code || twofactor_state.toggling_sms == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_sms()" ng-class="{disabled: twofactor_state.toggling_sms == 'enabling'}">Annulla</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+      <hr>
+    <form role="form" class="form-horizontal" ng-submit="submit_phone()">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_phone_switch" ng-disabled="twofactor_state.toggling_phone">
+                <span class="switch"></span>
+                Telefono
+            </label>
+            <input type="submit" style="position: absolute; left: -10000px;" />
+            <div ng-show="twofactor_state.toggling_phone == 'initial' && !twofactor_state.phone_set" class="col-sm-9">
+                <label class="col-sm-4 control-label" for="wallet-google-conf-code">Il tuo numero di telefono:</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input class="form-control" ng-model="twofactor_state.new_twofac_phone"
+                            id="wallet-twofac-phone" type="tel" name="phone" ng-required="!twofactor_state.phone_set"
+                            placeholder="Inserisci qui il tuo numero di telefono incluso il codice paese (ad es: +39...)" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.new_twofac_phone || twofactor_state.enabling_phone" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="(twofactor_state.toggling_phone == 'enabling' || twofactor_state.toggling_phone == 'initial') && twofactor_state.phone_set" class="col-sm-9">
+                <p>You need to provide one phone code to set up the two factor authentication.<br>                    Please check your phone and provide the code.
+                </p>
+                <label class="col-sm-4 control-label" for="wallet-phone-conf-code">Codice Telefono</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_phone_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.phone_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-phone-conf-code"
+                            placeholder="Per piacere inserisci qui il codice ricevuto" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_phone_code || twofactor_state.toggling_phone == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Abilita" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_phone()" ng-class="{disabled: twofactor_state.toggling_phone == 'enabling'}">Annulla</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Limiti di spesa</div>
+    <div class="sub-header-desc">Configura un limite sotto il quale non ti verrà richiesta l'autenticazioine a due fattori per pagamenti super veloci</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-horizontal">
+      <label class="switch">
+          <input type="checkbox" class="switch" disabled>
+          <span class="switch"></span>
+          <span>
+            Abilita pagamenti ritardati
+            <span class="coming-soon">Disponibile a breve</span>
+          </span>
+      </label>
+      <!--
+      <hr>
+      <div class="form-group">
+        <label for="single" class="col-sm-3 control-label">Single transaction</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="single" placeholder="Ammontare">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="daily" class="col-sm-3 control-label">Daily</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="daily" placeholder="Ammontare">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="monthly" class="col-sm-3 control-label">Monthly</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="monthly" placeholder="Ammontare">
+        </div>
+      </div>
+      -->
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Pagamenti ritardati</div>
+    <div class="sub-header-desc">Ritarda le transazioni per stare tranquillo: funziona al meglio con la notifica dei movimenti in uscita.</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-horizontal">
+      <label class="switch">
+          <input type="checkbox" class="switch" disabled>
+          <span class="switch"></span>
+          <span>
+            Abilita pagamenti ritardati
+            <span class="coming-soon">Disponibile a breve</span>
+          </span>
+      </label>
+      <!--
+      <hr>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Ritarda il pagamento di</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="Ammontare">
+        </div>
+        <div class="col-sm-4">
+          <select class="form-control">
+            <option value="">Seconds</option>
+            <option value="">Minutes</option>
+          </select>
+        </div>
+      </div>
+      -->
+    </form>
+  </div>
+</div>
+<hr class="double" ng-show="!settings.noLocalStorage">
+<div ng-controller="QuickLoginController" class="row" ng-show="!settings.noLocalStorage">
+  <div class="col-md-3">
+    <div class="sub-header">Accesso veloce</div>
+    <div class="sub-header-desc">Per avere un accesso sicuro ma veloce da questo dispositivo configura il PIN</div>
+  </div>
+  <div class="col-md-9">
+    <div ng-show="quicklogin.loaded">
+      <form ng-submit="set_new_pin()" class="form-horizontal" role="form">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="quicklogin.enabled" ng-disabled="quicklogin.started_setting_pin">
+          <span class="switch"></span>
+            Abilita l'accesso rapido su questo dispositivo
+        </label>
+        <hr ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
+        <div class="form-group" ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
+          <label ng-show="quicklogin.enabled" class="control-label col-sm-3">Cambia PIN</label>
+          <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">Imposta PIN</label>
+          <div class="col-sm-4">
+            <input type="tel" class="form-control" placeholder="Quattro numeri"
+                   maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" ng-model="quicklogin.new_pin">
+            <input type="submit" class="btn btn-primary" ng-show="quicklogin.new_pin" value="Conferma" ng-disabled="quicklogin.setting_pin" />
+          </div>
+        </div>
+        <hr>
+        <button class="btn btn-danger btn-block-xs" ng-click="remove_all_pin_logins()">Disabilita l'accesso rapido da tutti i devices</button>
+        <!-- 
+        <div class="form-group">
+          <select id="quick-login-select" ng-model="quicklogin.selected_device" ng-options="device.device_name for device in quicklogin.devices"></select>
+          <label for="pin" class="col-sm-3 control-label">imposta PIN a</label>
+          <div class="col-sm-4">
+            <input id="pin" class="form-control" style="width:120px;" placeholder="codice PIN" type="tel" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" maxlength="4" ng-model="quicklogin.new_pin" />
+          </div>
+          <div class="col-sm-4">
+            <a href="" ng-click="remove_pin()" class="noanimate btn btn-danger" ng-class="{disabled: quicklogin.removing_pin}" ng-hide="quicklogin.selected_device.is_current && quicklogin.new_pin">Rimuovi</a>
+            <input type="submit" class="btn btn-primary" ng-show="quicklogin.selected_device.is_current && quicklogin.new_pin" value="Conferma" ng-disabled="quicklogin.setting_pin" />
+          </div>
+        </div>
+        -->
+      </form>
+    </div>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Collega account di terze parti</div>
+    <div class="sub-header-desc">Permette pagamenti social e accesso in modalità a sola lettura attraverso login di altri servizi</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
+    
+      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
+      <label class="switch">
+        <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
+        <span class="switch"></span>
+      </label>
+      <hr>
+      
+    
+      <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> Login custom</button>
+      <label class="switch">
+        <input type="checkbox" class="switch" ng-model="thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom">
+        <span class="switch"></span>
+      </label>
+      <div ng-hide="!thirdparty.customstate.enabled && !thirdparty.toggling_custom && !thirdparty.customstate.username">
+        <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="text" ng-model="thirdparty.customstate.username" placeholder="Nome utente" />
+        <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="password" ng-model="thirdparty.customstate.password" placeholder="Password" />
+        <input type="submit" class="btn btn-sm btn-default" value="(( thirdparty.customstate.save_button_label ))" ng-show="thirdparty.customstate.username && thirdparty.customstate.password" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" ng-click="thirdparty.customstate.save()" />
+      </div>
+    
+      <hr>
+      <button class="btn btn-block-xs btn-twitter" disabled><i class="icon-twitter"></i> Twitter <span class="coming-soon">Disponibile a breve</span></button>
+      <label class="switch">
+        <input type="checkbox" class="switch" disabled>
+        <span class="switch"></span>
+      </label>
+    
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Mnemonica</div>
+    <div class="sub-header-desc">Mostra la tua passphrase per recuperare o clonare il wallet su un altro dispositivo.</div>
+  </div>
+  <div class="col-md-9">
+    <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()">Mnemonica</button>
+    
+    <button class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
+    
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">nLockTime</div>
+    <div class="sub-header-desc">Le transazioni nLockTime permettono di recuperare i tuoi fondi dopo un numero predefinito di blocchi</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
+      <div class="form-group">
+        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac_email_switch}">
+          <label for="id_nlocktime_blocks" class="control-label">Permetti di ottenere i fondi senza la firma di GreenAddress.it dopo</label>
+          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac_email_switch" />
+          blocchi
+          <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
+          <br />(( settings.nlocktime.blocks_userfriendly ))
+        </div>
+        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac_email_switch">
+          <hr>
+          <small class="label label-info"><strong>NOTA</strong>: Sia le notifiche per i momvimenti in uscita che per quelli in entrata devono essere abilitati per usare questa fetaure.</small>
+        </div>
+        <hr>
+        <a href="" class="btn btn-default btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Mostra gli output in scadenza a breve</a>
+      </div>
+    </form>
+  </div>
+</div>

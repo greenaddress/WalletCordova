@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Building cleans the assets/www directory, so we need to re-add .gitkeep
+# to avoid removing it from the git repo
+touch platforms/android/assets/www/.gitkeep
