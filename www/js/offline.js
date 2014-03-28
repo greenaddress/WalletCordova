@@ -18,7 +18,11 @@ var app = {
         //if (window.location.href != destination) {
         //    window.location.href = destination;
         //}
-        window.location.href = destination;
+        plugins.appPreferences.fetch(function(language) {
+            window.location.href = destination.replace('/en/', '/'+language+'/');
+        }, function(error) {
+            window.location.href = destination;
+        }, 'language');
     },
 
     onDeviceOffline: function() {
