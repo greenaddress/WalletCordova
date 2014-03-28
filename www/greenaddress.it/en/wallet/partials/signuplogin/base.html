@@ -13,7 +13,7 @@
                     <div class="control-group" ng-class="{'has-error': state.error && form.$invalid}">
                         <div class="row">
                             <div class="col-sm-2 col-sm-offset-1">
-                                <input ng-show="state.has_pin" class="form-control pin" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="PIN number" ng-model="use_pin_data.pin" />
+                                <input ng-show="state.has_pin" class="form-control pin" ng-disabled="is_loading || logging_in" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="PIN number" ng-model="use_pin_data.pin" />
                             </div>
                             <div class="col-sm-1">
                                 <p ng-show="state.has_pin" class="form-control-static">or</p>
@@ -21,7 +21,7 @@
                             <div class="col-sm-7">
                                 
                                 <span class="input-group">
-                                    <input class="form-control" ng-disabled="is_loading" ng-model="state.mnemonic" placeholder="Mnemonic passphrase" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
+                                    <input class="form-control" ng-disabled="is_loading || logging_in" ng-model="state.mnemonic" placeholder="Mnemonic passphrase" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
                                     <span class="input-group-btn">
                                         <a class="btn btn-default" ng-click="read_qr_code()"><i class="glyphicon glyphicon-qrcode"></i> Scan QR</a>
                                     </span>
@@ -44,7 +44,7 @@
                         
                     </div>
                     <hr>
-                    <button type="submit" ng-disabled="is_loading || (state.seed_progress && !state.login_error)"
+                    <button type="submit" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error)"
                             class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
                             href="#" id="restore-wallet-continue">
                         <span ng-hide="state.seed_progress || state.login_error">Login to your Wallet</span>

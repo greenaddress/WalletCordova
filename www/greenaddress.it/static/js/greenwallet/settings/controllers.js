@@ -17,6 +17,7 @@ angular.module('greenWalletSettingsControllers',
                 twofactor_state.google_secret_key = data.gauth_url.split('=')[1];
             }
             twofactor_state.twofac_email_switch = data.email;
+            $scope.wallet.twofac_email_switch = data.email;  // used by notification and nLockTime settings
             twofactor_state.twofac_sms_switch = data.sms;
             twofactor_state.twofac_phone_switch = data.phone;
         }, function(err) {
