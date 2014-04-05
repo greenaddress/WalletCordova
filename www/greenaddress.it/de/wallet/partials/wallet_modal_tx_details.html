@@ -16,10 +16,10 @@
 
     <hr class="double">
 
-    <p style="font-size:140%;"><b>Eingaben</b></p>
+    <p style="font-size:140%;"><b>Eingänge</b></p>
 
     <table class="table">
-        <tr><th>Addresse</th><th>Betrag</th></tr>
+        <tr><th>Adresse</th><th>Betrag</th></tr>
         <tr ng-repeat="input in selected_transaction.inputs">
             <td>(( input.ad ))</td>
             <td>(( input.value | format_btc:wallet.unit ))</td>
@@ -28,14 +28,14 @@
 
     <hr class="double">
 
-    <p style="font-size:140%;"><b>Ausgaben</b></p>
+    <p style="font-size:140%;"><b>Ausgänge</b></p>
 
     <table class="table">
-        <tr><th>Addresse</th><th>Betrag</th></tr>
+        <tr><th>Adresse</th><th>Betrag</th></tr>
         <tr ng-repeat="output in selected_transaction.outputs">
             <td>(( output.ad ))<br />
 
-            <a ng-hide="output.nlocktime_json || output.is_spent || !output.is_relevant" href="" ng-click="generate_nlocktime(selected_transaction, output)">beauftrage nLockTime</a>
+            <a ng-hide="output.nlocktime_json || output.is_spent || !output.is_relevant" href="" ng-click="generate_nlocktime(selected_transaction, output)">nLockTime abfragen</a>
             <p style="word-wrap: break-word; width: 400px;" ng-show="output.nlocktime_json">nLockTime: (( output.nlocktime_json ))</p>
             </td>
             <td>(( output.value | format_btc:wallet.unit ))</td>

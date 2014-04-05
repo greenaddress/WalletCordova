@@ -135,3 +135,13 @@ GAHDWallet.prototype.subpath = function(path_hex) {
     }
     return key;
 }
+GAHDWallet.prototype.subpath_for_login = function(path_hex) {
+    // derive private key for signing the challenge, using 8 bytes instead of 64
+    var key = this;
+    var path_bytes = Crypto.util.hexToBytes(path_hex);
+    for (var i = 0; i < 4; i++) {
+        key = key.subkey(+BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)), false, true);
+        path_bytes = path_bytes.slice(2);
+    }
+    return key;
+}

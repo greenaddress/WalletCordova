@@ -15,7 +15,7 @@
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-search"></span>
             </span>
-            <input ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Inserisci il nome del destinatario o indirizzo bitcoin, email, SMS, Facebook o Twitter"
+            <input ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Inserisci il nome del destinatario o indirizzo bitcoin, email, o utente Facebook"
                     typeahead="item as item.name for item in addressbook.items | filter:$viewValue | limitTo:8" />
             
             <span class="input-group-btn">

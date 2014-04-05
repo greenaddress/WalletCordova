@@ -1,7 +1,7 @@
 <div class="row hidden-xs hidden-sm">
   <div class="col-md-12">
     <div class="header">
-      Addressenbuch<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+      Adressbuch<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
     </div>
   </div>
 </div>
@@ -9,7 +9,7 @@
 <div class="row" ng-show="wallet.hdwallet.secret_exponent_bytes">
   <div class="col-md-12">
     <div class="header-options">
-      <a href="" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i> Füge neuen Eintrag hinzu</a>
+      <a href="" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i> Neuen Eintrag hinzufügen</a>
     </div>
   </div>
 </div>
@@ -19,7 +19,7 @@
 			<thead>
 				<th></th>
 				<th><a href="">Name</a></th>
-				<th><a href="">Addresse</a></th>
+				<th><a href="">Adresse</a></th>
 				<th ng-show="wallet.hdwallet.secret_exponent_bytes"></th>
 			</thead>
 	  
@@ -38,7 +38,7 @@
 				</tr>
 				<tr ng-class="{danger: item.name == route.name}" submittable addressbook-item ng-repeat="item in addressbook.items | startFrom:(route.page-1)*20 | limitTo:20"></tr>
 				<tr ng-hide="addressbook.items.length || is_loading">
-					<td colspan="5"><small class="text-muted"><i>Ihr Addressbuch ist leer</i></small></td>
+					<td colspan="5"><small class="text-muted"><i>Ihr Adressbuch ist leer</i></small></td>
 				</tr>
 			</tbody>
 		</table>

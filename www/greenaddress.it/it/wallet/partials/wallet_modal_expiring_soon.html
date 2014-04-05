@@ -4,7 +4,7 @@
 
 <div class="modal-body">
 
-    <p ng-show="!soon_nlocktimes.list.length">transazioni</p>
+    <p ng-show="!soon_nlocktimes.list.length">Non ci sono transazioni nLockTime attive</p>
     <table class="table break-all" ng-show="soon_nlocktimes.list.length">
         <tr><th>Hash della transazione, numero di output</th><th>nLockTime</th></tr>
         <tr ng-repeat="nlocktime in soon_nlocktimes.list">

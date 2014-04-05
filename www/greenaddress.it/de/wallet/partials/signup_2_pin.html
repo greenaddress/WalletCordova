@@ -11,15 +11,15 @@
             </div>
 
             <div class="create-modal-body">
-                <div class="title">Schneller und sicherer Zugriff auf Ihre Brieftasche<br><small>Um einen sicheren aber schnellen Zugriff von diesem Gerät aus zu haben, stellen Sie Ihre PIN ein</small></div>
+                <div class="title">Schneller und sicherer Zugriff auf Ihre Brieftasche<br><small>Für sicheren aber schnellen Zugriff von diesem Gerät aus, stellen Sie Ihre PIN ein</small></div>
                 <hr>
                 <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
                     <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
-                        <label class="col-sm-5 control-label" for="id_pin">PIN Nummer</label>
+                        <label class="col-sm-5 control-label" for="id_pin">PIN-Nummer</label>
                         <div class="col-sm-4">
                             <input class="form-control pin" type="tel" mask-input
                                    id="id_pin" name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
-                                   placeholder="Viertstellige Zahl" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                                   placeholder="Vierstellige Zahl" ng-model="signup.pin" ng-disabled="signup.pin_set" />
                         </div>
                         <input type="submit" class="hide" submitter />
                     </div>
@@ -45,7 +45,7 @@
                     <span ng-show="signup.setting_pin">Setze PIN...</span>
                 </a>
                 <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
-                    <span>Überspringe PIN-Einrichtung und gehe weiter</span>
+                    <span>PIN-Einrichtung überspringen und fortfahren</span>
                 </a>
             </div>
 

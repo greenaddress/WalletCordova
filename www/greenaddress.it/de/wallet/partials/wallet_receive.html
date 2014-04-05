@@ -35,13 +35,13 @@
               <a href="((receive.bitcoin_uri))" onclick="return false;">((receive.bitcoin_uri))</a>
           </p>
           <div class="pull-right">
-            <button class="btn btn-info btn-block-xs" ng-click="show_bitcoin_uri()" ng-hide="receive.bitcoin_uri">Show URI and address</button>
-            <a class="btn btn-default btn-block-xs" ng-click="show_bitcoin_uri(true)"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR Code</a>
+            <button class="btn btn-info btn-block-xs" ng-click="show_bitcoin_uri()" ng-hide="receive.bitcoin_uri">URI und Adresse anzeigen</button>
+            <a class="btn btn-default btn-block-xs" ng-click="show_bitcoin_uri(true)"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR-Code</a>
           </div>
         </div>
       </div>
       <div class="form-group" ng-show="receive.bitcoin_uri">
-        <label class="col-sm-2 control-label" for="amount">Addresse</label>
+        <label class="col-sm-2 control-label" for="amount">Adresse</label>
         <div class="col-sm-10">
           <p class="form-control-static payment-url break-all" style="display:inline-block;">
               ((receive.bitcoin_address))
@@ -56,17 +56,24 @@
               <a href="((receive.payment_url))" onclick="return false;">((receive.payment_url))</a>
           </p>
           <div class="pull-right">
-            <a class="btn btn-default btn-block-xs" ng-click="show_url_qr(receive.payment_url)"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR Code</a>
+            <a class="btn btn-default btn-block-xs" ng-click="show_url_qr(receive.payment_url)"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR-Code</a>
           </div>
         </div>
       </div>
       <div ng-show="receive.show_sweep">
         <hr>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="id_privkey_wif">Privater Schlüssel in WIF-Format</label>
+          <label class="col-sm-2 control-label" for="id_privkey_wif">Privater Schlüssel im WIF-Format</label>
           <div class="col-sm-10">
             <div class="col-sm-10">
-              <input ng-model="receive.privkey_wif" class="form-control" type="text" id="id_privkey_wif" placeholder="Geben Sie einen privaten Schlüssel zum Leeren hier ein">
+              <div class="input-group">
+                <input ng-model="receive.privkey_wif" class="form-control" type="text" id="id_privkey_wif" placeholder="Geben Sie einen privaten Schlüssel zum Leeren hier ein">
+                
+                <span class="input-group-btn">
+                  <a class="btn btn-default" ng-click="receive.read_wif_qr_code()"><i class="glyphicon glyphicon-qrcode"></i> QR Scannen</a>
+                </span>
+                
+              </div>
             </div>
             <div class="pull-right">
               <a class="btn btn-default btn-block-xs" ng-class="{disabled: receive.sweeping}" ng-click="receive.sweep()">Leeren</a>

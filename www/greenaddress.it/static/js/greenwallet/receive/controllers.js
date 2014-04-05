@@ -74,6 +74,27 @@ angular.module('greenWalletReceiveControllers',
                 }
             });
         },
+        read_wif_qr_code: cordovaReady(function()  {
+            gaEvent('Wallet', 'ReceiveReadWIFQrCode');
+            var that = this;
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    console.log("We got a barcode\n" +
+                    "Result: " + result.text + "\n" +
+                    "Format: " + result.format + "\n" +
+                    "Cancelled: " + result.cancelled);
+                    if (!result.cancelled && result.format == "QR_CODE") {
+                        gaEvent('Wallet', 'ReceiveReadWIFQrCodeSuccessful');
+                        $scope.$apply(function() {
+                            that.privkey_wif = result.text;
+                        });
+                    }
+                }, 
+                function (error) {
+                    console.log("Scanning failed: " + error);
+                }
+            );
+        }),
         show_sweep: cur_coin_version == 0  // no testnet
     };
     var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];

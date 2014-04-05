@@ -26,8 +26,8 @@ angular.module('greenWalletServices', [])
         return null;
     }
     return cryptoService;
-}).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics',
-        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics) {
+}).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook',
+        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook) {
     var walletsService = {};
     var handle_double_login = function(retry_fun) {
         return $modal.open({
@@ -67,6 +67,9 @@ angular.module('greenWalletServices', [])
         var promise = tx_sender.login(logout), that = this;
         promise = promise.then(function(data) {
             if (data) {
+                if (window.disableEuCookieComplianceBanner) {
+                    disableEuCookieComplianceBanner();
+                }
                 tx_sender.wallet = $scope.wallet;
                 $scope.wallet.hdwallet = hdwallet;
                 $scope.wallet.mnemonic = mnemonic;
@@ -124,6 +127,9 @@ angular.module('greenWalletServices', [])
     walletsService.loginWatchOnly = function($scope, token_type, token, logout) {
         var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
         promise = promise.then(function(json) {
+            if (window.disableEuCookieComplianceBanner) {
+                disableEuCookieComplianceBanner();
+            }
             var data = JSON.parse(json);
             tx_sender.wallet = $scope.wallet;
             $scope.wallet.hdwallet = new GAHDWallet({
@@ -155,12 +161,14 @@ angular.module('greenWalletServices', [])
     };
     walletsService.getTransactions = function($scope) {
         var transactions_key = $scope.wallet.receiving_id + 'transactions'
-        return storage.get(transactions_key).then(function(cache) {
+        var deferreds = [addressbook.load($scope), storage.get(transactions_key)];
+        return $q.all(deferreds).then(function(results) {
+            var cache = results[1];
             return walletsService._getTransactions($scope, cache);
         });
     };
     walletsService._getTransactions = function($scope, cache) {
-        var transactions_key = $scope.wallet.receiving_id + 'transactions'
+        var transactions_key = $scope.wallet.receiving_id + 'transactions';
         var d = $q.defer();  
         try {
             cache = JSON.parse(cache) || {items: []};
@@ -251,8 +259,9 @@ angular.module('greenWalletServices', [])
                                         addresses.push(ep.social_source);
                                     }
                                 } else {
-                                    if (addresses.indexOf(ep.ad) == -1) {
-                                        addresses.push(ep.ad);
+                                    var ad = addressbook.reverse[ep.ad] || ep.ad;
+                                    if (addresses.indexOf(ad) == -1) {
+                                        addresses.push(ad);
                                     }
                                 }
                             }
@@ -282,7 +291,8 @@ angular.module('greenWalletServices', [])
                                     addresses.push(ep.social_destination);
                                 }
                             } else {
-                                addresses.push(ep.ad);
+                                var ad = addressbook.reverse[ep.ad] || ep.ad;
+                                addresses.push(ad);
                             }
                         }
                     }
@@ -372,7 +382,7 @@ angular.module('greenWalletServices', [])
         }
         return d.promise;
     };
-    walletsService.get_two_factor_code = function($scope) {
+    walletsService.get_two_factor_code = function($scope, action, data) {
         var deferred = $q.defer();
         walletsService.getTwoFacConfig($scope).then(function(twofac_data) {
             if (twofac_data.any) {
@@ -396,12 +406,13 @@ angular.module('greenWalletServices', [])
                     request_code: function() {
                         var that = this;
                         this.requesting_code = true;
-                        return tx_sender.call('http://greenaddressit.com/twofactor/request_' + this.twofactor_method).then(function() {
+                        return tx_sender.call('http://greenaddressit.com/twofactor/request_' + this.twofactor_method,
+                                action, data).then(function() {
                             that.codes_requested[that.twofactor_method] = true;
-                            this.requesting_code = false;
+                            that.requesting_code = false;
                         }, function(err) {
                             notices.makeNotice('error', err.desc);
-                            this.requesting_code = false;
+                            that.requesting_code = false;
                         });
                     }};
                 var show_modal = function() {
@@ -439,7 +450,7 @@ angular.module('greenWalletServices', [])
     walletsService.sign_and_send_tx = function($scope, data, priv_der, twofac_data, notify) {
         if ($scope) {
             var d = $q.defer();
-            walletsService.get_two_factor_code($scope).then(function(twofac_data) {
+            walletsService.get_two_factor_code($scope, 'send_tx').then(function(twofac_data) {
                 d.resolve(_sign_and_send_tx(data, priv_der, twofac_data, notify));
             }, function(err) { d.reject(err); });
             return d.promise;
@@ -569,6 +580,7 @@ angular.module('greenWalletServices', [])
     return noticesService;
 }]).factory('tx_sender', ['$q', '$rootScope', 'cordovaReady', '$http', 'notices', 'gaEvent', '$location',
         function($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location) {
+    var rng = new SecureRandom();
     ab._Deferred = $q.defer;
     var txSenderService = {};
     if (window.Electrum) {
@@ -712,9 +724,17 @@ angular.module('greenWalletServices', [])
             txSenderService.call('http://greenaddressit.com/login/get_challenge',
                     hdwallet.getBitcoinAddress().toString()).then(function(challenge) {
                 var challenge_bytes = new BigInteger(challenge).toByteArrayUnsigned();
-                var signature = new Bitcoin.ECKey(hdwallet.secret_exponent_bytes).sign(challenge_bytes);
+
+                // generate random path to derive key from - avoids signing using the same key twice
+                var max64int_hex = '';
+                while (max64int_hex.length < 16) max64int_hex += 'F';
+                var TWOPOWER64 = new BigInteger(max64int_hex, 16).add(BigInteger.ONE);
+                var random_path_hex = Bitcoin.ECDSA.getBigRandom(TWOPOWER64, rng).toString(16);
+                while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
+                var signature = new Bitcoin.ECKey(hdwallet.subpath_for_login(random_path_hex).secret_exponent_bytes).sign(challenge_bytes);
+
                 d.resolve(txSenderService.call('http://greenaddressit.com/login/authenticate',
-                        [signature.r.toString(), signature.s.toString()], logout||false).then(function(data) {
+                        [signature.r.toString(), signature.s.toString()], logout||false, random_path_hex).then(function(data) {
                     txSenderService.logged_in = data;
                     return data;
                 }));
@@ -1013,4 +1033,81 @@ angular.module('greenWalletServices', [])
         }
     };
     return storageService;
+}]).factory('addressbook', ['$rootScope', 'tx_sender', 'storage', 'crypto',
+        function($rootScope, tx_sender, storage, crypto) {
+    return {
+        items: [],
+        reverse: {},
+        new_item: undefined,
+        populate_csv: function() {
+            var csv_list = [];
+            for (var i = 0; i < this.items.length; i++) {
+                var item = this.items[i];
+                csv_list.push(item.name + ',' + (item.href || item.address));
+            }
+            this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
+        },
+        update_with_items: function(items, $routeParams) {
+            while (this.items.length) this.items.pop();
+            this.reverse = {};
+            if (!$routeParams) $routeParams = {};
+            var that = this;
+            items.sort(function(a, b) { return a[0].localeCompare(b[0]); });
+            var i = 0;
+            var is_chrome_app = window.chrome && chrome.storage;
+            angular.forEach(items, function(value) {
+                if (value[3] == 'facebook') {
+                    var has_wallet = value[4];
+                    if (!has_wallet && is_chrome_app) return;  // can't send FB messages from Chrome app
+                    var href = 'https://www.facebook.com/' + value[1];
+                    that.items.push({name: value[0], type: value[3], address: value[1], has_wallet: has_wallet, href: href});
+                } else {
+                    that.items.push({name: value[0], type: value[3], has_wallet: value[4], address: value[1]});
+                    that.reverse[value[1]] = value[0];
+                }
+                if (value[0] === $routeParams.name) $routeParams.page = Math.ceil((i+1)/20);
+                i += 1;
+            });
+            that.num_pages = Math.ceil(that.items.length / 20);
+            that.pages = [];
+            for (var i = 1; i <= that.num_pages; i++) that.pages.push(i);
+            that.populate_csv();
+        },
+        load: function($scope, $routeParams) {
+            var addressbook_key = $scope.wallet.receiving_id + 'addressbook'
+            var cache;
+            var that = this;
+            return storage.get(addressbook_key).then(function(cache) {
+                try {
+                    cache = JSON.parse(cache) || {};
+                } catch(e) {
+                    cache = {};
+                }
+                if (cache.hashed) {
+                    that.update_with_items(JSON.parse(crypto.decrypt(cache.items, $scope.wallet.cache_password)),
+                                           $routeParams);
+                    var requires_load = false;
+                } else {
+                    $rootScope.is_loading += 1;
+                    requires_load = true;
+                }
+
+                return tx_sender.call('http://greenaddressit.com/addressbook/read_all', cache.hashed).then(function(data) {
+                    if (data.items) {
+                        var items = data.items;
+                        cache.items = crypto.encrypt(JSON.stringify(data.items), $scope.wallet.cache_password);
+                        cache.hashed = data.hashed;
+                        storage.set(addressbook_key, JSON.stringify(cache));
+                        that.update_with_items(items, $routeParams);
+                    }
+                }, function(err) {
+                    notices.makeNotice('error', gettext('Error reading address book: ') + err.desc);
+                }).finally(function() {
+                    if (requires_load) {
+                        $rootScope.is_loading -= 1;
+                    }
+                });
+            });
+        }
+    };
 }]);

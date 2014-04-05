@@ -4,7 +4,7 @@
 <div submittable>
     <div class="modal-body">
         <p>You must provide 2 factor authentication code to perform this action</p>
-        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method, gauth_code: twofac.gauth_code})"><div class="control-group">
+        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method})"><div class="control-group">
             <div ng-hide="twofac.codes_requested[twofac.twofactor_method] || twofac.gauth_only">
                 <p>Please select authentication method: <br/>
                 <label clickfix ng-repeat="method in twofactor_methods">

@@ -3,7 +3,7 @@
   <head>
     <title>Wallet | GreenAddress.it</title>
     <meta charset="utf-8">
-    <meta name="description" content="La Bitcoin Wallet segura, tú tienes el control.">
+    <meta name="description" content="La Bitcoin Wallet más segura que lo pone a usted en el control.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta property="og:image" content="https://localhostfile:///android_asset/www/greenaddress.it/static/img/logos/logo-greenaddress.png" />
@@ -123,8 +123,8 @@
     <li class="menu-header"><img src="file:///android_asset/www/greenaddress.it/static/img/logos/logo-greenaddress-white.png" alt="GreenAddress.it" /> GreenAddress.it</li>
     <li path="/info"><a href="#/info">Balance</a></li>
     <li path="/transactions"><a href="#/transactions">Transacciones</a></li>
-    <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/send"><a href="#/send">Enviar dinero</a></li>
-    <li path="/receive"><a href="#/receive">Recibir dinero</a></li>
+    <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/send"><a href="#/send">Enviar Dinero</a></li>
+    <li path="/receive"><a href="#/receive">Recibir Dinero</a></li>
     <li path="/address-book"><a href="#/address-book">Libreta de Direcciones</a></li>
     <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/settings" class="menu-settings"><a href="#/settings">Configuración</a></li>
     <li><a href="" ng-click="update_now()" ng-show="update_available">Actualizar</a></li>
@@ -135,11 +135,11 @@
   <div class="menu-footer">
     <div><a href="/faq/" target="_blank">Preguntas Frecuentes</a> | <a href="/support/" target="_blank">Soporte</a></div>
     <div ng-show="wallet.last_login">
-      Ultimo sesión:
+      Último inicio de sesión:
       ((wallet.last_login.at))
       from ((wallet.last_login.ip))
       <span ng-show="wallet.last_login.country">(país: ((wallet.last_login.country)))</span>
-      <span ng-hide="wallet.last_login.country">(pais desconocido)</span>
+      <span ng-hide="wallet.last_login.country">(país desconocido)</span>
     </div>
     <div><b>Copyright &copy; GreenAddress.it 2014</b></div>
   </div>

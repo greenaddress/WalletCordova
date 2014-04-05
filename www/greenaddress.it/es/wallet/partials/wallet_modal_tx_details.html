@@ -35,7 +35,7 @@
         <tr ng-repeat="output in selected_transaction.outputs">
             <td>(( output.ad ))<br />
 
-            <a ng-hide="output.nlocktime_json || output.is_spent || !output.is_relevant" href="" ng-click="generate_nlocktime(selected_transaction, output)">requerir nLockTime</a>
+            <a ng-hide="output.nlocktime_json || output.is_spent || !output.is_relevant" href="" ng-click="generate_nlocktime(selected_transaction, output)">solicitar nLockTime</a>
             <p style="word-wrap: break-word; width: 400px;" ng-show="output.nlocktime_json">nLockTime: (( output.nlocktime_json ))</p>
             </td>
             <td>(( output.value | format_btc:wallet.unit ))</td>

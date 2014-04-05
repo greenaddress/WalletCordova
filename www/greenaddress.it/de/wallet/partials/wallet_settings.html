@@ -4,7 +4,7 @@
       Einstellungen
       <form role="form" class="form-inline pull-right" style="margin:0;">
         <div class="form-group">
-          Sprache ändern in&nbsp;
+          Sprache ändern zu&nbsp;
           <select ng-model="settings.language">
             <option value="de">Deutsch</option>
             <option value="en">English</option>
@@ -61,7 +61,7 @@
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">Benachrichtigungen</div>
-    <div class="sub-header-desc">Benachrichtigungen bieten höhere Sicherheit wenn eingerichtet für ausgehende und für aktuellste Informationen wenn eingerichtet für eingehende</div>
+    <div class="sub-header-desc">Benachrichtigungen bieten höhere Sicherheit für ausgehende Transaktionen, und aktuellste Informationen über eingehende Transaktionen</div>
   </div>
   <div class="col-md-9">
     <form role="form" class="form-inline">
@@ -106,7 +106,7 @@
       </div>
       <div ng-hide="wallet.twofac_email_switch">
         <hr>
-        <small class="label label-info" style="white-space: normal"><strong>BEACHTE</strong>: Sie müssen Email Zwei-Faktor-Authentifizierungen aktiviert haben für diese Funktion.</small>
+        <small class="label label-info" style="white-space: normal"><strong>HINWEIS</strong>: Für diese Funktion muss Zwei-Faktor-Authentifizierung via Email aktiviert sein.</small>
       </div>
     </form>
   </div>
@@ -115,7 +115,7 @@
 <div class="row" ng-controller="TwoFactorSetupController">
   <div class="col-md-3">
     <div class="sub-header">Zwei-Faktor-Authentifikation</div>
-    <div class="sub-header-desc">Richten Sie eine oder alle Zwei-Faktor-Authentifikationen ein: Sie können wählen nach Bedarf!</div>
+    <div class="sub-header-desc">Eine oder alle Zwei-Faktor-Authentifikationen einrichten, diese können dann nach Bedarf gewählt werden!</div>
   </div>
   <div class="col-md-9" submittable>
     <form role="form" class="form-horizontal" ng-submit="submit_email()">
@@ -141,7 +141,7 @@
             </div>
             <div ng-show="(twofactor_state.toggling_email == 'enabling' || twofactor_state.toggling_email == 'initial') && twofactor_state.email_set" class="col-sm-9">
                 <p>
-                    You need to provide one code from your email to set up the two factor authentication.<br>                    Please open your email and provide the code.
+                    Sie müssen einen Code aus Ihrer Email eingeben um die Zwei-Faktor-Authentifizierung zu aktivieren.<br>Bitte öffnen Sie Ihre Email und geben Sie den Code ein.
                 </p>
                 <label class="col-sm-4 control-label" for="wallet-email-conf-code">Email Code</label>
                 <div class="col-sm-7">
@@ -163,12 +163,12 @@
             <label class="switch col-sm-4">
                 <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_gauth_switch" ng-disabled="twofactor_state.toggling_gauth">
                 <span class="switch"></span>
-                Google Authenticator
+                Aktiviere Google Authenticator
             </label>
             <div ng-show="twofactor_state.toggling_gauth == 'enabling' || twofactor_state.toggling_gauth == 'initial'" class="col-sm-8">
-                <p>You need to provide one Google Authenticator code to set up the two factor authentication.<br>                    Please scan the QR code below, and provide the code.
+                <p>Sie müssen einen Google Authenticator-Code angeben um die Zwei-Faktor-Authentifikation einzurichten.<br>Bitte scannen Sie den QR-Code mit Google Auth, und geben Sie den erhaltenen Code ein.
                 </p>
-                <div class="text-center"><a href="" class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR Code</a></div>
+                <div class="text-center"><a href="" class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR-Code</a></div>
                 <label class="col-sm-2 control-label" for="wallet-gauth-conf-code">Code</label>
                 <div class="col-sm-9">
                     <div class="input-group">
@@ -206,9 +206,9 @@
                 </div>
             </div>
             <div ng-show="(twofactor_state.toggling_sms == 'enabling' || twofactor_state.toggling_sms == 'initial') && twofactor_state.sms_set" class="col-sm-9">
-                <p>You need to provide one SMS code to set up the two factor authentication.<br>                    Please check your phone and provide the code.
+                <p>Sie müssen einen SMS-Code eingeben um die Zwei-Faktor-Authentifizierung einzurichten.<br>Bitte prüfen Sie Ihr Telefon und geben Sie den Code ein.
                 </p>
-                <label class="col-sm-4 control-label" for="wallet-sms-conf-code">SMS Code</label>
+                <label class="col-sm-4 control-label" for="wallet-sms-conf-code">SMS-Code</label>
                 <div class="col-sm-7">
                     <div class="input-group">
                         <input ng-model="twofactor_state.twofac_sms_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.sms_set"
@@ -245,9 +245,9 @@
                 </div>
             </div>
             <div ng-show="(twofactor_state.toggling_phone == 'enabling' || twofactor_state.toggling_phone == 'initial') && twofactor_state.phone_set" class="col-sm-9">
-                <p>You need to provide one phone code to set up the two factor authentication.<br>                    Please check your phone and provide the code.
+                <p>Sie müssen einen Code bereit stellen um die Zwei-Faktor-Authentifikation einzurichten.<br>Bitte prüfen Sie Ihr Telefon und geben Sie den Code ein.
                 </p>
-                <label class="col-sm-4 control-label" for="wallet-phone-conf-code">Telefon Code</label>
+                <label class="col-sm-4 control-label" for="wallet-phone-conf-code">Telefon-Code</label>
                 <div class="col-sm-7">
                     <div class="input-group">
                         <input ng-model="twofactor_state.twofac_phone_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.phone_set"
@@ -267,7 +267,7 @@
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">Ausgabegrenzen</div>
-    <div class="sub-header-desc">Setzen Sie Grenzen unter denen sie nicht nach Zwei-Faktor-Authentifikation gefragt werden für super-nutzerfreundliche Zahlungen.</div>
+    <div class="sub-header-desc">Setzen Sie Grenzen unter denen Sie nicht nach Zwei-Faktor-Authentifikation gefragt werden, für super-nutzerfreundliche Zahlungen.</div>
   </div>
   <div class="col-md-9">
     <form role="form" class="form-horizontal">
@@ -322,7 +322,7 @@
       <!--
       <hr>
       <div class="form-group">
-        <label class="control-label col-sm-3">Verzögere Bezahlung über</label>
+        <label class="control-label col-sm-3">Verzögere Zahlungen über</label>
         <div class="col-sm-4">
           <input type="text" class="form-control" placeholder="Betrag">
         </div>
@@ -341,7 +341,7 @@
 <div ng-controller="QuickLoginController" class="row" ng-show="!settings.noLocalStorage">
   <div class="col-md-3">
     <div class="sub-header">Schneller Login</div>
-    <div class="sub-header-desc">Erlaube eine einfache PIN um schnell auf Ihre Brieftasche von diesem Gerät zuzugreifen.</div>
+    <div class="sub-header-desc">Einfache PIN einrichten, um schnell auf Ihre Brieftasche von diesem Gerät aus zuzugreifen.</div>
   </div>
   <div class="col-md-9">
     <div ng-show="quicklogin.loaded">
@@ -349,16 +349,16 @@
         <label class="switch">
           <input type="checkbox" class="switch" ng-model="quicklogin.enabled" ng-disabled="quicklogin.started_setting_pin">
           <span class="switch"></span>
-            Erlaube schnelles Anmelden von diesem Gerät
+            Schnelle Anmeldung auf diesem Gerät aktivieren
         </label>
         <hr ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
         <div class="form-group" ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
-          <label ng-show="quicklogin.enabled" class="control-label col-sm-3">Ändere PIN Nummer</label>
-          <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">Setze PIN Nummer</label>
+          <label ng-show="quicklogin.enabled" class="control-label col-sm-3">PIN-Nummer ändern</label>
+          <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">PIN-Nummer setzen</label>
           <div class="col-sm-4">
             <input type="tel" class="form-control" placeholder="Vierstellige Zahl"
                    maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" ng-model="quicklogin.new_pin">
-            <input type="submit" class="btn btn-primary" ng-show="quicklogin.new_pin" value="Bestätige" ng-disabled="quicklogin.setting_pin" />
+            <input type="submit" class="btn btn-primary" ng-show="quicklogin.new_pin" value="Bestätigen" ng-disabled="quicklogin.setting_pin" />
           </div>
         </div>
         <hr>
@@ -366,13 +366,13 @@
         <!-- 
         <div class="form-group">
           <select id="quick-login-select" ng-model="quicklogin.selected_device" ng-options="device.device_name for device in quicklogin.devices"></select>
-          <label for="pin" class="col-sm-3 control-label">setze PIN als</label>
+          <label for="pin" class="col-sm-3 control-label">PIN setzen auf</label>
           <div class="col-sm-4">
-            <input id="pin" class="form-control" style="width:120px;" placeholder="PIN Nummer" type="tel" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" maxlength="4" ng-model="quicklogin.new_pin" />
+            <input id="pin" class="form-control" style="width:120px;" placeholder="PIN-Nummer" type="tel" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" maxlength="4" ng-model="quicklogin.new_pin" />
           </div>
           <div class="col-sm-4">
             <a href="" ng-click="remove_pin()" class="noanimate btn btn-danger" ng-class="{disabled: quicklogin.removing_pin}" ng-hide="quicklogin.selected_device.is_current && quicklogin.new_pin">Entferne</a>
-            <input type="submit" class="btn btn-primary" ng-show="quicklogin.selected_device.is_current && quicklogin.new_pin" value="Bestätige" ng-disabled="quicklogin.setting_pin" />
+            <input type="submit" class="btn btn-primary" ng-show="quicklogin.selected_device.is_current && quicklogin.new_pin" value="Bestätigen" ng-disabled="quicklogin.setting_pin" />
           </div>
         </div>
         -->
@@ -383,8 +383,8 @@
 <hr class="double">
 <div class="row">
   <div class="col-md-3">
-    <div class="sub-header">Verbinde deine eigenen Kontos von anderen Diensten</div>
-    <div class="sub-header-desc">Erlaube soziale Zahlungen und Nur-Schauen-Anmeldungen auf Ihre Brieftasche über Ihre Kontos bei anderen Diensten.</div>
+    <div class="sub-header">Verknüpfen Sie Ihre eigenen Konten von anderen Diensten</div>
+    <div class="sub-header-desc">Erlauben von Sozialen Zahlungen und Nur-Schauen-Anmeldungen auf Ihre Brieftasche über Ihre Konten bei anderen Diensten.</div>
   </div>
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
@@ -403,7 +403,7 @@
         <span class="switch"></span>
       </label>
       <div ng-hide="!thirdparty.customstate.enabled && !thirdparty.toggling_custom && !thirdparty.customstate.username">
-        <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="text" ng-model="thirdparty.customstate.username" placeholder="Nutzername" />
+        <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="text" ng-model="thirdparty.customstate.username" placeholder="Benutzername" />
         <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="password" ng-model="thirdparty.customstate.password" placeholder="Passwort" />
         <input type="submit" class="btn btn-sm btn-default" value="(( thirdparty.customstate.save_button_label ))" ng-show="thirdparty.customstate.username && thirdparty.customstate.password" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" ng-click="thirdparty.customstate.save()" />
       </div>
@@ -418,11 +418,12 @@
     </form>
   </div>
 </div>
+
 <hr class="double">
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">Zeige Mnemonikum</div>
-    <div class="sub-header-desc">Zeige Ihr Mnemonikum zur Kontowiederherstellung oder zum Klonen auf anderen Geräten.</div>
+    <div class="sub-header-desc">Zeige Mnemonikum zur Kontowiederherstellung oder Klonen auf anderen Geräten.</div>
   </div>
   <div class="col-md-9">
     <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()">Zeige Mnemonikum</button>
@@ -435,13 +436,13 @@
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">nLockTime</div>
-    <div class="sub-header-desc">nLockTime-Transaktionen erlauben es Ihnen Ihre Einlagen wieder zu erhalten nach einer im Voraus fest gelegten Anzahl von Blocks auch ohne GreenAddress.it's Signatur</div>
+    <div class="sub-header-desc">nLockTime-Transaktionen erlauben es Ihnen, Ihre Einlagen nach einer im Voraus festgelegten Zeit auch ohne GreenAddress.it's Signatur zurückzuerhalten</div>
   </div>
   <div class="col-md-9">
     <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
       <div class="form-group">
         <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac_email_switch}">
-          <label for="id_nlocktime_blocks" class="control-label">Erlaube Guthaben einzulösen ohne der Signatur von GreenAddress.it nach</label>
+          <label for="id_nlocktime_blocks" class="control-label">Guthaben einlösbar ohne Signatur von GreenAddress.it nach</label>
           <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac_email_switch" />
           Blöcken
           <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
@@ -449,10 +450,10 @@
         </div>
         <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac_email_switch">
           <hr>
-          <small class="label label-info" style="white-space: normal"><strong>BEACHTE</strong>: Benachrichtungen sowohl für ausgehende als auch eingehende Transaktionen müssen aktiviert sein für diese Funktion.</small>
+          <small class="label label-info" style="white-space: normal"><strong>HINWEIS</strong>: Für diese Funktion müssen Benachrichtigungen sowohl für ausgehende als auch eingehende Transaktionen aktiviert sein.</small>
         </div>
         <hr>
-        <a href="" class="btn btn-default btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Zeige bald ablaufende Ausgaben</a>
+        <a href="" class="btn btn-default btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Zeige bald ablaufende Ausgänge</a>
       </div>
     </form>
   </div>

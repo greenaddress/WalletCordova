@@ -238,7 +238,7 @@ angular.module('greenWalletSettingsControllers',
             if (oldValue) { // disabling
                 $scope.twofactor_state['toggling_'+type] = 'disabling';
                 $scope.twofactor_state.twofactor_type = type;
-                wallets.get_two_factor_code($scope).then(function(twofac_data) {
+                wallets.get_two_factor_code($scope, 'disable_2fa', {method: type}).then(function(twofac_data) {
                     return $scope.disable_2fa(type, twofac_data)
                 }).catch(function() {
                     $scope.twofactor_state['toggling_'+type] = false;
@@ -247,9 +247,14 @@ angular.module('greenWalletSettingsControllers',
             }
             // step 1 - just show the inputs
             $scope.twofactor_state['toggling_'+type] = 'old_2fa';
-            wallets.get_two_factor_code($scope).then(function(twofac_data) {
-                $scope.twofactor_state['toggling_'+type] = 'initial';
-                $scope.twofac_data = twofac_data;
+            wallets.get_two_factor_code($scope, 'enable_2fa', {method: type}).then(function(twofac_data) {
+                return tx_sender.call('http://greenaddressit.com/twofactor/request_proxy', type, twofac_data).then(function(data) {
+                    $scope.twofactor_state['toggling_'+type] = 'initial';
+                    $scope.twofac_data = {'method': 'proxy', 'code': data};
+                }, function(err) {
+                    notices.makeNotice('error', err.desc);
+                    return $q.reject(err);
+                });
             }).catch(function() {
                 $scope.twofactor_state['toggling_'+type] = false;
             });
@@ -444,6 +449,13 @@ angular.module('greenWalletSettingsControllers',
             });
         }
     });
+    $scope.enable_link_handler = function() {
+        try {
+            navigator.registerProtocolHandler('bitcoin', 'https://'+window.location.hostname+'/uri/?uri=%s', 'GreenAddress.It');
+        } catch(e) {
+            notices.makeNotice('error', e.toString());
+        }
+    }
     $scope.show_mnemonic = function() {
         gaEvent('Wallet', 'ShowMnemonic');
         $modal.open({
@@ -451,82 +463,16 @@ angular.module('greenWalletSettingsControllers',
             scope: $scope
         });
     };
-}]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', 'crypto', '$routeParams', 'storage',
-        function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, crypto, $routeParams, storage) {
+}]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', '$routeParams', 'addressbook',
+        function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, $routeParams, addressbook) {
     // dontredirect=false here because address book is now outside settings,
     // though it's also used from inside SendController, hence the $location.url() check
     if (!wallets.requireWallet($scope, $location.url().indexOf('/address-book') != -0)) return;
     $routeParams.page = $routeParams.page || 1;
     $routeParams.page = parseInt($routeParams.page);
     $scope.route = $routeParams;
-    var addressbook = $scope.addressbook = {
-        items: [],
-        new_item: undefined,
-        populate_csv: function() {
-            var csv_list = [];
-            for (var i = 0; i < this.items.length; i++) {
-                var item = this.items[i];
-                csv_list.push(item.name + ',' + (item.href || item.address));
-            }
-            this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
-        }
-    };
-    var update_addressbook = function(items) {
-        while (addressbook.items.length) addressbook.items.pop();
-        items.sort(function(a, b) { return a[0].localeCompare(b[0]); });
-        var i = 0;
-        var is_chrome_app = window.chrome && chrome.storage;
-        angular.forEach(items, function(value) {
-            if (value[3] == 'facebook') {
-                var has_wallet = value[4];
-                if (!has_wallet && is_chrome_app) return;  // can't send FB messages from Chrome app
-                var href = 'https://www.facebook.com/' + value[1];
-                addressbook.items.push({name: value[0], type: value[3], address: value[1], has_wallet: has_wallet, href: href});
-            } else {
-                addressbook.items.push({name: value[0], type: value[3], has_wallet: value[4], address: value[1]});
-            }
-            if (value[0] == $routeParams.name) $routeParams.page = Math.ceil((i+1)/20);
-            i += 1;
-        });
-        addressbook.num_pages = Math.ceil(addressbook.items.length / 20);
-        addressbook.pages = [];
-        for (var i = 1; i <= addressbook.num_pages; i++) addressbook.pages.push(i);
-        addressbook.populate_csv();
-    };
-    var addressbook_key = $scope.wallet.receiving_id + 'addressbook'
-    var cache;
-    storage.get(addressbook_key).then(function(cache) {
-        try {
-            cache = JSON.parse(cache) || {};
-        } catch(e) {
-            cache = {};
-        }
-        if (cache.hashed) {
-            update_addressbook(JSON.parse(crypto.decrypt(cache.items, $scope.wallet.cache_password)));
-            var requires_load = false;
-        } else {
-            $rootScope.is_loading += 1;
-            requires_load = true;
-        }
-
-        tx_sender.call('http://greenaddressit.com/addressbook/read_all', cache.hashed).then(function(data) {
-            if (data.items) {
-                var items = data.items;
-                cache.items = crypto.encrypt(JSON.stringify(data.items), $scope.wallet.cache_password);
-                cache.hashed = data.hashed;
-                storage.set(addressbook_key, JSON.stringify(cache));
-                update_addressbook(items);
-            }
-        }, function(err) {
-            notices.makeNotice('error', gettext('Error reading address book: ') + err.desc);
-        }).finally(function() {
-            if (requires_load) {
-                $rootScope.is_loading -= 1;
-            }
-        });
-    });
-    
-    
+    $scope.addressbook = addressbook;
+    addressbook.load($scope, $routeParams);
     $scope.add = function() {
         gaEvent('Wallet', 'AddressBookNewItemStarted');
         addressbook.new_item = {name: '', address: '', type: 'address'};
@@ -544,6 +490,7 @@ angular.module('greenWalletSettingsControllers',
             addressbook.items = filtered_items;
             addressbook.num_pages = Math.ceil(addressbook.items.length / 20);
             addressbook.populate_csv();
+            $scope.wallet.refresh_transactions();  // update sender/recipient names
         });
     };
     $scope.rename = function(address, name) {
@@ -554,6 +501,7 @@ angular.module('greenWalletSettingsControllers',
                     value.renaming = false;
                 }
             });
+            $scope.wallet.refresh_transactions();  // update sender/recipient names
         }, function(err) {
             gaEvent('Wallet', 'AddressBookItemRenameFailed', err.desc);
             notices.makeNotice('error', 'Error renaming item: ' + err.desc);
@@ -580,6 +528,7 @@ angular.module('greenWalletSettingsControllers',
                 
                 addressbook.new_item = undefined;
                 notices.makeNotice('success', gettext('New item saved'));
+                $scope.wallet.refresh_transactions();  // update sender/recipient names
                 // go to first page - it should refresh the view:
                 $location.path('/address-book/name_'+encodeURIComponent(item.name));
             }

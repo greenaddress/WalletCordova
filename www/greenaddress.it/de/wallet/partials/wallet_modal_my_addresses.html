@@ -2,7 +2,7 @@
 
     <p ng-show="!receive.my_addresses.length">Keine Addressen gefunden</p>
     <table class="table" ng-show="receive.my_addresses.length">
-        <tr><th>Addresse</th><th>anzahl der Transaktionen</th></tr>
+        <tr><th>Adresse</th><th>Anzahl der Transaktionen</th></tr>
         <tr ng-repeat="address in receive.my_addresses">
             <td>(( address.ad ))</td>
             <td>(( address.num_tx ))</td>

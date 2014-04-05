@@ -1,11 +1,11 @@
 <div class="alert alert-error" ng-show="nfc_error">
-    Es gab ein Problem beim schreiben auf den NFC-Tag: (( nfc_error.reason ))
+    Es gab ein Problem beim Schreiben des NFC-Tags: (( nfc_error.reason ))
 </div>
 <div class="modal-body text-center" ng-show="(( !nfc_init_error && nfc_init_succeeded < 3 ))">
     <p>Initialisiere NFC Tags Listener...</p>
 </div>
 <div class="modal-body text-center" ng-show="(( nfc_init_succeeded == 3 ))">
-    <p>Bitte halten Sie Ihr(e) Tag(s) nahe am Gerät um Ihre Brieftasche zu schreiben!</p>
+    <p>Bitte halten Sie Ihr(e) Tag(s) nah an das Gerät um Ihre Brieftasche zu schreiben!</p>
     <p>Tags geschrieben: (( num_tags_written ))</p>
     <p>Tags formatiert: (( num_tags_formatted ))</p>
 </div>

@@ -16,12 +16,12 @@
 
 <div ng-show="twofactor_state.twofactor_type == 'gauth'">
     <p class="well" ng-show="twofactor_state.twofac_gauth_switch">
-        Google Authentikator ist eingerichtet
+        Google Authenticator ist aktiviert.
     </p>
     <div ng-show="!twofactor_state.twofac_gauth_switch" ng-if="twofactor_state.google_secret_url">
         <div class="row">
             <div class="col-sm-4">
-                <dt>1) Installiere App</dt>
+                <dt>1) App installieren</dt>
                 <dd>
                     Installieren Sie die App auf Ihrem Gerät. Für Android auf <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google play</a> für iOS auf <a href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8" target="_blank">Apple Store.</a>
                 </dd>
@@ -29,14 +29,14 @@
             <div class="col-sm-4">
                 <dt>2) Konto hinzufügen</dt>
                 <dd>
-                    Fügen Sie ein Konto zur Google Authenticator App hinzu und scannen Sie den QR code oder geben Sie den genauen Code manuell ein.
-                    <div class="text-center"><button class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR Code</button></div>
+                    Fügen Sie ein Konto zur Google Authenticator App hinzu und scannen Sie den QR-Code oder geben Sie den Code manuell ein.
+                    <div class="text-center"><button class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR-Code</button></div>
                 </dd>
             </div>
             <div class="col-sm-4">
                 <dt>3) Code bestätigen</dt>
                 <dd>
-                    Google Authenticator zeigt nun eine Zahl an, die Sie unten eingeben müssen um die Zwei-Faktor-Authentifikation zu vervollständigen.
+                    Google Authenticator zeigt nun eine Zahl an. Geben Sie diese unten ein, um die Zwei-Faktor-Authentifikation zu vervollständigen.
                 </dd>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="col-sm-12">
                 <form role="form" class="form-horizontal" ng-submit="enable_twofac_gauth()">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="wallet-google-conf-code">Authenticator Code</label>
+                        <label class="col-sm-4 control-label" for="wallet-google-conf-code">Authenticator-Code</label>
                         <div class="col-sm-7">
                             <div class="input-group">
                                 <input ng-model="twofactor_state.twofac_gauth_code" class="form-control pin" type="tel" mask-input
@@ -87,7 +87,7 @@
         </div>
         <div ng-show="twofactor_state.email_set">
             <p>
-                Sie müssen einen Code von Ihrer Email eingeben um die Zwei-Faktor-Authentifizierung zu aktivieren<br>Bitte öffnen Sie Ihre Email und geben Sie den Code ein.
+                Sie müssen einen Code aus Ihrer Email eingeben um die Zwei-Faktor-Authentifizierung zu aktivieren<br>Bitte öffnen Sie Ihre Email und geben Sie den Code ein.
             </p>
             <form role="form" class="form-horizontal" ng-submit="enable_twofac_email()" style="margin:25px 0;">
                 <div class="form-group">
@@ -128,11 +128,11 @@
             </form>
         </div>
         <div ng-show="twofactor_state.sms_set">
-            <p>Sie müssen einen SMS Code eingeben um die Zwei-Faktor-Authentifizierung einzurichten.<br>                Bitte prüfen Sie Ihr Handy und geben Sie den Code ein.
+            <p>Sie müssen einen SMS Code eingeben um die Zwei-Faktor-Authentifizierung einzurichten.<br>Bitte prüfen Sie Ihr Telefon und geben Sie den Code ein.
             </p>
             <form role="form" class="form-horizontal" ng-submit="enable_twofac_sms()" style="margin:25px 0;">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="wallet-sms-conf-code">SMS Code</label>
+                    <label class="col-sm-4 control-label" for="wallet-sms-conf-code">SMS-Code</label>
                     <div class="col-sm-7">
                         <div class="input-group">
                             <input ng-model="twofactor_state.twofac_sms_code" class="form-control pin" type="tel" mask-input required="required"
@@ -169,11 +169,11 @@
             </form>
         </div>
         <div ng-show="twofactor_state.phone_set">
-            <p>Sie müssen einen Code bereit stellen um die Zwei-Faktor-Authentifikation einzurichten.<br>                Bitte prüfen Sie Ihre Telefon und geben Sie den Code ein.
+            <p>Sie müssen einen Code angeben um die Zwei-Faktor-Authentifikation einzurichten.<br>               Bitte prüfen Sie Ihr Telefon und geben Sie den Code ein.
             </p>
             <form role="form" class="form-horizontal" ng-submit="enable_twofac_phone()" style="margin:25px 0;">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="wallet-phone-conf-code">Telefon Code</label>
+                    <label class="col-sm-4 control-label" for="wallet-phone-conf-code">Telefon-Code</label>
                     <div class="col-sm-7">
                         <div class="input-group">
                             <input ng-model="twofactor_state.twofac_phone_code" class="form-control pin" type="tel" mask-input required="required"

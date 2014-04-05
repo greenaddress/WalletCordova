@@ -1,7 +1,7 @@
 <div class="title">Vous allez envoyer 
   <span ng-show="wallet.send_to_receiving_id_amount">((wallet.send_to_receiving_id_amount|format_btc:'mBTC'))</span><span ng-hide="wallet.send_to_receiving_id_amount">Bitcoin</span>!
   <div ng-show="wallet.send_to_receiving_id.indexOf('GA')==0">
-    <br><small>Merci de vous connecter, de créer un nouveau porte-monnaie, ou cliquez ci-dessous pour voir un bitcoin : URI:</small></div>
+    <br><small>Merci de vous connecter, de créer un nouveau porte-monnaie, ou cliquez ci-dessous pour voir l'URL Bitcoin : </small></div>
   <div ng-hide="wallet.send_to_receiving_id.indexOf('GA')==0">
     <br><small>Connectez-vous, créez un nouveau porte-monnaie ou utilisez l'adresse ci-dessous :</small></div>
 </div>

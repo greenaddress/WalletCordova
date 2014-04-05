@@ -38,7 +38,7 @@
 				</tr>
 				<tr ng-class="{danger: item.name == route.name}" submittable addressbook-item ng-repeat="item in addressbook.items | startFrom:(route.page-1)*20 | limitTo:20"></tr>
 				<tr ng-hide="addressbook.items.length || is_loading">
-					<td colspan="5"><small class="text-muted"><i>Tu libreta de direcciones esta vacía</i></small></td>
+					<td colspan="5"><small class="text-muted"><i>Su libreta de direcciones esta vacía</i></small></td>
 				</tr>
 			</tbody>
 		</table>

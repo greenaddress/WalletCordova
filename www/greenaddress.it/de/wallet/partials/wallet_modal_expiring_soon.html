@@ -1,12 +1,12 @@
 <div class="modal-header">
-    Bald ablaufende Ausgaben
+    Bald ablaufende Ausgänge
 </div>
 
 <div class="modal-body">
 
     <p ng-show="!soon_nlocktimes.list.length">Keine aktiven nLockTime-Transaktionen gefunden</p>
     <table class="table break-all" ng-show="soon_nlocktimes.list.length">
-        <tr><th>Transaktionshash, Ausgabennummer</th><th>nLockTime</th></tr>
+        <tr><th>Transaktionshash, Ausgangsnummer</th><th>nLockTime</th></tr>
         <tr ng-repeat="nlocktime in soon_nlocktimes.list">
             <td>(( nlocktime.txhash )), (( nlocktime.output_n ))</td>
             <td>(( nlocktime.nlocktime_at ))<br/>(<small>(( soon_nlocktimes.estimate_days(nlocktime.nlocktime_at) ))</small>)</td>

@@ -3,9 +3,6 @@ angular.module('greenWalletInfoControllers',
 .controller('InfoController', ['$scope', 'wallets', 'tx_sender', '$modal', '$q', 'notices', '$location', 'gaEvent', 'cordovaReady',
         function InfoController($scope, wallets, tx_sender, $modal, $q, notices, $location, gaEvent, cordovaReady) {
     if(!wallets.requireWallet($scope)) return;
-    try {
-        navigator.registerProtocolHandler('bitcoin', 'https://'+window.location.hostname+'/uri/?uri=%s', 'GreenAddress.It');
-    } catch(e) {}
     
     $scope.wallet.hidden = false;
     if ($scope.wallet.signup) {

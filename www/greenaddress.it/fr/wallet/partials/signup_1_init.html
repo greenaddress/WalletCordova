@@ -21,7 +21,7 @@
                 <hr>
                 <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Votre passphrase mnémonique</div>
                 <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
-                <div class="mnemonic info" ng-hide="signup.mnemonic">Generating mnemonic, please wait...</div>
+                <div class="mnemonic info" ng-hide="signup.mnemonic">Génération de la passphrase mnémonique</div>
                 <hr>
                 <p>Recopiez ou imprimez ces mots et stockez-les dans un endroit sûr.  <b>Nous ne stockons aucune des informations ci-dessus, nous ne pourrons pas vous aider à les retrouver !</b></p>
             </div>
@@ -41,7 +41,7 @@
 
             <div class="create-modal-footer" ng-show="signup.unexpected_error">
                 <a class="btn btn-danger login-submit" href="" ng-click="signup.try_again()">
-                    Error:  (( signup.unexpected_error )).  Click to try again
+                    Erreur :  (( signup.unexpected_error )). Cliquez pour recommencer 
                 </a>
             </button>
             </div>

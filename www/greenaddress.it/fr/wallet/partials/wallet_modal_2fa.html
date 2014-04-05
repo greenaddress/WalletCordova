@@ -4,7 +4,7 @@
 <div submittable>
     <div class="modal-body">
         <p>Vous devez renseigner le code d'authentification deux-facteurs pour effecter cette action</p>
-        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method, gauth_code: twofac.gauth_code})"><div class="control-group">
+        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method})"><div class="control-group">
             <div ng-hide="twofac.codes_requested[twofac.twofactor_method] || twofac.gauth_only">
                 <p>Merci de sélectionner une méthode d'authentification: <br/>
                 <label clickfix ng-repeat="method in twofactor_methods">
@@ -12,10 +12,10 @@
                     (( twofactor_method_names[method] ))<br/>
                 </label>
             </div>
-            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Please enter your (( twofactor_method_names[twofac.twofactor_method] )) authentication code which we have just sent to you.</p>
+            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Entrez votre adresse email(( twofactor_method_names[twofac.twofactor_method] )) code que nous venons de vous envoyer.</p>
             
             <div class="form-inline" ng-show="twofac.twofactor_method == 'gauth' || twofac.codes_requested[twofac.twofactor_method]">
-                <p>Please enter the  (( twofactor_method_names[twofac.twofactor_method] ))  code:
+                <p>Entrez le  (( twofactor_method_names[twofac.twofactor_method] )) code :
                 <input clickfix focus-on="twoFactorModal" class="form-control pin" type="tel" mask-input required="required"
                    maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" ng-model="twofac.twofactor_code" /></p>
             </div>

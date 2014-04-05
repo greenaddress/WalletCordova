@@ -125,10 +125,10 @@
     <li path="/transactions"><a href="#/transactions">Transaktionen</a></li>
     <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/send"><a href="#/send">Geld senden</a></li>
     <li path="/receive"><a href="#/receive">Geld empfangen</a></li>
-    <li path="/address-book"><a href="#/address-book">Addressenbuch</a></li>
+    <li path="/address-book"><a href="#/address-book">Adressbuch</a></li>
     <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/settings" class="menu-settings"><a href="#/settings">Einstellungen</a></li>
     <li><a href="" ng-click="update_now()" ng-show="update_available">Jetzt aktualisieren</a></li>
-    <li><a href="" ng-click="logout()">Logout</a></li>
+    <li><a href="" ng-click="logout()">Abmelden</a></li>
     <li class="menu-balance visible-xs"><i class="glyphicon glyphicon-stats"></i> ((wallet.final_balance|format_btc:wallet.unit)) / ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</li>
     <li class="menu-balance visible-sm"><i class="glyphicon glyphicon-stats"></i> ((wallet.final_balance|format_btc:wallet.unit)) / ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</li>
   </ul>

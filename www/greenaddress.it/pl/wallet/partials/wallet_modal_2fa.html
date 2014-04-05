@@ -4,7 +4,7 @@
 <div submittable>
     <div class="modal-body">
         <p>Aby tego dokonać musisz podać kod dwuetapowej autoryzacji</p>
-        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method, gauth_code: twofac.gauth_code})"><div class="control-group">
+        <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method})"><div class="control-group">
             <div ng-hide="twofac.codes_requested[twofac.twofactor_method] || twofac.gauth_only">
                 <p>Proszę wybierz metodę autoryzacji: <br/>
                 <label clickfix ng-repeat="method in twofactor_methods">

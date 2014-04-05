@@ -18,7 +18,7 @@
           <a href="" ng-show="details" ng-click="details(transaction)">(( transaction.description ))</a>
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
-              <span class="label label-default" ng-show="transaction.confirmations == 0">no confirmada</span>
+              <span class="label label-default" ng-show="transaction.confirmations == 0">no confirmado</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) confirmaciones</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;

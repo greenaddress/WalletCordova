@@ -11,7 +11,7 @@
             </div>
 
             <div class="create-modal-body">
-                <div class="title">Acceso rapido y seguro a tu Wallet<br><small>Para obtener acceso rapido y seguro desde este dispositivo, configure tu PIN</small></div>
+                <div class="title">Acceso rápido y seguro a su Wallet<br><small>Para obtener acceso rápido y seguro desde este dispositivo, configure su PIN</small></div>
                 <hr>
                 <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
                     <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
@@ -26,26 +26,26 @@
                 </form>
                 <hr>
                 <p>
-                El PIN le permite un inicio de sesión rápido manteniendo altos estandares de seguridad.                    El PIN esta asociado a una clave random AES 256 bit, que es eliminada luego de 3 intentos fallidos, tras lo cual debera ingresar nuevamente la clave mnemonica completa. Simple, rápido y seguro, pruebelo!
+                El PIN le permite un inicio de sesión rápido manteniendo altos estándares de seguridad. El PIN está asociado a una clave aleatoria de AES 256 bit, que es eliminada luego de 3 intentos fallidos, tras lo cual debera ingresar nuevamente el indicio de clave completo. Simple, rápido y seguro, ¡pruébelo!
                 </p>
             </div>
 
             <div class="create-modal-footer">
                 <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress < 100">
-                    Generando las llaves de tu Wallet, por favor espere ... (( signup.seed_progress ))%
+                    Generando las claves de tu Wallet, por favor espere ... (( signup.seed_progress ))%
                 </span>
                 <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
-                    Por favor aguarde, iniciando sesión
+                    Por favor espere, iniciando sesión...
                 </span>
                 <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
-                    Ir a mi Wallet y saltear todo esto!
+                    ¡Ir a mi Wallet y saltear todo esto!
                 </a>
                 <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100}">
                     <span ng-hide="signup.setting_pin" ng-class="{disabled: !signup.logged_in || signup.login_failed}">PIN configurado, ir al paso 3</span>
-                    <span ng-show="signup.setting_pin">Configurando el PIN</span>
+                    <span ng-show="signup.setting_pin">Configurando el PIN...</span>
                 </a>
                 <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
-                    <span>Salter PIN y continuar</span>
+                    <span>Saltear configuración de PIN y continuar</span>
                 </a>
             </div>
 

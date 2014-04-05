@@ -1,12 +1,12 @@
 <div class="modal-header">
-    Las Salidas estan por expirar
+    Las salidas están por expirar
 </div>
 
 <div class="modal-body">
 
-    <p ng-show="!soon_nlocktimes.list.length">No hay transacciones de nLockTime</p>
+    <p ng-show="!soon_nlocktimes.list.length">No hay transacciones de nLockTime activas</p>
     <table class="table break-all" ng-show="soon_nlocktimes.list.length">
-        <tr><th>Hash de transacción, número de Salida</th><th>nLockTime</th></tr>
+        <tr><th>Hash de transacción, número de salida</th><th>nLockTime</th></tr>
         <tr ng-repeat="nlocktime in soon_nlocktimes.list">
             <td>(( nlocktime.txhash )), (( nlocktime.output_n ))</td>
             <td>(( nlocktime.nlocktime_at ))<br/>(<small>(( soon_nlocktimes.estimate_days(nlocktime.nlocktime_at) ))</small>)</td>
