@@ -68,12 +68,15 @@
             <div class="col-sm-10">
               <div class="input-group">
                 <input ng-model="receive.privkey_wif" class="form-control" type="text" id="id_privkey_wif" placeholder="Enter a private key to sweep here">
-                
                 <span class="input-group-btn">
-                  <a class="btn btn-default" ng-click="receive.read_wif_qr_code()"><i class="glyphicon glyphicon-qrcode"></i> Scan QR</a>
+                  <span class="btn btn-default" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
+                    Scan QR
+                    <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="receive.read_wif_qr_code($event)">
+                  </span>
+                  <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="receive.stop_scanning_qr_code()">Cancel</a>
                 </span>
-                
               </div>
+              
             </div>
             <div class="pull-right">
               <a class="btn btn-default btn-block-xs" ng-class="{disabled: receive.sweeping}" ng-click="receive.sweep()">Sweep</a>

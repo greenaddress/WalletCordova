@@ -233,21 +233,28 @@ angular.module('greenWalletControllers', [])
         });
     };
     $scope.redeposit_multiple_tx = function() {
-        return wallets.get_two_factor_code($scope).then(function(twofac_data) {
-            var promise = $q.when();
-            for (var i = 0; i < $scope.wallet.expired_deposits.length; ++i) {
-                (function(i) { promise = promise.then(function() {
-                    return redeposit([$scope.wallet.expired_deposits[i]], twofac_data);
-                }, function(err) {
-                    return $q.reject(err);
-                });})(i);
-            }
-            promise.then(function() {
-                notices.makeNotice('success', gettext('Re-depositing successful!'));
-            }, function(err) {
-                notices.makeNotice('error', err);
+        return tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit",
+                [[$scope.wallet.expired_deposits[0].txhash, $scope.wallet.expired_deposits[0].out_n]]).then(function() {
+            // prepare one to set appropriate tx data for 2FA
+            return wallets.get_two_factor_code($scope, 'send_tx').then(function(twofac_data) {
+                var promise = $q.when();
+                for (var i = 0; i < $scope.wallet.expired_deposits.length; ++i) {
+                    (function(i) { promise = promise.then(function() {
+                        return redeposit([$scope.wallet.expired_deposits[i]], twofac_data);
+                    }, function(err) {
+                        return $q.reject(err);
+                    });})(i);
+                }
+                promise.then(function() {
+                    notices.makeNotice('success', gettext('Re-depositing successful!'));
+                }, function(error) {
+                    notices.makeNotice('error', error);
+                });
+                return promise;
             });
-            return promise;
-        });
+        }, function(error) {
+            notices.makeNotice('error', error);
+        })
+        
     };
 }]);

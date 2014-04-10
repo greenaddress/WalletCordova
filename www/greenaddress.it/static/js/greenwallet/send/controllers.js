@@ -1,7 +1,7 @@
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
-.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$modal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri',
-         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $modal, $location, $rootScope, $q, parse_bitcoin_uri) {
+.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$modal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode',
+         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $modal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode) {
     if (!wallets.requireWallet($scope)) return;
     var verify_tx = function(that, rawtx, destination, satoshis, change_pointer) {
         var d = $q.defer();
@@ -134,35 +134,30 @@ angular.module('greenWalletSendControllers',
     $scope.send_tx = {
         add_fee: 'sender',
         recipient: $routeParams.contact ? JSON.parse(UTF8.bytesToString(Crypto.util.base64ToBytes($routeParams.contact))) : null,
-        read_qr_code: cordovaReady(function()  {
+        read_qr_code: function($event)  {
             gaEvent('Wallet', 'SendReadQrCode');
             var that = this;
-            cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                    console.log("We got a barcode\n" +
-                    "Result: " + result.text + "\n" +
-                    "Format: " + result.format + "\n" +
-                    "Cancelled: " + result.cancelled);
-                    if (!result.cancelled && result.format == "QR_CODE") {
-                        gaEvent('Wallet', 'SendReadQrCodeSuccessful');
-                        $scope.$apply(function() {
-                            parsed_uri = parse_bitcoin_uri(result.text);
-                            if (parsed_uri[0]) {
-                                that.recipient = parsed_uri[0];
-                                if (parsed_uri[1]) {
-                                    that.amount = btcToUnit(parsed_uri[1]);
-                                }
-                            } else {
-                                that.recipient = result.text;
-                            }
-                        });
+            qrcode.scan($scope, $event, '_send').then(function(text) {
+                gaEvent('Wallet', 'SendReadQrCodeSuccessful');
+                $rootScope.safeApply(function() {
+                    parsed_uri = parse_bitcoin_uri(text);
+                    if (parsed_uri[0]) {
+                        that.recipient = parsed_uri[0];
+                        if (parsed_uri[1]) {
+                            that.amount = btcToUnit(parsed_uri[1]);
+                        }
+                    } else {
+                        that.recipient = text;
                     }
-                }, 
-                function (error) {
-                    console.log("Scanning failed: " + error);
-                }
-            );
-        }),
+                });
+            }, function(error) {
+                gaEvent('Wallet', 'SendReadQrCodeFailed', error);
+                notices.makeNotice('error', error);
+            });
+        },
+        stop_scanning_qr_code: function() {
+            qrcode.stop_scanning($scope);
+        },
         do_send_fb: function(that, enckey, satoshis, key, pointer) {
             $scope.send_fb_via_fb = function() {
                 $scope.send_fb_via_fb_clicked = true;

@@ -63,4 +63,17 @@ angular.module('greenWalletDirectives', [])
    return function(scope, elem, attr) {
        FB.XFBML.parse(elem[0]);
    };
+}]).directive('gaClickNoTouch', ['$parse', function($parse) {
+    return {
+        compile: function($element, attr) {
+            var fn = $parse(attr['gaClickNoTouch']);
+            return function(scope, element, attr) {
+                element.on('click', function(event) {
+                    scope.$apply(function() {
+                        fn(scope, {$event:event});
+                    });
+                });
+            };
+        }
+    };
 }]);

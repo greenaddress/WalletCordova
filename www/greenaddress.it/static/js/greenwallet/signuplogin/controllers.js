@@ -1,6 +1,6 @@
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage',
-        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage) {
+.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode',
+        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode) {
     var state = {};
     storage.get(['pin_ident', 'encrypted_seed', 'pin_refused']).then(function(data) {
         state.has_pin = data.pin_ident && data.encrypted_seed;
@@ -25,7 +25,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         }
         gaEvent('Login', 'MnemonicLogin');
         state.mnemonic_error = state.login_error = undefined;
-        mnemonics.validateMnemonic(state.mnemonic).then(function() {
+        return mnemonics.validateMnemonic(state.mnemonic).then(function() {
             return mnemonics.toSeed(state.mnemonic).then(function(seed) {
                 return mnemonics.toSeed(state.mnemonic, 'greenaddress_path').then(function(path_seed) {
                     var hdwallet = new GAHDWallet({seed_hex: seed});
@@ -162,28 +162,20 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         
     };
     
-    $scope.read_qr_code = function read_qr_code() {
+    $scope.read_qr_code = function read_qr_code($event) {
         gaEvent('Login', 'QrScanClicked');
-        cordovaReady(function()  {
-            cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                    console.log("We got a barcode\n" +
-                    "Result: " + result.text + "\n" +
-                    "Format: " + result.format + "\n" +
-                    "Cancelled: " + result.cancelled);
-                    if (!result.cancelled && result.format == "QR_CODE") {
-                          gaEvent('Login', 'QrScanningSucceeded');
-                          state.mnemonic = result.text;
-                          $scope.login();
-                    }
-                }, 
-                function (error) {
-                    gaEvent('Login', 'QrScanningFailed', error);
-                    console.log("Scanning failed: " + error);
-                }
-            );
-        })();
+        qrcode.scan($scope, $event, '_login').then(function(text) {
+            gaEvent('Login', 'QrScanningSucceeded');
+            state.mnemonic = text;
+            return $scope.login();
+        }, function(error) {
+            gaEvent('Login', 'QrScanningFailed', error);
+            notices.makeNotice('error', error);
+        });
     };
+    $scope.stop_scanning_qr_code = function() {
+        qrcode.stop_scanning($scope);
+    }
 
     var use_pin_data = $scope.use_pin_data = {};
 

@@ -1,7 +1,7 @@
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
-.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$modal', '$location',
-        function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $modal, $location) {
+.controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$modal', '$location', 'qrcode',
+        function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $modal, $location, qrcode) {
     if(!wallets.requireWallet($scope)) return;
     var base_payment_url = 'https://' + hostname + '/pay/' + $scope.wallet.receiving_id + '/';
     $scope.receive = {
@@ -74,28 +74,23 @@ angular.module('greenWalletReceiveControllers',
                 }
             });
         },
-        read_wif_qr_code: cordovaReady(function()  {
+        read_wif_qr_code: function($event) {
             gaEvent('Wallet', 'ReceiveReadWIFQrCode');
             var that = this;
-            cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                    console.log("We got a barcode\n" +
-                    "Result: " + result.text + "\n" +
-                    "Format: " + result.format + "\n" +
-                    "Cancelled: " + result.cancelled);
-                    if (!result.cancelled && result.format == "QR_CODE") {
-                        gaEvent('Wallet', 'ReceiveReadWIFQrCodeSuccessful');
-                        $scope.$apply(function() {
-                            that.privkey_wif = result.text;
-                        });
-                    }
-                }, 
-                function (error) {
-                    console.log("Scanning failed: " + error);
-                }
-            );
-        }),
-        show_sweep: cur_coin_version == 0  // no testnet
+            qrcode.scan($scope, $event, '_receive').then(function(text) {
+                gaEvent('Wallet', 'ReceiveReadWIFQrCodeSuccessful');
+                $rootScope.safeApply(function() {
+                    that.privkey_wif = text;
+                });
+            }, function(error) {
+                gaEvent('Wallet', 'ReceiveReadWIFQrCodeFailed', error);
+                notices.makeNotice('error', error);
+            });
+        },
+        stop_scanning_qr_code: function() {
+            qrcode.stop_scanning($scope);
+        },
+        show_sweep: true || cur_coin_version == 0  // no testnet
     };
     var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
     var formatAmountBitcoin = function(amount) {
