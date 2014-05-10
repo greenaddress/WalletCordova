@@ -49,7 +49,7 @@ angular.module('greenWalletSettingsControllers',
         gaEvent('Wallet', 'Phone2FATabClicked');
         twofactor_state.twofactor_type = 'phone';
     };
-    $scope.enable_twofac_gauth = function(twofac_data) {
+    $scope.enable_twofac_gauth = function() {
         notices.setLoadingText("Validating code");
         return tx_sender.call('http://greenaddressit.com/twofactor/enable_gauth', twofactor_state.twofac_gauth_code, $scope.twofac_data).then(
             function() {
@@ -143,7 +143,12 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_email = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email', twofactor_state.twofac_email_code).then(
+        var suffix = '_twofac', arg = $scope.twofac_data;
+        if ($scope.wallet.signup) {
+            suffix = '';
+            arg = twofactor_state.twofac_email_code;
+        }
+        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email'+suffix, arg).then(
             function() {
                 gaEvent('Wallet', 'EnableEmail2FASuccessful');
                 notices.makeNotice('success', 'Enabled email two factor authentication');
@@ -151,8 +156,8 @@ angular.module('greenWalletSettingsControllers',
                 twofactor_state.twofac_email_switch = true;
                 update_wallet();
             }, function(err) {
-                twofactor_state.twofac_email_code = '';
                 gaEvent('Wallet', 'EnableEmail2FAFailed', err.desc);
+                twofactor_state.twofac_email_code = '';
                 notices.makeNotice('error', err.desc);
                 return $q.reject(err);
             });
@@ -227,11 +232,18 @@ angular.module('greenWalletSettingsControllers',
         $scope.$watch('twofactor_state.twofac_'+type+'_switch', function(newValue, oldValue) {
             if ($scope.wallet.signup) return;
             if (newValue === oldValue || $scope.twofactor_state['toggling_'+type] == 'initial'
-                || $scope.twofactor_state['toggling_'+type] == 'old_2fa' ) return;
+                || $scope.twofactor_state['toggling_'+type] == 'old_2fa') return;
             if (updating[type]) { updating[type] = false; return; }
             if ($scope.twofactor_state['toggling_'+type] == 'disabling' && newValue == true) return;
-            if ($scope.twofactor_state['toggling_'+type] == 'disabling' || $scope.twofactor_state['toggling_'+type] == 'enabling') {
-                $scope.twofactor_state['toggling_'+type] = false;
+            if ($scope.twofactor_state['toggling_'+type] == 'disabling' || $scope.twofactor_state['toggling_'+type] == 'enabling' ||
+                $scope.twofactor_state['toggling_'+type] == 'enabling_email_2nd') {
+                if (!$scope.wallet.signup && type == 'email' && $scope.twofactor_state['toggling_'+type] == 'enabling') {
+                    // email toggling in settings changes twice on enabling - first to false,
+                    // then back to true, because there is no initial state
+                    $scope.twofactor_state['toggling_'+type] = 'enabling_email_2nd';
+                } else {
+                    $scope.twofactor_state['toggling_'+type] = false;
+                }
                 return;
             }
             $scope.twofactor_state['twofac_'+type+'_switch'] = oldValue;
@@ -246,15 +258,24 @@ angular.module('greenWalletSettingsControllers',
                 return;
             }
             // step 1 - just show the inputs
-            $scope.twofactor_state['toggling_'+type] = 'old_2fa';
+            if (type == 'email') {
+                $scope.twofactor_state['toggling_'+type] = 'enabling';
+            } else {
+                $scope.twofactor_state['toggling_'+type] = 'old_2fa';
+            }
             wallets.get_two_factor_code($scope, 'enable_2fa', {method: type}).then(function(twofac_data) {
-                return tx_sender.call('http://greenaddressit.com/twofactor/request_proxy', type, twofac_data).then(function(data) {
-                    $scope.twofactor_state['toggling_'+type] = 'initial';
-                    $scope.twofac_data = {'method': 'proxy', 'code': data};
-                }, function(err) {
-                    notices.makeNotice('error', err.desc);
-                    return $q.reject(err);
-                });
+                if (type == 'email') {
+                    $scope.twofac_data = twofac_data;
+                    return $scope['enable_twofac_'+type]();
+                } else {
+                    return tx_sender.call('http://greenaddressit.com/twofactor/request_proxy', type, twofac_data).then(function(data) {
+                        $scope.twofactor_state['toggling_'+type] = 'initial';
+                        $scope.twofac_data = {'method': 'proxy', 'code': data};
+                    }, function(err) {
+                        notices.makeNotice('error', err.desc);
+                        return $q.reject(err);
+                    });
+                }
             }).catch(function() {
                 $scope.twofactor_state['toggling_'+type] = false;
             });
@@ -338,7 +359,10 @@ angular.module('greenWalletSettingsControllers',
     });
     $scope.$watch('settings.nlocktime.blocks_new', function(newValue, oldValue) {
         settings.nlocktime.blocks_userfriendly = userfriendly_blocks(settings.nlocktime.blocks_new);
-    })
+    });
+    $scope.$watch('wallet.twofac.email_addr', function(newValue, oldValue) {
+        settings.new_email = newValue;
+    });
     if (!settings.currency) {
         $scope.$on('first_balance_updated', function() { settings.currency = $scope.wallet.fiat_currency; })
     }
@@ -463,6 +487,29 @@ angular.module('greenWalletSettingsControllers',
             scope: $scope
         });
     };
+    $scope.set_new_email = function() {
+        if ($scope.wallet.twofac.email) {
+            notices.makeNotice('error', gettext("You can't change your email address while you have email 2FA enabled"));
+            return;
+        }
+        settings.setting_email = true;
+        wallets.get_two_factor_code($scope, 'set_email', {'address': settings.new_email}).then(function(twofac_data) {
+            return tx_sender.call('http://greenaddressit.com/twofactor/set_email', settings.new_email, twofac_data).then(function() {
+                wallets.getTwoFacConfig($scope, true);  // refresh twofac config
+            }).catch(function(err) {
+                notices.makeNotice('error', err.desc);
+                return $q.reject(err);
+            });
+        }).finally(function() { settings.setting_email = false; });
+    };
+    $scope.confirm_email = function() {
+        tx_sender.call('http://greenaddressit.com/twofactor/activate_email', settings.email_confirmation_code).then(function() {
+            wallets.getTwoFacConfig($scope, true);  // refresh twofac config
+            notices.makeNotice('success', gettext('Email confirmed'))
+        }).catch(function(err) {
+            notices.makeNotice('error', err.desc);
+        });
+    };
 }]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', '$routeParams', 'addressbook',
         function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, $routeParams, addressbook) {
     // dontredirect=false here because address book is now outside settings,
@@ -538,7 +585,57 @@ angular.module('greenWalletSettingsControllers',
         });
     }
     $scope.send_url = function(contact) {
-        return '#/send/' + Crypto.util.bytesToBase64(UTF8.stringToBytes(JSON.stringify(contact)));
+        return '#/send/' + Bitcoin.base58.encode(
+            Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
+                JSON.stringify(contact)).toString()));
+    };
+}]).controller('SoundController', ['$scope', 'notices', 'wallets', 'gaEvent', function SoundController($scope, notices, wallets, gaEvent) {
+    
+    if (!('appearance' in $scope.wallet)) return;
+    var soundstate = {sound: false};
+    $scope.$watch('wallet.appearance.sound', function(newValue, oldValue) {
+        if (newValue === oldValue) return;
+        if (!soundstate['sound']) {
+            soundstate['sound'] = true;
+            wallets.updateAppearance($scope, 'sound', newValue).then(function() {
+                gaEvent('Wallet', "Sound_"+(newValue?'Enabled':'Disabled'));
+                soundstate['sound'] = false;
+            }).catch(function(err) {
+                gaEvent('Wallet', "Sound_"+(newValue?'Enable':'Disable')+'Failed', err.desc);
+                notices.makeNotice('error', err.desc);
+                soundstate['sound'] = false;
+            });
+        }
+    });
+}]).controller('AutoLogoutController', ['$scope', 'notices', 'wallets', 'autotimeout', 'gaEvent', function AutoLogoutController($scope, notices, wallets, autotimeout, gaEvent) {
+    
+    if (!('appearance' in $scope.wallet)) return;
+
+    $scope.timeoutstate = {timeout: false, altimeout: $scope.wallet.appearance.altimeout};
+
+    autotimeout.registerObserverCallback(function() {
+        $scope.mins = Math.floor(autotimeout.left / 1000 / 60);
+        $scope.secs = Math.floor((autotimeout.left - ($scope.mins * 60 * 1000)) / 1000);
+    
+    });
+    $scope.save_logout_timeout = function() {
+        if ($scope.timeoutstate['altimeout'] === $scope.wallet.appearance.altimeout) return;
+        if (!$scope.timeoutstate['timeout']) {
+            $scope.timeoutstate['timeout'] = true;
+        }
+        wallets.updateAppearance($scope, 'altimeout', $scope.timeoutstate['altimeout']).then(function() {
+            gaEvent('Wallet', "Timeoutset");
+            //
+            $scope.timeoutstate['timeout'] = false;
+            $scope.wallet.appearance.altimeout = $scope.timeoutstate['altimeout'];
+            autotimeout.start($scope.wallet.appearance.altimeout);
+
+        }).catch(function(err) {
+            gaEvent('Wallet', "TimeoutsetFailed");
+            notices.makeNotice('error', err.desc);
+            $scope.timeoutstate['timeout'] = false;
+            $scope.altimeout = $scope.wallet.appearance.altimeout;
+        });
     };
 }]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage',
         function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage) {
@@ -601,8 +698,8 @@ angular.module('greenWalletSettingsControllers',
         }, error = function(err) {
             $scope.quicklogin.setting_pin = false;
             $scope.quicklogin.started_setting_pin = false;
-            gaEvent('Wallet', 'PinError', err.desc);
-            notices.makeNotice('error', err.desc);
+            gaEvent('Wallet', 'PinError', err);
+            notices.makeNotice('error', err);
         };
         if ($scope.quicklogin.device_ident) {  // change the existing PIN
             gaEvent('Wallet', 'PinChangeAttempt');

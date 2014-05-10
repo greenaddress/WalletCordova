@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">U hebt een aantal verlopen stortingen. Tenzij u ze opnieuw stort of ze opneemt, zullen geen transacties worden toegestaan</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Opnieuw storten als één transactie (goedkoper)</a><br />
+    		geschatte transactiekosten: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Opnieuw storten als één transactie per output (betere privacy)</a><br />
+    		geschatte transactiekosten: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transacties)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Sluiten</button>
+</div>

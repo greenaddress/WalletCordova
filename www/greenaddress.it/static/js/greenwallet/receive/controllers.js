@@ -23,14 +23,16 @@ angular.module('greenWalletReceiveControllers',
             var key_wif = this.privkey_wif;
             if (key_wif.indexOf('K') == 0 || key_wif.indexOf('L') == 0 || key_wif.indexOf('5') == 0) { // prodnet
                 // || encrypted_key.indexOf('c') == 0 || encrypted_key.indexOf('9') == 0) { // testnet - not supported
-                var key_bytes = B58.decode(key_wif);
+                var key_bytes = Bitcoin.base58.decode(key_wif);
                 if (key_bytes.length != 38 && key_bytes.length != 37) {
                     notices.makeNotice(gettext('Not a valid private key'));
                     return;
                 }
                 var expChecksum = key_bytes.slice(-4);
                 key_bytes = key_bytes.slice(0, -4);
-                var checksum = Crypto.SHA256(Crypto.SHA256(key_bytes, {asBytes: true}), {asBytes: true});
+                var key_words = Bitcoin.convert.bytesToWordArray(key_bytes);
+                var checksum = Bitcoin.CryptoJS.SHA256(Bitcoin.CryptoJS.SHA256(key_words));
+                checksum = Bitcoin.convert.wordArrayToBytes(checksum);
                 if (checksum[0] != expChecksum[0] || checksum[1] != expChecksum[1] || checksum[2] != expChecksum[2] || checksum[3] != expChecksum[3]) {
                     notices.makeNotice(gettext('Not a valid private key'));
                     return;
@@ -46,14 +48,10 @@ angular.module('greenWalletReceiveControllers',
                 notices.makeNotice(gettext('Not a valid private key'));
                 return;
             }
-            var key = new Bitcoin.ECKey(key_bytes);
-            if (compressed) {
-                var pubkey = key.getPubCompressed();
-            } else {
-                var pubkey = key.getPub()
-            }
+            var key = new Bitcoin.ECKey(Bitcoin.convert.bytesToHex(key_bytes));
+            var pubkey = key.getPub(compressed);
             that.sweeping = true;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social", pubkey, true).then(function(data) {
+            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social", pubkey.toBytes(), true).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
                     data.prev_outputs.push(
@@ -90,15 +88,15 @@ angular.module('greenWalletReceiveControllers',
         stop_scanning_qr_code: function() {
             qrcode.stop_scanning($scope);
         },
-        show_sweep: true || cur_coin_version == 0  // no testnet
+        show_sweep: cur_net == 'mainnet'  // no testnet
     };
     var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
     var formatAmountBitcoin = function(amount) {
-        var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(BigInteger.valueOf(div));
+        var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(div));
         return Bitcoin.Util.formatValue(satoshi.toString());
     };
     var formatAmountSatoshi = function(amount) {
-        var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(BigInteger.valueOf(div));
+        var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(div));
         return satoshi.toString();
     }
     $scope.show_bitcoin_uri = function(show_qr) {
@@ -107,9 +105,10 @@ angular.module('greenWalletReceiveControllers',
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
             tx_sender.call('http://greenaddressit.com/vault/fund').then(function(data) {
-                var script = Crypto.util.hexToBytes(data);
-                var address = new Bitcoin.Address(Bitcoin.Util.sha256ripe160(script));
-                address.version = cur_coin_p2sh_version;
+                var script = Bitcoin.convert.bytesToWordArray(Bitcoin.convert.hexToBytes(data));
+                var hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(script));
+                var version = Bitcoin.network[cur_net].p2shVersion;
+                var address = new Bitcoin.Address(hash, version);
                 $scope.receive.bitcoin_address = address.toString();
                 $scope.receive.base_bitcoin_uri = $scope.receive.bitcoin_uri = 'bitcoin:' + address.toString();
                 if ($scope.receive.amount) {

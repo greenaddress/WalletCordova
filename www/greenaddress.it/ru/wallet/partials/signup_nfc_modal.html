@@ -1,0 +1,17 @@
+<div class="alert alert-error" ng-show="nfc_error">
+    Возникла проблема при записи к метке NFC: (( nfc_error.reason ))
+</div>
+<div class="modal-body text-center" ng-show="(( !nfc_init_error && nfc_init_succeeded < 3 ))">
+    <p>Инициализация слушателя NFC меток...</p>
+</div>
+<div class="modal-body text-center" ng-show="(( nfc_init_succeeded == 3 ))">
+    <p>Пожалуйста, держите ваши метки (метку) рядом с устройством для записи вашего кошелька!</p>
+    <p>Записанные теги: (( num_tags_written ))</p>
+    <p>Форматированные теги: (( num_tags_formatted ))</p>
+</div>
+<div class="modal-body text-center" ng-show="(( nfc_init_error ))">
+    <p>Ваш NFC не включен или не доступен. Если возможно, пожалуйста, включите его в настройках</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Закрыть</button>
+</div>

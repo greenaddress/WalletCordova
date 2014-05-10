@@ -3,7 +3,7 @@
 </div>
 <div submittable>
     <div class="modal-body">
-        <p>Devi fornire il tuo codice di doppia autenticazione per disabilitarla</p>
+        <p>Devi fornire il tuo codice di autenticazione a due fattori per disabilitarla</p>
         <form class="form-horizontal" ng-submit="$close({code: twofac.twofactor_code, method: twofac.twofactor_method})"><div class="control-group">
             <div ng-hide="twofac.codes_requested[twofac.twofactor_method] || twofac.gauth_only">
                 <p>Scegli quale autenticazione a due fattori usare: <br/>
@@ -12,7 +12,7 @@
                     (( twofactor_method_names[method] ))<br/>
                 </label>
             </div>
-            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Per favore inserisci la tua email(( twofactor_method_names[twofac.twofactor_method] )) codice di autenticazione che vi abbiamo appena inviato.</p>
+            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Per favore inserisci (( twofactor_method_names[twofac.twofactor_method] )) codice di autenticazione che vi abbiamo appena inviato.</p>
             
             <div class="form-inline" ng-show="twofac.twofactor_method == 'gauth' || twofac.codes_requested[twofac.twofactor_method]">
                 <p>Per piacere inserisci qui (( twofactor_method_names[twofac.twofactor_method] )) codice SMS::

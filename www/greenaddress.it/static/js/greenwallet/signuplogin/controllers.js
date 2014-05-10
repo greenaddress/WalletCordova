@@ -28,7 +28,8 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         return mnemonics.validateMnemonic(state.mnemonic).then(function() {
             return mnemonics.toSeed(state.mnemonic).then(function(seed) {
                 return mnemonics.toSeed(state.mnemonic, 'greenaddress_path').then(function(path_seed) {
-                    var hdwallet = new GAHDWallet({seed_hex: seed});
+                    var hdwallet = Bitcoin.HDWallet.fromSeedHex(seed, cur_net);
+                    hdwallet.seed_hex = seed;
                     // seed, mneomnic, and path seed required already here for PIN setup below
                     $scope.wallet.hdwallet = hdwallet;
                     $scope.wallet.mnemonic = state.mnemonic;
@@ -77,7 +78,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     
     if ($location.hash()) {
         try {
-            var nfc_bytes = Crypto.util.base64ToBytes($location.hash());
+            var nfc_bytes = Bitcoin.convert.base64ToBytes($location.hash());
         } catch(e) {}
         if (nfc_bytes) {
             gaEvent('Login', 'NfcLogin');
@@ -199,13 +200,15 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                             parsed.path_seed = path_seed;
                             storage.set('encrypted_seed', crypto.encrypt(JSON.stringify(parsed), password));
                             var path = mnemonics.seedToPath(path_seed);
-                            var hdwallet = new GAHDWallet({seed_hex: parsed.seed});
+                            var hdwallet = Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net);
+                            hdwallet.seed_hex = parsed.seed;
                             return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed);
                         }, undefined, function(progress) {
                             state.seed_progress = progress;
                         });
                     } else {
-                        var hdwallet = new GAHDWallet({seed_hex: parsed.seed});
+                        var hdwallet = Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net);
+                        hdwallet.seed_hex = parsed.seed;
                         return wallets.login($scope, hdwallet, parsed.mnemonic, false, false, parsed.path_seed);
                     }
                 } else {

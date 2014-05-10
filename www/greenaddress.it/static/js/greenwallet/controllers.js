@@ -1,6 +1,6 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$timeout', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $timeout, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler) {
+.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler',
+        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
@@ -71,10 +71,10 @@ angular.module('greenWalletControllers', [])
                     }
                 }).finally(function() { updating = false; });
             },
-            refresh_transactions: function() {
+            refresh_transactions: function(notifydata) {
                 if (updating_txs) return;
                 updating_txs = true;
-                wallets.getTransactions($scope).then(function(data) {
+                wallets.getTransactions($scope, notifydata).then(function(data) {
                     $scope.wallet.transactions = data;
                 }).finally(function() { updating_txs = false; });
             },
@@ -83,9 +83,8 @@ angular.module('greenWalletControllers', [])
                 if (tx_sender.electrum) {
                     var d = $q.defer();
                     return tx_sender.electrum.issueTransactionGet(txhash).then(function(rawtx) {
-                        var bytes = decode_raw_tx(Crypto.util.hexToBytes(rawtx)).outs[i].value;
-                        bytes.reverse();
-                        return BigInteger.fromByteArrayUnsigned(bytes);
+                        var value = Bitcoin.Transaction.deserialize(rawtx).outs[i].value;
+                        return new Bitcoin.BigInteger(value.toString());
                     }, function(err) {
                         return $q.reject(err);
                     });
@@ -137,7 +136,7 @@ angular.module('greenWalletControllers', [])
             if (updating) return;
             updating = true;
             $scope.wallet.update_balance();
-            $scope.wallet.refresh_transactions();
+            $scope.wallet.refresh_transactions(data);
         });
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
             $modal.open({

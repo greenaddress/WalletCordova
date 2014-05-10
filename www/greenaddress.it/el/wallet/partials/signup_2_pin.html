@@ -1,0 +1,54 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Βήμα 2 του 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Γρήγορη και ασφαλή πρόσβαση σε πορτοφόλι σας<br><small>Για να έχετε μια ασφαλή, αλλά γρήγορη πρόσβαση από αυτήν τη συσκευή ορίστε το PIN σας</small></div>
+                <hr>
+                <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
+                    <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <label class="col-sm-5 control-label" for="id_pin">Αριθμός PIN</label>
+                        <div class="col-sm-4">
+                            <input class="form-control pin" type="tel" mask-input
+                                   id="id_pin" name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                                   placeholder="Τετραψήφιο αριθμός" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                        </div>
+                        <input type="submit" class="hide" submitter />
+                    </div>
+                </form>
+                <hr>
+                <p>
+                Η πρόσβαση με PIN επιτρέπει γρήγορη σύνδεση, διατηρώντας παράλληλα την ασφάλεια σε υψηλό επίπεδο. Το PIN εξασφαλίζει ένα τυχαίο AES 256 bit κωδικό που θα διαγραφεί εάν οι 3 προσπάθειες του PIN αποτύχουν, αναγκάζοντάς σας να παρέχετε την πλήρη φράση πρόσβασης σας και πάλι. Εύκολο, άνετο και ασφαλή, οπότε ας το χρησιμοποιήσουμε!
+                </p>
+            </div>
+
+            <div class="create-modal-footer">
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress < 100">
+                    Δημιουργία των κλειδιών για το πορτοφόλι σας, σας παρακαλώ να περιμένετε ... (( signup.seed_progress ))%
+                </span>
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
+                    Παρακαλώ περιμένετε, σύνδεση στο...
+                </span>
+                <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                    Mετάβαση στο πορτοφόλι μου και παραλείψτε όλα αυτά!
+                </a>
+                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100||!signup.logged_in||signup.login_failed}">
+                    <span ng-hide="signup.setting_pin">Το PIN έχει οριστεί, έτοιμο για το βήμα 3</span>
+                    <span ng-show="signup.setting_pin">Ρύθμιση PIN...</span>
+                </a>
+                <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
+                    <span>Παραλείψτε την ρύθμιση του PIN και συνεχίστε</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

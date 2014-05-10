@@ -4,7 +4,7 @@
     <title>Portfel | GreenAddress.it</title>
     <meta charset="utf-8">
     <meta name="description" content="Bezpieczniejszy portfel Bitcoin który daje Ci kontrolę.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta property="og:image" content="https://localhostfile:///android_asset/www/greenaddress.it/static/img/logos/logo-greenaddress.png" />
     <!--[if IE 7]>
@@ -26,6 +26,7 @@
     <link rel="icon" type="image/png" href="file:///android_asset/www/greenaddress.it/static/img/favicons/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="file:///android_asset/www/greenaddress.it/static/img/favicons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="file:///android_asset/www/greenaddress.it/static/img/favicons/favicon-16x16.png" sizes="16x16">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="file:///android_asset/www/greenaddress.it/static/img/favicons/mstile-144x144.png">
     <meta name="msapplication-square70x70logo" content="file:///android_asset/www/greenaddress.it/static/img/favicons/mstile-70x70.png">
@@ -45,13 +46,14 @@
     <script src="file:///android_asset/www/greenaddress.it/static/wallet/config.js"></script>
     <script src="file:///android_asset/www/greenaddress.it/pl/i18n_catalog.js"></script>
     
-  <link href="/static/css/dc.min.css" rel="stylesheet">
+  <link href="file:///android_asset/www/greenaddress.it/static/css/dc.min.css" rel="stylesheet">
 
 
 <script type="text/javascript">FB_APP_ID = '1470897776471523';</script>
 
 <script src="https://connect.facebook.net/en_US/all.js"></script>
 
+<script src="file:///android_asset/www/greenaddress.it/static/js/typedarray.js"></script>  <!-- for android 4.1 -->
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/script.min.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/autobahn.min.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/angular/raf-polyfill.js"></script>
@@ -63,7 +65,6 @@
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/angular/angular-qr.min.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/sha512.js"></script>
-<script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/hdwallet.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/signuplogin/controllers.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/info/controllers.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/receive/controllers.js"></script>
@@ -77,9 +78,8 @@
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/app.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/mnemonics/services.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/apps/wallet.js"></script>
-<script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/wallet/shared.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/bitcoinjs.min.js"></script>
-<script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/greenwallet/decode_raw_tx.js"></script>
+<script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/bitcoinjs_util.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/d3.min.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/crossfilter.min.js"></script>
 <script type="text/javascript" src="file:///android_asset/www/greenaddress.it/static/js/dc.min.js"></script>
@@ -102,7 +102,7 @@
       
 
 <div ng-controller="WalletController" id="content_container">
-  <div ng-show="wallet.hdwallet.public_key && !wallet.hidden && is_loading" ng-cloak>
+  <div ng-show="wallet.hdwallet.pub && !wallet.hidden && is_loading" ng-cloak>
     <div id="loading"><div class="spin"></div></div>
   </div>
   <div ng-repeat="notice in notices" class="notice notice-((notice.type))" ng-cloak>
@@ -114,7 +114,7 @@
   <div class="menu-mobile" toggle-class="visible">
     <i class="menu-mobile-toggle menu-mobile-toggle-open glyphicon glyphicon-align-justify" toggle-class="visible" ng-click="toggle_set(true)"></i>
     <i class="menu-mobile-toggle menu-mobile-toggle-close glyphicon glyphicon-remove" toggle-class="visible" ng-click="toggle_set(false)"></i>
-    (( subpage_title ))
+    <small>(( subpage_title ))</small> <small ng-show="wallet.final_balance" ng-cloak >((wallet.final_balance|format_btc:wallet.unit)) </small> 
   </div>
   <div class="container" toggle-class="visible"><div class="ng-view"></div></div>
   <div class="menu" toggle-class="visible">
@@ -122,17 +122,17 @@
     <li class="menu-header"><img src="file:///android_asset/www/greenaddress.it/static/img/logos/logo-greenaddress-white.png" alt="GreenAddress.it" /> GreenAddress.it</li>
     <li path="/info"><a href="#/info">Saldo</a></li>
     <li path="/transactions"><a href="#/transactions">Transakcje</a></li>
-    <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/send"><a href="#/send">Wyślij pieniądze</a></li>
+    <li ng-show="wallet.hdwallet.priv" path="/send"><a href="#/send">Wyślij pieniądze</a></li>
     <li path="/receive"><a href="#/receive">Odbierz pieniądze</a></li>
     <li path="/address-book"><a href="#/address-book">Książka adresowa</a></li>
-    <li ng-show="wallet.hdwallet.secret_exponent_bytes" path="/settings" class="menu-settings"><a href="#/settings">Ustawienia</a></li>
+    <li ng-show="wallet.hdwallet.priv" path="/settings" class="menu-settings"><a href="#/settings">Ustawienia</a></li>
     <li><a href="" ng-click="update_now()" ng-show="update_available">Zaktualizuj teraz</a></li>
     <li><a href="" ng-click="logout()">Wyloguj</a></li>
     <li class="menu-balance visible-xs"><i class="glyphicon glyphicon-stats"></i> ((wallet.final_balance|format_btc:wallet.unit)) / ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</li>
     <li class="menu-balance visible-sm"><i class="glyphicon glyphicon-stats"></i> ((wallet.final_balance|format_btc:wallet.unit)) / ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</li>
   </ul>
   <div class="menu-footer">
-    <div><a href="/faq/" target="_blank">FAQ</a> | <a href="/support/" target="_blank">Wsparcie techniczne</a></div>
+    
     <div ng-show="wallet.last_login">
       Ostatnie logowanie:
       ((wallet.last_login.at))

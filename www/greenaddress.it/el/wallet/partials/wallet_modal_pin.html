@@ -1,0 +1,27 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">Μπορείτε να δημιουργήσετε ένα 4-ψήφιο προσωπικό αριθμό αναγνώρισης και να τον χρησιμοποιήσετε για να ανακτήσετε τον κωδικό πρόσβασης του μνημονικού συνθηματικού σας.</p>
+        <hr>
+        <form ng-submit="set_pin(form.$valid)" name="form" class="form-horizontal">
+            <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                <label for="pinId" class="col-sm-5 control-label">Εισαγάγετε το PIN σας</label>
+                <div class="col-sm-4">
+                    <input clickfix focus-on="usePinModal" type="tel" mask-input class="form-control pin" required="required"
+                           name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                           ng-model="state.new_pin_value" />
+                    <input type="submit" class="hide" submitter />
+                    <div class="help-block"><i class="glyphicon glyphicon-info-sign"></i> Το PIN πρέπει να είναι 4-ψήφιος αριθμός</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Ακύρωση</button>
+            <button class="btn btn-primary" ng-click="submit_me()">Επιβεβαίωση αριθμού PIN</button>
+        </div>
+    </div>
+
+</div>

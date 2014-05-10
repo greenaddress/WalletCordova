@@ -61,6 +61,10 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_settings.html',
             controller: 'SettingsController'
         })
+        .when('/create_warning', {
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_0_warning.html',
+            controller: 'SignupController'
+        })
         .when('/create', {
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_1_init.html',
             controller: 'SignupController'

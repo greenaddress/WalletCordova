@@ -1,0 +1,60 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+
+            <div class="create-modal-header">
+                <span class="pull-left">Έχετε ήδη λογαριασμό;
+                    
+                    <a href="/wallet">Συνδεθείτε στο πορτοφόλι σας</a></span>
+                    
+                Βήμα 1 του 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+                <div class="title">Τώρα είστε ο υπερήφανος ιδιοκτήτης ένός πορτοφολιού bitcoin<br>
+                    <small>Παρακαλώ ολοκληρώστε τα 4-βήματα για την ρύθμιση του λογαριασμού σας ώστε να το ασφαλίσετε πλήρως κατά των εισβολέων</small>
+                </div>
+                <hr>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Το συνθηματικό σας</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic info" ng-hide="signup.mnemonic">Δημιουργία μνημονικού, παρακαλώ περιμένετε...</div>
+                <hr>
+                <p>Παρακαλώ γράψτε κάτω αυτές τις λέξεις και αποθηκεύστε τις σε ασφαλές μέρος, καθώς δεν μπορούν να ανακτηθούν. <b>Δεν αποθηκεύουμε τις παραπάνω πληροφορίες οπουδήποτε, δεν μπορούμε να σας βοηθήσουμε να τις ανακτήσετε!</b></p>
+            </div>
+
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+                <label for="checkbox-confirmation">
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Επιβεβαιώνω ότι το συνθηματικό μου έχει αποθηκευτεί &amp; προστατευτεί και συμφωνώ με το <a href="/tos" target="_blank">Όροι Παροχής Υπηρεσιών</a>
+                </label>
+                <br>
+                <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Εμφάνιση QR Code</button>
+                
+                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Γράψτε στην ετικέτα NFC</button>
+                
+                <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Συνέχεια!</a>
+                <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Συνέχεια!</a>
+            </div>
+
+            <div class="create-modal-footer" ng-show="signup.unexpected_error">
+                <a class="btn btn-danger login-submit" href="" ng-click="signup.try_again()">
+                    Σφάλμα:  (( signup.unexpected_error )).  Κάντε κλίκ για να ξαναδοκιμάσετε
+                </a>
+            </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="printable">
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
+    <p>Η φράση κλειδί για να αποκτήσετε πρόσβαση στο πορτοφόλι σας είναι:</p>
+    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Αποθηκεύστε αυτή την σελίδα σε ασφαλές μέρος</i></p>
+</div>

@@ -1,0 +1,17 @@
+<div class="title">Ви збираєтесь відправити 
+  <span ng-show="wallet.send_to_receiving_id_amount">((wallet.send_to_receiving_id_amount|format_btc:'mBTC'))</span><span ng-hide="wallet.send_to_receiving_id_amount">Bitcoin</span>!
+  <div ng-show="wallet.send_to_receiving_id.indexOf('GA')==0">
+    <br><small>Будь-ласка, створіть новий гаманець, чи кликніть нижче, щоб показати bitcoin: URI:</small></div>
+  <div ng-hide="wallet.send_to_receiving_id.indexOf('GA')==0">
+    <br><small>Будь-ласка, створіть новий гаманець, чи використайте URI нижче:</small></div>
+</div>
+
+<p ng-show="wallet.send_to_receiving_id.indexOf('GA')==0">
+  <a ng-show="bitcoin_uri" href="(( bitcoin_uri ))">(( bitcoin_uri ))</a>
+  <button class="btn btn-info btn-block-xs" ng-click="show_bitcoin_uri()" ng-hide="bitcoin_uri" ng-disabled="generating_bitcoin_uri">Показати</button>
+  <button class="btn btn-default btn-block-xs" ng-click="show_bitcoin_uri(true)" ng-disabled="generating_bitcoin_uri"><i class="glyphicon glyphicon-qrcode"></i> Показати QR код</button>
+</p>
+
+<p ng-hide="wallet.send_to_receiving_id.indexOf('GA')==0">
+  <a href="(( wallet.send_to_receiving_id_bitcoin_uri ))">(( wallet.send_to_receiving_id_bitcoin_uri ))</a>
+</p>

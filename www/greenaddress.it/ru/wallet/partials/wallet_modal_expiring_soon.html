@@ -1,0 +1,22 @@
+<div class="modal-header">
+    Выходы, срок действия которых скоро заканчивается
+</div>
+
+<div class="modal-body">
+
+    <p ng-show="!soon_nlocktimes.list.length">Активных nLockTime транзакций не найдено</p>
+    <table class="table break-all" ng-show="soon_nlocktimes.list.length">
+        <tr><th>Хеш транзакции, номер выхода</th><th>nLockTime</th></tr>
+        <tr ng-repeat="nlocktime in soon_nlocktimes.list">
+            <td>(( nlocktime.txhash )), (( nlocktime.output_n ))</td>
+            <td>(( nlocktime.nlocktime_at ))<br/>(<small>(( soon_nlocktimes.estimate_days(nlocktime.nlocktime_at) ))</small>)</td>
+        </tr>
+    </table>
+
+</div>
+
+<div class="modal-footer">
+    <div class="">
+        <button class="btn btn-primary" ng-click="$dismiss()">Закрыть</button>
+    </div>
+</div>

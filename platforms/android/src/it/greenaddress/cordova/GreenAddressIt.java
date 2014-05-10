@@ -32,6 +32,9 @@ import android.os.Parcelable;
 import android.net.Uri;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.os.Build;
+import android.content.pm.ApplicationInfo;
 
 class CustomNativeAccess {
     @JavascriptInterface
@@ -49,6 +52,12 @@ public class GreenAddressIt extends CordovaActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if ( 0 != ( getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) ) {
+                Logger.getLogger("CordovaLog").info("enabling debugging for webview");
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
+        }
         if (!isTaskRoot()) {
             // https://code.google.com/p/android/issues/detail?id=2373
             Intent intent = getIntent();

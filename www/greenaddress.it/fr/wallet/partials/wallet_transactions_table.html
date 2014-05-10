@@ -30,8 +30,8 @@
         </div>
       </td>
       <td class="amount">
-        <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc:wallet.unit ))</span>
-        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc:wallet.unit ))</span><br>
+        <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
+        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span><br>
         <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( wallet.transactions.fiat_currency ))</span>
       </td>
     </tr>

@@ -40,8 +40,8 @@
                 <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
                     Überspringe das ganze und auf zu meiner Brieftasche!
                 </a>
-                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100}">
-                    <span ng-hide="signup.setting_pin" ng-class="{disabled: !signup.logged_in || signup.login_failed}">PIN eingerichtet, bereit für Schritt 3</span>
+                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100||!signup.logged_in||signup.login_failed}">
+                    <span ng-hide="signup.setting_pin">PIN eingerichtet, bereit für Schritt 3</span>
                     <span ng-show="signup.setting_pin">Setze PIN...</span>
                 </a>
                 <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">

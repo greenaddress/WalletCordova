@@ -43,10 +43,10 @@ angular.module('greenWalletTransactionsControllers',
     $scope.redeem = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabRedeem');
         var key = tx_sender.hdwallet;
-        key = key.subkey(branches.EXTERNAL, true, true);
-        key = key.subkey(transaction.pubkey_pointer, true, true);
+        key = key.derivePrivate(branches.EXTERNAL);
+        key = key.derivePrivate(transaction.pubkey_pointer);
         tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
-                key.public_key.getEncoded(true), false).then(function(data) {
+                key.pub.toBytes(), false).then(function(data) {
             data.prev_outputs = [];
             for (var i = 0; i < data.prevout_scripts.length; i++) {
                 data.prev_outputs.push(
@@ -67,7 +67,7 @@ angular.module('greenWalletTransactionsControllers',
                 [[transaction.txhash, output.pt_idx]], twofactor_data).then(function(data) {
                     // TODO: verify
                     console.log(data);
-                    var tx = decode_raw_tx(Crypto.util.hexToBytes(data.tx));
+                    var tx = Bitcoin.Transaction.deserialize(data.tx);
                     var signatures = [];
                     var ins = [output];
                     for (var i = 0; i < ins.length; ++i) {
@@ -89,7 +89,7 @@ angular.module('greenWalletTransactionsControllers',
                         in_script.writeBytes(in_.script.chunks[3]);  // 2of2 outscript
                         in_.script = in_script;
 
-                        data.tx = Crypto.util.bytesToHex(tx.serialize());
+                        data.tx = Bitcoin.convert.bytesToHex(tx.serialize());
                     }
                     output.nlocktime_json = JSON.stringify(data);
             }, function(error) {

@@ -1,0 +1,29 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Βήμα 4 του 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Μην κάνετε συμβιβασμούς στην ασφάλεια<br><small>Δημιουργήστε έλεγχο ταυτότητας δύο παραγόντων</small></div>
+                <div ng-controller="TwoFactorSetupController" ng-include="'file:///android_asset/www/greenaddress.it/el/wallet/partials/wallet_2fa.html'"></div>
+                <hr class="double">
+                <p>Σας προτείνουμε ανεπιφύλακτα να δημιουργήσει έλεγχο ταυτότηταςδύο παραγόντων, αυτό θα κάνει το πορτοφόλι σας πολύ πιο ασφαλές και θα έχετε πρόσβαση σε περισσότερς λειτουργίες, όπως όρια δαπανών και καθυστερήσεις πληρωμών.</p>
+                <p>Αν το ρυθμίσετε να εκδώσει μια συναλλαγή θα χρειαστεί όχι μόνο να συνδεθείτε με το πορτοφόλι σας, αλλά και να επιβεβαιώσετε με ένα κωδικό που θα σας σταλεί μέσω e-mail, SMS ή google authenticator σύμφωνα με την επιλογή σας.</p>
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.twofac_in_progress}">
+                    Πάρε με στο πορτοφόλι μου!
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -35,14 +35,15 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
             }
             var binary = '';
             for(var i = 0; i < indices.length; i++) {
-                var binPart = new BigInteger(indices[i].toString()).toRadix(2);
+                var binPart = new Bitcoin.BigInteger(indices[i].toString()).toRadix(2);
                 while (binPart.length < 11) binPart = '0' + binPart;
                 binary += binPart;
             }
-            var retval = new BigInteger(binary, 2).toByteArrayUnsigned();
+            var retval = new Bitcoin.BigInteger(binary, 2).toByteArrayUnsigned();
             while (retval.length < 33) retval.unshift(0);
             var checksum = retval.pop();
-            var hash = Crypto.SHA256(retval, {asBytes: true});
+            var wordArray = Bitcoin.convert.bytesToWordArray(retval);
+            var hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.CryptoJS.SHA256(wordArray));
             if(hash[0] != checksum) return $q.reject('Checksum does not match');  // checksum
             return retval;
         });
@@ -64,16 +65,18 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                 throw("Wordlist should contain 2048 words, but it contains "+words.length+" words.");
             }
 
-            var binary = BigInteger.fromByteArrayUnsigned(data).toRadix(2);
+            var binary = Bitcoin.BigInteger.fromByteArrayUnsigned(data).toRadix(2);
             while (binary.length < 256) { binary = '0' + binary; }
             while (data.length < 32) data.unshift(0);
-            var hash = BigInteger.fromByteArrayUnsigned(Crypto.SHA256(data, {asBytes: true})).toRadix(2);
+            var bytes = Bitcoin.CryptoJS.SHA256(Bitcoin.convert.bytesToWordArray(data));
+            bytes = Bitcoin.convert.wordArrayToBytes(bytes);
+            var hash = Bitcoin.BigInteger.fromByteArrayUnsigned(bytes).toRadix(2);
             while (hash.length < 256) { hash = '0' + hash; }
             binary += hash.substr(0, data.length / 4);  // checksum
 
             var mnemonic = [];
             for (var i = 0; i < binary.length / 11; ++i) {
-                var index = new BigInteger(binary.slice(i*11, (i+1)*11), 2);
+                var index = new Bitcoin.BigInteger(binary.slice(i*11, (i+1)*11), 2);
                 mnemonic.push(words[index[0]]);
             }
             return mnemonic.join(' ');

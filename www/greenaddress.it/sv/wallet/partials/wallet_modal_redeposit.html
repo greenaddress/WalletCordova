@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">Du har några utgångna insättningar. Om du inte återinsätter dem eller hämtar åt dem så tillåts inga transaktioner</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Återinsätt som en enda transaktion (billigare)</a><br />
+    		uppskattad avgift: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Återinsätt som en transaktion per utmatning (bättre integritet)</a><br />
+    		uppskattad avgift: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> transaktioner)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Stäng</button>
+</div>

@@ -13,7 +13,7 @@ angular.module('greenWalletSettingsDirectives', [])
             template += '<i class="glyphicon glyphicon-envelope"></i>'
         }
         template += '</td>';
-        var item_name = scope.wallet.hdwallet.secret_exponent_bytes ? 
+        var item_name = scope.wallet.hdwallet.priv ? 
                         '<a href="(( send_url(item) ))">(( item.name ))</a>' :
                         '(( item.name ))';  // don't allow opening 'Send' in watch-only
         if (interactive) {

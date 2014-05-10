@@ -1,0 +1,30 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">Παρακαλώ δώστε όνομα χρήστη και κωδικό πρόσβασης.</p>
+        <hr>
+        <form ng-submit="got_username_password(username, password)" name="form" class="form-horizontal">
+            <div class="form-group">
+                <label for="usernameId" class="col-sm-5 control-label">Εισάγετε το όνομα χρήστη</label>
+                <div class="col-sm-4">
+                    <input class="form-control" clickfix id="usernameId" focus-on="customLoginModal" type="text" ng-model="username" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="passwordId" class="col-sm-5 control-label">Εισάγετε τον κωδικό σας</label>
+                <div class="col-sm-4">
+                    <input class="form-control" clickfix id="passwordId" type="password" ng-model="password" />
+                </div>
+            </div>
+            <input type="submit" style="position: absolute; top: -10000px; left: -10000px;" submitter ng-disabled="!(username && password)" />
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Ακύρωση</button>
+            <button class="btn btn-primary" ng-click="submit_me()" ng-disabled="!(username && password)">Ok</button>
+        </div>
+    </div>
+
+</div>

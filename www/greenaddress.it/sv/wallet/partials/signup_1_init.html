@@ -1,0 +1,60 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+
+            <div class="create-modal-header">
+                <span class="pull-left">Har du redan ett konto?
+                    
+                    <a href="/wallet">Logga in på din plånbok</a></span>
+                    
+                Steg 1 av 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+                <div class="title">Du är nu en stolt ägare av en Bitcoinplånbok<br>
+                    <small>Vänligen färdigställ denna fyrstegsregistrering för att skydda den mot inkräktare</small>
+                </div>
+                <hr>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Din mnemoniska lösenfras</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic info" ng-hide="signup.mnemonic">Genererar mnemonisk fras, vänta...</div>
+                <hr>
+                <p>Skriv ner dessa orden och förvara dem på ett säkert ställe eftersom de inte kan återskapas. <b>Vi lagrar inte ovanstående information någonstans, vi kan inte hjälpa dig att återskapa den!</b></p>
+            </div>
+
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+                <label for="checkbox-confirmation">
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Jag bekräftar att min lösenfras är sparad &amp; säker och jag accepterar <a href="/tos" target="_blank">Villkor</a>
+                </label>
+                <br>
+                <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Visa Qr-kod</button>
+                
+                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Skriv till NFC-tagg</button>
+                
+                <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Fortsätt!</a>
+                <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Fortsätt!</a>
+            </div>
+
+            <div class="create-modal-footer" ng-show="signup.unexpected_error">
+                <a class="btn btn-danger login-submit" href="" ng-click="signup.try_again()">
+                    Fel:  (( signup.unexpected_error )).  Klicka för att försöka igen
+                </a>
+            </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="printable">
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
+    <p>Lösenfrasen för din plånbok är:</p>
+    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Lagra denna sida på ett säkert ställe</i></p>
+</div>

@@ -1,0 +1,15 @@
+<div class="modal-body text-center">
+    <p class="alert alert-warning">У Вас є деякі депозити, термін дії яких завершився. Якщо ви не зробите повторний депозит чи не активуєте їх, то транзакції будуть заборонені</p>
+    
+    	<p><a href="" ng-click="redeposit_single_tx()">
+    		Зробити депозит як одну транзакцію (дешевше)</a><br />
+    		передбачувана комісія: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
+    	<p><a href="" ng-click="redeposit_multiple_tx()">
+    		Повторний депозит як одна транзакція на вихід (краща конфіденційність)</a><br />
+    		передбачувана комісія: (( redeposit_estimated_fees.multiple_tx|format_btc:wallet.unit ))
+    		(<span>(( wallet.expired_deposits.length ))</span> транзакції)</p>
+    </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">Закрити</button>
+</div>

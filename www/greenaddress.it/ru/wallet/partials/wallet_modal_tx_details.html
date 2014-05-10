@@ -1,0 +1,50 @@
+<div class="modal-header">
+    Детали транзакции
+</div>
+
+<div class="modal-body">
+    <dl>
+        <dt>Временная ометка</dt>
+        <dd>(( selected_transaction.ts ))</dd>
+
+        <dt>Хеш</dt>
+        <dd>(( selected_transaction.txhash ))</dd>
+        
+        <dt>Коммисия</dt>
+        <dd>(( selected_transaction.fee | format_btc:wallet.unit ))</dd>
+    </ul>
+
+    <hr class="double">
+
+    <p style="font-size:140%;"><b>Входы</b></p>
+
+    <table class="table">
+        <tr><th>Адрес</th><th>Количество</th></tr>
+        <tr ng-repeat="input in selected_transaction.inputs">
+            <td>(( input.ad ))</td>
+            <td>(( input.value | format_btc:wallet.unit ))</td>
+        </tr>
+    </table>
+
+    <hr class="double">
+
+    <p style="font-size:140%;"><b>Выходы</b></p>
+
+    <table class="table">
+        <tr><th>Адрес</th><th>Количество</th></tr>
+        <tr ng-repeat="output in selected_transaction.outputs">
+            <td>(( output.ad ))<br />
+
+            <a ng-hide="output.nlocktime_json || output.is_spent || !output.is_relevant" href="" ng-click="generate_nlocktime(selected_transaction, output)">запрос nLockTime</a>
+            <p style="word-wrap: break-word; width: 400px;" ng-show="output.nlocktime_json">nLockTime: (( output.nlocktime_json ))</p>
+            </td>
+            <td>(( output.value | format_btc:wallet.unit ))</td>
+        </tr>
+    </table>
+</div>
+
+<div class="modal-footer">
+    <div class="">
+        <button class="btn btn-primary" ng-click="$dismiss()">Закрыть</button>
+    </div>
+</div>

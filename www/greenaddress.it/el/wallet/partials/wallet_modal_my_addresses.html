@@ -1,0 +1,18 @@
+<div class="modal-body">
+
+    <p ng-show="!receive.my_addresses.length">Δεν βρέθηκαν διευθύνσεις</p>
+    <table class="table" ng-show="receive.my_addresses.length">
+        <tr><th>Διεύθυνση</th><th>πλήθος συναλλαγών</th></tr>
+        <tr ng-repeat="address in receive.my_addresses">
+            <td>(( address.ad ))</td>
+            <td>(( address.num_tx ))</td>
+        </tr>
+    </table>
+
+</div>
+
+<div class="modal-footer">
+    <div class="">
+        <button class="btn btn-primary" ng-click="$dismiss()">Κλείσιμο</button>
+    </div>
+</div>

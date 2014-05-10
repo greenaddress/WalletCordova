@@ -6,7 +6,7 @@
   </div>
 </div>
 <div ng-controller="AddressBookController">
-<div class="row" ng-show="wallet.hdwallet.secret_exponent_bytes">
+<div class="row" ng-show="wallet.hdwallet.priv">
   <div class="col-md-12">
     <div class="header-options">
       <a href="" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i> Ajouter un nouveau</a>
@@ -20,7 +20,7 @@
 				<th></th>
 				<th><a href="">Nom</a></th>
 				<th><a href="">Adresse</a></th>
-				<th ng-show="wallet.hdwallet.secret_exponent_bytes"></th>
+				<th ng-show="wallet.hdwallet.priv"></th>
 			</thead>
 	  
 			<tbody>

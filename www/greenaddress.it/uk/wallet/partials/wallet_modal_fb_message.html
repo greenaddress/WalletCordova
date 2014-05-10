@@ -1,0 +1,16 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">Будь-ласка, відправте повідомлення через Facebook.</p>
+        <hr>
+        <p><a class="btn btn-huge btn-facebook center-block" ng-click="send_fb_via_fb()"><i class="icon-facebook"></i> Відправити</a></p>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Відмінити - анулювати транзакцію</button>
+            <button class="btn btn-primary" ng-click="$close()" ng-disabled="!send_fb_via_fb_clicked">Я відправив/відправила повідомлення</button>
+        </div>
+    </div>
+
+</div>

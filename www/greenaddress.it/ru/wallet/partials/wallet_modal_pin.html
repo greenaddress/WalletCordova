@@ -1,0 +1,27 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">Вы можете создать 4-значный персональный идентификационный номер, используемый для извлечения пароля шифрования мнемонической парольной фразы.</p>
+        <hr>
+        <form ng-submit="set_pin(form.$valid)" name="form" class="form-horizontal">
+            <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                <label for="pinId" class="col-sm-5 control-label">Введите ваш PIN</label>
+                <div class="col-sm-4">
+                    <input clickfix focus-on="usePinModal" type="tel" mask-input class="form-control pin" required="required"
+                           name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                           ng-model="state.new_pin_value" />
+                    <input type="submit" class="hide" submitter />
+                    <div class="help-block"><i class="glyphicon glyphicon-info-sign"></i> PIN-код должен быть 4-значный номер</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Отменить</button>
+            <button class="btn btn-primary" ng-click="submit_me()">Подтвердите номер PIN</button>
+        </div>
+    </div>
+
+</div>

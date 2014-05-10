@@ -1,0 +1,54 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                шаг 2 из 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Быстрый и безопасный доступ к Wallet<br><small>Для того чтобы иметь безопасный но быстрый доступ с этого устройства, установите PIN-код</small></div>
+                <hr>
+                <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
+                    <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <label class="col-sm-5 control-label" for="id_pin">ПИН номер</label>
+                        <div class="col-sm-4">
+                            <input class="form-control pin" type="tel" mask-input
+                                   id="id_pin" name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
+                                   placeholder="4-знаковый номер" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                        </div>
+                        <input type="submit" class="hide" submitter />
+                    </div>
+                </form>
+                <hr>
+                <p>
+                Доступ через PIN-код разрешает быстрый вход в Ваш кошелек сохраняя при этом безопасность на высоком уровне. PIN-код защищает случайный AES 256-битный пароль, который будет удален в случае 3 не успешных попыток ввода PIN-кода и тогда Ваша мнемоника должна будет предоставлена полностью. Легко, удобно и безопасно. Пользуйтесь!
+                </p>
+            </div>
+
+            <div class="create-modal-footer">
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress < 100">
+                    Генерирование ключей вашего кошелька, пожалуйста подождите ... (( signup.seed_progress ))%
+                </span>
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
+                    Пожалуйста, подождите, вход...
+                </span>
+                <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                    Я хочу видеть свой кошелек и пропустить все это!
+                </a>
+                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100||!signup.logged_in||signup.login_failed}">
+                    <span ng-hide="signup.setting_pin">PIN-код установлен, все готово для шага 3</span>
+                    <span ng-show="signup.setting_pin">Установка PIN-кода...</span>
+                </a>
+                <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
+                    <span>Пропустить настройку PIN-кода и продолжить</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

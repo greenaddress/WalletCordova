@@ -1,0 +1,60 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+
+            <div class="create-modal-header">
+                <span class="pull-left">У Вас уже есть аккаунт?
+                    
+                    <a href="/wallet">Вход в ваш кошелёк</a></span>
+                    
+                шаг 1 из 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+                <div class="title">Теперь вы гордый владелец bitcoin кошелька<br>
+                    <small>Пожалуйста, завершите эту 4-этапную настройку аккаунта для полной защиты от злоумышленников</small>
+                </div>
+                <hr>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Ваша мнемоническая фраза-пароль</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic info" ng-hide="signup.mnemonic">Генерируем мнемонику, пожалуйста подождите</div>
+                <hr>
+                <p>Пожалуйста запишите эти слова и храните их в надежном месте, поскольку они не могут быть восстановлены. <b>Мы нигде не храним вышеуказанную информацию, мы не сможем помочь вам восстановить ее!</b></p>
+            </div>
+
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+                <label for="checkbox-confirmation">
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Я подтверждаю, что моя фраза-пароль сохранена в безопасном месте, и я согласен (согласна) с <a href="/tos" target="_blank">Условия предоставления услуг</a>
+                </label>
+                <br>
+                <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Показать QR код</button>
+                
+                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Записать на тег NFC</button>
+                
+                <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Продолжить!</a>
+                <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Продолжить!</a>
+            </div>
+
+            <div class="create-modal-footer" ng-show="signup.unexpected_error">
+                <a class="btn btn-danger login-submit" href="" ng-click="signup.try_again()">
+                    Ошибка: (( signup.unexpected_error )).  Кликнете чтобы повторит заново
+                </a>
+            </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="printable">
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
+    <p>Фраза доступа к вашему кошельку:</p>
+    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Храните эту страницу в защищенном месте</i></p>
+</div>

@@ -72,10 +72,15 @@ angular.module('greenWalletInfoControllers',
         btcGraph.yAxis().ticks(Math.floor(size[1]/30));
         dc.renderAll();
         angular.element(window).on('resize', function() {
-            var size = getSize();
-            var svg = document.getElementById('btc_graph').getElementsByTagName('svg')[0];
-            svg.setAttribute("width", size[0]);
-            svg.setAttribute("height", size[1]);
+            try {
+                var size = getSize();
+                var svg = document.getElementById('btc_graph').getElementsByTagName('svg')[0];
+                svg.setAttribute("width", size[0]);
+                svg.setAttribute("height", size[1]);
+            } catch (err) {
+                //  btc_graph does not exist, i.e. logged out
+                //  FIXME: perhaps remove hooks on logout?
+            }
         });
         gaEvent('Wallet', 'BalanceGraphShown');
     }
@@ -95,8 +100,8 @@ angular.module('greenWalletInfoControllers',
             invalid_passphrase: gettext('Invalid passphrase')
         }
         var sweep = function(key_bytes) {
-            var key = new Bitcoin.ECKey(key_bytes);
-            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social", key.getPubCompressed()).then(function(data) {
+            var key = new Bitcoin.ECKey(key_bytes, true);
+            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social", key.getPub().toBytes()).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
                     data.prev_outputs.push(
@@ -113,19 +118,20 @@ angular.module('greenWalletInfoControllers',
             });
         };
         if (encrypted_key.indexOf('K') == 0 || encrypted_key.indexOf('L') == 0 || encrypted_key.indexOf('c') == 0) {  // unencrypted
-            var bytes = B58.decode(encrypted_key);
+            var bytes = Bitcoin.base58.decode(encrypted_key);
             if (bytes.length != 38) {
                 deferred.reject(errors.invalid_unenc_privkey);
                 return deferred.promise;
             }
             var expChecksum = bytes.slice(-4);
             bytes = bytes.slice(0, -4);
-            var checksum = Crypto.SHA256(Crypto.SHA256(bytes, {asBytes: true}), {asBytes: true});
+            var checksum = Bitcoin.CryptoJS.SHA256(Bitcoin.CryptoJS.SHA256(Bitcoin.convert.bytesToWordArray(bytes)));
+            checksum = Bitcoin.convert.wordArrayToBytes(checksum);
             if (checksum[0] != expChecksum[0] || checksum[1] != expChecksum[1] || checksum[2] != expChecksum[2] || checksum[3] != expChecksum[3]) {
                 deferred.reject(errors.invalid_unenc_privkey);
                 return deferred.promise;
             }
-            if (cur_coin == 'BTT') {
+            if (cur_net == 'testnet') {
                 var version = 0xef;
             } else {
                 var version = 0x80;
@@ -135,7 +141,7 @@ angular.module('greenWalletInfoControllers',
                 return deferred.promise;
             }
             bytes = bytes.slice(1, -1);
-            sweep(bytes);
+            sweep(Array.apply([], bytes));
             deferred.resolve();
         } else {
             if (window.cordova) {
@@ -147,7 +153,7 @@ angular.module('greenWalletInfoControllers',
                         });
                     }, function(fail) {
                         deferred.reject([fail == 'invalid_passphrase', errors[fail] || fail]);
-                    }, "BIP38", "decrypt", [encrypted_key, password, cur_coin]);
+                    }, "BIP38", "decrypt", [encrypted_key, password, (cur_net=='testnet'?'BTT':'BTC')]);
                 })();
             } else {
                 var worker = new Worker("/static/js/bip38_worker.min.js");
@@ -162,7 +168,7 @@ angular.module('greenWalletInfoControllers',
                 }
                 worker.postMessage({data: encrypted_key,
                                     key: password,
-                                    cur_coin_version: cur_coin_version});
+                                    cur_coin_version: Bitcoin.network[cur_net].addressVersion});
             }
         }
         return deferred.promise;
@@ -216,6 +222,9 @@ angular.module('greenWalletInfoControllers',
         var receiving_id = $scope.wallet.send_to_receiving_id;
         var recipient = {name: receiving_id, address: receiving_id, type: receiving_id.indexOf('reddit:') == -1 ? 'address' : 'reddit',
                          amount: $scope.wallet.send_to_receiving_id_amount};
-        $location.path('/send/' + Crypto.util.bytesToBase64(UTF8.stringToBytes(JSON.stringify(recipient))));
+        var b58 = Bitcoin.base58.encode(
+            Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
+                JSON.stringify(recipient)).toString()));
+        $location.path('/send/' + b58);
     }
 }]);

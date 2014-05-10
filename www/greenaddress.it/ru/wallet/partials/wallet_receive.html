@@ -1,0 +1,93 @@
+<div class="row hidden-xs hidden-sm">
+  <div class="col-md-12">
+    <div class="header">
+      Получить денежные средства<span class="balance pull-right" ng-include="'file:///android_asset/www/greenaddress.it/'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Количество</label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-xs-6 col-sm-5 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">(( wallet.unit ))</span>
+                <input class="form-control" type="text" id="amount" ng-model="receive.amount" placeholder="0.0000" />
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-5 col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">(( wallet.fiat_currency ))</span>
+                <input class="form-control" type="text" ng-model="receive.amount_fiat" placeholder="0.00" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="double">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Bitcoin URI</label>
+        <div class="col-sm-10">
+          <p class="form-control-static payment-url break-all" style="display:inline-block;">
+              <a href="((receive.bitcoin_uri))" onclick="return false;">((receive.bitcoin_uri))</a>
+          </p>
+          <div class="pull-right">
+            <button class="btn btn-info btn-block-xs" ng-click="show_bitcoin_uri()" ng-hide="receive.bitcoin_uri">Показать URI и адрес</button>
+            <a class="btn btn-default btn-block-xs" ng-click="show_bitcoin_uri(true)"><i class="glyphicon glyphicon-qrcode"></i> Показать QR код</a>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-show="receive.bitcoin_uri">
+        <label class="col-sm-2 control-label" for="amount">Адрес</label>
+        <div class="col-sm-10">
+          <p class="form-control-static payment-url break-all" style="display:inline-block;">
+              ((receive.bitcoin_address))
+          </p>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amount">Постоянный URL Оплаты</label>
+        <div class="col-sm-10">
+          <p class="form-control-static payment-url break-all" style="display:inline-block;">
+              <a href="((receive.payment_url))" onclick="return false;">((receive.payment_url))</a>
+          </p>
+          <div class="pull-right">
+            <a class="btn btn-default btn-block-xs" ng-click="show_url_qr(receive.payment_url)"><i class="glyphicon glyphicon-qrcode"></i> Показать QR код</a>
+          </div>
+        </div>
+      </div>
+      <div ng-show="receive.show_sweep">
+        <hr>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="id_privkey_wif">Приватный ключ у WIF формате</label>
+          <div class="col-sm-10">
+            <div class="col-sm-10">
+              <div class="input-group">
+                <input ng-model="receive.privkey_wif" class="form-control" type="text" id="id_privkey_wif" placeholder="Введите приватный ключ, чтобы смести с него средства сюда">
+                <span class="input-group-btn">
+                  <span class="btn btn-default" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
+                    Cканировать QR код
+                    <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="receive.read_wif_qr_code($event)">
+                  </span>
+                  <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="receive.stop_scanning_qr_code()">Отменить</a>
+                </span>
+              </div>
+              
+            </div>
+            <div class="pull-right">
+              <a class="btn btn-default btn-block-xs" ng-class="{disabled: receive.sweeping}" ng-click="receive.sweep()">Смести</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="pull-right">
+            <a class="btn btn-default btn-block-xs" ng-click="receive.show_previous_addresses()"><i class="glyphicon glyphicon-time"></i> Показать ранее созданные адреса</a>
+          </div>
+    </form>
+  </div>
+</div>

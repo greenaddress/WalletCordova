@@ -1,0 +1,62 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+            <div class="create-modal-header" ng-hide="wallet.redeem_key">
+                Har inget konto än?
+                <a href="#/create"><strong>Skapa ny plånbok</strong></a>
+            </div>
+            <div class="create-modal-body text-center">
+                <div ng-include="wallet.signuplogin_header"></div>
+                <hr>
+                <div class="subtitle">Logga in för full plånboksåtkomst</div>
+                <form class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}">
+                    <div class="control-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-1">
+                                <input ng-show="state.has_pin" class="form-control pin" ng-disabled="is_loading || logging_in" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="PIN-nummer" ng-model="use_pin_data.pin" />
+                            </div>
+                            <div class="col-sm-1">
+                                <p ng-show="state.has_pin" class="form-control-static">eller</p>
+                            </div>
+                            <div class="col-sm-7">
+                                <span class="input-group">
+                                    <input class="form-control" ng-disabled="is_loading || logging_in" ng-model="state.mnemonic" placeholder="Mnemonisk lösenfras" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default" ng-class="{disabled: logging_in}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
+                                            Skanna QR
+                                            <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)">
+                                        </span>
+                                        <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="stop_scanning_qr_code()">Avbryt</a>
+                                    </span>
+                                </span>
+                                
+                                <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Ogiltig mnemonisk fras: (( state.mnemonic_error ))</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!wallet.send_to_receiving_id">
+                        <hr>
+                        <div class="subtitle">Logga in på övervakningsläge</div>
+                        
+                        <a href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
+                        
+                        
+                        <a href="" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Anpassad inloggning</a>
+                        
+                        <a href="" class="btn btn-twitter" disabled><i class="icon-twitter"></i> Twitter<span class="coming-soon">Kommer snart</span></a>
+                        
+                    </div>
+                    <hr>
+                    <button type="submit" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error)"
+                            class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
+                            href="#" id="restore-wallet-continue">
+                        <span ng-hide="state.seed_progress || state.login_error">Logga in på din plånbok</span>
+                        <span ng-show="state.seed_progress && !state.login_error">Bearbetar ... (( state.seed_progress ))%</span>
+                        <span ng-show="state.login_error">Fel, försök igen</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
