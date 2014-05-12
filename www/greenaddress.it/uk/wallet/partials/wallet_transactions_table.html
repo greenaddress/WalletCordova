@@ -15,7 +15,8 @@
       <td class="date">(( transaction.ts|date:"dd/MM/yyyy" ))</td>
       <td>
         <div class="desc">
-          <a href="" ng-show="details" ng-click="details(transaction)">(( transaction.description ))</a>
+          <a href="" ng-show="details" ng-click="details(transaction)">(( transaction.description ))
+            <small ng-show="transaction.memo" style="color: black;">(( transaction.memo ))</small></a>
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
               <span class="label label-default" ng-show="transaction.confirmations == 0">непідтверджена</span>

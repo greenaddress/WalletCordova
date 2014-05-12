@@ -147,10 +147,10 @@ angular.module('greenWalletSendControllers',
                 gaEvent('Wallet', 'SendReadQrCodeSuccessful');
                 $rootScope.safeApply(function() {
                     parsed_uri = parse_bitcoin_uri(text);
-                    if (parsed_uri[0]) {
-                        that.recipient = parsed_uri[0];
-                        if (parsed_uri[1]) {
-                            that.amount = btcToUnit(parsed_uri[1]);
+                    if (parsed_uri.recipient) {
+                        that.recipient = parsed_uri.recipient;
+                        if (parsed_uri.amount) {
+                            that.amount = btcToUnit(parsed_uri.amount);
                         }
                     } else {
                         that.recipient = text;
@@ -391,7 +391,7 @@ angular.module('greenWalletSendControllers',
         send_address: function() {
             var to_addr = this.recipient.constructor === String ? this.recipient : this.recipient.address;
             var parsed_uri = parse_bitcoin_uri(to_addr);
-            if (parsed_uri[0]) to_addr = parsed_uri[0];
+            if (parsed_uri.recipient) to_addr = parsed_uri.recipient;
             var that = this;
             var satoshis = that.amount_to_satoshis(that.amount);
             $rootScope.is_loading += 1;
@@ -423,7 +423,18 @@ angular.module('greenWalletSendControllers',
                 that.sending = false;
                 notices.makeNotice('error', error.desc);
             });
-            
+        },
+        send_to_payreq: function() {
+            var that = this;
+            var satoshis = that.amount_to_satoshis(that.amount);
+            that.sending = true;
+            tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, that.recipient.data).then(function(data) {
+                return wallets.sign_and_send_tx($scope, data).then(function() {
+                    $location.url('/transactions/');
+                });
+            }, function(error) {
+                notices.makeNotice('error', error.desc);
+            }).finally(function() { that.sending = false; });
         },
         send_money: function() {
             if (isNaN(parseFloat(this.amount))) {
@@ -447,6 +458,9 @@ angular.module('greenWalletSendControllers',
             } else if (this.recipient.type == 'reddit') {
                 gaEvent('Wallet', 'SendToReddit');
                 this.send_to_reddit();
+            } else if (this.recipient.type == 'payreq') {
+                gaEvent('Wallet', 'SendToPaymentRequestSent');
+                this.send_to_payreq();
             } else if (this.recipient.constructor === String) {
                 if (this.recipient.indexOf('@') != -1) {
                     gaEvent('Wallet', 'SendToNewEmail');
@@ -470,6 +484,7 @@ angular.module('greenWalletSendControllers',
                     this.recipient.indexOf('@') == -1 &&
                     this.recipient.indexOf('reddit') != 0) ||
                 this.recipient.type == 'address' ||
+                this.recipient.type == 'payreq' || 
                 this.recipient.has_wallet;
         },
         send_to_priv_done: function() {
@@ -483,16 +498,16 @@ angular.module('greenWalletSendControllers',
     $scope.$watch('send_tx.recipient', function(newValue, oldValue) {
         if (newValue === oldValue) return;
         var parsed_uri = parse_bitcoin_uri(newValue);
-        if (parsed_uri[1]) {    
-            $scope.send_tx.amount = btcToUnit(parsed_uri[1]);
+        if (parsed_uri.amount) {    
+            $scope.send_tx.amount = btcToUnit(parsed_uri.amount);
         }
     });
     $scope.$watch('send_tx.amount', function(newValue, oldValue) {
         if (newValue !== oldValue) {
             var parsed_uri = parse_bitcoin_uri($scope.send_tx.recipient);
-            if (parsed_uri[1] && newValue != btcToUnit(parsed_uri[1])) {
+            if (parsed_uri.amount && newValue != btcToUnit(parsed_uri.amount)) {
                 // replace the URI with recipient when amount is changed
-                $scope.send_tx.recipient = parsed_uri[0];
+                $scope.send_tx.recipient = parsed_uri.recipient;
             }
         }
     });

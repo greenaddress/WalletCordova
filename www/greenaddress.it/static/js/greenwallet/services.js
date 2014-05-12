@@ -96,8 +96,8 @@ angular.module('greenWalletServices', [])
 
     return autotimeoutService;
 
-}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout',
-        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout) {
+}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types',
+        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types) {
     var walletsService = {};
     var handle_double_login = function(retry_fun) {
         return $modal.open({
@@ -380,7 +380,7 @@ angular.module('greenWalletServices', [])
                     for (var j = 0; j < tx.eps.length; j++) {
                         var ep = tx.eps[j];
                         if (ep.is_credit && (!ep.is_relevant || ep.social_destination)) {
-                            if (ep.social_destination) {
+                            if (ep.social_destination && ep.social_destination_type != social_types.PAYMENTREQUEST) {
                                 pubkey_pointer = ep.pubkey_pointer;
                                 var bytes = Bitcoin.base58.decode(ep.ad);
                                 var version = bytes[0];
@@ -393,6 +393,10 @@ angular.module('greenWalletServices', [])
                                     sent_back = true;
                                     addresses.push(ep.ad);
                                 } else {
+                                    addresses.push(ep.social_destination);
+                                }
+                            } else if (ep.social_destination && ep.social_destination_type == social_types.PAYMENTREQUEST) {
+                                if (addresses.indexOf(ep.social_destination) == -1) {
                                     addresses.push(ep.social_destination);
                                 }
                             } else {
@@ -414,7 +418,7 @@ angular.module('greenWalletServices', [])
                 // prepend zeroes for sorting
                 var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
                 while (value_sort.length < 20) value_sort = '0' + value_sort;
-                retval.unshift({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash,
+                retval.unshift({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
                              value_sort: value_sort, value: value,
                              value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
                              redeemable_value: redeemable_value, negative: negative, positive: positive,
@@ -1086,18 +1090,18 @@ angular.module('greenWalletServices', [])
     };
 }).factory('parse_bitcoin_uri', ['parseKeyValue', function(parseKeyValue) {
     return function parse_bitcoin_uri(uri) {
-        // FIXME: Should do better parsing, checking label and message too
         if (uri.indexOf("bitcoin:") == -1) {
-            // not an URI
-            return [undefined, undefined];
+            // not a URI
+            return {};
         } else {
             if (uri.indexOf("?") == -1) {
                 // no amount
-                return [uri.split("bitcoin:")[1], undefined];
+                return {recipient: uri.split("bitcoin:")[1]};
             } else {
                 var recipient =  uri.split("bitcoin:")[1].split("?")[0];
                 var variables = parseKeyValue(uri.split('bitcoin:')[1].split('?')[1]);
-                return [recipient, variables.amount];
+                variables.recipient = recipient;
+                return variables;
             }
         }
     }

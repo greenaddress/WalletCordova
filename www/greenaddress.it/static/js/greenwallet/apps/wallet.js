@@ -19,6 +19,12 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
 	REGULAR: 1,
     EXTERNAL: 2
 })
+.constant('social_types', {
+    FACEBOOK: 0,
+    EMAIL: 10,
+    UNKNOWN: 100,
+    PAYMENTREQUEST: 110
+})
 .config(['$routeProvider', '$provide', function config($routeProvider, $provide) {
     $routeProvider
         .when('/', {

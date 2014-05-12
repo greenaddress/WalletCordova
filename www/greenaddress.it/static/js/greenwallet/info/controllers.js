@@ -226,5 +226,16 @@ angular.module('greenWalletInfoControllers',
             Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
                 JSON.stringify(recipient)).toString()));
         $location.path('/send/' + b58);
+    } else if ($scope.wallet.send_to_payment_request && !$scope.wallet.send_to_receiving_id_shown) {
+        gaEvent('Wallet', 'SendToPaymentRequestOpened');
+        $scope.wallet.send_to_receiving_id_shown = true;
+        var data = $scope.wallet.send_to_payment_request;
+        var name = data.merchant_cn || data.request_url;
+        var recipient = {name: name, data: data, type: 'payreq',
+                         amount: $scope.wallet.send_to_receiving_id_amount};
+        var b58 = Bitcoin.base58.encode(
+            Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
+                JSON.stringify(recipient)).toString()));
+        $location.path('/send/' + b58);
     }
 }]);

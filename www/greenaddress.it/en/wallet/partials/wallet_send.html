@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group" ng-hide="wallet.send_from">
+      <div class="form-group" ng-hide="wallet.send_from || send_tx.recipient.type == 'payreq'">
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0;">
             Fee (<span>((10000|format_btc:wallet.unit))</span> / kB) will be paid by:

@@ -423,14 +423,14 @@
   <div class="col-md-9">
     <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
       <div class="form-group">
-        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac_email_switch}">
+        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
           <label for="id_nlocktime_blocks" class="control-label">Дозволити використання коштів без підпису GreenAddress.it після</label>
-          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac_email_switch" />
+          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
           блоків
           <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
           <br />(( settings.nlocktime.blocks_userfriendly ))
         </div>
-        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac_email_switch">
+        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac.email_confirmed">
           <hr>
           <small class="label label-info" style="white-space: normal"><strong>ПРИМІТКА</strong>: Для роботи цієї функції обидва сповіщення повинні бути включені - для вхідних та вихідних транзакцій.</small>
         </div>

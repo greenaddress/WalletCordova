@@ -319,11 +319,13 @@ angular.module('greenWalletSettingsControllers',
             update: function() {
                 this.updating_nlocktime_blocks = true;
                 var that = this;
-                tx_sender.call('http://greenaddressit.com/login/set_nlocktime', that.blocks_new).then(function() {
-                    $scope.wallet.nlocktime_blocks = that.blocks = that.blocks_new;
-                    notices.makeNotice('success', gettext('nLockTime settings updated successfully'));
-                }, function(err) {
-                    notices.makeNotice('error', err.desc);
+                wallets.get_two_factor_code($scope, 'change_nlocktime', {'value': that.blocks_new}).then(function(twofac_data) {
+                    return tx_sender.call('http://greenaddressit.com/login/set_nlocktime', that.blocks_new, twofac_data).then(function() {
+                        $scope.wallet.nlocktime_blocks = that.blocks = that.blocks_new;
+                        notices.makeNotice('success', gettext('nLockTime settings updated successfully'));
+                    }, function(err) {
+                        notices.makeNotice('error', err.desc);
+                    });
                 }).finally(function() { that.updating_nlocktime_blocks = false; });
             }
         },

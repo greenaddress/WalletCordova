@@ -1,5 +1,8 @@
 <div class="title">Está por enviar 
-  <span ng-show="wallet.send_to_receiving_id_amount">((wallet.send_to_receiving_id_amount|format_btc:'mBTC'))</span><span ng-hide="wallet.send_to_receiving_id_amount">Bitcoin</span>!
+  <span ng-show="wallet.send_to_receiving_id_amount">((wallet.send_to_receiving_id_amount|format_btc:'mBTC'))</span><span ng-hide="wallet.send_to_receiving_id_amount">Bitcoin</span><span ng-show="wallet.send_to_receiving_id_currency"> (<span>((wallet.send_to_receiving_id_amount_fiat))</span> <span>((wallet.send_to_receiving_id_currency))</span>)</span>!
+  <div ng-show="wallet.send_to_verified_common_name">
+  	<strong>Verified recipient:</strong> (( wallet.send_to_verified_common_name ))
+  </div>
   <div ng-show="wallet.send_to_receiving_id.indexOf('GA')==0">
     <br><small>Por favor inicie sesión, cree una nueva Wallet o haga click abajo para mostrar una Bitcoin: URI:</small></div>
   <div ng-hide="wallet.send_to_receiving_id.indexOf('GA')==0">

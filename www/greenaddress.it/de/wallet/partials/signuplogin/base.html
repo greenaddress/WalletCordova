@@ -14,16 +14,16 @@
                     <div class="control-group" ng-class="{'has-error': state.error && form.$invalid}">
                         <div class="row">
                             <div class="col-sm-2 col-sm-offset-1">
-                                <input ng-show="state.has_pin" class="form-control pin" ng-disabled="is_loading || logging_in" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="PIN-Nummer" ng-model="use_pin_data.pin" />
+                                <input ng-show="state.has_pin" class="form-control pin" ng-disabled="is_loading || logging_in || payreq_loading" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="PIN-Nummer" ng-model="use_pin_data.pin" />
                             </div>
                             <div class="col-sm-1">
                                 <p ng-show="state.has_pin" class="form-control-static">oder</p>
                             </div>
                             <div class="col-sm-7">
                                 <span class="input-group">
-                                    <input class="form-control" ng-disabled="is_loading || logging_in" ng-model="state.mnemonic" placeholder="Mnemomische Passphrase" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
+                                    <input class="form-control" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Mnemomische Passphrase" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
                                     <span class="input-group-btn">
-                                        <span class="btn btn-default" ng-class="{disabled: logging_in}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
+                                        <span class="btn btn-default" ng-class="{disabled: logging_in || payreq_loading}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
                                             QR Scannen
                                             <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)">
                                         </span>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-show="!wallet.send_to_receiving_id">
+                    <div ng-show="!wallet.send_to_receiving_id && !has_payreq">
                         <hr>
                         <div class="subtitle">In "Nur-Schauen-Modus" anmelden</div>
                         
@@ -48,7 +48,7 @@
                         
                     </div>
                     <hr>
-                    <button type="submit" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error)"
+                    <button type="submit" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading"
                             class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
                             href="#" id="restore-wallet-continue">
                         <span ng-hide="state.seed_progress || state.login_error">In Ihre Brieftasche einloggen</span>

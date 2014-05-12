@@ -54,8 +54,8 @@ angular.module('greenWalletControllers', [])
         var initVars = window.WalletControllerInitVars = {
             send_to_receiving_id_bitcoin_uri: destUri
         };    
-        initVars.send_to_receiving_id = parsed_uri[0];
-        initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri[1]).toString();
+        initVars.send_to_receiving_id = parsed_uri.recipient;
+        initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri.amount).toString();
     }
     var clearwallet = function() {
         $scope.wallet = {
@@ -122,6 +122,28 @@ angular.module('greenWalletControllers', [])
     });
     if (window.WalletControllerInitVars) {
         angular.extend($scope.wallet, WalletControllerInitVars);
+    }
+    if ($scope.wallet.send_to_receiving_id_bitcoin_uri) {
+        var parsed = parse_bitcoin_uri($scope.wallet.send_to_receiving_id_bitcoin_uri);
+        if (parsed.r) {
+            $scope.wallet.send_to_receiving_id = undefined;  // ignore address from the URI if 'r' is present
+            $scope.payreq_loading = true;
+            $scope.has_payreq = true;
+            tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed.r).then(function(data) {
+                $scope.payreq_loading = false; 
+                var amount = 0;
+                for (var i = 0; i < data.outputs.length; i++) {
+                    var output = data.outputs[i];
+                    amount += output.amount;
+                }
+                $scope.wallet.send_to_receiving_id_amount = amount;
+                $scope.wallet.send_to_verified_common_name = data.merchant_cn;
+                data.request_url = parsed.r;
+                $scope.wallet.send_to_payment_request = data;
+            }).catch(function(err) {
+                notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
+            });
+        }
     }
     if ($scope.wallet.send_to_receiving_id) {
         $scope.wallet.signuplogin_header = BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_pay.html'
