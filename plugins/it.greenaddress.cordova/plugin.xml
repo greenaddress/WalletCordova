@@ -16,6 +16,7 @@
     </platform>
     <platform name="ios">
         <framework src="Security.framework" />
+        <framework src="CoreBitcoin.framework" custom="true" />
         <source-file src="CDVAES.m" />
         <source-file src="CDVAES.h" />
         <source-file src="CDVBIP32.m" />

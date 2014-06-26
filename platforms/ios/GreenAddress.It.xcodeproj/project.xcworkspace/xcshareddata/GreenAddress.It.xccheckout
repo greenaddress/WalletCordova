@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>905528C6-45B4-488E-A34F-C9C9DBD7CFEE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>GreenAddress.It</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8130F295-00FB-44BB-B7A0-061940F2B9D2</key>
+		<string>ssh://gitolite/cordova</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/GreenAddress.It.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8130F295-00FB-44BB-B7A0-061940F2B9D2</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://gitolite/cordova</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8130F295-00FB-44BB-B7A0-061940F2B9D2</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8130F295-00FB-44BB-B7A0-061940F2B9D2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cordova</string>
+		</dict>
+	</array>
+</dict>
+</plist>
