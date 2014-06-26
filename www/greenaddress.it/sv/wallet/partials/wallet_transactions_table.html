@@ -11,7 +11,7 @@
   </thead>
   
   <tbody>
-    <tr ng-repeat="transaction in wallet.transactions.list | limitTo:wallet.transactions.limit | orderBy:order_by:reversed">
+    <tr ng-repeat="transaction in wallet.transactions.list | limitTo:wallet.transactions.limit | orderBy:order_by:reversed" ng-style="{opacity: (transaction.value_account !== undefined && !transaction.value.equals(transaction.value_account)) ? 0.3 : 1}">
       <td class="date">(( transaction.ts|date:"dd/MM/yyyy" ))</td>
       <td>
         <div class="desc">
@@ -19,7 +19,8 @@
             <small ng-show="transaction.memo" style="color: black;">(( transaction.memo ))</small></a>
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
-              <span class="label label-default" ng-show="transaction.confirmations == 0">obekräftad</span>
+              <span class="label label-success" ng-show="transaction.instant">instant GreenAddress confirmation</span>
+              <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant">obekräftad</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) bekräftelser</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;

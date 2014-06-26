@@ -5,5 +5,8 @@
     <p>(( twofactor_state.google_secret_key ))</p>
 </div>
 <div class="modal-footer">
+  
+  <button class="btn btn-info btn-block-xs" ng-click="copy_to_clipboard(twofactor_state.google_secret_key)"><i class="glyphicon glyphicon-transfer"></i>Copy to clipboard</button>
+  
   <button type="button" class="btn btn-primary" ng-click="$close()">Закрити</button>
 </div>

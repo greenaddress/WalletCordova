@@ -1,21 +1,83 @@
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode',
-        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode) {
+.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', 'vibration', '$timeout', '$q', 'trezor', 'bip38',
+        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, vibration, $timeout, $q, trezor, bip38) {
+
+    if (window.GlobalWalletControllerInitVars) {
+        // in case user goes back from send to login and back to send, we want to display the
+        // send data again
+        window.WalletControllerInitVars = window.GlobalWalletControllerInitVars;
+    }
+
     var state = {};
     storage.get(['pin_ident', 'encrypted_seed', 'pin_refused']).then(function(data) {
         state.has_pin = data.pin_ident && data.encrypted_seed;
         state.refused_pin = data.pin_refused || storage.noLocalStorage;  // don't show the PIN popup if no storage is available
         state.pin_ident = data.pin_ident;
+        state.toggleshowpin = !state.has_pin;
         state.encrypted_seed = data.encrypted_seed;
+        $timeout(function() {
+            if (!window.cordova || window.cordova.platformId != 'ios') {
+                // focus on iOS seems to break the app - clicking anywhere opens
+                // the software keyboard which is not what we want
+                if (state.has_pin) {
+                    focus('pin');
+                } else {
+                    focus('mnemonic');
+                }
+            }
+        });
     });
     if ($scope.wallet) {
         $scope.wallet.signup = false;  // clear signup state
     }
     $scope.state = state;
+    if (!('toggleshowpin' in state)) {
+        state.toggleshowpin = true;
+    }
+    state.toggleshowpassword = false;
     var modal;
+    var decrypt_bytes = function(bytes) {
+        var d = $q.defer();
+        $scope.decrypt_password_modal = {
+            decrypt: function() {
+                this.error = undefined;
+                if (!this.password) {
+                    this.error = gettext('Please provide a password.');
+                    return;
+                }
+                this.decrypting = true;
+                var that = this;
+                bip38.processMessage({password: this.password, mnemonic_encrypted: bytes}).then(function(message) {
+                    if (message.data.error) {
+                        that.decrypting = false;
+                        that.error = message.data.error;
+                    } else {
+                        mnemonics.toMnemonic(message.data).then(function(mnemonic) {
+                            that.decrypting = false;
+                            d.resolve(mnemonic);
+                            modal.close();
+                        });
+                    }
+                }, function(err) { that.error = err; that.decrypting = false; });
+            }
+        };
+        var modal = $modal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/modal_decryption_password.html',
+            scope: $scope
+        });
+        modal.opened.then(function() { focus('decryptPasswordModal'); })
+        return d.promise;
+    };
 
     $scope.login = function() {
+        if (!state.mnemonic && !use_pin_data.pin) {
+            return;
+        }
+
+        vibration.vibrate(250);
         $scope.logging_in = true;
+
+
         if (use_pin_data.pin) {
             gaEvent('Login', 'PinLogin');
             $scope.use_pin().finally(function() {
@@ -23,51 +85,67 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             });
             return;
         }
-        gaEvent('Login', 'MnemonicLogin');
+        var encrypted = state.mnemonic.split(" ").length == 27;
+        gaEvent('Login', encrypted ? 'MnemonicLogin' : 'MnemonicEncryptedLogin');
         state.mnemonic_error = state.login_error = undefined;
         return mnemonics.validateMnemonic(state.mnemonic).then(function() {
-            return mnemonics.toSeed(state.mnemonic).then(function(seed) {
-                return mnemonics.toSeed(state.mnemonic, 'greenaddress_path').then(function(path_seed) {
-                    var hdwallet = Bitcoin.HDWallet.fromSeedHex(seed, cur_net);
-                    hdwallet.seed_hex = seed;
-                    // seed, mneomnic, and path seed required already here for PIN setup below
-                    $scope.wallet.hdwallet = hdwallet;
-                    $scope.wallet.mnemonic = state.mnemonic;
-                    $scope.wallet.gait_path_seed = path_seed;
-                    state.seed_progress = 100;
-                    state.seed = seed;
-                    var do_login = function() {
-                        return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed).then(function(data) {
-                            if (!data) {
-                                gaEvent('Login', 'MnemonicLoginFailed');
-                                state.login_error = true;
+            var process = function(mnemonic) {
+                return mnemonics.toSeed(mnemonic).then(function(seed) {
+                    return mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
+                        return $q.when(Bitcoin.HDWallet.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
+                            hdwallet.seed_hex = seed;
+                            // seed, mnemonic, and path seed required already here for PIN setup below
+                            $scope.wallet.hdwallet = hdwallet;
+                            $scope.wallet.mnemonic = mnemonic;
+                            $scope.wallet.gait_path_seed = path_seed;
+                            state.seed_progress = 100;
+                            state.seed = seed;
+                            var do_login = function() {
+                                return wallets.login($scope, hdwallet, mnemonic, false, false, path_seed).then(function(data) {
+                                    if (!data) {
+                                        gaEvent('Login', 'MnemonicLoginFailed');
+                                        state.login_error = true;
+                                    } else {
+                                        gaEvent('Login', 'MnemonicLoginSucceeded');
+                                    }
+                                });
+                            };
+                            if (!state.has_pin && !state.refused_pin) {
+                                gaEvent('Login', 'MnemonicLoginPinModalShown');
+                                modal = $modal.open({
+                                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
+                                    scope: $scope
+                                });
+                                modal.opened.then(function() { focus("pinModal"); });
+                                return modal.result.then(do_login, function() {
+                                    storage.set('pin_refused', true);
+                                    return do_login();
+                                })
                             } else {
-                                gaEvent('Login', 'MnemonicLoginSucceeded');
+                                return do_login();
                             }
                         });
-                    };
-                    if (!state.has_pin && !state.refused_pin) {
-                        gaEvent('Login', 'MnemonicLoginPinModalShown');
-                        modal = $modal.open({
-                            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
-                            scope: $scope
-                        });
-                        modal.opened.then(function() { focus("pinModal"); });
-                        return modal.result.then(do_login, function() {
-                            storage.set('pin_refused', true);
-                            return do_login();
-                        })
-                    } else {
-                        return do_login();
-                    }
+                    }, undefined, function(progress) {
+                        state.seed_progress = Math.round(50 + progress/2);
+                    });
                 }, undefined, function(progress) {
-                    state.seed_progress = Math.round(50 + progress/2);
+                    state.seed_progress = Math.round(progress/2);
+                }).catch(function() {
+                    state.seed_progress = undefined;
                 });
-            }, undefined, function(progress) {
-                state.seed_progress = Math.round(progress/2);
-            }).catch(function() {
-                state.seed_progress = undefined;
-            });
+            }
+            if (!encrypted) {
+                return process(state.mnemonic);
+            } else {
+                if (window.cordova && cordova.platformId == 'ios') {
+                    alert ('We apologise for the inconvenience, but encrypted mnemonics are not supported on iOS at this moment.');
+                    $scope.logging_in = false;
+                } else {
+                    mnemonics.fromMnemonic(state.mnemonic).then(function(mnemonic_data) {
+                        return decrypt_bytes(mnemonic_data);
+                    }).then(process);
+                }
+            }
         }, function(e) {
             gaEvent('Login', 'MnemonicError', e);
             state.mnemonic_error = e;
@@ -76,20 +154,29 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         });
     };
     
-    if ($location.hash()) {
-        try {
-            var nfc_bytes = Bitcoin.convert.base64ToBytes($location.hash());
-        } catch(e) {}
+    $scope.window = window;
+    $scope.$watch('window.GA_NFC_LOGIN_DATA', function(newValue, oldValue) {
+        var nfc_bytes = newValue;
         if (nfc_bytes) {
-            gaEvent('Login', 'NfcLogin');
-            mnemonics.toMnemonic(nfc_bytes).then(function(mnemonic) {
+            window.GA_NFC_LOGIN_DATA = undefined;
+            var login_with_mnemonic = function(mnemonic) {
                 state.mnemonic = mnemonic;
+                state.toggleshowpin = true;
                 $scope.login();
-            });
-        } else if (state.has_pin) {
-            focus('pin');
+            }
+            if (nfc_bytes.length == 36) {  // encrypted
+                gaEvent('Login', 'NfcEncryptedLogin');
+                decrypt_bytes(nfc_bytes).then(login_with_mnemonic);
+            } else {
+                gaEvent('Login', 'NfcLogin');
+                mnemonics.toMnemonic(nfc_bytes).then(function(mnemonic) {
+                    login_with_mnemonic(mnemonic);
+                });
+            }
         }
-    } else if (state.has_pin) {
+    });
+
+    if (state.has_pin && state.toggleshowpin) {
         focus('pin');
     }
 
@@ -189,37 +276,65 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     state.login_error = true;
                     return;
                 }
+                notices.makeNotice('success', gettext('PIN correct'));
                 tx_sender.pin_ident = state.pin_ident;
                 tx_sender.pin = use_pin_data.pin;
-                var decoded = crypto.decrypt(state.encrypted_seed, password);
-                if(decoded && JSON.parse(decoded).seed) {
-                    gaEvent('Login', 'PinLoginSucceeded');
-                    var parsed = JSON.parse(decoded);
-                    if (!parsed.path_seed) {
-                        return mnemonics.toSeed(parsed.mnemonic, 'greenaddress_path').then(function(path_seed) {
-                            parsed.path_seed = path_seed;
-                            storage.set('encrypted_seed', crypto.encrypt(JSON.stringify(parsed), password));
-                            var path = mnemonics.seedToPath(path_seed);
-                            var hdwallet = Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net);
-                            hdwallet.seed_hex = parsed.seed;
-                            return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed);
-                        }, undefined, function(progress) {
-                            state.seed_progress = progress;
-                        });
+                crypto.decrypt(state.encrypted_seed, password).then(function(decoded) {
+                    if(decoded && JSON.parse(decoded).seed) {
+                        gaEvent('Login', 'PinLoginSucceeded');
+                        var parsed = JSON.parse(decoded);
+                        if (!parsed.path_seed) {
+                            return mnemonics.toSeed(parsed.mnemonic, 'greenaddress_path').then(function(path_seed) {
+                                parsed.path_seed = path_seed;
+                                crypto.encrypt(JSON.stringify(parsed), password).then(function(encrypted) {
+                                    storage.set('encrypted_seed', encrypted);
+                                })                                
+                                var path = mnemonics.seedToPath(path_seed);
+                                return $q.when(Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
+                                    hdwallet.seed_hex = parsed.seed;
+                                    return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed);
+                                });
+                            }, undefined, function(progress) {
+                                state.seed_progress = progress;
+                            });
+                        } else {
+                            return $q.when(Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
+                                hdwallet.seed_hex = parsed.seed;
+                                return wallets.login($scope, hdwallet, parsed.mnemonic, false, false, parsed.path_seed);
+                            });
+                        }
                     } else {
-                        var hdwallet = Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net);
-                        hdwallet.seed_hex = parsed.seed;
-                        return wallets.login($scope, hdwallet, parsed.mnemonic, false, false, parsed.path_seed);
+                        gaEvent('Login', 'PinLoginFailed', 'Wallet decryption failed');
+                        state.login_error = true;
+                        notices.makeNotice('error', gettext('Wallet decryption failed'));
                     }
-                } else {
-                    gaEvent('Login', 'PinLoginFailed', 'Wallet decryption failed');
-                    state.login_error = true;
-                    notices.makeNotice('error', gettext('Wallet decryption failed'));
-                }
+                });
             }, function(e) {
                 gaEvent('Login', 'PinLoginFailed', e.desc);
                 notices.makeNotice('error', e.desc || e);
                 state.login_error = true;
             });
+    }
+
+    if ($location.path() == '/trezor_login') {
+        trezor.getDevice().then(function(trezor_dev) {
+            state.trezor_dev = trezor_dev;
+            $scope.login = function() {
+                $scope.logging_in = true;
+                state.login_error = undefined;
+                trezor_dev.getPublicKey([18241 + 0x80000000]).then(function(pubkey) {
+                    var extended = pubkey.message.node.chain_code + pubkey.message.node.public_key;
+                    var path = Bitcoin.CryptoJS.HmacSHA512(extended, 'GreenAddress.it HD wallet path');
+                    path = Bitcoin.CryptoJS.enc.Hex.stringify(path);
+                    return wallets.login_trezor($scope, trezor_dev, path, false, false).then(function(data) {},
+                        function(err) {
+                            state.login_error = err;
+                        }).finally(function() { $scope.logging_in = false; });
+                }, function(err) {
+                    state.login_error = err;
+                    $scope.logging_in = false;
+                });
+            }
+        });
     }
 }]);

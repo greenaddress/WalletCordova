@@ -12,10 +12,10 @@
                     (( twofactor_method_names[method] ))<br/>
                 </label>
             </div>
-            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Please enter your (( twofactor_method_names[twofac.twofactor_method] )) authentication code which we have just sent to you.</p>
+            <p ng-show="twofac.codes_requested[twofac.twofactor_method]">Proszę podaj swój email(( twofactor_method_names[twofac.twofactor_method] )) authentication code which we have just sent to you.</p>
             
             <div class="form-inline" ng-show="twofac.twofactor_method == 'gauth' || twofac.codes_requested[twofac.twofactor_method]">
-                <p>Please enter the  (( twofactor_method_names[twofac.twofactor_method] ))  code:
+                <p>Proszę wprowadź go tutaj (( twofactor_method_names[twofac.twofactor_method] )) Kod SMS:
                 <input clickfix focus-on="twoFactorModal" class="form-control pin" type="tel" mask-input required="required"
                    maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" ng-model="twofac.twofactor_code" /></p>
             </div>
@@ -28,8 +28,8 @@
 
     <div class="modal-footer">
         <div class="btn-group pull-right">
-            <button class="btn btn-primary" ng-click="submit_me()" ng-show="twofac.twofactor_code">OK</button>
             <button class="btn btn-secondary" ng-click="$dismiss()">Anuluj</button>
+            <button class="btn btn-primary" ng-click="submit_me()" ng-show="twofac.twofactor_code">OK</button>
         </div>
     </div>
 </div>

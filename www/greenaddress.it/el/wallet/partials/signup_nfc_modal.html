@@ -1,16 +1,16 @@
 <div class="alert alert-error" ng-show="nfc_error">
     Υπήρχε ένα πρόβλημα κατά την εγραφή της NFC ετικέτας: (( nfc_error.reason ))
 </div>
-<div class="modal-body text-center" ng-show="(( !nfc_init_error && nfc_init_succeeded < 3 ))">
+<div class="modal-body text-center" ng-show="!nfc_init_error && nfc_init_succeeded < 4">
     <p>Καθορισμός αρχικών παραμέτρων για ετικέτες NFC...</p>
 </div>
-<div class="modal-body text-center" ng-show="(( nfc_init_succeeded == 3 ))">
+<div class="modal-body text-center" ng-show="nfc_init_succeeded == 4">
     <p>Παρακαλώ κρατήστε την ετικέτα (ες) κοντά στη συσκευή για να εισαχθούν στο πορτοφόλι σας!</p>
     <p>Ετικέτες γραμμένες: (( num_tags_written ))</p>
     <p>Μορφοποίηση Ετικετών : (( num_tags_formatted ))</p>
 </div>
-<div class="modal-body text-center" ng-show="(( nfc_init_error ))">
-    <p>NFC σας δεν είναι ενεργοποιημένο ή δεν είναι διαθέσιμο. Εάν είναι διαθέσιμο, παρακαλώ να το ενεργοποιήσετε από τις ρυθμίσεις</p>
+<div class="modal-body text-center" ng-show="nfc_init_error">
+    <p>Your NFC is not enabled or not available. If available, please enable it in settings</p>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" ng-click="$close()">Κλείσιμο</button>

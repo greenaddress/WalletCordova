@@ -1,0 +1,10 @@
+<div class="modal-header">
+    Confirm changing the pricing source
+</div>
+<div class="modal-body">
+  <p>Changing the pricing source while using it for transaction limits will result in resetting the limits to 0. Do you want to proceed?
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="$dismiss()" ng-disabled="limits_editor.saving">Cancelar</button>
+  <button class="btn btn-primary btn-block-xs" ng-click="$close()" ng-disabled="limits_editor.saving">Ok</button>
+</div>

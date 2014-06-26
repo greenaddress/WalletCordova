@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="it.greenaddress.cordova" version="0.0.0">
+    <name>GAIT</name>
+    <description>Cordova GAIT Plugin</description>
+    <keywords>cordova,gait</keywords>
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="BIP39">
+                <param name="android-package" value="it.greenaddress.cordova.BIP39"/>
+            </feature>
+            <feature name="BIP38">
+                <param name="android-package" value="it.greenaddress.cordova.BIP38"/>
+            </feature>
+        </config-file>
+    </platform>
+    <platform name="ios">
+        <framework src="Security.framework" />
+        <source-file src="CDVAES.m" />
+        <source-file src="CDVAES.h" />
+        <source-file src="CDVBIP32.m" />
+        <source-file src="CDVBIP32.h" />
+<!--        <source-file src="CDVBIP38.m" />
+        <source-file src="CDVBIP38.h" /> -->
+        <source-file src="CDVBIP39.m" />
+        <source-file src="CDVBIP39.h" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="AES">
+                <param name="ios-package" value="CDVAES"/>
+            </feature>
+            <feature name="BIP32">
+                <param name="ios-package" value="CDVBIP32"/>
+            </feature>
+            <feature name="BIP38">
+                <param name="ios-package" value="CDVBIP38"/>
+            </feature>
+            <feature name="BIP39">
+                <param name="ios-package" value="CDVBIP39"/>
+            </feature>
+        </config-file>
+    </platform>
+</plugin>

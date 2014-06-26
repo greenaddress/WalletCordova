@@ -22,6 +22,7 @@ Supported Platforms
 * [BlackBerry 10 Invoke Target](#blackberry-10-invoke-target)
 * [Launching Application when Scanning a Tag](#launching-your-android-application-when-scanning-a-tag)
 * [Sample Projects](#sample-projects)
+* [Book](#book)
 * [License](#license)
  
 # Installing
@@ -41,6 +42,7 @@ Note: BlackBerry 7 support is only available for Cordova 2.x. For applications t
 ## Methods
 
 - [nfc.addNdefListener](#nfcaddndeflistener)
+- [nfc.removeNdefListener](#nfcremovendeflistener)
 - [nfc.addTagDiscoveredListener](#nfcaddtagdiscoveredlistener)
 - [nfc.addMimeTypeListener](#nfcaddmimetypelistener)
 - [nfc.addNdefFormatableListener](#nfcaddndefformatablelistener)
@@ -79,6 +81,22 @@ On Android registered [mimeTypeListeners](#nfcaddmimetypelistener) takes precede
 - BlackBerry 7
 - BlackBerry 10
 - Windows Phone 8
+
+## nfc.removeNdefListener
+
+Remove an event listener for any NDEF tag.
+
+    nfc.removeNdefListener(callback, [onSuccess], [onFailure]);
+
+### Parameters
+
+- __callback__: The callback that is called when an NDEF tag is read.
+- __onSuccess__: (Optional) The callback that is called when the listener is added.
+- __onFailure__: (Optional) The callback that is called if there was an error.
+
+### Description
+
+Function `nfc.removeNdefListener` removes the callback for ndef events.
 
 ## nfc.addTagDiscoveredListener
 
@@ -122,7 +140,12 @@ Function `nfc.addMimeTypeListener` registers the callback for ndef-mime events.
 
 A ndef-mime event occurs when a `Ndef.TNF_MIME_MEDIA` tag is read and matches the specified MIME type.
 
-This function can be called multiple times to register different MIME types.
+This function can be called multiple times to register different MIME types. You should use the *same* handler for all MIME messages. 
+
+    nfc.addMimeTypeListener("text/json", *onNfc*, success, failure);
+    nfc.addMimeTypeListener("text/demo", *onNfc*, success, failure);
+
+On Android, MIME types for filtering should always be lower case. (See [IntentFilter.addDataType()](http://developer.android.com/reference/android/content/IntentFilter.html#addDataType\(java.lang.String\)))
 
 ### Supported Platforms
 
@@ -570,13 +593,21 @@ We have found it necessary to add `android:noHistory="true"` to the activity ele
 
 See the Android documentation for more information about [filtering for NFC intents](http://developer.android.com/guide/topics/connectivity/nfc/nfc.html#ndef-disc).
 
+
 Sample Projects
 ================
 
 - [NFC Reader](https://github.com/don/phonegap-nfc-reader)
 - [NFC Writer](https://github.com/don/phonegap-nfc-writer)
 - [NFC Peer to Peer](https://github.com/don/phonegap-p2p)
+- [ApacheCon 2014 Demos](https://github.com/don/apachecon-nfc-demos)
 - [Rock Paper Scissors](https://github.com/don/rockpaperscissors) *Android 2.x only*
+
+Book
+================
+Need more info? Check out my book [Beginning NFC: Near Field Communication with Arduino, Android, and PhoneGap](http://shop.oreilly.com/product/0636920021193.do)
+
+![Beginning NFC](http://akamaicovers.oreilly.com/images/0636920021193/cat.gif)
 
 License
 ================

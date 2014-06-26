@@ -1,12 +1,15 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler) {
+.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', 'vibration', '$modalStack',
+        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, vibration, $modalStack) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
             $scope.update_available = true;
         });
     });
+
+    $scope.cordova_platform = window.cordova && cordova.platformId;
+    
     $scope.update_now = function() {
         wallets.askForLogout($scope, gettext('You need to log out to update cache.')).then(function() {
             window.applicationCache.swapCache();
@@ -15,50 +18,97 @@ angular.module('greenWalletControllers', [])
     };
     $scope.logout = function() {
         wallets.askForLogout($scope).then(function() {
-            var filtered_intent = $scope.wallet.filtered_intent;
             clearwallet();
             tx_sender.logout();
-            if (filtered_intent) navigator.app.exitApp();
-            else $location.path('/');
+            $location.path('/');
         });
     };
     var updating = true, updating_txs = false;
-    var destPath = $location.path(), destAmount = $location.search().amount, destUri = $location.search().uri,
-        variables = {};
-    if ($location.search().redir) {
-        destPath = $location.search().redir;
-        if (destPath.indexOf('?') != -1) {
-            variables = parseKeyValue(destPath.split('?')[1]);
-            destPath = destPath.split('?')[0];
+    if (window.WalletControllerInitVars) {
+        // keep a copy for signup controller in case user goes back
+        window.GlobalWalletControllerInitVars = window.WalletControllerInitVars;
+    }
+    $scope.clearWalletInitVars = function() {
+        $scope.wallet.send_to_receiving_id_bitcoin_uri = undefined;
+        window.WalletControllerInitVars = undefined;
+    }
+    $scope.processWalletVars = function() {
+        var destPath = $location.path(), destAmount = $location.search().amount, destUri = $location.search().uri,
+            variables = {};
+        if ($location.search().redir) {
+            destPath = $location.search().redir;
+            if (destPath.indexOf('?') != -1) {
+                variables = parseKeyValue(destPath.split('?')[1]);
+                destPath = destPath.split('?')[0];
+            }
+            destAmount = destAmount || variables.amount;
+            destUri = destUri || variables.uri;
         }
-        destAmount = destAmount || variables.amount;
-        destUri = destUri || variables.uri;
+        if (destPath.indexOf('/redeem/') == 0) {
+            window.WalletControllerInitVars = {
+                redeem_key: destPath.slice(8).replace(/\//g, ''),
+                redeem_amount: destAmount,
+                redeem_closed: false
+            };
+        }
+        if (destPath.indexOf('/pay/') == 0) {
+            window.WalletControllerInitVars = {
+                send_to_receiving_id: destPath.slice(5).replace(/\//g, ''),
+                send_to_receiving_id_amount: destAmount,
+                send_from: Object.keys(variables).length ? variables.from : $location.search().from,
+                send_unencrypted: Object.keys(variables).length ? variables.unencrypted : $location.search().unencrypted
+            };
+        }
+        if (destPath.indexOf('/uri/') == 0) {
+            var parsed_uri = parse_bitcoin_uri(destUri);
+            var initVars = window.WalletControllerInitVars = {
+                send_to_receiving_id_bitcoin_uri: destUri
+            };    
+            initVars.send_to_receiving_id = parsed_uri.recipient;
+            initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri.amount).toString();
+        }
+
+        if (window.WalletControllerInitVars) {
+            angular.extend($scope.wallet, WalletControllerInitVars);
+        }
+
+        if ($scope.wallet.send_to_receiving_id_bitcoin_uri) {
+            $scope.wallet.signuplogin_header = BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_pay.html'
+            var parsed = parse_bitcoin_uri($scope.wallet.send_to_receiving_id_bitcoin_uri);
+            if (parsed.r) {
+                $scope.wallet.send_to_receiving_id = undefined;  // ignore address from the URI if 'r' is present
+                $scope.payreq_loading = true;
+                $scope.has_payreq = true;
+                return tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed.r).then(function(data) {
+                    $scope.payreq_loading = false; 
+                    var amount = 0;
+                    for (var i = 0; i < data.outputs.length; i++) {
+                        var output = data.outputs[i];
+                        amount += output.amount;
+                    }
+                    $scope.wallet.send_to_receiving_id_amount = amount;
+                    $scope.wallet.send_to_verified_common_name = data.merchant_cn;
+                    data.request_url = parsed.r;
+                    $scope.wallet.send_to_payment_request = data;
+                }).catch(function(err) {
+                    notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
+                });
+            }
+        } else if ($scope.wallet.send_to_receiving_id) {
+            $scope.wallet.signuplogin_header = BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_pay.html'
+        } else if ($scope.wallet.redeem_key) {
+            $scope.wallet.signuplogin_header = BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_redeem.html'
+        }
+
+        return $q.when();
     }
-    if (destPath.indexOf('/redeem/') == 0) {
-        window.WalletControllerInitVars = {
-            redeem_key: destPath.slice(8).replace(/\//g, ''),
-            redeem_amount: destAmount
-        };
-    }
-    if (destPath.indexOf('/pay/') == 0) {
-        window.WalletControllerInitVars = {
-            send_to_receiving_id: destPath.slice(5).replace(/\//g, ''),
-            send_to_receiving_id_amount: destAmount,
-            send_from: Object.keys(variables).length ? variables.from : $location.search().from,
-            send_unencrypted: Object.keys(variables).length ? variables.unencrypted : $location.search().unencrypted
-        };
-    }
-    if (destPath.indexOf('/uri/') == 0) {
-        destUri = decodeURIComponent(destUri);
-        var parsed_uri = parse_bitcoin_uri(destUri);
-        var initVars = window.WalletControllerInitVars = {
-            send_to_receiving_id_bitcoin_uri: destUri
-        };    
-        initVars.send_to_receiving_id = parsed_uri.recipient;
-        initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri.amount).toString();
-    }
+    
     var clearwallet = function() {
         $scope.wallet = {
+            show_fiat: false,
+            toggle_balance_title: function() {
+                this.show_fiat = !this.show_fiat;
+            },
             update_balance: function(first) {
                 var that = this;
                 tx_sender.call('http://greenaddressit.com/txs/get_balance').then(function(data) {
@@ -79,8 +129,8 @@ angular.module('greenWalletControllers', [])
                 }).finally(function() { updating_txs = false; });
             },
             clear: clearwallet,
-            get_tx_output_value: function(txhash, i) {
-                if (tx_sender.electrum) {
+            get_tx_output_value: function(txhash, i, no_electrum) {
+                if (!no_electrum && tx_sender.electrum) {
                     var d = $q.defer();
                     return tx_sender.electrum.issueTransactionGet(txhash).then(function(rawtx) {
                         var value = Bitcoin.Transaction.deserialize(rawtx).outs[i].value;
@@ -92,21 +142,17 @@ angular.module('greenWalletControllers', [])
                 } else {
                     var is_chrome_app = window.chrome && chrome.storage;
                     // don't allow transactions in Chrome app or Cordova when no Electrum is available
-                    if (window.cordova || is_chrome_app) return $q.reject(gettext('Electrum setup failed'));
+                    if (!no_electrum && (window.cordova || is_chrome_app)) return $q.reject(gettext('Electrum setup failed'));
                     return $q.when($scope.wallet.transactions.output_values[[txhash, i]]);
                 }
             },
-            send_to_receiving_id: window.location.href.indexOf(LANG+'/pay/') != -1 ||
-                                  window.location.href.indexOf(LANG+'/uri/?uri=bitcoin') != -1 ||
-                                  (window.WalletControllerInitVars && WalletControllerInitVars.send_to_receiving_id),
+            send_to_receiving_id: (window.WalletControllerInitVars && WalletControllerInitVars.send_to_receiving_id) ||
+                                  window.location.href.indexOf(LANG+'/pay/') != -1 ||
+                                  window.location.href.indexOf(LANG+'/uri/?uri=bitcoin') != -1,
             signuplogin_header: BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_wallet.html'
         };
     };
     clearwallet();
-    if ($location.search().filtered_intent === '1') {
-        backButtonHandler.pushHandler(backButtonHandler.exitAppHandler);
-        $scope.wallet.filtered_intent = true;
-    }
     $scope.$on('block', function(event, data) {
         if (!$scope.wallet.transactions || !$scope.wallet.transactions.list.length) return;
         $scope.$apply(function() {
@@ -120,37 +166,7 @@ angular.module('greenWalletControllers', [])
             }
         });
     });
-    if (window.WalletControllerInitVars) {
-        angular.extend($scope.wallet, WalletControllerInitVars);
-    }
-    if ($scope.wallet.send_to_receiving_id_bitcoin_uri) {
-        var parsed = parse_bitcoin_uri($scope.wallet.send_to_receiving_id_bitcoin_uri);
-        if (parsed.r) {
-            $scope.wallet.send_to_receiving_id = undefined;  // ignore address from the URI if 'r' is present
-            $scope.payreq_loading = true;
-            $scope.has_payreq = true;
-            tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed.r).then(function(data) {
-                $scope.payreq_loading = false; 
-                var amount = 0;
-                for (var i = 0; i < data.outputs.length; i++) {
-                    var output = data.outputs[i];
-                    amount += output.amount;
-                }
-                $scope.wallet.send_to_receiving_id_amount = amount;
-                $scope.wallet.send_to_verified_common_name = data.merchant_cn;
-                data.request_url = parsed.r;
-                $scope.wallet.send_to_payment_request = data;
-            }).catch(function(err) {
-                notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
-            });
-        }
-    }
-    if ($scope.wallet.send_to_receiving_id) {
-        $scope.wallet.signuplogin_header = BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_pay.html'
-    }
-    if ($scope.wallet.redeem_key) {
-        $scope.wallet.signuplogin_header = BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/header_redeem.html'
-    }
+    $scope.processWalletVars();
     $scope.$on('login', function() {
         $scope.wallet.update_balance(true);
         $scope.wallet.refresh_transactions();
@@ -200,6 +216,8 @@ angular.module('greenWalletControllers', [])
     };
 
     $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue) {
+        $modalStack.dismissAll();
+        if (newValue == '/') tx_sender.logout();  // logout on navigation to login page
         var pathname = window.location.pathname
         // don't include addresses:
         if (newValue.indexOf('/send/') == 0) newValue = '/send/_ad_';

@@ -1,10 +1,11 @@
 <div class="modal-body text-center">
     <p>El código QR que contiene la clave para acceder a tu Wallet es:</p>
-    <p><qr text="(( wallet.mnemonic ))" size="212"></qr></p>
+    <p><qr text="(( mnemonic_encrypted || wallet.mnemonic ))" size="212"></qr></p>
+    <p ng-show="mnemonic_encrypted">This passphrase is encrypted, so your encryption password is required to use it.</p>
     <p><b><i class="glyphicon glyphicon-exclamation-sign"></i> ¡Recuerde guardarlo en un lugar seguro!</b></p>
 
     <div class="mnemonic-label">Su indicio de clave</div>
-    <div class="mnemonic info" ng-bind="wallet.mnemonic"></div>
+    <div class="mnemonic info" ng-bind="mnemonic_encrypted || wallet.mnemonic"></div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" ng-click="$close()">Cerrar</button>

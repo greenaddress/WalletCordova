@@ -24,7 +24,6 @@
 
 function Electrum($http, $q) {
   this.SERVERS = [
-    "http://b.1209k.com/",
     "http://ecdsa.net:8081/",
     "http://electrum.hachre.de:8081/",
     "http://electrum.coinwallet.me:8081/",
@@ -39,6 +38,32 @@ function Electrum($http, $q) {
   this.callbacks = {};
   this.callbackId = 1;
   this.rpcQueue = [];
+
+
+
+  this.checkConnectionsAvailable = function() {
+    var tryServer = function (name) {
+      return $http.get(name, { withCredentials: true, no_loading_indicator: true });
+    };
+
+    //+ Jonas Raoni Soares Silva
+    //@ http://jsfromhell.com/array/shuffle [v1.0]
+    function shuffle(o){ //v1.0
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    };
+    var servers = shuffle(this.SERVERS.slice(0));
+
+    var ret = $q.defer();
+    var d = $q.reject();
+    for (var i = 0; i < servers.length; i++) {
+      d = d.then(ret.resolve, (function(i) { return function() {
+        return tryServer(servers[i]);
+      }})(i));
+    }
+    d.then(ret.resolve, ret.reject);
+    return ret.promise;
+  }
 
   this.issueAddressGetHistory = function(addr_b58) {
     return this._enqueueRpc("blockchain.address.get_history", [addr_b58]);
@@ -75,6 +100,22 @@ function Electrum($http, $q) {
     return this.pendingRpcCount > 0;
   };
 
+  this.deleteAllCookies = function() {
+    if (window.CustomNativeAccess) {
+      window.CustomNativeAccess.clearCookies();  // reset session every ~2 minutes
+    } else {
+      var cookies = document.cookie.split(";");
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
+    }
+  }
+
+
   this.advanceTimeoutDuration = function() {
     if (!this.timeoutDuration) {
       this.resetTimeoutDuration();
@@ -82,7 +123,7 @@ function Electrum($http, $q) {
       if (this.timeoutDuration < 120 * 1000) {
         this.timeoutDuration *= 2;
       } else {
-        window.CustomNativeAccess.clearCookies();  // reset session every ~2 minutes
+        this.deleteAllCookies();
       }
     }
   };
@@ -122,7 +163,7 @@ function Electrum($http, $q) {
   };
 
   // Old session cookies can cause 'session not found' errors
-  window.CustomNativeAccess.clearCookies();
+  this.deleteAllCookies();
   this.pickRandomServer();
 
   this.connect = function() {

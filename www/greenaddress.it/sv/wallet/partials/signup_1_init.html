@@ -6,7 +6,7 @@
             <div class="create-modal-header">
                 <span class="pull-left">Har du redan ett konto?
                     
-                    <a href="/wallet">Logga in på din plånbok</a></span>
+                    <a href="" ng-click="logout()">Logga in på din plånbok</a></span>
                     
                 Steg 1 av 4
                 <div class="progress">
@@ -19,9 +19,13 @@
                     <small>Vänligen färdigställ denna fyrstegsregistrering för att skydda den mot inkräktare</small>
                 </div>
                 <hr>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Din mnemoniska lösenfras</div>
-                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">Din mnemoniska lösenfras</div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Genererar mnemonisk fras, vänta...</div>
+                <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>Click to encrypt your mnemonic</a>
+                </div></div>
                 <hr>
                 <p>Skriv ner dessa orden och förvara dem på ett säkert ställe eftersom de inte kan återskapas. <b>Vi lagrar inte ovanstående information någonstans, vi kan inte hjälpa dig att återskapa den!</b></p>
             </div>
@@ -33,7 +37,7 @@
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Visa Qr-kod</button>
                 
-                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Skriv till NFC-tagg</button>
+                <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Skriv till NFC-tagg</button>
                 
                 <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Fortsätt!</a>
                 <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Fortsätt!</a>
@@ -54,7 +58,8 @@
 <div class="printable">
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
     <p>Lösenfrasen för din plånbok är:</p>
-    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
-    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
+    <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic_encrypted || signup.mnemonic ))" size="212"></qr>
     <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Lagra denna sida på ett säkert ställe</i></p>
 </div>

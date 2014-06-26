@@ -23,9 +23,11 @@ import android.os.Bundle;
 import org.apache.cordova.*;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import java.util.logging.Logger;
 import android.os.Parcelable;
@@ -35,6 +37,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.os.Build;
 import android.content.pm.ApplicationInfo;
+import android.util.Base64;
 
 class CustomNativeAccess {
     @JavascriptInterface
@@ -46,29 +49,45 @@ class CustomNativeAccess {
 
 public class GreenAddressIt extends CordovaActivity 
 {
-    private boolean shown;
+    private Intent lastIntent = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) && getIntent().getBooleanExtra("continue", true)) {
+            // ignore nfc, to avoid having nfc service and app not reparenting (disappears from history) and send intent just to start app normally
+            final Intent intent = getIntent();//.cloneFilter();//new Intent(getApplicationContext(), GreenAddressIt.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("continue", false);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        if (getIntent().hasCategory(Intent.CATEGORY_BROWSABLE)) {
+            // ignore opening uri to deparent from browser
+            final Intent intent = new Intent(Intent.ACTION_VIEW, getIntent().getData(), getApplicationContext(), GreenAddressIt.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if ( 0 != ( getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) ) {
-                Logger.getLogger("CordovaLog").info("enabling debugging for webview");
                 WebView.setWebContentsDebuggingEnabled(true);
             }
         }
         if (!isTaskRoot()) {
             // https://code.google.com/p/android/issues/detail?id=2373
-            Intent intent = getIntent();
-            String action = intent.getAction();
+            final Intent intent = getIntent();
+            final String action = intent.getAction();
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
                 finish();
                 return;
             }
         }
         super.init();
-        shown = false;
         // Set by <content src="index.html" /> in config.xml
         super.appView.getSettings().setUserAgentString("GAITCordova;" + super.appView.getSettings().getUserAgentString());
         super.appView.addJavascriptInterface(new CustomNativeAccess(), "CustomNativeAccess");
@@ -77,77 +96,98 @@ public class GreenAddressIt extends CordovaActivity
         } else {
             super.clearCache();
             super.setIntegerProperty("splashscreen", R.drawable.splash);
+            final Intent intent = getIntent();
+            if (intent != null) {
+                final String hash = intent.getStringExtra("hash");
+                if (hash != null) {
+                    super.loadUrl(getBaseURL() + "#/?redir=" + Uri.encode(hash + "?&filtered_intent=1"));
+                    return;
+                }
+            }
             super.loadUrl(getBaseURL());
         }
     }
 
-    private void processNFC(final Intent intent) {
-        final Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-        NfcAdapter.EXTRA_NDEF_MESSAGES);
-        final NdefMessage msg = (NdefMessage) rawMsgs[0];
-        Logger.getLogger("CordovaLog").info("OnIntent" + msg.getRecords()[0].getPayload());
-    }
-
     protected String getBaseURL() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         String language;
         if (sharedPrefs.contains("language")) {
             language = (String)sharedPrefs.getAll().get("language");
-            Logger.getLogger("CordovaLog").info(language);
         } else {
-            Logger.getLogger("CordovaLog").info("doesn't");
             language = "en";
         }
         return "file:///android_asset/www/greenaddress.it/" + language + "/wallet.html";
     }
 
     private void processView(final Intent intent) {
-        if (getIntent().getData().getScheme().equals("bitcoin")) {
-            String uri = "/uri/?uri=" + Uri.encode(getIntent().getData().toString());
-            super.loadUrl(getBaseURL() + "#/?redir=" + Uri.encode(uri));
-        } else if (getIntent().getData().getPath() == null) {
+        if (intent == null) {
+            return;
+        }
+        if (intent.getData() == null) {
+            return;
+        }
+        if ("bitcoin".equals(intent.getData().getScheme())) {
+            String uri = "/uri/?uri=" + Uri.encode(intent.getData().toString());
+            super.loadUrl(getBaseURL() + "#" + uri);
+        } else if (intent.getData().getPath() == null) {
             super.loadUrl(getBaseURL());
         } else {
-            // all of /redeem/, /pay/, /uri/ require login, so go to /?redir directly
-            String path = getIntent().getData().getPath();
+            String path = intent.getData().getPath();
             if (path.length() > 4 && path.charAt(0) == '/' && path.charAt(3) == '/') {
                 // hackish language URL detection
                 path = path.substring(3);
             }
-            String url = getBaseURL() + "#/?filtered_intent=1&redir=" + path,
-                   query = getIntent().getData().getQuery(),
-                   fragment = getIntent().getData().getFragment();
+            String url = getBaseURL() + "#" + path,
+                   query = intent.getData().getQuery(),
+                   fragment = intent.getData().getFragment();
             if (path.startsWith("/wallet/")) {
                 if (fragment != null && !fragment.isEmpty()) {
-                    if (fragment.indexOf('?') != -1) fragment += "&filtered_intent=1";
-                    else fragment += "?filtered_intent=1";
                     url = getBaseURL() + '#' + fragment;
                 } else {
-                    url = getBaseURL() + "#/?filtered_intent=1";
+                    url = getBaseURL();
                 }
                 super.loadUrl(url);
             } else if (path.startsWith("/pay/") || path.startsWith("/redeem/") || path.startsWith("/uri/")) {
-    	        if (query != null && !query.isEmpty()) {
-    		        url += Uri.encode("?" + query);
+                if (query != null && !query.isEmpty()) {
+                    url += "?" + query;
                 }
                 super.loadUrl(url);
             } else {  // not a wallet url - shouldn't happen given the filters work correctly
-                super.loadUrl(getBaseURL());
             }
         }
-        shown = true;
+    }
+    
+    private void handleWidget(final Intent intent) {
+        if (intent != null) {
+            final String hash = intent.getStringExtra("hash");
+            if (hash != null) {
+                if (("/send".equals(hash) || "/receive".equals(hash))) {
+                        final String js = "location.hash=\"#" +hash+"\"";
+                        super.sendJavascript(js);
+                }
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.getLogger("CordovaLog").info("OnResume");
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            processNFC(getIntent());
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {    
+            processView(getIntent());
         }
-        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
-            if (!shown)  // don't reload the page on return to "parent" intent-calling app
-                processView(getIntent());
+        handleWidget(lastIntent);
+        if (lastIntent != null && Intent.ACTION_VIEW.equals(lastIntent.getAction())) {
+            processView(lastIntent);
         }
+        lastIntent = null;
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        lastIntent = intent;
+        processView(intent);
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }

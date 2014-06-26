@@ -1,7 +1,7 @@
 angular.module('greenWalletSettingsControllers',
     ['greenWalletServices', 'greenWalletSettingsDirectives'])
-.controller('TwoFactorSetupController', ['$scope', '$modal', 'notices', 'focus', 'tx_sender', 'wallets', 'gaEvent', '$q',
-        function TwoFactorSetupController($scope, $modal, notices, focus, tx_sender, wallets, gaEvent, $q) {
+.controller('TwoFactorSetupController', ['$scope', '$modal', 'notices', 'focus', 'tx_sender', 'wallets', 'gaEvent', '$q', 'clipboard',
+        function TwoFactorSetupController($scope, $modal, notices, focus, tx_sender, wallets, gaEvent, $q, clipboard) {
     if (!wallets.requireWallet($scope, true)) return;  // dontredirect=true because this cocntroller is reused in signup
     var twofactor_state = $scope.twofactor_state = {
         twofactor_type: 'email'
@@ -32,6 +32,16 @@ angular.module('greenWalletSettingsControllers',
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_gauth_qr.html',
             scope: $scope
         });
+    };
+    $scope.copy_to_clipboard = function(data) {
+        clipboard.copy(data).then(
+            function(text){
+                notices.makeNotice('success', text);
+            }, 
+            function(error){
+                notices.makeNotice('error', error);
+            }
+        );
     };
     $scope.show_gauth = function() {
         gaEvent('Wallet', 'GoogleAuth2FATabClicked');
@@ -294,8 +304,8 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
-}]).controller('SettingsController', ['$scope', 'wallets', 'tx_sender', 'notices', '$modal', 'gaEvent', 'storage',
-        function SettingsController($scope, wallets, tx_sender, notices, $modal, gaEvent, storage) {
+}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$modal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics',
+        function SettingsController($scope, $q, wallets, tx_sender, notices, $modal, gaEvent, storage, $location, $timeout, bip38, mnemonics) {
     if (!wallets.requireWallet($scope)) return;
     var exchanges = $scope.exchanges = {
         BITSTAMP: 'Bitstamp',   
@@ -307,9 +317,8 @@ angular.module('greenWalletSettingsControllers',
     }
     var settings = $scope.settings = {
         noLocalStorage: storage.noLocalStorage,
-        currency: $scope.wallet.fiat_currency,
         unit: $scope.wallet.unit,
-        exchange: $scope.wallet.fiat_exchange,
+        pricing_source: $scope.wallet.fiat_currency + '|' + $scope.wallet.fiat_exchange,
         notifications: angular.copy($scope.wallet.appearance.notifications_settings || {}),
         language: LANG,
         updating_display_fiat: false,
@@ -331,10 +340,30 @@ angular.module('greenWalletSettingsControllers',
         },
         nfcmodal: function() {
             gaEvent('Wallet', 'SettingsNfcModal');
-            $modal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
-                scope: $scope,
-                controller: 'NFCController'
+            mnemonics.validateMnemonic($scope.wallet.mnemonic).then(function(bytes) {
+                $scope.nfc_bytes = bytes;
+                $scope.nfc_mime = 'x-gait/mnc';
+                $modal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
+                    scope: $scope,
+                    controller: 'NFCController'
+                });
+            });
+        },
+        nfcmodal_encrypted: function() {
+            gaEvent('Wallet', 'SettingsNfcModal');
+            mnemonics.validateMnemonic($scope.wallet.mnemonic).then(function(bytes) {
+                bip38.encrypt_mnemonic_modal($scope, bytes).then(function(mnemonic_encrypted) {
+                    mnemonics.validateMnemonic(mnemonic_encrypted).then(function(bytes_encrypted) {
+                        $scope.nfc_bytes = bytes_encrypted;
+                        $scope.nfc_mime = 'x-gait/enc';
+                        $modal.open({
+                            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
+                            scope: $scope,
+                            controller: 'NFCController'
+                        });
+                    });
+                });
             });
         },
         expiring_soon_modal: function() {
@@ -353,11 +382,29 @@ angular.module('greenWalletSettingsControllers',
             }, function(err) {
                 notices.makeNotice('error', err.desc);
             });
+        },
+        send_nlocktime: function() {
+            var that = this;
+            that.sending_nlocktime = true;
+            gaEvent('Wallet', 'SendNlocktimeByEmail');
+            tx_sender.call('http://greenaddressit.com/txs/send_nlocktime').then(function(data) {
+                notices.makeNotice('success', gettext('Email sent'));
+            }, function(err) {
+                notices.makeNotice('error', err.desc);
+            }).finally(function() { that.sending_nlocktime = false; });
         }
     };
     $scope.settings.available_units = ['BTC', 'mBTC', 'µBTC'];
     tx_sender.call('http://greenaddressit.com/login/available_currencies').then(function(data) {
-        $scope.settings.available_currencies = data;
+        $scope.settings.pricing_sources = [];
+        for (var i = 0; i < data.all.length; i++) {
+            var currency = data.all[i];
+            for (var exchange in data.per_exchange) {
+                if (data.per_exchange[exchange].indexOf(currency) != -1) {
+                    $scope.settings.pricing_sources.push({currency: currency, exchange: exchange});
+                }
+            }
+        }
     });
     $scope.$watch('settings.nlocktime.blocks_new', function(newValue, oldValue) {
         settings.nlocktime.blocks_userfriendly = userfriendly_blocks(settings.nlocktime.blocks_new);
@@ -366,7 +413,9 @@ angular.module('greenWalletSettingsControllers',
         settings.new_email = newValue;
     });
     if (!settings.currency) {
-        $scope.$on('first_balance_updated', function() { settings.currency = $scope.wallet.fiat_currency; })
+        $scope.$on('first_balance_updated', function() {
+            settings.pricing_source = $scope.wallet.fiat_currency + '|' + $scope.wallet.fiat_exchange;
+        })
     }
     var ignoreLangChange = false;
     $scope.$watch('settings.language', function(newValue, oldValue) {
@@ -389,6 +438,51 @@ angular.module('greenWalletSettingsControllers',
                 window.location.href = '/'+newValue+'/wallet';
             }
         });
+    });
+    $scope.$watch('settings.pricing_source', function(newValue, oldValue) {
+        var currency = newValue.split('|')[0];
+        var exchange = newValue.split('|')[1];
+        if (oldValue !== newValue && !settings.updating_pricing_source &&
+                (currency != $scope.wallet.fiat_currency || exchange != $scope.wallet.fiat_exchange)) {
+            // no idea why oldValue-on-error handling doesn't work without $timeout here
+            $timeout(function() { settings.pricing_source = oldValue; });
+            settings.updating_pricing_source = true;
+            var update = function() {
+                tx_sender.call('http://greenaddressit.com/login/set_pricing_source', currency, exchange).then(function() {
+                    gaEvent('Wallet', 'PricingSourceChanged', newValue);
+                    $scope.wallet.fiat_currency = currency;
+                    $scope.wallet.fiat_exchange = exchange;
+                    $scope.wallet.update_balance();
+                    tx_sender.call("http://greenaddressit.com/login/get_spending_limits").then(function(data) {
+                        // we reset limits if we change currency source while limits are fiat
+                        $scope.wallet.limits.per_tx = data.per_tx;
+                        $scope.wallet.limits.total = data.total;
+                    });
+                    settings.pricing_source = newValue;
+                    settings.updating_pricing_source = false;
+                }).catch(function(err) {
+                    settings.updating_pricing_source = false;
+                    if (err.uri == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
+                        gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
+                        notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
+                            .replace('{1}', exchanges[exchange])
+                            .replace('{2}', err.detail.supported));
+                    } else {
+                        gaEvent('Wallet', 'PricingSourceChangeFailed', err.desc);
+                        notices.makeNotice('error', err.desc);
+                    }
+                });
+            };
+            if ($scope.wallet.limits.is_fiat && parseInt($scope.wallet.limits.total)) {
+                $modal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_limits_fiat_warning.html'
+                }).result.then(update, function() { settings.updating_pricing_source = false; });
+            } else {
+                update();
+            }
+            
+            
+        }
     });
     $scope.$watch('settings.currency', function(newValue, oldValue) {
         if (oldValue !== newValue && !settings.updating_currency && newValue != $scope.wallet.fiat_currency) {
@@ -478,15 +572,51 @@ angular.module('greenWalletSettingsControllers',
     $scope.enable_link_handler = function() {
         try {
             navigator.registerProtocolHandler('bitcoin', 'https://'+window.location.hostname+'/uri/?uri=%s', 'GreenAddress.It');
+            notices.makeNotice('success', gettext('Sent handler registration request'));
         } catch(e) {
             notices.makeNotice('error', e.toString());
         }
     }
+    $scope.show_encrypted_mnemonic = function() {
+        gaEvent('Wallet', 'ShowEncryptedMnemonic');
+        mnemonics.fromMnemonic($scope.wallet.mnemonic).then(function(data) {
+            bip38.encrypt_mnemonic_modal($scope, data).then(function(mnemonic_encrypted) {
+                $scope.mnemonic_encrypted = mnemonic_encrypted;
+                $modal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
+                    scope: $scope
+                });
+            });
+        });
+    };
     $scope.show_mnemonic = function() {
         gaEvent('Wallet', 'ShowMnemonic');
+        $scope.mnemonic_encrypted = undefined;
         $modal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
             scope: $scope
+        });
+    };
+    $scope.remove_account = function() {
+        gaEvent('Wallet', 'RemoveAccountClicked');
+        if ($scope.wallet.final_balance != 0) {
+            notices.makeNotice('error', gettext("Cannot remove an account with non-zero balance"))
+            return;
+        }
+        $modal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_remove_account.html',
+        }).result.then(function() {
+            wallets.get_two_factor_code($scope, 'remove_account', {}).then(function(twofac_data) {
+                return tx_sender.call('http://greenaddressit.com/login/remove_account', twofac_data).then(function() {
+                    tx_sender.logout();
+                    storage.remove('pin_ident');
+                    storage.remove('encrypted_seed');
+                    $location.path('/');
+                }).catch(function(err) {
+                    notices.makeNotice('error', err.desc);
+                    return $q.reject(err);
+                });
+            });
         });
     };
     $scope.set_new_email = function() {
@@ -512,6 +642,34 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.desc);
         });
     };
+}]).controller('PrivacyController', ['$scope', 'tx_sender', 'wallets', 'notices',
+        function PrivacyController($scope, tx_sender, wallets, notices) {
+    if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough
+
+    $scope.privacy = {
+        'updating_send_me': false,
+        'send_me': $scope.wallet.privacy.send_me,
+        'updating_show_as_sender': false,
+        'show_as_sender': $scope.wallet.privacy.show_as_sender
+    };
+    var init_changer = function(key) {
+        $scope.$watch('privacy.' + key, function(newValue, oldValue) {
+            if (newValue == oldValue || newValue == $scope.wallet.privacy[key]) return;
+            var upkey = 'updating_' + key;
+            $scope.privacy[upkey] = true;
+            $scope.privacy[key] = oldValue;
+            tx_sender.call('http://greenaddressit.com/login/change_settings', 'privacy.' + key, parseInt(newValue)).then(function() {
+                $scope.wallet.privacy[key] = newValue;
+                $scope.privacy[upkey] = false;
+                $scope.privacy[key] = newValue;
+            }, function(err) {
+                notices.makeNotice('error', err.desc);
+                $scope.privacy[upkey] = false;
+            });
+        });
+    };
+    init_changer('send_me');
+    init_changer('show_as_sender');
 }]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', '$routeParams', 'addressbook',
         function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, $routeParams, addressbook) {
     // dontredirect=false here because address book is now outside settings,
@@ -537,6 +695,7 @@ angular.module('greenWalletSettingsControllers',
                 }
             });
             addressbook.items = filtered_items;
+            addressbook.init_partitions();
             addressbook.num_pages = Math.ceil(addressbook.items.length / 20);
             addressbook.populate_csv();
             $scope.wallet.refresh_transactions();  // update sender/recipient names
@@ -593,12 +752,13 @@ angular.module('greenWalletSettingsControllers',
     };
 }]).controller('SoundController', ['$scope', 'notices', 'wallets', 'gaEvent', function SoundController($scope, notices, wallets, gaEvent) {
     
-    if (!('appearance' in $scope.wallet)) return;
+    if (!('wallet' in $scope) || !('appearance' in $scope.wallet)) return;
     var soundstate = {sound: false};
     $scope.$watch('wallet.appearance.sound', function(newValue, oldValue) {
         if (newValue === oldValue) return;
         if (!soundstate['sound']) {
             soundstate['sound'] = true;
+            if (!('wallet' in $scope) || !('appearance' in $scope.wallet) || !('sound' in $scope.wallet.appearance)) return;
             wallets.updateAppearance($scope, 'sound', newValue).then(function() {
                 gaEvent('Wallet', "Sound_"+(newValue?'Enabled':'Disabled'));
                 soundstate['sound'] = false;
@@ -606,6 +766,26 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', "Sound_"+(newValue?'Enable':'Disable')+'Failed', err.desc);
                 notices.makeNotice('error', err.desc);
                 soundstate['sound'] = false;
+            });
+        }
+    });
+}]).controller('VibrationController', ['$scope', 'notices', 'wallets', 'gaEvent', 'vibration', function VibrationController($scope, notices, wallets, gaEvent, vibration) {
+    
+    if (!('wallet' in $scope) || !('appearance' in $scope.wallet)) return;
+    var vibrationstate = {vibrate: false};
+    $scope.$watch('wallet.appearance.vibrate', function(newValue, oldValue) {
+        if (newValue === oldValue) return;
+        if (!vibrationstate['vibrate']) {
+            vibrationstate['vibrate'] = true;
+            if (!('wallet' in $scope) || !('appearance' in $scope.wallet) || !('vibrate' in $scope.wallet.appearance)) return;
+            wallets.updateAppearance($scope, 'vibrate', newValue).then(function() {
+                gaEvent('Wallet', "Vibrate_"+(newValue?'Enabled':'Disabled'));
+                vibrationstate['vibrate'] = false;
+                vibration.state = newValue;
+            }).catch(function(err) {
+                gaEvent('Wallet', "Vibrate_"+(newValue?'Enable':'Disable')+'Failed', err.desc);
+                notices.makeNotice('error', err.desc);
+                vibrationstate['vibrate'] = false;
             });
         }
     });
@@ -641,7 +821,7 @@ angular.module('greenWalletSettingsControllers',
     };
 }]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage',
         function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage) {
-    if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enoug
+    if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough
     $scope.quicklogin = {enabled: false};
     tx_sender.call('http://greenaddressit.com/pin/get_devices').then(function(data) {
         angular.forEach(data, function(device) {
@@ -895,4 +1075,67 @@ angular.module('greenWalletSettingsControllers',
             $scope.thirdparty.toggling_custom = 'initial';
         });
     });
+}]).controller('TxLimitsController', ['$scope', 'gaEvent', '$modal', 'tx_sender', 'notices', 'wallets',
+        function($scope, gaEvent, $modal, tx_sender, notices, wallets) {
+
+    var formatAmountHumanReadable = function(units, is_fiat) {
+        // for fiat, to fit the 'satoshi->BTC' conversion, the input value needs to be multiplied by 1M,
+        // to get 1 fiat per 100 units
+        var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+        var cur_mul = is_fiat ? 1000000 : mul;  // already satoshis for BTC
+        var satoshi = new Bitcoin.BigInteger(units.toString()).multiply(Bitcoin.BigInteger.valueOf(cur_mul));
+        return Bitcoin.Util.formatValue(satoshi.toString());
+    };
+    var formatAmountInteger = function(amount, is_fiat) {
+        // for fiat, 'BTC->satoshi' parsed value needs to be divided by 1M, to get 100 units per 1 fiat
+        var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+        var cur_div = is_fiat ? 1000000 : div;
+        var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(cur_div));
+        return parseInt(satoshi.toString());
+    }
+
+    var modal;
+
+    $scope.change_tx_limits = function() {
+        gaEvent('Wallet', 'ChangeTxLimitsModal');
+        $scope.limits_editor = {
+            currency: $scope.wallet.limits.is_fiat ? 'fiat' : 'BTC',
+            single_tx: formatAmountHumanReadable($scope.wallet.limits.per_tx, $scope.wallet.limits.is_fiat),
+            total: formatAmountHumanReadable($scope.wallet.limits.total, $scope.wallet.limits.is_fiat)
+        };
+        modal = $modal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_limits.html',
+            scope: $scope
+        });
+    };
+
+    $scope.save_limits = function() {
+        var is_fiat = $scope.limits_editor.currency == 'fiat';
+        var data = {
+            is_fiat: is_fiat,
+            per_tx: formatAmountInteger($scope.limits_editor.single_tx, is_fiat),
+            total: formatAmountInteger($scope.limits_editor.total, is_fiat)
+        };
+        if (data.is_fiat != $scope.wallet.limits.is_fiat ||
+                data.per_tx > $scope.wallet.limits.per_tx ||
+                data.total > $scope.wallet.limits.total) {
+            var do_change = function() {
+                return wallets.get_two_factor_code($scope, 'change_tx_limits', data).then(function(twofac_data) {
+                    return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data, twofac_data);
+                });
+            }
+        } else {
+            var do_change = function() {
+                return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data);   
+            }
+        }
+        $scope.limits_editor.saving = true;
+        do_change().then(function() {
+            $scope.wallet.limits = data;
+            notices.makeNotice('success', gettext('Limits updated successfully'));
+            modal.close();
+        }, function(err) {
+            notices.makeNotice('error', err.desc);
+        }).finally(function() { $scope.limits_editor.saving = false; });
+    };
 }]);

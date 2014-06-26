@@ -6,7 +6,7 @@
             <div class="create-modal-header">
                 <span class="pull-left">Hai già un account?
                     
-                    <a href="/wallet">Per piacere accedi per usare il tuo portafogli</a></span>
+                    <a href="" ng-click="logout()">Per piacere accedi per usare il tuo portafogli</a></span>
                     
                 Passo 1 di 4
                 <div class="progress">
@@ -19,9 +19,13 @@
                     <small>Per piacere completa questi 4 passaggi per configurare e per rendere sicuro il tuo portafoglio.</small>
                 </div>
                 <hr>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">La tua passphrase mnemonica</div>
-                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">La tua passphrase mnemonica</div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Generazione mnemonica in corso...</div>
+                <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>Click to encrypt your mnemonic</a>
+                </div></div>
                 <hr>
                 <p>Per piacere scrivi e non perdere queste parole perchè non possono essere recuperate altrimenti. <b>Non salviamo queste parole sui nostri server dunque non possiamo aiutarti a recuperarle se le perdi!</b></p>
             </div>
@@ -33,7 +37,7 @@
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</button>
                 
-                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
+                <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
                 
                 <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Continua!</a>
                 <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Continua!</a>
@@ -54,7 +58,8 @@
 <div class="printable">
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
     <p>La passphrase per accedere al tuo portafoglio è:</p>
-    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
-    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
+    <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic_encrypted || signup.mnemonic ))" size="212"></qr>
     <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Salva questa pagina in un posto sicuro</i></p>
 </div>

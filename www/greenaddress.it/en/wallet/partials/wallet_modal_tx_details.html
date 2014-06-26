@@ -12,6 +12,11 @@
         
         <dt>Fee</dt>
         <dd>(( selected_transaction.fee | format_btc:wallet.unit ))</dd>
+
+        <dt ng-show="selected_transaction.payment_request">Payment request</dt>
+        <dd ng-show="selected_transaction.payment_request">
+            <a ng-href="(( selected_transaction.payment_request ))" download="(( selected_transaction.txhash )).paymentrequest">download</a>
+        </dd>
     </ul>
 
     <hr class="double">
@@ -33,11 +38,7 @@
     <table class="table">
         <tr><th>Address</th><th>Amount</th></tr>
         <tr ng-repeat="output in selected_transaction.outputs">
-            <td>(( output.ad ))<br />
-
-            <a ng-hide="output.nlocktime_json || output.is_spent || !output.is_relevant" href="" ng-click="generate_nlocktime(selected_transaction, output)">request nLockTime</a>
-            <p style="word-wrap: break-word; width: 400px;" ng-show="output.nlocktime_json">nLockTime: (( output.nlocktime_json ))</p>
-            </td>
+            <td>(( output.ad ))</td>
             <td>(( output.value | format_btc:wallet.unit ))</td>
         </tr>
     </table>

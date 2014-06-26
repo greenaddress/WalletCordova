@@ -1,6 +1,7 @@
 var deps = ['ngAnimate', 'greenWalletServices'];
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-   deps.push('ngTouch');
+    deps.push('ngTouch');
+    window.IS_MOBILE = true;
 }
 angular.module('greenWalletBaseApp', deps)
 .config(['$interpolateProvider', '$httpProvider',
@@ -61,8 +62,8 @@ angular.module('greenWalletBaseApp', deps)
     };
 }]).factory('btc_formatter', function() {
     return function btc_formatter(satoshis, unit) {
-        var mul = {'µBTC': '1000000', 'mBTC': '1000', 'BTC': '1'}
-        satoshis = (new Bitcoin.BigInteger((satoshis || 0).toString())).multiply(new Bitcoin.BigInteger(mul[unit]));
+        var mul = {'µBTC': '1000000', 'mBTC': '1000', 'BTC': '1'};
+        satoshis = (new Bitcoin.BigInteger((satoshis || 0).toString())).multiply(new Bitcoin.BigInteger(mul[unit] || mul['µBTC']));
         if (satoshis.compareTo(new Bitcoin.BigInteger('0')) < 0) {
             return '-'+Bitcoin.Util.formatValue(satoshis.multiply(new Bitcoin.BigInteger('-1')));
         } else {
@@ -71,6 +72,7 @@ angular.module('greenWalletBaseApp', deps)
     };
 }).filter('format_btc', ['btc_formatter', function(btc_formatter) {
     return function format_btc(satoshis, unit) {
+        if (!satoshis) return '0 ' + unit;
         return btc_formatter(satoshis, unit) + ' ' + unit;
     };
 }]).filter('format_btc_nounit', ['btc_formatter', function(btc_formatter) {

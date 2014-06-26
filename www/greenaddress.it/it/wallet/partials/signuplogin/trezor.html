@@ -1,0 +1,25 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+            <div class="create-modal-header" ng-hide="wallet.redeem_key">
+                Non hai ancora un account?
+                <a href="#/trezor_signup"><strong>Crea un nuovo portafogli</strong></a>
+            </div>
+            <div class="create-modal-body text-center">
+                <div ng-include="wallet.signuplogin_header"></div>
+                <hr>
+                <div class="subtitle" ng-hide="state.trezor_dev">Please connect your Trezor device</div>
+                <div class="subtitle" ng-show="state.trezor_dev">Trezor detected.</div>
+                <div class="subtitle" ng-show="state.trezor_dev.signing"><strong>Please confirm the signature on your Trezor device.</strong></div>
+                <hr ng-show="state.trezor_dev">
+                <button type="submit" tabindex="4" ng-show="state.trezor_dev" ng-disabled="logging_in"
+                        class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}" ng-click="login()">
+                    <span ng-hide="state.trezor_dev.signing || state.login_error">Per piacere accedi per usare il tuo portafogli</span>
+                    <span ng-show="state.trezor_dev.signing">Sto lavorando......</span>
+                    <span ng-show="state.login_error">Errore, riprovare</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

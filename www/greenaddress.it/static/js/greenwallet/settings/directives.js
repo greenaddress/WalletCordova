@@ -46,7 +46,7 @@ angular.module('greenWalletSettingsDirectives', [])
         template += '<td>' + address + '</td>';
 
         template += '<td>';
-        if (scope.wallet.hdwallet.secret_exponent_bytes && item.type != 'facebook') {
+        if (scope.wallet.hdwallet.priv && item.type != 'facebook') {
             template += 
                         '<a href="" ng-click="start_rename(item)"><i class="glyphicon glyphicon-edit"></i></a> ' + 
                         '<a href="" ng-click="delete(item.address)"><i class="glyphicon glyphicon-trash"></i></a> ';

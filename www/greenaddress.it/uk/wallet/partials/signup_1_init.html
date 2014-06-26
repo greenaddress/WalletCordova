@@ -6,7 +6,7 @@
             <div class="create-modal-header">
                 <span class="pull-left">У Вас уже є акаунт?
                     
-                    <a href="/wallet">Вхід у Ваш гаманець</a></span>
+                    <a href="" ng-click="logout()">Вхід у Ваш гаманець</a></span>
                     
                 Крок 1 із 4
                 <div class="progress">
@@ -19,9 +19,13 @@
                     <small>Будь-ласка, завершіть це 4-крокове налаштування Вашого акаунта для  повного захисту від зловмисників</small>
                 </div>
                 <hr>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Ваша мнемонічна фраза-пароль</div>
-                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">Ваша мнемонічна фраза-пароль</div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Генерування мнемоніки, будь-ласка зачекайте...</div>
+                <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>Click to encrypt your mnemonic</a>
+                </div></div>
                 <hr>
                 <p>Будь-ласка, запишіть ці слова і бережіть їх у надійному місці, оскільки вони не можуть бути відновлені. <b>Ми ніде не зберігаємо вище вказану інформацію, ми не можемо допомогти Вам відновити її!</b></p>
             </div>
@@ -33,7 +37,7 @@
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Показати QR код</button>
                 
-                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Записати на тег NFC</button>
+                <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Записати на тег NFC</button>
                 
                 <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Продовжити!</a>
                 <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Продовжити!</a>
@@ -54,7 +58,8 @@
 <div class="printable">
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
     <p>Фраза-пароль для доступу до Вашого Гаманця:</p>
-    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
-    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
+    <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic_encrypted || signup.mnemonic ))" size="212"></qr>
     <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Збережіть цю сторінку в безпечному місці</i></p>
 </div>

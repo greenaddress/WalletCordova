@@ -1,16 +1,16 @@
 <div class="alert alert-error" ng-show="nfc_error">
     Es gab ein Problem beim Schreiben des NFC-Tags: (( nfc_error.reason ))
 </div>
-<div class="modal-body text-center" ng-show="(( !nfc_init_error && nfc_init_succeeded < 3 ))">
+<div class="modal-body text-center" ng-show="!nfc_init_error && nfc_init_succeeded < 4">
     <p>Initialisiere NFC Tags Listener...</p>
 </div>
-<div class="modal-body text-center" ng-show="(( nfc_init_succeeded == 3 ))">
+<div class="modal-body text-center" ng-show="nfc_init_succeeded == 4">
     <p>Bitte halten Sie Ihr(e) Tag(s) nah an das Gerät um Ihre Brieftasche zu schreiben!</p>
     <p>Tags geschrieben: (( num_tags_written ))</p>
     <p>Tags formatiert: (( num_tags_formatted ))</p>
 </div>
-<div class="modal-body text-center" ng-show="(( nfc_init_error ))">
-    <p>Ihr NFC ist nicht aktiviert oder verfügbar. Wenn verfügbar, aktivieren Sie es bitte in Einstellungen</p>
+<div class="modal-body text-center" ng-show="nfc_init_error">
+    <p>Your NFC is not enabled or not available. If available, please enable it in settings</p>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" ng-click="$close()">Schließen</button>

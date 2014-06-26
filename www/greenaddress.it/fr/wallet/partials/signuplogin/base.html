@@ -10,22 +10,27 @@
                 <div ng-include="wallet.signuplogin_header"></div>
                 <hr>
                 <div class="subtitle">Connexion avec accès complet</div>
-                <form class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}">
+                <form submittable class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}">
                     <div class="control-group" ng-class="{'has-error': state.error && form.$invalid}">
                         <div class="row">
-                            <div class="col-sm-2 col-sm-offset-1">
-                                <input ng-show="state.has_pin" class="form-control pin" ng-disabled="is_loading || logging_in || payreq_loading" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="Code PIN" ng-model="use_pin_data.pin" />
-                            </div>
-                            <div class="col-sm-1">
-                                <p ng-show="state.has_pin" class="form-control-static">ou</p>
-                            </div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-3 col-sm-offset-1" ng-show="!state.toggleshowpin">
                                 <span class="input-group">
-                                    <input class="form-control" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Passphrase mnémonique" ng-model="" ng-class="{'has-error': state.mnemonic_error}" />
+                                    <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="is_loading || logging_in || payreq_loading" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="Code PIN" ng-model="use_pin_data.pin" />
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default pull-right" ng-class="{disabled: logging_in || payreq_loading}"><i class="glyphicon glyphicon-log-in"></i>
+                                            <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="submit_me()" ng-focus="submit_me()" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading" />
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-sm-7" ng-show="state.toggleshowpin">
+                                <span class="input-group">
+                                    <input class="form-control" ng-show="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Passphrase mnémonique" ng-class="{'has-error': state.mnemonic_error}" />
+                                    <input tabindex="3" type="password" ng-show="!state.toggleshowpassword" class="form-control" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" focus-on="mnemonic" placeholder="Passphrase mnémonique" ng-class="{'has-error': state.mnemonic_error}" />
                                     <span class="input-group-btn">
                                         <span class="btn btn-default" ng-class="{disabled: logging_in || payreq_loading}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
                                             Scanner QR code
-                                            <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)">
+                                            <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)"/>
                                         </span>
                                         <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="stop_scanning_qr_code()">Annuler</a>
                                     </span>
@@ -33,13 +38,33 @@
                                 
                                 <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Mnémonique invalide: (( state.mnemonic_error ))</span>
                             </div>
+                            <label class="switch" ng-show="state.has_pin">
+                              <input type="checkbox" class="switch" ng-model="state.toggleshowpin" ng-disabled="is_loading || logging_in || payreq_loading" />
+                              <span class="switch"></span>
+                                <span ng-show="state.toggleshowpin">
+                                PIN login
+                                </span>
+                                <span ng-show="!state.toggleshowpin">
+                                Other login
+                                </span>
+                            </label>
                         </div>
                     </div>
-                    <div ng-show="!wallet.send_to_receiving_id && !has_payreq">
+                    <label class="switch" ng-show="state.toggleshowpin" >
+                      <input type="checkbox" class="switch" ng-model="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading"/>
+                      <span class="switch"></span>
+                        <span ng-show="!state.toggleshowpassword">
+                        Show mnemonics
+                        </span>
+                        <span ng-show="state.toggleshowpassword">
+                        Hide mnemonics
+                        </span>
+                    </label>
+                    <div ng-show="!wallet.send_to_receiving_id && !has_payreq && state.toggleshowpin && !(state.seed_progress && !state.login_error)">
                         <hr>
                         <div class="subtitle">Se connecter en mode lecture seule</div>
                         
-                        <a href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
+                        <a ng-hide="cordova_platform=='ios'" href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
                         
                         
                         <a href="" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Personnalisé Connexion</a>
@@ -47,14 +72,15 @@
                         <a href="" class="btn btn-twitter" disabled><i class="icon-twitter"></i> Twitter<span class="coming-soon">Bientôt</span></a>
                         
                     </div>
-                    <hr>
-                    <button type="submit" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading"
+                    <hr ng-show="state.toggleshowpin">
+                    <button type="submit" tabindex="4" ng-disabled="(is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading) && state.mnemonic"
                             class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
-                            href="#" id="restore-wallet-continue">
+                            href="#" id="restore-wallet-continue" ng-show="state.toggleshowpin" ng-focus="submit_me()">
                         <span ng-hide="state.seed_progress || state.login_error">Connexion au porte-monnaie</span>
                         <span ng-show="state.seed_progress && !state.login_error">Traitement en cours ... (( state.seed_progress ))%</span>
                         <span ng-show="state.login_error">Erreur, essayez encore</span>
                     </button>
+                    <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
                 </form>
             </div>
         </div>

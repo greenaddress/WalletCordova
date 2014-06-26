@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.cordova.plugin.softkeyboard"
+    version="1.0.2">
+
+    <name>SoftKeyboard</name>
+    <description>Controls Soft Keyboard on touch devices (so far only Android).</description>
+    <license>MIT</license>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <!-- android -->
+    <platform name="android">
+
+        <js-module src="www/softkeyboard.js" name="SoftKeyboard">
+            <clobbers target="cordova.plugins.SoftKeyboard" />
+        </js-module>
+
+        <source-file src="src/android/com/cordova/plugin/softkeyboard/SoftKeyboard.java" target-dir="src/com/cordova/plugin/softkeyboard" />
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SoftKeyboard">
+                <param name="android-package" value="com.cordova.plugin.softkeyboard.SoftKeyboard" />
+            </feature>
+        </config-file>
+
+    </platform>
+</plugin>

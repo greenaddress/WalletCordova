@@ -1,27 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="it.greenaddress.cordova" version="0.0.13" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <preference name="loglevel" value="DEBUG" />
-    <feature name="App">
-        <param name="android-package" value="org.apache.cordova.App" />
-    </feature>
-    <feature name="WebSocket">
-        <param name="android-package" value="com.ququplay.websocket.WebSocket" />
-    </feature>
-    <feature name="NetworkStatus">
-        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
-    </feature>
-    <feature name="PushPlugin">
-        <param name="android-package" value="com.plugin.gcm.PushPlugin" />
-    </feature>
-    <feature name="BIP39">
-        <param name="android-package" value="it.greenaddress.cordova.BIP39" />
-    </feature>
-    <feature name="BIP38">
-        <param name="android-package" value="it.greenaddress.cordova.BIP38" />
-    </feature>
-    <feature name="NfcPlugin">
-        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
-    </feature>
+<widget id="it.greenaddress.cordova" version="0.0.35" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="AndroidLaunchMode" value="singleTask" />
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
@@ -34,14 +13,60 @@
     <feature name="AppPreferences">
         <param name="android-package" value="me.apla.cordova.AppPreferences" />
     </feature>
+    <feature name="BIP38">
+        <param name="android-package" value="it.greenaddress.cordova.BIP38" />
+    </feature>
+    <feature name="Clipboard">
+        <param name="android-package" value="com.verso.cordova.clipboard.Clipboard" />
+    </feature>
+    <feature name="Vibration">
+        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    </feature>
+    <feature name="SoftKeyboard">
+        <param name="android-package" value="com.cordova.plugin.softkeyboard.SoftKeyboard" />
+    </feature>
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
+    <feature name="NfcPlugin">
+        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <name>GreenAddress.It</name>
     <description>
         GreenAddress.It Mobile Wallet
     </description>
+    <preference name="loglevel" value="INFO" />
+    <feature name="App">
+        <param name="android-package" value="org.apache.cordova.App" />
+    </feature>
+    <feature name="NfcPlugin">
+        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="PushPlugin">
+        <param name="android-package" value="com.plugin.gcm.PushPlugin" />
+    </feature>
+    <feature name="WebSocket">
+        <param name="android-package" value="com.ququplay.websocket.WebSocket" />
+    </feature>
+    <feature name="BIP39">
+        <param name="android-package" value="it.greenaddress.cordova.BIP39" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
     <author email="info@greenaddress.it" href="https://greenaddress.it">
         GreenAddress IT Ltd
     </author>
-    <content src="doesnotexist.html" />
+    <content src="greenaddress.it/en/wallet.html" />
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />

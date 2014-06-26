@@ -1,7 +1,7 @@
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
-.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$modal', 'gaEvent',
-        function TransactionsController($scope, wallets, tx_sender, notices, branches, $modal, gaEvent) {
+.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$modal', 'gaEvent', '$timeout', '$q',
+        function TransactionsController($scope, wallets, tx_sender, notices, branches, $modal, gaEvent, $timeout, $q) {
     if(!wallets.requireWallet($scope)) return;
 
     var limiter = {
@@ -43,21 +43,25 @@ angular.module('greenWalletTransactionsControllers',
     $scope.redeem = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabRedeem');
         var key = tx_sender.hdwallet;
-        key = key.derivePrivate(branches.EXTERNAL);
-        key = key.derivePrivate(transaction.pubkey_pointer);
-        tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
-                key.pub.toBytes(), false).then(function(data) {
-            data.prev_outputs = [];
-            for (var i = 0; i < data.prevout_scripts.length; i++) {
-                data.prev_outputs.push(
-                    {branch: branches.EXTERNAL, pointer: transaction.pubkey_pointer,
-                     script: data.prevout_scripts[i]})
-            }
-            // TODO: verify
-            wallets.sign_and_send_tx(undefined, data, true);  // priv_der=true
-        }, function(error) {
-            gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
-            notices.makeNotice('error', error.desc);
+        key = $q.when(key.derivePrivate(branches.EXTERNAL));
+        key = key.then(function(key) {
+            return key.derivePrivate(transaction.pubkey_pointer);
+        });
+        key.then(function(key) {
+            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
+                    key.pub.toBytes(), false).then(function(data) {
+                data.prev_outputs = [];
+                for (var i = 0; i < data.prevout_scripts.length; i++) {
+                    data.prev_outputs.push(
+                        {branch: branches.EXTERNAL, pointer: transaction.pubkey_pointer,
+                         script: data.prevout_scripts[i]})
+                }
+                // TODO: verify
+                wallets.sign_and_send_tx(undefined, data, true);  // priv_der=true
+            }, function(error) {
+                gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
+                notices.makeNotice('error', error.desc);
+            });
         });
     };
 
@@ -100,6 +104,11 @@ angular.module('greenWalletTransactionsControllers',
     $scope.details = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabDetailsModal');
         $scope.selected_transaction = transaction;
+        if (transaction.has_payment_request && !transaction.payment_request) {
+            tx_sender.call('http://greenaddressit.com/txs/get_payment_request', transaction.txhash).then(function(payreq_b64) {
+                transaction.payment_request = 'data:application/bitcoin-paymentrequest;base64,' + payreq_b64;
+            });
+        }
         $modal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_details.html',
             scope: $scope

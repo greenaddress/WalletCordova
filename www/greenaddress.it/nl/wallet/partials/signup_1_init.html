@@ -6,7 +6,7 @@
             <div class="create-modal-header">
                 <span class="pull-left">Heeft u al een account?
                     
-                    <a href="/wallet">Log in op uw portemonnee</a></span>
+                    <a href="" ng-click="logout()">Log in op uw portemonnee</a></span>
                     
                 Stap 1 van 4
                 <div class="progress">
@@ -19,9 +19,13 @@
                     <small>Gelieve de volgende 4-stapsprocedure te voltooien om uw account maximaal te beveiligen tegen indringers</small>
                 </div>
                 <hr>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Uw wachtwoord om te onthouden</div>
-                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">Uw wachtwoord om te onthouden</div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Genereren van wachtwoord, even geduld...</div>
+                <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>Click to encrypt your mnemonic</a>
+                </div></div>
                 <hr>
                 <p>Gelieve deze woorden op te schrijven en op een veilige plaats op te bergen aangezien ze bij verlies niet kunnen worden teruggehaald. <b>Wij slaan de bovenstaande informatie nergens op, we kunnen u niet helpen het terug te halen als u het kwijtraakt!</b></p>
             </div>
@@ -33,7 +37,7 @@
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> QR-code weergeven</button>
                 
-                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Schrijf naar NFC tag</button>
+                <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Schrijf naar NFC tag</button>
                 
                 <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Doorgaan!</a>
                 <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Doorgaan!</a>
@@ -54,7 +58,8 @@
 <div class="printable">
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
     <p>De passphrase voor toegang tot uw portemonnee is:</p>
-    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
-    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
+    <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic_encrypted || signup.mnemonic ))" size="212"></qr>
     <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Bewaar deze pagina op een veilige plek</i></p>
 </div>

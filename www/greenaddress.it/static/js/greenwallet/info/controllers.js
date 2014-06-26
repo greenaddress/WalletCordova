@@ -108,7 +108,7 @@ angular.module('greenWalletInfoControllers',
                         {privkey: key, script: data.prevout_scripts[i]})
                 }
                 // TODO: verify
-                wallets.sign_and_send_tx(undefined, data, false, null, gettext('Funds redeemed'));
+                wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds redeemed'));
             }, function(error) {
                 if (error.uri == 'http://greenaddressit.com/error#notenoughmoney') {
                     notices.makeNotice('error', gettext('Already redeemed'));
@@ -144,7 +144,7 @@ angular.module('greenWalletInfoControllers',
             sweep(Array.apply([], bytes));
             deferred.resolve();
         } else {
-            if (window.cordova) {
+            if (window.cordova && cordova.platformId == 'android') {
                 cordovaReady(function() {
                     cordova.exec(function(data) {
                         $scope.$apply(function() {
@@ -153,10 +153,11 @@ angular.module('greenWalletInfoControllers',
                         });
                     }, function(fail) {
                         deferred.reject([fail == 'invalid_passphrase', errors[fail] || fail]);
-                    }, "BIP38", "decrypt", [encrypted_key, password, (cur_net=='testnet'?'BTT':'BTC')]);
+                    }, "BIP38", "decrypt", [encrypted_key, password,
+                            'BTC']);  // probably not correct for testnet, but simpler, and compatible with our JS impl
                 })();
             } else {
-                var worker = new Worker("/static/js/bip38_worker.min.js");
+                var worker = new Worker(BASE_URL+"/static/js/bip38_worker.min.js");
                 worker.onmessage = function(message) {
                     if (message.data.error) {
                         deferred.reject([message.data.error == 'invalid_passphrase',
@@ -166,76 +167,56 @@ angular.module('greenWalletInfoControllers',
                         deferred.resolve();
                     }
                 }
-                worker.postMessage({data: encrypted_key,
-                                    key: password,
-                                    cur_coin_version: Bitcoin.network[cur_net].addressVersion});
+                worker.postMessage({b58: encrypted_key,
+                                    password: password});
             }
         }
         return deferred.promise;
     };
 
-    if ($scope.wallet.redeem_key && !$scope.wallet.redeem_closed) {
-        if ($scope.wallet.redeem_key.indexOf('K') == 0 || $scope.wallet.redeem_key.indexOf('L') == 0 || $scope.wallet.redeem_key.indexOf('c') == 0) {  // unencrypted
-            redeem($scope.wallet.redeem_key).then(function() {
-                gaEvent('Wallet', 'SocialRedeemSuccessful');
-            }, function(e) {
-                gaEvent('Wallet', 'SocialRedeemError', e);
-                notices.makeNotice('error', e);
-            })
-        } else {
-            $scope.redeem_modal = {
-                redeem: function() {
-                    var that = this;
-                    this.decrypting = true;
-                    this.error = undefined;
-                    redeem($scope.wallet.redeem_key, this.password).then(function() {
-                        gaEvent('Wallet', 'SocialRedeemSuccessful');
-                        modal.close();
-                    }, function(e) {
-                        gaEvent('Wallet', 'SocialRedeemError', e[1]);
-                        that.decrypting = false;
-                        if (e[0]) that.error = e[1];
-                        else {
-                            modal.dismiss();
-                            notices.makeNotice('error', e[1]);
-                        }
-                    })
-                }
-            };
-        
-            var modal = $modal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/redeem_password_modal.html',
-                scope: $scope
-            });
-            gaEvent('Wallet', 'SocialRedeemModal');
-            modal.result.finally(function() {
-                // don't show the modal twice
-                $scope.wallet.redeem_closed = true;
-            });
-        }
-        $scope.redeem_shown = true;
-    }
+    $scope.processWalletVars().then(function() {
+        $scope.clearWalletInitVars();
 
-    if ($scope.wallet.send_to_receiving_id && !$scope.wallet.send_to_receiving_id_shown) {
-        gaEvent('Wallet', 'SendToReceivingId');
-        $scope.wallet.send_to_receiving_id_shown = true;
-        var receiving_id = $scope.wallet.send_to_receiving_id;
-        var recipient = {name: receiving_id, address: receiving_id, type: receiving_id.indexOf('reddit:') == -1 ? 'address' : 'reddit',
-                         amount: $scope.wallet.send_to_receiving_id_amount};
-        var b58 = Bitcoin.base58.encode(
-            Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
-                JSON.stringify(recipient)).toString()));
-        $location.path('/send/' + b58);
-    } else if ($scope.wallet.send_to_payment_request && !$scope.wallet.send_to_receiving_id_shown) {
-        gaEvent('Wallet', 'SendToPaymentRequestOpened');
-        $scope.wallet.send_to_receiving_id_shown = true;
-        var data = $scope.wallet.send_to_payment_request;
-        var name = data.merchant_cn || data.request_url;
-        var recipient = {name: name, data: data, type: 'payreq',
-                         amount: $scope.wallet.send_to_receiving_id_amount};
-        var b58 = Bitcoin.base58.encode(
-            Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
-                JSON.stringify(recipient)).toString()));
-        $location.path('/send/' + b58);
-    }
+        if ($scope.wallet.redeem_key && !$scope.wallet.redeem_closed) {
+            if ($scope.wallet.redeem_key.indexOf('K') == 0 || $scope.wallet.redeem_key.indexOf('L') == 0 || $scope.wallet.redeem_key.indexOf('c') == 0) {  // unencrypted
+                redeem($scope.wallet.redeem_key).then(function() {
+                    gaEvent('Wallet', 'SocialRedeemSuccessful');
+                }, function(e) {
+                    gaEvent('Wallet', 'SocialRedeemError', e);
+                    notices.makeNotice('error', e);
+                })
+            } else {
+                $scope.redeem_modal = {
+                    redeem: function() {
+                        var that = this;
+                        this.decrypting = true;
+                        this.error = undefined;
+                        redeem($scope.wallet.redeem_key, this.password).then(function() {
+                            gaEvent('Wallet', 'SocialRedeemSuccessful');
+                            modal.close();
+                        }, function(e) {
+                            gaEvent('Wallet', 'SocialRedeemError', e[1]);
+                            that.decrypting = false;
+                            if (e[0]) that.error = e[1];
+                            else {
+                                modal.dismiss();
+                                notices.makeNotice('error', e[1]);
+                            }
+                        })
+                    }
+                };
+            
+                var modal = $modal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/redeem_password_modal.html',
+                    scope: $scope
+                });
+                gaEvent('Wallet', 'SocialRedeemModal');
+                modal.result.finally(function() {
+                    // don't show the modal twice
+                    $scope.wallet.redeem_closed = true;
+                });
+            }
+            $scope.redeem_shown = true;
+        }
+    });
 }]);

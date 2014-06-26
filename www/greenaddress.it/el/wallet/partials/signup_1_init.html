@@ -6,7 +6,7 @@
             <div class="create-modal-header">
                 <span class="pull-left">Έχετε ήδη λογαριασμό;
                     
-                    <a href="/wallet">Συνδεθείτε στο πορτοφόλι σας</a></span>
+                    <a href="" ng-click="logout()">Συνδεθείτε στο πορτοφόλι σας</a></span>
                     
                 Βήμα 1 του 4
                 <div class="progress">
@@ -19,9 +19,13 @@
                     <small>Παρακαλώ ολοκληρώστε τα 4-βήματα για την ρύθμιση του λογαριασμού σας ώστε να το ασφαλίσετε πλήρως κατά των εισβολέων</small>
                 </div>
                 <hr>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic">Το συνθηματικό σας</div>
-                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic" ng-show="signup.mnemonic"></div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">Το συνθηματικό σας</div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
+                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Δημιουργία μνημονικού, παρακαλώ περιμένετε...</div>
+                <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>Click to encrypt your mnemonic</a>
+                </div></div>
                 <hr>
                 <p>Παρακαλώ γράψτε κάτω αυτές τις λέξεις και αποθηκεύστε τις σε ασφαλές μέρος, καθώς δεν μπορούν να ανακτηθούν. <b>Δεν αποθηκεύουμε τις παραπάνω πληροφορίες οπουδήποτε, δεν μπορούμε να σας βοηθήσουμε να τις ανακτήσετε!</b></p>
             </div>
@@ -33,7 +37,7 @@
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Εμφάνιση QR Code</button>
                 
-                <button class="btn btn-default btn-block-xs" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Γράψτε στην ετικέτα NFC</button>
+                <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Γράψτε στην ετικέτα NFC</button>
                 
                 <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Συνέχεια!</a>
                 <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Συνέχεια!</a>
@@ -54,7 +58,8 @@
 <div class="printable">
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
     <p>Η φράση κλειδί για να αποκτήσετε πρόσβαση στο πορτοφόλι σας είναι:</p>
-    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
-    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
+    <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic_encrypted || signup.mnemonic ))" size="212"></qr>
     <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Αποθηκεύστε αυτή την σελίδα σε ασφαλές μέρος</i></p>
 </div>

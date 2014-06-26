@@ -41,6 +41,34 @@
             app.initialize();
         </script>
         <script type="text/javascript">
+            /*
+            function loadjsfile(filename, cb){
+               var fileref = document.createElement('script');
+               var loaded = false;
+               fileref.setAttribute("type","text/javascript");
+               fileref.setAttribute("src", filename);
+               if (cb) {
+                    fileref.onreadystatechange = fileref.onload = function() {
+                        if (!loaded) {
+                            cb();
+                        }
+                        loaded = true;
+                    };
+               }
+                
+               document.getElementsByTagName("head")[0].appendChild(fileref)
+            }
+
+            if (navigator.userAgent.indexOf("GAITCordova") == 0) {
+                console.log("loading cordova");
+                loadjsfile("http://192.168.2.34:8000/android/www/cordova.js", function() {
+                    console.log("loading index");
+                    loadjsfile("http://192.168.2.34:8000/android/www/js/index.js", function() {
+                        console.log("initializing app");
+                        app.initialize();
+                    });
+                });
+            } */
         </script>
     </body>
 </html>

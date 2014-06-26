@@ -31,6 +31,10 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/base.html',
             controller: 'SignupLoginController'
         })
+        .when('/trezor_login', {
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/trezor.html',
+            controller: 'SignupLoginController'
+        })
         .when('/info', {
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_info.html',
             controller: 'InfoController'
@@ -87,6 +91,10 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_4_2factor.html',
             controller: 'SignupController'
         })
+        .when('/trezor_signup', {
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_2_trezor.html',
+            controller: 'SignupController'
+        })
         .when('/concurrent_login', {
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/concurrent_login.html',
             controller: 'SignupController'
@@ -99,12 +107,12 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             controller: 'InfoController'
         })
         .when('/pay/:pay_receiver', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_info.html',
-            controller: 'InfoController'
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_send.html',
+            controller: 'SendController'
         })
         .when('/uri/', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_info.html',
-            controller: 'InfoController'
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_send.html',
+            controller: 'SendController'
         });
         
 }]).run(['$rootScope', function($rootScope, $location) {
@@ -112,9 +120,6 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
 }]).factory("backButtonHandler", function () {
     var backButtonHandlerService = {
         handlers: [],
-        exitAppHandler: function() {
-            navigator.app.exitApp();
-        },
         pushHandler: function(handler) {
             if (this.handlers.length) {
                 document.removeEventListener("backbutton", this.handlers[this.handlers.length-1]);
@@ -130,8 +135,8 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
         }
     };
     return backButtonHandlerService;
-}).directive("toggleableMenu", ['$location', 'cordovaReady', 'backButtonHandler',
-        function($location, cordovaReady, backButtonHandler) {
+}).directive("toggleableMenu", ['$location', 'cordovaReady', 'backButtonHandler', 'vibration',
+        function($location, cordovaReady, backButtonHandler, vibration) {
     return {
         restrict: 'A',
         controller: ['$scope', function($scope) {
@@ -151,6 +156,8 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
                 toggleClasses.push([element, cls]);
             };
             $scope.toggle_set = function(enable) {
+                if ($location.path() == '/') return;  // don't allow swiping menu on login page
+                vibration.vibrate(50);
                 if (state == enable) return;
                 state = enable;
                 for (var i = 0 ; i < toggleClasses.length; ++i) {
@@ -180,8 +187,12 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
                     var all_a = element.find('a');
                     for (var i = 0; i < all_a.length; i++) {
                         var a = angular.element(all_a[i]);
-                        if (newValue.indexOf(a.parent().attr('path')) != -1) {
+                        if (newValue.indexOf(a.parent().attr('path')) != -1 ||
+                            (a.parent().attr('path') == '/send' && newValue.indexOf('/uri/') != -1) ||
+                            (a.parent().attr('path') == '/send' && newValue.indexOf('/pay/') != -1) ||
+                            (a.parent().attr('path') == '/info' && newValue.indexOf('/redeem/') != -1)) {
                             scope.subpage_title = a.text();
+                            vibration.vibrate(50);
                             a.parent().addClass('selected');
                         } else {
                             a.parent().removeClass('selected');

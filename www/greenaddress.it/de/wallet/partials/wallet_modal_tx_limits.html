@@ -1,0 +1,39 @@
+<div submittable>
+  <div class="modal-body">
+    <form role="form" class="form-horizontal" ng-submit="save_limits()">
+      <div class="form-group">
+        <label for="limit_currency" class="col-sm-4 control-label">Limit currency</label>
+        <div class="col-sm-8">
+          <select clickfix ng-model="limits_editor.currency" class="form-control" id="limit_currency" class="col-sm-4" ng-disabled="privacy.updating_send_me" ng-disabled="limits_editor.saving">
+            <option value="BTC">(( wallet.unit ))</option>
+            <option value="fiat">(( wallet.fiat_currency)) (current currency)</option>
+          </select>
+          <small ng-show="limits_editor.currency == 'fiat'" class="label label-warning" style="white-space: normal"><strong>HINWEIS</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <label for="single" class="col-sm-4 control-label">Single transaction (<span>((limits_editor.currency=='BTC'?wallet.unit:wallet.fiat_currency))</span>)</label>
+        <div class="col-sm-8">
+          
+              <input ng-model="limits_editor.single_tx" type="tel" class="form-control" id="single" placeholder="Betrag" ng-disabled="limits_editor.saving">
+          
+        </div>
+      </div> -->
+      <div class="form-group">
+        <label for="total" class="col-sm-4 control-label">Total (<span>((limits_editor.currency=='BTC'?wallet.unit:wallet.fiat_currency))</span>)</label>
+        <div class="col-sm-8">
+          
+              <input clickfix ng-model="limits_editor.total" type="number" class="form-control" id="total" placeholder="Betrag" ng-disabled="limits_editor.saving" ng-show="cordova_platform=='ios'">
+              <input clickfix ng-model="limits_editor.total" type="tel" class="form-control" id="total" placeholder="Betrag" ng-disabled="limits_editor.saving" ng-hide="cordova_platform=='ios'">
+          
+          <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
+        </div>
+      </div>
+      <input type="submit" class="hide" submitter />
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" ng-click="$close()" ng-disabled="limits_editor.saving">Abbrechen</button>
+    <button class="btn btn-primary btn-block-xs" ng-click="submit_me()" ng-disabled="limits_editor.saving"><i class="glyphicon glyphicon-save"></i>Save</button>
+  </div>
+</div>

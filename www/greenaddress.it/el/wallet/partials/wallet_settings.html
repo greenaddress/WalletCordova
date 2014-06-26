@@ -5,7 +5,7 @@
     </div>
   </div>
 </div>
-<div class="row currencies" ng-show="settings.available_currencies">
+<div class="row currencies" ng-show="settings.pricing_sources">
   <div class="col-md-3">
     <div class="sub-header">Συνάλλαγμα</div>
     <div class="sub-header-desc">Επιλέξτε το συναλλαγμα σας και την πηγή τιμολόγησης.</div>
@@ -17,7 +17,10 @@
       </div>
       <div class="form-group">
         <div class="btn-group">
-          <button ng-repeat="(exchange, available) in settings.available_currencies.per_exchange" type="button" class="btn btn-xs btn-default" ng-class="{'btn-primary': settings.exchange == exchange, 'btn-default': settings.exchange != exchange}" ng-model="settings.exchange" btn-radio="exchange" ng-disabled="settings.updating_exchange || available.indexOf(settings.currency) == -1">(( exchanges[exchange] ))</button>
+          <select ng-model="settings.pricing_source"
+              ng-options="(source.currency+'|'+source.exchange) as (source.currency+' ('+exchanges[source.exchange]+')') for source in settings.pricing_sources"
+              ng-disabled="settings.updating_pricing_source">
+          </select>
         </div>
       </div>
     </form>
@@ -25,15 +28,6 @@
     <form role="form" class="form-inline">
       <div class="form-group">
         <label class="control-label">Εμφάνιση ποσών σε</label>
-      </div>
-      <div class="form-group">
-        <div class="btn-group">
-          <button ng-repeat="currency in settings.available_currencies.all" type="button" class="btn btn-xs" ng-class="{'btn-primary': settings.currency == currency, 'btn-default': settings.currency != currency}" ng-model="settings.currency" btn-radio="currency" ng-disabled="settings.updating_currency || (settings.available_currencies.per_exchange[settings.exchange].indexOf(currency) == -1 && settings.available_currencies.per_exchange[settings.exchange].length != 0)">(( currency ))</button>
-        </div>
-      </div>
-      <br />
-      <div class="form-group">
-        <label class="control-label">και</label>
       </div>
       <div class="form-group">
         <div class="btn-group">
@@ -56,6 +50,24 @@
                 <input type="checkbox" class="switch" ng-model="wallet.appearance.sound"/>
                 <span class="switch"></span>
                 Enable sounds
+            </label>
+        </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="VibrationController">
+  <div class="col-md-3">
+    <div class="sub-header">Vibrate</div>
+    <div class="sub-header-desc">Enable or disable vibrations on mobile devices</div>
+  </div>
+  <div class="col-md-9" submittable>
+    <form role="form" class="form-horizontal">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="wallet.appearance.vibrate"/>
+                <span class="switch"></span>
+                Enable vibrations
             </label>
         </div>
     </form>
@@ -152,7 +164,7 @@
           </div>
         </div>
         <hr>
-        <button class="btn btn-danger btn-block-xs" ng-click="remove_all_pin_logins()">Απενεργοποιήσετε τη γρήγορη σύνδεση σε όλες τις συσκευές</button>
+        <button class="btn btn-danger btn-block-xs" ng-click="remove_all_pin_logins()"><i class="glyphicon glyphicon-remove"></i> Απενεργοποιήσετε τη γρήγορη σύνδεση σε όλες τις συσκευές</button>
         <!-- 
         <div class="form-group">
           <select id="quick-login-select" ng-model="quicklogin.selected_device" ng-options="device.device_name for device in quicklogin.devices"></select>
@@ -179,12 +191,12 @@
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
     
-      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
-      <label class="switch">
+      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled" ng-hide="cordova_platform=='ios'"><i class="icon-facebook"></i> Facebook</button>
+      <label class="switch" ng-hide="cordova_platform=='ios'">
         <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
         <span class="switch"></span>
       </label>
-      <hr>
+      <hr ng-hide="cordova_platform=='ios'">
       
     
       <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> Προσαρμοσμένη σύνδεση</button>
@@ -260,6 +272,37 @@
         <small class="label label-info" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: You need to have a confirmed email enabled for this feature to work.</small>
       </div>
     </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="PrivacyController">
+  <div class="col-md-3">
+    <div class="sub-header">Privacy</div>
+    <div class="sub-header-desc">Decide who can send you money directly to your GreenAddress wallet, and who can see your name when receiving money from you</div>
+  </div>
+  <div class="col-md-9" submittable>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email/Reddit</label>
+          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Addressbook contacts' will disallow sending to you wallet directly using your Reddit handle)</small></div>
+          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
+            <option value="2">Everyone</option>
+            <option value="1">Addressbook contacts</option>
+            <option value="0">No one</option>
+          </select>
+        </div>
+      </form>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email/Reddit handle as sender to </label>
+          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Mutually added in addressbook' will cause you to be never visible as sender when using Reddit handle for sending)</small></div>
+          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
+            <option value="2">Everyone</option>
+            <option value="1">Mutually added in addressbook</option>
+            <option value="0">No one</option>
+          </select>
+        </div>
+      </form>
   </div>
 </div>
 <hr class="double">
@@ -394,7 +437,7 @@
     <form role="form" class="form-horizontal" ng-submit="save_logout_timeout()">
         <label class="col-sm-2 control-label" for="wallet-timeout">Minutes</label>
         <div class="input-group">
-            <input inputmode="numeric" class="form-control" placeholder="Timeout minutes"
+            <input inputmode="numeric" type="tel" class="form-control" placeholder="Timeout minutes"
                    maxlength="3"  ng-pattern="/[0-9]/" ng-model="timeoutstate.altimeout" id="wallet-timeout"/>
             <input type="submit" class="btn btn-primary" ng-show="wallet.appearance.altimeout != timeoutstate.altimeout" value="Save" ng-disabled="timeoutstate.timeout" />
         </div>
@@ -404,13 +447,15 @@
 <hr class="double">
 <div class="row">
   <div class="col-md-3">
-    <div class="sub-header">Εμφάνιση μνημονικού</div>
+      <div class="sub-header">Εμφάνιση μνημονικού</div>
     <div class="sub-header-desc">Εμφάνιση του μνημονικού σας για την ανάκτηση του λογαριασμού ή κλωνοποίηση σε κάποια άλλη συσκευή.</div>
   </div>
   <div class="col-md-9">
-    <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()">Εμφάνιση μνημονικού</button>
+    <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()"><i class="glyphicon glyphicon-eye-open"></i> Εμφάνιση μνημονικού</button>
+    <button ng-hide="cordova_platform=='ios'" class="btn btn-success btn-block-xs" ng-click="show_encrypted_mnemonic()"><i class="glyphicon glyphicon-lock"></i> Show encrypted mnemonic</button>
     
-    <button class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Γράψτε στην ετικέτα NFC</button>
+    <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Γράψτε στην ετικέτα NFC</button>
+    <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Write encrypted to NFC tag</button>
     
   </div>
 </div>
@@ -435,49 +480,46 @@
           <small class="label label-info" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: Τόσο οι εξερχόμενες όσο και οι εισερχόμενες ειδοποιήσεις συναλλαγών πρέπει να είναι ενεργοποιημένες για να λειτουργεί αυτή η δυνατότητα.</small>
         </div>
         <hr>
-        <a href="" class="btn btn-default btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Εμφάνιση εκροών που λήγουν σύντομα</a>
+        <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Εμφάνιση εκροών που λήγουν σύντομα</a>
+        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Send all nLockTime transactions by email</a>
       </div>
     </form>
   </div>
 </div>
 <hr class="double">
-<div class="row">
+<div class="row" ng-controller="TxLimitsController">
   <div class="col-md-3">
     <div class="sub-header">Όρια δαπανών</div>
     <div class="sub-header-desc">Θέστε κάποια όρια για τα οποία δεν θα σας ζητηθεί έλεγχο ταυρότητας με την μέθοδο των δύο παραγόντων για πληρωμές φιλικές προς το χρήστη.</div>
   </div>
   <div class="col-md-9">
-    <form role="form" class="form-horizontal">
-      <label class="switch">
-          <input type="checkbox" class="switch" disabled>
-          <span class="switch"></span>
-          <span>
-            Ενεργοποίηση καθυστέρησης πληρωμών
-            <span class="coming-soon">Προσεχώς</span>
-          </span>
-      </label>
-      <!--
-      <hr>
+    <p>You can provide amount (BTC or fiat) limits of transactions that you can make without using two factor authentication</p>
+    <div class="form-horizontal">
       <div class="form-group">
-        <label for="single" class="col-sm-3 control-label">Single transaction</label>
-        <div class="col-sm-4">
-          <input type="text" class="form-control" id="single" placeholder="Ποσό">
+        <label class="col-sm-3 control-label">Limit currency</label>
+        <div class="col-sm-7">
+          <span class="form-control" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
+          <span class="form-control" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (current currency)</span>
+          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
         </div>
       </div>
+      <!-- <div class="form-group">
+        <label class="col-sm-3 control-label">Single transaction</label>
+        <div class="col-sm-7">
+          <span class="form-control">((wallet.limits.per_tx|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+        </div>
+      </div> -->
       <div class="form-group">
-        <label for="daily" class="col-sm-3 control-label">Daily</label>
-        <div class="col-sm-4">
-          <input type="text" class="form-control" id="daily" placeholder="Ποσό">
+        <label class="col-sm-3 control-label">Total</label>
+        <div class="col-sm-7">
+          <span class="form-control">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+          <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
         </div>
       </div>
-      <div class="form-group">
-        <label for="monthly" class="col-sm-3 control-label">Monthly</label>
-        <div class="col-sm-4">
-          <input type="text" class="form-control" id="monthly" placeholder="Ποσό">
-        </div>
-      </div>
-      -->
-    </form>
+    </div>
+    <div>
+      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Change limits</button>
+    </div>
   </div>
 </div>
 <hr class="double">
@@ -512,5 +554,15 @@
       </div>
       -->
     </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Remove account</div>
+    <div class="sub-header-desc">You can remove your account with all associated data here.</div>
+  </div>
+  <div class="col-md-9">
+      <button class="btn btn-danger btn-block-xs" ng-click="remove_account()"><i class="glyphicon glyphicon-remove"></i> Remove account</button>
   </div>
 </div>
