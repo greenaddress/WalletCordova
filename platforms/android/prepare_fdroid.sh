@@ -10,9 +10,6 @@ cp -r ../../www/* assets/www
 cp -r platform_www/* assets/www
 cp -r ../../plugins/me.apla.cordova.app-preferences/www/task assets/www
 
-# remove the prebuilt scrypt for F-Droid
-# (we keep it in repo to avoid NDK dependency for other users)
-rm libs/armeabi/libscrypt.so
 cd scrypt
 export PATH=$ANDROID_NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin:$PATH
 make NDK_ROOT=$ANDROID_NDK TARGET=android
