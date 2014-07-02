@@ -1,0 +1,3 @@
+[submodule "platforms/android/scrypt"]
+	path = platforms/android/scrypt
+	url = git@github.com:wg/scrypt.git
