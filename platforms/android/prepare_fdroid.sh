@@ -14,7 +14,7 @@ cp -r ../../plugins/me.apla.cordova.app-preferences/www/task assets/www
 # (we keep it in repo to avoid NDK dependency for other users)
 rm libs/armeabi/libscrypt.so
 cd scrypt
-export PATH=$1/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin:$PATH
-make NDK_ROOT=$1 TARGET=android
+export PATH=$ANDROID_NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin:$PATH
+make NDK_ROOT=$ANDROID_NDK TARGET=android
 cd ..
 cp scrypt/target/libscrypt.so libs/armeabi
