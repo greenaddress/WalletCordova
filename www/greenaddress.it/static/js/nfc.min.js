@@ -42,12 +42,12 @@ angular.module('greenWalletNFCControllers', ['greenWalletServices'])
             });
         }
         
-        nfc.removeMimeTypeListener('x-gait/enc', commonNFCXGaitMNCListener, undefined);
+        nfc.removeMimeTypeListener('x-ga/en', commonNFCXGaitMNCListener, undefined);
         nfc.removeMimeTypeListener('x-gait/mnc', commonNFCXGaitMNCListener, undefined);
 
         nfc.addTagDiscoveredListener(writeTag, win, fail);
         nfc.addMimeTypeListener('x-gait/mnc', writeTag, win, fail); // overwrite
-        nfc.addMimeTypeListener('x-gait/enc', writeTag, win, fail); // overwrite
+        nfc.addMimeTypeListener('x-ga/en', writeTag, win, fail); // overwrite
         nfc.addNdefFormatableListener(formatTag, win, fail);
         
         $modalInstance.result.finally(function() {
@@ -61,10 +61,10 @@ angular.module('greenWalletNFCControllers', ['greenWalletServices'])
             nfc.removeTagDiscoveredListener(writeTag, undefined, removeFail);
             document.removeEventListener("ndef-formatable", formatTag, false);
             // re-add the original mime listener
-            nfc.removeMimeTypeListener('x-gait/enc', writeTag, undefined, removeFail);
+            nfc.removeMimeTypeListener('x-ga/en', writeTag, undefined, removeFail);
             nfc.removeMimeTypeListener('x-gait/mnc', writeTag, undefined, removeFail);
 
-            nfc.addMimeTypeListener('x-gait/enc', commonNFCXGaitMNCListener);
+            nfc.addMimeTypeListener('x-ga/en', commonNFCXGaitMNCListener);
             nfc.addMimeTypeListener('x-gait/mnc', commonNFCXGaitMNCListener);
         });
     })();

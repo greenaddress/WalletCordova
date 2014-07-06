@@ -24,7 +24,7 @@
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) potwierdzenia</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;
-                    <a href="" ng-click="redeem(transaction)">zabierz fundusze z powrotem</a>
+                    <a href="" ng-click="redeem(transaction)" ng-show="wallet.hdwallet.priv">zabierz fundusze z powrotem</a>
                 </span>
                 <span ng-hide="transaction.sent_back || transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">claimed</span>
               </span>

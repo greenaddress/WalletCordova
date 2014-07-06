@@ -103,15 +103,12 @@ function Electrum($http, $q) {
   this.deleteAllCookies = function() {
     if (window.CustomNativeAccess) {
       window.CustomNativeAccess.clearCookies();  // reset session every ~2 minutes
-    } else {
-      var cookies = document.cookie.split(";");
-
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      }
+    } else if (window.cordova && cordova.exec) {
+      cordova.exec(function() {
+        console.log('clearCookies failed')
+      }, function(fail) {
+        console.log('clearCookies succeeded');
+      }, "BIP38", "clearCookies", []);
     }
   }
 
@@ -183,7 +180,10 @@ function Electrum($http, $q) {
     };
 
     var success = function(data, status, headers, config) {
-      if (data && !data.error) {
+      if (typeof data == "string" && data.indexOf("Error: session not found") == 0) {
+        this.deleteAllCookies();
+      }
+      if (data && !data.error && !(typeof data == "string" && data.indexOf('Error') == 0)) {
         this.resetTimeoutDuration();
         if (data instanceof Array) {
           for (var o in data) {

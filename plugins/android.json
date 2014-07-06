@@ -41,6 +41,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"PINInput\"><param name=\"android-package\" value=\"it.greenaddress.cordova.PINInput\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"BIP39\"><param name=\"android-package\" value=\"it.greenaddress.cordova.BIP39\" /></feature>",
                             "count": 1
                         },
@@ -695,10 +699,10 @@
         "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "it.greenaddress.cordova": {
+        "com.chariotsolutions.nfc.plugin": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "com.chariotsolutions.nfc.plugin": {
+        "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         }
     },

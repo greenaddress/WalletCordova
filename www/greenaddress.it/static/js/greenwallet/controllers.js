@@ -21,6 +21,7 @@ angular.module('greenWalletControllers', [])
             clearwallet();
             tx_sender.logout();
             $location.path('/');
+            $scope.is_loading = 0;  // seems is_loading > 0 while logging out breaks login (ng-disabled checkbox)
         });
     };
     var updating = true, updating_txs = false;
@@ -183,6 +184,7 @@ angular.module('greenWalletControllers', [])
                 scope: $scope
             });
         }
+        wallets.getTwoFacConfig($scope);  // required for 2FA missing warning
     });
 
     if ($scope.wallet.send_to_receiving_id) {
@@ -214,6 +216,46 @@ angular.module('greenWalletControllers', [])
             resolve: {url: function() { return url; }}
         });
     };
+
+    $scope.verify_mnemonic = function() {
+        gaEvent('Wallet', 'VerifyMnemonicModal');
+        var indices = $scope.verify_mnemonics_words_indices = [];
+        $scope.verified_mnemonic_words = ['', '', '', ''];
+        $scope.verified_mnemonic_errors = ['', '', '', ''];
+        for (var i = 0; i < 4; i++) {
+            indices.push(Math.floor(Math.random() * 24) + 1);
+            while (indices.indexOf(indices[indices.length - 1]) < indices.length - 1) {
+                indices[indices.length - 1] = Math.floor(Math.random() * 24) + 1;
+            }
+        }
+        indices.sort(function(a, b) { return a - b; });
+        $scope.verify_mnemonic_submit = function() {
+            var valid = true;
+            var valid_words = $scope.wallet.mnemonic.split(' ');
+            for (var i = 0; i < 4; i++) {
+                if (!$scope.verified_mnemonic_words[i]) {
+                    $scope.verified_mnemonic_errors[i] = gettext('Please provide this word');
+                    valid = false;
+                } else if ($scope.verified_mnemonic_words[i] != valid_words[indices[i]-1]) {
+                    $scope.verified_mnemonic_errors[i] = gettext('Incorrect word');
+                    valid = false;
+                } else {
+                    $scope.verified_mnemonic_errors[i] = '';
+                }
+            }
+
+            if (valid) {
+                modal.close();
+                wallets.updateAppearance($scope, 'mnemonic_verified', 'true').catch(function(e) {
+                    notices.makeNotice('error', e);
+                })
+            }
+        }
+        var modal = $modal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_verify_mnemonic.html',
+            scope: $scope
+        });
+    }
 
     $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue) {
         $modalStack.dismissAll();

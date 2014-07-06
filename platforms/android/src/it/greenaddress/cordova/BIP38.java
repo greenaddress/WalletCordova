@@ -95,11 +95,7 @@ public class BIP38 extends CordovaPlugin
                         callbackContext.sendPluginResult(result);
                         return;
                     }
-                    final JSONArray json = new JSONArray();
-                    for (int i = 0; i < keyPair.getPrivate().length; i++) {
-                        json.put(keyPair.getPrivate()[i]);
-                    }
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, json);
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, keyPair.toString());
                     callbackContext.sendPluginResult(result);
                 }
             });

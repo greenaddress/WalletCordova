@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-sm-3 col-sm-offset-1" ng-show="!state.toggleshowpin">
                                 <span class="input-group">
-                                    <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="is_loading || logging_in || payreq_loading" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="Code PIN" ng-model="use_pin_data.pin" />
+                                    <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="logging_in" type="tel" mask-input name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" focus-on="pin" placeholder="Code PIN" ng-model="use_pin_data.pin" />
                                     <span class="input-group-btn">
                                         <span class="btn btn-default pull-right" ng-class="{disabled: logging_in || payreq_loading}"><i class="glyphicon glyphicon-log-in"></i>
                                             <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="submit_me()" ng-focus="submit_me()" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading" />
@@ -64,7 +64,7 @@
                         <hr>
                         <div class="subtitle">Se connecter en mode lecture seule</div>
                         
-                        <a ng-hide="cordova_platform=='ios'" href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
+                        <a href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
                         
                         
                         <a href="" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Personnalisé Connexion</a>

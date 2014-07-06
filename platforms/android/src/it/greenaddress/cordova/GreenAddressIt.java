@@ -190,4 +190,5 @@ public class GreenAddressIt extends CordovaActivity
         super.onNewIntent(intent);
         setIntent(intent);
     }
+    
 }

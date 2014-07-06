@@ -6117,6 +6117,9 @@ fieldset[disabled] .btn.btn-reddit.active {
   color: #707070;
   background-color: #ffffff;
 }
+.btn.btn-adv-options {
+  margin-top: 5px;
+}
 .btn.btn-sync {
   /* &:hover {
       &:before {
@@ -6572,6 +6575,9 @@ input[type="checkbox"].switch:disabled + span + span {
 }
 .form-control-static {
   margin-bottom: 9px;
+}
+.form-control-noinput {
+  border: none;
 }
 .input-group-addon {
   font-style: italic;
@@ -7236,6 +7242,9 @@ input[type="checkbox"].switch:disabled + span + span {
   -webkit-transition: all 0.25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
   transition: all 0.25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
+.menu-mobile small a {
+  color: inherit;
+}
 .menu-mobile.visible {
   -webkit-transform: translate3d(265px, 0, 0);
   transform: translate3d(265px, 0, 0);
@@ -7714,12 +7723,22 @@ input[type="checkbox"].switch:disabled + span + span {
   #content_container,
   .container,
   .ng-view,
+  .modal,
+  .modal-dialog,
+  .modal-content,
   .printable,
   .printable * {
     display: block !important;
     margin: 0 auto;
     padding-left: 0 !important;
     color: black;
+  }
+  .printable .ng-hide {
+    display: none !important;
+  }
+  .printable p.small {
+    font-size: 50%;
+    line-height: 100%;
   }
   .printable {
     position: absolute;

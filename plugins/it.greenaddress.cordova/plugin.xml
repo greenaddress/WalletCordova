@@ -6,6 +6,9 @@
     <keywords>cordova,gait</keywords>
     <platform name="android">
         <config-file target="config.xml" parent="/*">
+            <feature name="PINInput">
+                <param name="android-package" value="it.greenaddress.cordova.PINInput"/>
+            </feature>
             <feature name="BIP39">
                 <param name="android-package" value="it.greenaddress.cordova.BIP39"/>
             </feature>
@@ -17,12 +20,23 @@
     <platform name="ios">
         <framework src="Security.framework" />
         <framework src="CoreBitcoin.framework" custom="true" />
+        <source-file src="bip38/bip38.h" target-dir="bip38" />
+        <source-file src="bip38/bip38.m" target-dir="bip38" />
+        <source-file src="bip38/c/crypto_scrypt-neon.c" target-dir="bip38/c" />
+        <source-file src="bip38/c/crypto_scrypt-sse.c" target-dir="bip38/c" />
+        <source-file src="bip38/c/sha256.c" target-dir="bip38/c" />
+        <source-file src="bip38/include/config.h" target-dir="bip38/include" />
+        <source-file src="bip38/include/crypto_scrypt-neon-salsa208.h" target-dir="bip38/include" />
+        <source-file src="bip38/include/crypto_scrypt.h" target-dir="bip38/include" />
+        <source-file src="bip38/include/scrypt_platform.h" target-dir="bip38/include" />
+        <source-file src="bip38/include/sha256.h" target-dir="bip38/include" />
+        <source-file src="bip38/include/sysendian.h" target-dir="bip38/include" />
         <source-file src="CDVAES.m" />
         <source-file src="CDVAES.h" />
         <source-file src="CDVBIP32.m" />
         <source-file src="CDVBIP32.h" />
-<!--        <source-file src="CDVBIP38.m" />
-        <source-file src="CDVBIP38.h" /> -->
+        <source-file src="CDVBIP38.m" />
+        <source-file src="CDVBIP38.h" />
         <source-file src="CDVBIP39.m" />
         <source-file src="CDVBIP39.h" />
         <config-file target="config.xml" parent="/*">

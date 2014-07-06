@@ -356,7 +356,7 @@ angular.module('greenWalletSettingsControllers',
                 bip38.encrypt_mnemonic_modal($scope, bytes).then(function(mnemonic_encrypted) {
                     mnemonics.validateMnemonic(mnemonic_encrypted).then(function(bytes_encrypted) {
                         $scope.nfc_bytes = bytes_encrypted;
-                        $scope.nfc_mime = 'x-gait/enc';
+                        $scope.nfc_mime = 'x-ga/en';
                         $modal.open({
                             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
                             scope: $scope,
@@ -628,6 +628,7 @@ angular.module('greenWalletSettingsControllers',
         wallets.get_two_factor_code($scope, 'set_email', {'address': settings.new_email}).then(function(twofac_data) {
             return tx_sender.call('http://greenaddressit.com/twofactor/set_email', settings.new_email, twofac_data).then(function() {
                 wallets.getTwoFacConfig($scope, true);  // refresh twofac config
+                notices.makeNotice('success', gettext('Email sent'));
             }).catch(function(err) {
                 notices.makeNotice('error', err.desc);
                 return $q.reject(err);

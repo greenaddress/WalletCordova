@@ -1,0 +1,26 @@
+<div submittable>
+
+    <div class="modal-body">
+    	<p class="text-center">Voucher created successfully!</p>
+        <p>It is available at <a ng-href="((voucher.url))">((voucher.url))</a></p>
+        
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Κλείσιμο</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="printable">
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
+    <p class="small">This is a GreenAddress voucher for  (( voucher.satoshis|format_btc:wallet.unit ))</p>
+    <p ng-show="voucher.text">(( voucher.text ))</p>
+    <p class="small">The QR code below contains a URL for redeeming the funds:</p>
+    <qr class="qrcode" text="(( voucher.url ))" size="212"></qr>
+    <p class="small" ng-hide="voucher.encrypted">Alternatively, you can sweep funds to a wallet supporting Wallet Import Format using the following QR code:</p>
+    <p class="small" ng-show="voucher.encrypted">Alternatively, you can sweep funds to a wallet supporting BIP38 using the following QR code:</p>
+    <qr class="qrcode" text="(( voucher.enckey ))" size="212"></qr>
+</div>

@@ -9,8 +9,14 @@
   <div class="col-md-12">
     <form role="form" class="form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="recipient">Le destinataire</label>
-        <div class="col-sm-10">
+        <label class="col-sm-2 control-label" for="voucher_text" ng-show="send_tx.voucher">Voucher Text (optional)</label>
+        <label class="col-sm-2 control-label" for="recipient" ng-hide="send_tx.voucher">Le destinataire</label>
+        <div class="col-sm-10" ng-show="send_tx.voucher">
+          
+            <input ng-model="send_tx.voucher_text" class="form-control" type="text" id="voucher_text" placeholder="Enter any clear text message that will appear on the voucher" />
+          
+        </div>
+        <div class="col-sm-10" ng-hide="send_tx.voucher">
           <div class="input-group">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-search"></span>
@@ -18,7 +24,7 @@
             <script id="template/typeahead/typeahead-match.html" type="text/ng-template">
               <a tabindex="-1" ng-bind="match.label"></a>
             </script>
-            <input ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Entrez l'adresse du destinataire, adresse bitcoin, email ou nom Facebook"
+            <input ng-disabled="send_tx.processing_payreq" ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Entrez l'adresse du destinataire, adresse bitcoin, email ou nom Facebook"
                     typeahead="item as item.name for item in addressbook.items | filter:$viewValue | limitTo:8" />
             
             <!--
@@ -39,16 +45,24 @@
             </span>
           </div>  
           
+          <a class="btn btn-info btn-xs btn-adv-options" ng-hide="send_tx.advanced_options_visible || send_tx.recipient_overridden || send_tx.recipient.type == 'payreq'" ng-click="send_tx.advanced_options_visible=true"><i class="glyphicon glyphicon-wrench"></i> show advanced options</a>
         </div>
       </div>
-      <div class="form-group" ng-hide="send_tx.recipient_is_btcaddr() || wallet.send_unencrypted">
-        <label class="col-sm-2 control-label" for="recipient">Passphrase de chiffrement</label>
-        <div class="col-sm-10" ng-hide="cordova_platform=='ios'">
-          <input class="form-control" ng-model="send_tx.passphrase" class="form-control" type="text" />
-          <small ng-show="!send_tx.passphrase" class="label label-warning" style="white-space: normal"><strong>note</strong>: The receiving private key will not be encrypted unless you provide a passphrase. Unencrypted private keys are prone to eavesdropping!</small>
+
+      <div class="form-group" ng-show="send_tx.advanced_options_visible && send_tx.recipient.type != 'payreq'">
+        <div class="col-sm-offset-2 col-sm-10">
+           <label>
+            <input type="checkbox" ng-model="send_tx.voucher" />
+            <span>Create a voucher instead of sending to a recipient</span>
+          </label>
         </div>
-        <div class="col-sm-10" ng-show="cordova_platform=='ios'">
-          <small class="label label-warning" style="white-space: normal"><strong>note</strong>: The receiving private key will not be encrypted, and currently iOS doesn't support BIP38 encryption. Unencrypted private keys are prone to eavesdropping!</small>
+      </div>
+
+      <div class="form-group" ng-hide="!send_tx.voucher && (send_tx.recipient_is_btcaddr() || wallet.send_unencrypted)">
+        <label class="col-sm-2 control-label" for="encpassphrase">Passphrase de chiffrement</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="encpassphrase" ng-model="send_tx.passphrase" class="form-control" type="text" />
+          <small ng-show="!send_tx.passphrase" class="label label-warning" style="white-space: normal"><strong>note</strong>: The receiving private key will not be encrypted unless you provide a passphrase. Unencrypted private keys are prone to eavesdropping!</small>
         </div>
       </div>
       <hr>
@@ -60,8 +74,8 @@
               <div class="input-group">
                 <span class="input-group-addon">((wallet.unit))</span>
                 
-                    <input class="form-control" type="number" ng-model="send_tx.amount" placeholder="0.0000" ng-show="cordova_platform=='ios'" />
-                    <input class="form-control" type="tel" ng-model="send_tx.amount" placeholder="0.0000" ng-hide="cordova_platform=='ios'" />
+                    <input ng-disabled="send_tx.recipient.amount" class="form-control" type="number" ng-model="send_tx.amount" placeholder="0.0000" ng-show="cordova_platform=='ios'" />
+                    <input ng-disabled="send_tx.recipient.amount" class="form-control" type="tel" ng-model="send_tx.amount" placeholder="0.0000" ng-hide="cordova_platform=='ios'" />
                 
               </div>
             </div>
@@ -69,8 +83,8 @@
               <div class="input-group">
                 <span class="input-group-addon">(( wallet.fiat_currency ))</span>
                 
-                <input class="form-control" type="number" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-show="cordova_platform=='ios'" />
-                <input class="form-control" type="tel" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-hide="cordova_platform=='ios'" />
+                <input ng-disabled="send_tx.recipient.amount" class="form-control" type="number" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-show="cordova_platform=='ios'" />
+                <input ng-disabled="send_tx.recipient.amount" class="form-control" type="tel" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-hide="cordova_platform=='ios'" />
                 
               </div>
             </div>
@@ -93,7 +107,10 @@
         </div>
       </div>
       <hr class="double">
-      <button ng-disabled="send_tx.sending" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i> Envoyer de l'argent</button>
+      <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i> 
+        <span ng-hide="send_tx.voucher">Envoyer de l'argent</span>
+        <span ng-show="send_tx.voucher">Create a Voucher</span>
+      </button>
     </form>
   </div>
 </div>

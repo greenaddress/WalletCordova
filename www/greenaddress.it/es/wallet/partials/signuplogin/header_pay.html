@@ -18,5 +18,7 @@
 </p>
 
 <p ng-hide="wallet.send_to_receiving_id.indexOf('GA')==0">
-  <a href="(( wallet.send_to_receiving_id_bitcoin_uri ))">(( wallet.send_to_receiving_id_bitcoin_uri ))</a>
+  
+    <a href="(( wallet.send_to_receiving_id_bitcoin_uri ))" onclick="return false;">(( wallet.send_to_receiving_id_bitcoin_uri ))</a>
+  
 </p>

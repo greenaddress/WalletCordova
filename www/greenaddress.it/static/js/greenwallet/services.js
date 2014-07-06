@@ -3,11 +3,12 @@ angular.module('greenWalletServices', [])
    return function(name) {
         $timeout(function (){
             $rootScope.$broadcast('focusOn', name);
+            /* doesn't work very well
             if (window.cordova) {
                 cordovaReady(function() {
                     window.plugins.SoftKeyboard.show();
                 })();
-            }
+            } */
         });
    }
 }]).factory('crypto', ['cordovaReady', '$q', function(cordovaReady, $q) {
@@ -197,7 +198,7 @@ angular.module('greenWalletServices', [])
                     $scope.wallet.appearance.sound = true;
                 }
                 if (!('vibrate' in $scope.wallet.appearance)) {
-                    $scope.wallet.appearance.vibrate = true;
+                    $scope.wallet.appearance.vibrate = false;
                 }
                 vibration.state = $scope.wallet.appearance.vibrate;
                 if (!('altimeout' in $scope.wallet.appearance)) {
@@ -323,6 +324,15 @@ angular.module('greenWalletServices', [])
             return walletsService._getTransactions($scope, cache, notifydata);
         });
     };
+    var parseSocialDestination = function(social_destination) {
+        try { 
+            var data = JSON.parse(social_destination);
+            if (data.type == 'voucher') return gettext('Voucher');
+            else return social_destination;
+        } catch (e) {
+            return social_destination;
+        }
+    };
     walletsService._getTransactions = function($scope, cache, notifydata) {
         var transactions_key = $scope.wallet.receiving_id + 'transactions';
         var d = $q.defer();
@@ -384,7 +394,7 @@ angular.module('greenWalletServices', [])
                                 pubkey_pointer = ep.pubkey_pointer;
                                 if (!from_me) {
                                     redeemable_value = redeemable_value.add(new Bitcoin.BigInteger(ep.value));
-                                    sent_back_from = ep.social_destination;
+                                    sent_back_from = parseSocialDestination(ep.social_destination);
                                     redeemable_unspent = redeemable_unspent || !ep.is_spent;
                                 }
                             } else {
@@ -448,12 +458,12 @@ angular.module('greenWalletServices', [])
                                 external_social = external_social || _external_social;
                                 if (!ep.is_spent && ep.is_relevant) {
                                     unclaimed = true;
-                                    addresses.push(ep.social_destination);
+                                    addresses.push(parseSocialDestination(ep.social_destination));
                                 } else if (!ep.is_relevant && external_social) {
                                     sent_back = true;
                                     addresses.push(ep.ad);
                                 } else {
-                                    addresses.push(ep.social_destination);
+                                    addresses.push(parseSocialDestination(ep.social_destination));
                                 }
                             } else if (ep.social_destination && ep.social_destination_type == social_types.PAYMENTREQUEST) {
                                 if (addresses.indexOf(ep.social_destination) == -1) {
@@ -556,7 +566,7 @@ angular.module('greenWalletServices', [])
         $q.all(signatures).then(function(signatures) {
             tx_sender.call("http://greenaddressit.com/vault/send_tx", signatures, twofactor||null).then(function(data) {
                 d.resolve();
-                if (!twofactor) {
+                if (!twofactor && $scope) {
                     tx_sender.call("http://greenaddressit.com/login/get_spending_limits").then(function(data) {
                         $scope.wallet.limits.total = data.total;
                     });
@@ -663,6 +673,10 @@ angular.module('greenWalletServices', [])
     }
     walletsService.addCurrencyConversion = function($scope, model_name) {
         var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+        var unitPlaces = {'BTC': 8, 'mBTC': 5, 'µBTC': 2}[$scope.wallet.unit];
+        var trimDecimalPlaces = function(numPlaces, val) {
+            return (Math.round(val * Math.pow(10, numPlaces)) / Math.pow(10, numPlaces));
+        }
         $scope.$watch(model_name+'.amount', function(newValue, oldValue) {
             if (newValue === oldValue) return;
             if ($scope[model_name].updated_by_conversion) {
@@ -673,9 +687,9 @@ angular.module('greenWalletServices', [])
                     $scope[model_name].amount_fiat = '';
                 } else {
                     $scope[model_name].amount_fiat = newValue * $scope.wallet.fiat_rate / div;
-                    $scope[model_name].amount_fiat = (Math.round($scope[model_name].amount_fiat * 100) / 100).toString();
+                    $scope[model_name].amount_fiat = trimDecimalPlaces(2, $scope[model_name].amount_fiat);
                 }
-                if ($scope[model_name].amount_fiat !== oldFiat) {
+                if ($scope[model_name].amount_fiat.toString() !== (oldFiat || '').toString()) {
                     $scope[model_name].updated_by_conversion = true;
                 }
             }
@@ -689,9 +703,10 @@ angular.module('greenWalletServices', [])
                 if (!newValue) {
                     $scope[model_name].amount = '';
                 } else {
-                    $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate).toString();
+                    $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate);
+                    $scope[model_name].amount = trimDecimalPlaces(unitPlaces, $scope[model_name].amount);
                 }
-                if ($scope[model_name].amount !== oldBTC) {
+                if ($scope[model_name].amount.toString() !== (oldBTC || '').toString()) {
                     $scope[model_name].updated_by_conversion = true;
                 }
             }
@@ -801,13 +816,19 @@ angular.module('greenWalletServices', [])
             txSenderService.electrum.connectToServer();
         }
     }
-    var session, calls = [];
+    var session, calls = [], calls_missed = {}, calls_counter = 0;
     txSenderService.call = function() {
         var d = $q.defer();
         if (session) {
+            var cur_call = calls_counter++;
+            calls_missed[cur_call] = [arguments, d];  // will be called on new session
             session.call.apply(session, arguments).then(function(data) {
+                if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
+                delete calls_missed[cur_call];
                 $rootScope.$apply(function() { d.resolve(data); })
             }, function(err) {
+                if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
+                delete calls_missed[cur_call];
                 $rootScope.$apply(function() { d.reject(err); })
             });
         } else {
@@ -824,7 +845,9 @@ angular.module('greenWalletServices', [])
         cordovaReady(function() {
             document.addEventListener("resume", function() {
                 if (!txSenderService.wallet) return;
-                session.close();  // reconnect on resume
+                if (session) {  
+                    session.close();  // reconnect on resume
+                }
                 session = null;
                 disconnected = true;
                 txSenderService.wallet.update_balance();
@@ -844,14 +867,14 @@ angular.module('greenWalletServices', [])
         session = s;
         session.subscribe('http://greenaddressit.com/tx_notify', function(topic, event) {
             gaEvent('Wallet', 'TransactionNotification');
-            $rootScope.$broadcast('transaction', event);        });
+            $rootScope.$broadcast('transaction', event);       
+        });
         session.subscribe('http://greenaddressit.com/block_count', function(topic, event) {
             $rootScope.$broadcast('block', event);
         });
         var d1, d2;
         if (txSenderService.hdwallet && txSenderService.logged_in) {
-            txSenderService.logged_in = false;
-            d1 = txSenderService.login();
+            d1 = txSenderService.login(false, true); // force_relogin
         } else if (txSenderService.watch_only) {
             d1 = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
         } else {
@@ -876,7 +899,12 @@ angular.module('greenWalletServices', [])
             d2 = $q.when(true);
         }
         $q.all([d1, d2]).then(function() {
-            // missed calls queue
+            // missed calls queues
+            for (i in calls_missed) {
+                var item = calls_missed[i];
+                delete calls_missed[i];
+                item[1].resolve(txSenderService.call.apply(session, item[0]));
+            }
             while (calls.length) {
                 var item = calls.shift();
                 item[1].resolve(txSenderService.call.apply(session, item[0]));
@@ -892,8 +920,10 @@ angular.module('greenWalletServices', [])
             });
         });
     };
-    var retries = 60, everConnected = false, disconnected = false;
+    var retries = 60, everConnected = false, disconnected = false, connecting = false;
     var connect = function() {
+        if (connecting) return;
+        connecting = true;
         ab.connect(wss_url,
             function(s) {
                 everConnected = true;
@@ -902,6 +932,7 @@ angular.module('greenWalletServices', [])
                     s.authreq(token).then(function(challenge) {
                         var signature = s.authsign(challenge, token);
                         s.auth(signature).then(function(permissions) {
+                            connecting = false;
                             onAuthed(s);
                         });
                     });
@@ -928,15 +959,16 @@ angular.module('greenWalletServices', [])
                     });
                 }
                 session = null;
+                connecting = false;
             },
             {maxRetries: 60}
         );
     };
     cordovaReady(connect)();
     txSenderService.logged_in = false;
-    txSenderService.login = function(logout) {
+    txSenderService.login = function(logout, force_relogin) {
         var d = $q.defer();
-        if (txSenderService.logged_in) {
+        if (txSenderService.logged_in && !force_relogin) {
             d.resolve(txSenderService.logged_in);
         } else {
             var hdwallet = txSenderService.hdwallet;
@@ -1251,7 +1283,7 @@ angular.module('greenWalletServices', [])
     };
 }).factory('parse_bitcoin_uri', ['parseKeyValue', function(parseKeyValue) {
     return function parse_bitcoin_uri(uri) {
-        if (uri.indexOf("bitcoin:") == -1) {
+        if (uri.indexOf === undefined || uri.indexOf("bitcoin:") == -1) {
             // not a URI
             return {};
         } else {
@@ -1403,7 +1435,7 @@ angular.module('greenWalletServices', [])
             var is_chrome_app = window.chrome && chrome.storage;
             if (value[3] == 'facebook') {
                 var has_wallet = value[4];
-                if (!has_wallet && is_chrome_app) return;  // can't send FB messages from Chrome app
+                if (!has_wallet && (is_chrome_app || window.cordova)) return;  // can't send FB messages from Chrome/Cordova app
                 var href = 'https://www.facebook.com/' + value[1];
                 return {name: value[0], type: value[3], address: value[1], has_wallet: has_wallet, href: href};
             } else {
@@ -1511,7 +1543,7 @@ angular.module('greenWalletServices', [])
     return {
         play: function(src, $scope) {
             cordovaReady(function(){
-                if (!$scope.wallet.appearance.sound) {
+                if (!$scope || !$scope.wallet.appearance.sound) {
                     return;
                 }
                 if (window.cordova && typeof Media != "undefined") {
@@ -1534,7 +1566,7 @@ angular.module('greenWalletServices', [])
             })();
     }};
 
-}]).factory('qrcode', ['$q', 'cordovaReady', function($q, cordovaReady) {
+}]).factory('qrcode', ['$q', 'cordovaReady', '$timeout', function($q, cordovaReady, $timeout) {
     var n = navigator, v, webkit = false, moz = false, gCtx, stream, gotGUMerror = false;
     return {
     stop_scanning: function($scope) {
@@ -1555,12 +1587,12 @@ angular.module('greenWalletServices', [])
                         "Format: " + result.format + "\n" +
                         "Cancelled: " + result.cancelled);
                         if (!result.cancelled && result.format == "QR_CODE") {
-                              deferred.resolve(result.text);
+                              $timeout(function() { deferred.resolve(result.text); });
                         } else {
                             if (result.cancelled) {
-                                deferred.reject(gettext('Cancelled'));    
+                                $timeout(function() { deferred.reject(gettext('Cancelled')); });
                             } else {
-                                deferred.reject(gettext('Invalid format'));
+                                $timeout(function() { deferred.reject(gettext('Invalid format')); });
                             }
                         }
                     },

@@ -184,15 +184,7 @@ angular.module('greenWalletSendControllers',
             qrcode.scan($scope, $event, '_send').then(function(text) {
                 gaEvent('Wallet', 'SendReadQrCodeSuccessful');
                 $rootScope.safeApply(function() {
-                    parsed_uri = parse_bitcoin_uri(text);
-                    if (parsed_uri.recipient) {
-                        that.recipient = parsed_uri.recipient;
-                        if (parsed_uri.amount) {
-                            that.amount = btcToUnit(parsed_uri.amount);
-                        }
-                    } else {
-                        that.recipient = text;
-                    }
+                    that.recipient = text;
                 });
             }, function(error) {
                 gaEvent('Wallet', 'SendReadQrCodeFailed', error);
@@ -261,6 +253,20 @@ angular.module('greenWalletSendControllers',
                 }
             );
         },
+        do_create_voucher: function(that, enckey, satoshis) {
+            $scope.voucher = {
+                encrypted: !!that.passphrase,
+                enckey: enckey,
+                satoshis: satoshis,
+                url: 'https://' + hostname + '/redeem/' + enckey + '/?amount=' + satoshis,
+                text: that.voucher_text
+            };
+            $modal.open({
+                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_voucher.html',
+                scope: $scope
+            }).result.finally(function() { $location.url('/transactions/'); });
+            $rootScope.is_loading -= 1;
+        },
         do_send_reddit: function(that, enckey, satoshis) {
             if ($scope.wallet.send_from) $scope.wallet.send_from = null;
             tx_sender.call("http://greenaddressit.com/vault/send_reddit", that.recipient.address,
@@ -299,7 +305,7 @@ angular.module('greenWalletSendControllers',
         _send_social: function(do_send) {
             var that = this;
             var satoshis = that.amount_to_satoshis(this.amount);
-            if (this.recipient.has_wallet) {
+            if (this.recipient && this.recipient.has_wallet) {
                 this._send_social_ga(satoshis);
                 return;
             }
@@ -307,9 +313,19 @@ angular.module('greenWalletSendControllers',
             var send = function(key, pointer) {
                 var to_addr = key.getAddress().toString();
                 var add_fee = that.add_fee;
+                var social_destination;
+                if (that.voucher) {
+                    var voucher_data = {
+                        type: 'voucher',
+                        text: that.voucher_text
+                    };
+                    social_destination = JSON.stringify(voucher_data);
+                } else {
+                    social_destination = that.recipient.name;
+                }
                 var priv_data = {pointer: pointer,
                                  pubkey: key.pub.toBytes(),
-                                 social_destination: that.recipient.name,
+                                 social_destination: social_destination,
                                  external_private: true,
                                  instant: that.instant};
                 if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
@@ -335,16 +351,18 @@ angular.module('greenWalletSendControllers',
                                     var version = 0x80;
                                 }
                                 data.unshift(version);
-                                do_send(that, base58Check.encode(data), satoshis);
+                                return do_send(that, base58Check.encode(data), satoshis);
                             } else {
                                 var is_chrome_app = window.chrome && chrome.storage;
+                                var d = $q.defer();
                                 if (window.cordova) {
                                     cordovaReady(function() {
                                         cordova.exec(function(b58) {
-                                            do_send(that, b58, satoshis, key, pointer);
+                                            d.resolve(do_send(that, b58, satoshis, key, pointer));
                                         }, function(fail) {
                                             $rootScope.is_loading -= 1;
                                             notices.makeNotice('error', fail);
+                                            d.reject(fail);
                                         }, "BIP38", "encrypt", [data, that.passphrase,
                                                 'BTC']);  // probably not correct for testnet, but simpler, and compatible with our JS impl
                                     })();
@@ -352,10 +370,10 @@ angular.module('greenWalletSendControllers',
                                     var process = function() {
                                         var listener = function(message) {
                                             window.removeEventListener('message', listener);
-                                            do_send(that, message.data, satoshis, key, pointer);
+                                            d.resolve(do_send(that, message.data, satoshis, key, pointer));
                                         };
                                         window.addEventListener('message', listener);
-                                        iframe.contentWindow.postMessage({eckey: key.priv.toBytes(), password: that.passphrase}, '*');
+                                        iframe.contentWindow.postMessage({eckey: key.priv.toWif(), password: that.passphrase}, '*');
                                     };
                                     if (!iframe) {
                                         if (document.getElementById("id_iframe_send_bip38")) {
@@ -375,10 +393,11 @@ angular.module('greenWalletSendControllers',
                                 } else {
                                     var worker = new Worker("/static/js/bip38_worker.min.js");
                                     worker.onmessage = function(message) {
-                                        do_send(that, message.data, satoshis, key, pointer);
+                                        d.resolve(do_send(that, message.data, satoshis, key, pointer));
                                     }
-                                    worker.postMessage({eckey: key.priv.toBytes(), password: that.passphrase});
+                                    worker.postMessage({eckey: key.priv.toWif(), password: that.passphrase});
                                 }
+                                return d.promise;
                             }
                         }, function(error) { 
                             $rootScope.is_loading -= 1;
@@ -444,6 +463,9 @@ angular.module('greenWalletSendControllers',
             });
         },
         send_social: function(do_send) {
+            if (this.voucher) {
+                return this._send_social(do_send);
+            }
             var that = this;
             var name = this.recipient.address;
             if (this.recipient.type == 'reddit') {
@@ -477,6 +499,11 @@ angular.module('greenWalletSendControllers',
         send_money: function() {
             if (isNaN(parseFloat(this.amount))) {
                 notices.makeNotice('error', gettext('Invalid amount'));
+                return;
+            }
+            if (this.voucher) {
+                gaEvent('Wallet', 'SendToVoucher');
+                this.send_social(this.do_create_voucher);
                 return;
             }
             if (!this.recipient) {
@@ -531,27 +558,53 @@ angular.module('greenWalletSendControllers',
     };
     var btcToUnit = function(btc) {
         var amount_satoshi = Bitcoin.Util.parseValue(btc);
-        return Bitcoin.Util.formatValue(amount_satoshi.multiply(Bitcoin.BigInteger.valueOf(mul)));
+        return parseFloat(  // parseFloat required for iOS Cordova
+            Bitcoin.Util.formatValue(amount_satoshi.multiply(Bitcoin.BigInteger.valueOf(mul))));
+    }
+    var satoshisToUnit = function(amount_satoshi) {
+        return parseFloat(  // parseFloat required for iOS Cordova
+            Bitcoin.Util.formatValue(new Bitcoin.BigInteger(amount_satoshi.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
     }
     $scope.$watch('send_tx.recipient', function(newValue, oldValue) {
-        if (newValue === oldValue) return;
+        if (newValue === oldValue || !newValue) return;
         var parsed_uri = parse_bitcoin_uri(newValue);
-        if (parsed_uri.amount) {    
+        if (parsed_uri.r) {
+            $scope.send_tx.processing_payreq = true;
+            tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed_uri.r).then(function(data) {
+                var amount = 0;
+                for (var i = 0; i < data.outputs.length; i++) {
+                    var output = data.outputs[i];
+                    amount += output.amount;
+                }
+                $scope.send_tx.amount = satoshisToUnit(amount);
+                data.request_url = parsed_uri.r;
+                var name = data.merchant_cn || data.request_url;
+                $scope.send_tx.recipient = {name: name, data: data, type: 'payreq',
+                                            amount: amount, requires_instant: data.requires_instant};
+            }).catch(function(err) {
+                notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
+                $scope.send_tx.recipient = '';
+            }).finally(function() { $scope.send_tx.processing_payreq = false; });
+        } else if (parsed_uri.amount) {    
             $scope.send_tx.amount = btcToUnit(parsed_uri.amount);
         }
     });
     $scope.$watch('send_tx.amount', function(newValue, oldValue) {
         if (newValue !== oldValue) {
-            var parsed_uri = parse_bitcoin_uri($scope.send_tx.recipient);
-            if (parsed_uri.amount && newValue != btcToUnit(parsed_uri.amount)) {
+            var parsed_uri = $scope.send_tx.recipient && parse_bitcoin_uri($scope.send_tx.recipient);
+            var orig_amount = parsed_uri && parsed_uri.amount && btcToUnit(parsed_uri.amount);
+            if ($scope.send_tx.recipient.type == 'payreq') {
+                orig_amount = satoshisToUnit($scope.send_tx.recipient.amount);
+            }
+            if (parsed_uri && orig_amount && newValue != orig_amount) {
                 // replace the URI with recipient when amount is changed
-                $scope.send_tx.recipient = parsed_uri.recipient;
+                $scope.send_tx.recipient = parsed_uri && parsed_uri.recipient;
             }
         }
     });
     if ($scope.send_tx.recipient && $scope.send_tx.recipient.amount) {
-        $scope.send_tx.amount = Bitcoin.Util.formatValue(
-            new Bitcoin.BigInteger($scope.send_tx.recipient.amount.toString()).multiply(Bitcoin.BigInteger.valueOf(mul)));
+        $scope.send_tx.amount = parseFloat(Bitcoin.Util.formatValue(  // parseFloat required for iOS Cordova
+            new Bitcoin.BigInteger($scope.send_tx.recipient.amount.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
     }
 
 
@@ -574,11 +627,12 @@ angular.module('greenWalletSendControllers',
                                   requires_instant: data.requires_instant};
         }
         if (recipient_override) {
+            $scope.send_tx.recipient_overridden = true;
             $scope.send_tx.recipient = recipient_override;
             $scope.send_tx.instant = recipient_override.requires_instant;
             if ($scope.send_tx.recipient && $scope.send_tx.recipient.amount) {
-                $scope.send_tx.amount = Bitcoin.Util.formatValue(
-                    new Bitcoin.BigInteger($scope.send_tx.recipient.amount.toString()).multiply(Bitcoin.BigInteger.valueOf(mul)));
+                $scope.send_tx.amount = parseFloat(Bitcoin.Util.formatValue(  // parseFloat required for iOS Cordova
+                    new Bitcoin.BigInteger($scope.send_tx.recipient.amount.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
             }
         }
     });

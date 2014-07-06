@@ -26,6 +26,19 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 }
             }
         });
+
+        if (state.has_pin && window.cordova && cordova.platformId == 'android') {
+            cordovaReady(function() {
+                cordova.exec(function(data) {
+                    $scope.$apply(function() {
+                        use_pin_data.pin = data;
+                        $scope.use_pin();
+                    });
+                }, function(fail) {
+                    state.toggleshowpin = true;
+                }, "PINInput", "show_input", []);
+            })();
+        }
     });
     if ($scope.wallet) {
         $scope.wallet.signup = false;  // clear signup state
@@ -137,14 +150,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             if (!encrypted) {
                 return process(state.mnemonic);
             } else {
-                if (window.cordova && cordova.platformId == 'ios') {
-                    alert ('We apologise for the inconvenience, but encrypted mnemonics are not supported on iOS at this moment.');
-                    $scope.logging_in = false;
-                } else {
-                    mnemonics.fromMnemonic(state.mnemonic).then(function(mnemonic_data) {
-                        return decrypt_bytes(mnemonic_data);
-                    }).then(process);
-                }
+                mnemonics.fromMnemonic(state.mnemonic).then(function(mnemonic_data) {
+                    return decrypt_bytes(mnemonic_data);
+                }).then(process);
             }
         }, function(e) {
             gaEvent('Login', 'MnemonicError', e);
@@ -279,7 +287,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 notices.makeNotice('success', gettext('PIN correct'));
                 tx_sender.pin_ident = state.pin_ident;
                 tx_sender.pin = use_pin_data.pin;
-                crypto.decrypt(state.encrypted_seed, password).then(function(decoded) {
+                return crypto.decrypt(state.encrypted_seed, password).then(function(decoded) {
                     if(decoded && JSON.parse(decoded).seed) {
                         gaEvent('Login', 'PinLoginSucceeded');
                         var parsed = JSON.parse(decoded);

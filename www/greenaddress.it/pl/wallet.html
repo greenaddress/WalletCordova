@@ -126,10 +126,21 @@
   <div class="menu-mobile" toggle-class="visible">
     <i class="menu-mobile-toggle menu-mobile-toggle-open glyphicon glyphicon-align-justify" toggle-class="visible" ng-click="toggle_set(true)"></i>
     <i class="menu-mobile-toggle menu-mobile-toggle-close glyphicon glyphicon-remove" toggle-class="visible" ng-click="toggle_set(false)"></i>
-    <small>(( subpage_title ))</small> <small ng-click="wallet.toggle_balance_title()" ng-show="!wallet.show_fiat && wallet.final_balance" ng-cloak >((wallet.final_balance|format_btc:wallet.unit)) </small> <small ng-show="wallet.show_fiat && wallet.fiat_value" ng-click="wallet.toggle_balance_title()" ng-cloak >((wallet.fiat_value|number:2)) ((wallet.fiat_currency)) </small> 
+    <small>(( subpage_title ))</small>
+    <small ng-click="wallet.toggle_balance_title()" ng-show="!wallet.show_fiat && wallet.final_balance" ng-cloak> <a href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a>
+    </small>
+    <small ng-show="wallet.show_fiat && wallet.fiat_value" ng-click="wallet.toggle_balance_title()" ng-cloak>
+     <a href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2))</a> ((wallet.fiat_currency))
+    </small> 
 
   </div>
-  <div class="container" toggle-class="visible"><div class="ng-view"></div></div>
+  <div class="container" toggle-class="visible">
+  <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
+  <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">WARNING:</span>
+    You have not verified that you have backed up your mnemonic.
+    <a href="" ng-click="verify_mnemonic()">Please verify now by clicking here.</a>
+  </p>
+  <div class="ng-view"></div></div>
   <div class="menu" toggle-class="visible">
   <ul>
     <li class="menu-header"><img src="../static/img/logos/logo-greenaddress-white.png" alt="GreenAddress.it" /> GreenAddress.it</li>

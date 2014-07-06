@@ -136,6 +136,9 @@
                 </div>
             </div>
           </form>
+          <div class="row"><div class="col-sm-12">
+            <p>The code is valid only for 5 minutes, so you can request another one if necessary. <a href="" ng-click="set_new_email()" class="btn btn-info btn-xs" ng-class="{disabled: settings.setting_email}">Request another code</a></p>
+          </div></div>
       </div>
   </div>
 </div>
@@ -191,8 +194,8 @@
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
     
-      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled" ng-hide="cordova_platform=='ios'"><i class="icon-facebook"></i> Facebook</button>
-      <label class="switch" ng-hide="cordova_platform=='ios'">
+      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
+      <label class="switch">
         <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
         <span class="switch"></span>
       </label>
@@ -452,7 +455,7 @@
   </div>
   <div class="col-md-9">
     <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()"><i class="glyphicon glyphicon-eye-open"></i> Show mnemonic</button>
-    <button ng-hide="cordova_platform=='ios'" class="btn btn-success btn-block-xs" ng-click="show_encrypted_mnemonic()"><i class="glyphicon glyphicon-lock"></i> Show encrypted mnemonic</button>
+    <button class="btn btn-success btn-block-xs" ng-click="show_encrypted_mnemonic()"><i class="glyphicon glyphicon-lock"></i> Show encrypted mnemonic</button>
     
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Write to NFC tag</button>
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Write encrypted to NFC tag</button>
@@ -498,8 +501,8 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Limit currency</label>
         <div class="col-sm-7">
-          <span class="form-control" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
-          <span class="form-control" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (current currency)</span>
+          <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
+          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (current currency)</span>
           <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>NOTE</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
         </div>
       </div>
@@ -512,7 +515,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Total</label>
         <div class="col-sm-7">
-          <span class="form-control">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+          <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
           <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
         </div>
       </div>
