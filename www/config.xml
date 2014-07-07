@@ -12,9 +12,6 @@
         <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="PushPlugin">
-        <param name="android-package" value="com.plugin.gcm.PushPlugin" />
-    </feature>
     <feature name="WebSocket">
         <param name="android-package" value="com.ququplay.websocket.WebSocket" />
     </feature>

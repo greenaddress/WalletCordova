@@ -23,13 +23,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
-        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
-        "clobbers": [
-            "PushNotification"
-        ]
-    },
-    {
         "file": "plugins/com.phonegap.plugins.barcodescanner/www/barcodescanner.js",
         "id": "com.phonegap.plugins.barcodescanner.BarcodeScanner",
         "clobbers": [
@@ -246,7 +239,6 @@ module.exports.metadata =
 {
     "com.ququplay.websocket.WebSocket": "0.1.0",
     "org.apache.cordova.network-information": "0.2.5",
-    "com.phonegap.plugins.PushPlugin": "2.1.1",
     "com.phonegap.plugins.barcodescanner": "1.0.1",
     "org.apache.cordova.splashscreen": "0.2.7",
     "me.apla.cordova.app-preferences": "0.4.0",

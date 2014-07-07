@@ -6,13 +6,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
-        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
-        "clobbers": [
-            "PushNotification"
-        ]
-    },
-    {
         "file": "plugins/com.phonegap.plugins.barcodescanner/www/barcodescanner.js",
         "id": "com.phonegap.plugins.barcodescanner.BarcodeScanner",
         "clobbers": [
@@ -225,7 +218,6 @@ module.exports.metadata =
 {
     "com.chariotsolutions.nfc.plugin": "0.5.0",
     "com.cordova.plugin.softkeyboard": "1.0.2",
-    "com.phonegap.plugins.PushPlugin": "2.1.1",
     "com.phonegap.plugins.barcodescanner": "1.0.1",
     "com.ququplay.websocket.WebSocket": "0.1.0",
     "com.verso.cordova.clipboard": "0.1.0",

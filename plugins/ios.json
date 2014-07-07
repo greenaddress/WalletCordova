@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
                             "count": 1
                         },
@@ -199,9 +195,6 @@
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
         "com.cordova.plugin.softkeyboard": {
-            "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
-        "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
         "com.phonegap.plugins.barcodescanner": {
