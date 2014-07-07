@@ -1,6 +1,11 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/com.chariotsolutions.nfc.plugin/www/phonegap-nfc.js",
+        "id": "com.chariotsolutions.nfc.plugin.NFC",
+        "runs": true
+    },
+    {
         "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
         "id": "com.phonegap.plugins.PushPlugin.PushNotification",
         "clobbers": [
@@ -26,6 +31,13 @@ module.exports = [
         "id": "me.apla.cordova.app-preferences.apppreferences",
         "clobbers": [
             "plugins.appPreferences"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
+        "id": "org.apache.cordova.dialogs.notification",
+        "merges": [
+            "navigator.notification"
         ]
     },
     {
@@ -201,35 +213,31 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
-        "id": "org.apache.cordova.dialogs.notification",
-        "merges": [
-            "navigator.notification"
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
         ]
-    },
-    {
-        "file": "plugins/com.chariotsolutions.nfc.plugin/www/phonegap-nfc.js",
-        "id": "com.chariotsolutions.nfc.plugin.NFC",
-        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "com.chariotsolutions.nfc.plugin": "0.5.0",
     "com.cordova.plugin.softkeyboard": "1.0.2",
     "com.phonegap.plugins.PushPlugin": "2.1.1",
     "com.phonegap.plugins.barcodescanner": "1.0.1",
     "com.ququplay.websocket.WebSocket": "0.1.0",
     "com.verso.cordova.clipboard": "0.1.0",
     "me.apla.cordova.app-preferences": "0.4.0",
+    "org.apache.cordova.dialogs": "0.2.8",
     "org.apache.cordova.file": "1.1.0",
     "org.apache.cordova.media": "0.2.10",
     "org.apache.cordova.network-information": "0.2.5",
     "org.apache.cordova.splashscreen": "0.2.7",
     "org.apache.cordova.vibration": "0.3.9-dev",
-    "org.apache.cordova.dialogs": "0.2.8",
     "it.greenaddress.cordova": "0.0.0",
-    "com.chariotsolutions.nfc.plugin": "0.5.0"
+    "org.apache.cordova.inappbrowser": "0.5.0"
 }
 // BOTTOM OF METADATA
 });

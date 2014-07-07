@@ -32,7 +32,10 @@
 
             <div class="create-modal-footer" ng-hide="signup.unexpected_error">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Ich bestätige, dass meine Passphrase gespeichert und gesichert ist, und akzeptiere die <a href="/tos" target="_blank">Allgemeinen Geschäftsbedingungen</a>
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Ich bestätige, dass meine Passphrase gespeichert und gesichert ist, und akzeptiere die 
+                    
+                    <a href="" onclick="window.open('tos.html', '_blank', 'location=no'); return false">Allgemeinen Geschäftsbedingungen</a>
+                    
                 </label>
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Zeige QR-Code</button>

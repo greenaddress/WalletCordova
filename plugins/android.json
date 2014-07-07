@@ -653,6 +653,10 @@
                         {
                             "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ],
                     "/widget": [
@@ -703,6 +707,9 @@
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
         "it.greenaddress.cordova": {
+            "PACKAGE_NAME": "it.greenaddress.cordova"
+        },
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         }
     },

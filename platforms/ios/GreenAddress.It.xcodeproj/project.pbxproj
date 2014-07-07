@@ -93,6 +93,7 @@
 		E9FC0B83C16D442C8C30FCEE /* crypto_scrypt-neon-salsa208.h in Sources */ = {isa = PBXBuildFile; fileRef = 7389805ADC04483287239CFF /* crypto_scrypt-neon-salsa208.h */; };
 		EBA98E79A32843689008FFFA /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C64A6675A9E4AECB36018DC /* FacebookConnectPlugin.m */; };
 		FB8B16714F444FD2B12B7173 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA7BDEEE039440229B011F9E /* libsqlite3.dylib */; };
+		DB766CAE8E684AFA8AB1A8E4 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6248A4C8704CAA8E56C0CD /* CDVInAppBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +252,8 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = GreenAddress.It/config.xml; sourceTree = "<group>"; };
 		F87CA8453CD544548A4FCED0 /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVSplashScreen.h; path = org.apache.cordova.splashscreen/CDVSplashScreen.h; sourceTree = "<group>"; };
 		FDA8BA20657E47A9A1F957C2 /* zxing-all-in-one.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "zxing-all-in-one.h"; path = "com.phonegap.plugins.barcodescanner/zxing-all-in-one.h"; sourceTree = "<group>"; };
+		EE6248A4C8704CAA8E56C0CD /* CDVInAppBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVInAppBrowser.m"; path = "org.apache.cordova.inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		0C51DE6208F642E5B55A61ED /* CDVInAppBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVInAppBrowser.h"; path = "org.apache.cordova.inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -474,6 +477,8 @@
 				7389805ADC04483287239CFF /* crypto_scrypt-neon-salsa208.h */,
 				0C64A6675A9E4AECB36018DC /* FacebookConnectPlugin.m */,
 				A54F76A6CC7548B7912A7CB8 /* FacebookConnectPlugin.h */,
+				EE6248A4C8704CAA8E56C0CD /* CDVInAppBrowser.m */,
+				0C51DE6208F642E5B55A61ED /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
 			path = GreenAddress.It/Plugins;
@@ -743,6 +748,7 @@
 				9E463990195E74ED00EF4E88 /* CDVBIP38.m in Sources */,
 				9E463996195E76B800EF4E88 /* CDVBIP39.m in Sources */,
 				EBA98E79A32843689008FFFA /* FacebookConnectPlugin.m in Sources */,
+				DB766CAE8E684AFA8AB1A8E4 /* CDVInAppBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

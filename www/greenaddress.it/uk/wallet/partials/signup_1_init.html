@@ -32,7 +32,10 @@
 
             <div class="create-modal-footer" ng-hide="signup.unexpected_error">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Я підтверджую, що моя фраза-пароль збережена &amp; в безпечному місці і я згоден/згідна з <a href="/tos" target="_blank">Умови надання послуг</a>
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Я підтверджую, що моя фраза-пароль збережена &amp; в безпечному місці і я згоден/згідна з 
+                    
+                    <a href="" onclick="window.open('tos.html', '_blank', 'location=no'); return false">Умови надання послуг</a>
+                    
                 </label>
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Показати QR код</button>

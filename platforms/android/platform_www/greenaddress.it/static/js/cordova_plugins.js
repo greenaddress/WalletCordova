@@ -105,6 +105,13 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -248,8 +255,9 @@ module.exports.metadata =
     "org.apache.cordova.media": "0.2.10",
     "com.cordova.plugin.softkeyboard": "1.0.2",
     "org.apache.cordova.dialogs": "0.2.8",
-    "it.greenaddress.cordova": "0.0.0",
     "com.chariotsolutions.nfc.plugin": "0.5.0",
+    "it.greenaddress.cordova": "0.0.0",
+    "org.apache.cordova.inappbrowser": "0.5.0",
     "org.apache.cordova.file": "1.1.0"
 }
 // BOTTOM OF METADATA
