@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		01FE61DA53894105861B6AF6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F5DA2698434344841BC063 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0811E8FFD0A6425F894DFE28 /* zxing-all-in-one.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C6A6F91EF71402D9D87EF0D /* zxing-all-in-one.cpp */; };

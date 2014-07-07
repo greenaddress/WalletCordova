@@ -82,6 +82,15 @@
         viewBounds.size.height = viewBounds.size.height - 20;
         self.webView.frame = viewBounds;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+-(void)keyboardWillHide:(NSNotification*)n {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"keyboardHide()"];
 }
 
 - (void)viewDidUnload
