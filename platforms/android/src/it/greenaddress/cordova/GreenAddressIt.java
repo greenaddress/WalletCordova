@@ -55,6 +55,12 @@ public class GreenAddressIt extends CordovaActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // in previous versions there was a flaw which caused qr scanning history to be stored by
+        // our zxing plugin because Intents.Scan.SAVE_HISTORY was not set to false - the history
+        // from previous versions is removed here:
+        getApplicationContext().deleteDatabase("barcode_scanner_history.db");
+
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) && getIntent().getBooleanExtra("continue", true)) {
             // ignore nfc, to avoid having nfc service and app not reparenting (disappears from history) and send intent just to start app normally
             final Intent intent = getIntent();//.cloneFilter();//new Intent(getApplicationContext(), GreenAddressIt.class);

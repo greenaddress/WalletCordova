@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Reeds verstreken",
 "An error has occured which forced us to log you out.": "Door een fout hebben we u moeten uitloggen.",
 "Re\u002Ddeposited": "Opnieuw gestort",
-"You must provide encryption passphrase.": "U moet een wachtwoord voor versleuteling invoeren.",
 "Access denied. Retry to scan from file.": "Toegang geweigerd. Probeer opnieuw te scannen vanaf bestand.",
 "Custom login disabled": "Aangepast inloggen uitgeschakeld",
 "Invalid out P2SH hash": "Ongeldige P2SH hash out",

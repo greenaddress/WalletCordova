@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Expiradas",
 "An error has occured which forced us to log you out.": "Ha ocurrido un error que nos forzó a cerrar tu sesión.",
 "Re\u002Ddeposited": "Re\u002Ddepositado",
-"You must provide encryption passphrase.": "Debe ingresar una clave de encriptación.",
 "Access denied. Retry to scan from file.": "Acceso denegado. Reintente escanear desde archivo.",
 "Custom login disabled": "Sesión Personalizada deshabilitada",
 "Invalid out P2SH hash": "Hash P2SH de salida inválido",

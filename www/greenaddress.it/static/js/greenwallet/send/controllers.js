@@ -1,7 +1,7 @@
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
-.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$modal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound',
-         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $modal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound) {
+.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$modal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
+         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $modal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
     if (!wallets.requireWallet($scope)) return;    
 
     var _verify_tx = function(that, rawtx, destination, satoshis, change_pointer, no_electrum) {
@@ -202,7 +202,7 @@ angular.module('greenWalletSendControllers',
                     $rootScope.is_loading -= 1;
                     FB.ui({
                         method: 'send',
-                        link: 'https://' + hostname + '/redeem/' + enckey + '/?amount=' + satoshis,
+                        link: 'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey,
                         to: that.recipient.address
                     });
                 }, function() {
@@ -242,7 +242,7 @@ angular.module('greenWalletSendControllers',
         },
         do_send_email: function(that, enckey, satoshis) {
             tx_sender.call("http://greenaddressit.com/vault/send_email", that.recipient.address,
-                    'https://' + hostname + '/redeem/' + enckey + '/?amount=' + satoshis).then(
+                    'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
                 function() {
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('success', gettext('Email sent'));
@@ -258,7 +258,7 @@ angular.module('greenWalletSendControllers',
                 encrypted: !!that.passphrase,
                 enckey: enckey,
                 satoshis: satoshis,
-                url: 'https://' + hostname + '/redeem/' + enckey + '/?amount=' + satoshis,
+                url: 'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey,
                 text: that.voucher_text
             };
             $modal.open({
@@ -270,7 +270,7 @@ angular.module('greenWalletSendControllers',
         do_send_reddit: function(that, enckey, satoshis) {
             if ($scope.wallet.send_from) $scope.wallet.send_from = null;
             tx_sender.call("http://greenaddressit.com/vault/send_reddit", that.recipient.address,
-                    'https://' + hostname + '/redeem/' + enckey + '/?amount=' + satoshis).then(
+                    'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
                 function(json) {
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('success', gettext('Reddit message sent'));
@@ -302,11 +302,19 @@ angular.module('greenWalletSendControllers',
             var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
             return Bitcoin.Util.parseValue(amount).divide(Bitcoin.BigInteger.valueOf(div)).toString();
         },
+        _encrypt_key: function(key) {
+            return encode_key(key, !$scope.wallet.send_unencrypted && this.passphrase);
+        },
         _send_social: function(do_send) {
             var that = this;
             var satoshis = that.amount_to_satoshis(this.amount);
             if (this.recipient && this.recipient.has_wallet) {
                 this._send_social_ga(satoshis);
+                return;
+            }
+            if (satoshis < 15430) {
+                notices.makeNotice('error', gettext('Transaction amount must be at least 0.1543mBTC to allow redemption fee'));
+                that.sending = false;
                 return;
             }
             $rootScope.is_loading += 1;
@@ -329,89 +337,28 @@ angular.module('greenWalletSendControllers',
                                  external_private: true,
                                  instant: that.instant};
                 if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
-                tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
-                    verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).then(function() {
-                        wallets.sign_and_send_tx($scope, data, false, undefined, false).then(function() {
-                            that.encrypted_key = null;
-                            var base58Check = {
-                              encode: function(buf) {
-                                var checkedBuf = [].concat(buf);
-                                var buf_words = Bitcoin.convert.bytesToWordArray(buf);
-                                var hash = Bitcoin.CryptoJS.SHA256(Bitcoin.CryptoJS.SHA256(buf_words));
-                                hash = Bitcoin.convert.wordArrayToBytes(hash);
-                                checkedBuf = checkedBuf.concat(hash.slice(0, 4));
-                                return Bitcoin.base58.encode(checkedBuf);
-                              }
-                            };
-                            var data = key.priv.toBytes();
-                            if ($scope.wallet.send_unencrypted || !that.passphrase) {
-                                if (cur_net == 'testnet') {
-                                    var version = 0xef;
-                                } else {
-                                    var version = 0x80;
-                                }
-                                data.unshift(version);
-                                return do_send(that, base58Check.encode(data), satoshis);
-                            } else {
-                                var is_chrome_app = window.chrome && chrome.storage;
-                                var d = $q.defer();
-                                if (window.cordova) {
-                                    cordovaReady(function() {
-                                        cordova.exec(function(b58) {
-                                            d.resolve(do_send(that, b58, satoshis, key, pointer));
-                                        }, function(fail) {
-                                            $rootScope.is_loading -= 1;
-                                            notices.makeNotice('error', fail);
-                                            d.reject(fail);
-                                        }, "BIP38", "encrypt", [data, that.passphrase,
-                                                'BTC']);  // probably not correct for testnet, but simpler, and compatible with our JS impl
-                                    })();
-                                } else if (is_chrome_app) {
-                                    var process = function() {
-                                        var listener = function(message) {
-                                            window.removeEventListener('message', listener);
-                                            d.resolve(do_send(that, message.data, satoshis, key, pointer));
-                                        };
-                                        window.addEventListener('message', listener);
-                                        iframe.contentWindow.postMessage({eckey: key.priv.toWif(), password: that.passphrase}, '*');
-                                    };
-                                    if (!iframe) {
-                                        if (document.getElementById("id_iframe_send_bip38")) {
-                                            iframe = document.getElementById("id_iframe_send_bip38");
-                                            process();
-                                        } else {
-                                            iframe = document.createElement("IFRAME"); 
-                                            iframe.onload = process;
-                                            iframe.setAttribute("src", "/bip38_sandbox.html");
-                                            iframe.setAttribute("class", "ng-hide");
-                                            iframe.setAttribute("id", "id_iframe_send_bip38");
-                                            document.body.appendChild(iframe); 
-                                        }
-                                    } else {
-                                        process();
-                                    }
-                                } else {
-                                    var worker = new Worker("/static/js/bip38_worker.min.js");
-                                    worker.onmessage = function(message) {
-                                        d.resolve(do_send(that, message.data, satoshis, key, pointer));
-                                    }
-                                    worker.postMessage({eckey: key.priv.toWif(), password: that.passphrase});
-                                }
-                                return d.promise;
-                            }
-                        }, function(error) { 
+                that._encrypt_key(key).then(function(b58) {
+                    if (that.voucher && that.passphrase) {
+                        priv_data.encrypted_key_hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(b58));
+                    }
+                    tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
+                        verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).then(function() {
+                            wallets.sign_and_send_tx($scope, data, false, undefined, false).then(function() {
+                                do_send(that, b58, satoshis, key, pointer);
+                            }, function(error) { 
+                                $rootScope.is_loading -= 1;
+                            }).finally(function() { that.sending = false; });
+                        }, function(error) {
                             $rootScope.is_loading -= 1;
-                        }).finally(function() { that.sending = false; });
+                            that.sending = false;
+                            sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
+                            notices.makeNotice('error', gettext('Transaction verification failed: ' + error + '. Please contact support.'))
+                        })
                     }, function(error) {
                         $rootScope.is_loading -= 1;
                         that.sending = false;
-                        sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
-                        notices.makeNotice('error', gettext('Transaction verification failed: ' + error + '. Please contact support.'))
-                    })
-                }, function(error) {
-                    $rootScope.is_loading -= 1;
-                    that.sending = false;
-                    notices.makeNotice('error', error.desc);
+                        notices.makeNotice('error', error.desc);
+                    });
                 });
             };
             tx_sender.call("http://greenaddressit.com/vault/get_next_private_derived_pointer").then(function(pointer) {
@@ -551,9 +498,6 @@ angular.module('greenWalletSendControllers',
                 this.recipient.type == 'address' ||
                 this.recipient.type == 'payreq' || 
                 this.recipient.has_wallet;
-        },
-        send_to_priv_done: function() {
-            this.encrypted_key = undefined;
         }
     };
     var btcToUnit = function(btc) {
@@ -593,7 +537,7 @@ angular.module('greenWalletSendControllers',
         if (newValue !== oldValue) {
             var parsed_uri = $scope.send_tx.recipient && parse_bitcoin_uri($scope.send_tx.recipient);
             var orig_amount = parsed_uri && parsed_uri.amount && btcToUnit(parsed_uri.amount);
-            if ($scope.send_tx.recipient.type == 'payreq') {
+            if ($scope.send_tx.recipient && $scope.send_tx.recipient.type == 'payreq') {
                 orig_amount = satoshisToUnit($scope.send_tx.recipient.amount);
             }
             if (parsed_uri && orig_amount && newValue != orig_amount) {

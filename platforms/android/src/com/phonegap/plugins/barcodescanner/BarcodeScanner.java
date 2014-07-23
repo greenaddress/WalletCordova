@@ -20,6 +20,8 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
+import com.google.zxing.client.android.Intents;
+
 /**
  * This calls out to the ZXing barcode reader and returns the result.
  *
@@ -109,6 +111,7 @@ public class BarcodeScanner extends CordovaPlugin {
     public void scan() {
         Intent intentScan = new Intent(SCAN_INTENT);
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+        intentScan.putExtra(Intents.Scan.SAVE_HISTORY, false);
 
         this.cordova.startActivityForResult((CordovaPlugin) this, intentScan, REQUEST_CODE);
     }
@@ -163,6 +166,7 @@ public class BarcodeScanner extends CordovaPlugin {
         Intent intentEncode = new Intent(ENCODE_INTENT);
         intentEncode.putExtra(ENCODE_TYPE, type);
         intentEncode.putExtra(ENCODE_DATA, data);
+        intentEncode.putExtra(Intents.Scan.SAVE_HISTORY, false);
 
         this.cordova.getActivity().startActivity(intentEncode);
     }

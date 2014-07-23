@@ -5,8 +5,11 @@ angular.module('greenWalletInfoControllers',
     if(!wallets.requireWallet($scope)) return;
     
     $scope.wallet.hidden = false;
-    if ($scope.wallet.signup) {
+    if ($scope.wallet.signup || ($scope.signup && $scope.signup.seed)) {
         gaEvent('Signup', 'OpenedWallet');
+        if ($scope.signup) {
+            $scope.signup.seed = undefined;
+        }
         $scope.wallet.signup = false;
     }
 
@@ -181,9 +184,11 @@ angular.module('greenWalletInfoControllers',
             if ($scope.wallet.redeem_key.indexOf('K') == 0 || $scope.wallet.redeem_key.indexOf('L') == 0 || $scope.wallet.redeem_key.indexOf('c') == 0) {  // unencrypted
                 redeem($scope.wallet.redeem_key).then(function() {
                     gaEvent('Wallet', 'SocialRedeemSuccessful');
+                    $scope.wallet.redeem_closed = true;
                 }, function(e) {
                     gaEvent('Wallet', 'SocialRedeemError', e);
                     notices.makeNotice('error', e);
+                    $scope.wallet.redeem_closed = true;
                 })
             } else {
                 $scope.redeem_modal = {

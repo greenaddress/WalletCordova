@@ -1,8 +1,11 @@
 <div class="title">
   Ha recibido ((wallet.redeem_amount|format_btc:'mBTC'))!
+  <p>(( wallet.redeem_message ))</p>
   <hr class="double">
   <small style="font-size:50%;">
-    <p>Si no tienes una wallet GreenAddress.it, por favor crea una o redime el pago <a class="btn btn-warning" href="/wallet/#/create/">Crear una Wallet</a></p>
+  	<p ng-show="wallet.redeem_is_bip38">You can redeem it using any BIP38-compatible wallet using the password given to you by the sender and the following key:  (( wallet.redeem_key )).</p>
+  	<p ng-hide="wallet.redeem_is_bip38">You can redeem it using any WIF-compatible wallet using the following key:  (( wallet.redeem_key )).</p>
+    <p>If you do not have a GreenAddress.it wallet, you can create one to reedem the payment <a class="btn btn-warning" href="/wallet/#/create/">Crear una Wallet</a></p>
     <p>De lo contrario, si eres un usuario de GreenAddress.it por favor inicia sesión usando el formulario de abajo</p>
   </small>
 </div>

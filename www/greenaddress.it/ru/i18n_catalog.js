@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Уже истекло",
 "An error has occured which forced us to log you out.": "Произошла ошибка при которой пришлось завершить вашу сессию.",
 "Re\u002Ddeposited": "Положено на депозит повторно",
-"You must provide encryption passphrase.": "Вы должны предоставить кодовую фразу для шифрования.",
 "Access denied. Retry to scan from file.": "Доступ запрещен. Повторите сканирование из файла.",
 "Custom login disabled": "Пользовательский логин запрещен",
 "Invalid out P2SH hash": "Неверный хеш P2SH выхода",

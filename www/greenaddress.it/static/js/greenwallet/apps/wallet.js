@@ -135,8 +135,8 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
         }
     };
     return backButtonHandlerService;
-}).directive("toggleableMenu", ['$location', 'cordovaReady', 'backButtonHandler', 'vibration',
-        function($location, cordovaReady, backButtonHandler, vibration) {
+}).directive("toggleableMenu", ['$location', 'cordovaReady', 'backButtonHandler',
+        function($location, cordovaReady, backButtonHandler) {
     return {
         restrict: 'A',
         controller: ['$scope', function($scope) {
@@ -157,7 +157,6 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             };
             $scope.toggle_set = function(enable) {
                 if ($location.path() == '/') return;  // don't allow swiping menu on login page
-                vibration.vibrate(50);
                 if (state == enable) return;
                 state = enable;
                 for (var i = 0 ; i < toggleClasses.length; ++i) {
@@ -192,7 +191,6 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
                             (a.parent().attr('path') == '/send' && newValue.indexOf('/pay/') != -1) ||
                             (a.parent().attr('path') == '/info' && newValue.indexOf('/redeem/') != -1)) {
                             scope.subpage_title = a.text();
-                            vibration.vibrate(50);
                             a.parent().addClass('selected');
                         } else {
                             a.parent().removeClass('selected');

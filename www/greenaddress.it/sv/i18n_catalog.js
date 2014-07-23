@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Redan utgången",
 "An error has occured which forced us to log you out.": "Ett fel har inträffat som tvingat oss att logga ut dig.",
 "Re\u002Ddeposited": "Re\u002Ddeposited",
-"You must provide encryption passphrase.": "Du måste ange en krypteringslösenfras.",
 "Access denied. Retry to scan from file.": "Åtkomst nekad. Försök läsa från filen igen.",
 "Custom login disabled": "Anpassad inloggning inaktiv",
 "Invalid out P2SH hash": "Invalid out P2SH hash",

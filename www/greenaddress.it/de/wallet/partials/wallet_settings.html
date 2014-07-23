@@ -56,24 +56,6 @@
   </div>
 </div>
 <hr class="double">
-<div class="row" ng-controller="VibrationController">
-  <div class="col-md-3">
-    <div class="sub-header">Vibrate</div>
-    <div class="sub-header-desc">Enable or disable vibrations on mobile devices</div>
-  </div>
-  <div class="col-md-9" submittable>
-    <form role="form" class="form-horizontal">
-        <div class="form-group">
-            <label class="switch col-sm-3">
-                <input type="checkbox" class="switch" ng-model="wallet.appearance.vibrate"/>
-                <span class="switch"></span>
-                Enable vibrations
-            </label>
-        </div>
-    </form>
-  </div>
-</div>
-<hr class="double">
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">Language</div>
@@ -161,8 +143,8 @@
           <label ng-show="quicklogin.enabled" class="control-label col-sm-3">PIN-Nummer ändern</label>
           <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">PIN-Nummer setzen</label>
           <div class="col-sm-4">
-            <input type="tel" inputmode="numeric" class="form-control" placeholder="Vierstellige Zahl"
-                   maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" ng-model="quicklogin.new_pin"/>
+            <input type="tel" inputmode="numeric" class="form-control" placeholder="4-15 digits number"
+                   maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" ng-model="quicklogin.new_pin"/>
             <input type="submit" class="btn btn-primary" ng-show="quicklogin.new_pin" value="Bestätigen" ng-disabled="quicklogin.setting_pin" />
           </div>
         </div>

@@ -7131,6 +7131,9 @@ input[type="checkbox"].switch:disabled + span + span {
 #wallet .graph {
   margin-bottom: 15px;
 }
+#wallet p.label-warning {
+  padding: 4px;
+}
 .dc-chart path.line {
   stroke-width: 3px !important;
 }

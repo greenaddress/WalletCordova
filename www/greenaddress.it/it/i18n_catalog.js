@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Già scaduto",
 "An error has occured which forced us to log you out.": "Un errore di rete ha causato la necessita\u0027 di ripete l\u0027accesso al servizio.",
 "Re\u002Ddeposited": "Ridepositato",
-"You must provide encryption passphrase.": "Devi inserire una password",
 "Access denied. Retry to scan from file.": "Accesso negato. Riprova a scansionere da file.",
 "Custom login disabled": "Login custom disabilitata",
 "Invalid out P2SH hash": "Out P2SH hash non valido",

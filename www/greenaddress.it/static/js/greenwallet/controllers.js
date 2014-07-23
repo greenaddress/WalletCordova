@@ -1,6 +1,6 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', 'vibration', '$modalStack',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, vibration, $modalStack) {
+.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack',
+        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
@@ -46,11 +46,23 @@ angular.module('greenWalletControllers', [])
             destUri = destUri || variables.uri;
         }
         if (destPath.indexOf('/redeem/') == 0) {
-            window.WalletControllerInitVars = {
-                redeem_key: destPath.slice(8).replace(/\//g, ''),
-                redeem_amount: destAmount,
-                redeem_closed: false
-            };
+            if (!window.WalletControllerInitVars) window.WalletControllerInitVars = {};
+            var redeem_key = window.WalletControllerInitVars.redeem_key = destPath.slice(8).replace(/\//g, '');
+            window.WalletControllerInitVars.redeem_closed = false;
+            if (destAmount) {
+                // can be also provided already by URL before #hash (useful for facebook opengraph data)
+                window.WalletControllerInitVars.redeem_amount = destAmount;
+            }
+            var is_bip38 = window.WalletControllerInitVars.redeem_is_bip38 = Bitcoin.BIP38.isBIP38Format(redeem_key);
+            var type = is_bip38 ? 'hash' : 'pubkey';
+            if (type == 'hash') {
+                var hash_or_pubkey = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(redeem_key));
+            } else {
+                var hash_or_pubkey = new Bitcoin.ECKey(redeem_key).getPub().toBytes();
+            }
+            tx_sender.call('http://greenaddressit.com/txs/get_redeem_message', type, hash_or_pubkey).then(function(message) {
+                $scope.wallet.redeem_message = message;
+            });
         }
         if (destPath.indexOf('/pay/') == 0) {
             window.WalletControllerInitVars = {

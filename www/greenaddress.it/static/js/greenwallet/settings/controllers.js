@@ -770,26 +770,6 @@ angular.module('greenWalletSettingsControllers',
             });
         }
     });
-}]).controller('VibrationController', ['$scope', 'notices', 'wallets', 'gaEvent', 'vibration', function VibrationController($scope, notices, wallets, gaEvent, vibration) {
-    
-    if (!('wallet' in $scope) || !('appearance' in $scope.wallet)) return;
-    var vibrationstate = {vibrate: false};
-    $scope.$watch('wallet.appearance.vibrate', function(newValue, oldValue) {
-        if (newValue === oldValue) return;
-        if (!vibrationstate['vibrate']) {
-            vibrationstate['vibrate'] = true;
-            if (!('wallet' in $scope) || !('appearance' in $scope.wallet) || !('vibrate' in $scope.wallet.appearance)) return;
-            wallets.updateAppearance($scope, 'vibrate', newValue).then(function() {
-                gaEvent('Wallet', "Vibrate_"+(newValue?'Enabled':'Disabled'));
-                vibrationstate['vibrate'] = false;
-                vibration.state = newValue;
-            }).catch(function(err) {
-                gaEvent('Wallet', "Vibrate_"+(newValue?'Enable':'Disable')+'Failed', err.desc);
-                notices.makeNotice('error', err.desc);
-                vibrationstate['vibrate'] = false;
-            });
-        }
-    });
 }]).controller('AutoLogoutController', ['$scope', 'notices', 'wallets', 'autotimeout', 'gaEvent', function AutoLogoutController($scope, notices, wallets, autotimeout, gaEvent) {
     
     if (!('appearance' in $scope.wallet)) return;

@@ -11,7 +11,7 @@
   </thead>
   
   <tbody>
-    <tr ng-repeat="transaction in wallet.transactions.list | limitTo:wallet.transactions.limit | orderBy:order_by:reversed" ng-style="{opacity: (transaction.value_account !== undefined && !transaction.value.equals(transaction.value_account)) ? 0.3 : 1}">
+    <tr ng-repeat="transaction in wallet.transactions.list | limitTo:wallet.transactions.limit | orderBy:order_by:reversed">
       <td class="date">(( transaction.ts|date:"dd/MM/yyyy" ))</td>
       <td>
         <div class="desc">
@@ -20,18 +20,25 @@
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
               <span class="label label-success" ng-show="transaction.instant">instant GreenAddress confirmation</span>
-              <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant">onbevestigde</span>
+              <span class="label label-danger" ng-show="transaction.double_spent_by">double spend</span>
+              <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">onbevestigde</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) bevestigingen</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;
                     <a href="" ng-click="redeem(transaction)" ng-show="wallet.hdwallet.priv">Neem bedrag terug</a>
                 </span>
+                <a class="btn btn-info btn-xs" ng-show="transaction.social_destination.type == 'voucher' && transaction.unclaimed" ng-click="show_voucher(transaction)">
+                  Regenerate voucher
+                </a>
+                <a class="btn btn-success btn-xs" ng-show="transaction.social_destination.type == 'voucher' && transaction.unclaimed" ng-click="show_encrypted_voucher(transaction)">
+                  Regenerate encrypted voucher
+                </a>
                 <span ng-hide="transaction.sent_back || transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">claimed</span>
               </span>
           </div>
         </div>
       </td>
-      <td class="amount">
+      <td class="amount" ng-style="{opacity: (transaction.double_spent_by !== undefined) ? 0.3 : 1}">
         <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
         <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span><br>
         <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( wallet.transactions.fiat_currency ))</span>

@@ -18,8 +18,8 @@
                         <label class="col-sm-5 control-label" for="id_pin">PIN-код</label>
                         <div class="col-sm-4">
                             <input class="form-control pin" type="tel" mask-input
-                                   id="id_pin" name="pin" maxlength="4" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/"
-                                   placeholder="4-цифрове число" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                                   id="id_pin" name="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/"
+                                   placeholder="4-15 digits number" ng-model="signup.pin" ng-disabled="signup.pin_set" />
                         </div>
                         <input type="submit" class="hide" submitter />
                     </div>

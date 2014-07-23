@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Έχει ήδη λήξει",
 "An error has occured which forced us to log you out.": "Παρουσιάστηκε ένα σφάλμα που μας ανάγκασε να σας αποσυνδέσουμε.",
 "Re\u002Ddeposited": "Επανακατάθεση",
-"You must provide encryption passphrase.": "Πρέπει να δώσετε κρυπτογραφημένο συνθηματικό πρόσβασης .",
 "Access denied. Retry to scan from file.": "Δεν επιτρέπεται η πρόσβαση. Δοκιμάστε ξανά για να σαρώσετε από αρχείο.",
 "Custom login disabled": "Προσαρμοσμένη σύνδεση απενεργοποιημένη",
 "Invalid out P2SH hash": "Λανθασμένη έξοδος P2SH hash",

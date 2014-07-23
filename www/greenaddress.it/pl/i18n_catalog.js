@@ -91,7 +91,6 @@ globals.i18n_catalog = {
 "Already expired": "Już wygasło",
 "An error has occured which forced us to log you out.": "An error has occured which forced us to log you out.",
 "Re\u002Ddeposited": "Ponownie zdeponowano",
-"You must provide encryption passphrase.": "Musisz podać hasło szyfrowania.",
 "Access denied. Retry to scan from file.": "Access denied. Retry to scan from file.",
 "Custom login disabled": "Własny login wyłączony",
 "Invalid out P2SH hash": "Nieprawidłowy hash wyjściowego P2SH",
