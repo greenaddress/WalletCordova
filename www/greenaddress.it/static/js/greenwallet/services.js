@@ -877,6 +877,7 @@ angular.module('greenWalletServices', [])
             }
         }, false);
     }
+    var attempt_login = false;
     var onAuthed = function(s) {
         session = s;
         session.subscribe('http://greenaddressit.com/tx_notify', function(topic, event) {
@@ -887,7 +888,7 @@ angular.module('greenWalletServices', [])
             $rootScope.$broadcast('block', event);
         });
         var d1, d2;
-        if (txSenderService.hdwallet && txSenderService.logged_in) {
+        if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
             d1 = txSenderService.login(false, true); // force_relogin
         } else if (txSenderService.watch_only) {
             d1 = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
@@ -973,6 +974,7 @@ angular.module('greenWalletServices', [])
                     });
                 }
                 session = null;
+                disconnected = true;
                 connecting = false;
             },
             {maxRetries: 60}
@@ -987,30 +989,39 @@ angular.module('greenWalletServices', [])
         } else {
             var hdwallet = txSenderService.hdwallet;
             if (hdwallet) {
-                txSenderService.call('http://greenaddressit.com/login/get_challenge',
-                        hdwallet.getAddress().toString()).then(function(challenge) {
-                    var challenge_bytes = new Bitcoin.BigInteger(challenge).toByteArrayUnsigned();
+                attempt_login = true;
+                if (session) {
+                    session.call('http://greenaddressit.com/login/get_challenge',
+                            hdwallet.getAddress().toString()).then(function(challenge) {
+                        var challenge_bytes = new Bitcoin.BigInteger(challenge).toByteArrayUnsigned();
 
-                    // generate random path to derive key from - avoids signing using the same key twice
-                    var max64int_hex = '';
-                    while (max64int_hex.length < 16) max64int_hex += 'F';
-                    var TWOPOWER64 = new Bitcoin.BigInteger(max64int_hex, 16).add(Bitcoin.BigInteger.ONE);
-                    var random_path_hex = Bitcoin.ecdsa.getBigRandom(TWOPOWER64).toString(16);
-                    while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
-                    $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function(subhd) {
-                        $q.when(subhd.priv.sign(challenge_bytes)).then(function(signature) {
-                            signature = Bitcoin.ecdsa.parseSig(signature);
-                            d.resolve(device_id().then(function(devid) {
-                                return txSenderService.call('http://greenaddressit.com/login/authenticate',
-                                        [signature.r.toString(), signature.s.toString()], logout||false,
-                                         random_path_hex, devid).then(function(data) {
-                                    txSenderService.logged_in = data;
-                                    return data;
-                                });
-                            }));
+                        // generate random path to derive key from - avoids signing using the same key twice
+                        var max64int_hex = '';
+                        while (max64int_hex.length < 16) max64int_hex += 'F';
+                        var TWOPOWER64 = new Bitcoin.BigInteger(max64int_hex, 16).add(Bitcoin.BigInteger.ONE);
+                        var random_path_hex = Bitcoin.ecdsa.getBigRandom(TWOPOWER64).toString(16);
+                        while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
+                        $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function(subhd) {
+                            $q.when(subhd.priv.sign(challenge_bytes)).then(function(signature) {
+                                signature = Bitcoin.ecdsa.parseSig(signature);
+                                d.resolve(device_id().then(function(devid) {
+                                    if (session) {
+                                        return session.call('http://greenaddressit.com/login/authenticate',
+                                                [signature.r.toString(), signature.s.toString()], logout||false,
+                                                 random_path_hex, devid).then(function(data) {
+                                            txSenderService.logged_in = data;
+                                            return data;
+                                        });
+                                    } else if (disconnected) {
+                                        connect();
+                                    }
+                                }));
+                            });
                         });
                     });
-                });
+                } else if (disconnected) {
+                    connect();
+                }                
             } else {  // trezor_dev
                 var trezor_dev = txSenderService.trezor_dev;
                 trezor_dev._typedCommonCall('GetAddress', 'Address', {
@@ -1062,6 +1073,7 @@ angular.module('greenWalletServices', [])
         }
         disconnected = true;
         txSenderService.logged_in = false;
+        attempt_login = false;
         txSenderService.hdwallet = undefined;
         txSenderService.trezor_dev = undefined;
         txSenderService.watch_only = undefined;
