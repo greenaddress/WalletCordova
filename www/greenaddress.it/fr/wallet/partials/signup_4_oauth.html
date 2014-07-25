@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Etape 4 sur 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Transactions via les réseaux sociaux<br><small>Accès à votre porte-monnaie en mode lecture seule</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Personnalisé Connexion</button>
+                </div>
+                <hr>
+                <p>Vous avez la possibilité de vous connecter en mode lecture seule en utilisant les réseaux sociaux. Lorsque vous utilisez ce mode vous accédez à un emplacement complètement séparé de votre porte-monnaie réel de sorte que celui-ci ne puisse être compromis ou que des paiements puisse être envoyés.</p>
+                
+                
+                <p>De plus, vous pouvez utiliser votre adresse email ou votre nom Facebook pour recevoir des paiements ! Plus d'adresses longues et compliquée à retenir et à communiquer. Avec ce mode vous pouvez vous connecter depuis n'importe quel WiFi publique en toute sécurité.</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Terminer et aller sur le porte-monnaie</span>
+                    <span ng-show="signup.social_in_progress">Traitement...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

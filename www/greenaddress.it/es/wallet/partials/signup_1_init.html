@@ -42,8 +42,7 @@
                 
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Escribir a etiqueta NFC</button>
                 
-                <a ng-hide="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_pin#content_container">Continuar!</a>
-                <a ng-show="signup.noLocalStorage" class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_oauth#content_container">Continuar!</a>
+                <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_2factor#content_container">Continuar!</a>
             </div>
 
             <div class="create-modal-footer" ng-show="signup.unexpected_error">
@@ -59,7 +58,7 @@
 
 
 <div class="printable">
-    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddres.it"> GreenAddress.it<br><small>https://greenaddress.it</small></h1>
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddress"> GreenAddress<br><small>https://greenaddress.it</small></h1>
     <p>La clave para acceder a tu Wallet es:</p>
     <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
     <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>

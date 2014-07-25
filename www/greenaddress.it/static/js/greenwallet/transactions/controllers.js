@@ -2,7 +2,8 @@ angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
 .controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$modal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
         function TransactionsController($scope, wallets, tx_sender, notices, branches, $modal, gaEvent, $timeout, $q, encode_key, hostname) {
-    if(!wallets.requireWallet($scope)) return;
+    // required already by InfoController
+    // if(!wallets.requireWallet($scope)) return;
 
     var limiter = {
         cur_limit: ['10'],

@@ -36,12 +36,8 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             controller: 'SignupLoginController'
         })
         .when('/info', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_info.html',
-            controller: 'InfoController'
-        })
-        .when('/transactions', {
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_transactions.html',
-            controller: 'TransactionsController'
+            controller: 'InfoController'
         })
         .when('/receive', {
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_receive.html',
@@ -79,20 +75,20 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_1_init.html',
             controller: 'SignupController'
         })
+        .when('/signup_2factor', {
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_2_2factor.html',
+            controller: 'SignupController'
+        })
         .when('/signup_pin', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_2_pin.html',
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_3_pin.html',
             controller: 'SignupController'
         })
         .when('/signup_oauth', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_3_oauth.html',
-            controller: 'SignupController'
-        })
-        .when('/signup_2factor', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_4_2factor.html',
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_4_oauth.html',
             controller: 'SignupController'
         })
         .when('/trezor_signup', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_2_trezor.html',
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_1_trezor.html',
             controller: 'SignupController'
         })
         .when('/concurrent_login', {
@@ -103,7 +99,7 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/browser_unsupported.html'
         })
         .when('/redeem/:enckey', {
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_info.html',
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_transactions.html',
             controller: 'InfoController'
         })
         .when('/pay/:pay_receiver', {

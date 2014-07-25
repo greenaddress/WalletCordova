@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                шаг 4 из 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Платите или получайте платежы через социальные сети<br><small>Предоставить доступ к вашему кошельку в режиме "только наблюдение"</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Персонализированный вход</button>
+                </div>
+                <hr>
+                <p>Если Вы хотите, Вы можете получить доступ к своему кошельку в режиме только для наблюдения используя простой вход. Когда вы входите таким образом, вы получаете доступ к совершенно отдельный «области» вашего кошелька, и таким образом он не может быть скомпрометирован и никакие платежи не могут быть проведены</p>
+                
+                
+                <p>Плюс, используйте Ваш адрес электронной почты или имя Facebook для получения платежей! Больше не нужно помнить длинных и сложных адресов. Это значит, что вы можете легко войти режиме 'только наблюдения' безопасно в любой wi-fi сети, на ходу или даже в Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Веди меня к кошельку</span>
+                    <span ng-show="signup.social_in_progress">Обрабатывается...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

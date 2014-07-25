@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Steg 4 av 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Betala eller få betalt via sociala nätverk<br><small>Godkänn åtkomst till din plånbok i övervakningsläge</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Anpassad inloggning</button>
+                </div>
+                <hr>
+                <p>Om du vill kan du komma åt din plånbok i övervakningsläge med enkel inloggning. När du loggar in på detta sätt så kan du komma åt en separat "avdelning" av din plånbok, den kan inte hackas och betalningar kan inte utföras</p>
+                
+                
+                <p>Och du kan använda din email eller Facebook-namn för att ta emot betalningar! Inga fler långa och komplicerade adresser att komma ihåg och kommunicera. Det betyder att du enkelt kan logga in i övervakningsläge säkert från valfritt WiFi-nätverk, i rörelse eller på Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Ta mig till min plånbok!</span>
+                    <span ng-show="signup.social_in_progress">Bearbetar...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -684,38 +684,53 @@ angular.module('greenWalletServices', [])
             return (Math.round(val * Math.pow(10, numPlaces)) / Math.pow(10, numPlaces));
         }
         $scope.$watch(model_name+'.amount', function(newValue, oldValue) {
-            if (newValue === oldValue) return;
-            if ($scope[model_name].updated_by_conversion) {
-                $scope[model_name].updated_by_conversion = false;
-            } else {
-                var oldFiat = $scope[model_name].amount_fiat;
-                if (!newValue) {
-                    $scope[model_name].amount_fiat = '';
+            // don't check for newValue == oldValue to allow conversion to happen
+            // in 'send' form even when using plain (non-payreq) bitcoin: URI with amount
+            var _update = function() {
+                if ($scope[model_name].updated_by_conversion) {
+                    $scope[model_name].updated_by_conversion = false;
                 } else {
-                    $scope[model_name].amount_fiat = newValue * $scope.wallet.fiat_rate / div;
-                    $scope[model_name].amount_fiat = trimDecimalPlaces(2, $scope[model_name].amount_fiat);
+                    var oldFiat = $scope[model_name].amount_fiat;
+                    if (!newValue) {
+                        $scope[model_name].amount_fiat = '';
+                    } else {
+                        $scope[model_name].amount_fiat = newValue * $scope.wallet.fiat_rate / div;
+                        $scope[model_name].amount_fiat = trimDecimalPlaces(2, $scope[model_name].amount_fiat);
+                    }
+                    if ($scope[model_name].amount_fiat.toString() !== (oldFiat || '').toString()) {
+                        $scope[model_name].updated_by_conversion = true;
+                    }
                 }
-                if ($scope[model_name].amount_fiat.toString() !== (oldFiat || '').toString()) {
-                    $scope[model_name].updated_by_conversion = true;
-                }
+            }
+            if ($scope.wallet.fiat_rate) { 
+                _update();
+            } else {
+                $scope.$on('first_balance_updated', _update);
             }
         });
         $scope.$watch(model_name+'.amount_fiat', function(newValue, oldValue) {
             if (newValue === oldValue) return;
-            if ($scope[model_name].updated_by_conversion) {
-                $scope[model_name].updated_by_conversion = false;
-            } else {
-                var oldBTC = $scope[model_name].amount;
-                if (!newValue) {
-                    $scope[model_name].amount = '';
+            var _update = function() {
+                if ($scope[model_name].updated_by_conversion) {
+                    $scope[model_name].updated_by_conversion = false;
                 } else {
-                    $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate);
-                    $scope[model_name].amount = trimDecimalPlaces(unitPlaces, $scope[model_name].amount);
-                }
-                if ($scope[model_name].amount.toString() !== (oldBTC || '').toString()) {
-                    $scope[model_name].updated_by_conversion = true;
+                    var oldBTC = $scope[model_name].amount;
+                    if (!newValue) {
+                        $scope[model_name].amount = '';
+                    } else {
+                        $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate);
+                        $scope[model_name].amount = trimDecimalPlaces(unitPlaces, $scope[model_name].amount);
+                    }
+                    if ($scope[model_name].amount.toString() !== (oldBTC || '').toString()) {
+                        $scope[model_name].updated_by_conversion = true;
+                    }
                 }
             }
+            if ($scope.wallet.fiat_rate) { 
+                _update();
+            } else {
+                $scope.$on('first_balance_updated', _update);
+            }           
         });
     };
     walletsService.create_pin = function(pin, $scope) {

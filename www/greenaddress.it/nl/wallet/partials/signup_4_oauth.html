@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Stap 4 van 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Verstuur of ontvang betalingen via sociale netwerken<br><small>Verleen toegang tot uw portemonnee in de alleen-kijken-modus</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Aangepaste Login</button>
+                </div>
+                <hr>
+                <p>Als u wilt, kunt u bij uw portemonnee in alleen-kijken-modus via een versimpelde inlogprocedure. Als u op deze wijze inlogt, komt in in a volledig afgeschermde "zone" van uw portemonnee, deze kan onmogelijk worden gecompromitteerd en er kunnen geen betalingen mee worden gedaan</p>
+                
+                
+                <p>En gebruik uw e-mail of uw Facebook naam om betalingen te ontvangen! Geen lange en ingewikkelde adressen meer om te onthouden en te communiceren. Dat betekent dat u gemakkelijk veilig kunt inloggen in alleen-kijken-modus vanaf wi-fi, onderweg of zelfs bij Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Laat mijn portemonnee zien!</span>
+                    <span ng-show="signup.social_in_progress">Verwerken...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

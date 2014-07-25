@@ -194,14 +194,6 @@
         <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="password" ng-model="thirdparty.customstate.password" placeholder="Hasło" />
         <input type="submit" class="btn btn-sm btn-default" value="(( thirdparty.customstate.save_button_label ))" ng-show="thirdparty.customstate.username && thirdparty.customstate.password" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" ng-click="thirdparty.customstate.save()" />
       </div>
-    
-      <hr>
-      <button class="btn btn-block-xs btn-twitter" disabled><i class="icon-twitter"></i> Twitter <span class="coming-soon">Dostępne wkrótce</span></button>
-      <label class="switch">
-        <input type="checkbox" class="switch" disabled>
-        <span class="switch"></span>
-      </label>
-    
     </form>
   </div>
 </div>
@@ -448,13 +440,13 @@
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">nLockTime</div>
-    <div class="sub-header-desc">transakcje nLockTime pozwalają Ci na przyjmowanie Twoich zdeponowanych środków z pominięciem podpisu GreenAddress.it po wstępnie określonej liczbie bloków</div>
+    <div class="sub-header-desc">nLockTime transactions allow you to redeem your deposited funds without GreenAddress' signature after pre-defined number of blocks</div>
   </div>
   <div class="col-md-9">
     <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
       <div class="form-group">
         <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
-          <label for="id_nlocktime_blocks" class="control-label">Pozwala na przyjęcie funduszy z pominięciem podpisu GreenAddress.it po</label>
+          <label for="id_nlocktime_blocks" class="control-label">Allow redeeming funds without GreenAddress' signature after</label>
           <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
           blokach
           <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
@@ -507,6 +499,7 @@
     </div>
   </div>
 </div>
+<!--
 <hr class="double">
 <div class="row">
   <div class="col-md-3">
@@ -523,7 +516,6 @@
             <span class="coming-soon">Dostępne wkrótce</span>
           </span>
       </label>
-      <!--
       <hr>
       <div class="form-group">
         <label class="control-label col-sm-3">Opóźniaj płatności o kwocie większej niż </label>
@@ -537,10 +529,10 @@
           </select>
         </div>
       </div>
-      -->
     </form>
   </div>
 </div>
+-->
 <hr class="double">
 <div class="row">
   <div class="col-md-3">

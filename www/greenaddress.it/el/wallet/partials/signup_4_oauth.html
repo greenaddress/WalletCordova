@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Βήμα 4 του 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Πληρώστε ή πληρωθείτε από κοινωνικά δίκτυα<br><small>Επιτρέψτε την πρόσβαση στο πορτοφόλι σας σε κατάσταση λειτουργίας παρακολούθησης-μόνο</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Προσαρμοσμένη σύνδεση</button>
+                </div>
+                <hr>
+                <p>Εάν θέλετε μπορείτε να έχετε πρόσβαση στο πορτοφόλι σας σε λειτουργία παρακολούθησης-μόνο, μέσω απλής σύνδεσης. Όταν συνδεθείτε με αυτόν τον τρόπο αποκτάτε πρόσβαση σε ένα τελείως ξεχωριστό "χώρο" του πορτοφολιού σας, σε καμία περίπτωση δεν μπορεί να τεθεί σε κίνδυνο και πληρωμές δεν είναι εφικτές</p>
+                
+                
+                <p>Επιπλέον χρησιμοποιείστε το email σας ή το όνομα σας στο Facebook για να λάβετε πληρωμές! Με αυτό τον τρόπο δεν απαιτείται να θυμάστε περίπλοκες διευθύνσεις για επικοινωνία. Αυτό σημαίνει ότι μπορείτε εύκολα να συνδεθείτε σε λειτουργία 'παρακολουθήσης-μόνο' με ασφάλεια από οποιοδήποτε wi-fi, στο δρόμο ή ακόμα και στα Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Πάρε με στο πορτοφόλι μου!</span>
+                    <span ng-show="signup.social_in_progress">Επεξεργασία...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

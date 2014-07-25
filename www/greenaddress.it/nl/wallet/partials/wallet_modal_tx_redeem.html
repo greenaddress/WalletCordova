@@ -1,0 +1,27 @@
+<div class="modal-header">
+    Take funds back
+</div>
+
+<div class="modal-body">
+    <p>Do you want to take funds back from the following transaction?</p>
+    <dl>
+        <dt>Tijdsstempel</dt>
+        <dd>(( redeem_transaction.ts ))</dd>
+
+        <dt>Hash</dt>
+        <dd>(( redeem_transaction.txhash ))</dd>
+        
+        <dt>Beschrijving</dt>
+        <dd>(( redeem_transaction.description ))</dd>
+
+        <dt>Bedrag</dt>
+        <dd>(( redeem_transaction.value|format_btc:wallet.unit )) </dd>
+    </dl>
+</div>
+
+<div class="modal-footer">
+    <div class="">
+        <button class="btn btn-secondary" ng-class="{disabled: redeeming}" ng-click="$dismiss()">Annuleren</button>
+        <button class="btn btn-primary" ng-class="{disabled: redeeming}" ng-click="_redeem()">OK</button>
+    </div>
+</div>

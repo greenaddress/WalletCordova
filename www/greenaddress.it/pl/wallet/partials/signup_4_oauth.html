@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Krok 4 z 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Płać lub odbieraj płatności za pośrednictwem portali społecznościowych<br><small>Umożliw dostęp do Twojego portfela w trybie Tylko-do-Odczytu</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Własny login</button>
+                </div>
+                <hr>
+                <p>Jeśli tylko chcesz, możesz dostać się do swojego portfelu w Trybie-tylko-do-Odczytu poprzez proste logowanie. Kiedy logujesz się w tym trybie uzyskujesz dostęp do całkowicie odrębnego "obszaru" swojego portfela, który w żaden sposób nie może być modyfikowany ani nie masz w nim możliwości dokonywania płatności.</p>
+                
+                
+                <p>Dodatkowo możesz użyć swojego adresu email lub loginu na Facebooku aby otrzymywać płatności! Nigdy więcej długich i skomplikowanych adresów do zapamiętania i przekazywania. To oznacza, ze możesz po prostu zalogować się w trybie tylko do odczytu bezpiecznie w każdej sieci wi-fi, gdy jesteś w podróży, czy choćby w Starbucksie!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Zabierz mnie do mojego Portfela!</span>
+                    <span ng-show="signup.social_in_progress">Przetwarzanie...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

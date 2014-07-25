@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Paso 4 de 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Pagar o recibir pagos vía redes sociales<br><small>Dar acceso a tu Wallet en modo sólo lectura</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Sesión personalizada</button>
+                </div>
+                <hr>
+                <p>Si lo desea, también puede acceder a su Wallet en modo Sólo Lectura. Cuando inicia sesión en este modo, accede a un área completamente separada de su Wallet, que no puede hacer pagos ni ser comprometida de ninguna forma</p>
+                
+                
+                <p>También puede usar tu email o tu nombre de Facebook para recibir pagos! No más largas y complicadas direcciones para recordar o comunicar. Eso significa que también puede fácilmente iniciar sesión en modo de sólo lectura y de forma segura en cualquier wi-fi, incluso en Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">¡Ir a mi Wallet!</span>
+                    <span ng-show="signup.social_in_progress">Procesando...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

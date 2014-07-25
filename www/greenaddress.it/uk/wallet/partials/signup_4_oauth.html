@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Крок 4 із 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Платіть і отримуйте платежі через соціальні мережі<br><small>Надати доступ до Вашого гаманця в режимі "тільки спостереження"</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Спеціальний Вхід</button>
+                </div>
+                <hr>
+                <p>Якщо ви хочете, ви можете отримати доступ до вашого гаманця в режимі тільки спостереження використовуючи простий вхід. Коли ви заходите таким чином, ви отримуєте доступ до повністю "окремої" області вашого гаманця, і таким чином, він не може бути скомпрометованим і ніякі платежі не можуть бути здійснені</p>
+                
+                
+                <p>Додатково, використовуйте ваш адрес електронної пошти, Facebook для отримання платежів! Не потрібно більше запам'ятовувати складні довгі адреси. Це значить, що ви можете легко ввійти в режимі "тільки спостереження" безпечно в будь-якій wi-fi мережі, на ходу чи навіть в Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Перейти до гаманця!</span>
+                    <span ng-show="signup.social_in_progress">Обробка...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

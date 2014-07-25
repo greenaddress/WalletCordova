@@ -1,0 +1,53 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content">
+
+            <div class="create-modal-header">
+                <span class="pull-left">У Вас уже есть аккаунт?
+                    
+                    <a href="" ng-click="logout()">Вход в ваш кошелёк</a></span>
+                    
+                шаг 1 из 3
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+                <div class="title">Connect Trezor to create a GreenAddress wallet<br>
+                    <small>This 3-step account setup will fully secure it against intruders</small>
+                </div>
+                <hr>
+                <div class="subtitle" ng-hide="trezor_dev">Please connect your Trezor device</div>
+                <div class="subtitle" ng-show="trezor_dev">Trezor detected.</div>
+                <div class="subtitle" ng-show="trezor_dev.signing"><strong>Please confirm the signature on your Trezor device.</strong></div>
+            </div>
+
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+                <label for="checkbox-confirmation">
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> I agree with the <a href="/tos" target="_blank">Условия предоставления услуг</a>
+                </label>
+                <br>
+                <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.logged_in||!signup.secured_confirmed}" href="#/signup_2factor#content_container">Продолжить!</a>
+            </div>
+
+            <div class="create-modal-footer" ng-show="signup.unexpected_error">
+                <a class="btn btn-danger login-submit" href="" ng-click="signup.try_again()">
+                    Ошибка: (( signup.unexpected_error )).  Кликнете чтобы повторит заново
+                </a>
+            </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="printable">
+    <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddress"> GreenAddress<br><small>https://greenaddress.it</small></h1>
+    <p>Фраза доступа к вашему кошельку:</p>
+    <div class="mnemonic noanimate">(( signup.mnemonic ))</div>
+    <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic ))" size="212"></qr>
+    <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Храните эту страницу в защищенном месте</i></p>
+</div>

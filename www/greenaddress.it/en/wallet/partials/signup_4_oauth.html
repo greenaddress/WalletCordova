@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Step 4 of 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Pay or get paid by social networks<br><small>Grant access to your wallet in watch-only mode</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Custom Login</button>
+                </div>
+                <hr>
+                <p>If you like you can access your Wallet in Watch-Only mode via simple login. When you login in this way you access a completely separate "area" of your wallet, in no way it can be compromised and payments cannot be made</p>
+                
+                
+                <p>Plus use your email or your Facebook name to receive payments! No more long and complicated addresses to remember and communicate. That means that you can easily login in 'watch-only mode' safely from any wi-fi, on the go or even at Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Take me to my wallet!</span>
+                    <span ng-show="signup.social_in_progress">Processing...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

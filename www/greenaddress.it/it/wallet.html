@@ -1,7 +1,7 @@
 <!doctype html>
 <html  toggleable-menu ng-swipe-left="toggle_set(false)" ng-swipe-right="toggle_set(true)" ng-app="greenWalletApp" lang="it"  >
   <head>
-    <title>portafoglio | GreenAddress.it</title>
+    <title>portafoglio | GreenAddress</title>
     <meta charset="utf-8" />
     <meta name="description" content="Il più sicuro wallet Bitcoin che ti lascia in controllo completo" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
@@ -143,9 +143,8 @@
   <div class="ng-view"></div></div>
   <div class="menu" toggle-class="visible">
   <ul>
-    <li class="menu-header"><img src="../static/img/logos/logo-greenaddress-white.png" alt="GreenAddress.it" /> GreenAddress.it</li>
-    <li path="/info"><a href="#/info">Saldo</a></li>
-    <li path="/transactions"><a href="#/transactions">Transazioni</a></li>
+    <li class="menu-header"><img src="../static/img/logos/logo-greenaddress-white.png" alt="GreenAddress" /> GreenAddress</li>
+    <li path="/info"><a href="#/info">Transazioni</a></li>
     <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev" path="/send"><a href="#/send">Invia denaro</a></li>
     <li path="/receive"><a href="#/receive">Ricevi</a></li>
     <li path="/address-book"><a href="#/address-book">Rubrica</a></li>
@@ -164,7 +163,7 @@
       <span ng-show="wallet.last_login.country">(paese: ((wallet.last_login.country)))</span>
       <span ng-hide="wallet.last_login.country">(paese sconosciuto)</span>
     </div>
-    <div><b>Copyright &copy; GreenAddress.it 2014</b></div>
+    <div><b>Copyright &copy; GreenAddress 2014</b></div>
   </div>
 </div>
 </div>

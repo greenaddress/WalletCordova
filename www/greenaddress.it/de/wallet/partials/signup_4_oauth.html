@@ -1,0 +1,40 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                Schritt 4 von 4
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">Bezahlen oder bezahlt werden in Sozialen Netzwerken<br><small>Zugriff auf Ihre Brieftasche im Nur-Schauen-Modus erlauben</small></div>
+                <hr>
+                <div class="text-center">
+                
+                    <button ng-click="signup.fblogin()" class="btn btn-facebook" ng-class="{'btn-sync':signup.fbloginstate.synchronized}" ng-disabled="signup.fbloginstate.synchronized"><i class="icon-facebook"></i> Facebook</button>
+                    
+                
+                <button ng-click="signup.customlogin()" class="btn btn-default" ng-class="{'btn-sync':signup.customloginstate.synchronized}" ng-disabled="signup.customloginstate.synchronized"><i class="glyphicon glyphicon-lock"></i> Manuelles Anmelden</button>
+                </div>
+                <hr>
+                <p>Wenn Sie wollen können Sie auf Ihre Brieftasche über einfaches Anmelden im Nur-Schauen-Modus zugreifen. Wenn Sie sich so anmelden können Sie auf einen komplett separaten "Bereich" Ihrer Brieftasche zugreifen, der auf keinerlei Weise kompromittiert werden kann und in dem keine Zahlungen durchgeführt werden können</p>
+                
+                
+                <p>Zudem können Sie Ihre Emailadresse oder Ihren Facebooknamen benutzen um Zahlungen zu erhalten! Keine langen und komplizierten Adressen mehr zu merken und kommunizieren. Das heißt Sie können sich einfach und sicher im 'Nur-Schauen-Modus' anmelden, über WLAN, unterwegs oder bei Starbucks!</p>
+                
+            </div>
+
+            <div class="create-modal-footer">
+                <a class="btn btn-primary btn-block-xs" href="#/info#content_container" ng-hide="signup.any_twofac_done" ng-class="{disabled:signup.social_in_progres}">
+                    <span ng-hide="signup.social_in_progress">Zu meiner Brieftasche!</span>
+                    <span ng-show="signup.social_in_progress">Bearbeite...</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
