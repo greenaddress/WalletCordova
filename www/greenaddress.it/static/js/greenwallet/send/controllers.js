@@ -217,7 +217,7 @@ angular.module('greenWalletSendControllers',
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_fb_message.html',
                 scope: $scope
             }).result.then(function() {
-                $location.url('/transactions/');
+                $location.url('/info/');
             }, function() {
                 // cancel - reverse the tx
                 $rootScope.is_loading += 1;
@@ -231,7 +231,7 @@ angular.module('greenWalletSendControllers',
                     }
                     wallets.sign_and_send_tx(undefined, data, true, null, gettext('Transaction reversed!')).finally(function() {
                         $rootScope.is_loading -= 1;
-                        $location.url('/transactions/');
+                        $location.url('/info/');
                     });  // priv_der=true
                 }, function(error) {
                     $rootScope.is_loading -= 1;
@@ -246,7 +246,7 @@ angular.module('greenWalletSendControllers',
                 function() {
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('success', gettext('Email sent'));
-                    $location.url('/transactions/');
+                    $location.url('/info/');
                 }, function(err) {
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('error', gettext('Failed sending email') + ': ' + err.desc);
@@ -264,7 +264,7 @@ angular.module('greenWalletSendControllers',
             $modal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_voucher.html',
                 scope: $scope
-            }).result.finally(function() { $location.url('/transactions/'); });
+            }).result.finally(function() { $location.url('/info/'); });
             $rootScope.is_loading -= 1;
         },
         do_send_reddit: function(that, enckey, satoshis) {
@@ -275,7 +275,7 @@ angular.module('greenWalletSendControllers',
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('success', gettext('Reddit message sent'));
                     sound.play(BASE_URL + "/static/sound/coinsent.mp3", $scope);
-                    $location.url('/transactions/');
+                    $location.url('/info/');
                 }, function(err) {
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('error', gettext('Failed sending Reddit message') + ': ' + err.desc);
@@ -291,7 +291,7 @@ angular.module('greenWalletSendControllers',
                            priv_data).then(function(data) {
                 wallets.sign_and_send_tx($scope, data).then(function() {
                     if ($scope.wallet.send_from) $scope.wallet.send_from = null;
-                    $location.url('/transactions/');
+                    $location.url('/info/');
                 }).finally(function() { that.sending = false; });
             }, function(error) {
                 that.sending = false;
@@ -384,7 +384,7 @@ angular.module('greenWalletSendControllers',
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee, priv_data).then(function(data) {
                 return verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).then(function() {
                     return wallets.sign_and_send_tx($scope, data).then(function() {
-                        $location.url('/transactions/');
+                        $location.url('/info/');
                     });
                 }, function(error) {
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
@@ -437,7 +437,7 @@ angular.module('greenWalletSendControllers',
             that.sending = true;
             tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, that.recipient.data).then(function(data) {
                 return wallets.sign_and_send_tx($scope, data).then(function() {
-                    $location.url('/transactions/');
+                    $location.url('/info/');
                 });
             }, function(error) {
                 notices.makeNotice('error', error.desc);
