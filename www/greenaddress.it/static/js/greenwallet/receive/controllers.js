@@ -33,7 +33,7 @@ angular.module('greenWalletReceiveControllers',
                     }
                     // TODO: verify
                     wallets.sign_and_send_tx(undefined, data, false, null, gettext('Funds swept')).then(function() {
-                        $location.url('/transactions/');
+                        $location.url('/info/');
                     }).finally(function() {
                         that.sweeping = false;
                     });

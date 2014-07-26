@@ -38,6 +38,25 @@
                                 
                                 <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Недопустимая мнемоника: (( state.mnemonic_error ))</span>
                             </div>
+                            <button type="submit" tabindex="4" ng-disabled="(is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading) && state.mnemonic"
+                                    class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
+                                    href="#" id="restore-wallet-continue" ng-show="state.toggleshowpin" ng-focus="submit_me()">
+                                <span ng-hide="state.seed_progress || state.login_error">Вход в ваш кошелёк</span>
+                                <span ng-show="state.seed_progress && !state.login_error">Обрабатывается ... (( state.seed_progress ))%</span>
+                                <span ng-show="state.login_error">Ошибка, попробуйте еще раз</span>
+                            </button>
+                            <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
+                            <label class="switch" ng-show="state.toggleshowpin" >
+                              <input type="checkbox" class="switch" ng-model="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading"/>
+                              <span class="switch"></span>
+                                <span ng-show="!state.toggleshowpassword">
+                                Show mnemonics
+                                </span>
+                                <span ng-show="state.toggleshowpassword">
+                                Hide mnemonics
+                                </span>
+                            </label>
+                            <hr ng-show="state.toggleshowpin">
                             <label class="switch" ng-show="state.has_pin">
                               <input type="checkbox" class="switch" ng-model="state.toggleshowpin" ng-disabled="is_loading || logging_in || payreq_loading" />
                               <span class="switch"></span>
@@ -50,16 +69,6 @@
                             </label>
                         </div>
                     </div>
-                    <label class="switch" ng-show="state.toggleshowpin" >
-                      <input type="checkbox" class="switch" ng-model="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading"/>
-                      <span class="switch"></span>
-                        <span ng-show="!state.toggleshowpassword">
-                        Show mnemonics
-                        </span>
-                        <span ng-show="state.toggleshowpassword">
-                        Hide mnemonics
-                        </span>
-                    </label>
                     <div ng-show="!wallet.send_to_receiving_id && !has_payreq && state.toggleshowpin && !(state.seed_progress && !state.login_error)">
                         <hr>
                         <div class="subtitle">Войти в режиме Только-Наблюдать</div>
@@ -69,15 +78,6 @@
                         
                         <a href="" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Персонализированный вход</a>
                     </div>
-                    <hr ng-show="state.toggleshowpin">
-                    <button type="submit" tabindex="4" ng-disabled="(is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading) && state.mnemonic"
-                            class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
-                            href="#" id="restore-wallet-continue" ng-show="state.toggleshowpin" ng-focus="submit_me()">
-                        <span ng-hide="state.seed_progress || state.login_error">Вход в ваш кошелёк</span>
-                        <span ng-show="state.seed_progress && !state.login_error">Обрабатывается ... (( state.seed_progress ))%</span>
-                        <span ng-show="state.login_error">Ошибка, попробуйте еще раз</span>
-                    </button>
-                    <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
                 </form>
             </div>
         </div>
