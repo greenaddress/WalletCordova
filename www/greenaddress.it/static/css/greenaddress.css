@@ -6150,7 +6150,7 @@ fieldset[disabled] .btn.btn-reddit.active {
 .input-group-btn .btn {
   white-space: nowrap;
 }
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .btn {
     margin: 4px 2px;
   }
@@ -6408,6 +6408,9 @@ table.table tfoot {
 .modal.twofactor {
   z-index: 1250 !important;
 }
+.modal.pinmodal {
+  z-index: 1250 !important;
+}
 .modal .modal-dialog {
   margin: 0 20px;
   border-radius: 4px;
@@ -6553,7 +6556,7 @@ input[type="checkbox"].switch:disabled + span + span {
   filter: alpha(opacity=40);
 }
 .help-block {
-  font-size: 12px;
+  font-size: 14px;
 }
 .form-control-static {
   margin-bottom: 9px;
@@ -7098,6 +7101,7 @@ input[type="checkbox"].switch:disabled + span + span {
   #wallet .container {
     padding: 15px;
     padding-top: 70px;
+    padding-bottom: 60px;
     -webkit-transition: all 0.25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     transition: all 0.25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,.25), 0 0 20px rgba(0,0,0,.15);
@@ -7253,6 +7257,41 @@ input[type="checkbox"].switch:disabled + span + span {
 .menu-mobile .menu-mobile-toggle.menu-mobile-toggle-close.visible {
   visibility: visible;
 }
+.menu-mobile-bottom {
+  -webkit-transform: translateZ(0);
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 35px;
+  background: rgba(240, 240, 240, 0.92);
+  color: #aaa;
+  text-align: center;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 32px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  -webkit-transition: all 0.25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  transition: all 0.25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.menu-mobile-bottom.visible {
+  -webkit-transform: translate3d(265px, 0, 0);
+  transform: translate3d(265px, 0, 0);
+  -webkit-transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.menu-mobile-bottom .spin {
+  float: right;
+  position: absolute;
+  top: .5em;
+  right: 15px;
+}
 .menu {
   position: fixed;
   top: 0;
@@ -7335,7 +7374,8 @@ input[type="checkbox"].switch:disabled + span + span {
   margin-top: 5px;
 }
 @media (max-width: 991px) {
-  .menu-mobile {
+  .menu-mobile,
+  .menu-mobile-bottom {
     display: block;
   }
   .menu {
@@ -7448,7 +7488,7 @@ input[type="checkbox"].switch:disabled + span + span {
   font-weight: 300;
   font-style: italic;
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .create-modal .create-modal-dialog .create-modal-content .create-modal-body hr {
   margin: 20px -7px;
@@ -7562,9 +7602,6 @@ input[type="checkbox"].switch:disabled + span + span {
   .create-modal .create-modal-body {
     padding: 18px 30px 25px !important;
   }
-  .create-modal .create-modal-body .login-submit {
-    margin-top: 15px;
-  }
 }
 @media (min-width: 992px) {
   .create-modal .create-modal-dialog {
@@ -7641,39 +7678,19 @@ input[type="checkbox"].switch:disabled + span + span {
 .notice.notice-error .glyphicon {
   color: #d9534f;
 }
-#loading {
-  position: fixed;
-  z-index: 1070;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: 0;
-  cursor: wait;
-  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0));
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0));
-  background-repeat: no-repeat;
-  -webkit-box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.4);
-  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.4);
-}
 .spin {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
   background: #3c8c42;
-  animation: loading .5s infinite linear;
-  -webkit-animation: loading .5s infinite linear;
-  border: 5px solid #fff;
-  border-top: 5px solid rgba(0, 0, 0, 0);
-  border-left: 5px solid rgba(0, 0, 0, 0);
-  border-radius: 100px;
-  width: 50px;
-  height: 50px;
-  margin: auto;
-  -webkit-box-shadow: 0 0 0 4px #3C8C42, 0 0 0 6px white, 0 0 8px 3px rgba(0,20,0,.8);
-  box-shadow: 0 0 0 4px #3C8C42, 0 0 0 6px white, 0 0 8px 3px rgba(0,20,0,.8);
+  border: 4px solid #fff;
+  border-top: 4px solid rgba(0, 0, 0, 0);
+  border-left: 4px solid rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  vertical-align: middle;
+  cursor: wait;
+  animation: loading .5s infinite;
+  -webkit-animation: loading .5s infinite;
 }
 @keyframes loading {
   0% {
@@ -7744,6 +7761,11 @@ input[type="checkbox"].switch:disabled + span + span {
   }
   .printable h1 {
     margin-bottom: 40px !important;
+  }
+  .printable h1 img {
+    display: inline !important;
+    height: 64px;
+    position: relative;
   }
   .printable h1 small {
     font-size: 50%;

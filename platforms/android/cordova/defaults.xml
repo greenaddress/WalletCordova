@@ -22,8 +22,8 @@
         version   = "2.0.0">
 
     <!-- Preferences for Android -->
-    <preference name="loglevel" value="INFO" />
-    <preference name="AndroidLaunchMode" value="singleTask" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
 
     <!-- This is required for native Android hooks -->
     <feature name="App">

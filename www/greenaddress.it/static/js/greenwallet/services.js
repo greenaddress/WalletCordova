@@ -144,7 +144,7 @@ angular.module('greenWalletServices', [])
         });
     }
     walletsService.requireWallet = function($scope, dontredirect) {
-        if (!$scope.wallet.hdwallet && !$scope.wallet.trezor_dev) {
+        if (!$scope.wallet.hdwallet && !$scope.wallet.trezor_dev && !$scope.wallet.btchip) {
             if (!dontredirect) {
                 var location = '/?redir=' + $location.path();
                 var search = '';
@@ -189,6 +189,7 @@ angular.module('greenWalletServices', [])
                 tx_sender.wallet = $scope.wallet;
                 $scope.wallet.hdwallet = hdwallet;
                 $scope.wallet.trezor_dev = tx_sender.trezor_dev;
+                $scope.wallet.btchip = tx_sender.btchip;
                 $scope.wallet.mnemonic = mnemonic;
                 if (data.last_login) {
                     $scope.wallet.last_login = data.last_login;
@@ -218,9 +219,11 @@ angular.module('greenWalletServices', [])
                 $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
                 if (path) {
                     $scope.wallet.gait_path = path;
-                } else {
+                } else if (path_seed) {
                     $scope.wallet.gait_path_seed = path_seed;
                     $scope.wallet.gait_path = mnemonics.seedToPath(path_seed);
+                } else {
+                    $scope.wallet.gait_path = data.gait_path;
                 }
                 if (data.gait_path !== $scope.wallet.gait_path) {
                     tx_sender.call('http://greenaddressit.com/login/set_gait_path', $scope.wallet.gait_path).catch(function(err) {
@@ -256,8 +259,18 @@ angular.module('greenWalletServices', [])
     };
     walletsService.login_trezor = function($scope, trezor_dev, path, signup, logout) {
         tx_sender.trezor_dev = trezor_dev;
-        return this._login($scope, undefined, undefined, signup, logout, undefined, path, trezor_dev);
-    }
+        return this._login($scope, undefined, undefined, signup, logout, undefined, path);
+    };
+    walletsService.login_btchip = function($scope, btchip, btchip_pubkey, logout) {
+        tx_sender.btchip = btchip;
+        tx_sender.btchip_address = btchip_pubkey.bitcoinAddress.value;
+        var hdwallet = new Bitcoin.HDWallet();
+        hdwallet.network = cur_net;
+        hdwallet.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(btchip_pubkey.publicKey.toString(HEX)));
+        hdwallet.chaincode = Bitcoin.convert.hexToBytes(btchip_pubkey.chainCode.toString(HEX));
+        tx_sender.hdwallet = hdwallet;
+        return this._login($scope, hdwallet, undefined, false, logout, undefined, undefined);
+    };
     walletsService.loginWatchOnly = function($scope, token_type, token, logout) {
         var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
         promise = promise.then(function(json) {
@@ -533,13 +546,15 @@ angular.module('greenWalletServices', [])
     var _sign_and_send_tx = function($scope, data, priv_der, twofactor, notify) {
         var d = $q.defer();
         var tx = Bitcoin.Transaction.deserialize(data.tx);
-        var signatures = [];
+        var signatures = [], device_deferred = null;
+
         for (var i = 0; i < tx.ins.length; ++i) {
             (function(i) {
+                var key, path = [];
                 if (data.prev_outputs[i].privkey) {
-                    var key = $q.when(data.prev_outputs[i].privkey);
-                } else {
-                    var key = tx_sender.hdwallet;
+                    key = $q.when(data.prev_outputs[i].privkey);
+                } else if (tx_sender.hdwallet.priv) {
+                    key = tx_sender.hdwallet;
                     if (priv_der) {
                         key = $q.when(key.derivePrivate(data.prev_outputs[i].branch)).then(function(key) {
                             return key.derivePrivate(data.prev_outputs[i].pointer);
@@ -558,14 +573,52 @@ angular.module('greenWalletServices', [])
                     key = key.then(function(key) {
                         return key.priv;
                     });
+                } else {
+                    if (priv_der) {
+                        path.push(data.prev_outputs[i].branch + "'");
+                        path.push(data.prev_outputs[i].pointer + "'");
+                    } else {
+                        path.push(data.prev_outputs[i].branch);
+                        if (data.prev_outputs[i].subaccount) {
+                            path.push(data.prev_outputs[i].subaccount + "'");
+                        }
+                        path.push(data.prev_outputs[i].pointer);
+                    }
                 }
-                var sign = key.then(function(key) {
+                if (!key) {
                     var script = new Bitcoin.Script(Bitcoin.convert.hexToBytes(data.prev_outputs[i].script));
                     var SIGHASH_ALL = 1;
-                    var sign = key.sign(tx.hashTransactionForSignature(script, i, SIGHASH_ALL));
-                    sign.push(SIGHASH_ALL);
-                    return Bitcoin.convert.bytesToHex(sign);
-                });
+                    var sign_deferred = $q.defer();
+
+                    var next = function() {
+                        return $scope.wallet.btchip.gaStartUntrustedHashTransactionInput_async(
+                            i == 0,
+                            tx.cloneTransactionForSignature(script, i, SIGHASH_ALL)
+                        ).then(function(finished) {
+                            return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function(finished) {
+                                return $scope.wallet.btchip.app.signTransaction_async(path.join('/')).then(function(sig) {
+                                    sign_deferred.resolve(sig.toString(HEX));
+                                });
+                            })
+                        });
+                    }
+
+                    if (!device_deferred) {
+                        device_deferred = next();
+                    } else {
+                        device_deferred = device_deferred.then(next);
+                    }
+
+                    var sign = sign_deferred.promise;
+                } else {
+                    var sign = key.then(function(key) {
+                        var script = new Bitcoin.Script(Bitcoin.convert.hexToBytes(data.prev_outputs[i].script));
+                        var SIGHASH_ALL = 1;
+                        var sign = key.sign(tx.hashTransactionForSignature(script, i, SIGHASH_ALL));
+                        sign.push(SIGHASH_ALL);
+                        return Bitcoin.convert.bytesToHex(sign);
+                    });
+                }
                 signatures.push(sign);
             })(i);
         }
@@ -692,12 +745,12 @@ angular.module('greenWalletServices', [])
                 } else {
                     var oldFiat = $scope[model_name].amount_fiat;
                     if (!newValue) {
-                        $scope[model_name].amount_fiat = '';
+                        $scope[model_name].amount_fiat = undefined;
                     } else {
                         $scope[model_name].amount_fiat = newValue * $scope.wallet.fiat_rate / div;
                         $scope[model_name].amount_fiat = trimDecimalPlaces(2, $scope[model_name].amount_fiat);
                     }
-                    if ($scope[model_name].amount_fiat.toString() !== (oldFiat || '').toString()) {
+                    if ($scope[model_name].amount_fiat !== oldFiat) {
                         $scope[model_name].updated_by_conversion = true;
                     }
                 }
@@ -716,12 +769,12 @@ angular.module('greenWalletServices', [])
                 } else {
                     var oldBTC = $scope[model_name].amount;
                     if (!newValue) {
-                        $scope[model_name].amount = '';
+                        $scope[model_name].amount = undefined;
                     } else {
                         $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate);
                         $scope[model_name].amount = trimDecimalPlaces(unitPlaces, $scope[model_name].amount);
                     }
-                    if ($scope[model_name].amount.toString() !== (oldBTC || '').toString()) {
+                    if ($scope[model_name].amount !== oldBTC) {
                         $scope[model_name].updated_by_conversion = true;
                     }
                 }
@@ -1003,7 +1056,7 @@ angular.module('greenWalletServices', [])
             d.resolve(txSenderService.logged_in);
         } else {
             var hdwallet = txSenderService.hdwallet;
-            if (hdwallet) {
+            if (hdwallet.priv) {
                 attempt_login = true;
                 if (session) {
                     session.call('http://greenaddressit.com/login/get_challenge',
@@ -1037,45 +1090,67 @@ angular.module('greenWalletServices', [])
                 } else if (disconnected) {
                     connect();
                 }                
-            } else {  // trezor_dev
-                var trezor_dev = txSenderService.trezor_dev;
-                trezor_dev._typedCommonCall('GetAddress', 'Address', {
-                    address_n: [],
-                    coin_name: cur_net == 'testnet' ? 'Testnet' : 'Bitcoin'
-                }).then(function (addr) {
-                    txSenderService.call('http://greenaddressit.com/login/get_trezor_challenge',
-                            addr.message.address).then(function(challenge) {
+            } else {  // trezor_dev || btchip
 
-                        msg = Bitcoin.CryptoJS.enc.Hex.stringify(Bitcoin.CryptoJS.enc.Utf8.parse('greenaddress.it      login ' + challenge))
-                        // generate random path to derive key from - avoids signing using the same key twice
-                        var max64int_hex = '';
-                        while (max64int_hex.length < 16) max64int_hex += 'F';
-                        var TWOPOWER64 = new Bitcoin.BigInteger(max64int_hex, 16).add(Bitcoin.BigInteger.ONE);
-                        var random_path_hex = Bitcoin.ecdsa.getBigRandom(TWOPOWER64).toString(16);
-                        while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
-                        var path_bytes = Bitcoin.convert.hexToBytes(random_path_hex);
-                        var path = [];
-                        for (var i = 0; i < 4; i++) {
-                            path.push(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)))
-                            path_bytes.shift(); path_bytes.shift();
-                        }
-                        trezor_dev.signing = true;
-                        trezor_dev._typedCommonCall('SignMessage', 'MessageSignature',
-                                {'message': msg, address_n: path}).then(function(res) {
-                            signature = Bitcoin.ecdsa.parseSigCompact(Bitcoin.convert.hexToBytes(res.message.signature));
-                            trezor_dev.signing = false;
-                            d.resolve(device_id().then(function(devid) {
-                                return txSenderService.call('http://greenaddressit.com/login/authenticate',
-                                        [signature.r.toString(), signature.s.toString(), signature.i.toString()], logout||false,
-                                         random_path_hex, devid).then(function(data) {
-                                    txSenderService.logged_in = data;
-                                    return data;
+                var trezor_dev = txSenderService.trezor_dev,
+                    btchip = txSenderService.btchip;
+                var get_pubkey = function() {
+                    if (trezor_dev) {
+                        return trezor_dev._typedCommonCall('GetAddress', 'Address', {
+                            address_n: [],
+                            coin_name: cur_net == 'testnet' ? 'Testnet' : 'Bitcoin'
+                        }).then(function(addr) { return addr.message.address; });
+                    } else {
+                        return $q.when(txSenderService.btchip_address);
+                    }
+                }
+                get_pubkey().then(function (addr) {
+                    txSenderService.call('http://greenaddressit.com/login/get_trezor_challenge',
+                            addr).then(function(challenge) {
+                        var msg_plain = 'greenaddress.it      login ' + challenge;
+                        var msg = Bitcoin.CryptoJS.enc.Hex.stringify(Bitcoin.CryptoJS.enc.Utf8.parse(msg_plain));
+                        // btchip requires 0xB11E to skip HID authentication
+                        // 0x4741 = 18241 = 256*G + A in ASCII
+                        var path = [0x4741b11e];
+
+                        if (trezor_dev) {
+                            trezor_dev.signing = true;
+                            trezor_dev._typedCommonCall('SignMessage', 'MessageSignature',
+                                    {'message': msg, address_n: path}).then(function(res) {
+                                var signature = Bitcoin.ecdsa.parseSigCompact(Bitcoin.convert.hexToBytes(res.message.signature));
+                                trezor_dev.signing = false;
+                                d.resolve(device_id().then(function(devid) {
+                                    return txSenderService.call('http://greenaddressit.com/login/authenticate',
+                                            [signature.r.toString(), signature.s.toString(), signature.i.toString()], logout||false,
+                                             random_path_hex, devid).then(function(data) {
+                                        txSenderService.logged_in = data;
+                                        return data;
+                                    });
+                                }));
+                            }, function(err) {
+                                d.reject(err.message);
+                                trezor_dev.signing = false;
+                            });
+                        } else {
+                            var t0 = new Date();
+                            $q.when(hdwallet.derive(path[0])).then(function(result_pk) {
+                                btchip.app.signMessagePrepare_async(path.join('/'), new ByteString(msg, HEX)).then(function(result) {
+                                    btchip.app.signMessageSign_async(new ByteString("00", HEX)).then(function(result) {
+                                        var signature = Bitcoin.ecdsa.parseSig(Bitcoin.convert.hexToBytes(result.toString(HEX)));
+                                        var i = Bitcoin.ecdsa.calcPubKeyRecoveryParam(
+                                            result_pk.pub.pub, signature.r, signature.s, Bitcoin.Message.magicHash(msg_plain));
+                                        d.resolve(device_id().then(function(devid) {
+                                            return txSenderService.call('http://greenaddressit.com/login/authenticate',
+                                                    [signature.r.toString(), signature.s.toString(), i.toString()], logout||false,
+                                                     'GA', devid).then(function(data) {
+                                                txSenderService.logged_in = data;
+                                                return data;
+                                            });
+                                        }));
+                                    });
                                 });
-                            }));
-                        }, function(err) {
-                            d.reject(err.message);
-                            trezor_dev.signing = false;
-                        });
+                            });
+                        }
                     });
                 });
             }   
@@ -1085,6 +1160,9 @@ angular.module('greenWalletServices', [])
     txSenderService.logout = function() {
         if (session) {
             session.close();
+        }
+        if (txSenderService.btchip) {
+            txSenderService.btchip.dongle.disconnect_async();
         }
         disconnected = true;
         txSenderService.logged_in = false;
@@ -1797,6 +1875,240 @@ angular.module('greenWalletServices', [])
                 }, 1000);
             });
             return deferred.promise;
+        }
+    }
+}]).factory('btchip', ['$q', '$interval', '$modal', '$rootScope', 'mnemonics', 'notices', 'focus',
+        function($q, $interval, $modal, $rootScope, mnemonics, notices, focus) {
+    var cardFactory;
+    if (window.ChromeapiPlugupCardTerminalFactory) {
+        cardFactory = new ChromeapiPlugupCardTerminalFactory();
+    }
+
+    return {
+        _setupWrappers: function(btchip) {
+            // wrap some functions to allow using them even after disconnecting the dongle
+            // (prompting user to reconnect and enter pin)
+            var service = this;
+            var WRAP_FUNCS = [
+                'gaStartUntrustedHashTransactionInput_async'
+            ];
+            for (var i = 0; i < WRAP_FUNCS.length; i++) {
+                var func_name = WRAP_FUNCS[i];
+                btchip[func_name] = function() {
+                    var origArguments = arguments;
+                    return btchip.app[func_name].apply(btchip.app, arguments).then(function(data) {
+                        return data;
+                    }).fail(function(error) {
+                        if (!error || !error.indexOf) {
+                            return service.getDevice().then(function(btchip_) {
+                                btchip.app = btchip_.app;
+                                btchip.dongle = btchip_.dongle;
+                                return btchip[func_name].apply(btchip, origArguments);
+                            });
+                        } else {
+                            if (error.indexOf("6982") >= 0) {
+                                // setMsg("Dongle is locked - enter the PIN");
+                                return service.promptPin('', function(err, pin) {
+                                    if (!pin) return;
+                                    return btchip.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
+                                        return btchip[func_name].apply(btchip, origArguments);
+                                    }).fail(function(error) {
+                                        btchip.dongle.disconnect_async();
+                                        if (error.indexOf("6982") >= 0) {
+                                            notices.makeNotice("error", gettext("Invalid PIN"));
+                                        } else if (error.indexOf("6985") >= 0) {
+                                            notices.makeNotice("error", gettext("Dongle is not set up"));
+                                        } else if (error.indexOf("6faa") >= 0) {
+                                            notices.makeNotice("error", gettext("Dongle is locked - reconnect the dongle and retry"));
+                                        } else {
+                                            notices.makeNotice("error", error);
+                                        }
+                                    });;
+                                });
+                            } else if (error.indexOf("6985") >= 0) {
+                                notices.makeMessage('error', gettext("Dongle is not set up"));
+                            } else if (error.indexOf("6faa") >= 0) {
+                                notices.makeMessage('error', gettext("Dongle is locked - remove the dongle and retry"));
+                            }
+                        }
+                    });
+                }
+            }
+            return btchip;
+        },
+        promptPin: function(type, callback) {
+            var scope, modal;
+
+            scope = angular.extend($rootScope.$new(), {
+                pin: '',
+                type: type
+            });
+
+            modal = $modal.open({
+                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_pin.html',
+                size: 'sm',
+                windowClass: 'pinmodal',
+                backdrop: 'static',
+                keyboard: false,
+                scope: scope
+            });
+
+            focus('btchipPinModal');
+
+            return modal.result.then(
+                function (res) { return callback(null, res); },
+                function (err) { callback(err); }
+            );
+        },
+        getDevice: function(noModal) {
+            var service = this;
+            var deferred = $q.defer();
+
+            if (!cardFactory) return deferred.promise;
+            
+            if (!noModal) {
+                var modal = $modal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
+                });
+                modal.result.finally(function() {
+                    $interval.cancel(tick);
+                });
+            };            
+
+            var check = function() {
+                cardFactory.list_async().then(function(result) {
+                    if (result.length) {
+                        cardFactory.getCardTerminal(result[0]).getCard_async().then(function(dongle) {
+                            var app = new BTChip(dongle);
+                            app.getFirmwareVersion_async().then(function(version) {
+                                if (version.firmwareVersion.toString(HEX) < '000104080000') {
+                                    var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
+                                    notices.makeNotice("error", notice);
+                                    return;
+                                }
+                                if (noModal) {
+                                    $interval.cancel(tick);
+                                } else {
+                                    modal.close();  // modal close cancels the tick
+                                }
+                                deferred.resolve(service._setupWrappers({dongle: dongle, app: app}));
+                            });
+                        });
+                    }
+                });
+            }
+            var tick = $interval(check, 1000);
+            check();
+
+            return deferred.promise;
+        },
+        setupSeed: function(mnemonic) {
+            var service = this;
+
+            this.getDevice().then(function(btchip_) {
+                var scope = $rootScope.$new(),
+                    wrong_pin, btchip = btchip_;
+                scope.btchip = {
+                    already_setup: false,
+                    gait_setup: false,
+                    storing: false,
+                    seed_progress: 0,
+                    reset: function() {
+                        this.resetting = true;
+                        this.resets_remaining = 3;
+                        wrong_pin = '00000000000000000000000000000000';
+                        var attempt = function() {
+                            btchip.app.verifyPin_async(new ByteString(wrong_pin, ASCII)).then(function() {
+                                wrong_pin = '1234';
+                                attempt();
+                            }).fail(function(error) {
+                                $rootScope.$apply(function() {
+                                    console.log('reset pin error ' + error);
+                                    if (error.indexOf("6982") >= 0) {
+                                        // setMsg("Dongle is locked - enter the PIN");
+                                        scope.btchip.resets_remaining -= 1;
+                                    } else if (error.indexOf("6985") >= 0) {
+                                        // var setupText = "Dongle is not set up";
+                                        scope.btchip.resets_remaining = 0;
+                                    }
+                                    scope.btchip.replug_required = true;
+                                    if (scope.btchip.resets_remaining) {
+                                        service.getDevice(true).then(function(btchip_) {
+                                            btchip = btchip_;
+                                            scope.btchip.replug_required = false;
+                                            attempt();
+                                        })
+                                    } else {
+                                        service.getDevice(true).then(function(btchip_) {
+                                            btchip = btchip_;
+                                            scope.btchip.replug_required = false;
+                                            scope.btchip.resetting = false;
+                                            scope.btchip.already_setup = false;
+                                        });
+                                    }
+                                });
+                            });
+                        };
+                        attempt();
+                    },
+                    store: function() {
+                        this.storing = true;
+                        service.promptPin('', function(err, pin) {
+                            if (!pin) return;
+                            mnemonics.toSeed(mnemonic).then(function(seed) {
+                                btchip.app.setupNew_async(
+                                    0x01,  // wallet mode
+
+                                    0x02 | // deterministic signatures
+                                    0x08,  // skip second factor if consuming only P2SH inputs in a transaction
+
+                                    Bitcoin.network[cur_net].addressVersion,
+                                    Bitcoin.network[cur_net].p2shVersion,
+                                    new ByteString(pin, ASCII),
+                                    undefined,  // wipePin
+
+                                    // undefined,  // keymapEncoding
+                                    // true,  // restoreSeed
+                                    new ByteString(seed, HEX) // bip32Seed
+                                ).then(function() {
+                                    $rootScope.$apply(function() {
+                                        scope.btchip.storing = false;
+                                        scope.btchip.gait_setup = true;
+                                    });
+                                }).fail(function(error) {
+                                    notices.makeNotice('error', error);
+                                    console.log('setupNew_async error: ' + error);
+                                });
+                            }, null, function(progress) {
+                                scope.btchip.seed_progress = progress;
+                            });
+                        });
+                    }
+                };
+                var do_modal = function() {
+                    $modal.open({
+                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_setup.html',
+                        scope: scope
+                    }).result.finally(function() {
+                        btchip.dongle.disconnect_async();
+                    });
+                }
+                btchip.app.getWalletPublicKey_async("0'/0/0").then(function(result) {
+                    scope.btchip.already_setup = true;
+                    do_modal();
+                }).fail(function(error) {
+                    if (error.indexOf("6982") >= 0) {
+                        // setMsg("Dongle is locked - enter the PIN");
+                        scope.btchip.already_setup = true;
+                    } else if (error.indexOf("6985") >= 0) {
+                        // var setupText = "Dongle is not set up";
+                    } else if (error.indexOf("6faa") >= 0) {
+                        // setMsg("Dongle is locked - remove the dongle and retry");
+                        scope.btchip.already_setup = true;
+                    }    
+                    do_modal();
+                });
+            });
         }
     }
 }]).factory('bip38', ['$q', '$modal', 'mnemonics', 'focus', function($q, $modal, mnemonics, focus) {

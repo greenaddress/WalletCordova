@@ -410,6 +410,11 @@ angular.module('greenWalletSendControllers',
             });
         },
         send_social: function(do_send) {
+            if (!$scope.wallet.hdwallet.priv) {
+                notices.makeNotice('error', gettext('Sorry, vouchers and social transactions are not supported with hardware wallets.'))
+                this.sending = false;
+                return;
+            }
             if (this.voucher) {
                 return this._send_social(do_send);
             }

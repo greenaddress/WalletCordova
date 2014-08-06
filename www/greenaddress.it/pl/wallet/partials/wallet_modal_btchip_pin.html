@@ -1,0 +1,27 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">Please enter BTChip PIN.</p>
+        <hr>
+        <form ng-submit="$close(pin)" name="form" class="form-horizontal">
+            <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                <label for="pinId" class="col-sm-5 control-label">Wprowadź Twój kod PIN</label>
+                <div class="col-sm-4">
+                    <input clickfix focus-on="btchipPinModal" type="tel" mask-input class="form-control pin" required="required"
+                           name="pin" maxlength="32" pattern="[0-9]{4,32}" ng-pattern="/[0-9]{4,32}/"
+                           ng-model="pin" />
+                    <input type="submit" class="hide" submitter />
+                    <div class="help-block"><i class="glyphicon glyphicon-info-sign"></i> PIN must be a 4-to-32-digit number</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Anuluj</button>
+            <button class="btn btn-primary" ng-click="submit_me()">Potwierdź kod PIN</button>
+        </div>
+    </div>
+
+</div>

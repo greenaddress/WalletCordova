@@ -118,10 +118,6 @@ angular.module('greenWalletControllers', [])
     
     var clearwallet = function() {
         $scope.wallet = {
-            show_fiat: false,
-            toggle_balance_title: function() {
-                this.show_fiat = !this.show_fiat;
-            },
             update_balance: function(first) {
                 var that = this;
                 tx_sender.call('http://greenaddressit.com/txs/get_balance').then(function(data) {

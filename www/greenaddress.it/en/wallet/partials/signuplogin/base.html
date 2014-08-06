@@ -6,79 +6,78 @@
                 Haven't got an account yet?
                 <a href="#/create"><strong>Create new Wallet</strong></a>
             </div>
-            <div class="create-modal-body text-center">
+            <div class="create-modal-body">
                 <div ng-include="wallet.signuplogin_header"></div>
                 <hr>
                 <div class="subtitle">Log in for full Wallet access</div>
-                <form submittable class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}">
-                    <div class="control-group" ng-class="{'has-error': state.error && form.$invalid}">
-                        <div class="row">
-                            <div class="col-sm-3 col-sm-offset-1" ng-show="!state.toggleshowpin">
-                                <span class="input-group">
-                                    <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="logging_in" type="tel" mask-input name="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" focus-on="pin" placeholder="PIN number" ng-model="use_pin_data.pin" />
-                                    <span class="input-group-btn">
-                                        <span class="btn btn-default pull-right" ng-class="{disabled: logging_in || payreq_loading}"><i class="glyphicon glyphicon-log-in"></i>
-                                            <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="submit_me()" ng-focus="submit_me()" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading" />
-                                        </span>
+                <form submittable class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}" autocomplete="off">
+                    <div class="form-group" ng-show="!state.toggleshowpin" ng-class="{'has-error': state.error && form.$invalid}">
+                        <label class="col-sm-3 col-sm-offset-2 control-label" for="pin">PIN Number</label>
+                        <div class="col-sm-4">
+                            <span class="input-group">
+                                <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="logging_in" type="tel" mask-input name="pin" id="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" focus-on="pin" placeholder="Enter your PIN" ng-model="use_pin_data.pin" />
+                                <span class="input-group-btn">
+                                    <span class="btn btn-primary pull-right" ng-class="{disabled: logging_in || payreq_loading}"><i class="glyphicon glyphicon-log-in"></i>
+                                        <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="submit_me()" ng-focus="submit_me()" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading" />
                                     </span>
                                 </span>
-                            </div>
-                            <div class="col-sm-7" ng-show="state.toggleshowpin">
-                                <span class="input-group">
-                                    <input class="form-control noanimate" ng-show="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Mnemonic passphrase" ng-class="{'has-error': state.mnemonic_error}" />
-                                    <input tabindex="3" type="password" ng-show="!state.toggleshowpassword" class="form-control noanimate" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" focus-on="mnemonic" placeholder="Mnemonic passphrase" ng-class="{'has-error': state.mnemonic_error}" />
-                                    <span class="input-group-btn">
-                                        <span class="btn btn-default" ng-class="{disabled: logging_in || payreq_loading}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
-                                            Scan QR
-                                            <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)"/>
-                                        </span>
-                                        <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="stop_scanning_qr_code()">Cancel</a>
-                                    </span>
-                                </span>
-                                
-                                <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Invalid mnemonic: (( state.mnemonic_error ))</span>
-                            </div>
-                            <button type="submit" tabindex="4" ng-disabled="(is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading) && state.mnemonic"
-                                    class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
-                                    href="#" id="restore-wallet-continue" ng-show="state.toggleshowpin" ng-focus="submit_me()">
-                                <span ng-hide="state.seed_progress || state.login_error">Login to your Wallet</span>
-                                <span ng-show="state.seed_progress && !state.login_error">Processing ... (( state.seed_progress ))%</span>
-                                <span ng-show="state.login_error">Error, try again</span>
-                            </button>
-                            <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
-                            <label class="switch" ng-show="state.toggleshowpin" >
-                              <input type="checkbox" class="switch" ng-model="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading"/>
-                              <span class="switch"></span>
-                                <span ng-show="!state.toggleshowpassword">
-                                Show mnemonics
-                                </span>
-                                <span ng-show="state.toggleshowpassword">
-                                Hide mnemonics
-                                </span>
-                            </label>
-                            <hr ng-show="state.toggleshowpin">
-                            <label class="switch" ng-show="state.has_pin">
-                              <input type="checkbox" class="switch" ng-model="state.toggleshowpin" ng-disabled="is_loading || logging_in || payreq_loading" />
-                              <span class="switch"></span>
-                                <span ng-show="state.toggleshowpin">
-                                PIN login
-                                </span>
-                                <span ng-show="!state.toggleshowpin">
-                                Other login
-                                </span>
-                            </label>
+                            </span>
                         </div>
                     </div>
-                    <div ng-show="!wallet.send_to_receiving_id && !has_payreq && state.toggleshowpin && !(state.seed_progress && !state.login_error)">
+                    <div class="form-group" ng-show="state.toggleshowpin">
+                        <label class="col-md-2 col-md-offset-1 control-label" for="pin">Mnemonic</label>
+                        <div class="col-md-8" >
+                            <span class="input-group">
+                                <input class="form-control noanimate" ng-show="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Enter your Mnemonic passphrase" ng-class="{'has-error': state.mnemonic_error}" />
+                                <input tabindex="3" type="password" ng-show="!state.toggleshowpassword" class="form-control noanimate" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" focus-on="mnemonic" placeholder="Enter your Mnemonic passphrase" ng-class="{'has-error': state.mnemonic_error}" />
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default" ng-class="{disabled: logging_in || payreq_loading}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
+                                        Scan QR
+                                        <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)"/>
+                                    </span>
+                                    <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="stop_scanning_qr_code()">Cancel</a>
+                                    <button type="submit" tabindex="4" ng-disabled="(is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading)"
+                                            class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}"
+                                            href="#" id="restore-wallet-continue" ng-show="state.toggleshowpin" ng-focus="submit_me()">
+                                        <span ng-hide="state.seed_progress || state.login_error"><i class="glyphicon glyphicon-log-in"></i></span>
+                                        <span ng-show="state.seed_progress && !state.login_error">(( state.seed_progress ))%</span>
+                                        <span ng-show="state.login_error"><i class="glyphicon glyphicon-warning-sign"></i></span>
+                                    </button>
+                                </span>
+                            </span>
+                            <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
+                            
+                            <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Invalid mnemonic: (( state.mnemonic_error ))</span>
+                            <span class="help-block">
+                                <label class="switch" ng-show="state.toggleshowpin" >
+                                  <input type="checkbox" class="switch" ng-model="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading"/>
+                                  <span class="switch"></span>
+                                    Show mnemonics
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="text-center" ng-show="!wallet.send_to_receiving_id && !has_payreq && state.toggleshowpin && !(state.seed_progress && !state.login_error)">
                         <hr>
                         <div class="subtitle">Log in to Watch-Only mode</div>
                         
                         <a href="" ng-click="login_with_facebook()" class="btn btn-facebook"><i class="icon-facebook"></i> Facebook</a>
                         
                         
-                        <a href="" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Custom Login</a>
+                        <a href="" ng-class="{disabled: logging_in}" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Custom Login</a>
                     </div>
+                    
                 </form>
+            </div>
+            <div class="create-modal-footer" ng-show="state.has_pin">
+                <label class="switch">
+                  <input type="checkbox" class="switch" ng-model="state.toggleshowpin" ng-disabled="is_loading || logging_in || payreq_loading" />
+                  <span class="switch"></span>
+                    <span>
+                    Show other logins
+                    </span>
+                </label>
             </div>
         </div>
     </div>

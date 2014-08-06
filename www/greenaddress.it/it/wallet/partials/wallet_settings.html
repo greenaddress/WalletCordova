@@ -421,8 +421,8 @@
     </form>
   </div>
 </div>
-<hr class="double">
-<div class="row">
+<div class="row" ng-show="wallet.hdwallet.priv">
+  <hr class="double">
   <div class="col-md-3">
       <div class="sub-header">Mnemonica</div>
     <div class="sub-header-desc">Mostra la tua passphrase per recuperare o clonare il wallet su un altro dispositivo.</div>
@@ -433,6 +433,7 @@
     
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Write encrypted to NFC tag</button>
+    
     
   </div>
 </div>

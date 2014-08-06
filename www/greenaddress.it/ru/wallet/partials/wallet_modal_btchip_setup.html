@@ -1,0 +1,21 @@
+<div class="modal-body text-center">
+	<div ng-show="btchip.already_setup">
+    	<p>Your BTChip is already set up. To use it with GreenAddress, you need to reset it. Do you want to reset your BTChip? This will be performed by entering wrong PIN 3 times in a row. <strong>You will lose your keys currently stored on the device.</strong></p>
+    	<button ng-hide="btchip.resetting" type="button" class="btn btn-danger" ng-click="btchip.reset()">Reset my BTChip</button>
+    	<button ng-show="btchip.resetting" type="button" disabled="disabled" class="btn btn-danger" ng-click="btchip.reset()">Resetting...
+    	<span ng-show="btchip.replug_required">Please unplug and plug your device in again (<span>(( btchip.resets_remaining )) wrong PINs remaining</span>)</span></button>
+    </div>
+	<div ng-show="!btchip.already_setup && !btchip.gait_setup">
+    	<p>Empty BTChip detected successfully. Click the button below to store your seed on it.</p>
+    	<button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.storing">Save to BTChip</button>
+        <span class="btn btn-success disabled" ng-show="btchip.storing">
+           	Генерирование ключей вашего кошелька, пожалуйста подождите ... (( btchip.seed_progress ))%
+        </span>
+    </div>
+	<div ng-show="btchip.gait_setup">
+    	<p>BTChip setup successful!</p>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" ng-click="$dismiss()">Закрыть</button>
+</div>

@@ -168,13 +168,25 @@ Bitcoin.HDWallet.prototype.subpath = function(path_hex) {
 Bitcoin.HDWallet.prototype.subpath_for_login = function(path_hex) {
     // derive private key for signing the challenge, using 8 bytes instead of 64
     var key = $q.when(this);
-    var path_bytes = Bitcoin.convert.hexToBytes(path_hex);
-    for (var i = 0; i < 4; i++) {
-        key = key.then(function(key) {
-            var dk = key.derive(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)));
-            path_bytes.shift(); path_bytes.shift();
-            return dk;
-        });
+    if (path_hex.length == 17 && path_hex[0] == '0') {  // new version with leading 0
+        path_hex = path_hex.slice(1);
+        var path_bytes = Bitcoin.convert.hexToBytes(path_hex);
+        for (var i = 0; i < 2; i++) {
+            key = key.then(function(key) {
+                var dk = key.derive(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 4)));
+                path_bytes.shift(); path_bytes.shift(); path_bytes.shift(); path_bytes.shift();
+                return dk;
+            });
+        }
+    } else {
+        var path_bytes = Bitcoin.convert.hexToBytes(path_hex);
+        for (var i = 0; i < 4; i++) {
+            key = key.then(function(key) {
+                var dk = key.derive(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)));
+                path_bytes.shift(); path_bytes.shift();
+                return dk;
+            });
+        }
     }
     return key;
 }
@@ -723,3 +735,45 @@ Bitcoin.BIP38 = (function () {
   return BIP38;
 
 })();
+
+Bitcoin.Transaction.prototype.cloneTransactionForSignature =
+  function (connectedScript, inIndex, hashType)
+{
+  var txTmp = this.clone()
+
+  // In case concatenating two scripts ends up with two codeseparators,
+  // or an extra one at the end, this prevents all those possible
+  // incompatibilities.
+  /*scriptCode = scriptCode.filter(function (val) {
+    return val !== OP_CODESEPARATOR
+    });*/
+
+  // Blank out other inputs' signatures
+  txTmp.ins.forEach(function(txin) {
+    txin.script = new Bitcoin.Script()
+  })
+
+  txTmp.ins[inIndex].script = connectedScript
+
+  // Blank out some of the outputs
+  /*if ((hashType & 0x1f) == SIGHASH_NONE) {
+    txTmp.outs = []
+
+    // Let the others update at will
+    txTmp.ins.forEach(function(txin, i) {
+      if (i != inIndex) {
+        txTmp.ins[i].sequence = 0
+      }
+    })
+
+  } else if ((hashType & 0x1f) == SIGHASH_SINGLE) {
+    // TODO: Implement
+  }
+
+  // Blank out other inputs completely, not recommended for open transactions
+  if (hashType & SIGHASH_ANYONECANPAY) {
+    txTmp.ins = [txTmp.ins[inIndex]]
+  }*/
+
+  return txTmp
+}

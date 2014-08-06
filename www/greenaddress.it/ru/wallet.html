@@ -88,6 +88,7 @@
   <script src="../static/js/nfc.min.js"></script>
 
 
+
     <script type="text/javascript">
       BASE_URL = '..';
       LANG = 'ru';</script>
@@ -114,9 +115,6 @@
 </script>
 
 <div ng-controller="WalletController" id="content_container">
-  <div ng-show="(wallet.hdwallet.pub || wallet.trezor_dev) && !wallet.hidden && is_loading" ng-cloak>
-    
-  </div>
   <div ng-repeat="notice in notices" class="notice notice-((notice.type))" ng-cloak>
     <i class="glyphicon glyphicon-exclamation-sign" ng-show="notice.type == 'error'"></i>
     <i class="glyphicon glyphicon-ok-sign" ng-show="notice.type == 'success'"></i>
@@ -127,34 +125,31 @@
     <i class="menu-mobile-toggle menu-mobile-toggle-open glyphicon glyphicon-align-justify" toggle-class="visible" ng-click="toggle_set(true)"></i>
     <i class="menu-mobile-toggle menu-mobile-toggle-close glyphicon glyphicon-remove" toggle-class="visible" ng-click="toggle_set(false)"></i>
     <small>(( subpage_title ))</small>
-    <small ng-click="wallet.toggle_balance_title()" ng-show="!wallet.show_fiat && wallet.final_balance" ng-cloak> <a href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a>
-    </small>
-    <small ng-show="wallet.show_fiat && wallet.fiat_value" ng-click="wallet.toggle_balance_title()" ng-cloak>
-     <a href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2))</a> ((wallet.fiat_currency))
-    </small> 
-
+  </div>
+  <div class="menu-mobile-bottom" toggle-class="visible">
+    <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a> 
   </div>
   <div class="container" toggle-class="visible">
-  <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
-  <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">WARNING:</span>
-    You have not verified that you have backed up your mnemonic.
-    <a href="" ng-click="verify_mnemonic()">Please verify now by clicking here.</a>
-  </p>
-  <div class="ng-view"></div></div>
+    <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
+    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">WARNING</span>
+      You have not verified that you have backed up your mnemonic.
+      <a href="" ng-click="verify_mnemonic()">Please verify now by clicking here.</a>
+    </p>
+    <div class="ng-view"></div>
+  </div>
   <div class="menu" toggle-class="visible">
   <ul>
     <li class="menu-header"><img src="../static/img/logos/logo-greenaddress-white.png" alt="GreenAddress" /> GreenAddress</li>
     <li path="/info"><a href="#/info">Транзакции</a></li>
-    <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev" path="/send"><a href="#/send">Послать денежные средства</a></li>
+    <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">Послать денежные средства</a></li>
     <li path="/receive"><a href="#/receive">Получить денежные средства</a></li>
     <li path="/address-book"><a href="#/address-book">Aдресная книга</a></li>
-    <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev" path="/settings" class="menu-settings"><a href="#/settings">Настройки</a></li>
+    <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">Настройки</a></li>
     <li><a href="" ng-click="update_now()" ng-show="update_available">Обновит сейчас</a></li>
     <li><a href="" ng-click="logout()">Выход</a></li>
-    <li class="menu-balance visible-xs"><i class="glyphicon glyphicon-stats"></i> ((wallet.final_balance|format_btc:wallet.unit)) <br><i class="glyphicon glyphicon-stats"></i> ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</li>
-    <li class="menu-balance visible-sm"><i class="glyphicon glyphicon-stats"></i> ((wallet.final_balance|format_btc:wallet.unit)) <br><i class="glyphicon glyphicon-stats"></i> ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</li>
   </ul>
   <div class="menu-footer">
+    
     
     <div ng-show="wallet.last_login">
       Последний вход:

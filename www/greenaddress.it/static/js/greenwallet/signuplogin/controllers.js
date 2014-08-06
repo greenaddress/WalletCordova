@@ -1,6 +1,6 @@
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38',
-        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38) {
+.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip',
+        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip) {
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -33,7 +33,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     $scope.$apply(function() {
                         use_pin_data.pin = data;
                         $scope.logging_in = true;
-                        $scope.use_pin();
+                        $scope.use_pin().finally(function() {
+                            $scope.logging_in = false;
+                        });
                     });
                 }, function(fail) {
                     state.toggleshowpin = true;
@@ -239,24 +241,43 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         });
     };
 
-    $scope.login_with_custom = function() {
-        gaEvent('Login', 'CustomLogin');
-        $scope.got_username_password = function(username, password) {
-            wallets.loginWatchOnly($scope, 'custom', {username: username, password: password}).then(function() {
-                gaEvent('Login', 'CustomLoginSucceeded');
-                modal.close();
-            }).catch(function(e) {
-                gaEvent('Login', 'CustomLoginFailed', e.desc);
-                notices.makeNotice('error', e.desc);
+    $scope.login_with_hw = function() {
+        gaEvent('Login', 'HardwareLogin');
+        btchip.getDevice().then(function(btchip_dev) {
+            btchip.promptPin('', function(err, pin) {
+                if (!pin) return;
+                btchip_dev.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
+                    $scope.logging_in = true;
+                    btchip_dev.app.getWalletPublicKey_async('').then(function(result) {
+                        wallets.login_btchip($scope, btchip_dev, result).finally(function() {
+                            $scope.logging_in = false;
+                        });
+                    }).fail(function(error) {
+                        $scope.logging_in = false;
+                        btchip_dev.dongle.disconnect_async();
+                        notices.makeNotice("error", error);
+                    });
+                }).fail(function(error) {
+                    btchip_dev.dongle.disconnect_async();
+                    if (error.indexOf("6982") >= 0) {
+                        notices.makeNotice("error", gettext("Invalid PIN"));
+                    } else if (error.indexOf("6985") >= 0) {
+                        notices.makeNotice("error", gettext("Dongle is not set up"));
+                    } else if (error.indexOf("6faa") >= 0) {
+                        notices.makeNotice("error", gettext("Dongle is locked - reconnect the dongle and retry"));
+                    } else {
+                        notices.makeNotice("error", error);
+                    }
+                });
             });
-        };
-        var modal = $modal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_custom_login.html',
-            scope: $scope
         });
-        
     };
-    
+
+    btchip.getDevice(true).then(function(btchip) {
+        btchip.dongle.disconnect_async();
+        state.hw_detected = true;
+    });
+
     $scope.read_qr_code = function read_qr_code($event) {
         gaEvent('Login', 'QrScanClicked');
         qrcode.scan($scope, $event, '_login').then(function(text) {

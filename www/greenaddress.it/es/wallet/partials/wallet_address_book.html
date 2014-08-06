@@ -6,7 +6,7 @@
   </div>
 </div>
 <div ng-controller="AddressBookController">
-<div class="row" ng-show="wallet.hdwallet.priv || wallet.trezor_dev">
+<div class="row" ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip">
   <div class="col-md-12">
     <div class="header-options">
       <a href="" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i> Agregar nueva entrada</a>
@@ -20,7 +20,7 @@
 				<th></th>
 				<th><a href="">Nombre</a></th>
 				<th><a href="">Dirección</a></th>
-				<th ng-show="wallet.hdwallet.priv || wallet.trezor_dev"></th>
+				<th ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip"></th>
 			</thead>
 	  
 			<tbody>

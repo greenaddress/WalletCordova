@@ -304,8 +304,8 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
-}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$modal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics',
-        function SettingsController($scope, $q, wallets, tx_sender, notices, $modal, gaEvent, storage, $location, $timeout, bip38, mnemonics) {
+}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$modal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics', 'btchip',
+        function SettingsController($scope, $q, wallets, tx_sender, notices, $modal, gaEvent, storage, $location, $timeout, bip38, mnemonics, btchip) {
     if (!wallets.requireWallet($scope)) return;
     var exchanges = $scope.exchanges = {
         BITSTAMP: 'Bitstamp',   
@@ -365,6 +365,9 @@ angular.module('greenWalletSettingsControllers',
                     });
                 });
             });
+        },
+        usbmodal: function() {
+            btchip.setupSeed($scope.wallet.mnemonic);
         },
         expiring_soon_modal: function() {
             gaEvent('Wallet', 'ExpiringSoonModal');

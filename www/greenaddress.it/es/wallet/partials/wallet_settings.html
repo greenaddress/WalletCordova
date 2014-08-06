@@ -421,8 +421,8 @@
     </form>
   </div>
 </div>
-<hr class="double">
-<div class="row">
+<div class="row" ng-show="wallet.hdwallet.priv">
+  <hr class="double">
   <div class="col-md-3">
       <div class="sub-header">Ver indicio de clave</div>
     <div class="sub-header-desc">Mostrar tu indicio de clave para recuperación de la cuenta o clonarla en otro dispositivo.</div>
@@ -433,6 +433,7 @@
     
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Escribir a etiqueta NFC</button>
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Write encrypted to NFC tag</button>
+    
     
   </div>
 </div>
