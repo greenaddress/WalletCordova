@@ -410,13 +410,14 @@ angular.module('greenWalletSendControllers',
             });
         },
         send_social: function(do_send) {
-            if (!$scope.wallet.hdwallet.priv) {
+            var fail_hardware = function() {
                 notices.makeNotice('error', gettext('Sorry, vouchers and social transactions are not supported with hardware wallets.'))
                 this.sending = false;
                 return;
             }
             if (this.voucher) {
-                return this._send_social(do_send);
+                if (!$scope.wallet.hdwallet.priv) return fail_hardware();
+                else return this._send_social(do_send);
             }
             var that = this;
             var name = this.recipient.address;
@@ -429,6 +430,7 @@ angular.module('greenWalletSendControllers',
                     var satoshis = that.amount_to_satoshis(that.amount);
                     that._send_social_ga(satoshis);
                 } else {
+                    if (!$scope.wallet.hdwallet.priv) return fail_hardware();
                     that._send_social(do_send);
                 }
             }, function(error) {

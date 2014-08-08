@@ -598,9 +598,9 @@ angular.module('greenWalletServices', [])
                             return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function(finished) {
                                 return $scope.wallet.btchip.app.signTransaction_async(path.join('/')).then(function(sig) {
                                     sign_deferred.resolve(sig.toString(HEX));
-                                });
-                            })
-                        });
+                                }, sign_deferred.reject);
+                            }, sign_deferred.reject)
+                        }, sign_deferred.reject);
                     }
 
                     if (!device_deferred) {
@@ -1895,23 +1895,33 @@ angular.module('greenWalletServices', [])
             for (var i = 0; i < WRAP_FUNCS.length; i++) {
                 var func_name = WRAP_FUNCS[i];
                 btchip[func_name] = function() {
+                    var deferred = $q.defer();
                     var origArguments = arguments;
-                    return btchip.app[func_name].apply(btchip.app, arguments).then(function(data) {
-                        return data;
-                    }).fail(function(error) {
+                    try {
+                        var d = btchip.app[func_name].apply(btchip.app, arguments)
+                    } catch (e) {
+                        // handle `throw "Connection is not open"` gracefully - getDevice() below
+                        var d = $q.reject();
+                    }
+                    d.then(function(data) {
+                        deferred.resolve(data);
+                    }, function(error) {
                         if (!error || !error.indexOf) {
-                            return service.getDevice().then(function(btchip_) {
+                            service.getDevice().then(function(btchip_) {
                                 btchip.app = btchip_.app;
                                 btchip.dongle = btchip_.dongle;
-                                return btchip[func_name].apply(btchip, origArguments);
+                                deferred.resolve(btchip[func_name].apply(btchip, origArguments));
                             });
                         } else {
                             if (error.indexOf("6982") >= 0) {
                                 // setMsg("Dongle is locked - enter the PIN");
                                 return service.promptPin('', function(err, pin) {
-                                    if (!pin) return;
-                                    return btchip.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
-                                        return btchip[func_name].apply(btchip, origArguments);
+                                    if (!pin) {
+                                        deferred.reject();
+                                        return;
+                                    }
+                                    btchip.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
+                                        deferred.resolve(btchip[func_name].apply(btchip, origArguments));
                                     }).fail(function(error) {
                                         btchip.dongle.disconnect_async();
                                         if (error.indexOf("6982") >= 0) {
@@ -1923,15 +1933,19 @@ angular.module('greenWalletServices', [])
                                         } else {
                                             notices.makeNotice("error", error);
                                         }
-                                    });;
+                                        deferred.reject();
+                                    });
                                 });
                             } else if (error.indexOf("6985") >= 0) {
                                 notices.makeMessage('error', gettext("Dongle is not set up"));
+                                deferred.reject();
                             } else if (error.indexOf("6faa") >= 0) {
                                 notices.makeMessage('error', gettext("Dongle is locked - remove the dongle and retry"));
+                                deferred.reject();
                             }
                         }
                     });
+                    return deferred.promise;
                 }
             }
             return btchip;
@@ -2003,6 +2017,7 @@ angular.module('greenWalletServices', [])
             return deferred.promise;
         },
         setupSeed: function(mnemonic) {
+            var deferred = $q.defer();
             var service = this;
 
             this.getDevice().then(function(btchip_) {
@@ -2074,6 +2089,7 @@ angular.module('greenWalletServices', [])
                                     $rootScope.$apply(function() {
                                         scope.btchip.storing = false;
                                         scope.btchip.gait_setup = true;
+                                        deferred.resolve();
                                     });
                                 }).fail(function(error) {
                                     notices.makeNotice('error', error);
@@ -2109,6 +2125,8 @@ angular.module('greenWalletServices', [])
                     do_modal();
                 });
             });
+            
+            return deferred.promise;
         }
     }
 }]).factory('bip38', ['$q', '$modal', 'mnemonics', 'focus', function($q, $modal, mnemonics, focus) {

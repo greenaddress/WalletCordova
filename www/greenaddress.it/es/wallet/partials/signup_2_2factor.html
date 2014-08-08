@@ -26,10 +26,10 @@
                 <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
                     Por favor espere, iniciando sesión...
                 </span>
-                <a ng-hide="signup.noLocalStorage" href="#/signup_pin#content_container" class="noanimate btn btn-primary btn-block-xs pull-right" ng-class="{disabled:signup.twofac_in_progress || signup.seed_progress < 100 || !signup.logged_in || signup.login_failed || !wallet.twofac.any}">
+                <a ng-hide="signup.noLocalStorage || signup.has_btchip" href="#/signup_pin#content_container" class="noanimate btn btn-primary btn-block-xs pull-right" ng-class="{disabled:signup.twofac_in_progress || signup.seed_progress < 100 || !signup.logged_in || signup.login_failed || !wallet.twofac.any}">
                     Continuar!
                 </a>
-                <a ng-show="signup.noLocalStorage" href="#/signup_oauth#content_container" class="noanimate btn btn-primary btn-block-xs pull-right" ng-class="{disabled:signup.twofac_in_progress || signup.seed_progress < 100 || !signup.logged_in || signup.login_failed || !wallet.twofac.any}">
+                <a ng-show="signup.noLocalStorage || signup.has_btchip" href="#/signup_oauth#content_container" class="noanimate btn btn-primary btn-block-xs pull-right" ng-class="{disabled:signup.twofac_in_progress || signup.seed_progress < 100 || !signup.logged_in || signup.login_failed || !wallet.twofac.any}">
                     Continuar!
                 </a>
             </div>

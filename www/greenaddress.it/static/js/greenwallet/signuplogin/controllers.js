@@ -1,6 +1,6 @@
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip',
-        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip) {
+.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval',
+        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval) {
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -241,12 +241,39 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         });
     };
 
+
+    $scope.login_with_custom = function() {
+        gaEvent('Login', 'CustomLogin');
+        $scope.got_username_password = function(username, password) {
+            wallets.loginWatchOnly($scope, 'custom', {username: username, password: password}).then(function() {
+                gaEvent('Login', 'CustomLoginSucceeded');
+                modal.close();
+            }).catch(function(e) {
+                gaEvent('Login', 'CustomLoginFailed', e.desc);
+                notices.makeNotice('error', e.desc);
+            });
+        };
+        var modal = $modal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_custom_login.html',
+            scope: $scope
+        });
+    };
+
     $scope.login_with_hw = function() {
         gaEvent('Login', 'HardwareLogin');
         btchip.getDevice().then(function(btchip_dev) {
             btchip.promptPin('', function(err, pin) {
                 if (!pin) return;
                 btchip_dev.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
+                    var expected_signing_ms = 6000, elapsed_signing_ms = 0;
+                    $scope.hardware_progress = 1;
+                    var countdown = $interval(function() {
+                        elapsed_signing_ms += 100;
+                        $scope.hardware_progress = Math.max(1, Math.round(100*elapsed_signing_ms/expected_signing_ms));
+                        if ($scope.hardware_progress >= 100) {
+                            $interval.cancel(countdown);
+                        }
+                    }, 100);
                     $scope.logging_in = true;
                     btchip_dev.app.getWalletPublicKey_async('').then(function(result) {
                         wallets.login_btchip($scope, btchip_dev, result).finally(function() {
