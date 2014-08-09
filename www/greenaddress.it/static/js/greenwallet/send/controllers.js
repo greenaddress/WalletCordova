@@ -52,9 +52,16 @@ angular.module('greenWalletSendControllers',
         // calculate the inputs value
         var in_value_promises = [];
         var in_value = Bitcoin.BigInteger.valueOf(0);
+        var verified_n = 0;
         for (var i = 0; i < tx.ins.length; i++) {
             var outpoint = tx.ins[i].outpoint;
-            in_value_promises.push($scope.wallet.get_tx_output_value(outpoint.hash, outpoint.index, no_electrum));
+            in_value_promises.push(
+                $scope.wallet.get_tx_output_value(outpoint.hash, outpoint.index, no_electrum).then(function(r) {
+                    verified_n += 1;
+                    $scope.send_tx.verifying_percentage = Math.round(100 * verified_n / tx.ins.length);
+                    return r;
+                })
+            );
         }
         return $q.all(in_value_promises).then(function(values) {
             for (var i = 0; i < values.length; ++i) {
@@ -151,7 +158,12 @@ angular.module('greenWalletSendControllers',
         if (tx_sender.electrum) {
             var d = $q.defer();
             tx_sender.electrum.checkConnectionsAvailable().then(function() {
-                d.resolve(verify(false));
+                $scope.send_tx.verifying = true;
+                $scope.send_tx.verifying_percentage = 0;
+                d.resolve(verify(false).then(function(r) {
+                    $scope.send_tx.verifying = false;
+                    return r;
+                }));
             }, function() {
                 $modal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_no_electrum.html',
@@ -175,6 +187,9 @@ angular.module('greenWalletSendControllers',
         return JSON.parse(json);
     };
     $scope.send_tx = {
+        _signing_progress_cb: function(progress) {
+            this.signing_percentage = Math.max(this.signing_percentage, progress);
+        },
         add_fee: 'sender',  // used to be changeable from wallet_send.html, removed for now
         instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
         recipient: $routeParams.contact ? parseContact($routeParams.contact) : null,
@@ -195,6 +210,7 @@ angular.module('greenWalletSendControllers',
             qrcode.stop_scanning($scope);
         },
         do_send_fb: function(that, enckey, satoshis, key, pointer) {
+            var that = this;
             $scope.send_fb_via_fb = function() {
                 $scope.send_fb_via_fb_clicked = true;
                 $rootScope.is_loading += 1;
@@ -229,7 +245,8 @@ angular.module('greenWalletSendControllers',
                             {branch: branches.EXTERNAL, pointer: pointer,
                              script: data.prevout_scripts[i]})
                     }
-                    wallets.sign_and_send_tx(undefined, data, true, null, gettext('Transaction reversed!')).finally(function() {
+                    that.signing = true;
+                    wallets.sign_and_send_tx(undefined, data, true, null, gettext('Transaction reversed!'), that._signing_progress_cb.bind(that)).finally(function() {
                         $rootScope.is_loading -= 1;
                         $location.url('/info/');
                     });  // priv_der=true
@@ -289,7 +306,8 @@ angular.module('greenWalletSendControllers',
             if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee,
                            priv_data).then(function(data) {
-                wallets.sign_and_send_tx($scope, data).then(function() {
+                that.signing = true;
+                wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
                     if ($scope.wallet.send_from) $scope.wallet.send_from = null;
                     $location.url('/info/');
                 }).finally(function() { that.sending = false; });
@@ -342,18 +360,18 @@ angular.module('greenWalletSendControllers',
                         priv_data.encrypted_key_hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(b58));
                     }
                     tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
-                        verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).then(function() {
-                            wallets.sign_and_send_tx($scope, data, false, undefined, false).then(function() {
-                                do_send(that, b58, satoshis, key, pointer);
-                            }, function(error) { 
-                                $rootScope.is_loading -= 1;
-                            }).finally(function() { that.sending = false; });
-                        }, function(error) {
+                        var d_verify = verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).catch(function(error) {
                             $rootScope.is_loading -= 1;
                             that.sending = false;
                             sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
                             notices.makeNotice('error', gettext('Transaction verification failed: ' + error + '. Please contact support.'))
-                        })
+                        });
+                        that.signing = true;
+                        wallets.sign_and_send_tx($scope, data, false, undefined, false, that._signing_progress_cb.bind(that), d_verify).then(function() {
+                            do_send(that, b58, satoshis, key, pointer);
+                        }, function(error) { 
+                            $rootScope.is_loading -= 1;
+                        }).finally(function() { that.sending = false; });
                     }, function(error) {
                         $rootScope.is_loading -= 1;
                         that.sending = false;
@@ -382,16 +400,19 @@ angular.module('greenWalletSendControllers',
             $rootScope.is_loading += 1;
             var priv_data = {instant: that.instant};
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee, priv_data).then(function(data) {
-                return verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).then(function() {
-                    return wallets.sign_and_send_tx($scope, data).then(function() {
-                        $location.url('/info/');
-                    });
-                }, function(error) {
+                var d_verify = verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).catch(function(error) {
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
                     notices.makeNotice('error', gettext('Transaction verification failed: ' + error + '. Please contact support.'))
+                    return $q.reject();
+                });
+                that.signing = true;
+                return wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that), d_verify).then(function() {
+                    $location.url('/info/');
                 });
             }, function(error) {
-                notices.makeNotice('error', error.desc);
+                if (error && error.desc) {
+                    notices.makeNotice('error', error.desc);
+                }
             }).finally(function() { $rootScope.is_loading -= 1; that.sending = false; });;
         },
         send_to_reddit: function() {
@@ -441,9 +462,9 @@ angular.module('greenWalletSendControllers',
         send_to_payreq: function() {
             var that = this;
             var satoshis = that.amount_to_satoshis(that.amount);
-            that.sending = true;
             tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, that.recipient.data).then(function(data) {
-                return wallets.sign_and_send_tx($scope, data).then(function() {
+                that.signing = true;
+                return wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
                     $location.url('/info/');
                 });
             }, function(error) {
@@ -464,7 +485,9 @@ angular.module('greenWalletSendControllers',
                 notices.makeNotice('error', gettext('Please provide a recipient'));
                 return;   
             }
+            this.signing = false;
             this.sending = true;
+            this.signing_percentage = 0;
             if (this.recipient.type == 'facebook') {
                 gaEvent('Wallet', 'SendToFacebook');
                 this.send_social(this.do_send_fb);

@@ -108,7 +108,10 @@
       </div>
       <hr class="double">
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i> 
-        <span ng-hide="send_tx.voucher">Invia denaro</span>
+        <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Invia denaro</span>
+        <span ng-show="!send_tx.voucher && send_tx.sending && send_tx.signing">
+          <span ng-show="send_tx.verifying">Verifying ((send_tx.verifying_percentage))% /</span>
+          Signing ((send_tx.signing_percentage))%</span>
         <span ng-show="send_tx.voucher">Create a Voucher</span>
       </button>
     </form>
