@@ -101,11 +101,11 @@ angular.module('greenWalletServices', [])
             autotimeoutService.promise = $timeout(countdown, timeoutms);
         }
     };
-    
+
     autotimeoutService.registerObserverCallback = function(callback){
         autotimeoutService['callbacks'].push(callback);
     };
-    
+
     autotimeoutService.stop = function() {
         $document.find('body').off('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart');
         if (autotimeoutService.promise) {
@@ -336,7 +336,7 @@ angular.module('greenWalletServices', [])
         });
     };
     var parseSocialDestination = function(social_destination) {
-        try { 
+        try {
             var data = JSON.parse(social_destination);
             if (data.type == 'voucher') return gettext('Voucher');
             else return social_destination;
@@ -382,7 +382,7 @@ angular.module('greenWalletServices', [])
                     cache.items.push(tx);
                     cache.last_txhash = tx.txhash;
                 }
-                any_unconfirmed_seen = num_confirmations < 6 && !tx.double_spent_by;
+                any_unconfirmed_seen = any_unconfirmed_seen || (num_confirmations < 6 && !tx.double_spent_by);
 
                 var value = new Bitcoin.BigInteger('0'),
                     in_val = new Bitcoin.BigInteger('0'), out_val = new Bitcoin.BigInteger('0'),
@@ -396,7 +396,7 @@ angular.module('greenWalletServices', [])
                 for (var j = 0; j < tx.eps.length; j++) {
                     var ep = tx.eps[j];
                     if (ep.is_relevant) {
-                        if (ep.is_credit) {                            
+                        if (ep.is_credit) {
                             var bytes = Bitcoin.base58.decode(ep.ad);
                             var version = bytes[0];
                             var _external_social = version != Bitcoin.network[cur_net].p2shVersion;
@@ -463,7 +463,7 @@ angular.module('greenWalletServices', [])
                         var ep = tx.eps[j];
                         if (ep.is_credit && (!ep.is_relevant || ep.social_destination)) {
                             if (ep.social_destination && ep.social_destination_type != social_types.PAYMENTREQUEST) {
-                                try { 
+                                try {
                                     tx_social_destination = JSON.parse(ep.social_destination);
                                     tx_social_value = ep.value;
                                 } catch (e) {
@@ -534,7 +534,7 @@ angular.module('greenWalletServices', [])
                             for (var i = 0; i < Math.min(this.limit, this.list.length); i++) {
                                 var item = this.list[i];
                                 csv_list.push(item.ts + ',' + item.description.replace(',', '\'') + ',' + item.value + ',' + item.value_fiat);
-                            }   
+                            }
                             this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
                         },
                         output_values: output_values});
@@ -555,13 +555,13 @@ angular.module('greenWalletServices', [])
                     key = $q.when(data.prev_outputs[i].privkey);
                 } else if (tx_sender.hdwallet.priv) {
                     if (priv_der) {
-                        key = $timeout(function() { return 
+                        key = $timeout(function() { return
                                 $q.when(tx_sender.hdwallet.derivePrivate(data.prev_outputs[i].branch)).then(function(key) {
                                     return key.derivePrivate(data.prev_outputs[i].pointer);
                                 });
                             });
                     } else {
-                        key = $timeout(function() { 
+                        key = $timeout(function() {
                             key = $q.when(tx_sender.hdwallet.derive(data.prev_outputs[i].branch));
                             if (data.prev_outputs[i].subaccount) {
                                 key = key.then(function(key) {
@@ -604,7 +604,7 @@ angular.module('greenWalletServices', [])
                                 this_ms += 100;
                                 var progress = signed_n / tx.ins.length;
                                 progress += (1/tx.ins.length) * (this_ms/this_expected_ms);
-                                progress_cb(Math.min(100, Math.round(100 * progress)));
+                                if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
                             }, 100);
                             return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function(finished) {
                                 return $scope.wallet.btchip.app.signTransaction_async(path.join('/')).then(function(sig) {
@@ -626,7 +626,7 @@ angular.module('greenWalletServices', [])
                 } else {
                     var sign = key.then(function(key) {
                         signed_n += 1;
-                        progress_cb(Math.round(100 * signed_n / tx.ins.length));
+                        if (progress_cb) progress_cb(Math.round(100 * signed_n / tx.ins.length));
                         var script = new Bitcoin.Script(Bitcoin.convert.hexToBytes(data.prev_outputs[i].script));
                         var SIGHASH_ALL = 1;
                         var sign = key.sign(tx.hashTransactionForSignature(script, i, SIGHASH_ALL));
@@ -776,7 +776,7 @@ angular.module('greenWalletServices', [])
                     }
                 }
             }
-            if ($scope.wallet.fiat_rate) { 
+            if ($scope.wallet.fiat_rate) {
                 _update();
             } else {
                 $scope.$on('first_balance_updated', _update);
@@ -800,11 +800,11 @@ angular.module('greenWalletServices', [])
                     }
                 }
             }
-            if ($scope.wallet.fiat_rate) { 
+            if ($scope.wallet.fiat_rate) {
                 _update();
             } else {
                 $scope.$on('first_balance_updated', _update);
-            }           
+            }
         });
     };
     walletsService.create_pin = function(pin, $scope) {
@@ -948,7 +948,7 @@ angular.module('greenWalletServices', [])
         cordovaReady(function() {
             document.addEventListener("resume", function() {
                 if (!txSenderService.wallet) return;
-                if (session) {  
+                if (session) {
                     session.close();  // reconnect on resume
                 }
                 session = null;
@@ -956,7 +956,7 @@ angular.module('greenWalletServices', [])
                 txSenderService.wallet.update_balance();
                 txSenderService.wallet.refresh_transactions();
             }, false);
-        })();        
+        })();
     } else if (isMobile && typeof document.addEventListener !== undefined) {
         // reconnect on tab shown in mobile browsers
         document.addEventListener("visibilitychange", function() {
@@ -967,24 +967,26 @@ angular.module('greenWalletServices', [])
         }, false);
     }
     var attempt_login = false;
-    var onAuthed = function(s) {
+    var onAuthed = function(s, login_d) {
         session = s;
         session.subscribe('http://greenaddressit.com/tx_notify', function(topic, event) {
             gaEvent('Wallet', 'TransactionNotification');
-            $rootScope.$broadcast('transaction', event);       
+            $rootScope.$broadcast('transaction', event);
         });
         session.subscribe('http://greenaddressit.com/block_count', function(topic, event) {
             $rootScope.$broadcast('block', event);
         });
-        var d1, d2;
+        var d1, d2, logging_in = false;
         if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
             d1 = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
+            logging_in = true;
         } else if (txSenderService.watch_only) {
             d1 = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
+            logging_in = true;
         } else {
             d1 = $q.when(true);
         }
-        d1.catch(function(err) { 
+        d1.catch(function(err) {
             if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
                 autotimeout.stop();
                 if (txSenderService.wallet) txSenderService.wallet.clear();
@@ -1002,7 +1004,10 @@ angular.module('greenWalletServices', [])
         } else {
             d2 = $q.when(true);
         }
-        $q.all([d1, d2]).then(function() {
+        $q.all([d1, d2]).then(function(results) {
+            if (logging_in) {
+                login_d.resolve(results[0]);
+            }
             // missed calls queues
             for (i in calls_missed) {
                 var item = calls_missed[i];
@@ -1025,7 +1030,7 @@ angular.module('greenWalletServices', [])
         });
     };
     var retries = 60, everConnected = false, disconnected = false, connecting = false;
-    var connect = function() {
+    var connect = function(login_d) {
         if (connecting) return;
         connecting = true;
         ab.connect(wss_url,
@@ -1037,7 +1042,7 @@ angular.module('greenWalletServices', [])
                         var signature = s.authsign(challenge, token);
                         s.auth(signature).then(function(permissions) {
                             connecting = false;
-                            onAuthed(s);
+                            onAuthed(s, login_d);
                         });
                     });
                 });
@@ -1102,15 +1107,19 @@ angular.module('greenWalletServices', [])
                                             return data;
                                         });
                                     } else if (disconnected) {
-                                        connect();
+                                        d = $q.defer();
+                                        connect(d);
+                                        return d.promise;
                                     }
                                 }));
                             });
                         });
                     });
                 } else if (disconnected) {
-                    connect();
-                }                
+                    d = $q.defer();
+                    connect(d);
+                    return d.promise;
+                }
             } else {  // trezor_dev || btchip
 
                 var trezor_dev = txSenderService.trezor_dev,
@@ -1174,7 +1183,7 @@ angular.module('greenWalletServices', [])
                         }
                     });
                 });
-            }   
+            }
         }
         return d.promise;
     };
@@ -1251,7 +1260,7 @@ angular.module('greenWalletServices', [])
             }
         });
 
-        if (window.cordova) {    
+        if (window.cordova) {
             FB.init({
                 appId: FB_APP_ID,
                 nativeInterface: CDV.FB,
@@ -1319,7 +1328,7 @@ angular.module('greenWalletServices', [])
             var w = window.open('https://ssl.reddit.com/api/v1/authorize?client_id='+REDDIT_APP_ID+'&redirect_uri='+redir+'&response_type=code&scope='+scope+'&state=' + state,
                         '_blank', 'toolbar=0,menubar=0,width=1000,height=600,left='+left+',top='+top);
             var deferred = $q.defer();
-            var interval = setInterval(function() { if (w.closed) { 
+            var interval = setInterval(function() { if (w.closed) {
                 clearInterval(interval);
                 deferred.resolve(true);
             } }, 500);
@@ -1349,7 +1358,7 @@ angular.module('greenWalletServices', [])
     // is wrapped inside cordovaReady, because it uses WebSockets)
 
     // Maybe it might be better to add some runEvenWithoutCordova
-    // argument to cordovaReady for that WebSockets special case, 
+    // argument to cordovaReady for that WebSockets special case,
     // and by default don't run anything on desktop from the function
     // returned there...
     if (!window.cordova) {
@@ -1501,7 +1510,7 @@ angular.module('greenWalletServices', [])
     return storageService;
 }]).factory('device_id', ['storage', function(storage) {
     var uuid4 = function() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {  
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var nums = new Uint32Array(1), r, v;
             window.crypto.getRandomValues(nums);
             r = nums[0] % 16,
@@ -1558,7 +1567,7 @@ angular.module('greenWalletServices', [])
                            next_prefix.length < get_name(items_copy[0]).length) {
                         next_prefix += get_name(items_copy[0])[next_prefix.length];
                         if (next_prefix.length == 3) {
-                            while (partition.length && 
+                            while (partition.length &&
                                     partition[partition.length-1].name.substring(0, 3) == next_prefix) {
                                 next_partition.push(partition.pop());
                             }
@@ -1579,7 +1588,7 @@ angular.module('greenWalletServices', [])
                 var href = 'https://www.facebook.com/' + value[1];
                 return {name: value[0], type: value[3], address: value[1], has_wallet: has_wallet, href: href};
             } else {
-                return {name: value[0], type: value[3], has_wallet: value[4], address: value[1]}; 
+                return {name: value[0], type: value[3], has_wallet: value[4], address: value[1]};
             }
         },
         update_with_items: function(items, $routeParams) {
@@ -1645,7 +1654,7 @@ angular.module('greenWalletServices', [])
                             $rootScope.is_loading -= 1;
                         }
                     });
-                });                
+                });
             });
         }
     };
@@ -1681,7 +1690,7 @@ angular.module('greenWalletServices', [])
                             console.log("error playing sound: " + JSON.stringify(e));
                         });
                     mediaRes.play();
-                } else if (typeof Audio != "undefined") { 
+                } else if (typeof Audio != "undefined") {
                     //HTML5 Audio
                     $timeout(function() { new Audio(src).play(); });
                 } else {
@@ -1739,12 +1748,12 @@ angular.module('greenWalletServices', [])
                         qrcode.decode();
                         that.stop_scanning($scope);
                     }
-                    catch(e){       
+                    catch(e){
                         console.log(e);
                         setTimeout(captureToCanvas, 500);
                     };
                 }
-                catch(e){       
+                catch(e){
                         console.log(e);
                         setTimeout(captureToCanvas, 500);
                 };
@@ -1791,12 +1800,12 @@ angular.module('greenWalletServices', [])
                     var img = new Image();
                     img.onload = function() {
                         /*
-                        Helpful URLs: 
+                        Helpful URLs:
                         http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
                         http://stackoverflow.com/questions/19432269/ios-html5-canvas-drawimage-vertical-scaling-bug-even-for-small-images
-                      
+
                         There are a lot of arbitrary things here. Help to clean this up welcome.
-                        
+
                         context.save();
                         context.scale(1e6, 1e6);
                         context.drawImage(img, 0, 0, 1e-7, 1e-7, 0, 0, 1e-7, 1e-7);
@@ -2000,7 +2009,7 @@ angular.module('greenWalletServices', [])
             var deferred = $q.defer();
 
             if (!cardFactory) return deferred.promise;
-            
+
             if (!noModal) {
                 var modal = $modal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
@@ -2008,7 +2017,7 @@ angular.module('greenWalletServices', [])
                 modal.result.finally(function() {
                     $interval.cancel(tick);
                 });
-            };            
+            };
 
             var check = function() {
                 cardFactory.list_async().then(function(result) {
@@ -2142,11 +2151,11 @@ angular.module('greenWalletServices', [])
                     } else if (error.indexOf("6faa") >= 0) {
                         // setMsg("Dongle is locked - remove the dongle and retry");
                         scope.btchip.already_setup = true;
-                    }    
+                    }
                     do_modal();
                 });
             });
-            
+
             return deferred.promise;
         }
     }
@@ -2185,12 +2194,12 @@ angular.module('greenWalletServices', [])
                     iframe = document.getElementById("id_iframe_bip38_service");
                     process();
                 } else {
-                    iframe = document.createElement("IFRAME"); 
+                    iframe = document.createElement("IFRAME");
                     iframe.onload = process;
                     iframe.setAttribute("src", "/bip38_sandbox.html");
                     iframe.setAttribute("class", "ng-hide");
                     iframe.setAttribute("id", "id_iframe_bip38_service");
-                    document.body.appendChild(iframe); 
+                    document.body.appendChild(iframe);
                 }
             } else {
                 process();
@@ -2285,12 +2294,12 @@ angular.module('greenWalletServices', [])
                         iframe = document.getElementById("id_iframe_send_bip38");
                         process();
                     } else {
-                        iframe = document.createElement("IFRAME"); 
+                        iframe = document.createElement("IFRAME");
                         iframe.onload = process;
                         iframe.setAttribute("src", "/bip38_sandbox.html");
                         iframe.setAttribute("class", "ng-hide");
                         iframe.setAttribute("id", "id_iframe_send_bip38");
-                        document.body.appendChild(iframe); 
+                        document.body.appendChild(iframe);
                     }
                 } else {
                     process();
