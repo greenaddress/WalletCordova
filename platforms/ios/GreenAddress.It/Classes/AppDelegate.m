@@ -80,7 +80,14 @@
 
     // Set your app's start page by setting the <content src='foo.html' /> tag in config.xml.
     // If necessary, uncomment the line below to override it.
-    // self.viewController.startPage = @"index.html";
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *lang = [defaults stringForKey:@"language"];
+    if (lang != nil) {
+        self.viewController.startPage = [NSString
+            stringWithFormat:@"greenaddress.it/%@/wallet.html", lang];
+    } else {
+        self.viewController.startPage = @"greenaddress.it/en/wallet.html";
+    }
 
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
