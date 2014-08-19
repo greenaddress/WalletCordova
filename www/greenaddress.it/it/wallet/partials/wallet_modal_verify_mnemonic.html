@@ -1,11 +1,11 @@
 <div submittable>
 
     <div class="modal-body">
-    	<p class="text-center">Please enter the following words from your mnemonic:</p>
+    	<p class="text-center">Please enter the following words from your <strong>unencrypted</strong> mnemonic:</p>
         <form ng-submit="verify_mnemonic_submit()">
             <div ng-class="{'has-error': verified_mnemonic_errors[$index]}" ng-repeat="index in verify_mnemonics_words_indices">
                 <hr />
-                <label for="id_word(($index))">Word #(( index ))</label><input clickfix id="id_word(($index))" class="form-control" type="password" ng-model="verified_mnemonic_words[$index]" />
+                <label for="id_word(($index))">Parola #(( index ))</label><input clickfix id="id_word(($index))" class="form-control" type="password" ng-model="verified_mnemonic_words[$index]" />
                 <div ng-show="verified_mnemonic_errors[$index]" class="label label-danger">((verified_mnemonic_errors[$index]))</div>
             </div>
 
@@ -16,7 +16,7 @@
     <div class="modal-footer">
         <div class="">
             <button class="btn btn-danger" ng-click="$dismiss()">Annulla</button>
-            <button class="btn btn-primary" ng-click="submit_me()">Verify</button>
+            <button class="btn btn-primary" ng-click="submit_me()">Verifica</button>
         </div>
     </div>
 

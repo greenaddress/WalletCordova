@@ -9,7 +9,7 @@ angular.module('greenWalletControllers', [])
     });
 
     $scope.cordova_platform = window.cordova && cordova.platformId;
-    
+
     $scope.update_now = function() {
         wallets.askForLogout($scope, gettext('You need to log out to update cache.')).then(function() {
             window.applicationCache.swapCache();
@@ -76,7 +76,7 @@ angular.module('greenWalletControllers', [])
             var parsed_uri = parse_bitcoin_uri(destUri);
             var initVars = window.WalletControllerInitVars = {
                 send_to_receiving_id_bitcoin_uri: destUri
-            };    
+            };
             initVars.send_to_receiving_id = parsed_uri.recipient;
             initVars.send_to_receiving_id_amount = Bitcoin.Util.parseValue(parsed_uri.amount).toString();
         }
@@ -93,7 +93,7 @@ angular.module('greenWalletControllers', [])
                 $scope.payreq_loading = true;
                 $scope.has_payreq = true;
                 return tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed.r).then(function(data) {
-                    $scope.payreq_loading = false; 
+                    $scope.payreq_loading = false;
                     var amount = 0;
                     for (var i = 0; i < data.outputs.length; i++) {
                         var output = data.outputs[i];
@@ -115,7 +115,7 @@ angular.module('greenWalletControllers', [])
 
         return $q.when();
     }
-    
+
     var clearwallet = function() {
         $scope.wallet = {
             update_balance: function(first) {
@@ -167,11 +167,17 @@ angular.module('greenWalletControllers', [])
         $scope.$apply(function() {
             for (var i = 0; i < $scope.wallet.transactions.list.length; i++) {
                 if (!$scope.wallet.transactions.list[i].block_height) {
-                    // if any unconfirmed, refetch all txs to get the block height
-                    $scope.wallet.refresh_transactions();
-                    break;
+                    // if any unconfirmed, we need to refetch all txs to get the block height
+                    if ($scope.wallet.transactions.sorting.order_by != 'ts' ||
+                            !$scope.wallet.transactions.sorting.reversed) {
+                        $scope.wallet.transactions.pending_conf_from_notification = true;
+                    } else {
+                        $scope.wallet.refresh_transactions();
+                        break;
+                    }
+                } else {
+                    $scope.wallet.transactions.list[i].confirmations = data.count - $scope.wallet.transactions.list[i].block_height + 1;
                 }
-                $scope.wallet.transactions.list[i].confirmations = data.count - $scope.wallet.transactions.list[i].block_height + 1;
             }
         });
     });
@@ -183,7 +189,12 @@ angular.module('greenWalletControllers', [])
             if (updating) return;
             updating = true;
             $scope.wallet.update_balance();
-            $scope.wallet.refresh_transactions(data);
+            if ($scope.wallet.transactions.sorting.order_by != 'ts' ||
+                    !$scope.wallet.transactions.sorting.reversed) {
+                $scope.wallet.transactions.pending_from_notification = true;
+            } else {
+                $scope.wallet.refresh_transactions(data);
+            }
         });
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
             $scope.redeposit_modal = $modal.open({
@@ -351,6 +362,6 @@ angular.module('greenWalletControllers', [])
             $scope.redepositing = false;
             notices.makeNotice('error', error);
         })
-        
+
     };
 }]);

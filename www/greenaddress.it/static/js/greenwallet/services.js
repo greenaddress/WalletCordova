@@ -316,23 +316,9 @@ angular.module('greenWalletServices', [])
         });
         return promise;
     };
-    walletsService.getTransactions = function($scope, notifydata) {
-        var transactions_key = $scope.wallet.receiving_id + 'transactions'
-        var deferreds = [addressbook.load($scope), storage.get(transactions_key)];
-        return $q.all(deferreds).then(function(results) {
-            var cache = results[1];
-            try {
-                cache = JSON.parse(cache) || {items: []};
-            } catch(e) {
-                cache = {items: []};
-            }
-            if (cache.last_txhash) {
-                return crypto.decrypt(cache.items, $scope.wallet.cache_password).then(function(decrypted) {
-                    cache.items = JSON.parse(decrypted);
-                    return walletsService._getTransactions($scope, cache, notifydata);
-                });
-            } else cache.items = [];
-            return walletsService._getTransactions($scope, cache, notifydata);
+    walletsService.getTransactions = function($scope, notifydata, query, sorting, date_range) {
+        return addressbook.load($scope).then(function() {
+            return walletsService._getTransactions($scope, notifydata, null, query, sorting, date_range);
         });
     };
     var parseSocialDestination = function(social_destination) {
@@ -344,44 +330,34 @@ angular.module('greenWalletServices', [])
             return social_destination;
         }
     };
-    walletsService._getTransactions = function($scope, cache, notifydata) {
+    walletsService._getTransactions = function($scope, notifydata, page_id, query, sorting, date_range) {
         var transactions_key = $scope.wallet.receiving_id + 'transactions';
         var d = $q.defer();
         $rootScope.is_loading += 1;
         var unclaimed = [];
-        for (var i = 0; i < cache.items.length; i++) {
-            var item = cache.items[i];
-            if (item.unclaimed) {
-                unclaimed.push(item.txhash);
-            }
+
+        if (sorting) {
+            var sort_by = sorting.order_by;
+            if (sorting.reversed) { sort_by = '-'+sort_by; }
+        } else {
+            var sort_by = null;
         }
-        tx_sender.call('http://greenaddressit.com/txs/get_list', cache.last_txhash, unclaimed).then(function(data) {
+        sorting = sorting || {order_by: 'ts', reversed: true};
+        var end = date_range && date_range[1] && new Date(date_range[1]);
+        if (end) end.setDate(end.getDate() + 1);
+        var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
+                                            end && end.toISOString()];
+        var call = tx_sender.call('http://greenaddressit.com/txs/get_list_v2',
+            page_id, query, sort_by, date_range_iso);
+
+        call.then(function(data) {
             var retval = [];
-            var output_values = {};
             var any_unconfirmed_seen = false;
-            // prepend cache to the returned list
-            for (var i = cache.items.length - 1; i >= 0; i--) {
-                var item = cache.items[i];
-                if (data.unclaimed[item.txhash]) {
-                    // replace unclaimed in txcache
-                    item = cache.items[i] = data.unclaimed[item.txhash];
-                }
-                data.list.unshift(cache.items[i]);
-            }
+
             for (var i = 0; i < data.list.length; i++) {
                 var tx = data.list[i], inputs = [], outputs = [];
                 var num_confirmations = data.cur_block - tx.block_height + 1;
-                if (i >= cache.items.length &&
-                        ((tx.block_height && num_confirmations >= 6) || tx.double_spent_by) &&
-                        // Don't store in cache if there are 'holes' between confirmed/doublespent transactions
-                        // which can be caused by some older transactions getting confirmed later than
-                        // newer ones. Storing such newer txs and marking last_txhash can cause those
-                        // older txs to be missing from the list, being unconfirmed and not added to cache.
-                        !any_unconfirmed_seen) {
-                    // store confirmed txs in cache
-                    cache.items.push(tx);
-                    cache.last_txhash = tx.txhash;
-                }
+
                 any_unconfirmed_seen = any_unconfirmed_seen || (num_confirmations < 6 && !tx.double_spent_by);
 
                 var value = new Bitcoin.BigInteger('0'),
@@ -421,11 +397,11 @@ angular.module('greenWalletServices', [])
                     if (ep.is_credit) {
                         outputs.push(ep);
                         out_val = out_val.add(new Bitcoin.BigInteger(ep.value));
-                        output_values[[tx.txhash, ep.pt_idx]] = new Bitcoin.BigInteger(ep.value);
                     } else { inputs.push(ep); in_val = in_val.add(new Bitcoin.BigInteger(ep.value)); }
                 }
                 if (value.compareTo(new Bitcoin.BigInteger('0')) > 0 || redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
                     if (notifydata && (tx.txhash == notifydata.txhash)) {
+                        notifydata = undefined;
                         notices.makeNotice('success', gettext('Bitcoin transaction received!'));
                         sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
                     }
@@ -505,7 +481,7 @@ angular.module('greenWalletServices', [])
                 // prepend zeroes for sorting
                 var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
                 while (value_sort.length < 20) value_sort = '0' + value_sort;
-                retval.unshift({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
+                retval.push({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
                              value_sort: value_sort, value: value, instant: tx.instant,
                              value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
                              redeemable_value: redeemable_value, negative: negative, positive: positive,
@@ -523,21 +499,36 @@ angular.module('greenWalletServices', [])
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
-            crypto.encrypt(JSON.stringify(cache.items), $scope.wallet.cache_password).then(function(encrypted) {
-                cache.items = encrypted;
-                storage.set(transactions_key, JSON.stringify(cache));
-            });
 
-            d.resolve({fiat_currency: data.fiat_currency, list: retval,
+            d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range,
                         populate_csv: function() {
                             var csv_list = [gettext('Time,Description,satoshis,')+this.fiat_currency];
-                            for (var i = 0; i < Math.min(this.limit, this.list.length); i++) {
+                            for (var i = 0; i < this.list.length; i++) {
                                 var item = this.list[i];
                                 csv_list.push(item.ts + ',' + item.description.replace(',', '\'') + ',' + item.value + ',' + item.value_fiat);
                             }
                             this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
                         },
-                        output_values: output_values});
+                        next_page_id: data.next_page_id,
+                        fetch_next_page: function() {
+                            var that = this;
+                            walletsService._getTransactions($scope, notifydata, that.next_page_id, query, that.sorting, that.date_range).then(function(result) {
+                                that.list = that.list.concat(result.list);
+                                that.next_page_id = result.next_page_id;
+                            });
+                        },
+                        sort_by: function(sorting) {
+                            var that = this;
+                            walletsService._getTransactions($scope, notifydata, null, query, sorting, that.date_range).then(function(result) {
+                                that.sorting = sorting;
+                                if (sorting.order_by == 'ts' && sorting.reversed) {
+                                    $scope.wallet.transactions.pending_from_notification = false;
+                                    $scope.wallet.transactions.pending_conf_from_notification = false;
+                                }
+                                that.list = result.list;
+                                that.next_page_id = result.next_page_id;
+                            });
+                        }});
         }, function(err) {
             notices.makeNotice('error', err.desc);
         }).finally(function() { $rootScope.is_loading -= 1; });
@@ -740,15 +731,15 @@ angular.module('greenWalletServices', [])
         });
         return deferred.promise;
     }
-    walletsService.sign_and_send_tx = function($scope, data, priv_der, twofac_data, notify, progress_cb) {
+    walletsService.sign_and_send_tx = function($scope, data, priv_der, twofac_data, notify, progress_cb, send_after) {
         if ($scope && data.requires_2factor) {
             var d = $q.defer();
             walletsService.get_two_factor_code($scope, 'send_tx').then(function(twofac_data) {
-                d.resolve(_sign_and_send_tx($scope, data, priv_der, twofac_data, notify, progress_cb));
+                d.resolve(_sign_and_send_tx($scope, data, priv_der, twofac_data, notify, progress_cb, send_after));
             }, function(err) { d.reject(err); });
             return d.promise;
         } else {
-            return _sign_and_send_tx($scope, data, priv_der, twofac_data, notify, progress_cb);
+            return _sign_and_send_tx($scope, data, priv_der, twofac_data, notify, progress_cb, send_after);
         }
     }
     walletsService.addCurrencyConversion = function($scope, model_name) {
@@ -1005,7 +996,7 @@ angular.module('greenWalletServices', [])
             d2 = $q.when(true);
         }
         $q.all([d1, d2]).then(function(results) {
-            if (logging_in) {
+            if (logging_in && login_d) {
                 login_d.resolve(results[0]);
             }
             // missed calls queues

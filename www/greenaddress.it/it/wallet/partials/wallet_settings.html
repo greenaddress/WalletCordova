@@ -1,7 +1,7 @@
   <div class="row">
   <div class="col-md-12">
     <div class="header">
-      General Settings
+      Impostazioni Generali
     </div>
   </div>
 </div>
@@ -40,8 +40,8 @@
 <hr class="double">
 <div class="row" ng-controller="SoundController">
   <div class="col-md-3">
-    <div class="sub-header">Sound</div>
-    <div class="sub-header-desc">Enable or disable sounds</div>
+    <div class="sub-header">Suono</div>
+    <div class="sub-header-desc">Attivare o disattivare i suoni</div>
   </div>
   <div class="col-md-9" submittable>
     <form role="form" class="form-horizontal">
@@ -49,7 +49,7 @@
             <label class="switch col-sm-3">
                 <input type="checkbox" class="switch" ng-model="wallet.appearance.sound"/>
                 <span class="switch"></span>
-                Enable sounds
+                Abilitare i suoni
             </label>
         </div>
     </form>
@@ -119,7 +119,7 @@
             </div>
           </form>
           <div class="row"><div class="col-sm-12">
-            <p>The code is valid only for 5 minutes, so you can request another one if necessary. <a href="" ng-click="set_new_email()" class="btn btn-info btn-xs" ng-class="{disabled: settings.setting_email}">Request another code</a></p>
+            <p>The code is valid only for 5 minutes, so you can request another one if necessary. <a href="" ng-click="set_new_email()" class="btn btn-info btn-xs" ng-class="{disabled: settings.setting_email}">Richiedi un altro codice</a></p>
           </div></div>
       </div>
   </div>
@@ -150,7 +150,7 @@
         </div>
         <hr>
         <button class="btn btn-danger btn-block-xs" ng-click="remove_all_pin_logins()"><i class="glyphicon glyphicon-remove"></i> Disabilita l'accesso rapido da tutti i devices</button>
-        <!-- 
+        <!--
         <div class="form-group">
           <select id="quick-login-select" ng-model="quicklogin.selected_device" ng-options="device.device_name for device in quicklogin.devices"></select>
           <label for="pin" class="col-sm-3 control-label">imposta PIN a</label>
@@ -459,7 +459,7 @@
         </div>
         <hr>
         <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Mostra gli output in scadenza a breve</a>
-        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Send all nLockTime transactions by email</a>
+        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Inviare tutte le transazioni nLockTime via e-mail</a>
       </div>
     </form>
   </div>
@@ -471,13 +471,13 @@
     <div class="sub-header-desc">Configura un limite sotto il quale non ti verrà richiesta l'autenticazioine a due fattori per pagamenti super veloci</div>
   </div>
   <div class="col-md-9">
-    <p>You can provide amount (BTC or fiat) limits of transactions that you can make without using two factor authentication</p>
+    <p>È possibile indicare dei limiti di importo (BTC o fiat) per le operazioni che si possono fare senza utilizzare l'autenticazione a due fattori</p>
     <div class="form-horizontal">
       <div class="form-group">
         <label class="col-sm-3 control-label">Limit currency</label>
         <div class="col-sm-7">
           <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
-          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (current currency)</span>
+          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (valuta corrente)</span>
           <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
         </div>
       </div>
@@ -491,12 +491,12 @@
         <label class="col-sm-3 control-label">Total</label>
         <div class="col-sm-7">
           <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
-          <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
+          <small>Questo limite verrà diminiuto ad ogni transazione e avrai bisogno di riempirlo manualmente cambiando questo valore.</small>
         </div>
       </div>
     </div>
     <div>
-      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Change limits</button>
+      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Cambia i limiti</button>
     </div>
   </div>
 </div>

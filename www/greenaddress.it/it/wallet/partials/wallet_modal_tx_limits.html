@@ -6,7 +6,7 @@
         <div class="col-sm-8">
           <select clickfix ng-model="limits_editor.currency" class="form-control" id="limit_currency" class="col-sm-4" ng-disabled="privacy.updating_send_me" ng-disabled="limits_editor.saving">
             <option value="BTC">(( wallet.unit ))</option>
-            <option value="fiat">(( wallet.fiat_currency)) (current currency)</option>
+            <option value="fiat">(( wallet.fiat_currency)) (valuta corrente)</option>
           </select>
           <small ng-show="limits_editor.currency == 'fiat'" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
         </div>
@@ -26,7 +26,7 @@
               <input clickfix ng-model="limits_editor.total" type="number" class="form-control" id="total" placeholder="Ammontare" ng-disabled="limits_editor.saving" ng-show="cordova_platform=='ios'">
               <input clickfix ng-model="limits_editor.total" type="tel" class="form-control" id="total" placeholder="Ammontare" ng-disabled="limits_editor.saving" ng-hide="cordova_platform=='ios'">
           
-          <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
+          <small>Questo limite verrà diminiuto ad ogni transazione e avrai bisogno di riempirlo manualmente cambiando questo valore.</small>
         </div>
       </div>
       <input type="submit" class="hide" submitter />

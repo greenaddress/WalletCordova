@@ -1,7 +1,7 @@
 <div submittable>
 
     <div class="modal-body">
-    	<p class="text-center">Please enter the following words from your mnemonic:</p>
+    	<p class="text-center">Please enter the following words from your <strong>unencrypted</strong> mnemonic:</p>
         <form ng-submit="verify_mnemonic_submit()">
             <div ng-class="{'has-error': verified_mnemonic_errors[$index]}" ng-repeat="index in verify_mnemonics_words_indices">
                 <hr />

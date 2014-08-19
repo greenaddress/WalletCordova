@@ -37,14 +37,31 @@
   <div class="row">
     <div class="col-md-12">
       <div class="sub-header">Ihre letzten Transaktionen</div>
-      <div class="header-options">
-        <ul class="nav nav-pills">
-          <li ng-class="{active: wallet.transactions.limiter.cur_limit[0] == '10'}"><a href="" ng-click="wallet.transactions.limiter.last10()">Letzte 10 Einträge</a></li>
-          <li ng-class="{active: wallet.transactions.limiter.cur_limit.toString() == ['months', 1].toString()}"><a href="" ng-click="wallet.transactions.limiter.lastnmonths(1)">Letzter Monat</a></li>
-          <li ng-class="{active: wallet.transactions.limiter.cur_limit.toString() == ['months', 3].toString()}"><a href="" ng-click="wallet.transactions.limiter.lastnmonths(3)">Letzte drei Monate</a></li>
-          <li ng-class="{active: wallet.transactions.limiter.cur_limit[0] == 'all'}"><a href="" ng-click="wallet.transactions.limiter.all()">Alle</a></li>
-        </ul>
-      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <form>
+        <p class="input-group">
+          <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="search.date_start" placeholder="From date" is-open="search.is_open_from" max-date="search.today" close-text="Schließen" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="search.open_picker($event, 'from')"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form>
+        <p class="input-group">
+          <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="search.date_end" placeholder="To date" is-open="search.is_open_to" max-date="search.today" close-text="Schließen" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="search.open_picker($event, 'to')"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form><input class="form-control" placeholder="Search" ng-model="search.query" type="text" /></form>
     </div>
   </div>
   <div class="row">

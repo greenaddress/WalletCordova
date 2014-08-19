@@ -12,9 +12,9 @@
         <label class="col-sm-2 control-label" for="voucher_text" ng-show="send_tx.voucher">Voucher Text (optional)</label>
         <label class="col-sm-2 control-label" for="recipient" ng-hide="send_tx.voucher">Mottagare</label>
         <div class="col-sm-10" ng-show="send_tx.voucher">
-          
+
             <input ng-model="send_tx.voucher_text" class="form-control" type="text" id="voucher_text" placeholder="Enter any clear text message that will appear on the voucher" />
-          
+
         </div>
         <div class="col-sm-10" ng-hide="send_tx.voucher">
           <div class="input-group">
@@ -43,7 +43,7 @@
               </span>
               <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="send_tx.stop_scanning_qr_code()">Avbryt</a>
             </span>
-          </div>  
+          </div>
           
           <a class="btn btn-info btn-xs btn-adv-options" ng-hide="send_tx.advanced_options_visible || send_tx.recipient_overridden || send_tx.recipient.type == 'payreq'" ng-click="send_tx.advanced_options_visible=true"><i class="glyphicon glyphicon-wrench"></i> show advanced options</a>
         </div>
@@ -107,7 +107,7 @@
         </div>
       </div>
       <hr class="double">
-      <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i> 
+      <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
         <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Skicka pengar</span>
         <span ng-show="!send_tx.voucher && send_tx.sending && send_tx.signing">
           <span ng-show="send_tx.verifying">Verifying ((send_tx.verifying_percentage))% /</span>

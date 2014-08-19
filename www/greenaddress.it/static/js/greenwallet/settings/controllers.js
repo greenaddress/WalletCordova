@@ -37,7 +37,7 @@ angular.module('greenWalletSettingsControllers',
         clipboard.copy(data).then(
             function(text){
                 notices.makeNotice('success', text);
-            }, 
+            },
             function(error){
                 notices.makeNotice('error', error);
             }
@@ -308,7 +308,7 @@ angular.module('greenWalletSettingsControllers',
         function SettingsController($scope, $q, wallets, tx_sender, notices, $modal, gaEvent, storage, $location, $timeout, bip38, mnemonics, btchip) {
     if (!wallets.requireWallet($scope)) return;
     var exchanges = $scope.exchanges = {
-        BITSTAMP: 'Bitstamp',   
+        BITSTAMP: 'Bitstamp',
         LOCALBTC: 'LocalBitcoins',
         BTCAVG: 'BitcoinAverage'
     };
@@ -381,7 +381,7 @@ angular.module('greenWalletSettingsControllers',
                 $modal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_expiring_soon.html',
                     scope: $scope
-                });  
+                });
             }, function(err) {
                 notices.makeNotice('error', err.desc);
             });
@@ -461,6 +461,7 @@ angular.module('greenWalletSettingsControllers',
                         $scope.wallet.limits.per_tx = data.per_tx;
                         $scope.wallet.limits.total = data.total;
                     });
+                    $scope.wallet.refresh_transactions(); // update currency in tx list
                     settings.pricing_source = newValue;
                     settings.updating_pricing_source = false;
                 }).catch(function(err) {
@@ -483,8 +484,8 @@ angular.module('greenWalletSettingsControllers',
             } else {
                 update();
             }
-            
-            
+
+
         }
     });
     $scope.$watch('settings.currency', function(newValue, oldValue) {
@@ -674,8 +675,8 @@ angular.module('greenWalletSettingsControllers',
     };
     init_changer('send_me');
     init_changer('show_as_sender');
-}]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', '$routeParams', 'addressbook',
-        function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, $routeParams, addressbook) {
+}]).controller('AddressBookController', ['$scope', 'tx_sender', 'notices', 'focus', 'wallets', '$location', 'gaEvent', '$rootScope', '$routeParams', 'addressbook', 'qrcode',
+        function AddressBookController($scope, tx_sender, notices, focus, wallets, $location, gaEvent, $rootScope, $routeParams, addressbook, qrcode) {
     // dontredirect=false here because address book is now outside settings,
     // though it's also used from inside SendController, hence the $location.url() check
     if (!wallets.requireWallet($scope, $location.url().indexOf('/address-book') != -0)) return;
@@ -684,6 +685,24 @@ angular.module('greenWalletSettingsControllers',
     $scope.route = $routeParams;
     $scope.addressbook = addressbook;
     addressbook.load($scope, $routeParams);
+    $scope.read_qr_code = function($event) {
+        gaEvent('Wallet', 'AddressBookReadQrCode');
+        qrcode.scan($scope, $event, '_addrbook').then(function(text) {
+            gaEvent('Wallet', 'AddressBookReadQrCodeSuccessful');
+            $rootScope.safeApply(function() {
+                if (text.indexOf('bitcoin:') == 0) {
+                    text = text.slice('bitcoin:'.length);
+                }
+                addressbook.new_item.address = text;
+            });
+        }, function(error) {
+            gaEvent('Wallet', 'AddressBookQrCodeFailed', error);
+            notices.makeNotice('error', error);
+        });
+    };
+    $scope.stop_scanning_qr_code = function() {
+        qrcode.stop_scanning($scope);
+    };
     $scope.add = function() {
         gaEvent('Wallet', 'AddressBookNewItemStarted');
         addressbook.new_item = {name: '', address: '', type: 'address'};
@@ -737,7 +756,7 @@ angular.module('greenWalletSettingsControllers',
                 return;
             } else {
                 gaEvent('Wallet', 'AddressBookItemAdded');
-                
+
                 addressbook.new_item = undefined;
                 notices.makeNotice('success', gettext('New item saved'));
                 $scope.wallet.refresh_transactions();  // update sender/recipient names
@@ -755,7 +774,7 @@ angular.module('greenWalletSettingsControllers',
                 JSON.stringify(contact)).toString()));
     };
 }]).controller('SoundController', ['$scope', 'notices', 'wallets', 'gaEvent', function SoundController($scope, notices, wallets, gaEvent) {
-    
+
     if (!('wallet' in $scope) || !('appearance' in $scope.wallet)) return;
     var soundstate = {sound: false};
     $scope.$watch('wallet.appearance.sound', function(newValue, oldValue) {
@@ -774,7 +793,7 @@ angular.module('greenWalletSettingsControllers',
         }
     });
 }]).controller('AutoLogoutController', ['$scope', 'notices', 'wallets', 'autotimeout', 'gaEvent', function AutoLogoutController($scope, notices, wallets, autotimeout, gaEvent) {
-    
+
     if (!('appearance' in $scope.wallet)) return;
 
     $scope.timeoutstate = {timeout: false, altimeout: $scope.wallet.appearance.altimeout};
@@ -782,7 +801,7 @@ angular.module('greenWalletSettingsControllers',
     autotimeout.registerObserverCallback(function() {
         $scope.mins = Math.floor(autotimeout.left / 1000 / 60);
         $scope.secs = Math.floor((autotimeout.left - ($scope.mins * 60 * 1000)) / 1000);
-    
+
     });
     $scope.save_logout_timeout = function() {
         if ($scope.timeoutstate['altimeout'] === $scope.wallet.appearance.altimeout) return;
@@ -993,7 +1012,7 @@ angular.module('greenWalletSettingsControllers',
                     } else {
                         notices.makeNotice('success', gettext('Custom login enabled'));
                         that.customstate.enabled = true;
-                    }                    
+                    }
                 }, function(err) {
                     gaEvent('Wallet', 'CustomLoginEnableFailed');
                     notices.makeNotice('error', err.desc);
@@ -1110,7 +1129,7 @@ angular.module('greenWalletSettingsControllers',
             }
         } else {
             var do_change = function() {
-                return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data);   
+                return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data);
             }
         }
         $scope.limits_editor.saving = true;

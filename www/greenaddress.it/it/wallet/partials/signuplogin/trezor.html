@@ -9,9 +9,9 @@
             <div class="create-modal-body text-center">
                 <div ng-include="wallet.signuplogin_header"></div>
                 <hr>
-                <div class="subtitle" ng-hide="state.trezor_dev">Please connect your Trezor device</div>
-                <div class="subtitle" ng-show="state.trezor_dev">Trezor detected.</div>
-                <div class="subtitle" ng-show="state.trezor_dev.signing"><strong>Please confirm the signature on your Trezor device.</strong></div>
+                <div class="subtitle" ng-hide="state.trezor_dev">Per favore connetti il tuo dispositivo Trezor</div>
+                <div class="subtitle" ng-show="state.trezor_dev">Trezor rilevato.</div>
+                <div class="subtitle" ng-show="state.trezor_dev.signing"><strong>Per favore conferma la firma sul tuo Trezor.</strong></div>
                 <hr ng-show="state.trezor_dev">
                 <button type="submit" tabindex="4" ng-show="state.trezor_dev" ng-disabled="logging_in"
                         class="btn login-submit" ng-class="{'btn-primary': !state.login_error, 'btn-danger': state.login_error}" ng-click="login()">

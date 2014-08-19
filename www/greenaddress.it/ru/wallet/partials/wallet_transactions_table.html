@@ -1,17 +1,19 @@
-<table class="table table-striped" ng-init="(reversed = true) && (order_by = 'ts')">
+<p class="label label-success" ng-show="wallet.transactions.pending_from_notification">New transactions! Sort by descending date to see them.</p>
+<p class="label label-success" ng-show="wallet.transactions.pending_conf_from_notification">Newly confirmed transactions! Sort by descending date to see them.</p>
+<table class="table table-striped" ng-init="(sorting.reversed = true) && (sorting.order_by = 'ts')">
   <thead>
     <tr>
-      <th><a href="" ng-click="order_by=='ts' ? (reversed = !reversed) : (order_by = 'ts')">
-        <i ng-show="order_by == 'ts'" class="glyphicon"
-        ng-class="{'glyphicon-chevron-down': reversed, 'glyphicon-chevron-up': !reversed}"></i> Дата</a></th>
+      <th><a href="" ng-click="sorting.order_by=='ts' ? (sorting.reversed = !sorting.reversed) : (sorting.order_by = 'ts'); (filtered_transactions||wallet.transactions).sort_by(sorting);">
+        <i ng-show="sorting.order_by == 'ts'" class="glyphicon"
+        ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i> Дата</a></th>
       <th>Описание</th>
-      <th class="text-right"><a href="" ng-click="order_by == 'value_sort' ? (reversed = !reversed) : (order_by = 'value_sort')"><i ng-show="order_by == 'value_sort'" class="glyphicon"
-        ng-class="{'glyphicon-chevron-down': reversed, 'glyphicon-chevron-up': !reversed}"></i>(( wallet.unit ))</a></th>
+      <th class="text-right"><a href="" ng-click="sorting.order_by == 'value' ? (sorting.reversed = !sorting.reversed) : (sorting.order_by = 'value'); (filtered_transactions||wallet.transactions).sort_by(sorting);"><i ng-show="sorting.order_by == 'value'" class="glyphicon"
+        ng-class="{'glyphicon-chevron-down': sorting.reversed, 'glyphicon-chevron-up': !sorting.reversed}"></i>(( wallet.unit ))</a></th>
     </tr>
   </thead>
   
   <tbody>
-    <tr ng-repeat="transaction in wallet.transactions.list | limitTo:wallet.transactions.limit | orderBy:order_by:reversed">
+    <tr ng-repeat="transaction in (filtered_transactions||wallet.transactions).list">
       <td class="date">(( transaction.ts|date:"dd/MM/yyyy" ))</td>
       <td>
         <div class="desc">
@@ -41,11 +43,14 @@
       <td class="amount" ng-style="{opacity: (transaction.double_spent_by !== undefined) ? 0.3 : 1}">
         <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
         <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span><br>
-        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( wallet.transactions.fiat_currency ))</span>
+        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( (filtered_transactions||wallet.transactions).fiat_currency ))</span>
       </td>
     </tr>
-    <tr ng-hide="wallet.transactions.list || wallet.transactions === undefined">
+    <tr ng-hide="(filtered_transactions||wallet.transactions).list || (filtered_transactions||wallet.transactions) === undefined">
       <td colspan="3"><small class="text-muted"><i>Транзакции не найдены...</i></small></td>
+    </tr>
+    <tr ng-show="(filtered_transactions||wallet.transactions).next_page_id">
+      <td colspan="3" style="text-align: center;"><a href="" ng-click="(filtered_transactions||wallet.transactions).fetch_next_page()"><small class="text-muted"><i>Show more transactions...</i></small></a></td>
     </tr>
   </tbody>
 </table>

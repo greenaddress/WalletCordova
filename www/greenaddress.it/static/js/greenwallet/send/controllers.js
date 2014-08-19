@@ -2,7 +2,7 @@ angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
 .controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$modal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
          function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $modal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
-    if (!wallets.requireWallet($scope)) return;    
+    if (!wallets.requireWallet($scope)) return;
 
     var _verify_tx = function(that, rawtx, destination, satoshis, change_pointer, no_electrum) {
         var d = $q.defer();
@@ -48,6 +48,66 @@ angular.module('greenWalletSendControllers',
                 if (chunks[2] != Bitcoin.Opcode.map.OP_EQUAL) return $q.reject(gettext('out OP_EQUAL missing'));
             }
         }
+
+        if (that.add_fee == 'sender') {
+            // check output value
+            if (new Bitcoin.BigInteger(tx.outs[0].value.toString()).compareTo(
+                    new Bitcoin.BigInteger(satoshis)) != 0) {
+                return $q.reject(gettext('Invalid output value'));
+            }
+        }
+
+        // check change output if present
+        if (tx.outs.length == 2) {
+            var change_branch = $q.when($scope.wallet.hdwallet.derive(branches.REGULAR));
+            var change_key = change_branch.then(function(change_branch) {
+                return change_branch.derive(change_pointer);
+            });
+            var change_key_bytes = change_key.then(function(change_key) {
+                return change_key.pub.toBytes(true);
+            });
+
+            var gawallet = new Bitcoin.HDWallet();
+            gawallet.network = cur_net;
+            gawallet.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(deposit_pubkey));
+            gawallet.chaincode = Bitcoin.convert.hexToBytes(deposit_chaincode);
+            gawallet.depth = 0;
+            gawallet.index = 0;
+            change_d = change_key_bytes.then(function(change_key_bytes) {
+                return $q.when(gawallet.derive(1)).then(function(gawallet) {
+                    return $q.when(gawallet.subpath($scope.wallet.gait_path)).then(function(gawallet) {
+                        return $q.when(gawallet.derive(change_pointer)).then(function(change_gait_key) {
+                            var script_to_hash = new Bitcoin.Script();
+                            script_to_hash.writeOp(Bitcoin.Opcode.map.OP_2);
+                            if ($scope.wallet.old_server) {
+                                script_to_hash.writeBytes(Bitcoin.convert.hexToBytes(deposit_pubkey));
+                            } else {
+                                script_to_hash.writeBytes(change_gait_key.pub.toBytes(true));
+                            }
+                            script_to_hash.writeBytes(change_key_bytes);
+                            script_to_hash.writeOp(Bitcoin.Opcode.map.OP_2);
+                            script_to_hash.writeOp(Bitcoin.Opcode.map.OP_CHECKMULTISIG);
+
+                            var hash160 = Bitcoin.Util.sha256ripe160(Bitcoin.convert.bytesToWordArray(script_to_hash.buffer)).toString();
+                            var chunks = tx.outs[1].script.chunks;
+                            if (chunks.length != 3) return $q.reject(gettext('Invalid change P2SH script length'));
+                            if (chunks[0] != Bitcoin.Opcode.map.OP_HASH160) return $q.reject(gettext('change OP_HASH160 missing'));
+                            if (Bitcoin.convert.bytesToHex(chunks[1]) != hash160) return $q.reject(gettext('Invalid change P2SH hash'));
+                            if (chunks[2] != Bitcoin.Opcode.map.OP_EQUAL) return $q.reject(gettext('change OP_EQUAL missing'));
+
+                            return true;
+                        });
+                    });
+                });
+            });
+        } else {
+            change_d = $q.when(true);
+        }
+
+        // no Electrum, no cache - can't verify inputs
+        if (no_electrum) return change_d.then(function() {
+            return {success: true}
+        });
 
         // calculate the inputs value
         var in_value_promises = [];
@@ -103,52 +163,9 @@ angular.module('greenWalletSendControllers',
                 return $q.reject(gettext('Fee is too small (%1, expected at lest %2)').replace('%1', fee.toString()).replace('%2', expectedMinFee.toString()));
             }
 
-            // check change output if present
-            if (tx.outs.length == 2) {
-                var change_branch = $q.when($scope.wallet.hdwallet.derive(branches.REGULAR));
-                var change_key = change_branch.then(function(change_branch) {
-                    return change_branch.derive(change_pointer);
-                });
-                var change_key_bytes = change_key.then(function(change_key) {
-                    return change_key.pub.toBytes(true);
-                });
-
-                var gawallet = new Bitcoin.HDWallet();
-                gawallet.network = cur_net;
-                gawallet.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(deposit_pubkey));
-                gawallet.chaincode = Bitcoin.convert.hexToBytes(deposit_chaincode);
-                gawallet.depth = 0;
-                gawallet.index = 0;
-                return change_key_bytes.then(function(change_key_bytes) {
-                    return $q.when(gawallet.derive(1)).then(function(gawallet) {
-                        return $q.when(gawallet.subpath($scope.wallet.gait_path)).then(function(gawallet) {
-                            return $q.when(gawallet.derive(change_pointer)).then(function(change_gait_key) {
-                                var script_to_hash = new Bitcoin.Script();
-                                script_to_hash.writeOp(Bitcoin.Opcode.map.OP_2);
-                                if ($scope.wallet.old_server) {
-                                    script_to_hash.writeBytes(Bitcoin.convert.hexToBytes(deposit_pubkey));
-                                } else {
-                                    script_to_hash.writeBytes(change_gait_key.pub.toBytes(true));
-                                }
-                                script_to_hash.writeBytes(change_key_bytes);
-                                script_to_hash.writeOp(Bitcoin.Opcode.map.OP_2);
-                                script_to_hash.writeOp(Bitcoin.Opcode.map.OP_CHECKMULTISIG);
-
-                                var hash160 = Bitcoin.Util.sha256ripe160(Bitcoin.convert.bytesToWordArray(script_to_hash.buffer)).toString();
-                                var chunks = tx.outs[1].script.chunks;
-                                if (chunks.length != 3) return $q.reject(gettext('Invalid change P2SH script length'));
-                                if (chunks[0] != Bitcoin.Opcode.map.OP_HASH160) return $q.reject(gettext('change OP_HASH160 missing'));
-                                if (Bitcoin.convert.bytesToHex(chunks[1]) != hash160) return $q.reject(gettext('Invalid change P2SH hash'));
-                                if (chunks[2] != Bitcoin.Opcode.map.OP_EQUAL) return $q.reject(gettext('change OP_EQUAL missing'));
-
-                                return {success: true};
-                            });
-                        });
-                    });
-                });
-            }
-
-            return {success: true};
+            return change_d.then(function() {
+                return {success: true}
+            });
         });
     };
     var verify_tx = function(that, rawtx, destination, satoshis, change_pointer) {
@@ -225,7 +242,7 @@ angular.module('greenWalletSendControllers',
                     $rootScope.is_loading -= 1;
                     notices.makeNotice('error', gettext('Facebook login failed'));
                 });
-                
+
             }
             $scope.send_fb_via_fb_clicked = false;
             $rootScope.is_loading -= 1;
@@ -255,7 +272,7 @@ angular.module('greenWalletSendControllers',
                     gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
                     notices.makeNotice('error', error.desc);
                 });
-            });            
+            });
         },
         do_send_email: function(that, enckey, satoshis) {
             tx_sender.call("http://greenaddressit.com/vault/send_email", that.recipient.address,
@@ -369,7 +386,7 @@ angular.module('greenWalletSendControllers',
                         that.signing = true;
                         wallets.sign_and_send_tx($scope, data, false, undefined, false, that._signing_progress_cb.bind(that), d_verify).then(function() {
                             do_send(that, b58, satoshis, key, pointer);
-                        }, function(error) { 
+                        }, function(error) {
                             $rootScope.is_loading -= 1;
                         }).finally(function() { that.sending = false; });
                     }, function(error) {
@@ -483,7 +500,7 @@ angular.module('greenWalletSendControllers',
             }
             if (!this.recipient) {
                 notices.makeNotice('error', gettext('Please provide a recipient'));
-                return;   
+                return;
             }
             this.signing = false;
             this.sending = true;
@@ -526,7 +543,7 @@ angular.module('greenWalletSendControllers',
                     this.recipient.indexOf('@') == -1 &&
                     this.recipient.indexOf('reddit') != 0) ||
                 this.recipient.type == 'address' ||
-                this.recipient.type == 'payreq' || 
+                this.recipient.type == 'payreq' ||
                 this.recipient.has_wallet;
         }
     };
@@ -559,7 +576,7 @@ angular.module('greenWalletSendControllers',
                 notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
                 $scope.send_tx.recipient = '';
             }).finally(function() { $scope.send_tx.processing_payreq = false; });
-        } else if (parsed_uri.amount) {    
+        } else if (parsed_uri.amount) {
             $scope.send_tx.amount = btcToUnit(parsed_uri.amount);
         }
     });

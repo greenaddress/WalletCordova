@@ -63,7 +63,7 @@
 <script type="text/javascript" src="../static/js/angular/angular-touch.min.js"></script>
 <script type="text/javascript" src="../static/js/angular/qrcode.js"></script>
 <script type="text/javascript" src="../static/js/angular/angular-qr.min.js"></script>
-<script type="text/javascript" src="../static/js/angular/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<script type="text/javascript" src="../static/js/angular/ui-bootstrap-tpls-0.11.0.min.js"></script>
 <script type="text/javascript" src="../static/js/sha512.js"></script>
 <script type="text/javascript" src="../static/js/greenwallet/signuplogin/controllers.js"></script>
 <script type="text/javascript" src="../static/js/greenwallet/info/controllers.js"></script>
@@ -126,7 +126,7 @@
     <i class="menu-mobile-toggle menu-mobile-toggle-close glyphicon glyphicon-remove" toggle-class="visible" ng-click="toggle_set(false)"></i>
     <small>(( subpage_title ))</small>
   </div>
-  <div class="menu-mobile-bottom" toggle-class="visible">
+  <div class="menu-mobile-bottom" toggle-class="visible" ng-show="wallet.final_balance !== undefined">
     <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a> 
   </div>
   <div class="container" toggle-class="visible">

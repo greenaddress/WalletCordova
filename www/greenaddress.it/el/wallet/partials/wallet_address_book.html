@@ -27,14 +27,23 @@
 				<!-- TODO: move to modal -->
 				<tr ng-show="addressbook.new_item" submittable>
 				<td></td>
-				<td><form ng-submit="submit_me()" class="inline">
-				<input type="text" ng-model="addressbook.new_item.name" focus-on="addrbook_new_item" />
-				</form></td>
-				<td><form ng-submit="save()" class="inline">
-				<input type="text" required="required" ng-model="addressbook.new_item.address" />
+				<td class="col-md-4"><form ng-submit="submit_me()" class="inline"><input type="text" class="form-control" required="required" ng-model="addressbook.new_item.name" focus-on="addrbook_new_item" /></form></td>
+				<td class="col-md-4"><form ng-submit="save()" class="inline">
+				<span class="input-group">
+					<input type="text" class="form-control" ng-model="addressbook.new_item.address" />
+					<span class="input-group-btn">
+						<span class="btn btn-default" ng-hide="scanning_qr_video">
+							<i class="glyphicon glyphicon-qrcode"></i>
+			                Σαρώστε το κωδικό QR
+			                <input style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" type="file" id="qrcodeinput_login" accept="image/*" capture="camera" ga-click-no-touch="read_qr_code($event)">
+		                </span>
+		                <a class="btn btn-default" ng-show="scanning_qr_video" ng-click="stop_scanning_qr_code()">Ακύρωση</a>
+		            </span>
+		        </span>
+	            
 				<input type="submit" class="hide" submitter />
 				</form></td>
-				<td><a href="" ng-click="submit_me()">Save</a></td>
+				<td><form><a href="" class="btn btn-default" ng-click="submit_me()">Save</a></form></td>
 				</tr>
 				<tr ng-class="{danger: item.name == route.name}" submittable addressbook-item ng-repeat="item in addressbook.partitions[route.page-1][2]"></tr>
 				<tr ng-hide="addressbook.items.length || is_loading">

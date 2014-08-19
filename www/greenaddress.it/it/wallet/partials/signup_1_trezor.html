@@ -15,18 +15,18 @@
             </div>
 
             <div class="create-modal-body" ng-hide="signup.unexpected_error">
-                <div class="title">Connect Trezor to create a GreenAddress wallet<br>
-                    <small>This 3-step account setup will fully secure it against intruders</small>
+                <div class="title">Connetti Trezor per creare un portafoglio GreenAddress<br>
+                    <small>Questi 3 passaggi renderanno il tuo account completamente sicuro da eventuali intrusioni</small>
                 </div>
                 <hr>
-                <div class="subtitle" ng-hide="trezor_dev">Please connect your Trezor device</div>
-                <div class="subtitle" ng-show="trezor_dev">Trezor detected.</div>
-                <div class="subtitle" ng-show="trezor_dev.signing"><strong>Please confirm the signature on your Trezor device.</strong></div>
+                <div class="subtitle" ng-hide="trezor_dev">Per favore connetti il tuo dispositivo Trezor</div>
+                <div class="subtitle" ng-show="trezor_dev">Trezor rilevato.</div>
+                <div class="subtitle" ng-show="trezor_dev.signing"><strong>Per favore conferma la firma sul tuo Trezor.</strong></div>
             </div>
 
             <div class="create-modal-footer" ng-hide="signup.unexpected_error">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> I agree with the <a href="/tos" target="_blank">Termini di Servizio</a>
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Sono d'accordo con i <a href="/tos" target="_blank">Termini di Servizio</a>
                 </label>
                 <br>
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.logged_in||!signup.secured_confirmed}" href="#/signup_2factor#content_container">Continua!</a>

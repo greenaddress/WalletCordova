@@ -5,42 +5,6 @@ angular.module('greenWalletTransactionsControllers',
     // required already by InfoController
     // if(!wallets.requireWallet($scope)) return;
 
-    var limiter = {
-        cur_limit: ['10'],
-        redo: function() {
-            if (this.cur_limit[0] == '10') this.last10();
-            else if (this.cur_limit[0] == 'months') this.lastnmonths(this.cur_limit[1]);
-            else if (this.cur_limit[0] == 'all') this.all();
-        },
-        last10: function() {
-            $scope.wallet.transactions.limit = 10;
-            $scope.wallet.transactions.populate_csv();
-            this.cur_limit = ['10'];
-        },
-        lastnmonths: function(n) {
-            $scope.wallet.transactions.limit = $scope.wallet.transactions.list.length;
-            // find first tx older than n months and exclude it with all further txs
-            for (var i = 0; i < $scope.wallet.transactions.limit; i++) {
-                if ((new Date() - $scope.wallet.transactions.list[i].ts) > n*30*24*60*60*1000) {
-                    $scope.wallet.transactions.limit = i;
-                    break;
-                }
-            }
-            $scope.wallet.transactions.populate_csv();
-            this.cur_limit = ['months', n];
-        },
-        all: function() {
-            $scope.wallet.transactions.limit = $scope.wallet.transactions.list.length;
-            $scope.wallet.transactions.populate_csv();
-            this.cur_limit = ['all'];
-        }
-    }
-    $scope.$watch('wallet.transactions', function(newValue, oldValue) {
-        if (!$scope.wallet.transactions) return;
-        $scope.wallet.transactions.limiter = limiter;
-        limiter.redo();
-    });
-
     var _redeem = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabRedeem');
         var key = tx_sender.hdwallet;
