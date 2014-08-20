@@ -62,7 +62,7 @@
         <label class="col-sm-2 control-label" for="encpassphrase">Password per riscattare i fondi</label>
         <div class="col-sm-10">
           <input class="form-control" id="encpassphrase" ng-model="send_tx.passphrase" class="form-control" type="text" />
-          <small ng-show="!send_tx.passphrase" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: The receiving private key will not be encrypted unless you provide a passphrase. Unencrypted private keys are prone to eavesdropping!</small>
+          <small ng-show="!send_tx.passphrase" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: La chiave privata ricevuta non sarà crittografata a meno che non fornisci una password. Le chiavi private non crittografate possono essere lette da altri!</small>
         </div>
       </div>
       <hr>
@@ -94,13 +94,13 @@
       <div class="form-group" ng-hide="wallet.send_from || send_tx.recipient.type == 'payreq'">
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;">
-            Fee (<span>((10000|format_btc:wallet.unit))</span> / kB) will be added to the amount
+            Fee (<span>((10000|format_btc:wallet.unit))</span> / kB) verrà aggiunta all'importo
           </label>
         </div>
       </div>
       <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10" ng-hide="send_tx.recipient.type == 'payreq' && !send_tx.instant">
-          <label tooltip="Requires recipient to trust GreenAdress instant confirmations">
+          <label tooltip="E' necessario che chi riceve la transazioni accetti le conferme instantanee GreenAddress">
             <input type="checkbox" ng-model="send_tx.instant" ng-disabled="send_tx.recipient.type == 'payreq'" />
             <span>Conferma immediata</span>
           </label>
@@ -112,7 +112,7 @@
         <span ng-show="!send_tx.voucher && send_tx.sending && send_tx.signing">
           <span ng-show="send_tx.verifying">Verifying ((send_tx.verifying_percentage))% /</span>
           Signing ((send_tx.signing_percentage))%</span>
-        <span ng-show="send_tx.voucher">Create a Voucher</span>
+        <span ng-show="send_tx.voucher">Crea un Voucher</span>
       </button>
     </form>
   </div>

@@ -21,7 +21,7 @@
             <small ng-show="transaction.memo" style="color: black;">(( transaction.memo ))</small></a>
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
-              <span class="label label-success" ng-show="transaction.instant">instant GreenAddress confirmation</span>
+              <span class="label label-success" ng-show="transaction.instant">confirmación instantánea de GreenAddress</span>
               <span class="label label-danger" ng-show="transaction.double_spent_by">double spend</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">no confirmado</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) confirmaciones</span>

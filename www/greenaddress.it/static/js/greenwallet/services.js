@@ -546,8 +546,8 @@ angular.module('greenWalletServices', [])
                     key = $q.when(data.prev_outputs[i].privkey);
                 } else if (tx_sender.hdwallet.priv) {
                     if (priv_der) {
-                        key = $timeout(function() { return
-                                $q.when(tx_sender.hdwallet.derivePrivate(data.prev_outputs[i].branch)).then(function(key) {
+                        key = $timeout(function() {
+                                return $q.when(tx_sender.hdwallet.derivePrivate(data.prev_outputs[i].branch)).then(function(key) {
                                     return key.derivePrivate(data.prev_outputs[i].pointer);
                                 });
                             });

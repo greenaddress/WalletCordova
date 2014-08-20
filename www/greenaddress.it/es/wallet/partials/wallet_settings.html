@@ -254,29 +254,29 @@
 <hr class="double">
 <div class="row" ng-controller="PrivacyController">
   <div class="col-md-3">
-    <div class="sub-header">Privacy</div>
-    <div class="sub-header-desc">Decide who can send you money directly to your GreenAddress wallet, and who can see your name when receiving money from you</div>
+    <div class="sub-header">Privacidad</div>
+    <div class="sub-header-desc">Decida quién puede enviarle dinero directamente a su wallet GreenAddres, y quién puede ver su nombre cuando reciba dinero de usted</div>
   </div>
   <div class="col-md-9" submittable>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email/Reddit</label>
-          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Addressbook contacts' will disallow sending to you wallet directly using your Reddit handle)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Permitir enviar a mi wallet vía correo/Reddit</label>
+          <br /><small>(NOTA: en este momento la libreta de direcciones no está soportada para contactos Reddit, así que eligiendo 'Contactos de Libreta de Direcciones' rechazará el envío a tu wallet usando directamente tu título de Reddit)</small></div>
           <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
-            <option value="2">Everyone</option>
-            <option value="1">Addressbook contacts</option>
-            <option value="0">No one</option>
+            <option value="2">Todos</option>
+            <option value="1">Contactos de libreta de direcciones</option>
+            <option value="0">Nadie</option>
           </select>
         </div>
       </form>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email/Reddit handle as sender to </label>
-          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Mutually added in addressbook' will cause you to be never visible as sender when using Reddit handle for sending)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Mostrar mi correo/Título de Reddit como emisor a </label>
+          <br /><small>(NOTA: en este momento la libreta de direcciones no está soportada para contactos de Reddit, así que eligiendo 'agregado mutuamente en la libreta de direcciones' causará que nunca esté visible como emisor cuando use el título Reddit para enviar)</small></div>
           <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
-            <option value="2">Everyone</option>
-            <option value="1">Mutually added in addressbook</option>
-            <option value="0">No one</option>
+            <option value="2">Todos</option>
+            <option value="1">Agregado mutuamente en la libreta de direcciones</option>
+            <option value="0">Nadie</option>
           </select>
         </div>
       </form>
@@ -537,10 +537,10 @@
 <hr class="double">
 <div class="row">
   <div class="col-md-3">
-    <div class="sub-header">Remove account</div>
-    <div class="sub-header-desc">You can remove your account with all associated data here.</div>
+    <div class="sub-header">Eliminar cuenta</div>
+    <div class="sub-header-desc">Aquí puedes eliminar tu cuenta con todos los datos asociados.</div>
   </div>
   <div class="col-md-9">
-      <button class="btn btn-danger btn-block-xs" ng-click="remove_account()"><i class="glyphicon glyphicon-remove"></i> Remove account</button>
+      <button class="btn btn-danger btn-block-xs" ng-click="remove_account()"><i class="glyphicon glyphicon-remove"></i> Eliminar cuenta</button>
   </div>
 </div>

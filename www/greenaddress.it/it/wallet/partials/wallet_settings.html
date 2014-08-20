@@ -119,7 +119,7 @@
             </div>
           </form>
           <div class="row"><div class="col-sm-12">
-            <p>The code is valid only for 5 minutes, so you can request another one if necessary. <a href="" ng-click="set_new_email()" class="btn btn-info btn-xs" ng-class="{disabled: settings.setting_email}">Richiedi un altro codice</a></p>
+            <p>Il codice è valido solo per 5 minuto, richiedine uno nuovo se necessario. <a href="" ng-click="set_new_email()" class="btn btn-info btn-xs" ng-class="{disabled: settings.setting_email}">Richiedi un altro codice</a></p>
           </div></div>
       </div>
   </div>
@@ -143,7 +143,7 @@
           <label ng-show="quicklogin.enabled" class="control-label col-sm-3">Cambia PIN</label>
           <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">Imposta PIN</label>
           <div class="col-sm-4">
-            <input type="tel" inputmode="numeric" class="form-control" placeholder="4-15 digits number"
+            <input type="tel" inputmode="numeric" class="form-control" placeholder="numero di cifre 4-15"
                    maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" ng-model="quicklogin.new_pin"/>
             <input type="submit" class="btn btn-primary" ng-show="quicklogin.new_pin" value="Conferma" ng-disabled="quicklogin.setting_pin" />
           </div>
@@ -429,10 +429,10 @@
   </div>
   <div class="col-md-9">
     <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()"><i class="glyphicon glyphicon-eye-open"></i> Mnemonica</button>
-    <button class="btn btn-success btn-block-xs" ng-click="show_encrypted_mnemonic()"><i class="glyphicon glyphicon-lock"></i> Show encrypted mnemonic</button>
+    <button class="btn btn-success btn-block-xs" ng-click="show_encrypted_mnemonic()"><i class="glyphicon glyphicon-lock"></i> Visualizza mnemonica crittografata</button>
     
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
-    <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Write encrypted to NFC tag</button>
+    <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Scrivi crittografata su NFC tag</button>
     
     
   </div>
@@ -478,7 +478,7 @@
         <div class="col-sm-7">
           <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
           <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (valuta corrente)</span>
-          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
+          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: Usare limiti con valuta fiat assume che puoi fidarti della fonte del cambio di offrire il cambio corretto.</small>
         </div>
       </div>
       <!-- <div class="form-group">

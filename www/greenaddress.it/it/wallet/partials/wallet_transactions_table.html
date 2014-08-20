@@ -22,7 +22,7 @@
           <span ng-hide="details">(( transaction.description ))</span>
           <div class="info">
               <span class="label label-success" ng-show="transaction.instant">conferma immediata GreenAddress</span>
-              <span class="label label-danger" ng-show="transaction.double_spent_by">double spend</span>
+              <span class="label label-danger" ng-show="transaction.double_spent_by">doppia spesa</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">Non confermata</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) conferme</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">

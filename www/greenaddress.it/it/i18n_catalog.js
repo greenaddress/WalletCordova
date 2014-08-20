@@ -42,7 +42,7 @@ globals.i18n_catalog = {
 "Save": "Salva",
 "Already swept or no funds found": "Bitcoin gia\u0027 presi o non trovati",
 "PIN correct": "PIN corretto",
-"Sent handler registration request": "Sent handler registration request",
+"Sent handler registration request": "Richiesta per registrare uri \u0022bitcoin:\u0022 effettuata",
 "Fee is too small (%1, expected at lest %2)": "La fee è troppo bassa (%1, minimo previsto %2)",
 "nLockTime settings updated successfully": "Impostazione di nLockTime aggiornata con successo",
 "Error changing language:": "C\u0027è stato un errore aggiungendo il contatto: ",
@@ -87,6 +87,7 @@ globals.i18n_catalog = {
 "Unknown error": "Errore sconosciuto",
 "Fee is too large (%1, expected at most %2)": "La fee è troppo alta (%1, massimo previsto %2)",
 "Voucher": "Buono",
+"Problem with Internet connection detected. Please try again.": "Rilevato problema con la connessione a Internet. Per piacere riprova più tardi.",
 "Failed removing NFC listener": "Errore nel servizio NFC",
 "Internal error": "Errore interno",
 "Login failed": "Accesso fallito",
@@ -107,7 +108,7 @@ globals.i18n_catalog = {
 "change OP_HASH160 missing": "Manca il resto OP_HASH160",
 "Limits updated successfully": "Limiti aggiornati con successo",
 "You can\u0027t sent funds in watch only mode": "Non puoi inviare fondi in modalità watch\u002Donly",
-"Please provide this word": "Please provide this word",
+"Please provide this word": "Per piacere fornisci questa parola",
 "PIN changed": "PIN modificato",
 "Facebook integration disabled": "Integrazione con Facebook disabilitata"
 };}
