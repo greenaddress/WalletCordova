@@ -1,7 +1,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <h3>Please re-deposit your funds</h3>
+    <h3>Por favor vuelva a depositar sus fondos</h3>
 </div>
 <div class="modal-body text-center">
     <p class="alert alert-warning">Hay depósitos expirados. No se permitirán transacciones hasta que no redeposites o los redimas</p>
@@ -17,8 +17,8 @@
     </div>
     <div ng-show="wallet.expired_deposits.length == 1">
         <p><a class="btn btn-block-xs btn-success" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_multiple_tx()">
-            Redeposit</a><br />
+            Redepositar</a><br />
             comisión estimada: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))
-            (1 transaction)</p>
+            (1 transacción)</p>
     </div>
 </div>

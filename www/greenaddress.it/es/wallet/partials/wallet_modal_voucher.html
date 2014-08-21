@@ -1,7 +1,7 @@
 <div submittable>
 
     <div class="modal-body">
-    	<p class="text-center">Voucher created successfully!</p>
+    	<p class="text-center">¡Cupón creado exitosamente!</p>
         <p>It is available at <a ng-href="((voucher.url))">((voucher.url))</a></p>
         
     </div>
@@ -16,11 +16,11 @@
 
 <div class="printable">
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddress"> GreenAddress<br><small>https://greenaddress.it</small></h1>
-    <p class="small">This is a GreenAddress voucher for  (( voucher.satoshis|format_btc:wallet.unit ))</p>
+    <p class="small">Este es un cupón de GreenAddres para  (( voucher.satoshis|format_btc:wallet.unit ))</p>
     <p ng-show="voucher.text">(( voucher.text ))</p>
-    <p class="small">The QR code below contains a URL for redeeming the funds:</p>
+    <p class="small">El código QR de abajo contiene una URL para redimir los fondos:</p>
     <qr class="qrcode" text="(( voucher.url ))" size="212"></qr>
-    <p class="small" ng-hide="voucher.encrypted">Alternatively, you can sweep funds to a wallet supporting Wallet Import Format using the following QR code:</p>
-    <p class="small" ng-show="voucher.encrypted">Alternatively, you can sweep funds to a wallet supporting BIP38 using the following QR code:</p>
+    <p class="small" ng-hide="voucher.encrypted">Alternativamente, usted puede barrer los fondos a una wallet que soporte el Formato de Importación de Wallet usando el siguiente código QR:</p>
+    <p class="small" ng-show="voucher.encrypted">Alternativamente, usted puede barrer los fondos a una wallet que soporte BIP38 usando el siguiente código QR:</p>
     <qr class="qrcode" text="(( voucher.enckey ))" size="212"></qr>
 </div>

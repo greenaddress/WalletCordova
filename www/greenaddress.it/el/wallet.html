@@ -127,7 +127,9 @@
     <small>(( subpage_title ))</small>
   </div>
   <div class="menu-mobile-bottom" toggle-class="visible" ng-show="wallet.final_balance !== undefined">
-    <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a> 
+    <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a>   <div ng-show="(wallet.hdwallet.pub || wallet.trezor_dev) && !wallet.hidden && is_loading" ng-cloak>
+    <div class="spin"></div>
+  </div>
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
@@ -149,7 +151,9 @@
     <li><a href="" ng-click="logout()">Αποσύνδεση</a></li>
   </ul>
   <div class="menu-footer">
-    
+      <div ng-show="(wallet.hdwallet.pub || wallet.trezor_dev) && !wallet.hidden && is_loading" ng-cloak>
+    <div class="spin"></div>
+  </div>
     
     <div ng-show="wallet.last_login">
       Τελευταία σύνδεση:

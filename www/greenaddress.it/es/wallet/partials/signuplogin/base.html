@@ -12,7 +12,7 @@
                 <div class="subtitle">Inicie sesión para un acceso completo a su Wallet</div>
                 <form submittable class="form-horizontal" ng-submit="login()" ng-class="{'has-error': state.mnemonic_error}" autocomplete="off">
                     <div class="form-group" ng-show="!state.toggleshowpin" ng-class="{'has-error': state.error && form.$invalid}">
-                        <label class="col-sm-3 col-sm-offset-2 control-label" for="pin">PIN Number</label>
+                        <label class="col-sm-3 col-sm-offset-2 control-label" for="pin">Clave PIN</label>
                         <div class="col-sm-4">
                             <span class="input-group">
                                 <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="logging_in" type="tel" mask-input name="pin" id="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" focus-on="pin" placeholder="Ingrese su PIN" ng-model="use_pin_data.pin" />
@@ -25,11 +25,11 @@
                         </div>
                     </div>
                     <div class="form-group" ng-show="state.toggleshowpin">
-                        <label class="col-md-2 col-md-offset-1 control-label" for="pin">Mnemonic</label>
+                        <label class="col-md-2 col-md-offset-1 control-label" for="pin">Indicio de clave</label>
                         <div class="col-md-8" >
                             <span class="input-group">
-                                <input class="form-control noanimate" ng-show="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Enter your Mnemonic passphrase" ng-class="{'has-error': state.mnemonic_error}" />
-                                <input tabindex="3" type="password" ng-show="!state.toggleshowpassword" class="form-control noanimate" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" focus-on="mnemonic" placeholder="Enter your Mnemonic passphrase" ng-class="{'has-error': state.mnemonic_error}" />
+                                <input class="form-control noanimate" ng-show="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" placeholder="Introduzca su contraseña de Indicio de Clave" ng-class="{'has-error': state.mnemonic_error}" />
+                                <input tabindex="3" type="password" ng-show="!state.toggleshowpassword" class="form-control noanimate" ng-disabled="is_loading || logging_in || payreq_loading" ng-model="state.mnemonic" focus-on="mnemonic" placeholder="Introduzca su contraseña de Indicio de Clave" ng-class="{'has-error': state.mnemonic_error}" />
                                 <span class="input-group-btn">
                                     <span class="btn btn-default" ng-class="{disabled: logging_in || payreq_loading}" ng-hide="scanning_qr_video"><i class="glyphicon glyphicon-qrcode"></i>
                                         Leer QR
@@ -52,7 +52,7 @@
                                 <label class="switch" ng-show="state.toggleshowpin" >
                                   <input type="checkbox" class="switch" ng-model="state.toggleshowpassword" ng-disabled="is_loading || logging_in || payreq_loading"/>
                                   <span class="switch"></span>
-                                    Show mnemonics
+                                    Ver indicio de clave
                                 </label>
                             </span>
                         </div>
@@ -75,7 +75,7 @@
                   <input type="checkbox" class="switch" ng-model="state.toggleshowpin" ng-disabled="is_loading || logging_in || payreq_loading" />
                   <span class="switch"></span>
                     <span>
-                    Show other logins
+                    Mostrar otros inicios de sesión
                     </span>
                 </label>
             </div>

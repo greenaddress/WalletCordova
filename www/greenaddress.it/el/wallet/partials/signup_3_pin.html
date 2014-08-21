@@ -37,7 +37,7 @@
                 <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
                     Παρακαλώ περιμένετε, σύνδεση στο...
                 </span>
-                <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                <a class="btn btn-link btn-block-xs pull-left" href="#/receive#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
                     Mετάβαση στο πορτοφόλι μου και παραλείψτε όλα αυτά!
                 </a>
                 <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100||!signup.logged_in||signup.login_failed}">

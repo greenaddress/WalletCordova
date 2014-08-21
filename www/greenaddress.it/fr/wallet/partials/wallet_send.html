@@ -106,6 +106,17 @@
           </label>
         </div>
       </div>
+      <hr ng-hide="send_tx.recipient.type == 'payreq'">
+      <div class="form-group" ng-hide="send_tx.recipient.type == 'payreq'">
+        <label class="col-sm-2 control-label" for="amount">Memo</label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-md-12">
+              <input class="form-control" type="text" ng-model="send_tx.memo" placeholder="You can enter a memo to store in your transactions list" />
+            </div>
+          </div>
+        </div>
+      </div>
       <hr class="double">
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
         <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Envoyer de l'argent</span>

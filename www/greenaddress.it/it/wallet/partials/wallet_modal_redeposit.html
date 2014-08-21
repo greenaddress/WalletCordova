@@ -1,7 +1,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <h3>Please re-deposit your funds</h3>
+    <h3>Per piacere rideposita i tuoi bitcoin</h3>
 </div>
 <div class="modal-body text-center">
     <p class="alert alert-warning">Hai alcuni depositi scaduti. A meno che non li ridepositi o incassi, non potrai effettuare altra transazioni</p>
@@ -17,8 +17,8 @@
     </div>
     <div ng-show="wallet.expired_deposits.length == 1">
         <p><a class="btn btn-block-xs btn-success" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_multiple_tx()">
-            Redeposit</a><br />
+            Rideposita</a><br />
             commissioni stimate: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))
-            (1 transaction)</p>
+            (1 transazione)</p>
     </div>
 </div>

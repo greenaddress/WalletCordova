@@ -20,7 +20,7 @@
                 </div>
                 <hr>
                 <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">Su indicio de clave</div>
-                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
+                <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Su contraseña de indicio de clave <strong>encriptado</strong></div>
                 <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Generando indicio de clave, espere por favor...</div>
                 <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
@@ -65,7 +65,7 @@
     <h1><img src="/static/img/logos/logo-greenaddress.png" alt="GreenAddress"> GreenAddress<br><small>https://greenaddress.it</small></h1>
     <p>La clave para acceder a tu Wallet es:</p>
     <div class="mnemonic noanimate">(( signup.mnemonic_encrypted || signup.mnemonic ))</div>
-    <p ng-if="signup.mnemonic_encrypted">This passphrase is encrypted, so<br/> your encryption password is required to use it.</p>
+    <p ng-if="signup.mnemonic_encrypted">Esta contraseña está encriptada, así que<br/> su contraseña de encriptación es requerida para utilizarlo.</p>
     <qr ng-if="signup.mnemonic" class="qrcode" text="(( signup.mnemonic_encrypted || signup.mnemonic ))" size="212"></qr>
     <p><i class="glyphicon glyphicon-exclamation-sign"></i> <i>Guarde esta página en un sitio seguro</i></p>
 </div>

@@ -13,10 +13,10 @@
             <div class="create-modal-body">
                 <div class="title">No comprometa su seguridad<br><small>Configurar autenticación de doble factor</small></div>
                 <div ng-if="signup.logged_in" ng-controller="TwoFactorSetupController" ng-include="'../es/wallet/partials/wallet_2fa.html'"></div>
-                <div ng-hide="signup.logged_in" style="text-align: center">Please wait while we log you into your new wallet...</div>
+                <div ng-hide="signup.logged_in" style="text-align: center">Por favor espere mientras iniciamos sesión en su nueva wallet...</div>
                 <hr class="double">
-                <p>We require you to set up two factor authentication, this will make your wallet much more secure and will let you some additional features such as Spending Limits and Delayed Payments.</p>
-                <p>To issue a transaction you will not only need to login to your wallet but also confirm it with a code sent to you via email, SMS or google authenticator as per your choice.</p>
+                <p>Requerimos que configure la Autenticación de Doble Factor, estao hará que tu Wallet sea mucho más segura y le permitirá hacer uso de funciones adicionales como Límites de Pagos o Pagos Retrasados.</p>
+                <p>Para emitir una transacción no sólo necesitará iniciar sesión en su wallet sino también confirmarlo con un código enviado vía correo electrónico, SMS o google authenticator según su elección.</p>
             </div>
 
             <div class="create-modal-footer">

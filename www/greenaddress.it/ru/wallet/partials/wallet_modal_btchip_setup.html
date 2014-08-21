@@ -1,6 +1,6 @@
 <div class="modal-body text-center">
 	<div ng-show="btchip.already_setup">
-    	<p>Your BTChip is already set up. To use it with GreenAddress, you need to reset it. Do you want to reset your BTChip? This will be performed by entering wrong PIN 3 times in a row. <strong>You will lose your keys currently stored on the device.</strong></p>
+    	<p>Ваш BTChip уже настроен. Чтобы использовать его с GreenAddress, необходимо его перегрузить. Вы хотите перегрузить Ваш BTChip? Это будет сделано после ввода неправильного PIN-кода 3 раза подряд. <strong>Вы  потеряете Ваши ключи, которые в данный момент хранятся на устройстве.</strong></p>
     	<button ng-hide="btchip.resetting" type="button" class="btn btn-danger" ng-click="btchip.reset()">Reset my BTChip</button>
     	<button ng-show="btchip.resetting" type="button" disabled="disabled" class="btn btn-danger" ng-click="btchip.reset()">Resetting...
     	<span ng-show="btchip.replug_required">Please unplug and plug your device in again (<span>(( btchip.resets_remaining )) wrong PINs remaining</span>)</span></button>

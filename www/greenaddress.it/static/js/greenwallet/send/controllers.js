@@ -337,6 +337,7 @@ angular.module('greenWalletSendControllers',
             var priv_data = {social_destination: that.recipient.name, instant: that.instant};
             if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
             priv_data.allow_random_change = true;
+            priv_data.memo = this.memo;
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee,
                            priv_data).then(function(data) {
                 that.signing = true;
@@ -393,6 +394,7 @@ angular.module('greenWalletSendControllers',
                         priv_data.encrypted_key_hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(b58));
                     }
                     priv_data.allow_random_change = true;
+                    priv_data.memo = this.memo;
                     tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
                         var d_verify = verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).catch(function(error) {
                             that.sending = false;
@@ -432,7 +434,7 @@ angular.module('greenWalletSendControllers',
             var that = this;
             var satoshis = that.amount_to_satoshis(that.amount);
             $rootScope.is_loading += 1;
-            var priv_data = {instant: that.instant, allow_random_change: true};
+            var priv_data = {instant: that.instant, allow_random_change: true, memo: this.memo};
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee, priv_data).then(function(data) {
                 var d_verify = verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).catch(function(error) {
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);

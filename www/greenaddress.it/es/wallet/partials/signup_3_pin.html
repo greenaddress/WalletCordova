@@ -19,7 +19,7 @@
                         <div class="col-sm-4">
                             <input class="form-control pin" type="tel" mask-input
                                    id="id_pin" name="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/"
-                                   placeholder="4-15 digits number" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                                   placeholder="número de 4 a 15 dígitos" ng-model="signup.pin" ng-disabled="signup.pin_set" />
                         </div>
                         <input type="submit" class="hide" submitter />
                     </div>
@@ -37,7 +37,7 @@
                 <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
                     Por favor espere, iniciando sesión...
                 </span>
-                <a class="btn btn-link btn-block-xs pull-left" href="#/info#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                <a class="btn btn-link btn-block-xs pull-left" href="#/receive#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
                     ¡Ir a mi Wallet y saltear todo esto!
                 </a>
                 <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100||!signup.logged_in||signup.login_failed}">

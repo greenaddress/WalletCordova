@@ -1,0 +1,28 @@
+<div submittable>
+
+    <div class="modal-body">
+        <p class="text-center">TREZOR requires manual passing of words from computer to the device. Please enter a word provided, or choose mnemonic word index requested by TREZOR:</p>
+        <hr>
+        <form ng-submit="$close(word)" name="form" class="form-horizontal">
+            <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                <label for="word" class="col-sm-5 control-label">Enter word:</label>
+                <div class="col-sm-4">
+                    <input id="word" clickfix focus-on="trezorWordModal" type="text" mask-input class="form-control pin" required="required" ng-model="word" />
+                    <input type="submit" class="hide" submitter />
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                <label for="word" class="col-sm-5 control-label">Or click word number to automatically send to TREZOR:</label>
+                <a href="" ng-click="$close(num-1)" class="btn btn-xs" ng-repeat="num in word_nums">(( num ))</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-danger" ng-click="$dismiss()">Отменить</button>
+            <button class="btn btn-primary" ng-click="submit_me()">OK</button>
+        </div>
+    </div>
+
+</div>

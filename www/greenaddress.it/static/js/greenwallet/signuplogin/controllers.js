@@ -1,6 +1,6 @@
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval',
-        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval) {
+.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
+        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -162,7 +162,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             $scope.logging_in = false;
         });
     };
-    
+
     $scope.window = window;
     $scope.$watch('window.GA_NFC_LOGIN_DATA', function(newValue, oldValue) {
         var nfc_bytes = newValue;
@@ -343,7 +343,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                 parsed.path_seed = path_seed;
                                 crypto.encrypt(JSON.stringify(parsed), password).then(function(encrypted) {
                                     storage.set('encrypted_seed', encrypted);
-                                })                                
+                                })
                                 var path = mnemonics.seedToPath(path_seed);
                                 return $q.when(Bitcoin.HDWallet.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
                                     hdwallet.seed_hex = parsed.seed;
@@ -372,7 +372,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     }
 
     if ($location.path() == '/trezor_login') {
-        trezor.getDevice().then(function(trezor_dev) {
+        trezor.getDevice(true).then(function(trezor_dev) {
             state.trezor_dev = trezor_dev;
             $scope.login = function() {
                 $scope.logging_in = true;
@@ -383,7 +383,10 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     path = Bitcoin.CryptoJS.enc.Hex.stringify(path);
                     return wallets.login_trezor($scope, trezor_dev, path, false, false).then(function(data) {},
                         function(err) {
-                            state.login_error = err;
+                            $rootScope.safeApply(function() {
+                                state.login_error = err;
+                                $scope.logging_in = false;
+                            });
                         }).finally(function() { $scope.logging_in = false; });
                 }, function(err) {
                     state.login_error = err;
