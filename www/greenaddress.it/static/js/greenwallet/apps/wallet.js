@@ -17,7 +17,8 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
 }])
 .constant('branches', {
 	REGULAR: 1,
-    EXTERNAL: 2
+    EXTERNAL: 2,
+    SUBACCOUNT: 3
 })
 .constant('social_types', {
     FACEBOOK: 0,
@@ -110,7 +111,7 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_send.html',
             controller: 'SendController'
         });
-        
+
 }]).run(['$rootScope', function($rootScope, $location) {
     $rootScope.$location = $location;
 }]).factory("backButtonHandler", function () {
@@ -180,14 +181,15 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
             scope.$watch(function() { return $location.path(); },
                 function(newValue, oldValue) {
                     var all_a = element.find('a');
+                    scope.settings = newValue.indexOf('/settings') != -1;
                     for (var i = 0; i < all_a.length; i++) {
                         var a = angular.element(all_a[i]);
                         if (newValue.indexOf(a.parent().attr('path')) != -1 ||
                             (a.parent().attr('path') == '/send' && newValue.indexOf('/uri/') != -1) ||
                             (a.parent().attr('path') == '/send' && newValue.indexOf('/pay/') != -1) ||
                             (a.parent().attr('path') == '/info' && newValue.indexOf('/redeem/') != -1)) {
-                            scope.subpage_title = a.text();
-                            a.parent().addClass('selected');
+                                scope.subpage_title = a.text();
+                                a.parent().addClass('selected');
                         } else {
                             a.parent().removeClass('selected');
                         }

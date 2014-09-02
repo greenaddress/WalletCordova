@@ -9,6 +9,7 @@ globals.i18n_catalog = {
 "New item saved": "Il nuovo contatto è stato aggiunto",
 "Incorrect word": "Parola non corretta",
 "Invalid WIF key": "Chiave WIF invalida",
+"TREZOR initialisation failed": "Inizializzazione TREZOR fallita",
 "Change": "Resto",
 "Problem with Internet connection detected. Please try again.": "Rilevato problema con la connessione a Internet. Per piacere riprova più tardi.",
 "Cookies help us deliver our services. By using our services, you agree to our use of cookies.": "Per fornire il servizio sono necessari i cookies. Se continui a usare questo servizio, esprimi il tuo consenso all\u0027uso dei cookies.",

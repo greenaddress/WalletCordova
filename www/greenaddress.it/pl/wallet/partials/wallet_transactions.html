@@ -36,10 +36,13 @@
 <div ng-controller="TransactionsController">
   <div class="row">
     <div class="col-md-12">
-      <div class="sub-header">Twoje ostatnie transakcje</div>
+      <div class="sub-header">Twoje ostatnie transakcje
+      <span href="" class="transaction-search-toggle btn btn-xs btn-default" ng-click="toggle_transaction_search()"><i class="glyphicon glyphicon-search"></i></span>
+      <select ng-model="wallet.current_subaccount" ng-show="wallet.subaccounts.length" ng-options="subwallet.pointer as subwallet.name for subwallet in [{pointer: 0, name: 'Main'}].concat(wallet.subaccounts)" style="float: right;">
+      </select></div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" ng-show="search_visible">
     <div class="col-md-4">
       <form>
         <p class="input-group">

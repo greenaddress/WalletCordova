@@ -1,0 +1,12 @@
+<div class="modal-body text-center">
+    <p>QR Code สำหรับการเข้า Wallet ทาง Google Authenticator คือ</p>
+    <p><qr size="212" text="twofactor_state.google_secret_url"></qr></p>
+    <p>คุณยังสามารถคัดลอกรหัสด้วยตนเอง:</p>
+    <p>(( twofactor_state.google_secret_key ))</p>
+</div>
+<div class="modal-footer">
+  
+  <button class="btn btn-info btn-block-xs" ng-click="copy_to_clipboard(twofactor_state.google_secret_key)"><i class="glyphicon glyphicon-transfer"></i>คัด​ลอก​ไป​ยัง​คลิ​ป​บอร์ด</button>
+  
+  <button type="button" class="btn btn-primary" ng-click="$close()">ปิด</button>
+</div>

@@ -1,0 +1,17 @@
+<div class="alert alert-error" ng-show="nfc_error">
+    มีปัญหาในการเขียนไปยัง NFC tag: (( nfc_error.reason ))
+</div>
+<div class="modal-body text-center" ng-show="!nfc_init_error && nfc_init_succeeded < 4">
+    <p>เริ่มต้นการรับ NFC tag</p>
+</div>
+<div class="modal-body text-center" ng-show="nfc_init_succeeded == 4">
+    <p>วาง tags ของคุณติดกับอุปกรณ์เพื่อที่จะเขียน Wallet</p>
+    <p>Tag เขียนแล้ว (( num_tags_written ))</p>
+    <p>รูปแบบ Tag: (( num_tags_formatted ))</p>
+</div>
+<div class="modal-body text-center" ng-show="nfc_init_error">
+    <p>NFC ของคุณไม่ได้เปิดใช้งานหรือใช้ไม่ได้ หากใช้งานได้ กรุณาไปเปิดการทำงานที่ตั้งค่า</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="$close()">ปิด</button>
+</div>

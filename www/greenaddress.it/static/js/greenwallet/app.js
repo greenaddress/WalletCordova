@@ -1,4 +1,4 @@
-var deps = ['ngAnimate', 'greenWalletServices'];
+var deps = ['duScroll', 'ngAnimate', 'greenWalletServices'];
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     deps.push('ngTouch');
     window.IS_MOBILE = true;
@@ -39,7 +39,7 @@ angular.module('greenWalletBaseApp', deps)
 
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'x-csrftoken';
-}]).config(['$compileProvider', function($compileProvider) {   
+}]).config(['$compileProvider', function($compileProvider) {
     if (window.cordova) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|bitcoin|data|file):/);
     } else if (window.chrome && chrome.storage) {

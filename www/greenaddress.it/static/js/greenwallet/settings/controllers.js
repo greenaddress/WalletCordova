@@ -466,7 +466,6 @@ angular.module('greenWalletSettingsControllers',
                         $scope.wallet.limits.per_tx = data.per_tx;
                         $scope.wallet.limits.total = data.total;
                     });
-                    $scope.wallet.refresh_transactions(); // update currency in tx list
                     settings.pricing_source = newValue;
                     settings.updating_pricing_source = false;
                 }).catch(function(err) {
@@ -726,18 +725,16 @@ angular.module('greenWalletSettingsControllers',
             addressbook.init_partitions();
             addressbook.num_pages = Math.ceil(addressbook.items.length / 20);
             addressbook.populate_csv();
-            $scope.wallet.refresh_transactions();  // update sender/recipient names
         });
     };
     $scope.rename = function(address, name) {
         tx_sender.call('http://greenaddressit.com/addressbook/edit_entry', address, name, 0).then(function(data) {
             gaEvent('Wallet', 'AddressBookItemRenamed');
-            angular.forEach(addressbook.items, function(value) {
+            angular.forEach(addressbook.partitions[$routeParams.page-1][2], function(value) {
                 if (value.address == address) {
                     value.renaming = false;
                 }
             });
-            $scope.wallet.refresh_transactions();  // update sender/recipient names
         }, function(err) {
             gaEvent('Wallet', 'AddressBookItemRenameFailed', err.desc);
             notices.makeNotice('error', 'Error renaming item: ' + err.desc);
@@ -764,7 +761,6 @@ angular.module('greenWalletSettingsControllers',
 
                 addressbook.new_item = undefined;
                 notices.makeNotice('success', gettext('New item saved'));
-                $scope.wallet.refresh_transactions();  // update sender/recipient names
                 // go to first page - it should refresh the view:
                 $location.path('/address-book/name_'+encodeURIComponent(item.name));
             }
@@ -1145,5 +1141,66 @@ angular.module('greenWalletSettingsControllers',
         }, function(err) {
             notices.makeNotice('error', err.desc);
         }).finally(function() { $scope.limits_editor.saving = false; });
+    };
+}]).controller('SubwalletsController', ['$scope', 'tx_sender', '$q', 'notices',
+        function($scope, tx_sender, $q, notices) {
+    var subwallets = $scope.subwallets = {
+        existing: $scope.wallet.subaccounts,
+        create_new: function() {
+            var that = this, min_unused_pointer = null, pointers = [];
+            that.adding_subwallet = true;
+            for (var i = 0; i < that.existing.length; i++) {
+                pointers.push(that.existing[i].pointer);
+            }
+            pointers.sort();
+            for (var i = 1; i < pointers.length; i++) {
+                if (pointers[i] > pointers[i-1] + 1) {
+                    min_unused_pointer = pointers[i-1] + 1;
+                }
+            }
+            if (min_unused_pointer === null) {
+                if (pointers.length) {
+                    min_unused_pointer = pointers[pointers.length-1] + 1;
+                } else {
+                    min_unused_pointer = 1;
+                }
+            }
+            var derive_hd = function() {
+                return $q.when($scope.wallet.hdwallet.derivePrivate(3)).then(function(k) {
+                    return $q.when(k.derivePrivate(min_unused_pointer)).then(function(k) {
+                        return {
+                            pub: k.pub.toHex(),
+                            chaincode: Bitcoin.convert.bytesToHex(k.chaincode)
+                        };
+                    });
+                });
+            }
+            var derive_btchip = function() {
+                return $scope.wallet.btchip.app.getWalletPublicKey_async("3'/"+min_unused_pointer+"'").then(function(result) {
+                    var pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(result.publicKey.toString(HEX)));
+                    return {
+                        pub: pub.toHex(true),
+                        chaincode: result.chainCode.toString(HEX)
+                    };
+                });
+            }
+            if ($scope.wallet.hdwallet.priv) derive_fun = derive_hd;
+            else derive_fun = derive_btchip;
+            derive_fun().then(function(hdhex) {
+                return tx_sender.call('http://greenaddressit.com/txs/create_subaccount',
+                    min_unused_pointer,
+                    that.new_label,
+                    hdhex.pub,
+                    hdhex.chaincode
+                ).then(function(receiving_id) {
+                    that.existing.push({name: that.new_label, pointer: min_unused_pointer, receiving_id: receiving_id})
+                    that.new_label = '';
+                });
+            }).catch(function(e) {
+                notices.makeNotice('error', e.desc || e);
+            }).finally(function() {
+                that.adding_subwallet = false;
+            });
+        }
     };
 }]);

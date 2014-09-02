@@ -22,7 +22,11 @@ angular.module('greenWalletInfoControllers',
 
     $scope.wallet.has_graph = true;  // element needs to be initially visible to allow computing width
     var update_graph = function() {
-        tx_sender.call("http://greenaddressit.com/txs/get_daily_balance_chart").then(function(balances_arr) {
+        tx_sender.call("http://greenaddressit.com/txs/get_daily_balance_chart", $scope.wallet.current_subaccount).then(function(balances_arr) {
+            if (!document.getElementById('btc_graph')) {
+                // not in 'Transactions' tab anymore - don't do anything to avoid breaking it
+                return;
+            }
             var btcGraph = dc.lineChart("#btc_graph");
             var prevDate;
             var balance = parseInt($scope.wallet.final_balance);
@@ -91,25 +95,29 @@ angular.module('greenWalletInfoControllers',
         });
     }
 
-    $scope.$watch('wallet.transactions', function(newValue, oldValue) {
-        if (!$scope.wallet.transactions) { update_graph(); return; }
-        $scope.wallet.transactions.populate_csv();
-        if ($scope.wallet.transactions.list.length) update_graph();
+    $scope.$watch('filtered_transactions', function(newValue, oldValue) {
+        if (newValue) newValue.populate_csv();
     });
 
     var updating_timeout;
-    var update_txs = function(timeout_ms) {
+    var update_txs = function(timeout_ms, check_sorting) {
         if (updating_timeout) $timeout.cancel(updating_timeout);
         updating_timeout = $timeout(function() {
             updating_timeout = null;
             wallets.getTransactions($scope, null, $scope.search.query, $scope.sorting,
-                    [$scope.search.date_start, $scope.search.date_end]).then(function(txs) {
+                    [$scope.search.date_start, $scope.search.date_end], $scope.wallet.current_subaccount).then(function(txs) {
                 $scope.filtered_transactions = txs;
+                if (check_sorting && ($scope.filtered_transactions.sorting.order_by != 'ts' ||
+                                      !$scope.filtered_transactions.sorting.reversed)) {
+                    $scope.filtered_transactions.pending_from_notification = true;
+                }
                 txs.populate_csv();
             });
         }, timeout_ms||0);
     };
     $scope.sorting = {};
+    update_txs();
+    update_graph();
     $scope.$watch('search.query', function(newValue, oldValue) {
         if (newValue !== oldValue) update_txs(800);
     });
@@ -118,6 +126,37 @@ angular.module('greenWalletInfoControllers',
     });
     $scope.$watch('search.date_end', function(newValue, oldValue) {
         if (newValue !== oldValue) update_txs();
+    });
+    $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
+        if (newValue !== oldValue && newValue !== undefined) {
+            update_txs();
+            update_graph();
+        }
+    });
+    $scope.$on('transaction', function(event, data) {
+        if (data.subaccounts.indexOf($scope.wallet.current_subaccount) != -1) {
+            update_txs(0, true);
+            update_graph();
+        }
+    });
+    $scope.$on('block', function(event, data) {
+        if (!$scope.filtered_transactions || !$scope.filtered_transactions.list.length) return;
+        $scope.$apply(function() {
+            for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {
+                if (!$scope.filtered_transactions.list[i].block_height) {
+                    // if any unconfirmed, we need to refetch all txs to get the block height
+                    if ($scope.filtered_transactions.sorting.order_by != 'ts' ||
+                            !$scope.filtered_transactions.sorting.reversed) {
+                        $scope.filtered_transactions.pending_conf_from_notification = true;
+                    } else {
+                        update_txs();
+                        break;
+                    }
+                } else {
+                    $scope.filtered_transactions.list[i].confirmations = data.count - $scope.filtered_transactions.list[i].block_height + 1;
+                }
+            }
+        });
     });
 
     var redeem = function(encrypted_key, password) {

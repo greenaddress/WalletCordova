@@ -1,4 +1,5 @@
-  <div class="row">
+<div id="general">
+<div class="row">
   <div class="col-md-12">
     <div class="header">
       General Settings
@@ -74,6 +75,9 @@
             <option value="nl">Nederlands</option>
             <option value="pl">Polski</option>
             <option value="sv">Svenska</option>
+            
+            <option value="th">ภาษาไทย</option>
+            
             <option value="uk">Українська</option>
             <option value="ru">Pусский</option>
           </select>
@@ -82,6 +86,8 @@
   </div>
 </div>
 
+</div> <!-- id="general" -->
+<div id="security">
 <hr class="double">
 <div class="header">
   Security
@@ -544,3 +550,34 @@
       <button class="btn btn-danger btn-block-xs" ng-click="remove_account()"><i class="glyphicon glyphicon-remove"></i> Remove account</button>
   </div>
 </div>
+</div> <!-- id="security" -->
+<div id="accounts">
+<hr class="double">
+<div class="header">
+  Accounts
+</div>
+<div class="row" ng-controller="SubwalletsController">
+  <div class="col-md-3">
+    <div class="sub-header">Simple accounts</div>
+    <div class="sub-header-desc">Create accounts that allow you to separate your funds. Each accounts will have its own receiving addresses.</div>
+  </div>
+  <div class="col-md-9">
+    <form ng-submit="subwallets.create_new()" class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="control-label col-sm-6">Create an account with the following label:</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Label" ng-model="subwallets.new_label" ng-disabled="subwallets.adding_subwallet">
+            <span class="input-group-btn">
+              <input type="submit" class="btn btn-primary" value="Create" ng-disabled="!subwallets.new_label || subwallets.adding_subwallet" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <h3 ng-show="subwallets.existing.length">Your accounts:</h3>
+    <ul>
+      <li ng-repeat="subwallet in subwallets.existing">(( subwallet.name ))</li>
+    </ul>
+</div>
+</div> <!-- id="subwallets" -->

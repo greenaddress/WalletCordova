@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="it.greenaddress.cordova" version="0.0.53" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>GreenAddress.It</name>
+<widget id="it.greenaddress.cordova" version="0.0.54" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>GreenAddress</name>
     <description>
-        GreenAddress.It Mobile Wallet
+        GreenAddress Mobile Wallet
     </description>
     <preference name="loglevel" value="INFO" />
     <feature name="App">

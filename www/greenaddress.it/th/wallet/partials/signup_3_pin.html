@@ -1,0 +1,54 @@
+<div class="create-modal-backdrop"></div>
+<div class="create-modal">
+    <div class="create-modal-dialog">
+        <div class="create-modal-content" submittable>
+
+            <div class="create-modal-header">
+                ขั้นตอน 3 ของ 4
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="create-modal-body">
+                <div class="title">ทางที่เร็วและปลอดภัยในการเข้า Wallet<br><small>เพื่อให้เข้าถึงได้เร็วและปลอดภัยตั้ง PIN จากอุปกรณ์นี้</small></div>
+                <hr>
+                <form role="form" class="form-horizontal" ng-submit="signup.set_pin()">
+                    <div class="form-group" ng-class="{'has-error': state.error && form.$invalid}">
+                        <label class="col-sm-5 control-label" for="id_pin">หมายเลข PIN</label>
+                        <div class="col-sm-4">
+                            <input class="form-control pin" type="tel" mask-input
+                                   id="id_pin" name="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/"
+                                   placeholder="จำนวนตัวเลข 4-15" ng-model="signup.pin" ng-disabled="signup.pin_set" />
+                        </div>
+                        <input type="submit" class="hide" submitter />
+                    </div>
+                </form>
+                <hr>
+                <p>
+                การเข้าใช้งานโดย PIN ทำให้คุณเข้าระบบได้ง่ายและปลอดภัย โดย PIN จะสุ่มรหัสแบบ AES 256 bit และจะถูกลบทิ้งหากผิด 3 ครั้งเป็นต้นไป และให้คุณใส่รหัสช่วยจำอีกครั้ง มันง่าย สะดวก และปลอดภัย ดังนั้นโปรดใช้มัน!
+                </p>
+            </div>
+
+            <div class="create-modal-footer">
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress < 100">
+                    กรุณารอสักครู่ สร้างคีย์ wallet ของคุณ  ... (( signup.seed_progress ))%
+                </span>
+                <span class="btn btn-link btn-block-xs pull-left disabled" ng-show="signup.seed_progress == 100 && !signup.logged_in && !signup.login_failed">
+                    รอสักครู่ กำลังเข้าสู่ระบบ...
+                </span>
+                <a class="btn btn-link btn-block-xs pull-left" href="#/receive#content_container" ng-class="{disabled:signup.setting_pin}" ng-hide="signup.seed_progress < 100 || !signup.logged_in || signup.pin_set">
+                    นำฉันไปที่ Wallet และข้ามขั้นตอนนี้!
+                </a>
+                <a ng-show="signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled:signup.setting_pin||signup.seed_progress < 100||!signup.logged_in||signup.login_failed}">
+                    <span ng-hide="signup.setting_pin">ตั้งค่า PIN ไปยังขั้นที่ 3</span>
+                    <span ng-show="signup.setting_pin">กำลังตั้ง PIN</span>
+                </a>
+                <a ng-show="!signup.pin" class="noanimate btn btn-primary btn-block-xs pull-right" ng-click="submit_me()" ng-class="{disabled: !signup.logged_in || signup.login_failed}">
+                    <span>ข้ามการตั้ง PIN และไปต่อ</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

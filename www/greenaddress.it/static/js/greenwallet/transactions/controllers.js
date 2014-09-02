@@ -7,19 +7,27 @@ angular.module('greenWalletTransactionsControllers',
 
     var _redeem = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabRedeem');
-        var key = tx_sender.hdwallet;
-        key = $q.when(key.derivePrivate(branches.EXTERNAL));
+        var key = $q.when($scope.wallet.hdwallet);
+        if ($scope.wallet.current_subaccount) {
+            key = key.then(function(key) {
+                return key.derivePrivate(branches.SUBACCOUNT);
+            }).then(function(key) {
+                return key.derivePrivate($scope.wallet.current_subaccount);
+            })
+        }
         key = key.then(function(key) {
+            return key.derivePrivate(branches.EXTERNAL);
+        }).then(function(key) {
             return key.derivePrivate(transaction.pubkey_pointer);
         });
         return key.then(function(key) {
             return tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
-                    key.pub.toBytes(), false).then(function(data) {
+                    key.pub.toBytes(), false, $scope.wallet.current_subaccount).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
                     data.prev_outputs.push(
                         {branch: branches.EXTERNAL, pointer: transaction.pubkey_pointer,
-                         script: data.prevout_scripts[i]})
+                         subaccount: $scope.wallet.current_subaccount, script: data.prevout_scripts[i]})
                 }
                 // TODO: verify
                 return wallets.sign_and_send_tx(undefined, data, true);  // priv_der=true
@@ -139,5 +147,10 @@ angular.module('greenWalletTransactionsControllers',
             scope: $scope
         });
     };
+
+    $scope.toggle_transaction_search = function() {
+        $scope.search_visible = !$scope.search_visible;
+    }
+
 
 }]);

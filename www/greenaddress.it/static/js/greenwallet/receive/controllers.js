@@ -3,12 +3,13 @@ angular.module('greenWalletReceiveControllers',
 .controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$modal', '$location', 'qrcode', 'clipboard',
         function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $modal, $location, qrcode, clipboard) {
     if(!wallets.requireWallet($scope)) return;
-    var base_payment_url = 'https://' + hostname + '/pay/' + $scope.wallet.receiving_id + '/';
+    var payment_url_prefix = 'https://' + hostname + '/pay/';
+    var base_payment_url = payment_url_prefix + $scope.wallet.receiving_id + '/';
     $scope.receive = {
         payment_url: base_payment_url,
         show_previous_addresses: function() {
             $rootScope.is_loading += 1;
-            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses').then(function(data) {
+            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
                 $scope.receive.my_addresses = data;
                 $modal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_my_addresses.html',
@@ -88,12 +89,12 @@ angular.module('greenWalletReceiveControllers',
                             iframe = document.getElementById("id_iframe_receive_bip38");
                             process();
                         } else {
-                            iframe = document.createElement("IFRAME"); 
+                            iframe = document.createElement("IFRAME");
                             iframe.onload = process;
                             iframe.setAttribute("src", "/bip38_sandbox.html");
                             iframe.setAttribute("class", "ng-hide");
                             iframe.setAttribute("id", "id_iframe_receive_bip38");
-                            document.body.appendChild(iframe); 
+                            document.body.appendChild(iframe);
                         }
                     } else {
                         process();
@@ -171,7 +172,7 @@ angular.module('greenWalletReceiveControllers',
             if (show_qr) $scope.show_url_qr($scope.receive.bitcoin_uri);
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
-            tx_sender.call('http://greenaddressit.com/vault/fund').then(function(data) {
+            tx_sender.call('http://greenaddressit.com/vault/fund', $scope.wallet.current_subaccount).then(function(data) {
                 var script = Bitcoin.convert.bytesToWordArray(Bitcoin.convert.hexToBytes(data));
                 var hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(script));
                 var version = Bitcoin.network[cur_net].p2shVersion;
@@ -185,6 +186,23 @@ angular.module('greenWalletReceiveControllers',
             });
         }
     }
+    $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
+        if (newValue != oldValue) {
+            $scope.receive.bitcoin_uri = undefined;
+            $scope.receive.bitcoin_address = undefined;
+        }
+        var receiving_id;
+        if (newValue) {
+            for (var k in $scope.wallet.subaccounts)
+                if ($scope.wallet.subaccounts[k].pointer == newValue)
+                    receiving_id = $scope.wallet.subaccounts[k].receiving_id;
+        } else receiving_id = $scope.wallet.receiving_id;
+        base_payment_url = payment_url_prefix + receiving_id + '/';
+        $scope.receive.payment_url = base_payment_url;
+        if ($scope.receive.amount) {
+            $scope.receive.payment_url = base_payment_url + '?amount=' + formatAmountSatoshi($scope.receive.amount);
+        }
+    })
     $scope.copy_from_clipboard = function(send_tx) {
         clipboard.paste(function(data) {
             console.log(data);
@@ -195,7 +213,7 @@ angular.module('greenWalletReceiveControllers',
         clipboard.copy(data).then(
             function(text){
                 notices.makeNotice('success', text);
-            }, 
+            },
             function(error){
                 notices.makeNotice('error', error);
             }

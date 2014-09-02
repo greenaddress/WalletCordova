@@ -8,6 +8,14 @@
 <div class="row">
   <div class="col-md-12">
     <form role="form" class="form-horizontal">
+      <div class="form-group" ng-show="wallet.subaccounts.length">
+        <label class="col-sm-2 control-label" for="amount">From account</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="wallet.current_subaccount" ng-options="subwallet.pointer as subwallet.name for subwallet in [{pointer: 0, name: 'Main'}].concat(wallet.subaccounts)" style="float: right;">
+          </select>
+        </div>
+        <hr class="double">
+      </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="voucher_text" ng-show="send_tx.voucher">Testo di buono (opzionale)</label>
         <label class="col-sm-2 control-label" for="recipient" ng-hide="send_tx.voucher">Destinatario</label>
@@ -108,11 +116,11 @@
       </div>
       <hr ng-hide="send_tx.recipient.type == 'payreq'">
       <div class="form-group" ng-hide="send_tx.recipient.type == 'payreq'">
-        <label class="col-sm-2 control-label" for="amount">Memo</label>
+        <label class="col-sm-2 control-label" for="amount">Nota</label>
         <div class="col-sm-10">
           <div class="row">
             <div class="col-md-12">
-              <input class="form-control" type="text" ng-model="send_tx.memo" placeholder="You can enter a memo to store in your transactions list" />
+              <input class="form-control" type="text" ng-model="send_tx.memo" placeholder="Puoi inserire una nota privata che verrà visualizzata nella lista transazioni" />
             </div>
           </div>
         </div>

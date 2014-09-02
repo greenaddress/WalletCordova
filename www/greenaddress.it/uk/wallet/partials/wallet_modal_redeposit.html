@@ -5,9 +5,9 @@
 </div>
 <div class="modal-body text-center">
     <p class="alert alert-warning">У Вас є деякі депозити, термін дії яких завершився. Якщо ви не зробите повторний депозит чи не активуєте їх, то транзакції будуть заборонені</p>
-    
-    <div ng-hide="wallet.expired_deposits.length == 1">
-    	<p><a class="btn btn-block-xs btn-info" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_single_tx()">
+
+    <div ng-hide="wallet.expired_deposits.length == 1" class="tooltip-warning">
+    	<p><a class="btn btn-block-xs btn-default" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_single_tx()" tooltip="Warning: single transactions can be used to correlate funds with your identity, including funds between different accounts." >
     		Зробити депозит як одну транзакцію (дешевше)</a><br />
     		передбачувана комісія: (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
     	<p><a class="btn btn-block-xs btn-success" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_multiple_tx()">

@@ -1,0 +1,583 @@
+<div id="general">
+<div class="row">
+  <div class="col-md-12">
+    <div class="header">
+      ตั้งค่าทั่วไป
+    </div>
+  </div>
+</div>
+<div class="row currencies" ng-show="settings.pricing_sources">
+  <div class="col-md-3">
+    <div class="sub-header">สกุลเงิน</div>
+    <div class="sub-header-desc">เลือกสกุลเงินของคุณและราคาต้นทาง</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+      <div class="form-group">
+        <label class="control-label">แหล่งที่มาการกำหนดราคาที่จะใข้</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <select ng-model="settings.pricing_source"
+              ng-options="(source.currency+'|'+source.exchange) as (source.currency+' ('+exchanges[source.exchange]+')') for source in settings.pricing_sources"
+              ng-disabled="settings.updating_pricing_source">
+          </select>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <form role="form" class="form-inline">
+      <div class="form-group">
+        <label class="control-label">แสดงยอดเงิน</label>
+      </div>
+      <div class="form-group">
+        <div class="btn-group">
+          <button ng-repeat="unit in settings.available_units" type="button" class="btn btn-xs" ng-class="{'btn-primary': settings.unit == unit, 'btn-default': settings.unit != unit}" ng-model="settings.unit" btn-radio="unit" ng-disabled="settings.updating_unit">(( unit ))</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="SoundController">
+  <div class="col-md-3">
+    <div class="sub-header">เสียง</div>
+    <div class="sub-header-desc">เปิด หรือปิดเสียง</div>
+  </div>
+  <div class="col-md-9" submittable>
+    <form role="form" class="form-horizontal">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="wallet.appearance.sound"/>
+                <span class="switch"></span>
+                เปิดใช้งานเสียง
+            </label>
+        </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">ภาษา</div>
+    <div class="sub-header-desc">เปลี่ยนภาษา</div>
+  </div>
+  <div class="col-md-9" submittable>
+      <form role="form" class="form-inline">
+        <div class="form-group">
+          <select ng-model="settings.language">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="el">ελληνικά</option>
+            <option value="it">Italiano</option>
+            <option value="nl">Nederlands</option>
+            <option value="pl">Polski</option>
+            <option value="sv">Svenska</option>
+            
+            <option value="th">ภาษาไทย</option>
+            
+            <option value="uk">Українська</option>
+            <option value="ru">Pусский</option>
+          </select>
+        </div>
+      </form>
+  </div>
+</div>
+
+</div> <!-- id="general" -->
+<div id="security">
+<hr class="double">
+<div class="header">
+  ความปลอดภัย
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">อีเมล</div>
+    <div class="sub-header-desc">ตั้งค่าของคุณที่อยู่อีเมล์สำหรับการแจ้งเตือนธุรกรรม ปัจจัยสองรับรองความถูกต้อง และธุรกรรม nLockTime</div>
+  </div>
+  <div class="col-md-9">
+      <form ng-submit="set_new_email()" class="form-horizontal" role="form">
+        <div class="form-group">
+          <label ng-show="wallet.twofac.email_addr" class="control-label col-sm-3">เปลี่ยนอีเมล์</label>
+          <label ng-hide="wallet.twofac.email_addr" class="control-label col-sm-3">การตั้งค่าอีเมล์</label>
+          <div class="col-sm-4">
+            <input type="email" class="form-control" placeholder="อีเมล์ของคุณ" ng-model="settings.new_email" ng-disabled="settings.setting_email">
+            <input type="submit" class="btn btn-primary" ng-show="settings.new_email != wallet.twofac.email_addr" value="บันทึก" ng-disabled="settings.setting_email" />
+          </div>
+        </div>
+      </form>
+      <div ng-show="wallet.twofac.email_addr && !wallet.twofac.email_confirmed" class="col-sm-9">
+          <p>คุณต้องระบุรหัสยืนยันจากอีเมล์ของคุณให้ใช้<br>โปรดตรวจสอบอีเมล์ของคุณ และให้รหัส
+          </p>
+          <form ng-submit="confirm_email()" class="form-horizontal" role="form">
+            <label class="col-sm-4 control-label" for="wallet-sms-conf-code">รหัสจากอีเมล์</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input ng-model="settings.email_confirmation_code" class="form-control pin" type="tel" mask-input required="required"
+                        maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-sms-conf-code"
+                        placeholder="ใส่รหัสที่ได้รับ" />
+                    <span class="input-group-btn" ng-show="settings.email_confirmation_code">
+                        <input type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="ยืน​ยัน" />
+                    </span>
+                </div>
+            </div>
+          </form>
+          <div class="row"><div class="col-sm-12">
+            <p>รหัสถูกต้องสำหรับ 5 นาที เพื่อให้คุณสามารถร้องขออย่างอื่นถ้าจำเป็น <a href="" ng-click="set_new_email()" class="btn btn-info btn-xs" ng-class="{disabled: settings.setting_email}">ขอรหัสอื่น</a></p>
+          </div></div>
+      </div>
+  </div>
+</div>
+<hr class="double" ng-show="!settings.noLocalStorage">
+<div ng-controller="QuickLoginController" class="row" ng-show="!settings.noLocalStorage">
+  <div class="col-md-3">
+    <div class="sub-header">เข้าสู่ระบบอย่างรวดเร็ว</div>
+    <div class="sub-header-desc">เปิดใช้งาน PIN อย่างรวดเร็วเข้าถึง Wallet ของคุณจากอุปกรณ์นี้</div>
+  </div>
+  <div class="col-md-9">
+    <div ng-show="quicklogin.loaded">
+      <form ng-submit="set_new_pin()" class="form-horizontal" role="form">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="quicklogin.enabled" ng-disabled="quicklogin.started_setting_pin">
+          <span class="switch"></span>
+            เปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์นี้
+        </label>
+        <hr ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
+        <div class="form-group" ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
+          <label ng-show="quicklogin.enabled" class="control-label col-sm-3">เปลี่ยนหมายเลข PIN</label>
+          <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">กำหนดหมายเลข PIN</label>
+          <div class="col-sm-4">
+            <input type="tel" inputmode="numeric" class="form-control" placeholder="จำนวนตัวเลข 4-15"
+                   maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" ng-model="quicklogin.new_pin"/>
+            <input type="submit" class="btn btn-primary" ng-show="quicklogin.new_pin" value="ยืน​ยัน" ng-disabled="quicklogin.setting_pin" />
+          </div>
+        </div>
+        <hr>
+        <button class="btn btn-danger btn-block-xs" ng-click="remove_all_pin_logins()"><i class="glyphicon glyphicon-remove"></i> ปิดใช้งานการเข้าสู่ระบบอย่างรวดเร็วบนอุปกรณ์ทั้งหมด</button>
+        <!--
+        <div class="form-group">
+          <select id="quick-login-select" ng-model="quicklogin.selected_device" ng-options="device.device_name for device in quicklogin.devices"></select>
+          <label for="pin" class="col-sm-3 control-label">ตั้งค่า PIN</label>
+          <div class="col-sm-4">
+            <input id="pin" class="form-control" style="width:120px;" placeholder="หมายเลข PIN" type="tel" pattern="[0-9]{4}" ng-pattern="/[0-9]{4}/" maxlength="4" ng-model="quicklogin.new_pin" />
+          </div>
+          <div class="col-sm-4">
+            <a href="" ng-click="remove_pin()" class="noanimate btn btn-danger" ng-class="{disabled: quicklogin.removing_pin}" ng-hide="quicklogin.selected_device.is_current && quicklogin.new_pin">เอาออก</a>
+            <input type="submit" class="btn btn-primary" ng-show="quicklogin.selected_device.is_current && quicklogin.new_pin" value="ยืน​ยัน" ng-disabled="quicklogin.setting_pin" />
+          </div>
+        </div>
+        -->
+      </form>
+    </div>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">เชื่อมโยงบัญชีของบุคคลที่สาม</div>
+    <div class="sub-header-desc">อนุญาตจ่ายด้วยโซเชียลและการใช้งานแบบดูอย่างเดียวสำหรับ Wallet ผ่านทางบัญชีผู้ใช้งานแอพภายนอก</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
+    
+      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
+      <label class="switch">
+        <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
+        <span class="switch"></span>
+      </label>
+      <hr ng-hide="cordova_platform=='ios'">
+      
+    
+      <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> เข้าระบบเอง</button>
+      <label class="switch">
+        <input type="checkbox" class="switch" ng-model="thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom">
+        <span class="switch"></span>
+      </label>
+      <div ng-hide="!thirdparty.customstate.enabled && !thirdparty.toggling_custom && !thirdparty.customstate.username">
+        <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="text" ng-model="thirdparty.customstate.username" placeholder="ผู้ใช้" />
+        <input class="form-control" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" type="password" ng-model="thirdparty.customstate.password" placeholder="รหัสผ่าน" />
+        <input type="submit" class="btn btn-sm btn-default" value="(( thirdparty.customstate.save_button_label ))" ng-show="thirdparty.customstate.username && thirdparty.customstate.password" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" ng-click="thirdparty.customstate.save()" />
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">แจ้งเตือน</div>
+    <div class="sub-header-desc">การแจ้งเตือนอนุญาตให้พัฒนาความปลอดภัยเมื่อตั้งค่าขาออกและดึงข้อมูลล่าสุดเมื่อมีการตั้งค่าสำหรับขาเข้า</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
+      <div class="form-group">
+        <label class="control-label">ส่งการแจ้งเตือนธุรกรรมขาเข้าโดย</label>
+      </div>
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="settings.notifications.email_incoming" ng-disabled="settings.updating_ntf_email_incoming || !wallet.twofac.email_confirmed">
+          <span class="switch"></span>
+          อีเมล์
+        </label>
+      </div><!--
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch">
+          <span class="switch"></span>
+          SMS
+        </label>
+      </div> -->
+    </div>
+    <hr>
+    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
+        <div class="form-group">
+          <label class="control-label">ส่งการเตือนธุรกรรมขาออกโดย</label>
+        </div>
+        <div class="form-group">
+          <label class="switch">
+              <input type="checkbox" class="switch" ng-model="settings.notifications.email_outgoing" ng-disabled="settings.updating_ntf_email_outgoing || !wallet.twofac.email_confirmed">
+              <span class="switch"></span>
+              อีเมล์
+          </label>
+        </div><!--
+        <div class="form-group">
+          <label class="switch">
+            <input type="checkbox" class="switch">
+            <span class="switch"></span>
+            SMS
+          </label>
+        </div> -->
+      </div>
+      <div ng-hide="wallet.twofac.email_confirmed">
+        <hr>
+        <small class="label label-info" style="white-space: normal"><strong>บันทึก</strong>: คุณต้องเปิดการยืนยันผ่านอีดมล์เพื่อให้ใช้งานฟังก์ชันนี้ได้</small>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="PrivacyController">
+  <div class="col-md-3">
+    <div class="sub-header">ส่วนตัว</div>
+    <div class="sub-header-desc">ตัดสินใจเลือกบุคคลที่สามารถส่งเงินเข้า GreenAddress ได้และเลือกบุคคลที่เห็นชื่อคุณเมื่อมีการส่งเงินให้</div>
+  </div>
+  <div class="col-md-9" submittable>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">อนุญาตให้ส่งมาที่ wallet ผ่าน email/Reddit</label>
+          <br /><small>(หมายเหตุ: ขณะนี้สมุดบันทึกที่อยู่ไม่รองรับที่อยู่จาก reddit ดังนั้นการเลือก Addressbook contacts จะปิดการอนุญาตสำหรับการใช้ Reddit ส่งเข้าบัญชีคุณโดยตรง)</small></div>
+          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
+            <option value="2">ทุกท่าน</option>
+            <option value="1">สมุดรายชื่อที่อยู่</option>
+            <option value="0">ไม่มีใคร</option>
+          </select>
+        </div>
+      </form>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">แสดงอีเมล์/reddit เป็นผู้ส่งไปยัง</label>
+          <br /><small>(หมายเหตุ: ขณะนี้สมุดบันทึกที่อยู่ไม่รองรับที่อยู่จาก reddit ดังนั้นการเลือก Addressbook contacts จะทำให้คุณไม่เห็นผู้ส่งในชื่อ Reddit ขณะใช้งาน)</small></div>
+          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
+            <option value="2">ทุกท่าน</option>
+            <option value="1">เพิ่มความร่วมกันใน Facebook</option>
+            <option value="0">ไม่มีใคร</option>
+          </select>
+        </div>
+      </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="TwoFactorSetupController">
+  <div class="col-md-3">
+    <div class="sub-header">การตั้งรหัสผ่านสองขั้น</div>
+    <div class="sub-header-desc">ตั้งค่าตัวแปรหรือตั้งค่าทั้งหมด: คุณสามารถเลือกอันที่ต้องการได้</div>
+  </div>
+  <div class="col-md-9" submittable>
+    <form role="form" class="form-horizontal">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_email_switch" ng-disabled="twofactor_state.toggling_email">
+                <span class="switch"></span>
+                อีเมล
+            </label>
+        </div>
+    </form>
+      <hr>
+    <form role="form" class="form-horizontal" ng-submit="submit_gauth()">
+        <div class="form-group">
+            <label class="switch col-sm-4">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_gauth_switch" ng-disabled="twofactor_state.toggling_gauth">
+                <span class="switch"></span>
+                Google Authenticator
+            </label>
+            <div ng-show="twofactor_state.toggling_gauth == 'enabling' || twofactor_state.toggling_gauth == 'initial'" class="col-sm-8">
+                <p>คุณต้องป้อนรหัส Google Authenticator เพื่อตั้งค่ารหัสสองขั้น.<br>                    กรุณาสแกน QR code ด้านล่างและป้อนรหัส
+                </p>
+                <div class="text-center"><a href="" class="btn btn-default btn-sm" style="margin:15px 0 0;" ng-click="gauth_qr_modal()"><i class="glyphicon glyphicon-qrcode"></i> แสดง QR code</a></div>
+                <label class="col-sm-2 control-label" for="wallet-gauth-conf-code">รหัส</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_gauth_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.gauth_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-gauth-conf-code"
+                            placeholder="ใส่รหัสที่ได้รับ" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_gauth_code || twofactor_state.toggling_gauth == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="เปิดใช้งาน" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_gauth()" ng-class="{disabled: twofactor_state.toggling_gauth == 'enabling'}">ยกเลิก</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+      <hr>
+    <form role="form" class="form-horizontal" ng-submit="submit_sms()">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_sms_switch" ng-disabled="twofactor_state.toggling_sms">
+                <span class="switch"></span>
+                SMS
+            </label>
+            <input type="submit" style="position: absolute; left: -10000px;" />
+            <div ng-show="twofactor_state.toggling_sms == 'initial' && !twofactor_state.sms_set" class="col-sm-9">
+                <label class="col-sm-4 control-label" for="wallet-google-conf-code">หมายเลขโทรศัพท์ของคุณ</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input class="form-control" ng-model="twofactor_state.new_twofac_sms"
+                            id="wallet-twofac-sms" type="tel" name="phone" ng-required="!twofactor_state.sms_set"
+                            placeholder="+NN... กรุณาป้อนหมายเลขโทรศัพท์" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.new_twofac_sms || twofactor_state.enabling_sms" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="เปิดใช้งาน" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="(twofactor_state.toggling_sms == 'enabling' || twofactor_state.toggling_sms == 'initial') && twofactor_state.sms_set" class="col-sm-9">
+                <p>คุณต้องป้อนรหัสจากข้อความเพื่อตั้งค่ารหัสผ่านสองขั้น.<br>                กรุณาตรวจสอบโทรศัพท์และป้อนรหัส.
+                </p>
+                <label class="col-sm-4 control-label" for="wallet-sms-conf-code">รหัสจากข้อความ</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_sms_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.sms_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-sms-conf-code"
+                            placeholder="ใส่รหัสที่ได้รับ" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_sms_code || twofactor_state.toggling_sms == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="เปิดใช้งาน" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_sms()" ng-class="{disabled: twofactor_state.toggling_sms == 'enabling'}">ยกเลิก</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+      <hr>
+    <form role="form" class="form-horizontal" ng-submit="submit_phone()">
+        <div class="form-group">
+            <label class="switch col-sm-3">
+                <input type="checkbox" class="switch" ng-model="twofactor_state.twofac_phone_switch" ng-disabled="twofactor_state.toggling_phone">
+                <span class="switch"></span>
+                โทรศัพท์
+            </label>
+            <input type="submit" style="position: absolute; left: -10000px;" />
+            <div ng-show="twofactor_state.toggling_phone == 'initial' && !twofactor_state.phone_set" class="col-sm-9">
+                <label class="col-sm-4 control-label" for="wallet-google-conf-code">หมายเลขโทรศัพท์ของคุณ</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input class="form-control" ng-model="twofactor_state.new_twofac_phone"
+                            id="wallet-twofac-phone" type="tel" name="phone" ng-required="!twofactor_state.phone_set"
+                            placeholder="+NN... กรุณาป้อนหมายเลขโทรศัพท์" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.new_twofac_phone || twofactor_state.enabling_phone" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="เปิดใช้งาน" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="(twofactor_state.toggling_phone == 'enabling' || twofactor_state.toggling_phone == 'initial') && twofactor_state.phone_set" class="col-sm-9">
+                <p>คุณต้องป้อนรหัสจากโทรศัพท์เพื่อตั้งค่ารหัสผ่านสองขั้น.<br>                กรุณาตรวจสอบโทรศัพท์และป้อนรหัส.
+                </p>
+                <label class="col-sm-4 control-label" for="wallet-phone-conf-code">รหัสโทรศัพท์</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input ng-model="twofactor_state.twofac_phone_code" class="form-control pin" type="tel" mask-input ng-required="twofactor_state.phone_set"
+                            maxlength="6" pattern="[0-9]{6}" ng-pattern="/[0-9]{6}/" id="wallet-phone-conf-code"
+                            placeholder="ใส่รหัสที่ได้รับ" />
+                        <span class="input-group-btn">
+                            <input ng-disabled="!twofactor_state.twofac_phone_code || twofactor_state.toggling_phone == 'enabling'" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="เปิดใช้งาน" /><a href="" class="btn btn-warning" ng-click="cancel_twofac_phone()" ng-class="{disabled: twofactor_state.toggling_phone == 'enabling'}">ยกเลิก</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="AutoLogoutController">
+  <div class="col-md-3">
+    <div class="sub-header">ออกจากระบบอัตโนมัติ</div>
+    <div class="sub-header-desc">กำหนดค่าออกจากระบบโดยอัตโนมัติหลังจากไม่มีความเคลื่อนไหว  (( mins )) : (( secs )) </div>
+  </div>
+  <div class="col-md-9" submittable>
+    <form role="form" class="form-horizontal" ng-submit="save_logout_timeout()">
+        <label class="col-sm-2 control-label" for="wallet-timeout">นาที</label>
+        <div class="input-group">
+            <input inputmode="numeric" type="tel" class="form-control" placeholder="นาที ออกจากระบบ"
+                   maxlength="3"  ng-pattern="/[0-9]/" ng-model="timeoutstate.altimeout" id="wallet-timeout"/>
+            <input type="submit" class="btn btn-primary" ng-show="wallet.appearance.altimeout != timeoutstate.altimeout" value="บันทึก" ng-disabled="timeoutstate.timeout" />
+        </div>
+    </form>
+  </div>
+</div>
+<div class="row" ng-show="wallet.hdwallet.priv">
+  <hr class="double">
+  <div class="col-md-3">
+      <div class="sub-header">แสดงการช่วยจำ</div>
+    <div class="sub-header-desc">แสดงรหัสช่วยจำของการกู้บัญชีหรือนำไปใช้บนอุปกรณ์อื่น</div>
+  </div>
+  <div class="col-md-9">
+    <button class="btn btn-warning btn-block-xs" ng-click="show_mnemonic()"><i class="glyphicon glyphicon-eye-open"></i> แสดงการช่วยจำ</button>
+    <button class="btn btn-success btn-block-xs" ng-click="show_encrypted_mnemonic()"><i class="glyphicon glyphicon-lock"></i> แสดงรหัสช่วยจำเข้ารหัส</button>
+    
+    <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal()"><i class="glyphicon glyphicon-transfer"></i> เขียน NFC tag </button>
+    <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> เขียนการเข้ารหัสไปยัง NFC Tag</button>
+    
+    
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">nLockTime</div>
+    <div class="sub-header-desc">nLockTime transactions allow you to redeem your deposited funds without GreenAddress' signature after pre-defined number of blocks</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
+      <div class="form-group">
+        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
+          <label for="id_nlocktime_blocks" class="control-label">Allow redeeming funds without GreenAddress' signature after</label>
+          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
+          บล็อค
+          <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
+          <br />(( settings.nlocktime.blocks_userfriendly ))
+        </div>
+        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac.email_confirmed">
+          <hr>
+          <small class="label label-info" style="white-space: normal"><strong>บันทึก</strong>: ทั้งการแจ้งเตือนธุรกรรมขาเข้าและขาออกต้องเปิดใช้งานเพื่อให้ฟังก์ชั่นนี้ใช้งานได้</small>
+        </div>
+        <hr>
+        <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> แสดงผลลัพธ์ที่จะหมดอายุเร็ว ๆ นี้</a>
+        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> ส่งธุรกรรม nLockTime ทั้งหมดทางอีเมล์</a>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="TxLimitsController">
+  <div class="col-md-3">
+    <div class="sub-header">การจำกัดการใช้จ่าย</div>
+    <div class="sub-header-desc">ตั้งขีดจำกัดที่คุณจะไม่ถูกถามรหัสผ่าน 2 ขั้นสำหรับการชำระเงินที่สามารถทำได้อย่างง่ายดาย</div>
+  </div>
+  <div class="col-md-9">
+    <p>คุณสามารถตั้งขีดจำกัด (บีทีซีหรือเฟียต) ของยอดธุรกรรมที่คุณสามารถทำได้โดยไม่ต้องใช้การตรวจสอบรหัสผ่านขั้นที่ 2</p>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Limit currency</label>
+        <div class="col-sm-7">
+          <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
+          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (สกุลเงินปัจจุบัน)</span>
+          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>บันทึก</strong>: การใช้ค่าเงินเป็นขีดจำกัดหมายถึงคุณยอมรับความถูกต้องของการอ้างอิงราคาจากแหล่งที่มาแล้ว</small>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <label class="col-sm-3 control-label">Single transaction</label>
+        <div class="col-sm-7">
+          <span class="form-control">((wallet.limits.per_tx|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+        </div>
+      </div> -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Total</label>
+        <div class="col-sm-7">
+          <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+          <small>ขีดจำกัดนี้จะลดลงในแต่ละธุรกรรมและคุณต้องเติมเข้าไปใหม่เองเพื่อเพิ่มค่านี้</small>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> เปลี่ยนข้อจำกัด</button>
+    </div>
+  </div>
+</div>
+<!--
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">ชำระเงินล่าช้า</div>
+    <div class="sub-header-desc">ธุรกรรมหน่วงเวลาเป็นเรื่องง่ายดาย: ทำงานดีที่สุดใช้พร้อม conjunction และระบบแจ้งเตือนเปิดใช้งาน</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-horizontal">
+      <label class="switch">
+          <input type="checkbox" class="switch" disabled>
+          <span class="switch"></span>
+          <span>
+            ใช้งานชำระเงินล่าช้า
+            <span class="coming-soon">เร็วๆนี้</span>
+          </span>
+      </label>
+      <hr>
+      <div class="form-group">
+        <label class="control-label col-sm-3">ชำระเงินล่าช้าของ</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="จำนวน">
+        </div>
+        <div class="col-sm-4">
+          <select class="form-control">
+            <option value="">Seconds</option>
+            <option value="">Minutes</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+-->
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">ย้ายบัญชีออก</div>
+    <div class="sub-header-desc">คุณสามารถย้ายบัญชีและข้อมูลที่เกี่ยวข้องออกได้ที่นี่</div>
+  </div>
+  <div class="col-md-9">
+      <button class="btn btn-danger btn-block-xs" ng-click="remove_account()"><i class="glyphicon glyphicon-remove"></i> ย้ายบัญชีออก</button>
+  </div>
+</div>
+</div> <!-- id="security" -->
+<div id="accounts">
+<hr class="double">
+<div class="header">
+  Accounts
+</div>
+<div class="row" ng-controller="SubwalletsController">
+  <div class="col-md-3">
+    <div class="sub-header">Simple accounts</div>
+    <div class="sub-header-desc">Create accounts that allow you to separate your funds. Each accounts will have its own receiving addresses.</div>
+  </div>
+  <div class="col-md-9">
+    <form ng-submit="subwallets.create_new()" class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="control-label col-sm-6">Create an account with the following label:</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Label" ng-model="subwallets.new_label" ng-disabled="subwallets.adding_subwallet">
+            <span class="input-group-btn">
+              <input type="submit" class="btn btn-primary" value="Create" ng-disabled="!subwallets.new_label || subwallets.adding_subwallet" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <h3 ng-show="subwallets.existing.length">Your accounts:</h3>
+    <ul>
+      <li ng-repeat="subwallet in subwallets.existing">(( subwallet.name ))</li>
+    </ul>
+</div>
+</div> <!-- id="subwallets" -->

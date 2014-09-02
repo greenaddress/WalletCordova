@@ -181,7 +181,7 @@ angular.module('greenWalletServices', [])
             $location.url('/info');
         }
     };
-    walletsService._login = function($scope, hdwallet, mnemonic, signup, logout, path_seed, path) {
+    walletsService._login = function($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
         var d = $q.defer(), that = this;
         tx_sender.login(logout).then(function(data) {
             if (data) {
@@ -213,6 +213,8 @@ angular.module('greenWalletServices', [])
                 autotimeout.start($scope.wallet.appearance.altimeout);
                 $scope.wallet.privacy = data.privacy;
                 $scope.wallet.limits = data.limits;
+                $scope.wallet.subaccounts = data.subaccounts;
+                $scope.wallet.current_subaccount = 0;
                 $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
                 $scope.wallet.cache_password = data.cache_password;
                 $scope.wallet.fiat_exchange = data.exchange;
@@ -249,6 +251,7 @@ angular.module('greenWalletServices', [])
         return d.promise.catch(function(err) {
             if (err && err.uri == 'http://greenaddressit.com/error#doublelogin') {
                 return handle_double_login(function() {
+                    if (double_login_callback) double_login_callback();
                     return that.login($scope, hdwallet, mnemonic, signup, true, path_seed);
                 });
             } else {
@@ -274,7 +277,7 @@ angular.module('greenWalletServices', [])
             return that._login($scope, hdwallet, undefined, signup, logout, undefined, path);
         });
     };
-    walletsService.login_btchip = function($scope, btchip, btchip_pubkey, logout) {
+    walletsService.login_btchip = function($scope, btchip, btchip_pubkey, double_login_callback) {
         tx_sender.btchip = btchip;
         tx_sender.btchip_address = btchip_pubkey.bitcoinAddress.value;
         var hdwallet = new Bitcoin.HDWallet();
@@ -282,7 +285,7 @@ angular.module('greenWalletServices', [])
         hdwallet.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(btchip_pubkey.publicKey.toString(HEX)));
         hdwallet.chaincode = Bitcoin.convert.hexToBytes(btchip_pubkey.chainCode.toString(HEX));
         tx_sender.hdwallet = hdwallet;
-        return this._login($scope, hdwallet, undefined, false, logout, undefined, undefined);
+        return this._login($scope, hdwallet, undefined, false, false, undefined, undefined, double_login_callback);
     };
     walletsService.loginWatchOnly = function($scope, token_type, token, logout) {
         var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
@@ -312,7 +315,8 @@ angular.module('greenWalletServices', [])
 
             autotimeout.start($scope.wallet.appearance.altimeout);
             $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
-
+            $scope.wallet.subaccounts = data.subaccounts;
+            $scope.wallet.current_subaccount = 0;
             $scope.wallet.cache_password = data.cache_password;
             $scope.wallet.fiat_exchange = data.exchange;
             $scope.wallet.receiving_id = data.receiving_id;
@@ -333,9 +337,9 @@ angular.module('greenWalletServices', [])
         });
         return promise;
     };
-    walletsService.getTransactions = function($scope, notifydata, query, sorting, date_range) {
+    walletsService.getTransactions = function($scope, notifydata, query, sorting, date_range, subaccount) {
         return addressbook.load($scope).then(function() {
-            return walletsService._getTransactions($scope, notifydata, null, query, sorting, date_range);
+            return walletsService._getTransactions($scope, notifydata, null, query, sorting, date_range, subaccount);
         });
     };
     var parseSocialDestination = function(social_destination) {
@@ -347,7 +351,7 @@ angular.module('greenWalletServices', [])
             return social_destination;
         }
     };
-    walletsService._getTransactions = function($scope, notifydata, page_id, query, sorting, date_range) {
+    walletsService._getTransactions = function($scope, notifydata, page_id, query, sorting, date_range, subaccount) {
         var transactions_key = $scope.wallet.receiving_id + 'transactions';
         var d = $q.defer();
         $rootScope.is_loading += 1;
@@ -365,7 +369,7 @@ angular.module('greenWalletServices', [])
         var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
                                             end && end.toISOString()];
         var call = tx_sender.call('http://greenaddressit.com/txs/get_list_v2',
-            page_id, query, sort_by, date_range_iso);
+            page_id, query, sort_by, date_range_iso, subaccount);
 
         call.then(function(data) {
             var retval = [];
@@ -417,11 +421,6 @@ angular.module('greenWalletServices', [])
                     } else { inputs.push(ep); in_val = in_val.add(new Bitcoin.BigInteger(ep.value)); }
                 }
                 if (value.compareTo(new Bitcoin.BigInteger('0')) > 0 || redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
-                    if (notifydata && (tx.txhash == notifydata.txhash)) {
-                        notifydata = undefined;
-                        notices.makeNotice('success', gettext('Bitcoin transaction received!'));
-                        sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
-                    }
                     positive = true;
                     if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
                         var description = gettext('Back from ') + sent_back_from;
@@ -517,7 +516,7 @@ angular.module('greenWalletServices', [])
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
 
-            d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range,
+            d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range, subaccount: subaccount,
                         populate_csv: function() {
                             var csv_list = [gettext('Time,Description,satoshis,')+this.fiat_currency];
                             for (var i = 0; i < this.list.length; i++) {
@@ -529,18 +528,18 @@ angular.module('greenWalletServices', [])
                         next_page_id: data.next_page_id,
                         fetch_next_page: function() {
                             var that = this;
-                            walletsService._getTransactions($scope, notifydata, that.next_page_id, query, that.sorting, that.date_range).then(function(result) {
+                            walletsService._getTransactions($scope, notifydata, that.next_page_id, query, that.sorting, that.date_range, that.subaccount).then(function(result) {
                                 that.list = that.list.concat(result.list);
                                 that.next_page_id = result.next_page_id;
                             });
                         },
                         sort_by: function(sorting) {
                             var that = this;
-                            walletsService._getTransactions($scope, notifydata, null, query, sorting, that.date_range).then(function(result) {
+                            walletsService._getTransactions($scope, notifydata, null, query, sorting, that.date_range, that.subaccount).then(function(result) {
                                 that.sorting = sorting;
                                 if (sorting.order_by == 'ts' && sorting.reversed) {
-                                    $scope.wallet.transactions.pending_from_notification = false;
-                                    $scope.wallet.transactions.pending_conf_from_notification = false;
+                                    that.pending_from_notification = false;
+                                    that.pending_conf_from_notification = false;
                                 }
                                 that.list = result.list;
                                 that.next_page_id = result.next_page_id;
@@ -563,38 +562,44 @@ angular.module('greenWalletServices', [])
                 if (data.prev_outputs[i].privkey) {
                     key = $q.when(data.prev_outputs[i].privkey);
                 } else if (tx_sender.hdwallet.priv) {
-                    if (priv_der) {
+                    // $timeouts allow progress to be updated in the UI
+                    if (data.prev_outputs[i].subaccount) {
                         key = $timeout(function() {
-                                return $q.when(tx_sender.hdwallet.derivePrivate(data.prev_outputs[i].branch)).then(function(key) {
-                                    return key.derivePrivate(data.prev_outputs[i].pointer);
-                                });
+                            return $q.when(tx_sender.hdwallet.derivePrivate(3)).then(function(key) {
+                                return key.derivePrivate(data.prev_outputs[i].subaccount);
                             });
+                        })
                     } else {
                         key = $timeout(function() {
-                            key = $q.when(tx_sender.hdwallet.derive(data.prev_outputs[i].branch));
-                            if (data.prev_outputs[i].subaccount) {
-                                key = key.then(function(key) {
-                                    return key.derivePrivate(data.prev_outputs[i].subaccount);
-                                });
-                            }
-                            key = key.then(function(key) {
-                                return key.derive(data.prev_outputs[i].pointer);
-                            });
-                            return key;
+                            return $q.when(tx_sender.hdwallet);
+                        });
+                    }
+                    if (priv_der) {
+                        key = key.then(function(key) {
+                            return key.derivePrivate(data.prev_outputs[i].branch);
+                        }).then(function(key) {
+                            return key.derivePrivate(data.prev_outputs[i].pointer);
+                        });
+                    } else {
+                        key = key.then(function(key) {
+                            return key.derive(data.prev_outputs[i].branch);
+                        }).then(function(key) {
+                            return key.derive(data.prev_outputs[i].pointer);
                         });
                     }
                     key = key.then(function(key) {
                         return key.priv;
                     });
                 } else {
+                    if (data.prev_outputs[i].subaccount) {
+                        path.push("3'");
+                        path.push(data.prev_outputs[i].subaccount + "'");
+                    }
                     if (priv_der) {
                         path.push(data.prev_outputs[i].branch + "'");
                         path.push(data.prev_outputs[i].pointer + "'");
                     } else {
                         path.push(data.prev_outputs[i].branch);
-                        if (data.prev_outputs[i].subaccount) {
-                            path.push(data.prev_outputs[i].subaccount + "'");
-                        }
                         path.push(data.prev_outputs[i].pointer);
                     }
                 }
@@ -619,7 +624,7 @@ angular.module('greenWalletServices', [])
                                 return $scope.wallet.btchip.app.signTransaction_async(path.join('/')).then(function(sig) {
                                     $interval.cancel(int_promise);
                                     signed_n += 1;
-                                    sign_deferred.resolve(sig.toString(HEX));
+                                    sign_deferred.resolve("30" + sig.bytes(1).toString(HEX));
                                 }, sign_deferred.reject);
                             }, sign_deferred.reject)
                         }, sign_deferred.reject);
@@ -928,7 +933,7 @@ angular.module('greenWalletServices', [])
             txSenderService.electrum.connectToServer();
         }
     }
-    var session, calls = [], calls_missed = {}, calls_counter = 0;
+    var session, calls = [], calls_missed = {}, calls_counter = 0, global_login_d;
     txSenderService.call = function() {
         var d = $q.defer();
         if (session) {
@@ -940,6 +945,9 @@ angular.module('greenWalletServices', [])
                     delete calls_missed[cur_call];
                     $rootScope.$apply(function() { d.resolve(data); })
                 }, function(err) {
+                    if (err.uri == 'http://greenaddressit.com/error#internal' && err.desc == 'Authentication required') {
+                        return; // keep in missed calls queue for after login
+                    }
                     if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                     delete calls_missed[cur_call];
                     $rootScope.$apply(function() { d.reject(err); })
@@ -954,7 +962,7 @@ angular.module('greenWalletServices', [])
         } else {
             if (disconnected) {
                 disconnected = false;
-                connect();
+                connect(global_login_d);
             }
             calls.push([arguments, d]);
         }
@@ -971,7 +979,6 @@ angular.module('greenWalletServices', [])
                 session = null;
                 disconnected = true;
                 txSenderService.wallet.update_balance();
-                txSenderService.wallet.refresh_transactions();
             }, false);
         })();
     } else if (isMobile && typeof document.addEventListener !== undefined) {
@@ -979,7 +986,6 @@ angular.module('greenWalletServices', [])
         document.addEventListener("visibilitychange", function() {
             if (!document.hidden && txSenderService.wallet && txSenderService.logged_in) {
                 txSenderService.wallet.update_balance();
-                txSenderService.wallet.refresh_transactions();
             }
         }, false);
     }
@@ -1005,6 +1011,11 @@ angular.module('greenWalletServices', [])
         }
         d1.catch(function(err) {
             if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
+                if (login_d) {
+                    // login_d handler may want to handle double login by forcing logout
+                    login_d.reject(err);
+                    return;
+                }
                 autotimeout.stop();
                 if (txSenderService.wallet) txSenderService.wallet.clear();
                 $location.path('/concurrent_login');
@@ -1046,50 +1057,73 @@ angular.module('greenWalletServices', [])
             });
         });
     };
-    var retries = 60, everConnected = false, disconnected = false, connecting = false;
+    var disconnected = false, connecting = false, nconn = 0;
     var connect = function(login_d) {
+        global_login_d = login_d;
         if (connecting) return;
         connecting = true;
-        ab.connect(wss_url,
-            function(s) {
-                everConnected = true;
-                $http.get((window.root_url||'')+'/token/').then(function(response) {
-                    var token = response.data;
-                    s.authreq(token).then(function(challenge) {
-                        var signature = s.authsign(challenge, token);
-                        s.auth(signature).then(function(permissions) {
-                            connecting = false;
-                            onAuthed(s, login_d);
+        nconn += 1;
+        var retries = 60, everConnected = false;
+        (function (nc) {
+            ab.connect(wss_url,
+                function(s) {
+                    everConnected = true;
+                    $http.get((window.root_url||'')+'/token/').then(function(response) {
+                        var token = response.data;
+                        try {
+                            s.authreq(token).then(function(challenge) {
+                                var signature = s.authsign(challenge, token);
+                                try {
+                                    s.auth(signature).then(function(permissions) {
+                                        if (nc != nconn) {
+                                            // newer connection created - close the old one
+                                            s.close();
+                                            return;
+                                        }
+                                        connecting = false;
+                                        global_login_d = undefined;
+                                        onAuthed(s, login_d, nc);
+                                    });
+                                } catch (e) {  // "Autobahn not connected"
+                                    setTimeout(function() { connecting = false; connect(login_d); }, 5000);
+                                }
+                            });
+                        } catch (e) {  // "Autobahn not connected"
+                            setTimeout(function() { connecting = false; connect(login_d); }, 5000);
+                        }
+                    });
+                },
+                function(code, reason) {
+                    if (retries && !everConnected) {  // autobahnjs doesn't reconnect automatically if it never managed to connect
+                        retries -= 1;
+                        setTimeout(function() { connecting = false; connect(login_d); }, 5000);
+                        return;
+                    }
+                    if (reason && reason.indexOf('WS-4000') != -1) {
+                        $rootScope.$apply(function() {
+                            autotimeout.stop();
+                            txSenderService.logout();
+                            $location.path('/concurrent_login');
                         });
-                    });
-                });
-            },
-            function(code, reason) {
-                if (retries && !everConnected) {  // autobahnjs doesn't reconnect automatically if it never managed to connect
-                    retries -= 1;
-                    setTimeout(connect, 5000);
-                    return;
-                }
-                if (reason && reason.indexOf('WS-4000') != -1) {
-                    $rootScope.$apply(function() {
-                        autotimeout.stop();
-                        txSenderService.logout();
-                        $location.path('/concurrent_login');
-                    });
-                }
-                if (reason && reason.indexOf('WS-4001') != -1) {  // concurrent login on the same device
-                    $rootScope.$apply(function() {
-                        autotimeout.stop();
-                        txSenderService.logout();
-                        $location.path('/');
-                    });
-                }
-                session = null;
-                disconnected = true;
-                connecting = false;
-            },
-            {maxRetries: 60}
-        );
+                    }
+                    if (reason && reason.indexOf('WS-4001') != -1 &&  // concurrent login on the same device
+                            nc == nconn) {  // allow concurrent logins in the same session in case of service restarts
+                        $rootScope.$apply(function() {
+                            autotimeout.stop();
+                            txSenderService.logout();
+                            $location.path('/');
+                        });
+                    }
+                    if (nc == nconn) {
+                        session = null;
+                        disconnected = true;
+                        connecting = false;
+                        global_login_d = undefined;
+                    }
+                },
+                {maxRetries: 60}
+            );
+        })(nconn);
     };
     cordovaReady(connect)();
     txSenderService.logged_in = false;
@@ -1180,9 +1214,13 @@ angular.module('greenWalletServices', [])
                             $q.when(hdwallet.derive(path[0])).then(function(result_pk) {
                                 btchip.app.signMessagePrepare_async(path.join('/'), new ByteString(msg, HEX)).then(function(result) {
                                     btchip.app.signMessageSign_async(new ByteString("00", HEX)).then(function(result) {
-                                        var signature = Bitcoin.ecdsa.parseSig(Bitcoin.convert.hexToBytes(result.toString(HEX)));
-                                        var i = Bitcoin.ecdsa.calcPubKeyRecoveryParam(
-                                            result_pk.pub.pub, signature.r, signature.s, Bitcoin.Message.magicHash(msg_plain));
+                                        var signature = Bitcoin.ecdsa.parseSig(Bitcoin.convert.hexToBytes("30" + result.bytes(1).toString(HEX)));
+                                        if (btchip.features.signMessageRecoveryParam) {
+                                            var i = result.byteAt(0) & 0x01;
+                                        } else {
+                                            var i = Bitcoin.ecdsa.calcPubKeyRecoveryParam(
+                                                result_pk.pub.pub, signature.r, signature.s, Bitcoin.Message.magicHash(msg_plain));
+                                        }
                                         d.resolve(device_id().then(function(devid) {
                                             return txSenderService.call('http://greenaddressit.com/login/authenticate',
                                                     [signature.r.toString(), signature.s.toString(), i.toString()], logout||false,
@@ -1204,6 +1242,10 @@ angular.module('greenWalletServices', [])
     txSenderService.logout = function() {
         if (session) {
             session.close();
+            session = null;
+        }
+        for (var key in calls_missed) {
+            delete calls_missed[key];
         }
         if (txSenderService.btchip) {
             txSenderService.btchip.dongle.disconnect_async();
@@ -2090,18 +2132,21 @@ angular.module('greenWalletServices', [])
                     if (result.length) {
                         cardFactory.getCardTerminal(result[0]).getCard_async().then(function(dongle) {
                             var app = new BTChip(dongle);
+                            var features = {};
                             app.getFirmwareVersion_async().then(function(version) {
                                 if (version.firmwareVersion.toString(HEX) < '000104080000') {
                                     var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
                                     notices.makeNotice("error", notice);
                                     return;
                                 }
+                                features.signMessageRecoveryParam =
+                                    version.firmwareVersion.toString(HEX) >= '000104090000';
                                 if (noModal) {
                                     $interval.cancel(tick);
                                 } else {
                                     modal.close();  // modal close cancels the tick
                                 }
-                                deferred.resolve(service._setupWrappers({dongle: dongle, app: app}));
+                                deferred.resolve(service._setupWrappers({dongle: dongle, app: app, features: features}));
                             });
                         });
                     }

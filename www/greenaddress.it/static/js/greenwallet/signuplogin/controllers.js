@@ -265,18 +265,24 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             btchip.promptPin('', function(err, pin) {
                 if (!pin) return;
                 btchip_dev.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
-                    var expected_signing_ms = 6000, elapsed_signing_ms = 0;
-                    $scope.hardware_progress = 1;
-                    var countdown = $interval(function() {
-                        elapsed_signing_ms += 100;
-                        $scope.hardware_progress = Math.max(1, Math.round(100*elapsed_signing_ms/expected_signing_ms));
-                        if ($scope.hardware_progress >= 100) {
-                            $interval.cancel(countdown);
-                        }
-                    }, 100);
+                    var expected_signing_ms = 6000;
+                    var restart_countdown = function() {
+                        var elapsed_signing_ms = 0
+                        $scope.hardware_progress = 1;
+                        var countdown = $interval(function() {
+                            elapsed_signing_ms += 100;
+                            $scope.hardware_progress = Math.max(1, Math.round(100*elapsed_signing_ms/expected_signing_ms));
+                            if ($scope.hardware_progress >= 100) {
+                                // second login is faster because pubkey is already derived:
+                                expected_signing_ms = 4500;
+                                $interval.cancel(countdown);
+                            }
+                        }, 100);
+                    };
+                    restart_countdown();
                     $scope.logging_in = true;
                     btchip_dev.app.getWalletPublicKey_async('').then(function(result) {
-                        wallets.login_btchip($scope, btchip_dev, result).finally(function() {
+                        wallets.login_btchip($scope, btchip_dev, result, restart_countdown).finally(function() {
                             $scope.logging_in = false;
                         });
                     }).fail(function(error) {
@@ -331,7 +337,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     state.login_error = true;
                     return;
                 }
-                notices.makeNotice('success', gettext('PIN correct'));
                 tx_sender.pin_ident = state.pin_ident;
                 tx_sender.pin = use_pin_data.pin;
                 return crypto.decrypt(state.encrypted_seed, password).then(function(decoded) {

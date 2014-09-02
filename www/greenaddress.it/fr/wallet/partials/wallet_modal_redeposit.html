@@ -5,9 +5,9 @@
 </div>
 <div class="modal-body text-center">
     <p class="alert alert-warning">Vous avez des dépôts expirés, tant que vous ne re-déposez ou réclamez pas ces fonds aucune transaction ne pourra être effectuée. </p>
-    
-    <div ng-hide="wallet.expired_deposits.length == 1">
-    	<p><a class="btn btn-block-xs btn-info" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_single_tx()">
+
+    <div ng-hide="wallet.expired_deposits.length == 1" class="tooltip-warning">
+    	<p><a class="btn btn-block-xs btn-default" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_single_tx()" tooltip="Warning: single transactions can be used to correlate funds with your identity, including funds between different accounts." >
     		Re-dépôt transaction simple (moins cher)</a><br />
     		frais (estimation): (( redeposit_estimated_fees.single_tx|format_btc:wallet.unit ))</p>
     	<p><a class="btn btn-block-xs btn-success" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_multiple_tx()">

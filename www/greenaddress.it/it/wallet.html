@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="description" content="Il più sicuro wallet Bitcoin che ti lascia in controllo completo" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta property="og:image" content="https://localhost../static/img/logos/logo-greenaddress.png" />
     <!--[if IE 7]>
         <script>
@@ -38,7 +38,7 @@
     
         <script type="text/javascript" src="../static/js/cordova.js"></script>
         <script type="text/javascript" src="../static/js/cdv-plugin-fb-connect.js"></script>
-        <script type="text/javascript" src="../static/js/facebook-js-sdk.js"></script> 
+        <script type="text/javascript" src="../static/js/facebook-js-sdk.js"></script>
         <script type="text/javascript" src="../static/js/common_cordova_handlers.min.js"></script>
         
     
@@ -63,6 +63,7 @@
 <script type="text/javascript" src="../static/js/angular/angular-touch.min.js"></script>
 <script type="text/javascript" src="../static/js/angular/qrcode.js"></script>
 <script type="text/javascript" src="../static/js/angular/angular-qr.min.js"></script>
+<script type="text/javascript" src="../static/js/angular/angular-scroll.min.js"></script>
 <script type="text/javascript" src="../static/js/angular/ui-bootstrap-tpls-0.11.0.min.js"></script>
 <script type="text/javascript" src="../static/js/sha512.js"></script>
 <script type="text/javascript" src="../static/js/greenwallet/signuplogin/controllers.js"></script>
@@ -147,6 +148,11 @@
     <li path="/receive"><a href="#/receive">Ricevi</a></li>
     <li path="/address-book"><a href="#/address-book">Rubrica</a></li>
     <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">Configurazione</a></li>
+
+    <li ng-show="settings" du-scrollspy="general" class="menu-submenu"><a href="#general" du-smooth-scroll>General</a></li>
+    <li ng-show="settings" du-scrollspy="security" class="menu-submenu"><a href="#security" du-smooth-scroll>Sicurezza</a></li>
+    <li ng-show="settings" du-scrollspy="accounts" class="menu-submenu"><a href="#accounts" du-smooth-scroll>Accounts</a></li>
+
     <li><a href="" ng-click="update_now()" ng-show="update_available">Aggiorna ora</a></li>
     <li><a href="" ng-click="logout()">Esci</a></li>
   </ul>

@@ -1,6 +1,6 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack) {
+.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack', 'sound',
+        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack, sound) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
@@ -120,7 +120,7 @@ angular.module('greenWalletControllers', [])
         $scope.wallet = {
             update_balance: function(first) {
                 var that = this;
-                tx_sender.call('http://greenaddressit.com/txs/get_balance').then(function(data) {
+                tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
                     that.final_balance = data.satoshi;
                     that.fiat_currency = data.fiat_currency;
                     that.fiat_value = data.fiat_value;
@@ -129,13 +129,6 @@ angular.module('greenWalletControllers', [])
                         $scope.$broadcast('first_balance_updated');
                     }
                 }).finally(function() { updating = false; });
-            },
-            refresh_transactions: function(notifydata) {
-                if (updating_txs) return;
-                updating_txs = true;
-                wallets.getTransactions($scope, notifydata).then(function(data) {
-                    $scope.wallet.transactions = data;
-                }).finally(function() { updating_txs = false; });
             },
             clear: clearwallet,
             get_tx_output_value: function(txhash, i, no_electrum) {
@@ -162,38 +155,19 @@ angular.module('greenWalletControllers', [])
         };
     };
     clearwallet();
-    $scope.$on('block', function(event, data) {
-        if (!$scope.wallet.transactions || !$scope.wallet.transactions.list.length) return;
-        $scope.$apply(function() {
-            for (var i = 0; i < $scope.wallet.transactions.list.length; i++) {
-                if (!$scope.wallet.transactions.list[i].block_height) {
-                    // if any unconfirmed, we need to refetch all txs to get the block height
-                    if ($scope.wallet.transactions.sorting.order_by != 'ts' ||
-                            !$scope.wallet.transactions.sorting.reversed) {
-                        $scope.wallet.transactions.pending_conf_from_notification = true;
-                    } else {
-                        $scope.wallet.refresh_transactions();
-                        break;
-                    }
-                } else {
-                    $scope.wallet.transactions.list[i].confirmations = data.count - $scope.wallet.transactions.list[i].block_height + 1;
-                }
-            }
-        });
-    });
     $scope.processWalletVars();
+    $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
+        if (newValue != oldValue && newValue !== undefined) $scope.wallet.update_balance();
+    })
     $scope.$on('login', function() {
         $scope.wallet.update_balance(true);
-        $scope.wallet.refresh_transactions();
         $scope.$on('transaction', function(event, data) {
             if (updating) return;
             updating = true;
             $scope.wallet.update_balance();
-            if ($scope.wallet.transactions.sorting.order_by != 'ts' ||
-                    !$scope.wallet.transactions.sorting.reversed) {
-                $scope.wallet.transactions.pending_from_notification = true;
-            } else {
-                $scope.wallet.refresh_transactions(data);
+            if (data.value > 0) {
+                notices.makeNotice('success', gettext('Bitcoin transaction received!'));
+                sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
             }
         });
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
