@@ -1,6 +1,6 @@
 //
 //  CDVBIP32.m
-//  GreenAddress.It
+//  GreenAddress
 //
 
 #import "CDVBIP32.h"

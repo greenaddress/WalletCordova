@@ -1,6 +1,6 @@
 //
 //  CDVBIP38.m
-//  GreenAddress.It
+//  GreenAddress
 //
 
 #import "CDVBIP38.h"

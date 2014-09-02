@@ -1,6 +1,6 @@
 //
 //  CDVBIP32.h
-//  GreenAddress.It
+//  GreenAddress
 //
 
 #import <Cordova/CDVPlugin.h>

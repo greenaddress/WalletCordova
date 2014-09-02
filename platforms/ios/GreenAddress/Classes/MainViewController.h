@@ -18,25 +18,23 @@
  */
 
 //
-//  AppDelegate.h
-//  GreenAddress.It
+//  MainViewController.h
+//  GreenAddress
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import <Cordova/CDVViewController.h>
+#import <Cordova/CDVCommandDelegateImpl.h>
+#import <Cordova/CDVCommandQueue.h>
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>{}
+@interface MainViewController : CDVViewController
 
-// invoke string is passed to your app on launch, this is only valid if you
-// edit GreenAddress.It-Info.plist to add a protocol
-// a simple tutorial can be found here :
-// http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+@end
 
-@property (nonatomic, strong) IBOutlet UIWindow* window;
-@property (nonatomic, strong) IBOutlet CDVViewController* viewController;
+@interface MainCommandDelegate : CDVCommandDelegateImpl
+@end
 
+@interface MainCommandQueue : CDVCommandQueue
 @end

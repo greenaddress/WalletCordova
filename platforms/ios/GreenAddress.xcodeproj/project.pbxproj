@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		01FE61DA53894105861B6AF6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F5DA2698434344841BC063 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0811E8FFD0A6425F894DFE28 /* zxing-all-in-one.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C6A6F91EF71402D9D87EF0D /* zxing-all-in-one.cpp */; };
@@ -114,21 +115,21 @@
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
-			remoteInfo = GreenAddress.It;
+			remoteInfo = GreenAddress;
 		};
 		9EE39110195E362E00946C17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
-			remoteInfo = GreenAddress.It;
+			remoteInfo = GreenAddress;
 		};
 		9EE39112195E364200946C17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
-			remoteInfo = GreenAddress.It;
+			remoteInfo = GreenAddress;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -142,7 +143,7 @@
 		155EFE573F914D9CAA51599A /* crypto_scrypt-sse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = "crypto_scrypt-sse.c"; path = "it.greenaddress.cordova/bip38/c/crypto_scrypt-sse.c"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* GreenAddress.It.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GreenAddress.It.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* GreenAddress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GreenAddress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F766FDD13BBADB100FB74C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		21B6C8363D9946F987F080C3 /* sysendian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sysendian.h; path = it.greenaddress.cordova/bip38/include/sysendian.h; sourceTree = "<group>"; };
@@ -169,7 +170,7 @@
 		30A0434414DC770100060A13 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Localizable.strings; sourceTree = "<group>"; };
 		30A0434714DC770100060A13 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = Localizable.strings; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* GreenAddress.It-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GreenAddress.It-Prefix.pch"; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* GreenAddress-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GreenAddress-Prefix.pch"; sourceTree = "<group>"; };
 		33922329B1144C9AB9A89879 /* libiconv.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		34B41E81F2C14D908DB57D02 /* CDVBIP39.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVBIP39.h; path = it.greenaddress.cordova/CDVBIP39.h; sourceTree = "<group>"; };
 		3A2AE180857E47468CD39B37 /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVReachability.h; path = "org.apache.cordova.network-information/CDVReachability.h"; sourceTree = "<group>"; };
@@ -206,18 +207,18 @@
 		864DDAFFBF774097BEFCD533 /* CDVLocalFilesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLocalFilesystem.h; path = org.apache.cordova.file/CDVLocalFilesystem.h; sourceTree = "<group>"; };
 		8A0069C4A3614C9DBA74BB95 /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8C6A6F91EF71402D9D87EF0D /* zxing-all-in-one.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = "zxing-all-in-one.cpp"; path = "com.phonegap.plugins.barcodescanner/zxing-all-in-one.cpp"; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* GreenAddress.It-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GreenAddress.It-Info.plist"; path = "../GreenAddress.It-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* GreenAddress-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GreenAddress-Info.plist"; path = "../GreenAddress-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		919CA44E91BE4C8082A93CF0 /* CDVFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVFile.h; path = org.apache.cordova.file/CDVFile.h; sourceTree = "<group>"; };
 		93719F4DC0684A8496EA2100 /* CDVLocalFilesystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLocalFilesystem.m; path = org.apache.cordova.file/CDVLocalFilesystem.m; sourceTree = "<group>"; };
 		97FFC315C31A45D9A09A52CD /* scrypt_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scrypt_platform.h; path = it.greenaddress.cordova/bip38/include/scrypt_platform.h; sourceTree = "<group>"; };
 		9B7E89CA8AE844599ACF7CD7 /* CDVAssetLibraryFilesystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVAssetLibraryFilesystem.m; path = org.apache.cordova.file/CDVAssetLibraryFilesystem.m; sourceTree = "<group>"; };
-		9E93E00D195CE22700494A83 /* GreenAddress.It Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GreenAddress.It Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E93E00D195CE22700494A83 /* GreenAddress Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GreenAddress Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E93E00E195CE22700494A83 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		9E93E010195CE22700494A83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		9E93E012195CE22700494A83 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		9E93E016195CE22700494A83 /* GreenAddress.It Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GreenAddress.It Tests-Info.plist"; sourceTree = "<group>"; };
+		9E93E016195CE22700494A83 /* GreenAddress Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GreenAddress Tests-Info.plist"; sourceTree = "<group>"; };
 		9E93E018195CE22700494A83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9E93E01C195CE22700494A83 /* GreenAddress.It Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GreenAddress.It Tests-Prefix.pch"; sourceTree = "<group>"; };
+		9E93E01C195CE22700494A83 /* GreenAddress Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GreenAddress Tests-Prefix.pch"; sourceTree = "<group>"; };
 		9E93E024195CE2BE00494A83 /* BIP38Vectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIP38Vectors.m; sourceTree = "<group>"; };
 		A0D70C7BCD404774B19BA34F /* CDVBIP39.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVBIP39.m; path = it.greenaddress.cordova/CDVBIP39.m; sourceTree = "<group>"; };
 		A54F76A6CC7548B7912A7CB8 /* FacebookConnectPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookConnectPlugin.h; path = com.phonegap.plugins.facebookconnect/FacebookConnectPlugin.h; sourceTree = "<group>"; };
@@ -227,7 +228,7 @@
 		B2456C008D0044BD85F1A812 /* scannerOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scannerOverlay.xib; sourceTree = "<group>"; };
 		B808AB269BDA429792B67145 /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = CDVBarcodeScanner.mm; path = com.phonegap.plugins.barcodescanner/CDVBarcodeScanner.mm; sourceTree = "<group>"; };
 		BBCBE301BBE14627928BBEB1 /* AppPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppPreferences.m; path = "me.apla.cordova.app-preferences/AppPreferences.m"; sourceTree = "<group>"; };
-		C08118C9DEDA495D890E7D7E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = GreenAddress.It/Plugins/com.phonegap.plugins.facebookconnect/FacebookSDK.framework; sourceTree = "<group>"; };
+		C08118C9DEDA495D890E7D7E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = GreenAddress/Plugins/com.phonegap.plugins.facebookconnect/FacebookSDK.framework; sourceTree = "<group>"; };
 		C0C4FE0E341E4C31AEDA54BE /* SystemConfiguration.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D475D1ED4932463684D28A01 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
@@ -243,9 +244,9 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		EE6248A4C8704CAA8E56C0CD /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.m; sourceTree = "<group>"; };
 		EFB820D255234A0D8F60C0D6 /* crypto_scrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypto_scrypt.h; path = it.greenaddress.cordova/bip38/include/crypto_scrypt.h; sourceTree = "<group>"; };
-		F2E53F49FAB74F3FB310A29A /* CoreBitcoin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBitcoin.framework; path = GreenAddress.It/Plugins/it.greenaddress.cordova/CoreBitcoin.framework; sourceTree = "<group>"; };
+		F2E53F49FAB74F3FB310A29A /* CoreBitcoin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBitcoin.framework; path = GreenAddress/Plugins/it.greenaddress.cordova/CoreBitcoin.framework; sourceTree = "<group>"; };
 		F56EC949F3F24E03B907FB5E /* Social.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = GreenAddress.It/config.xml; sourceTree = "<group>"; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = GreenAddress/config.xml; sourceTree = "<group>"; };
 		F87CA8453CD544548A4FCED0 /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVSplashScreen.h; path = org.apache.cordova.splashscreen/CDVSplashScreen.h; sourceTree = "<group>"; };
 		FDA8BA20657E47A9A1F957C2 /* zxing-all-in-one.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "zxing-all-in-one.h"; path = "com.phonegap.plugins.barcodescanner/zxing-all-in-one.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -309,14 +310,14 @@
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
 			);
 			name = Classes;
-			path = GreenAddress.It/Classes;
+			path = GreenAddress/Classes;
 			sourceTree = SOURCE_ROOT;
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* GreenAddress.It.app */,
-				9E93E00D195CE22700494A83 /* GreenAddress.It Tests.xctest */,
+				1D6058910D05DD3D006BFB54 /* GreenAddress.app */,
+				9E93E00D195CE22700494A83 /* GreenAddress Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -349,7 +350,7 @@
 				307C750510C5A3420062BCA9 /* Plugins */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				9E93E014195CE22700494A83 /* GreenAddress.It Tests */,
+				9E93E014195CE22700494A83 /* GreenAddress Tests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -359,11 +360,11 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* GreenAddress.It-Prefix.pch */,
+				32CA4F630368D1EE00C91783 /* GreenAddress-Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
-			path = GreenAddress.It;
+			path = GreenAddress;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -375,12 +376,12 @@
 				1F766FDE13BBADB100FB74C0 /* es.lproj */,
 				308D052D1370CCF300D202BF /* icons */,
 				308D05311370CCF300D202BF /* splash */,
-				8D1107310486CEB800E47090 /* GreenAddress.It-Info.plist */,
+				8D1107310486CEB800E47090 /* GreenAddress-Info.plist */,
 				B2456C008D0044BD85F1A812 /* scannerOverlay.xib */,
 				D475D1ED4932463684D28A01 /* CDVNotification.bundle */,
 			);
 			name = Resources;
-			path = GreenAddress.It/Resources;
+			path = GreenAddress/Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
@@ -471,7 +472,7 @@
 				0C51DE6208F642E5B55A61ED /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
-			path = GreenAddress.It/Plugins;
+			path = GreenAddress/Plugins;
 			sourceTree = SOURCE_ROOT;
 		};
 		308D052D1370CCF300D202BF /* icons */ = {
@@ -525,21 +526,21 @@
 			path = se.lproj;
 			sourceTree = "<group>";
 		};
-		9E93E014195CE22700494A83 /* GreenAddress.It Tests */ = {
+		9E93E014195CE22700494A83 /* GreenAddress Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9E93E024195CE2BE00494A83 /* BIP38Vectors.m */,
 				9E93E015195CE22700494A83 /* Supporting Files */,
 			);
-			path = "GreenAddress.It Tests";
+			path = "GreenAddress Tests";
 			sourceTree = "<group>";
 		};
 		9E93E015195CE22700494A83 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9E93E016195CE22700494A83 /* GreenAddress.It Tests-Info.plist */,
+				9E93E016195CE22700494A83 /* GreenAddress Tests-Info.plist */,
 				9E93E017195CE22700494A83 /* InfoPlist.strings */,
-				9E93E01C195CE22700494A83 /* GreenAddress.It Tests-Prefix.pch */,
+				9E93E01C195CE22700494A83 /* GreenAddress Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -556,9 +557,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* GreenAddress.It */ = {
+		1D6058900D05DD3D006BFB54 /* GreenAddress */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GreenAddress.It" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GreenAddress" */;
 			buildPhases = (
 				304B58A110DAC018002A0835 /* Copy www directory */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
@@ -570,14 +571,14 @@
 			dependencies = (
 				301BF551109A68C00062928A /* PBXTargetDependency */,
 			);
-			name = GreenAddress.It;
-			productName = GreenAddress.It;
-			productReference = 1D6058910D05DD3D006BFB54 /* GreenAddress.It.app */;
+			name = GreenAddress;
+			productName = GreenAddress;
+			productReference = 1D6058910D05DD3D006BFB54 /* GreenAddress.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9E93E00C195CE22700494A83 /* GreenAddress.It Tests */ = {
+		9E93E00C195CE22700494A83 /* GreenAddress Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E93E01F195CE22700494A83 /* Build configuration list for PBXNativeTarget "GreenAddress.It Tests" */;
+			buildConfigurationList = 9E93E01F195CE22700494A83 /* Build configuration list for PBXNativeTarget "GreenAddress Tests" */;
 			buildPhases = (
 				9E93E009195CE22700494A83 /* Sources */,
 				9E93E00A195CE22700494A83 /* Frameworks */,
@@ -590,9 +591,9 @@
 				9EE39111195E362E00946C17 /* PBXTargetDependency */,
 				9EE39113195E364200946C17 /* PBXTargetDependency */,
 			);
-			name = "GreenAddress.It Tests";
-			productName = "GreenAddress.It Tests";
-			productReference = 9E93E00D195CE22700494A83 /* GreenAddress.It Tests.xctest */;
+			name = "GreenAddress Tests";
+			productName = "GreenAddress Tests";
+			productReference = 9E93E00D195CE22700494A83 /* GreenAddress Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -603,7 +604,7 @@
 			attributes = {
 				LastUpgradeCheck = 510;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GreenAddress.It" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GreenAddress" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -627,8 +628,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* GreenAddress.It */,
-				9E93E00C195CE22700494A83 /* GreenAddress.It Tests */,
+				1D6058900D05DD3D006BFB54 /* GreenAddress */,
+				9E93E00C195CE22700494A83 /* GreenAddress Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -758,17 +759,17 @@
 		};
 		9EE3910F195E362300946C17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* GreenAddress.It */;
+			target = 1D6058900D05DD3D006BFB54 /* GreenAddress */;
 			targetProxy = 9EE3910E195E362300946C17 /* PBXContainerItemProxy */;
 		};
 		9EE39111195E362E00946C17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* GreenAddress.It */;
+			target = 1D6058900D05DD3D006BFB54 /* GreenAddress */;
 			targetProxy = 9EE39110195E362E00946C17 /* PBXContainerItemProxy */;
 		};
 		9EE39113195E364200946C17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* GreenAddress.It */;
+			target = 1D6058900D05DD3D006BFB54 /* GreenAddress */;
 			targetProxy = 9EE39112195E364200946C17 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -825,22 +826,22 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					"$(PROJECT_DIR)/GreenAddress.It/Plugins/it.greenaddress.cordova",
-					"\"GreenAddress.It/Plugins/com.phonegap.plugins.facebookconnect\"",
-					"\"GreenAddress.It/Plugins/com.phonegap.plugins.facebookconnect\"",
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					"$(PROJECT_DIR)/GreenAddress/Plugins/it.greenaddress.cordova",
+					"\"GreenAddress/Plugins/com.phonegap.plugins.facebookconnect\"",
+					"\"GreenAddress/Plugins/com.phonegap.plugins.facebookconnect\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GreenAddress.It/GreenAddress.It-Prefix.pch";
+				GCC_PREFIX_HEADER = "GreenAddress/GreenAddress-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
-				INFOPLIST_FILE = "GreenAddress.It/GreenAddress.It-Info.plist";
+				INFOPLIST_FILE = "GreenAddress/GreenAddress-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -857,7 +858,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
 					"-ObjC",
 				);
-				PRODUCT_NAME = GreenAddress.It;
+				PRODUCT_NAME = GreenAddress;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -870,20 +871,20 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					GreenAddress.It/Plugins/it.greenaddress.cordova,
-					"$(PROJECT_DIR)/GreenAddress.It/Plugins/it.greenaddress.cordova",
-					"\"GreenAddress.It/Plugins/com.phonegap.plugins.facebookconnect\"",
-					"\"GreenAddress.It/Plugins/com.phonegap.plugins.facebookconnect\"",
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					GreenAddress/Plugins/it.greenaddress.cordova,
+					"$(PROJECT_DIR)/GreenAddress/Plugins/it.greenaddress.cordova",
+					"\"GreenAddress/Plugins/com.phonegap.plugins.facebookconnect\"",
+					"\"GreenAddress/Plugins/com.phonegap.plugins.facebookconnect\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GreenAddress.It/GreenAddress.It-Prefix.pch";
+				GCC_PREFIX_HEADER = "GreenAddress/GreenAddress-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
-				INFOPLIST_FILE = "GreenAddress.It/GreenAddress.It-Info.plist";
+				INFOPLIST_FILE = "GreenAddress/GreenAddress-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -900,7 +901,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
 					"-ObjC",
 				);
-				PRODUCT_NAME = GreenAddress.It;
+				PRODUCT_NAME = GreenAddress;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -919,13 +920,13 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(PROJECT_DIR)/GreenAddress.It/Plugins/it.greenaddress.cordova",
+					"$(PROJECT_DIR)/GreenAddress/Plugins/it.greenaddress.cordova",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GreenAddress.It Tests/GreenAddress.It Tests-Prefix.pch";
+				GCC_PREFIX_HEADER = "GreenAddress Tests/GreenAddress Tests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -934,7 +935,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "GreenAddress.It Tests/GreenAddress.It Tests-Info.plist";
+				INFOPLIST_FILE = "GreenAddress Tests/GreenAddress Tests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
@@ -956,15 +957,15 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(PROJECT_DIR)/GreenAddress.It/Plugins/it.greenaddress.cordova",
+					"$(PROJECT_DIR)/GreenAddress/Plugins/it.greenaddress.cordova",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GreenAddress.It Tests/GreenAddress.It Tests-Prefix.pch";
+				GCC_PREFIX_HEADER = "GreenAddress Tests/GreenAddress Tests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "GreenAddress.It Tests/GreenAddress.It Tests-Info.plist";
+				INFOPLIST_FILE = "GreenAddress Tests/GreenAddress Tests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = YES;
@@ -1066,7 +1067,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GreenAddress.It" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "GreenAddress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -1075,7 +1076,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E93E01F195CE22700494A83 /* Build configuration list for PBXNativeTarget "GreenAddress.It Tests" */ = {
+		9E93E01F195CE22700494A83 /* Build configuration list for PBXNativeTarget "GreenAddress Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E93E020195CE22700494A83 /* Debug */,
@@ -1084,7 +1085,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GreenAddress.It" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GreenAddress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
