@@ -17,7 +17,7 @@ angular.module('greenWalletReceiveControllers',
                 });
             }, function(err) {
                 notices.makeNotice('error', err.desc);
-            }).finally(function() { $rootScope.is_loading -= 1; });
+            }).finally(function() { $rootScope.decrementLoading(); });
         },
         is_bip38: function(privkey) {
             return Bitcoin.BIP38.isBIP38Format(privkey);

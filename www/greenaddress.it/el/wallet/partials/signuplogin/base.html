@@ -16,8 +16,9 @@
                         <div class="col-sm-4">
                             <span class="input-group">
                                 <input ng-show="state.has_pin && !state.toggleshowpin" tabindex="1" class="form-control pin" ng-disabled="logging_in" type="tel" mask-input name="pin" id="pin" maxlength="15" pattern="[0-9]{4,15}" ng-pattern="/[0-9]{4,15}/" focus-on="pin" placeholder="Εισαγάγετε το PIN σας" ng-model="use_pin_data.pin" />
+                                <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
                                 <span class="input-group-btn">
-                                    <span class="btn btn-primary pull-right" ng-class="{disabled: logging_in || payreq_loading}"><i class="glyphicon glyphicon-log-in"></i>
+                                    <span class="btn btn-primary pull-right" ng-class="{disabled: logging_in || payreq_loading}"><i ng-if="!logging_in && !payreq_loading" class="glyphicon glyphicon-log-in"></i><div class="spin" ng-if="logging_in || payreq_loading" ng-cloak></div>
                                         <input type="button" tabindex="2" style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%" ng-click="submit_me()" ng-focus="submit_me()" ng-disabled="is_loading || logging_in || (state.seed_progress && !state.login_error) || payreq_loading" />
                                     </span>
                                 </span>
@@ -45,7 +46,6 @@
                                     </button>
                                 </span>
                             </span>
-                            <input submitter type="submit" style="position: absolute; left: -10000px;" />  <!-- makes 'Go' button work for PIN on iOS -->
                             
                             <span class="help-block" ng-show="state.mnemonic_error"><i class="glyphicon glyphicon-info-sign"></i> Λανθασμένος μνημονικό: (( state.mnemonic_error ))</span>
                             <span class="help-block">

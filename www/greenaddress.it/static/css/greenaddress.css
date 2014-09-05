@@ -7655,11 +7655,13 @@ input[type="checkbox"].switch:disabled + span + span {
   width: 118;
   height: 35px;
 }
-.notice {
+#notices_container {
   position: fixed;
   top: 25px;
   right: 25px;
   z-index: 1060;
+}
+.notice {
   display: block;
   padding: 20px 25px;
   background: #333;

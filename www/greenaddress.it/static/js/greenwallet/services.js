@@ -548,7 +548,7 @@ angular.module('greenWalletServices', [])
         }, function(err) {
             notices.makeNotice('error', err.desc);
             d.reject(err);
-        }).finally(function() { $rootScope.is_loading -= 1; });
+        }).finally(function() { $rootScope.decrementLoading(); });
         return d.promise
     };
     var _sign_and_send_tx = function($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
@@ -952,11 +952,20 @@ angular.module('greenWalletServices', [])
                     delete calls_missed[cur_call];
                     $rootScope.$apply(function() { d.reject(err); })
                 });
+                var args = arguments;
+                setTimeout(function() {
+                    delete calls_missed[cur_call];
+                    $rootScope.safeApply(function() {
+                        d.reject({desc:
+                            gettext('Request timed out (%s)')
+                                .replace('%s', args[0].split('/').slice(3).join('/'))
+                        });
+                    });
+                }, 10000);
             } catch (e) {
                 if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                 delete calls_missed[cur_call];
                 $rootScope.$apply(function() { d.reject(gettext('Problem with Internet connection detected. Please try again.')); })
-
                 session = null;
             }
         } else {
@@ -1707,7 +1716,7 @@ angular.module('greenWalletServices', [])
                         notices.makeNotice('error', gettext('Error reading address book: ') + err.desc);
                     }).finally(function() {
                         if (requires_load) {
-                            $rootScope.is_loading -= 1;
+                            $rootScope.decrementLoading();
                         }
                     });
                 });
@@ -2385,7 +2394,7 @@ angular.module('greenWalletServices', [])
                     cordova.exec(function(b58) {
                         d.resolve(b58);
                     }, function(fail) {
-                        $rootScope.is_loading -= 1;
+                        $rootScope.decrementLoading();
                         notices.makeNotice('error', fail);
                         d.reject(fail);
                     }, "BIP38", "encrypt", [data, passphrase,

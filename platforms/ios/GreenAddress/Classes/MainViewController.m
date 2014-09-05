@@ -87,10 +87,26 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
 }
 
 -(void)keyboardWillHide:(NSNotification*)n {
     [self.webView stringByEvaluatingJavaScriptFromString:@"keyboardHide()"];
+}
+
+-(void)keyboardWillShow:(NSNotification*)n {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"keyboardWillShow()"];
+}
+
+-(void)keyboardDidShow:(NSNotification*)n {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"keyboardDidShow()"];
 }
 
 - (void)viewDidUnload

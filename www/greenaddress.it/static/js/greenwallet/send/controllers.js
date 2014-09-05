@@ -238,6 +238,19 @@ angular.module('greenWalletSendControllers',
                 d.resolve(verify(false).then(function(r) {
                     $scope.send_tx.verifying = false;
                     return r;
+                }, function(err) {
+                    if (err == 'no electrum') {
+                        return $modal.open({
+                            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_no_electrum.html',
+                            windowClass: 'twofactor' // display on top of loading indicator
+                        }).result.then(function()  {
+                            return verify(true);
+                        }, function() {
+                            return $q.reject(gettext('No Electrum servers reachable'));
+                        });
+                    } else {
+                        return $q.reject(err);
+                    }
                 }));
             }, function() {
                 $modal.open({
@@ -290,20 +303,20 @@ angular.module('greenWalletSendControllers',
                 $scope.send_fb_via_fb_clicked = true;
                 $rootScope.is_loading += 1;
                 facebook.login({}).then(function() {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     FB.ui({
                         method: 'send',
                         link: 'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey,
                         to: that.recipient.address
                     });
                 }, function() {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     notices.makeNotice('error', gettext('Facebook login failed'));
                 });
 
             }
             $scope.send_fb_via_fb_clicked = false;
-            $rootScope.is_loading -= 1;
+            $rootScope.decrementLoading();
             $modal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_fb_message.html',
                 scope: $scope
@@ -322,11 +335,11 @@ angular.module('greenWalletSendControllers',
                     }
                     that.signing = true;
                     wallets.sign_and_send_tx(undefined, data, true, null, gettext('Transaction reversed!'), that._signing_progress_cb.bind(that)).finally(function() {
-                        $rootScope.is_loading -= 1;
+                        $rootScope.decrementLoading();
                         $location.url('/info/');
                     });  // priv_der=true
                 }, function(error) {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
                     notices.makeNotice('error', error.desc);
                 });
@@ -336,11 +349,11 @@ angular.module('greenWalletSendControllers',
             return tx_sender.call("http://greenaddressit.com/vault/send_email", that.recipient.address,
                     'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
                 function() {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     notices.makeNotice('success', gettext('Email sent'));
                     $location.url('/info/');
                 }, function(err) {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     notices.makeNotice('error', gettext('Failed sending email') + ': ' + err.desc);
                 }
             );
@@ -357,19 +370,19 @@ angular.module('greenWalletSendControllers',
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_voucher.html',
                 scope: $scope
             }).result.finally(function() { $location.url('/info/'); });
-            $rootScope.is_loading -= 1;
+            $rootScope.decrementLoading();
         },
         do_send_reddit: function(that, enckey, satoshis) {
             if ($scope.wallet.send_from) $scope.wallet.send_from = null;
             return tx_sender.call("http://greenaddressit.com/vault/send_reddit", that.recipient.address,
                     'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
                 function(json) {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     notices.makeNotice('success', gettext('Reddit message sent'));
                     sound.play(BASE_URL + "/static/sound/coinsent.mp3", $scope);
                     $location.url('/info/');
                 }, function(err) {
-                    $rootScope.is_loading -= 1;
+                    $rootScope.decrementLoading();
                     notices.makeNotice('error', gettext('Failed sending Reddit message') + ': ' + err.desc);
                 }
             );
@@ -451,10 +464,10 @@ angular.module('greenWalletSendControllers',
                         wallets.sign_and_send_tx($scope, data, false, undefined, false, that._signing_progress_cb.bind(that), d_verify).then(function() {
                             return do_send(that, b58, satoshis, key, pointer);
                         }, function(error) {
-                            $rootScope.is_loading -= 1;
+                            $rootScope.decrementLoading();
                         }).finally(function() { that.sending = false; });
                     }, function(error) {
-                        $rootScope.is_loading -= 1;
+                        $rootScope.decrementLoading();
                         that.sending = false;
                         notices.makeNotice('error', error.desc);
                     });
@@ -478,7 +491,7 @@ angular.module('greenWalletSendControllers',
                     send(key, pointer);
                 });
             }, function(error) {
-                $rootScope.is_loading -= 1;
+                $rootScope.decrementLoading();
                 that.sending = false;
                 notices.makeNotice('error', error.desc);
             });
@@ -506,7 +519,7 @@ angular.module('greenWalletSendControllers',
                 if (error && error.desc) {
                     notices.makeNotice('error', error.desc);
                 }
-            }).finally(function() { $rootScope.is_loading -= 1; that.sending = false; });;
+            }).finally(function() { $rootScope.decrementLoading(); that.sending = false; });;
         },
         send_to_reddit: function() {
             var that = this;

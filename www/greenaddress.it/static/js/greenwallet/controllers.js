@@ -135,10 +135,11 @@ angular.module('greenWalletControllers', [])
                 if (!no_electrum && tx_sender.electrum) {
                     var d = $q.defer();
                     return tx_sender.electrum.issueTransactionGet(txhash).then(function(rawtx) {
+                        if (!rawtx) { return $q.reject('no electrum'); }
                         var value = Bitcoin.Transaction.deserialize(rawtx).outs[i].value;
                         return new Bitcoin.BigInteger(value.toString());
                     }, function(err) {
-                        return $q.reject(err);
+                        return $q.reject(err == 'timeout' ? 'no electrum' : err);
                     });
                     return d.promise;
                 } else {

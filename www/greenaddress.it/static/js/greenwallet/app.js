@@ -13,6 +13,9 @@ angular.module('greenWalletBaseApp', deps)
     // show loading indicator on http requests
     $httpProvider.interceptors.push(['$q', '$rootScope', '$timeout', 'notices',
             function($q, $rootScope, $timeout, notices) {
+        $rootScope.decrementLoading = function() {
+            if ($rootScope.is_loading > 0) $rootScope.is_loading -= 1;
+        }
         return {
             'request': function(config) {
                 if (config.no_loading_indicator) return config || $q.when(config);
@@ -24,13 +27,13 @@ angular.module('greenWalletBaseApp', deps)
             'response': function(response) {
                 if (response.config.no_loading_indicator) return response || $q.when(response);
                 if (!$rootScope.is_loading) $rootScope.is_loading = 1;
-                $rootScope.is_loading -= 1;
+                $rootScope.decrementLoading();
                 notices.setLoadingText();  // clear it (it's one-off)
                 return response || $q.when(response);
             },
             'responseError': function(rejection) {
                 if (!$rootScope.is_loading) $rootScope.is_loading = 1;
-                $rootScope.is_loading -= 1;
+                $rootScope.decrementLoading();
                 notices.setLoadingText();  // clear it (it's one-off)
                 return $q.reject(rejection);
             }

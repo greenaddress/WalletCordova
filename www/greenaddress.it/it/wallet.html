@@ -116,11 +116,13 @@
 </script>
 
 <div ng-controller="WalletController" id="content_container">
-  <div ng-repeat="notice in notices" class="notice notice-((notice.type))" ng-cloak>
-    <i class="glyphicon glyphicon-exclamation-sign" ng-show="notice.type == 'error'"></i>
-    <i class="glyphicon glyphicon-ok-sign" ng-show="notice.type == 'success'"></i>
-    <i class="glyphicon glyphicon-info-sign" ng-show="notice.type == 'info'"></i>
-    ((notice.msg))
+  <div id="notices_container" ng-show="notices.length" ng-cloak>
+    <div ng-repeat="notice in notices" class="notice notice-((notice.type))" ng-cloak>
+      <i class="glyphicon glyphicon-exclamation-sign" ng-show="notice.type == 'error'"></i>
+      <i class="glyphicon glyphicon-ok-sign" ng-show="notice.type == 'success'"></i>
+      <i class="glyphicon glyphicon-info-sign" ng-show="notice.type == 'info'"></i>
+      ((notice.msg))
+    </div>
   </div>
   <div class="menu-mobile" toggle-class="visible">
     <i class="menu-mobile-toggle menu-mobile-toggle-open glyphicon glyphicon-align-justify" toggle-class="visible" ng-click="toggle_set(true)"></i>
