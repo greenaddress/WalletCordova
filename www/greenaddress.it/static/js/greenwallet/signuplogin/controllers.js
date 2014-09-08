@@ -189,6 +189,10 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         focus('pin');
     }
 
+    $scope.$watch('state.toggleshowpin', function(newValue, oldValue) {
+        if (newValue) use_pin_data.pin = '';
+    });
+
     $scope.set_pin = function set_pin(valid) {
         if (!valid) {
             $scope.state.error = true;
@@ -328,6 +332,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 
     var use_pin_data = $scope.use_pin_data = {};
 
+    var pin_attempts_left = 3;
     $scope.use_pin = function(valid) {
         notices.setLoadingText("Checking PIN");
         return tx_sender.call('http://greenaddressit.com/pin/get_password', use_pin_data.pin, state.pin_ident).then(
@@ -371,7 +376,21 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 });
             }, function(e) {
                 gaEvent('Login', 'PinLoginFailed', e.desc);
-                notices.makeNotice('error', e.desc || e);
+                var suffix = '';
+                if (e.uri == "http://greenaddressit.com/error#password") {
+                    pin_attempts_left -= 1;
+                    if (pin_attempts_left > 0) {
+                        suffix = '; ' + gettext('%s attempts left.').replace('%s', pin_attempts_left);
+                    } else {
+                        suffix = '; ' + gettext('0 attempts left - PIN removed.').replace('%s', pin_attempts_left);
+                        storage.remove('pin_ident');
+                        storage.remove('encrypted_seed');
+                        state.has_pin = false;
+                        state.toggleshowpin = true;
+                        delete use_pin_data.pin;
+                    }
+                }
+                notices.makeNotice('error', (e.desc || e) + suffix);
                 state.login_error = true;
             });
     }

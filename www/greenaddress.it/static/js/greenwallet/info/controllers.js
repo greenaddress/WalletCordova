@@ -103,9 +103,12 @@ angular.module('greenWalletInfoControllers',
     var update_txs = function(timeout_ms, check_sorting) {
         if (updating_timeout) $timeout.cancel(updating_timeout);
         updating_timeout = $timeout(function() {
+            $scope.filtered_transactions = [];
+            $scope.loading_txs = true;
             updating_timeout = null;
             wallets.getTransactions($scope, null, $scope.search.query, $scope.sorting,
                     [$scope.search.date_start, $scope.search.date_end], $scope.wallet.current_subaccount).then(function(txs) {
+                $scope.loading_txs = false;
                 $scope.filtered_transactions = txs;
                 if (check_sorting && ($scope.filtered_transactions.sorting.order_by != 'ts' ||
                                       !$scope.filtered_transactions.sorting.reversed)) {

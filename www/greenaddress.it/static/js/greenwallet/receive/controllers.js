@@ -11,10 +11,23 @@ angular.module('greenWalletReceiveControllers',
             $rootScope.is_loading += 1;
             tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
                 $scope.receive.my_addresses = data;
+                $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
                 $modal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_my_addresses.html',
                     scope: $scope
                 });
+            }, function(err) {
+                notices.makeNotice('error', err.desc);
+            }).finally(function() { $rootScope.decrementLoading(); });
+        },
+        show_more_addresses: function() {
+          $rootScope.is_loading += 1;
+            var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer;
+            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses',
+                    $scope.wallet.current_subaccount, first_pointer).then(function(data) {
+                $scope.receive.my_addresses = $scope.receive.my_addresses.concat(data);
+                var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1];
+                $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
             }, function(err) {
                 notices.makeNotice('error', err.desc);
             }).finally(function() { $rootScope.decrementLoading(); });

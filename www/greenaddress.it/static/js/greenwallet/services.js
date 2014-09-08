@@ -277,7 +277,7 @@ angular.module('greenWalletServices', [])
             return that._login($scope, hdwallet, undefined, signup, logout, undefined, path);
         });
     };
-    walletsService.login_btchip = function($scope, btchip, btchip_pubkey, double_login_callback) {
+    walletsService.login_btchip = function($scope, btchip, btchip_pubkey, double_login_callback, signup) {
         tx_sender.btchip = btchip;
         tx_sender.btchip_address = btchip_pubkey.bitcoinAddress.value;
         var hdwallet = new Bitcoin.HDWallet();
@@ -285,7 +285,19 @@ angular.module('greenWalletServices', [])
         hdwallet.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(btchip_pubkey.publicKey.toString(HEX)));
         hdwallet.chaincode = Bitcoin.convert.hexToBytes(btchip_pubkey.chainCode.toString(HEX));
         tx_sender.hdwallet = hdwallet;
-        return this._login($scope, hdwallet, undefined, false, false, undefined, undefined, double_login_callback);
+        if (signup) {
+            var path_d = btchip.app.getWalletPublicKey_async("18241'").then(function(result) {
+                var ecPub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(result.publicKey.toString(HEX)));
+                var extended = result.chainCode.toString(HEX) + ecPub.toHex(true);
+                var path = Bitcoin.CryptoJS.HmacSHA512(extended, 'GreenAddress.it HD wallet path');
+                return Bitcoin.CryptoJS.enc.Hex.stringify(path);
+            });
+        } else path_d = $q.when();
+        var that = this;
+        return path_d.then(function(path) {
+            console.log(path);
+            return that._login($scope, hdwallet, undefined, signup, false, undefined, path, undefined, double_login_callback);
+        });
     };
     walletsService.loginWatchOnly = function($scope, token_type, token, logout) {
         var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
@@ -2176,6 +2188,7 @@ angular.module('greenWalletServices', [])
                 scope.btchip = {
                     already_setup: false,
                     gait_setup: false,
+                    use_gait_mnemonic: !!mnemonic,
                     storing: false,
                     seed_progress: 0,
                     reset: function() {
@@ -2217,10 +2230,16 @@ angular.module('greenWalletServices', [])
                         attempt();
                     },
                     store: function() {
-                        this.storing = true;
+                        if (!mnemonic) {
+                            this.setting_up = true;
+                        } else {
+                            this.storing = true;
+                        }
                         service.promptPin('', function(err, pin) {
                             if (!pin) return;
-                            mnemonics.toSeed(mnemonic).then(function(seed) {
+                            if (mnemonic) seed_deferred = mnemonics.toSeed(mnemonic);
+                            else seed_deferred = $q.when();
+                            seed_deferred.then(function(seed) {
                                 btchip.app.setupNew_async(
                                     0x01,  // wallet mode
 
@@ -2234,12 +2253,12 @@ angular.module('greenWalletServices', [])
 
                                     // undefined,  // keymapEncoding
                                     // true,  // restoreSeed
-                                    new ByteString(seed, HEX) // bip32Seed
+                                    seed && new ByteString(seed, HEX) // bip32Seed
                                 ).then(function() {
                                     $rootScope.$apply(function() {
-                                        scope.btchip.storing = false;
+                                        scope.btchip.storing = scope.btchip.setting_up = false;
                                         scope.btchip.gait_setup = true;
-                                        deferred.resolve();
+                                        deferred.resolve({pin: pin});
                                     });
                                 }).fail(function(error) {
                                     notices.makeNotice('error', error);

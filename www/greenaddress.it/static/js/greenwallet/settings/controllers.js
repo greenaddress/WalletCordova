@@ -310,7 +310,12 @@ angular.module('greenWalletSettingsControllers',
     var exchanges = $scope.exchanges = {
         BITSTAMP: 'Bitstamp',
         LOCALBTC: 'LocalBitcoins',
-        BTCAVG: 'BitcoinAverage'
+        BTCAVG: 'BitcoinAverage',
+        TRT: 'The Rock Trading',
+        BITFINEX: 'BitFinex',
+        BTCE: 'BTC-e',
+        CAVIRTEX: 'Cavirtex',
+        HUOBI: 'Huobi'
     };
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
@@ -1142,8 +1147,8 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.desc);
         }).finally(function() { $scope.limits_editor.saving = false; });
     };
-}]).controller('SubwalletsController', ['$scope', 'tx_sender', '$q', 'notices',
-        function($scope, tx_sender, $q, notices) {
+}]).controller('SubwalletsController', ['$scope', 'tx_sender', '$q', 'notices', '$location',
+        function($scope, tx_sender, $q, notices, $location) {
     var subwallets = $scope.subwallets = {
         existing: $scope.wallet.subaccounts,
         create_new: function() {
@@ -1201,6 +1206,33 @@ angular.module('greenWalletSettingsControllers',
             }).finally(function() {
                 that.adding_subwallet = false;
             });
+        },
+        start_rename: function(subaccount) {
+            subaccount.new_name = subaccount.name;
+            subaccount.renaming = true;
+        },
+        rename: function(subaccount) {
+            if (subaccount.new_name == subaccount.name) {
+                // nothing to do
+                subaccount.renaming = false;
+            } else {
+                tx_sender.call('http://greenaddressit.com/txs/rename_subaccount',
+                        subaccount.pointer, subaccount.new_name).then(function() {
+                    subaccount.name = subaccount.new_name;
+                    subaccount.renaming = false;
+                    notices.makeNotice('success', gettext('Renamed successfully'));
+                }, function(err) {
+                    notices.makeNotice('error', err.desc);
+                });
+            }
+        },
+        send_from: function(subaccount) {
+            $scope.wallet.current_subaccount = subaccount.pointer;
+            $location.path('/send');
+        },
+        receive_to: function(subaccount) {
+            $scope.wallet.current_subaccount = subaccount.pointer;
+            $location.path('/receive');
         }
     };
 }]);

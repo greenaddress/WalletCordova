@@ -576,8 +576,27 @@
       </div>
     </form>
     <h3 ng-show="subwallets.existing.length">Your accounts:</h3>
-    <ul>
-      <li ng-repeat="subwallet in subwallets.existing">(( subwallet.name ))</li>
-    </ul>
+    <table class="table table-striped" id="id_addressbook">
+      <thead>
+        <th>Nom</th>
+        <th>Actions</th>
+      </thead>
+      <tr ng-repeat="subwallet in subwallets.existing" submittable>
+        <td ng-hide="subwallet.renaming">(( subwallet.name ))</td>
+        <td ng-show="subwallet.renaming">
+          <form ng-submit="subwallets.rename(subwallet)" class="inline">
+            <input type="text" ng-model="subwallet.new_name" focus-on="addrbook_rename_(( item.address ))" />
+              <input type="submit" class="hide" submitter />
+            </form>
+
+        </td>
+        <td>
+          <a ng-hide="subwallet.renaming" class="btn btn-xs btn-default" href="" ng-click="subwallets.start_rename(subwallet)"><i class="glyphicon glyphicon-edit"></i> Rename</a>
+          <a ng-show="subwallet.renaming" class="btn btn-xs btn-default" href="" ng-click="submit_me()"><i class="glyphicon glyphicon-save"></i> Enregistrer</a>
+          <a class="btn btn-xs btn-default" href="" ng-click="subwallets.send_from(subwallet)"><i class="glyphicon glyphicon-send"></i> Envoyer</a>
+          <a class="btn btn-xs btn-default" href="" ng-click="subwallets.receive_to(subwallet)"><i class="icon-bitcoin"></i> Receive</a>
+        </td>
+      </tr>
+    </table>
 </div>
 </div> <!-- id="subwallets" -->

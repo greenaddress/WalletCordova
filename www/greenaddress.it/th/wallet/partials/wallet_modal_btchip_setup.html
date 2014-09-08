@@ -6,8 +6,10 @@
     	<span ng-show="btchip.replug_required">Please unplug and plug your device in again (<span>(( btchip.resets_remaining )) wrong PINs remaining</span>)</span></button>
     </div>
 	<div ng-show="!btchip.already_setup && !btchip.gait_setup">
-    	<p>Empty BTChip detected successfully. Click the button below to store your seed on it.</p>
-    	<button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.storing">Save to BTChip</button>
+    	<p ng-show="btchip.use_gait_mnemonic">Empty BTChip detected successfully. Click the button below to store your seed on it.</p>
+        <p ng-hide="btchip.use_gait_mnemonic">Empty BTChip detected successfully. Click the button below to set it up.</p>
+    	<button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.storing || !btchip.use_gait_mnemonic">Save to BTChip</button>
+        <button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.use_gait_mnemonic" ng-disabled="btchip.setting_up">Set up BTChip</button>
         <span class="btn btn-success disabled" ng-show="btchip.storing">
            	กรุณารอสักครู่ สร้างคีย์ wallet ของคุณ  ... (( btchip.seed_progress ))%
         </span>

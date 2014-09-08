@@ -6,8 +6,10 @@
     	<span ng-show="btchip.replug_required">Per piacere rimuovi e reinserisci il tuo dispositivo di nuovo (<span>(( btchip.resets_remaining )) tentativi PIN rimasti</span>)</span></button>
     </div>
 	<div ng-show="!btchip.already_setup && !btchip.gait_setup">
-    	<p>Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto per salvare all'interno del dispositivo i tuoi dati di accesso.</p>
-    	<button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.storing">Salva su BTChip</button>
+    	<p ng-show="btchip.use_gait_mnemonic">Nuovo dispositivo vuoto BTChip trovato. Fai click sul bottone qui sotto per salvare all'interno del dispositivo i tuoi dati di accesso.</p>
+        <p ng-hide="btchip.use_gait_mnemonic">Empty BTChip detected successfully. Click the button below to set it up.</p>
+    	<button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.storing || !btchip.use_gait_mnemonic">Salva su BTChip</button>
+        <button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.use_gait_mnemonic" ng-disabled="btchip.setting_up">Set up BTChip</button>
         <span class="btn btn-success disabled" ng-show="btchip.storing">
            	Generazione delle chiavi del tuo portafogli ... (( btchip.seed_progress ))%
         </span>

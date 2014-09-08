@@ -21,7 +21,10 @@
                 <hr>
                 <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && !signup.mnemonic_encrypted">Votre passphrase mnémonique</div>
                 <div class="mnemonic-label ng-cloak" ng-show="signup.mnemonic && signup.mnemonic_encrypted">Your <strong>encrypted</strong> mnemonic passphrase</div>
-                <div class="mnemonic info ng-cloak" ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ng-show="signup.mnemonic_encrypted || signup.mnemonic"></div>
+                <div class="mnemonic info ng-cloak" ng-show="signup.mnemonic_encrypted || signup.mnemonic">
+                <span ng-bind="signup.mnemonic_encrypted || signup.mnemonic" ></span>
+                
+                </div>
                 <div class="mnemonic info" ng-hide="signup.mnemonic">Génération de la passphrase mnémonique</div>
                 <div ng-hide="signup.mnemonic_encrypted || cordova_platform=='ios'" class="row"><div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
                     <a class="col-xs-12 btn btn-large btn-success" ng-class="{disabled: !signup.mnemonic}" ng-click="signup.encrypt_mnemonic()"><i class="glyphicon glyphicon-lock"></i>Click to encrypt your mnemonic</a>

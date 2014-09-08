@@ -46,7 +46,10 @@
         <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>
       </td>
     </tr>
-    <tr ng-hide="filtered_transactions.list || filtered_transactions === undefined">
+    <tr ng-show="loading_txs">
+      <td colspan="3"><small class="text-muted"><i>Loading transactions, please wait...</i></small></td>
+    </tr>
+    <tr ng-hide="loading_txs || filtered_transactions.list || filtered_transactions === undefined">
       <td colspan="3"><small class="text-muted"><i>Inga transaktioner funna...</i></small></td>
     </tr>
     <tr ng-show="filtered_transactions.next_page_id">
