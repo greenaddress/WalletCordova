@@ -9,7 +9,7 @@
                 <div class="col-sm-4">
                     <input clickfix focus-on="btchipPinModal" type="tel" mask-input class="form-control pin" required="required"
                            name="pin" maxlength="32" pattern="[0-9]{4,32}" ng-pattern="/[0-9]{4,32}/"
-                           ng-model="pin" />
+                           ng-model="pin" tabindex="1" />
                     <input type="submit" class="hide" submitter />
                     <div class="help-block"><i class="glyphicon glyphicon-info-sign"></i> PIN must be a 4-to-32-digit number</div>
                 </div>
@@ -19,8 +19,8 @@
 
     <div class="modal-footer">
         <div class="">
-            <button class="btn btn-danger" ng-click="$dismiss()">Отменить</button>
-            <button class="btn btn-primary" ng-click="submit_me()">Подтвердите номер PIN</button>
+            <button ng-hide="pinNotCancelable" class="btn btn-danger" ng-click="$dismiss()" tabindex="3">Отменить</button>
+            <button class="btn btn-primary" ng-click="submit_me()" tabindex="2" ng-focus="submit_me()">Подтвердите номер PIN</button
         </div>
     </div>
 
