@@ -158,7 +158,9 @@ angular.module('greenWalletControllers', [])
     clearwallet();
     $scope.processWalletVars();
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
-        if (newValue != oldValue && newValue !== undefined) $scope.wallet.update_balance();
+        if (newValue != oldValue &&
+                newValue !== undefined &&  // newValue === undefined on relogin
+                oldValue !== undefined) $scope.wallet.update_balance();
     })
     $scope.$on('login', function() {
         $scope.wallet.update_balance(true);
