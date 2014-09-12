@@ -153,7 +153,7 @@ angular.module('greenWalletSendControllers',
                     if (chunks[2] != Bitcoin.Opcode.map.OP_EQUAL) return $q.reject(gettext('out OP_EQUAL missing'));
                 }
 
-                if (that.add_fee == 'sender') {
+                if (that.add_fee.party == 'sender') {
                     // check output value
                     if (new Bitcoin.BigInteger(tx.outs[out_i].value.toString()).compareTo(
                             new Bitcoin.BigInteger(satoshis)) != 0) {
@@ -202,7 +202,7 @@ angular.module('greenWalletSendControllers',
             // calculate fees
             var fee = in_value.subtract(out_value), recipient_fee = Bitcoin.BigInteger.valueOf(0);
             // subtract mod 10000 to allow anti-dust (<5430) fee
-            if (that.add_fee == 'recipient') recipient_fee = fee.subtract(fee.mod(Bitcoin.BigInteger.valueOf(10000)));
+            if (that.add_fee.party == 'recipient') recipient_fee = fee.subtract(fee.mod(Bitcoin.BigInteger.valueOf(10000)));
 
             return change_d.then(function(out_i) {
                 // check output value
@@ -213,7 +213,7 @@ angular.module('greenWalletSendControllers',
 
                 // check fee
                 var kB = Math.ceil(rawtx.length / 1000) * 2;
-                var expectedMaxFee = Bitcoin.BigInteger.valueOf(10000).multiply(Bitcoin.BigInteger.valueOf(kB));
+                var expectedMaxFee = Bitcoin.BigInteger.valueOf(100000).multiply(Bitcoin.BigInteger.valueOf(kB));
                 if (fee.compareTo(expectedMaxFee) > 0) {
                     return $q.reject(gettext('Fee is too large (%1, expected at most %2)').replace('%1', fee.toString()).replace('%2', expectedMaxFee.toString()));
                 }
@@ -269,6 +269,15 @@ angular.module('greenWalletSendControllers',
     }
     var iframe;
     var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+    var btcToUnit = function(btc) {
+        var amount_satoshi = Bitcoin.Util.parseValue(btc);
+        return parseFloat(  // parseFloat required for iOS Cordova
+            Bitcoin.Util.formatValue(amount_satoshi.multiply(Bitcoin.BigInteger.valueOf(mul))));
+    }
+    var satoshisToUnit = function(amount_satoshi) {
+        return parseFloat(  // parseFloat required for iOS Cordova
+            Bitcoin.Util.formatValue(new Bitcoin.BigInteger(amount_satoshi.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
+    }
     var parseContact = function(str) {
         var json = Bitcoin.CryptoJS.enc.Utf8.stringify(Bitcoin.convert.bytesToWordArray(
                         Bitcoin.base58.decode(str)));
@@ -278,7 +287,9 @@ angular.module('greenWalletSendControllers',
         _signing_progress_cb: function(progress) {
             this.signing_percentage = Math.max(this.signing_percentage, progress);
         },
-        add_fee: 'sender',  // used to be changeable from wallet_send.html, removed for now
+        add_fee: {'party': 'sender',
+                  'per_kb': true,
+                  'amount': satoshisToUnit(10000)},
         instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
         recipient: $routeParams.contact ? parseContact($routeParams.contact) : null,
         read_qr_code: function($event)  {
@@ -395,7 +406,7 @@ angular.module('greenWalletSendControllers',
             priv_data.allow_random_change = true;
             priv_data.memo = this.memo;
             priv_data.subaccount = $scope.wallet.current_subaccount;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee,
+            tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(),
                            priv_data).then(function(data) {
                 that.signing = true;
                 wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
@@ -410,6 +421,11 @@ angular.module('greenWalletSendControllers',
         amount_to_satoshis: function(amount) {
             var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
             return Bitcoin.Util.parseValue(amount).divide(Bitcoin.BigInteger.valueOf(div)).toString();
+        },
+        get_add_fee: function() {
+            var add_fee = angular.extend({}, this.add_fee);
+            add_fee.amount = parseInt(this.amount_to_satoshis(add_fee.amount));
+            return add_fee;
         },
         _encrypt_key: function(key) {
             return encode_key(key, !$scope.wallet.send_unencrypted && this.passphrase);
@@ -429,7 +445,7 @@ angular.module('greenWalletSendControllers',
             $rootScope.is_loading += 1;
             var send = function(key, pointer) {
                 var to_addr = key.getAddress().toString();
-                var add_fee = that.add_fee;
+                var add_fee = that.get_add_fee();
                 var social_destination;
                 if (that.voucher) {
                     var voucher_data = {
@@ -505,7 +521,7 @@ angular.module('greenWalletSendControllers',
             $rootScope.is_loading += 1;
             var priv_data = {instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount};
-            tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.add_fee, priv_data).then(function(data) {
+            tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {
                 var d_verify = verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).catch(function(error) {
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
                     notices.makeNotice('error', gettext('Transaction verification failed: ' + error + '. Please contact support.'))
@@ -638,15 +654,9 @@ angular.module('greenWalletSendControllers',
                 this.recipient.has_wallet;
         }
     };
-    var btcToUnit = function(btc) {
-        var amount_satoshi = Bitcoin.Util.parseValue(btc);
-        return parseFloat(  // parseFloat required for iOS Cordova
-            Bitcoin.Util.formatValue(amount_satoshi.multiply(Bitcoin.BigInteger.valueOf(mul))));
-    }
-    var satoshisToUnit = function(amount_satoshi) {
-        return parseFloat(  // parseFloat required for iOS Cordova
-            Bitcoin.Util.formatValue(new Bitcoin.BigInteger(amount_satoshi.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
-    }
+    $scope.$watch('send_tx.instant', function(newValue, oldValue) {
+        if (newValue) $scope.send_tx.add_fee.per_kb = true;
+    });
     $scope.$watch('send_tx.recipient', function(newValue, oldValue) {
         if (newValue === oldValue || !newValue) return;
         var parsed_uri = parse_bitcoin_uri(newValue);

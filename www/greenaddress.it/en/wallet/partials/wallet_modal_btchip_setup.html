@@ -15,7 +15,10 @@
         </span>
     </div>
 	<div ng-show="btchip.gait_setup">
-    	<p>BTChip setup successful!</p>
+        <p ng-show="btchip.replug_for_backup">BTChip setup successful!
+        Please unplug your BTChip and plug it into a secure device supporting USB keyboards to read the seed backup.
+        <strong>On the second device remember to first open a text editor or a similar application where the seed will be typed in by BTChip.</strong></p>
+    	<p ng-hide="btchip.replug_for_backup">BTChip setup successful!</p>
     </div>
 </div>
 <div class="modal-footer">

@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Decoderen van de portemonnee is mislukt",
 "Save": "Opslaan",
 "Already swept or no funds found": "Al eerder leeggeveegd, of geen bedrag gevonden",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "Instellingen voor nLockTime bijgewerkt",
 "Error changing language:": "Fout bij wijzigen van de taal:",

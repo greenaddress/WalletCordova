@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Odszyfrowanie portfela nie powiodło się",
 "Save": "Zapisz",
 "Already swept or no funds found": "Już odebrano wcześniej lub brak funduszy",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "Ustawienia nLockTime zaktualizowane pomyślnie",
 "Error changing language:": "Błąd podczas zapisywania obiektu: ",

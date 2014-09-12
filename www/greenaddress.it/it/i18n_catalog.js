@@ -44,7 +44,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Errore nel decifrare il portafoglio",
 "Save": "Salva",
 "Already swept or no funds found": "Bitcoin gia\u0027 presi o non trovati",
-"PIN correct": "PIN corretto",
 "Sent handler registration request": "Richiesta per registrare uri \u0022bitcoin:\u0022 effettuata",
 "nLockTime settings updated successfully": "Impostazione di nLockTime aggiornata con successo",
 "Error changing language:": "C\u0027è stato un errore aggiungendo il contatto: ",

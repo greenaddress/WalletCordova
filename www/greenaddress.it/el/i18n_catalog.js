@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Αποκρυπτογράφηση του πορτοφόλιου απέτυχε",
 "Save": "Αποθήκευση",
 "Already swept or no funds found": "Εχουν ήση σαρωθεί ή δεν βρέθηκαν κεφάλαια",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "Ρυθμίσεις nLockTime έχουν ενημερώθεί με επιτυχία",
 "Error changing language:": "Σφάλμα στην αλλαγή της γλώσσας:",

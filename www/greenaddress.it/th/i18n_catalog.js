@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "การถอดรหัส wallet ล้มเหลว",
 "Save": "บันทึก",
 "Already swept or no funds found": "ย้ายไปแล้วหรือไม่พบกองทุน",
-"PIN correct": "PIN ถูกต้อง",
 "Sent handler registration request": "คำขอการลงทะเบียนการจัดการถูกส่ง",
 "nLockTime settings updated successfully": "การตั้งค่า nLockTime อัพเดทเสร็จสิ้น",
 "Error changing language:": "การเปลี่ยนภาษามีข้อผิดพลาด:",

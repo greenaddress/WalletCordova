@@ -6563,6 +6563,7 @@ input[type="checkbox"].switch:disabled + span + span {
 }
 .form-control-noinput {
   border: none;
+  box-shadow: none;
 }
 .input-group-addon {
   font-style: italic;

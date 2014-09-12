@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Не удалось расшифровать кошелек",
 "Save": "Сохранить",
 "Already swept or no funds found": "Средства уже были сняты или не найдены",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "nLockTime параметры успешно обновлены",
 "Error changing language:": "Ошибка при смене языка:",

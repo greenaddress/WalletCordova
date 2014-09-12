@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Plånboksdekryptering misslyckades",
 "Save": "Spara",
 "Already swept or no funds found": "Redan svept eller inga pengar hittade",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "nLockTime\u002Dinställningar uppdaterades",
 "Error changing language:": "Fel vid ändring av språk:",

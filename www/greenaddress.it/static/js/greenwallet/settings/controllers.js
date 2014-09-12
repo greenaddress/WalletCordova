@@ -150,6 +150,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.cancel_twofac_email = function() {
         twofactor_state.email_set = false;
+        twofactor_state.data_email = undefined;
     };
     $scope.enable_twofac_email = function() {
         notices.setLoadingText("Validating code");
@@ -158,18 +159,32 @@ angular.module('greenWalletSettingsControllers',
             suffix = '';
             arg = twofactor_state.twofac_email_code;
         }
+        var onSuccess = function() {
+            gaEvent('Wallet', 'EnableEmail2FASuccessful');
+            notices.makeNotice('success', 'Enabled email two factor authentication');
+            twofactor_state.twofac_email_code = '';
+            twofactor_state.twofac_email_switch = true;
+            update_wallet();
+        };
+        var onFail = function(err) {
+            gaEvent('Wallet', 'EnableEmail2FAFailed', err.desc);
+            twofactor_state.twofac_email_code = '';
+            notices.makeNotice('error', err.desc);
+            return $q.reject(err);
+        };
         return tx_sender.call('http://greenaddressit.com/twofactor/enable_email'+suffix, arg).then(
-            function() {
-                gaEvent('Wallet', 'EnableEmail2FASuccessful');
-                notices.makeNotice('success', 'Enabled email two factor authentication');
-                twofactor_state.twofac_email_code = '';
-                twofactor_state.twofac_email_switch = true;
-                update_wallet();
-            }, function(err) {
-                gaEvent('Wallet', 'EnableEmail2FAFailed', err.desc);
-                twofactor_state.twofac_email_code = '';
-                notices.makeNotice('error', err.desc);
-                return $q.reject(err);
+            onSuccess,
+            function(err) {
+                if ($scope.wallet.signup && err.uri == "http://greenaddressit.com/error#alreadyexists") {
+                    return $modal.open({
+                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_reset_email.html'
+                    }).result.then(function() {
+                        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email',
+                            arg, twofactor_state.new_twofac_email).then(onSuccess, onFail);
+                    });
+                } else {
+                    onFail(err);
+                }
             });
     };
     $scope.start_enabling_sms = function(twofac_data) {
@@ -315,7 +330,8 @@ angular.module('greenWalletSettingsControllers',
         BITFINEX: 'BitFinex',
         BTCE: 'BTC-e',
         CAVIRTEX: 'Cavirtex',
-        HUOBI: 'Huobi'
+        HUOBI: 'Huobi',
+        BTCCHINA: 'BTCChina'
     };
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));

@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Не вдалося дешифрувати гаманець",
 "Save": "Зберегти",
 "Already swept or no funds found": "Кошти уже були зняті або не знайдені",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "nLockTime параметри успішно оновлені",
 "Error changing language:": "Помилка вибору мови:",

@@ -2432,7 +2432,7 @@ angular.module('greenWalletServices', [])
                             }).fail(function(error) {
                                 $rootScope.$apply(function() {
                                     console.log('reset pin error ' + error);
-                                    if (error.indexOf("6982") >= 0) {
+                                    if (error.indexOf("6982") >= 0 || error.indexOf("63c") >= 0) {
                                         // setMsg("Dongle is locked - enter the PIN");
                                         scope.btchip.resets_remaining -= 1;
                                     } else if (error.indexOf("6985") >= 0) {
@@ -2485,10 +2485,16 @@ angular.module('greenWalletServices', [])
                                     // true,  // restoreSeed
                                     seed && new ByteString(seed, HEX) // bip32Seed
                                 ).then(function() {
-                                    $rootScope.$apply(function() {
-                                        scope.btchip.storing = scope.btchip.setting_up = false;
-                                        scope.btchip.gait_setup = true;
-                                        deferred.resolve({pin: pin});
+                                    btchip.app.setKeymapEncoding_async().then(function() {
+                                        $rootScope.$apply(function() {
+                                            scope.btchip.storing = scope.btchip.setting_up = false;
+                                            scope.btchip.gait_setup = true;
+                                            scope.btchip.replug_for_backup = !mnemonic;
+                                            deferred.resolve({pin: pin});
+                                        });
+                                    }).fail(function(error) {
+                                        notices.makeNotice('error', error);
+                                        console.log('setKeymapEncoding_async error: ' + error);
                                     });
                                 }).fail(function(error) {
                                     notices.makeNotice('error', error);
@@ -2508,7 +2514,7 @@ angular.module('greenWalletServices', [])
                         btchip.dongle.disconnect_async();
                     });
                 }
-                btchip.app.getWalletPublicKey_async("0'/0/0").then(function(result) {
+                btchip.app.getWalletPublicKey_async("").then(function(result) {
                     scope.btchip.already_setup = true;
                     do_modal();
                 }).fail(function(error) {

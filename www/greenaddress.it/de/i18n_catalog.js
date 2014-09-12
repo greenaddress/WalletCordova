@@ -43,7 +43,6 @@ globals.i18n_catalog = {
 "Wallet decryption failed": "Brieftaschenverschlüsselung fehlgeschlagen",
 "Save": "Speichern",
 "Already swept or no funds found": "Bereits geleert oder kein Guthaben gefunden",
-"PIN correct": "PIN correct",
 "Sent handler registration request": "Sent handler registration request",
 "nLockTime settings updated successfully": "nLockTime\u002DEinstellungen erfolgreich aktualisiert",
 "Error changing language:": "Fehler beim Speichern: ",
