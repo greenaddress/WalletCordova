@@ -5,7 +5,7 @@
 // A collection of routines dealing with parsing and writing various protocol messages.
 @interface BTCProtocolSerialization : NSObject
 
-// This implementation of varInt is known as "CompactSize" in Satoshi code (BitcoinQT).
+// This implementation of variable-length integer is known as "CompactSize" in Satoshi code (BitcoinQT).
 //
 //  Value           Storage length     Format
 //  < 0xfd          1                  uint8_t
@@ -23,7 +23,9 @@
 
 // Attempts to read string prepended by its length in varInt format.
 // On success, returns data. On failure, returns nil.
+// lengthOut is an optional out parameter that contains total bytes read (including the length prefix)
 + (NSData*) readVarStringFromData:(NSData*)data;
++ (NSData*) readVarStringFromData:(NSData*)data readBytes:(NSUInteger*)lengthOut;
 + (NSData*) readVarStringFromStream:(NSInputStream*)stream;
 
 // Encodes value in a varint binary form.

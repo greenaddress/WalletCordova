@@ -1,6 +1,6 @@
 //
 //  CDVAES.h
-//  GreenAddress.It
+//  GreenAddress
 //
 
 #import <Foundation/Foundation.h>

@@ -611,6 +611,11 @@ angular.module('greenWalletSendControllers',
             }
             this.signing = false;
             this.sending = true;
+            if (window.cordova && cordova.platformId == 'ios') {
+                // scroll to send button on sending to make sure progress is visible
+                // when 'Done' button from iOS keyboard is used
+                setTimeout(function() { document.body.scrollTop = document.body.scrollHeight; }, 0);
+            }
             this.signing_percentage = 0;
             if (this.recipient.type == 'facebook') {
                 gaEvent('Wallet', 'SendToFacebook');
@@ -618,7 +623,7 @@ angular.module('greenWalletSendControllers',
             } else if (this.recipient.type == 'email') {
                 gaEvent('Wallet', 'SendToEmail');
                 this.send_social(this.do_send_email);
-            } else if (this.recipient.type == 'address') {
+            } else if (this.recipient.type == 'address' || this.recipient.type == 'subaccount') {
                 gaEvent('Wallet', 'SendToAddress');
                 this.send_address();
             } else if (this.recipient.type == 'reddit') {

@@ -3,6 +3,8 @@ angular.module('greenWalletReceiveControllers',
 .controller('ReceiveController', ['$rootScope', '$scope', 'wallets', 'tx_sender', 'notices', 'cordovaReady', 'hostname', 'gaEvent', '$modal', '$location', 'qrcode', 'clipboard',
         function InfoController($rootScope, $scope, wallets, tx_sender, notices, cordovaReady, hostname, gaEvent, $modal, $location, qrcode, clipboard) {
     if(!wallets.requireWallet($scope)) return;
+    $scope.wallet.signup = false;  // required for 2FA settings to work properly in the same session as signup
+
     var payment_url_prefix = 'https://' + hostname + '/pay/';
     var base_payment_url = payment_url_prefix + $scope.wallet.receiving_id + '/';
     $scope.receive = {

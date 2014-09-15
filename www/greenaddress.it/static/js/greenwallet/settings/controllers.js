@@ -331,7 +331,8 @@ angular.module('greenWalletSettingsControllers',
         BTCE: 'BTC-e',
         CAVIRTEX: 'Cavirtex',
         HUOBI: 'Huobi',
-        BTCCHINA: 'BTCChina'
+        BTCCHINA: 'BTCChina',
+        KRAKEN: 'Kraken'
     };
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
@@ -748,8 +749,23 @@ angular.module('greenWalletSettingsControllers',
             addressbook.populate_csv();
         });
     };
-    $scope.rename = function(address, name) {
-        tx_sender.call('http://greenaddressit.com/addressbook/edit_entry', address, name, 0).then(function(data) {
+    $scope.rename = function(address, name, type) {
+        if (type == 'subaccount') {
+            var pointer, i;
+            for (i = 0; i < $scope.wallet.subaccounts.length; i++) {
+                var account = $scope.wallet.subaccounts[i];
+                if (account.receiving_id == address) {
+                    pointer = $scope.wallet.subaccounts[i].pointer;
+                    break;
+                }
+            }
+            var d = tx_sender.call('http://greenaddressit.com/txs/rename_subaccount', pointer, name).then(function() {
+                $scope.wallet.subaccounts[i].name = name;
+            });
+        } else {
+            var d = tx_sender.call('http://greenaddressit.com/addressbook/edit_entry', address, name, 0)
+        }
+        d.then(function(data) {
             gaEvent('Wallet', 'AddressBookItemRenamed');
             angular.forEach(addressbook.partitions[$routeParams.page-1][2], function(value) {
                 if (value.address == address) {

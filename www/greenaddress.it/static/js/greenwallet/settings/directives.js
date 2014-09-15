@@ -11,9 +11,11 @@ angular.module('greenWalletSettingsDirectives', [])
             template += '<i class="icon-facebook"></i>'
         } else if (item.type == 'email') {
             template += '<i class="glyphicon glyphicon-envelope"></i>'
+        } else if (item.type == 'subaccount') {
+            template += '<i class="glyphicon glyphicon-tag"></i>'
         }
         template += '</td>';
-        var item_name = scope.wallet.hdwallet.priv ? 
+        var item_name = scope.wallet.hdwallet.priv ?
                         '<a href="(( send_url(item) ))">(( item.name ))</a>' :
                         '(( item.name ))';  // don't allow opening 'Send' in watch-only
         if (interactive) {
@@ -25,31 +27,31 @@ angular.module('greenWalletSettingsDirectives', [])
             template += ' <img src="' + BASE_URL + '/static/img/logos/logo-greenaddress.png" height="16"/>';
         }
         template += '</a></td>';
-        if (interactive) {  
+        if (interactive) {
             template += '<td ng-show="item.renaming">' +
-                '<form ng-submit="rename(item.address, item.name)" class="inline">' +
+                '<form ng-submit="rename(item.address, item.name, item.type)" class="inline">' +
                     '<input type="text" ng-model="item.name" focus-on="addrbook_rename_(( item.address ))" />' +
                     '<input type="submit" class="hide" submitter-scope />' +
                 '</form>' +
             '</td>';
         }
-                    
+
         if (window.cordova) {  // no external links in Cordova
-            var address = (item.href ? 
-                           '<span>(( item.href ))</a>' : 
+            var address = (item.href ?
+                           '<span>(( item.href ))</a>' :
                            '<span>(( item.address ))</span>')
         } else {
-            var address = (item.href ? 
-                           '<a ng-href="(( item.href ))" target="_blank">(( item.href ))</a>' : 
+            var address = (item.href ?
+                           '<a ng-href="(( item.href ))" target="_blank">(( item.href ))</a>' :
                            '<span>(( item.address ))</span>');
         }
         template += '<td>' + address + '</td>';
 
         template += '<td>';
         if (scope.wallet.hdwallet.priv && item.type != 'facebook') {
-            template += 
-                        '<a href="" ng-click="start_rename(item)"><i class="glyphicon glyphicon-edit"></i></a> ' + 
-                        '<a href="" ng-click="delete(item.address)"><i class="glyphicon glyphicon-trash"></i></a> ';
+            template += '<a href="" ng-click="start_rename(item)"><i class="glyphicon glyphicon-edit"></i></a>';
+            if (item.type != 'subaccount')
+            template += '<a href="" ng-click="delete(item.address)"><i class="glyphicon glyphicon-trash"></i></a> ';
             if (interactive) {
                 template += '<a ng-show="item.renaming" href="" ng-click="submit_me()"><i class="glyphicon glyphicon-floppy-disk"></i></a>';
             }
@@ -68,7 +70,7 @@ angular.module('greenWalletSettingsDirectives', [])
             }
         }
         replaceWith($compile(getTemplate(scope).clone())(scope));
-        
+
         var replaced = false;
         element.on('mouseover', function() {
             if (replaced) return;

@@ -67,7 +67,7 @@ angular.module('greenWalletBaseApp', deps)
     var formatNum = function(num) {
         var num_arr = num.split('.');
         var x = '';
-        for (var i in num_arr[0]) {
+        for (var i = 0; i < num_arr[0].length; i++) {
             i = parseInt(i);
             x += num_arr[0][i];
             if (num_arr[0].length > (i + 1) && (num_arr[0].length - i - 1) % 3 == 0) x += ',';

@@ -3,10 +3,17 @@
 #import <Foundation/Foundation.h>
 
 // Addresses are Base58-encoded pieces of data representing various objects:
-// 1. Public key address. Example: 19FGfswVqxNubJbh1NW8A4t51T9x9RDVWQ.
-// 2. Private key for uncompressed public key (the one most used). Example: 5KQntKuhYWSRXNqp2yhdXzjekYAR7US3MT1715Mbv5CyUKV6hVe.
+//
+// 1. Public key (actually, a hash of a public key) address. Example: 19FGfswVqxNubJbh1NW8A4t51T9x9RDVWQ.
+// 2. Private key for uncompressed public key. Example: 5KQntKuhYWSRXNqp2yhdXzjekYAR7US3MT1715Mbv5CyUKV6hVe.
 // 3. Private key for compressed public key. Example: L3p8oAcQTtuokSCRHQ7i4MhjWc9zornvpJLfmg62sYpLRJF9woSu.
 // 4. Script address (P2SH). Example: 3NukJ6fYZJ5Kk8bPjycAnruZkE5Q7UW7i8.
+//
+// Testnet addresses are also supported with the following subclasses:
+//   BTCPublicKeyAddressTestnet, 
+//   BTCPrivateKeyAddressTestnet, 
+//   BTCScriptHashAddressTestnet.
+//
 @class BTCKey;
 @interface BTCAddress : NSObject
 
@@ -48,13 +55,13 @@
 @interface BTCPrivateKeyAddress : BTCAddress
 // Private key itself is not compressed, but it has extra 0x01 byte to indicate
 // that derived pubkey must be compressed (as this affects the address derived from pubkey).
-@property(nonatomic, getter=isCompressedPublicKey) BOOL compressedPublicKey;
+@property(nonatomic, getter=isPublicKeyCompressed) BOOL publicKeyCompressed;
 
 // Returns BTCKey containing a key pair. Its public key is compressed as specified by the address.
 @property(nonatomic, readonly) BTCKey* key;
 
-// Creates address from raw private key data. If the public key must be compressed, pass YES to compressedPublicKey:.
-+ (instancetype) addressWithData:(NSData*)data compressedPublicKey:(BOOL)compressedPubkey;
+// Creates address from raw private key data. If the public key must be compressed, pass YES to publicKeyCompressed:.
++ (instancetype) addressWithData:(NSData*)data publicKeyCompressed:(BOOL)compressedPubkey;
 @end
 @interface BTCPrivateKeyAddressTestnet : BTCPrivateKeyAddress
 @end

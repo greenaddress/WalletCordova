@@ -45,22 +45,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"AES\"><param name=\"ios-package\" value=\"CDVAES\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BIP32\"><param name=\"ios-package\" value=\"CDVBIP32\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BIP38\"><param name=\"ios-package\" value=\"CDVBIP38\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BIP39\"><param name=\"ios-package\" value=\"CDVBIP39\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"org.apache.cordova.facebook.Connect\"><param name=\"ios-package\" value=\"FacebookConnectPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -90,6 +74,26 @@
                         },
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AES\"><param name=\"ios-package\" value=\"CDVAES\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ECDSA\"><param name=\"ios-package\" value=\"CDVECDSA\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BIP32\"><param name=\"ios-package\" value=\"CDVBIP32\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BIP38\"><param name=\"ios-package\" value=\"CDVBIP38\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BIP39\"><param name=\"ios-package\" value=\"CDVBIP39\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -129,11 +133,11 @@
                     ],
                     "Security.framework": [
                         {
-                            "xml": "false",
+                            "xml": "true",
                             "count": 1
                         },
                         {
-                            "xml": "true",
+                            "xml": "false",
                             "count": 1
                         }
                     ],
@@ -227,10 +231,10 @@
         "org.apache.cordova.vibration": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "it.greenaddress.cordova": {
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         },
-        "org.apache.cordova.inappbrowser": {
+        "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         }
     },

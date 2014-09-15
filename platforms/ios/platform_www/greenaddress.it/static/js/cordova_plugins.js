@@ -228,8 +228,8 @@ module.exports.metadata =
     "org.apache.cordova.network-information": "0.2.5",
     "org.apache.cordova.splashscreen": "0.2.7",
     "org.apache.cordova.vibration": "0.3.9-dev",
-    "it.greenaddress.cordova": "0.0.0",
-    "org.apache.cordova.inappbrowser": "0.5.0"
+    "org.apache.cordova.inappbrowser": "0.5.0",
+    "it.greenaddress.cordova": "0.0.0"
 }
 // BOTTOM OF METADATA
 });

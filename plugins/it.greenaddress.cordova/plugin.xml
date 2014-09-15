@@ -39,9 +39,14 @@
         <source-file src="CDVBIP38.h" />
         <source-file src="CDVBIP39.m" />
         <source-file src="CDVBIP39.h" />
+        <source-file src="CDVECDSA.m" />
+        <source-file src="CDVECDSA.h" />
         <config-file target="config.xml" parent="/*">
             <feature name="AES">
                 <param name="ios-package" value="CDVAES"/>
+            </feature>
+            <feature name="ECDSA">
+                <param name="ios-package" value="CDVECDSA"/>
             </feature>
             <feature name="BIP32">
                 <param name="ios-package" value="CDVBIP32"/>

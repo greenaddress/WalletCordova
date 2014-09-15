@@ -1,6 +1,6 @@
 //
 //  CDVBIP39.h
-//  GreenAddress.It
+//  GreenAddress
 //
 
 #import <Foundation/Foundation.h>

@@ -5,7 +5,8 @@
 #import "BTCSignatureHashType.h"
 
 @class BTCAddress;
-
+@class BTCScriptHashAddress;
+@class BTCScriptHashAddressTestnet;
 @interface BTCScriptChunk : NSObject
 
 // Return YES if it is not a pushdata chunk, that is a single byte opcode without data.
@@ -41,6 +42,7 @@
 // Initializes a multisignature script "OP_<M> <pubkey1> ... <pubkeyN> OP_<N> OP_CHECKMULTISIG"
 // N must be >= M, M and N should be from 1 to 16.
 // If you need a more customized transaction with OP_CHECKMULTISIG, create it using other methods.
+// publicKeys is an array of NSData objects.
 - (id) initWithPublicKeys:(NSArray*)publicKeys signaturesRequired:(NSUInteger)signaturesRequired;
 
 
@@ -101,6 +103,14 @@
 // If the script is something different, returns nil.
 - (BTCAddress*) standardAddress;
 
+// Wraps the recipient into an output P2SH script (OP_HASH160 <20-byte hash of the recipient> OP_EQUAL).
+- (BTCScript*) scriptHashScript;
+
+// Returns BTCScriptHashAddress that hashes this script.
+// Equivalent to [[script scriptHashScript] standardAddress] or [BTCScriptHashAddress addressWithData:BTCHash160(script.data)]
+- (BTCScriptHashAddress*) scriptHashAddress;
+- (BTCScriptHashAddressTestnet*) scriptHashAddressTestnet;
+
 
 #pragma mark - Modification API
 
@@ -131,19 +141,9 @@
 // Removes chunks with an opcode.
 - (void) deleteOccurrencesOfOpcode:(BTCOpcode)opcode;
 
-// Used by BitcoinQT within OP_CHECKSIG to not relay transactions with non-canonical signature or a public key.
-// Normally, signatures and pubkeys are encoded in a canonical form and majority of the transactions are good.
-// Unfortunately, sometimes OpenSSL segfaults on some garbage data in place of a signature or a pubkey.
-// Read more on that here: https://bitcointalk.org/index.php?topic=8392.80
-
-// Note: non-canonical pubkey could still be valid for EC internals of OpenSSL and thus accepted by Bitcoin nodes.
-+ (BOOL) isCanonicalPublicKey:(NSData*)data error:(NSError**)errorOut;
-
-// Checks if the script signature is canonical.
-// The signature is assumed to include hash type (see BTCSignatureHashType).
-+ (BOOL) isCanonicalSignature:(NSData*)data verifyEvenS:(BOOL)verifyEvenS error:(NSError**)errorOut;
-
-
+// DEPRECATION WARNING: These methods were moved to BTCKey class.
++ (BOOL) isCanonicalPublicKey:(NSData*)data error:(NSError**)errorOut DEPRECATED_ATTRIBUTE;
++ (BOOL) isCanonicalSignature:(NSData*)data verifyEvenS:(BOOL)verifyEvenS error:(NSError**)errorOut DEPRECATED_ATTRIBUTE;
 
 
 @end

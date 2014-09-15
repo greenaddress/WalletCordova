@@ -8,8 +8,10 @@
 #import <CoreBitcoin/BTCBlock.h>
 #import <CoreBitcoin/BTCBlockchainInfo.h>
 #import <CoreBitcoin/BTCBlockHeader.h>
+#import <CoreBitcoin/BTCChainCom.h>
 #import <CoreBitcoin/BTCCurvePoint.h>
 #import <CoreBitcoin/BTCData.h>
+#import <CoreBitcoin/BTCEncryptedMessage.h>
 #import <CoreBitcoin/BTCErrors.h>
 #import <CoreBitcoin/BTCKey.h>
 #import <CoreBitcoin/BTCKeychain.h>

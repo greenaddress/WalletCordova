@@ -90,7 +90,7 @@
     }
     
     BTCKey* key = [[BTCKey alloc] initWithPrivateKey:[[NSData alloc] initWithBytes:priv length:32]];
-    [key setCompressedPublicKey:compressed];
+    [key setPublicKeyCompressed:compressed];
     NSString* addr = [[key publicKeyAddress] base58String];
     NSData* hash = BTCHash256([addr dataUsingEncoding:NSUTF8StringEncoding]);
     const uint8_t* hash_bytes = [hash bytes];
@@ -124,7 +124,8 @@
     BTCKey* key = [[BTCKey alloc] initWithPrivateKey:[NSData dataWithBytes:passfactor
                                                                     length:32]];
     uint8_t derived[64];
-    crypto_scrypt([[key publicKeyCompressed:true] bytes], 33,
+    [key setPublicKeyCompressed:true];
+    crypto_scrypt([[key publicKey] bytes], 33,
                   bytes+3, 12,
                   1024, 1, 1, derived, 64);
     
@@ -186,7 +187,7 @@
     
     store[0] = 0x01;
     store[1] = 0x42;
-    store[2] = [key isCompressedPublicKey] ? 0xe0 : 0xc0;
+    store[2] = [key isPublicKeyCompressed] ? 0xe0 : 0xc0;
     
     NSString* b58_addr = [[key publicKeyAddress] base58String];
     NSData* hash = BTCHash256([b58_addr dataUsingEncoding:NSUTF8StringEncoding]);

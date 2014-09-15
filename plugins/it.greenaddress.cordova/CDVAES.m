@@ -1,6 +1,6 @@
 //
 //  CDVAES.m
-//  GreenAddress.It
+//  GreenAddress
 //
 
 #import "CDVAES.h"

@@ -208,7 +208,6 @@ angular.module('greenWalletServices', [])
                 if (!('altimeout' in $scope.wallet.appearance)) {
                     $scope.wallet.appearance.altimeout = 20;
                 }
-                notices.makeNotice('success', gettext('Logged in!'));
                 sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
                 autotimeout.start($scope.wallet.appearance.altimeout);
                 $scope.wallet.privacy = data.privacy;
@@ -655,9 +654,11 @@ angular.module('greenWalletServices', [])
                         if (progress_cb) progress_cb(Math.round(100 * signed_n / tx.ins.length));
                         var script = new Bitcoin.Script(Bitcoin.convert.hexToBytes(data.prev_outputs[i].script));
                         var SIGHASH_ALL = 1;
-                        var sign = key.sign(tx.hashTransactionForSignature(script, i, SIGHASH_ALL));
-                        sign.push(SIGHASH_ALL);
-                        return Bitcoin.convert.bytesToHex(sign);
+                        var sign = $q.when(key.sign(tx.hashTransactionForSignature(script, i, SIGHASH_ALL)));
+                        return sign.then(function(sign) {
+                            sign.push(SIGHASH_ALL)
+                            return Bitcoin.convert.bytesToHex(sign);
+                        });
                     });
                 }
                 signatures.push(sign);
@@ -964,7 +965,9 @@ angular.module('greenWalletServices', [])
                     delete calls_missed[cur_call];
                     $rootScope.$apply(function() { d.reject(err); })
                 });
-                var args = arguments;
+                var args = arguments, timeout;
+                if (args[0] == "http://greenaddressit.com/vault/prepare_sweep_social") timeout = 40000;
+                else timeout = 10000;
                 setTimeout(function() {
                     delete calls_missed[cur_call];
                     $rootScope.safeApply(function() {
@@ -973,7 +976,7 @@ angular.module('greenWalletServices', [])
                                 .replace('%s', args[0].split('/').slice(3).join('/'))
                         });
                     });
-                }, 10000);
+                }, timeout);
             } catch (e) {
                 if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                 delete calls_missed[cur_call];
@@ -1172,6 +1175,7 @@ angular.module('greenWalletServices', [])
                         var TWOPOWER64 = new Bitcoin.BigInteger(max64int_hex, 16).add(Bitcoin.BigInteger.ONE);
                         var random_path_hex = Bitcoin.ecdsa.getBigRandom(TWOPOWER64).toString(16);
                         while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
+                        console.log(challenge_bytes, challenge_bytes.length);
                         $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function(subhd) {
                             $q.when(subhd.priv.sign(challenge_bytes)).then(function(signature) {
                                 signature = Bitcoin.ecdsa.parseSig(signature);
@@ -1660,6 +1664,7 @@ angular.module('greenWalletServices', [])
     };
 }]).factory('addressbook', ['$rootScope', 'tx_sender', 'storage', 'crypto', 'notices', '$q',
         function($rootScope, tx_sender, storage, crypto, notices, $q) {
+    var PER_PAGE = 15;
     return {
         items: [],
         reverse: {},
@@ -1676,7 +1681,6 @@ angular.module('greenWalletServices', [])
             var items = items || this.items, next_prefix, next_partition;
             var items_copy = [];
             for (var i = 0; i < items.length; i++) items_copy.push(items[i]);
-            var PER_PAGE = 15;
             this.partitions = [];
             var get_name = function (item) {
                 // works with 'unprocessed' and 'processed' items
@@ -1713,6 +1717,7 @@ angular.module('greenWalletServices', [])
         },
         _process_item: function(value) {
             var is_chrome_app = window.chrome && chrome.storage;
+            if (value.name) return value;
             if (value[3] == 'facebook') {
                 var has_wallet = value[4];
                 if (!has_wallet && (is_chrome_app || window.cordova)) return;  // can't send FB messages from Chrome/Cordova app
@@ -1737,7 +1742,7 @@ angular.module('greenWalletServices', [])
                     that.reverse[value[1]] = value[0];
                 }
                 that.items.push(item);
-                if (value[0] === $routeParams.name) $routeParams.page = Math.ceil((i+1)/20);
+                if (value[0] === $routeParams.name) $routeParams.page = Math.ceil((i+1)/PER_PAGE);
                 i += 1;
             });
             that.num_pages = Math.ceil(that.items.length / 20);
@@ -1756,9 +1761,14 @@ angular.module('greenWalletServices', [])
                     cache = {};
                 }
                 var d;
+                var subaccounts = [];
+                for (var i = 0; i < $scope.wallet.subaccounts.length; i++) {
+                    var account = $scope.wallet.subaccounts[i];
+                    subaccounts.push([account.name, account.receiving_id, '', 'subaccount', true]);
+                }
                 if (cache.hashed) {
                     d = crypto.decrypt(cache.items, $scope.wallet.cache_password).then(function(decrypted) {
-                        that.update_with_items(JSON.parse(decrypted), $routeParams);
+                        that.update_with_items(JSON.parse(decrypted).concat(subaccounts), $routeParams);
                     });
                     var requires_load = false;
                 } else {
@@ -1776,7 +1786,7 @@ angular.module('greenWalletServices', [])
                                 cache.hashed = data.hashed;
                                 storage.set(addressbook_key, JSON.stringify(cache));
                             });
-                            that.update_with_items(items, $routeParams);
+                            that.update_with_items(items.concat(subaccounts), $routeParams);
                         }
                     }, function(err) {
                         notices.makeNotice('error', gettext('Error reading address book: ') + err.desc);
@@ -2331,6 +2341,7 @@ angular.module('greenWalletServices', [])
             var service = this;
             var deferred = $q.defer();
 
+            if (window.cordova && cordova.platformId == 'ios') return deferred.promise;
             if (!cardFactory && !window.cordova) return deferred.promise;
 
             var modal, showModal = function() {

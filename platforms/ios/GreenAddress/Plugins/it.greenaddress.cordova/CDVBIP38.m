@@ -162,7 +162,7 @@
         
         BTCPrivateKeyAddress* address =
             [BTCPrivateKeyAddress addressWithData:[NSData dataWithBytes:key_bytes length:32]
-                              compressedPublicKey:true];
+                              publicKeyCompressed:true];
         NSString* serializedKey = [bip38 encode:[address base58String]
                                    withPassword:password];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK

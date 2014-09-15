@@ -9,7 +9,27 @@
 
         <dt>Hash</dt>
         <dd>(( selected_transaction.txhash ))</dd>
-        
+
+        <dt>Memo</dt>
+        <dd>
+            <span ng-hide="selected_transaction.changing_memo">(( selected_transaction.memo ))</span>
+
+            <form ng-submit="edit_tx_memo(selected_transaction)" class="inline" ng-show="selected_transaction.changing_memo">
+                <div class="input-group">
+                    <input clickfix class="form-control" type="text" ng-model="selected_transaction.new_memo" focus-on="txmemoedit_(( selected_transaction.txhash ))" />
+                    <span class="input-group-btn">
+                        <button clickfix type="submit" class="btn btn-default" href=""><i class="glyphicon glyphicon-save"></i>Save</button>
+                    </span>
+                </div>
+
+                <input type="submit" class="hide" submitter />
+            </form>
+
+            <a clickfix ng-hide="selected_transaction.changing_memo || selected_transaction.memo" class="btn btn-default" href="" ng-click="start_editing_tx_memo(selected_transaction)"><i class="glyphicon glyphicon-edit"></i> Add</a>
+            <a clickfix ng-hide="selected_transaction.changing_memo || !selected_transaction.memo" class="btn btn-default" href="" ng-click="start_editing_tx_memo(selected_transaction)"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+
+        </dd>
+
         <dt>Transactiekosten</dt>
         <dd>(( selected_transaction.fee | format_btc:wallet.unit ))</dd>
 
