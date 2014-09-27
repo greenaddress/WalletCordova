@@ -102,59 +102,69 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         var encrypted = state.mnemonic.split(" ").length == 27;
         gaEvent('Login', encrypted ? 'MnemonicLogin' : 'MnemonicEncryptedLogin');
         state.mnemonic_error = state.login_error = undefined;
-        return mnemonics.validateMnemonic(state.mnemonic).then(function() {
-            var process = function(mnemonic) {
-                return mnemonics.toSeed(mnemonic).then(function(seed) {
-                    return mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
-                        return $q.when(Bitcoin.HDWallet.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
-                            hdwallet.seed_hex = seed;
-                            // seed, mnemonic, and path seed required already here for PIN setup below
-                            $scope.wallet.hdwallet = hdwallet;
-                            $scope.wallet.mnemonic = mnemonic;
-                            $scope.wallet.gait_path_seed = path_seed;
-                            state.seed_progress = 100;
-                            state.seed = seed;
-                            var do_login = function() {
-                                return wallets.login($scope, hdwallet, mnemonic, false, false, path_seed).then(function(data) {
-                                    if (!data) {
-                                        gaEvent('Login', 'MnemonicLoginFailed');
-                                        state.login_error = true;
-                                    } else {
-                                        gaEvent('Login', 'MnemonicLoginSucceeded');
-                                    }
-                                });
-                            };
-                            if (!state.has_pin && !state.refused_pin) {
-                                gaEvent('Login', 'MnemonicLoginPinModalShown');
-                                modal = $modal.open({
-                                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
-                                    scope: $scope
-                                });
-                                modal.opened.then(function() { focus("pinModal"); });
-                                return modal.result.then(do_login, function() {
-                                    storage.set('pin_refused', true);
-                                    return do_login();
-                                })
-                            } else {
-                                return do_login();
-                            }
+        var mnemonic_words = state.mnemonic.split(' ');
+        var last_word = mnemonic_words[mnemonic_words.length-1];
+        // BTChip seed ends with 'X':
+        if (last_word.indexOf('X') == last_word.length-1) {
+            var login_data_d = $q.when({seed: last_word.slice(0, -1)});
+        } else {
+            var login_data_d = mnemonics.validateMnemonic(state.mnemonic).then(function() {
+                var process = function(mnemonic) {
+                    return mnemonics.toSeed(mnemonic).then(function(seed) {
+                        return mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
+                            return {seed: seed, path_seed: path_seed, mnemonic: state.mnemonic};
+                        }, undefined, function(progress) {
+                            state.seed_progress = Math.round(50 + progress/2);
                         });
                     }, undefined, function(progress) {
-                        state.seed_progress = Math.round(50 + progress/2);
+                        state.seed_progress = Math.round(progress/2);
+                    }).catch(function() {
+                        state.seed_progress = undefined;
                     });
-                }, undefined, function(progress) {
-                    state.seed_progress = Math.round(progress/2);
-                }).catch(function() {
-                    state.seed_progress = undefined;
-                });
-            }
-            if (!encrypted) {
-                return process(state.mnemonic);
-            } else {
-                mnemonics.fromMnemonic(state.mnemonic).then(function(mnemonic_data) {
-                    return decrypt_bytes(mnemonic_data);
-                }).then(process);
-            }
+                };
+                if (!encrypted) {
+                    return process(state.mnemonic);
+                } else {
+                    return mnemonics.fromMnemonic(state.mnemonic).then(function(mnemonic_data) {
+                        return decrypt_bytes(mnemonic_data);
+                    }).then(process);
+                }
+            });
+        }
+        return login_data_d.then(function(data) {
+            return $q.when(Bitcoin.HDWallet.fromSeedHex(data.seed, cur_net)).then(function(hdwallet) {
+                hdwallet.seed_hex = data.seed;
+                // seed, mnemonic, and path seed required already here for PIN setup below
+                $scope.wallet.hdwallet = hdwallet;
+                $scope.wallet.mnemonic = data.mnemonic;
+                $scope.wallet.gait_path_seed = data.path_seed;
+                state.seed_progress = 100;
+                state.seed = data.seed;
+                var do_login = function() {
+                    return wallets.login($scope, hdwallet, data.mnemonic, false, false, data.path_seed).then(function(data) {
+                        if (!data) {
+                            gaEvent('Login', 'MnemonicLoginFailed');
+                            state.login_error = true;
+                        } else {
+                            gaEvent('Login', 'MnemonicLoginSucceeded');
+                        }
+                    });
+                };
+                if (!state.has_pin && !state.refused_pin) {
+                    gaEvent('Login', 'MnemonicLoginPinModalShown');
+                    modal = $modal.open({
+                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
+                        scope: $scope
+                    });
+                    modal.opened.then(function() { focus("pinModal"); });
+                    return modal.result.then(do_login, function() {
+                        storage.set('pin_refused', true);
+                        return do_login();
+                    })
+                } else {
+                    return do_login();
+                }
+            });
         }, function(e) {
             gaEvent('Login', 'MnemonicError', e);
             state.mnemonic_error = e;

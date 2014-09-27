@@ -28,7 +28,6 @@ globals.i18n_catalog = {
 "Dongle is locked \u002D reconnect the dongle and retry": "Dongle is locked \u002D reconnect the dongle and retry",
 "Electrum setup failed": "Electrum\u002Deinrichtung fehlgeschlagen",
 "Transaction verification failed: ": "Transaktionsverifikation fehlgeschlagen: ",
-"Logged in!": "Logged in!",
 "Missing input": "Fehlender Eingang",
 "You can\u0027t change your email address while you have email 2FA enabled": "You can\u0027t change your email address while you have email 2FA enabled",
 "You need to log out for language changes to be applied.": "Sie müssen sich ausloggen um die Sprachänderung zu aktivieren.",

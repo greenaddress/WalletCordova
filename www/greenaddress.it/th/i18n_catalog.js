@@ -28,7 +28,6 @@ globals.i18n_catalog = {
 "Dongle is locked \u002D reconnect the dongle and retry": "Dongle is locked \u002D reconnect the dongle and retry",
 "Electrum setup failed": "ติดตั้ง electrum ล้มเหลว",
 "Transaction verification failed: ": "การตรวจสอบธุธรรมล้มเหลว: ",
-"Logged in!": "เข้าระบบ!",
 "Missing input": "ไม่พบการป้อนข้อมูล",
 "You can\u0027t change your email address while you have email 2FA enabled": "คุณไม่สามารถเปลี่ยนอีเมล์ในขณะที่มีอีเมล์รหัส 2FA ทำงานอยู่",
 "You need to log out for language changes to be applied.": "คุณต้องออกจากระบบเพื่อให้การเปลี่ยนภาษามีผล",

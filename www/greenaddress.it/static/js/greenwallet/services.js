@@ -1175,7 +1175,6 @@ angular.module('greenWalletServices', [])
                         var TWOPOWER64 = new Bitcoin.BigInteger(max64int_hex, 16).add(Bitcoin.BigInteger.ONE);
                         var random_path_hex = Bitcoin.ecdsa.getBigRandom(TWOPOWER64).toString(16);
                         while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
-                        console.log(challenge_bytes, challenge_bytes.length);
                         $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function(subhd) {
                             $q.when(subhd.priv.sign(challenge_bytes)).then(function(signature) {
                                 signature = Bitcoin.ecdsa.parseSig(signature);
@@ -2105,6 +2104,7 @@ angular.module('greenWalletServices', [])
     var cardFactory;
     if (window.ChromeapiPlugupCardTerminalFactory) {
         cardFactory = new ChromeapiPlugupCardTerminalFactory();
+        cardFactoryBootloader = new ChromeapiPlugupCardTerminalFactory(0x1808);
     }
 
     var BTChipCordovaWrapper = function() {
@@ -2363,7 +2363,24 @@ angular.module('greenWalletServices', [])
                         });
                     });
                 };
-            }
+            };
+
+            var showUpgradeModal = function() {
+                var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
+                if (window.cordova) {
+                    notices.makeNotice("error", notice);
+                } else {
+                    var scope = angular.extend($rootScope.$new(), {
+                        firmware_upgrade_message: notice
+                    });
+                    var modal = $modal.open({
+                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_fup.html',
+                        scope: scope
+                    }).result.then(function() {
+                        deferred.resolve(service.getDevice(noModal, modalNotDisableable, existing_device));
+                    });
+                }
+            };
 
             var check = cordovaReady(function() {
                 if (existing_device) existing_promise = existing_device.app.getFirmwareVersion_async();
@@ -2387,7 +2404,16 @@ angular.module('greenWalletServices', [])
                                     devnum += 1;
                                     return {app: new BTChip(dongle), dongle: dongle, devnum: devnum};
                                 });
-                            } else showModal();
+                            } else {
+                                cardFactoryBootloader.list_async().then(function(result) {
+                                    if (result.length) {
+                                        showUpgradeModal();
+                                        $interval.cancel(tick);
+                                    } else {
+                                        showModal();
+                                    }
+                                });
+                            }
                         });
                     }
                     app_promise.then(function(btchip) {
@@ -2400,9 +2426,9 @@ angular.module('greenWalletServices', [])
                                 $interval.cancel(tick);
                             }
                             var features = {};
-                            if (version.firmwareVersion.toString(HEX) < '000104080000') {
-                                var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
-                                notices.makeNotice("error", notice);
+                            if (version.firmwareVersion.toString(HEX) < '0001040800000') {
+                                btchip.dongle.disconnect_async();
+                                showUpgradeModal();
                                 return;
                             }
                             features.signMessageRecoveryParam =

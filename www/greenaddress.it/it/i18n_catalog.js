@@ -29,7 +29,6 @@ globals.i18n_catalog = {
 "Dongle is locked \u002D reconnect the dongle and retry": "La chiavetta USB è bloccata \u002D riconnetterla e riprovare",
 "Electrum setup failed": "Configurazione Electrum fallita",
 "Transaction verification failed: ": "La verifica della transazione è fallita:",
-"Logged in!": "Loggato!",
 "Missing input": "Manca l\u0027input",
 "You can\u0027t change your email address while you have email 2FA enabled": "Non puoi cambiare l\u0027indirizzo email mentre l\u0027autenticazione a due fattori e\u0027 attiva",
 "You need to log out for language changes to be applied.": "Devi rifare il login per cambiare la lingua.",

@@ -9,9 +9,9 @@
   <div class="col-md-12">
     <form role="form" class="form-horizontal">
       <div class="form-group" ng-show="wallet.subaccounts.length">
-        <label class="col-sm-2 control-label" for="amount">From account</label>
+        <label class="col-sm-2 control-label" for="amount">Agregar cuenta</label>
         <div class="col-sm-10">
-          <select class="form-control" ng-model="wallet.current_subaccount" ng-options="subwallet.pointer as subwallet.name for subwallet in [{pointer: 0, name: 'Main'}].concat(wallet.subaccounts)" style="float: right;">
+          <select class="form-control" ng-model="wallet.current_subaccount" ng-options="subwallet.pointer as subwallet.name for subwallet in [{pointer: 0, name: 'Principal'}].concat(wallet.subaccounts)" style="float: right;">
           </select>
         </div>
         <hr class="double">
@@ -146,7 +146,7 @@
         <div class="col-sm-10">
           <div class="row">
             <div class="col-md-12">
-              <input class="form-control" type="text" ng-model="send_tx.memo" placeholder="You can enter a memo to store in your transactions list" />
+              <input class="form-control" type="text" ng-model="send_tx.memo" placeholder="Puede escribir un memo para almacenar su lista de transacciones" />
             </div>
           </div>
         </div>
@@ -160,7 +160,7 @@
         <span ng-show="send_tx.voucher">Crear un Cupón</span>
       </button>
       <div class="pull-right" ng-hide="send_tx.advanced_options_visible">
-        <a class="btn btn-default" ng-click="send_tx.advanced_options_visible = true"><i class="glyphicon glyphicon-wrench"></i> Show advanced options</a>
+        <a class="btn btn-default" ng-click="send_tx.advanced_options_visible = true"><i class="glyphicon glyphicon-wrench"></i> Mostrar opciones avanzadas</a>
       </div>
     </form>
   </div>

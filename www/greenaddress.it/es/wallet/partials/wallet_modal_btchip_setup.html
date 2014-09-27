@@ -7,17 +7,17 @@
     </div>
 	<div ng-show="!btchip.already_setup && !btchip.gait_setup">
     	<p ng-show="btchip.use_gait_mnemonic">BTChip vacío detectado con éxito. Cliquee el botón abajo para almacenar su semilla en éste.</p>
-        <p ng-hide="btchip.use_gait_mnemonic">Empty BTChip detected successfully. Click the button below to set it up.</p>
+        <p ng-hide="btchip.use_gait_mnemonic">BTChip vacío detectado con éxito. Cliquee el botón abajo para almacenar su semilla en éste.</p>
     	<button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.storing || !btchip.use_gait_mnemonic">Guardar en BTChip</button>
-        <button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.use_gait_mnemonic" ng-disabled="btchip.setting_up">Set up BTChip</button>
+        <button type="button" class="btn btn-success" ng-click="btchip.store()" ng-hide="btchip.use_gait_mnemonic" ng-disabled="btchip.setting_up">Guardar en BTChip</button>
         <span class="btn btn-success disabled" ng-show="btchip.storing">
            	Generando las claves de tu Wallet, por favor espere ... (( btchip.seed_progress ))%
         </span>
     </div>
 	<div ng-show="btchip.gait_setup">
         <p ng-show="btchip.replug_for_backup">¡Configuración de BTChip exitosa!
-        Please unplug your BTChip and plug it into a secure device supporting USB keyboards to read the seed backup.
-        <strong>On the second device remember to first open a text editor or a similar application where the seed will be typed in by BTChip.</strong></p>
+        Por favor desconecte su BTChip y conéctelo en un dispositivo seguro compatible con teclados USB para leer la copia de seguridad de la semilla.
+        <strong>En el segundo dispositivo recuerde primero abrir un editor de texto o aplicación similar donde la semilla puede ser ingresada por el BTChip.</strong></p>
     	<p ng-hide="btchip.replug_for_backup">¡Configuración de BTChip exitosa!</p>
     </div>
 </div>
