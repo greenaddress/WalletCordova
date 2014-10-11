@@ -551,12 +551,12 @@
   </div>
 </div>
 </div> <!-- id="security" -->
-<div id="accounts">
+<div id="accounts" ng-controller="SubwalletsController">
 <hr class="double">
 <div class="header">
   Agregar cuenta
 </div>
-<div class="row" ng-controller="SubwalletsController">
+<div class="row">
   <div class="col-md-3">
     <div class="sub-header">Eliminar cuenta</div>
     <div class="sub-header-desc">Cree cuentas que le permitan separar sus fondos. Cada una de las cuentas tendrá su propia dirección de recepción.</div>
@@ -575,13 +575,13 @@
         </div>
       </div>
     </form>
-    <h3 ng-show="subwallets.existing.length">Eliminar cuenta</h3>
+    <h3 ng-show="subwallets.existing.length">Your simple accounts:</h3>
     <table class="table table-striped" id="id_addressbook">
       <thead>
         <th>Nombre</th>
         <th>Transacciones</th>
       </thead>
-      <tr ng-repeat="subwallet in subwallets.existing" submittable>
+      <tr ng-repeat="subwallet in subwallets.existing|filter:{type:'simple'}" submittable>
         <td ng-hide="subwallet.renaming">(( subwallet.name ))</td>
         <td ng-show="subwallet.renaming">
           <form ng-submit="subwallets.rename(subwallet)" class="inline">
@@ -598,5 +598,52 @@
         </td>
       </tr>
     </table>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">2of3 accounts</div>
+    <div class="sub-header-desc">Create accounts that allow you to access your funds at any time even without access to GreenAddress, using additional offline recovery key.<br/><strong>NOTE:</strong> instant transactions are not available for these accounts because GreenAddress can't protect them from double spending.</div>
+  </div>
+  <div class="col-md-9">
+    <form ng-submit="subwallets.create_new_2of3()" class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="control-label col-sm-6">Create a 2of3 account with the following label:</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Etiqueta" ng-model="subwallets.new_2of3_label" ng-disabled="subwallets.adding_subwallet">
+            <span class="input-group-btn">
+              <input ng-hide="subwallets.generating_2of3_seed" type="submit" class="btn btn-primary" value="Crear" ng-disabled="!subwallets.new_2of3_label || subwallets.adding_subwallet" />
+              <input ng-show="subwallets.generating_2of3_seed" type="submit" class="btn btn-primary" value="(( subwallets.seed_progress_2of3 ))%" disabled />
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <h3 ng-show="subwallets.existing.length">Your 2of3 accounts:</h3>
+    <table class="table table-striped" id="id_addressbook">
+      <thead>
+        <th>Nombre</th>
+        <th>Transacciones</th>
+      </thead>
+      <tr ng-repeat="subwallet in subwallets.existing|filter:{type:'2of3'}" submittable>
+        <td ng-hide="subwallet.renaming">(( subwallet.name ))</td>
+        <td ng-show="subwallet.renaming">
+          <form ng-submit="subwallets.rename(subwallet)" class="inline">
+            <input type="text" ng-model="subwallet.new_name" focus-on="addrbook_rename_(( item.address ))" />
+              <input type="submit" class="hide" submitter />
+            </form>
+
+        </td>
+        <td>
+          <a ng-hide="subwallet.renaming" class="btn btn-xs btn-default" href="" ng-click="subwallets.start_rename(subwallet)"><i class="glyphicon glyphicon-edit"></i> Nombre de usuario</a>
+          <a ng-show="subwallet.renaming" class="btn btn-xs btn-default" href="" ng-click="submit_me()"><i class="glyphicon glyphicon-save"></i> Guardar</a>
+          <a class="btn btn-xs btn-default" href="" ng-click="subwallets.send_from(subwallet)"><i class="glyphicon glyphicon-send"></i> Enviar</a>
+          <a class="btn btn-xs btn-default" href="" ng-click="subwallets.receive_to(subwallet)"><i class="icon-bitcoin"></i> Recibir Dinero</a>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 </div> <!-- id="subwallets" -->

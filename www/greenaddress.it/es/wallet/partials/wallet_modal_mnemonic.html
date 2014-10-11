@@ -1,11 +1,19 @@
 <div class="modal-body text-center">
-    <p>El código QR conteniendo la contraseña para acceder a su wallet es:</p>
-    <p><qr text="(( mnemonic_encrypted || wallet.mnemonic ))" size="212"></qr></p>
+    <p ng-hide="mnemonic_2of3">El código QR conteniendo la contraseña para acceder a su wallet es:</p>
+    <p ng-show="mnemonic_2of3">The QR code containing the passphrase for recovery access to your subaccount is:</p>
+    <p><qr text="(( mnemonic_2of3 || mnemonic_encrypted || wallet.mnemonic ))" size="212"></qr></p>
     <p ng-show="mnemonic_encrypted">Esta contraseña está encriptada, así que su contraseña de encriptación es requerida para utilizarlo.</p>
     <p><b><i class="glyphicon glyphicon-exclamation-sign"></i> ¡Recuerde guardarlo en un lugar seguro!</b></p>
+    <p style="word-break: normal" show="mnemonic_2of3"><b><i class="glyphicon glyphicon-exclamation-sign"></i> The subaccount mnemonic is not stored anywhere neither by GreenAddress, nor by your browser, so you *HAVE* to back it up to have a recovery access to your 2of3 subaccount.</b></p>
 
     <div class="mnemonic-label">Su indicio de clave</div>
-    <div class="mnemonic info" ng-bind="mnemonic_encrypted || wallet.mnemonic"></div>
+    <div style="word-break: normal" class="mnemonic info" ng-bind="mnemonic_encrypted || wallet.mnemonic"></div>
+
+    <div ng-show="mnemonic_2of3" class="mnemonic-label"><br/>Your subaccount recovery mnemonic passphrase</div>
+    <div ng-show="mnemonic_2of3" style="word-break: normal" class="mnemonic info" ng-bind="mnemonic_2of3"></div>
+
+    <div ng-show="mnemonic_2of3" class="mnemonic-label"><br/>Your subaccount GreenAddress xpub</div>
+    <div ng-show="mnemonic_2of3" class="mnemonic info" ng-bind="xpub_2of3"></div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" ng-click="$close()">Cerrar</button>

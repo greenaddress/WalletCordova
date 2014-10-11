@@ -38,7 +38,17 @@ angular.module('greenWalletSendControllers',
         }
 
         // check change output if present
-        var change_d;
+        var change_d, subaccount;
+        for (var i = 0; i < $scope.wallet.subaccounts.length; i++) {
+            if ($scope.wallet.subaccounts[i].pointer == $scope.wallet.current_subaccount) {
+                subaccount = $scope.wallet.subaccounts[i];
+                break;
+            }
+        }
+        if (subaccount && subaccount.type == '2of3') {
+            // FIXME implement paranoid checks for 2of3
+            return $q.when({success: true});
+        }
         if (tx.outs.length == 2) {
             if ($scope.wallet.current_subaccount) {
                 var derive_hd = function() {
@@ -240,6 +250,8 @@ angular.module('greenWalletSendControllers',
                     return r;
                 }, function(err) {
                     if (err == 'no electrum') {
+                        if (cur_net == 'testnet') return verify(true);
+                        // for mainnnet, ask user if they want to skip Electrum:
                         return $modal.open({
                             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_no_electrum.html',
                             windowClass: 'twofactor' // display on top of loading indicator
