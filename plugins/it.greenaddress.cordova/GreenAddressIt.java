@@ -19,6 +19,10 @@
 
 package it.greenaddress.cordova;
 
+import com.btchip.comm.BTChipTransport;
+import com.btchip.comm.android.BTChipTransportAndroid;
+import com.btchip.utils.Dump;
+
 import android.os.Bundle;
 import org.apache.cordova.*;
 import android.app.Activity;
@@ -27,6 +31,7 @@ import android.os.Build;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import java.util.logging.Logger;
 import android.os.Parcelable;
@@ -36,6 +41,10 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.os.Build;
 import android.content.pm.ApplicationInfo;
+import android.util.Base64;
+import android.content.Context;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 
 class CustomNativeAccess {
     @JavascriptInterface
@@ -45,7 +54,7 @@ class CustomNativeAccess {
     }
 }
 
-public class GreenAddressIt extends CordovaActivity 
+public class GreenAddressIt extends CordovaActivity
 {
     private Intent lastIntent = null;
 
@@ -53,62 +62,56 @@ public class GreenAddressIt extends CordovaActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+
+        // in previous versions there was a flaw which caused qr scanning history to be stored by
+        // our zxing plugin because Intents.Scan.SAVE_HISTORY was not set to false - the history
+        // from previous versions is removed here:
+        getApplicationContext().deleteDatabase("barcode_scanner_history.db");
+
+        UsbDevice device = (UsbDevice) getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
+        if (device != null) {
+            System.out.println("Dongle detected");
+            UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+            BTChip.transport = BTChipTransportAndroid.open(manager, device);
+        }
+
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) && getIntent().getBooleanExtra("continue", true)) {
             // ignore nfc, to avoid having nfc service and app not reparenting (disappears from history) and send intent just to start app normally
-            Logger.getLogger("CordovaLog").info(" NFC finishing");
-            final Intent intent = new Intent(getApplicationContext(), GreenAddressIt.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(NfcAdapter.EXTRA_NDEF_MESSAGES, getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES));
+            final Intent intent = getIntent();//.cloneFilter();//new Intent(getApplicationContext(), GreenAddressIt.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("continue", false);
             startActivity(intent);
             finish();
             return;
         }
         if (getIntent().hasCategory(Intent.CATEGORY_BROWSABLE)) {
-            // ignore nfc, to avoid having nfc service and app not reparenting (disappears from history) and send intent just to start app normally
-            Logger.getLogger("CordovaLog").info(" browsable");
+            // ignore opening uri to deparent from browser
             final Intent intent = new Intent(Intent.ACTION_VIEW, getIntent().getData(), getApplicationContext(), GreenAddressIt.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            //intent.putExtras(getIntent());
             startActivity(intent);
             finish();
             return;
         }
 
-        Logger.getLogger("CordovaLog").info("onCreate after super");
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if ( 0 != ( getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) ) {
-                Logger.getLogger("CordovaLog").info("enabling debugging for webview");
                 WebView.setWebContentsDebuggingEnabled(true);
             }
         }
         if (!isTaskRoot()) {
-            Logger.getLogger("CordovaLog").info("!isTaskRoot");
             // https://code.google.com/p/android/issues/detail?id=2373
             final Intent intent = getIntent();
             final String action = intent.getAction();
-            Logger.getLogger("CordovaLog").info("!isTaskRoot " + intent.toString());
-            Logger.getLogger("CordovaLog").info("!isTaskRoot " + action);
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
-                Logger.getLogger("CordovaLog").info("finishing");
                 finish();
                 return;
             }
         }
-        Logger.getLogger("CordovaLog").info("onCreate after super" + getIntent().toString());
-        if (getIntent()!= null && getIntent().getExtras() != null)  {
-            for (String key : getIntent().getExtras().keySet()) {
-                    Object value = getIntent().getExtras().get(key);
-                    Logger.getLogger("CordovaLog").info(String.format("onResume %s %s (%s)", key, value.toString(), value.getClass().getName()));
-            }
-        }
-        Logger.getLogger("CordovaLog").info("about to call init");
         super.init();
-        Logger.getLogger("CordovaLog").info("init called");
         // Set by <content src="index.html" /> in config.xml
         super.appView.getSettings().setUserAgentString("GAITCordova;" + super.appView.getSettings().getUserAgentString());
         super.appView.addJavascriptInterface(new CustomNativeAccess(), "CustomNativeAccess");
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
-            Logger.getLogger("CordovaLog").info("processing intent");
             processView(getIntent());
         } else {
             super.clearCache();
@@ -125,13 +128,6 @@ public class GreenAddressIt extends CordovaActivity
         }
     }
 
-    private void processNFC(final Intent intent) {
-        final Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-        NfcAdapter.EXTRA_NDEF_MESSAGES);
-        final NdefMessage msg = (NdefMessage) rawMsgs[0];
-        Logger.getLogger("CordovaLog").info("OnProcessNFC" + msg.getRecords()[0].getPayload());
-    }
-
     protected String getBaseURL() {
         final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         String language;
@@ -144,21 +140,19 @@ public class GreenAddressIt extends CordovaActivity
     }
 
     private void processView(final Intent intent) {
-
-        Logger.getLogger("CordovaLog").info("processView: being");
+        if (intent == null) {
+            return;
+        }
+        if (intent.getData() == null) {
+            return;
+        }
         if ("bitcoin".equals(intent.getData().getScheme())) {
-            Logger.getLogger("CordovaLog").info("processView: bitcoin uri");
             String uri = "/uri/?uri=" + Uri.encode(intent.getData().toString());
-            Logger.getLogger("CordovaLog").info(getBaseURL() + "#" + uri);
             super.loadUrl(getBaseURL() + "#" + uri);
         } else if (intent.getData().getPath() == null) {
-            Logger.getLogger("CordovaLog").info("processView: getPath == null");
             super.loadUrl(getBaseURL());
         } else {
-            Logger.getLogger("CordovaLog").info("processView: else");
             String path = intent.getData().getPath();
-            Logger.getLogger("CordovaLog").info("processView: PATH " + path);
-            Logger.getLogger("CordovaLog").info("processView: int " + intent.toString());
             if (path.length() > 4 && path.charAt(0) == '/' && path.charAt(3) == '/') {
                 // hackish language URL detection
                 path = path.substring(3);
@@ -179,32 +173,17 @@ public class GreenAddressIt extends CordovaActivity
                 }
                 super.loadUrl(url);
             } else {  // not a wallet url - shouldn't happen given the filters work correctly
-                Logger.getLogger("CordovaLog").info("processView: should NEVER NEVER happen");
             }
         }
-        Logger.getLogger("CordovaLog").info("processView: end.");
     }
-    
+
     private void handleWidget(final Intent intent) {
         if (intent != null) {
             final String hash = intent.getStringExtra("hash");
             if (hash != null) {
-                Logger.getLogger("CordovaLog").info("handleWidget " + hash);
-         //       Logger.getLogger("CordovaLog").info("testing if redirecting properly " + getIntent().getBundle().toString());
                 if (("/send".equals(hash) || "/receive".equals(hash))) {
                         final String js = "location.hash=\"#" +hash+"\"";
-                        Logger.getLogger("CordovaLog").info("exec " + js);
                         super.sendJavascript(js);
-                        /*
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                            appView.loadUrl("javascript:location.hash=\"" +hash+"\"");
-                            Logger.getLogger("CordovaLog").info("load");
-                        } else {
-                            Logger.getLogger("CordovaLog").info("eval");
-                            appView.evaluateJavascript("location.hash=\"" +hash+"\"", null);
-                        }
-                        */
-                        Logger.getLogger("CordovaLog").info("returning");
                 }
             }
         }
@@ -213,18 +192,7 @@ public class GreenAddressIt extends CordovaActivity
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.getLogger("CordovaLog").info("OnResume");
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            processNFC(getIntent());
-        }
-        /*
-        for (String key : getIntent().getExtras().keySet()) {
-                Object value = getIntent().getExtras().get(key);
-                Logger.getLogger("CordovaLog").info(String.format("%s %s (%s)", key, value.toString(), value.getClass().getName()));
-        }
-        */
-        Logger.getLogger("CordovaLog").info("OnResume action" + getIntent().getAction());
-        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {    
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             processView(getIntent());
         }
         handleWidget(lastIntent);
@@ -232,26 +200,21 @@ public class GreenAddressIt extends CordovaActivity
             processView(lastIntent);
         }
         lastIntent = null;
-        /*
-        if (intent != null && intent.getExtras() != null)  {
-            for (String key : intent.getExtras().keySet()) {
-                    Object value = intent.getExtras().get(key);
-                    Logger.getLogger("CordovaLog").info(String.format("onResume %s %s (%s)", key, value.toString(), value.getClass().getName()));
-            }
-        }
-        */
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         lastIntent = intent;
-        //processView(intent);
-        Logger.getLogger("CordovaLog").info("onNewIntent - lawrence" + intent.toString());
-        String hash = (intent.getData() == null? null : intent.getData().getPath());
-        Logger.getLogger("CordovaLog").info("on NewIntent path - " + hash);
-        Logger.getLogger("CordovaLog").info("onNewIntent - extras? " + intent.getExtras());
-             //  final Intent prevIntent = getIntent();
-       super.onNewIntent(intent);
-       setIntent(intent);
+        UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+        if (device != null) {
+            System.out.println("Dongle detected");
+            UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+            BTChip.transport = BTChipTransportAndroid.open(manager, device);
+        }
+        processView(intent);
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
+
 }

@@ -15,6 +15,9 @@
             <feature name="BIP38">
                 <param name="android-package" value="it.greenaddress.cordova.BIP38"/>
             </feature>
+            <feature name="BTChip">
+                <param name="android-package" value="it.greenaddress.cordova.BTChip"/>
+            </feature>
         </config-file>
     </platform>
     <platform name="ios">

@@ -47,6 +47,10 @@
                         {
                             "xml": "<feature name=\"BIP38\"><param name=\"android-package\" value=\"it.greenaddress.cordova.BIP38\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BTChip\"><param name=\"android-package\" value=\"it.greenaddress.cordova.BTChip\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -659,10 +663,10 @@
         "com.chariotsolutions.nfc.plugin": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "it.greenaddress.cordova": {
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.inappbrowser": {
+        "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         }
     },
