@@ -19,6 +19,10 @@
 
 package it.greenaddress.cordova;
 
+import com.btchip.comm.BTChipTransport;
+import com.btchip.comm.android.BTChipTransportAndroid;
+import com.btchip.utils.Dump;
+
 import android.os.Bundle;
 import org.apache.cordova.*;
 import android.app.Activity;
@@ -38,6 +42,9 @@ import android.webkit.WebView;
 import android.os.Build;
 import android.content.pm.ApplicationInfo;
 import android.util.Base64;
+import android.content.Context;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 
 class CustomNativeAccess {
     @JavascriptInterface
@@ -47,7 +54,7 @@ class CustomNativeAccess {
     }
 }
 
-public class GreenAddressIt extends CordovaActivity 
+public class GreenAddressIt extends CordovaActivity
 {
     private Intent lastIntent = null;
 
@@ -60,6 +67,13 @@ public class GreenAddressIt extends CordovaActivity
         // our zxing plugin because Intents.Scan.SAVE_HISTORY was not set to false - the history
         // from previous versions is removed here:
         getApplicationContext().deleteDatabase("barcode_scanner_history.db");
+
+        UsbDevice device = (UsbDevice) getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
+        if (device != null) {
+            System.out.println("Dongle detected");
+            UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+            BTChip.transport = BTChipTransportAndroid.open(manager, device);
+        }
 
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) && getIntent().getBooleanExtra("continue", true)) {
             // ignore nfc, to avoid having nfc service and app not reparenting (disappears from history) and send intent just to start app normally
@@ -162,7 +176,7 @@ public class GreenAddressIt extends CordovaActivity
             }
         }
     }
-    
+
     private void handleWidget(final Intent intent) {
         if (intent != null) {
             final String hash = intent.getStringExtra("hash");
@@ -178,7 +192,7 @@ public class GreenAddressIt extends CordovaActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {    
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             processView(getIntent());
         }
         handleWidget(lastIntent);
@@ -192,9 +206,15 @@ public class GreenAddressIt extends CordovaActivity
     @Override
     protected void onNewIntent(Intent intent) {
         lastIntent = intent;
+        UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+        if (device != null) {
+            System.out.println("Dongle detected");
+            UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+            BTChip.transport = BTChipTransportAndroid.open(manager, device);
+        }
         processView(intent);
         super.onNewIntent(intent);
         setIntent(intent);
     }
-    
+
 }
