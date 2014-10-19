@@ -25,6 +25,12 @@
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
             <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+            <meta-data android:name="android.nfc.action.TECH_DISCOVERED" android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity-alias android:name="it.greenaddress.cordova.ui.MainActivityUrlAlias" android:targetActivity="GreenAddressIt">
             <intent-filter>
