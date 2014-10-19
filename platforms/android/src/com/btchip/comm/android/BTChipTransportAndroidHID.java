@@ -49,6 +49,7 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 		this.dongleInterface = dongleInterface;
 		this.in = in;
 		this.out = out;
+		ledger = (in.getEndpointNumber() != out.getEndpointNumber());
 		this.timeout = timeout;
 		transferBuffer = new byte[HID_BUFFER_SIZE];
 	}
@@ -81,6 +82,7 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 		if (!ledger) {
 			request.queue(responseBuffer, HID_BUFFER_SIZE);
 			connection.requestWait();
+			responseBuffer.rewind();
 			int sw1 = (int)(responseBuffer.get() & 0xff);
 			int sw2 = (int)(responseBuffer.get() & 0xff);
 			if (sw1 != SW1_DATA_AVAILABLE) {
@@ -98,6 +100,7 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 					responseBuffer.clear();
 					request.queue(responseBuffer, HID_BUFFER_SIZE);
 					connection.requestWait();
+					responseBuffer.rewind();
 					blockSize = (responseSize - offset > HID_BUFFER_SIZE ? HID_BUFFER_SIZE : responseSize - offset);
 					responseBuffer.get(transferBuffer, 0, blockSize);
 					response.write(transferBuffer, 0, blockSize);
@@ -112,6 +115,7 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 				responseBuffer.clear();
 				request.queue(responseBuffer, HID_BUFFER_SIZE);
 				connection.requestWait();
+				responseBuffer.rewind();
 				responseBuffer.get(transferBuffer, 0, HID_BUFFER_SIZE);
 				response.write(transferBuffer, 0, HID_BUFFER_SIZE);				
 			}						
@@ -131,7 +135,7 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 	
 	@Override
 	public void setDebug(boolean debugFlag) {
-		this.debug = debug;
+		this.debug = debugFlag;
 	}
 	
 	private static final int HID_BUFFER_SIZE = 64;

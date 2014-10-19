@@ -85,7 +85,7 @@ public class BTChipTransportAndroidWinUSB implements BTChipTransport {
 	
 	@Override
 	public void setDebug(boolean debugFlag) {
-		this.debug = debug;
+		this.debug = debugFlag;
 	}
 	
 	private static final int SW1_DATA_AVAILABLE = 0x61;
