@@ -48,10 +48,10 @@
     <hr class="double">
 
     <p style="font-size:140%;"><b>ป้อนข้อมูล</b></p>
-
+    <p ng-show="selected_transaction.inputs.length > 10">The inputs below are only the first 10 inputs of this transaction. To see all of them, use a block explorer.
     <table class="table">
         <tr><th>ที่อยู่</th><th>จำนวน</th></tr>
-        <tr ng-repeat="input in selected_transaction.inputs">
+        <tr ng-repeat="input in selected_transaction.inputs|limitTo:10">
             <td>(( input.ad ))</td>
             <td>(( input.value | format_btc:wallet.unit ))</td>
         </tr>
@@ -60,10 +60,10 @@
     <hr class="double">
 
     <p style="font-size:140%;"><b>ผลลัพธ์</b></p>
-
+    <p ng-show="selected_transaction.outputs.length > 10">The outputs below are only the first 10 outputs of this transaction. To see all of them, use a block explorer.
     <table class="table">
         <tr><th>ที่อยู่</th><th>จำนวน</th></tr>
-        <tr ng-repeat="output in selected_transaction.outputs">
+        <tr ng-repeat="output in selected_transaction.outputs|limitTo:10">
             <td>(( output.ad ))</td>
             <td>(( output.value | format_btc:wallet.unit ))</td>
         </tr>

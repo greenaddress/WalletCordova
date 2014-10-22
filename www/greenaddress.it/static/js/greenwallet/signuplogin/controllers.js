@@ -280,15 +280,17 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 if (!pin) return;
                 btchip_dev.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
                     var expected_signing_ms = 6000;
+                    if (btchip_dev.features.quickerVersion) expected_signing_ms *= 0.74;
                     var restart_countdown = function() {
                         var elapsed_signing_ms = 0
                         $scope.hardware_progress = 1;
                         var countdown = $interval(function() {
                             elapsed_signing_ms += 100;
-                            $scope.hardware_progress = Math.max(1, Math.round(100*elapsed_signing_ms/expected_signing_ms));
+                            $scope.hardware_progress = Math.min(100, Math.round(100*elapsed_signing_ms/expected_signing_ms));
                             if ($scope.hardware_progress >= 100) {
                                 // second login is faster because pubkey is already derived:
                                 expected_signing_ms = 4500;
+                                if (btchip_dev.features.quickerVersion) expected_signing_ms *= 0.74;
                                 $interval.cancel(countdown);
                             }
                         }, 100);
@@ -308,6 +310,12 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     btchip_dev.dongle.disconnect_async();
                     if (error.indexOf("6982") >= 0) {
                         notices.makeNotice("error", gettext("Invalid PIN"));
+                    } else if (error.indexOf("63c2") >= 0) {
+                        notices.makeNotice("error", gettext("Invalid PIN, 2 retries left"));
+                    } else if (error.indexOf("63c1") >= 0) {
+                        notices.makeNotice("error", gettext("Invalid PIN, 1 retry left"));
+                    } else if (error.indexOf("63c0") >= 0) {
+                        notices.makeNotice("error", gettext("Invalid PIN, dongle wiped"));
                     } else if (error.indexOf("6985") >= 0) {
                         notices.makeNotice("error", gettext("Dongle is not set up"));
                     } else if (error.indexOf("6faa") >= 0) {

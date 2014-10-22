@@ -165,39 +165,41 @@ if (self.cordova && cordova.platformId == 'ios') {
         return deferred.promise;
     }
 } else {
-    (function() {
-        var worker = new Worker(BASE_URL+"/static/js/bitcoinjs_util_worker.js"), callId = 0,
-            cbs = {};
+    if (self.Worker && !self.GAIT_IN_WORKER) {
+        (function() {
+            var worker = new Worker(BASE_URL+"/static/js/bitcoinjs_util_worker.js"), callId = 0,
+                cbs = {};
 
-        worker.onmessage = function(message) {
-            cbs[message.data.callId](message.data.result);
-            delete cbs[message.data.callId];
-        }
+            worker.onmessage = function(message) {
+                cbs[message.data.callId](message.data.result);
+                delete cbs[message.data.callId];
+            }
 
-        Bitcoin.HDWallet.prototype.derive = function(i) {
-            var deferred = $q.defer(), that = this;
-            cbs[++callId] = function(derived) {
-                deferred.resolve(Bitcoin.HDWallet.fromBase58(derived));
-            };
-            worker.postMessage({
-                func: 'derive',
-                data: {wallet: this.toBase58(this.priv), i: i},
-                callId: callId
-            })
-            return deferred.promise;
-        }
+            Bitcoin.HDWallet.prototype.derive = function(i) {
+                var deferred = $q.defer(), that = this;
+                cbs[++callId] = function(derived) {
+                    deferred.resolve(Bitcoin.HDWallet.fromBase58(derived));
+                };
+                worker.postMessage({
+                    func: 'derive',
+                    data: {wallet: this.toBase58(this.priv), i: i},
+                    callId: callId
+                })
+                return deferred.promise;
+            }
 
-        Bitcoin.ECKey.prototype.sign = function(hash) {
-            var deferred = $q.defer();
-            cbs[++callId] = deferred.resolve;
-            worker.postMessage({
-                func: 'sign',
-                data: {key: this.toWif(), hash: hash},
-                callId: callId
-            })
-            return deferred.promise;
-        }
-    })();
+            Bitcoin.ECKey.prototype.sign = function(hash) {
+                var deferred = $q.defer();
+                cbs[++callId] = deferred.resolve;
+                worker.postMessage({
+                    func: 'sign',
+                    data: {key: this.toWif(), hash: hash},
+                    callId: callId
+                })
+                return deferred.promise;
+            }
+        })();
+    }
 }
 
 Bitcoin.HDWallet.prototype.subpath = function(path_hex) {

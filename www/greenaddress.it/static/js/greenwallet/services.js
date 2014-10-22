@@ -621,6 +621,7 @@ angular.module('greenWalletServices', [])
                             i
                         ).then(function(finished) {
                             var this_ms = 0, this_expected_ms = 6500;
+                            if ($scope.wallet.btchip.features.quickerVersion) this_expected_ms *= 0.55;
                             var int_promise = $interval(function() {
                                 this_ms += 100;
                                 var progress = signed_n / tx.ins.length;
@@ -2438,6 +2439,8 @@ angular.module('greenWalletServices', [])
                             }
                             features.signMessageRecoveryParam =
                                 version.firmwareVersion.toString(HEX) >= '000104090000';
+                            features.quickerVersion =
+                                version.firmwareVersion.toString(HEX) >= '0001040B0000';
                             deferred.resolve(service._setupWrappers({dongle: btchip.dongle,
                                                                      app: btchip.app,
                                                                      features: features}));
