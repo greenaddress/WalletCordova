@@ -25,5 +25,6 @@ public interface BTChipTransport {
 	
 	public byte[] exchange(byte[] command) throws BTChipException;
 	public void close() throws BTChipException;
+	public void setDebug(boolean debugFlag);
 
 }
