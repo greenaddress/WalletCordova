@@ -322,18 +322,6 @@ angular.module('greenWalletSettingsControllers',
 }]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$modal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics', 'btchip', 'trezor',
         function SettingsController($scope, $q, wallets, tx_sender, notices, $modal, gaEvent, storage, $location, $timeout, bip38, mnemonics, btchip, trezor) {
     if (!wallets.requireWallet($scope)) return;
-    var exchanges = $scope.exchanges = {
-        BITSTAMP: 'Bitstamp',
-        LOCALBTC: 'LocalBitcoins',
-        BTCAVG: 'BitcoinAverage',
-        TRT: 'The Rock Trading',
-        BITFINEX: 'BitFinex',
-        BTCE: 'BTC-e',
-        CAVIRTEX: 'Cavirtex',
-        HUOBI: 'Huobi',
-        BTCCHINA: 'BTCChina',
-        KRAKEN: 'Kraken'
-    };
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
     }

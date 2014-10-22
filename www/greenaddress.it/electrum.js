@@ -24,16 +24,15 @@
 
 function Electrum($http, $q) {
   this.SERVERS = [
-    "http://ecdsa.net:8081/",
-    "http://electrum.hachre.de:8081/",
-    "http://electrum.coinwallet.me:8081/",
+    // servers available on 05.09.2014
     "http://bitcoin.epicinet.net:8081/",
-    "http://electrum.electricnewyear.net:8081/",
-    "http://cube.l0g.in:8081/",
     "http://electrum.be:8081/",
-    "http://electrum.novit.ro:8081/",
-    "http://electrum.stepkrav.pw:8081/",
-    "http://e.slush.cz:8081/"
+    "http://kirsche.emzy.de:8081/",
+    "http://electrum2.hachre.de:8081/",
+    "http://electrum.hsmiths.com:8081/",
+    "http://EAST.electrum.jdubya.info:8081/",
+    "http://WEST.electrum.jdubya.info:8081/",
+    "http://electrum.thwg.org:8081/"
   ];
   this.callbacks = {};
   this.callbackId = 1;
@@ -42,8 +41,28 @@ function Electrum($http, $q) {
 
 
   this.checkConnectionsAvailable = function() {
+    var that = this;
     var tryServer = function (name) {
-      return $http.get(name, { withCredentials: true, no_loading_indicator: true });
+      var d = $q.defer(), resolved;
+      $http.get(name, { withCredentials: true, no_loading_indicator: true }).then(function(data) {
+        if (!resolved) {
+          resolved = true;
+          that.currentServerUrl = name;
+          d.resolve(data);
+        }
+      }, function(err) {
+        if (!resolved) {
+          resolved = true;
+          d.reject(err);
+        }
+      });
+      setTimeout(function() {
+        if (!resolved) {
+          resolved = true;
+          d.reject();
+        }
+      }, 1000);
+      return d.promise;
     };
 
     //+ Jonas Raoni Soares Silva
@@ -89,7 +108,6 @@ function Electrum($http, $q) {
     return this._enqueueRpc("blockchain.block.get_header", [block_num]);
   };
 
-  // TODO(miket): there's just no way this will work
   this.pendingRpcCount = 0;
 
   this.resetTimeoutDuration = function() {
@@ -136,17 +154,38 @@ function Electrum($http, $q) {
 
   this._enqueueRpc = function(method, params) {
     var deferred = $q.defer();
-    
+
     var rpc = { "id": this.callbackId++,
                 "method": method,
                 "params": params,
               };
     this.rpcQueue.push(rpc);
-    this.callbacks[rpc.id] = {'resolve': deferred.resolve, 'reject': deferred.reject};
+    var resolved, that = this;
+    var _resolve = function(arg) {
+      if (!resolved) {
+        that.pendingRpcCount--;
+        resolved = true;
+        deferred.resolve(arg);
+      }
+    }
+    var _reject = function(arg) {
+      if (!resolved) {
+        that.pendingRpcCount--;
+        resolved = true;
+        deferred.reject(arg);
+      }
+    }
+    this.callbacks[rpc.id] = {'resolve': _resolve, 'reject': _reject};
     this.pendingRpcCount++;
     this.resetTimeoutDuration();
-    this.scheduleNextConnect();
-    
+    this.connect();
+
+    setTimeout(function() {
+      if (!resolved) {
+        _reject('timeout');
+      }
+    }, 5000);
+
     return deferred.promise;
   };
 
@@ -175,7 +214,6 @@ function Electrum($http, $q) {
       if (this.callbacks[id]) {
         this.callbacks[id].resolve(o.result);
         delete this.callbacks[id];
-        this.pendingRpcCount--;
       }
     };
 
@@ -208,10 +246,12 @@ function Electrum($http, $q) {
       $http.post(this.currentServerUrl, obj, { withCredentials: true, no_loading_indicator: true }).
         success(success.bind(this)).
         error(error.bind(this));
-    } else {
+    } else if (this.areRequestsPending()) {
       $http.get(this.currentServerUrl, { withCredentials: true, no_loading_indicator: true }).
         success(success.bind(this)).
         error(error.bind(this));
+    } else {
+      this.scheduleNextConnect();
     }
   };
 }

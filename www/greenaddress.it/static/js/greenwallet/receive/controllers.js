@@ -201,6 +201,9 @@ angular.module('greenWalletReceiveControllers',
             });
         }
     }
+    $scope.show_myaddr_qrcode = function(addr) {
+        $scope.show_url_qr('bitcoin:' + addr);
+    }
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
         if (newValue != oldValue) {
             $scope.receive.bitcoin_uri = undefined;

@@ -88,6 +88,18 @@ angular.module('greenWalletBaseApp', deps)
         if (!satoshis) return '0 ' + unit;
         return btc_formatter(satoshis, unit) + ' ' + unit;
     };
+}]).filter('format_btc_fixed', ['btc_formatter', function(btc_formatter) {
+    return function format_btc_fixed(satoshis, unit) {
+        if (!satoshis) return '0 ' + unit;
+        return (1*(btc_formatter(satoshis, unit))).toFixed() + ' ' + unit;
+    };
+
+}]).filter('format_fiat_from_unit', ['btc_formatter', function() {
+    return function format_btc_nounit(amount, unit) {
+        var mul = {'µBTC': 1000000, 'mBTC': 1000, 'BTC': 1};
+        var decimals = {'µBTC': 4, 'mBTC': 2, 'BTC': 2};
+        return (amount / mul[unit]).toFixed(decimals[unit]);
+    };
 }]).filter('format_btc_nounit', ['btc_formatter', function(btc_formatter) {
     return function format_btc_nounit(satoshis, unit) {
         return btc_formatter(satoshis, unit);

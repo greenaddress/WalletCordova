@@ -5090,7 +5090,7 @@ button.close {
 .modal {
   display: none;
   overflow: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: fixed;
   top: 0;
   right: 0;
@@ -7435,7 +7435,7 @@ input[type="checkbox"].switch:disabled + span + span {
   left: 0;
   bottom: 0;
   overflow: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .create-modal .create-modal-dialog {
   position: relative;

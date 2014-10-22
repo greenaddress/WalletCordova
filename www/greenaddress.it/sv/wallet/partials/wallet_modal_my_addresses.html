@@ -2,10 +2,15 @@
 
     <p ng-show="!receive.my_addresses.length">Inga adresser funna</p>
     <table class="table" ng-show="receive.my_addresses.length">
-        <tr><th>Adress</th><th>antal transaktioner</th></tr>
+        <tr><th>Adress</th><th>antal transaktioner</th><th></th></tr>
         <tr ng-repeat="address in receive.my_addresses">
             <td>(( address.ad ))</td>
             <td>(( address.num_tx ))</td>
+            <td>
+                <div class="pull-right">
+                    <a class="btn btn-default btn-block-xs" ng-click="show_myaddr_qrcode(address.ad)"><i class="glyphicon glyphicon-qrcode"></i></a>
+                </div>
+            </td>
         </tr>
     </table>
 

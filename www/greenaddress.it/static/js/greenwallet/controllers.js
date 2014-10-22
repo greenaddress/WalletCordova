@@ -10,6 +10,19 @@ angular.module('greenWalletControllers', [])
 
     $scope.cordova_platform = window.cordova && cordova.platformId;
 
+    var exchanges = $scope.exchanges = {
+        BITSTAMP: 'Bitstamp',
+        LOCALBTC: 'LocalBitcoins',
+        BTCAVG: 'BitcoinAverage',
+        TRT: 'The Rock Trading',
+        BITFINEX: 'BitFinex',
+        BTCE: 'BTC-e',
+        CAVIRTEX: 'Cavirtex',
+        HUOBI: 'Huobi',
+        BTCCHINA: 'BTCChina',
+        KRAKEN: 'Kraken'
+    };
+
     $scope.update_now = function() {
         wallets.askForLogout($scope, gettext('You need to log out to update cache.')).then(function() {
             window.applicationCache.swapCache();
@@ -120,15 +133,18 @@ angular.module('greenWalletControllers', [])
         $scope.wallet = {
             update_balance: function(first) {
                 var that = this;
+                that.balance_updating = true;
                 tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
                     that.final_balance = data.satoshi;
                     that.fiat_currency = data.fiat_currency;
                     that.fiat_value = data.fiat_value;
                     that.fiat_rate = data.fiat_exchange;
+                    that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
+                    that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
                     if (first) {
                         $scope.$broadcast('first_balance_updated');
                     }
-                }).finally(function() { updating = false; });
+                }).finally(function() { updating = that.balance_updating = false; });
             },
             clear: clearwallet,
             get_tx_output_value: function(txhash, i, no_electrum) {
@@ -156,6 +172,7 @@ angular.module('greenWalletControllers', [])
         };
     };
     clearwallet();
+    wallets.set_last_fiat_update($scope);
     $scope.processWalletVars();
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
         if (newValue != oldValue &&

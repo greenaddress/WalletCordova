@@ -217,6 +217,7 @@ angular.module('greenWalletServices', [])
                 $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
                 $scope.wallet.cache_password = data.cache_password;
                 $scope.wallet.fiat_exchange = data.exchange;
+                $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
                 $scope.wallet.receiving_id = data.receiving_id;
                 $scope.wallet.expired_deposits = data.expired_deposits;
                 $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
@@ -572,17 +573,12 @@ angular.module('greenWalletServices', [])
                 if (data.prev_outputs[i].privkey) {
                     key = $q.when(data.prev_outputs[i].privkey);
                 } else if (tx_sender.hdwallet.priv) {
-                    // $timeouts allow progress to be updated in the UI
                     if (data.prev_outputs[i].subaccount) {
-                        key = $timeout(function() {
-                            return $q.when(tx_sender.hdwallet.derivePrivate(3)).then(function(key) {
-                                return key.derivePrivate(data.prev_outputs[i].subaccount);
-                            });
-                        })
-                    } else {
-                        key = $timeout(function() {
-                            return $q.when(tx_sender.hdwallet);
+                        key = $q.when(tx_sender.hdwallet.derivePrivate(3)).then(function(key) {
+                            return key.derivePrivate(data.prev_outputs[i].subaccount);
                         });
+                    } else {
+                        key = $q.when(tx_sender.hdwallet);
                     }
                     if (priv_der) {
                         key = key.then(function(key) {
@@ -841,6 +837,15 @@ angular.module('greenWalletServices', [])
                 $scope.$on('first_balance_updated', _update);
             }
         });
+    };
+    walletsService.set_last_fiat_update = function($scope) {
+        $timeout(function(){
+            var now = 1*((new Date()).getTime()/1000).toFixed()
+            var diff = $scope.wallet.fiat_last_fetch_ss = $scope.wallet.fiat_last_fetch ? (now - $scope.wallet.fiat_last_fetch) : 0;
+            $scope.wallet.fiat_lastupdate_mm = (diff > 60) ? Math.floor(diff / 60) : 0;
+            $scope.wallet.fiat_lastupdate_ss = (diff % 60);
+            walletsService.set_last_fiat_update($scope);
+        }, 1000)
     };
     walletsService.create_pin = function(pin, $scope) {
         var do_create = function() {

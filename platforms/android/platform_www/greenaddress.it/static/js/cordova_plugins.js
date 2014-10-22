@@ -248,8 +248,8 @@ module.exports.metadata =
     "com.cordova.plugin.softkeyboard": "1.0.2",
     "org.apache.cordova.dialogs": "0.2.8",
     "com.chariotsolutions.nfc.plugin": "0.5.0",
-    "it.greenaddress.cordova": "0.0.0",
     "org.apache.cordova.inappbrowser": "0.5.0",
+    "it.greenaddress.cordova": "0.0.0",
     "org.apache.cordova.file": "1.1.0"
 }
 // BOTTOM OF METADATA
