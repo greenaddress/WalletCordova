@@ -65,6 +65,8 @@ angular.module('greenWalletSendControllers',
                         subaccount.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(result.publicKey.toString(HEX)));
                         subaccount.chaincode = Bitcoin.convert.hexToBytes(result.chainCode.toString(HEX));
                         subaccount.depth = 2;
+                        subaccount.parentFingerprint = [1, 2, 3, 4];  // [HACK] not really the fingerprint, but we need some
+                                                                      // value for toBytes to work in the deriving worker
                         subaccount.index = $scope.wallet.current_subaccount + Bitcoin.HDWallet.HIGHEST_BIT;
                         return subaccount.derive(branches.REGULAR);
                     });

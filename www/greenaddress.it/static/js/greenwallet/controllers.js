@@ -23,6 +23,14 @@ angular.module('greenWalletControllers', [])
         KRAKEN: 'Kraken'
     };
 
+    if (window.chrome && chrome.runtime && chrome.runtime.getManifest) {
+        var app_version = chrome.runtime.getManifest().version;
+    } else if ($scope.cordova_platform) {
+        var app_version = null; //FIXME: Cordova App version plugin
+    } else {
+        var app_version = null
+    }
+
     $scope.update_now = function() {
         wallets.askForLogout($scope, gettext('You need to log out to update cache.')).then(function() {
             window.applicationCache.swapCache();
@@ -131,6 +139,7 @@ angular.module('greenWalletControllers', [])
 
     var clearwallet = function() {
         $scope.wallet = {
+            version: app_version,
             update_balance: function(first) {
                 var that = this;
                 that.balance_updating = true;

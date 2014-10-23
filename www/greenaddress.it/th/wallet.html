@@ -178,6 +178,10 @@
       from ((wallet.last_login.ip))
       <span ng-show="wallet.last_login.country">(ประเทศ: ((wallet.last_login.country)))</span>
       <span ng-hide="wallet.last_login.country">(ประเทศที่ไม่รู้จัก)</span>
+      <br />
+    </div>
+    <div style="margin-top:5px;" ng-show="wallet.version">
+      <span>App version: ((wallet.version))</span>
     </div>
     <div><b>Copyright &copy; GreenAddress 2014</b></div>
   </div>

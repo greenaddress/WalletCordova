@@ -284,6 +284,9 @@ angular.module('greenWalletServices', [])
         hdwallet.network = cur_net;
         hdwallet.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(btchip_pubkey.publicKey.toString(HEX)));
         hdwallet.chaincode = Bitcoin.convert.hexToBytes(btchip_pubkey.chainCode.toString(HEX));
+        hdwallet.depth = 0;
+        hdwallet.parentFingerprint = [0, 0, 0, 0];
+        hdwallet.index = 0;
         tx_sender.hdwallet = hdwallet;
         if (signup) {
             var path_d = btchip.app.getWalletPublicKey_async("18241'").then(function(result) {
