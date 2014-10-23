@@ -130,10 +130,11 @@
           <div class="col-sm-10">
               <div class="row">
                   <div class="col-xs-8 col-sm-8 col-md-8">
-                      <div style="display:inline" ng-include="'/'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div>
+                      <div style="display:inline" ng-include="'../'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div>
                   </div>
                   <div class="col-xs-4 col-sm-4 col-md-4">
-                      <a class="btn btn-default btn-sm pull-right" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()"><i ng-hide="wallet.balance_updating" class="glyphicon glyphicon-refresh"></i><i ng-show="wallet.balance_updating" class="glyphicon glyphicon-refresh spin"></i></a>
+                      <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()" ng-hide="wallet.balance_updating"><i class="glyphicon glyphicon-refresh"></i></a>
+                      <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-show="wallet.balance_updating"><i class="glyphicon spin"></i></a>
                   </div>
               </div>
           </div>
@@ -143,7 +144,7 @@
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;">
             Fee (<span>((10000|format_btc:wallet.unit))</span> / kB) will be added to the amount <br />
-            Rate is <div style="display:inline" ng-include="'/'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div> 
+            Rate is <div style="display:inline" ng-include="'../'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div> 
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()" ng-hide="wallet.balance_updating"><i class="glyphicon glyphicon-refresh"></i></a>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-show="wallet.balance_updating"><i class="glyphicon spin"></i></a>
           </label>
