@@ -152,7 +152,7 @@
       </div>
       <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10" ng-hide="send_tx.recipient.type == 'payreq' && !send_tx.instant">
-          <label tooltip="ต้องการให้ผู้รับรองรับการยืนยันแบบยืนยัน Greenadress">
+          <label tooltip="Requires recipient to trust GreenAddress instant confirmations">
             <input type="checkbox" ng-model="send_tx.instant" ng-disabled="send_tx.recipient.type == 'payreq'" />
             <span>การยืนยันแบบทันที</span>
           </label>

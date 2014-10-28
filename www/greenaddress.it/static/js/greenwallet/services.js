@@ -2434,15 +2434,16 @@ angular.module('greenWalletServices', [])
                                 $interval.cancel(tick);
                             }
                             var features = {};
-                            if (version.firmwareVersion.toString(HEX) < '0001040800000') {
+                            var firmwareVersion = version.firmwareVersion.bytes(0, 4);
+                            if (firmwareVersion.toString(HEX) < '00010408') {
                                 btchip.dongle.disconnect_async();
                                 showUpgradeModal();
                                 return;
                             }
                             features.signMessageRecoveryParam =
-                                version.firmwareVersion.toString(HEX) >= '000104090000';
+                                firmwareVersion.toString(HEX) >= '00010409';
                             features.quickerVersion =
-                                version.firmwareVersion.toString(HEX) >= '0001040B0000';
+                                firmwareVersion.toString(HEX) >= '0001040b';
                             deferred.resolve(service._setupWrappers({dongle: btchip.dongle,
                                                                      app: btchip.app,
                                                                      features: features}));

@@ -96,7 +96,7 @@ angular.module('greenWalletInfoControllers',
     }
 
     $scope.$watch('filtered_transactions', function(newValue, oldValue) {
-        if (newValue) newValue.populate_csv();
+        if (newValue && newValue.populate_csv) newValue.populate_csv();
     });
 
     var updating_timeout;
@@ -143,7 +143,7 @@ angular.module('greenWalletInfoControllers',
         }
     });
     $scope.$on('block', function(event, data) {
-        if (!$scope.filtered_transactions || !$scope.filtered_transactions.list.length) return;
+        if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
         $scope.$apply(function() {
             for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {
                 if (!$scope.filtered_transactions.list[i].block_height) {

@@ -1,3 +1,4 @@
+try { importScripts('typedarray.js'); } catch (e) { }  // Cordova polyfill
 importScripts('bitcoinjs.min.js');
 funcs = {
 	derive: function(data, cb) {
