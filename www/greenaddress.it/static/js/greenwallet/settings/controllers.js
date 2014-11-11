@@ -412,7 +412,7 @@ angular.module('greenWalletSettingsControllers',
             }).finally(function() { that.sending_nlocktime = false; });
         }
     };
-    $scope.settings.available_units = ['BTC', 'mBTC', 'µBTC'];
+    $scope.settings.available_units = ['BTC', 'mBTC', 'µBTC', 'bits'];
     tx_sender.call('http://greenaddressit.com/login/available_currencies').then(function(data) {
         $scope.settings.pricing_sources = [];
         for (var i = 0; i < data.all.length; i++) {
@@ -1110,14 +1110,14 @@ angular.module('greenWalletSettingsControllers',
     var formatAmountHumanReadable = function(units, is_fiat) {
         // for fiat, to fit the 'satoshi->BTC' conversion, the input value needs to be multiplied by 1M,
         // to get 1 fiat per 100 units
-        var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+        var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
         var cur_mul = is_fiat ? 1000000 : mul;  // already satoshis for BTC
         var satoshi = new Bitcoin.BigInteger(units.toString()).multiply(Bitcoin.BigInteger.valueOf(cur_mul));
         return Bitcoin.Util.formatValue(satoshi.toString());
     };
     var formatAmountInteger = function(amount, is_fiat) {
         // for fiat, 'BTC->satoshi' parsed value needs to be divided by 1M, to get 100 units per 1 fiat
-        var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+        var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits':1000000}[$scope.wallet.unit];
         var cur_div = is_fiat ? 1000000 : div;
         var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(cur_div));
         return parseInt(satoshi.toString());

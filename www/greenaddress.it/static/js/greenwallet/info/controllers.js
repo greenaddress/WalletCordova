@@ -51,7 +51,7 @@ angular.module('greenWalletInfoControllers',
                 return [Math.round(parent.offsetWidth), Math.round(parent.offsetWidth * (290/920))];
             };
             var size = getSize();
-            var pow = {'BTC': 8, 'mBTC': 5, 'µBTC': 2}[$scope.wallet.unit];
+            var pow = {'BTC': 8, 'mBTC': 5, 'µBTC': 2, 'bits': 2}[$scope.wallet.unit];
             bMin /= Math.pow(10, pow); bMax /= Math.pow(10, pow);
             var dScale = (bMax - bMin) * 0.1;
             btcGraph.width(size[0]).height(size[1])

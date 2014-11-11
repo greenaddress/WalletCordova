@@ -173,7 +173,7 @@ angular.module('greenWalletReceiveControllers',
         },
         show_sweep: cur_net == 'mainnet'  // no testnet
     };
-    var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+    var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
     var formatAmountBitcoin = function(amount) {
         var satoshi = Bitcoin.Util.parseValue(amount.toString()).divide(Bitcoin.BigInteger.valueOf(div));
         return Bitcoin.Util.formatValue(satoshi.toString());

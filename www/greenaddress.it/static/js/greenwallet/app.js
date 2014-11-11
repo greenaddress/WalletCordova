@@ -75,7 +75,7 @@ angular.module('greenWalletBaseApp', deps)
         return x + '.' + num_arr[1];
     }
     return function btc_formatter(satoshis, unit) {
-        var mul = {'µBTC': '1000000', 'mBTC': '1000', 'BTC': '1'};
+        var mul = {'bits': '1000000', 'µBTC': '1000000', 'mBTC': '1000', 'BTC': '1'};
         satoshis = (new Bitcoin.BigInteger((satoshis || 0).toString())).multiply(new Bitcoin.BigInteger(mul[unit] || mul['µBTC']));
         if (satoshis.compareTo(new Bitcoin.BigInteger('0')) < 0) {
             return '-'+formatNum(Bitcoin.Util.formatValue(satoshis.multiply(new Bitcoin.BigInteger('-1'))));

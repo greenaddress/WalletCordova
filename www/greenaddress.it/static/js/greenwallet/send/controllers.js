@@ -282,7 +282,7 @@ angular.module('greenWalletSendControllers',
         }
     }
     var iframe;
-    var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+    var mul = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
     var btcToUnit = function(btc) {
         var amount_satoshi = Bitcoin.Util.parseValue(btc);
         return parseFloat(  // parseFloat required for iOS Cordova
@@ -413,9 +413,11 @@ angular.module('greenWalletSendControllers',
             );
         },
         _send_social_ga: function(satoshis) {
-            var that = this, to_addr = {type: this.recipient.type,
-                                        id: this.recipient.address};
-            var priv_data = {social_destination: that.recipient.name, instant: that.instant};
+            var that = this, to_addr = {type: this.recipient.type, id: that.recipient.address};
+            var priv_data = {instant: that.instant};
+            if (that.recipient.address != that.recipient.name) {
+                priv_data.social_destination = that.recipient.name;
+            }
             if ($scope.wallet.send_from) priv_data.reddit_from = $scope.wallet.send_from;
             priv_data.allow_random_change = true;
             priv_data.memo = this.memo;
@@ -433,7 +435,7 @@ angular.module('greenWalletSendControllers',
             });
         },
         amount_to_satoshis: function(amount) {
-            var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
+            var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
             return Bitcoin.Util.parseValue(amount).divide(Bitcoin.BigInteger.valueOf(div)).toString();
         },
         get_add_fee: function() {
@@ -462,13 +464,18 @@ angular.module('greenWalletSendControllers',
                 var add_fee = that.get_add_fee();
                 var social_destination;
                 if (that.voucher) {
-                    var voucher_data = {
+                    social_destination = {
                         type: 'voucher',
                         text: that.voucher_text
                     };
-                    social_destination = JSON.stringify(voucher_data);
                 } else {
-                    social_destination = that.recipient.name;
+                    social_destination = {
+                        name: that.recipient.name,
+                        type: that.recipient.type
+                    };
+                    if (that.recipient.address != that.recipient.name) {
+                        social_destination.id = that.recipient.address;
+                    }
                 }
                 var priv_data = {pointer: pointer,
                                  pubkey: key.pub.toBytes(),
@@ -633,16 +640,16 @@ angular.module('greenWalletSendControllers',
             this.signing_percentage = 0;
             if (this.recipient.type == 'facebook') {
                 gaEvent('Wallet', 'SendToFacebook');
-                this.send_social(this.do_send_fb);
+                this.send_social(this.do_send_fb.bind(this));
             } else if (this.recipient.type == 'email') {
                 gaEvent('Wallet', 'SendToEmail');
-                this.send_social(this.do_send_email);
+                this.send_social(this.do_send_email.bind(this));
             } else if (this.recipient.type == 'address' || this.recipient.type == 'subaccount') {
                 gaEvent('Wallet', 'SendToAddress');
                 this.send_address();
             } else if (this.recipient.type == 'reddit') {
                 gaEvent('Wallet', 'SendToReddit');
-                this.send_social(this.do_send_reddit);
+                this.send_social(this.do_send_reddit.bind(this));
             } else if (this.recipient.type == 'payreq') {
                 gaEvent('Wallet', 'SendToPaymentRequestSent');
                 this.send_to_payreq();
@@ -650,11 +657,11 @@ angular.module('greenWalletSendControllers',
                 if (this.recipient.indexOf('@') != -1) {
                     gaEvent('Wallet', 'SendToNewEmail');
                     this.recipient = {type: 'email', name: this.recipient, address: this.recipient};
-                    this.send_social(this.do_send_email);
+                    this.send_social(this.do_send_email.bind(this));
                 } else if (this.recipient.indexOf('reddit:') == 0) {
                     gaEvent('Wallet', 'SendToNewReddit');
                     this.recipient = {type: 'reddit', name: this.recipient, address: this.recipient};
-                    this.send_social(this.do_send_reddit);
+                    this.send_social(this.do_send_reddit.bind(this));
                 } else {
                     gaEvent('Wallet', 'SendToNewAddress');
                     this.send_address();

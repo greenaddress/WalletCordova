@@ -786,8 +786,8 @@ angular.module('greenWalletServices', [])
         }
     }
     walletsService.addCurrencyConversion = function($scope, model_name) {
-        var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000}[$scope.wallet.unit];
-        var unitPlaces = {'BTC': 8, 'mBTC': 5, 'µBTC': 2}[$scope.wallet.unit];
+        var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits':1000000}[$scope.wallet.unit];
+        var unitPlaces = {'BTC': 8, 'mBTC': 5, 'µBTC': 2, 'bits': 2}[$scope.wallet.unit];
         var trimDecimalPlaces = function(numPlaces, val) {
             return (Math.round(val * Math.pow(10, numPlaces)) / Math.pow(10, numPlaces));
         }
@@ -2669,6 +2669,7 @@ angular.module('greenWalletServices', [])
     };
     return bip38Service;
 }]).factory('encode_key', ['$q', function($q) {
+    var iframe;
     return function(key, passphrase) {
         var base58Check = {
           encode: function(buf) {
