@@ -1,0 +1,21 @@
+<form class="form-horizontal"
+      ng-submit="$close(passphrase)">
+
+  <div class="modal-header">
+    <button type="button" class="close" title="Cancel"
+            ng-click="$dismiss()">&times;</button>
+    <h4 class="modal-title"
+        ng-switch="type">
+      Please enter your TREZOR passphrase:
+    </h4>
+  </div>
+  <div class="modal-body">
+
+    <input type="password" class="form-control" ng-model="passphrase" />
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-block btn-lg">Enter</button>
+  </div>
+
+</form>

@@ -8,13 +8,22 @@
                     
                     <a href="" ng-click="logout()">เข้าสู่กระเป๋าของคุณ</a></span>
                     
-                ขั้นตอน 1 ของ 4
+                ขั้นตอน 1 ของ <span ng-hide="signup.trezor_detected">4</span><span ng-show="signup.trezor_detected">3</span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
                 </div>
             </div>
 
-            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+            <div class="create-modal-body" ng-show="signup.trezor_detected">
+                <div class="title">Use TREZOR to create a GreenAddress wallet<br>
+                    <small ng-hide="signup.empty_trezor">Please finish this 3-step account setup to fully secure it against intruders</small>
+                    <small ng-show="signup.empty_trezor" ng-bind-html="signup.empty_mytrezor_message"></small>
+                </div>
+
+                <p style="text-align: center;">(You can also disconnect the TREZOR and refresh this page to create a wallet without the device.)</p>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error || signup.trezor_detected">
                 <div class="title">ขณะนี้คุณเป็นเจ้าของกระเป๋าบิทคอยน์แล้ว<br>
                     <small>กรุณาทำตามขั้นตอน 4 ขั้นตอนนี้เพื่อป้องกันบัญชีจากการบุกรุก</small>
                 </div>
@@ -33,20 +42,22 @@
                 <p>กรุณาจดรหัสและนำเก็บไว้ในสถานที่ปลอดภัยเพราะไม่สามารถกู้คืนได้ <b>เราไม่มีการเก็บข้อมูลใด ๆ และไม่สามารถช่วยคุณกู้คืนได้</b></p>
             </div>
 
-            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error || signup.empty_trezor">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> ฉันยืนยันว่ารหัสนั้นได้มีการเก็บรักษา &amp; อย่างปลอดภัยและฉันยอมรับเงื่อนไข 
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation" ng-disabled="signup.hw_wallet_processing"> ฉันยืนยันว่ารหัสนั้นได้มีการเก็บรักษา &amp; อย่างปลอดภัยและฉันยอมรับเงื่อนไข 
                     
                     <a href="" onclick="window.open('tos.html', '_blank', 'location=no'); return false">เงื่อนไขการใช้บริการ</a>
                     
                 </label>
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> แสดง QR code</button>
-                
+
                 
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> เขียน NFC tag </button>
                 
                 
+                
+                <button tooltip="คำเตือน: เครื่องพิมพ์บางรุ่นมีการจัดเก็บเอกสาร ดังนั้นอาจไม่ปลอดภัยที่จะพิมพ์รหัสช่วยจำ" class="btn btn-default btn-block-xs" onclick="window.print(); return false;" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-print"></i> พิมพ์วลีรหัสผ่าน</button>
                 
 
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_2factor#content_container">ดำเนินการต่อ!</a>

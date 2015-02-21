@@ -181,6 +181,11 @@ angular.module('greenWalletControllers', [])
         };
     };
     clearwallet();
+    $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
+        if (newValue !== oldValue && newValue !== undefined) {
+            wallets.updateAppearance($scope, "current_subaccount", newValue);
+        }
+    });
     wallets.set_last_fiat_update($scope);
     $scope.processWalletVars();
     $scope.$watch('wallet.current_subaccount', function(newValue, oldValue) {
@@ -313,12 +318,7 @@ angular.module('greenWalletControllers', [])
             txos_in.push([txos[i].txhash, txos[i].out_n]);
         }
         tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit", txos_in).then(function(data) {
-            if (twofac_data) {
-                var scope = undefined;
-            } else {
-                var scope = $scope;  // it asks for two fac if scope is provided
-            }
-            wallets.sign_and_send_tx(scope, data, false, twofac_data).then(function() {
+            wallets.sign_and_send_tx($scope, data, false, twofac_data).then(function() {
                 deferred.resolve();
             }, function(err) {
                 deferred.reject(err);

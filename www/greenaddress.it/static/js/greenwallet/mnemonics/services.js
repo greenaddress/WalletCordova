@@ -112,7 +112,7 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                     } else {
                         var ArrayBuffer2hex = function (buffer) {
                             var hex = "";
-                            var view = new Uint8Array(buffer);                                  
+                            var view = new Uint8Array(buffer);
                             for (var i = 0; i < view.length; i++)
                                 hex += ("00" + view[i].toString(16)).slice(-2);
                             return hex;

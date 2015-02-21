@@ -71,7 +71,13 @@ angular.module('greenWalletSendControllers',
                         return subaccount.derive(branches.REGULAR);
                     });
                 }
+                var derive_trezor = function() {
+                    return $scope.wallet.trezor_dev.getPublicKey([3 + 0x80000000, $scope.wallet.current_subaccount + 0x80000000]).then(function(result) {
+                        return Bitcoin.HDWallet.fromBase58(result.message.xpub).derive(branches.REGULAR);
+                    })
+                }
                 if ($scope.wallet.hdwallet.priv) derive_fun = derive_hd;
+                else if ($scope.wallet.trezor_dev) derive_fun = derive_trezor;
                 else derive_fun = derive_btchip;
                 var change_branch = derive_fun();
             } else {
@@ -303,7 +309,7 @@ angular.module('greenWalletSendControllers',
         },
         add_fee: {'party': 'sender',
                   'per_kb': true,
-                  'amount': satoshisToUnit(10000)},
+                  'amount': ''},
         instant: $routeParams.contact ? (parseContact($routeParams.contact).requires_instant || false) : false,
         recipient: $routeParams.contact ? parseContact($routeParams.contact) : null,
         read_qr_code: function($event)  {
@@ -440,7 +446,7 @@ angular.module('greenWalletSendControllers',
         },
         get_add_fee: function() {
             var add_fee = angular.extend({}, this.add_fee);
-            add_fee.amount = parseInt(this.amount_to_satoshis(add_fee.amount));
+            add_fee.amount = add_fee.amount == '' ? null : parseInt(this.amount_to_satoshis(add_fee.amount));
             return add_fee;
         },
         _encrypt_key: function(key) {

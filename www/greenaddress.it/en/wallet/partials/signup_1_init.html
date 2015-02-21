@@ -8,13 +8,22 @@
                     
                     <a href="" ng-click="logout()">Login to your Wallet</a></span>
                     
-                Step 1 of 4
+                Step 1 of <span ng-hide="signup.trezor_detected">4</span><span ng-show="signup.trezor_detected">3</span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
                 </div>
             </div>
 
-            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+            <div class="create-modal-body" ng-show="signup.trezor_detected">
+                <div class="title">Use TREZOR to create a GreenAddress wallet<br>
+                    <small ng-hide="signup.empty_trezor">Please finish this 3-step account setup to fully secure it against intruders</small>
+                    <small ng-show="signup.empty_trezor" ng-bind-html="signup.empty_mytrezor_message"></small>
+                </div>
+
+                <p style="text-align: center;">(You can also disconnect the TREZOR and refresh this page to create a wallet without the device.)</p>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error || signup.trezor_detected">
                 <div class="title">You are now the proud owner of a bitcoin wallet<br>
                     <small>Please finish this 4-step account setup to fully secure it against intruders</small>
                 </div>
@@ -33,20 +42,22 @@
                 <p>Please write down these words and store them in a safe place as they can't be recovered. <b>We do not store the above information anywhere, we can't help you recover it!</b></p>
             </div>
 
-            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error || signup.empty_trezor">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> I confirm that my passphrase is saved &amp; secured and I agree with the 
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation" ng-disabled="signup.hw_wallet_processing"> I confirm that my passphrase is saved &amp; secured and I agree with the 
                     
                     <a href="" onclick="window.open('tos.html', '_blank', 'location=no'); return false">Terms of Service</a>
                     
                 </label>
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Show QR Code</button>
-                
+
                 
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Write to NFC tag</button>
                 
                 
+                
+                <button tooltip="Warning: some printers store printed documents internally, so it can be insecure to print your mnemonic." class="btn btn-default btn-block-xs" onclick="window.print(); return false;" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-print"></i> Print passphrase</button>
                 
 
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_2factor#content_container">Continue!</a>

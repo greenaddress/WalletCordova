@@ -165,6 +165,48 @@ if (self.cordova && cordova.platformId == 'ios') {
         return deferred.promise;
     }
 } else {
+    if (!self.cordova && self.angular) {
+        angular.element(document).ready(function() {
+            var ready = false;
+            var script = document.createElement('script')
+            script.type = 'text/javascript';
+            script.src = '/static/js/secp256k1.js';
+            script.onload = script.onreadystatechange = function () {
+                if (!ready && (!this.readyState || this.readyState == 'complete')) {
+                    ready = true;
+                    Module._secp256k1_start(3);
+                }
+            };
+            var tag = document.getElementsByTagName('script')[0];
+            tag.parentNode.insertBefore(script, tag);
+        });
+
+        Bitcoin.ECKey.prototype.getPub = function(compressed) {
+            if (compressed === undefined) compressed = this.compressed;
+
+            var out = Module._malloc(128);
+            var out_s = Module._malloc(4);
+            var secexp = Module._malloc(32);
+            var start = this.priv.toByteArray().length - 32;
+            if (start >= 0) {  // remove excess zeroes
+                var slice = this.priv.toByteArray().slice(start);
+            } else {  // add missing zeroes
+                var slice = this.priv.toByteArray();
+                while (slice.length < 32) slice.unshift(0);
+            }
+            writeArrayToMemory(slice, secexp);
+            setValue(out_s, 128, 'i32');
+
+            Module._secp256k1_ec_pubkey_create(out, out_s, secexp, compressed ? 1 : 0);
+
+            var ret = [];
+            for (var i = 0; i < getValue(out_s, 'i32'); ++i) {
+                ret[i] = getValue(out+i, 'i8') & 0xff;
+            }
+
+            return Bitcoin.ECPubKey(ret, compressed)
+        };
+    }
     if (self.Worker && !self.GAIT_IN_WORKER) {
         (function() {
             var worker = new Worker(BASE_URL+"/static/js/bitcoinjs_util_worker.js"), callId = 0,
@@ -261,12 +303,12 @@ Bitcoin.scrypt = function(passwd, salt, N, r, p, dkLen) {
 /**
  * Private key encoded per BIP-38 (password encrypted, checksum,  base58)
  */
-Bitcoin.ECKey.prototype.getEncryptedFormat = function (passphrase) {
-    return Bitcoin.BIP38.encode(this, passphrase);
+Bitcoin.ECKey.prototype.getEncryptedFormat = function (passphrase, network) {
+    return Bitcoin.BIP38.encode(this, passphrase, network);
 }
 
-Bitcoin.ECKey.decodeEncryptedFormat = function (base58Encrypted, passphrase) {
-    return Bitcoin.BIP38.decode(base58Encrypted, passphrase);
+Bitcoin.ECKey.decodeEncryptedFormat = function (base58Encrypted, passphrase, cur_net) {
+    return Bitcoin.BIP38.decode(base58Encrypted, passphrase, cur_net);
 }
 
 Bitcoin.CryptoJS.AES.decryptCompat = function(bytes, key, opts) {
@@ -387,9 +429,9 @@ Bitcoin.BIP38 = (function () {
    * Private key encoded per BIP-38 (password encrypted, checksum,  base58)
    * @author scintill
    */
-  BIP38.encode = function (eckey, passphrase) {
+  BIP38.encode = function (eckey, passphrase, cur_net) {
     var privKeyBytes = eckey.getPrivateKeyByteArray();
-    var address = eckey.getAddress().toString();
+    var address = eckey.getAddress(Bitcoin.network[cur_net].addressVersion).toString();
 
     // compute sha256(sha256(address)) and take first 4 bytes
     var salt = sha256(sha256(address)).slice(0, 4);
@@ -415,7 +457,7 @@ Bitcoin.BIP38 = (function () {
    * Parse a wallet import format private key contained in a string.
    * @author scintill
    */
-  BIP38.decode = function (base58Encrypted, passphrase) {
+  BIP38.decode = function (base58Encrypted, passphrase, cur_net) {
     var hex_uint8, hex;
     try {
       hex_uint8 = Bitcoin.base58.decode(base58Encrypted);
@@ -463,7 +505,7 @@ Bitcoin.BIP38 = (function () {
     var verifyHashAndReturn = function() {
       var tmpkey = new Bitcoin.ECKey(decrypted, isCompPoint);
 
-      var address = tmpkey.getAddress();
+      var address = tmpkey.getAddress(Bitcoin.network[cur_net].addressVersion);
       checksum = sha256(sha256(address.toString()));
 
       if (checksum[0] != hex[3] || checksum[1] != hex[4] || checksum[2] != hex[5] || checksum[3] != hex[6]) {

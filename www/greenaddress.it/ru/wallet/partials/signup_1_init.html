@@ -8,13 +8,22 @@
                     
                     <a href="" ng-click="logout()">Вход в ваш кошелёк</a></span>
                     
-                шаг 1 из 4
+                шаг 1 из <span ng-hide="signup.trezor_detected">4</span><span ng-show="signup.trezor_detected">3</span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
                 </div>
             </div>
 
-            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+            <div class="create-modal-body" ng-show="signup.trezor_detected">
+                <div class="title">Use TREZOR to create a GreenAddress wallet<br>
+                    <small ng-hide="signup.empty_trezor">Please finish this 3-step account setup to fully secure it against intruders</small>
+                    <small ng-show="signup.empty_trezor" ng-bind-html="signup.empty_mytrezor_message"></small>
+                </div>
+
+                <p style="text-align: center;">(You can also disconnect the TREZOR and refresh this page to create a wallet without the device.)</p>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error || signup.trezor_detected">
                 <div class="title">Теперь вы гордый владелец bitcoin кошелька<br>
                     <small>Пожалуйста, завершите эту 4-этапную настройку аккаунта для полной защиты от злоумышленников</small>
                 </div>
@@ -33,20 +42,22 @@
                 <p>Пожалуйста запишите эти слова и храните их в надежном месте, поскольку они не могут быть восстановлены. <b>Мы нигде не храним вышеуказанную информацию, мы не сможем помочь вам восстановить ее!</b></p>
             </div>
 
-            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error || signup.empty_trezor">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Я подтверждаю, что моя фраза-пароль сохранена в безопасном месте, и я согласен (согласна) с 
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation" ng-disabled="signup.hw_wallet_processing"> Я подтверждаю, что моя фраза-пароль сохранена в безопасном месте, и я согласен (согласна) с 
                     
                     <a href="" onclick="window.open('tos.html', '_blank', 'location=no'); return false">Условия предоставления услуг</a>
                     
                 </label>
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Показать QR код</button>
-                
+
                 
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Записать на тег NFC</button>
                 
                 
+                
+                <button tooltip="Внимание: некоторые принтеры хранят документы внутри, поэтому печать Вашей мнемоники может быть небезопасной." class="btn btn-default btn-block-xs" onclick="window.print(); return false;" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-print"></i> Напечатать фразу доступа</button>
                 
 
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_2factor#content_container">Продолжить!</a>

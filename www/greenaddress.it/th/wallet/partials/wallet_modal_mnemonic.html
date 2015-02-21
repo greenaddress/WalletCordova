@@ -9,11 +9,19 @@
     <div class="mnemonic-label">รหัสผ่านช่วยจำของคุณ</div>
     <div style="word-break: normal" class="mnemonic info" ng-bind="mnemonic_encrypted || wallet.mnemonic"></div>
 
-    <div ng-show="mnemonic_2of3" class="mnemonic-label"><br/>Your subaccount recovery mnemonic passphrase</div>
-    <div ng-show="mnemonic_2of3" style="word-break: normal" class="mnemonic info" ng-bind="mnemonic_2of3"></div>
+    <div ng-show="mnemonic_2of3">
+        <div class="mnemonic-label"><br/>Your subaccount recovery mnemonic passphrase</div>
+        <div style="word-break: normal" class="mnemonic info" ng-bind="mnemonic_2of3"></div>
+    </div>
 
-    <div ng-show="mnemonic_2of3" class="mnemonic-label"><br/>Your subaccount GreenAddress xpub</div>
-    <div ng-show="mnemonic_2of3" class="mnemonic info" ng-bind="xpub_2of3"></div>
+    <div ng-show="xpub_2of3 && !mnemonic_2of3">
+        <div class="mnemonic-label"><br/>Your subaccount recovery xpub</div>
+        <div class="mnemonic info" ng-bind="xpub_2of3"></div>
+    </div>
+
+
+    <div ng-show="mnemonic_2of3 || xpub_2of3" class="mnemonic-label"><br/>Your subaccount GreenAddress xpub</div>
+    <div ng-show="mnemonic_2of3 || xpub_2of3" class="mnemonic info" ng-bind="xpub_ga_2of3"></div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" ng-click="$close()">ปิด</button>

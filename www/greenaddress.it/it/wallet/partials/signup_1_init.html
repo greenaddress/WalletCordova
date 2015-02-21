@@ -8,13 +8,22 @@
                     
                     <a href="" ng-click="logout()">Per piacere accedi per usare il tuo portafogli</a></span>
                     
-                Passo 1 di 4
+                Passo 1 di <span ng-hide="signup.trezor_detected">4</span><span ng-show="signup.trezor_detected">3</span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%"></div>
                 </div>
             </div>
 
-            <div class="create-modal-body" ng-hide="signup.unexpected_error">
+            <div class="create-modal-body" ng-show="signup.trezor_detected">
+                <div class="title">Use TREZOR to create a GreenAddress wallet<br>
+                    <small ng-hide="signup.empty_trezor">Please finish this 3-step account setup to fully secure it against intruders</small>
+                    <small ng-show="signup.empty_trezor" ng-bind-html="signup.empty_mytrezor_message"></small>
+                </div>
+
+                <p style="text-align: center;">(You can also disconnect the TREZOR and refresh this page to create a wallet without the device.)</p>
+            </div>
+
+            <div class="create-modal-body" ng-hide="signup.unexpected_error || signup.trezor_detected">
                 <div class="title">Ora puoi vantarti di avere un portafoglio Bitcoin<br>
                     <small>Per piacere completa questi 4 passaggi per configurare e per rendere sicuro il tuo portafoglio.</small>
                 </div>
@@ -33,20 +42,22 @@
                 <p>Per piacere scrivi e non perdere queste parole perchè non possono essere recuperate altrimenti. <b>Non salviamo queste parole sui nostri server dunque non possiamo aiutarti a recuperarle se le perdi!</b></p>
             </div>
 
-            <div class="create-modal-footer" ng-hide="signup.unexpected_error">
+            <div class="create-modal-footer" ng-hide="signup.unexpected_error || signup.empty_trezor">
                 <label for="checkbox-confirmation">
-                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation"> Confermo che la mia passphrase è al sicuro e aderisco
+                    <input type="checkbox" ng-model="signup.secured_confirmed" id="checkbox-confirmation" ng-disabled="signup.hw_wallet_processing"> Confermo che la mia passphrase è al sicuro e aderisco
                     
                     <a href="" onclick="window.open('tos.html', '_blank', 'location=no'); return false">Termini di Servizio</a>
                     
                 </label>
                 <br>
                 <button class="btn btn-default btn-block-xs" ng-click="signup.qrmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-qrcode"></i> Mostra Codice QR</button>
-                
+
                 
                 <button class="btn btn-default btn-block-xs" ng-hide="cordova_platform=='ios'" ng-click="signup.nfcmodal()" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-transfer"></i> Scrivi su tag NFC</button>
                 
                 
+                
+                <button tooltip="Attenzione: alcuni stampanti ricordano i documenti stampati tramite una memoria interna, quindi potrebbe essere non sicuro stampare la tua frase mnemonica." class="btn btn-default btn-block-xs" onclick="window.print(); return false;" ng-class="{disabled:!signup.mnemonic}"><i class="glyphicon glyphicon-print"></i> Stampa passphrase</button>
                 
 
                 <a class="btn btn-primary btn-block-xs" ng-class="{disabled:!signup.mnemonic||!signup.secured_confirmed}" href="#/signup_2factor#content_container">Continua!</a>

@@ -11,7 +11,7 @@ After following these steps you should get a debug apk file in `platforms/androi
 
 ## How to build on iOS
 
- 1. Install Xcode and Cordova 3.5
+ 1. Install Xcode and Cordova 3.7.1
  2. `cd` to the WalletCordova directory
  3. Run `cordova build ios`
 

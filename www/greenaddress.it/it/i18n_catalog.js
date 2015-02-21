@@ -104,7 +104,7 @@ globals.i18n_catalog = {
 "An error has occured which forced us to log you out.": "Un errore di rete ha causato la necessita\u0027 di ripete l\u0027accesso al servizio.",
 "Re\u002Ddeposited": "Ridepositato",
 "Please provide a password.": "Si prega di fornire una password.",
-"Access denied. Retry to scan from file.": "Accesso negato. Riprova a scansionere da file.",
+"Access denied. Retry to scan from file.": "Accesso negato. Riprova a scansionare da file.",
 "Custom login disabled": "Login custom disabilitata",
 "Invalid out P2SH hash": "Out P2SH hash non valido",
 "Error copying": "Errore nella copia",

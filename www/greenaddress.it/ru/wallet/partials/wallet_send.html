@@ -143,7 +143,7 @@
       <div class="form-group" ng-hide="send_tx.advanced_options_visible && send_tx.recipient.type != 'payreq'">
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;">
-            Коммисия (<span>((10000|format_btc:wallet.unit))</span> / kB) will be added to the amount <br />
+            Network fee will be added to the amount <br />
             Rate is <div style="display:inline" ng-include="'../'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div> 
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()" ng-hide="wallet.balance_updating"><i class="glyphicon glyphicon-refresh"></i></a>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-show="wallet.balance_updating"><i class="glyphicon spin"></i></a>

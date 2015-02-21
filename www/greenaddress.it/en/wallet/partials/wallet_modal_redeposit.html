@@ -4,7 +4,7 @@
     <h3>Please re-deposit your funds</h3>
 </div>
 <div class="modal-body text-center">
-    <p class="alert alert-warning">You have some expired deposits. Unless you re-deposit or redeem them, no transactions will be allowed</p>
+    <p class="alert alert-warning">You have some expired deposits. Unless you re-deposit or redeem them, Instant Confirmation transactions will not be allowed</p>
 
     <div ng-hide="wallet.expired_deposits.length == 1" class="tooltip-warning">
     	<p><a class="btn btn-block-xs btn-default" ng-class="{disabled: redepositing}" href="" ng-click="redeposit_single_tx()" tooltip="Warning: single transactions can be used to correlate funds with your identity, including funds between different accounts." >

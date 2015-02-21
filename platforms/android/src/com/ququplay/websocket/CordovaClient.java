@@ -104,7 +104,7 @@ public class CordovaClient extends WebSocketClient {
 
   @Override
   public void onClose(int code, String reason, boolean remote) {
-    sendResult("{\"code\": " + new Integer(code).toString() + ", \"reason\": \"" + reason + "\"}", "close", PluginResult.Status.OK);
+    sendResult("", "close", PluginResult.Status.OK);
   }
 
   @Override

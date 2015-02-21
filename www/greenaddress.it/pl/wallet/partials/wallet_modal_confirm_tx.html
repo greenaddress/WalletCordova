@@ -1,0 +1,29 @@
+<div class="modal-header">
+    Confirm transaction details
+</div>
+
+<div class="modal-body">
+    <p>Please make sure the details below are correct:</p>
+
+    <dl>
+        <dt>Odbiorca</dt>
+        <dd>(( tx.recipient ))</dd>
+    </dl>
+
+    <dl>
+        <dt>Kwota</dt>
+        <dd>(( tx.value | format_btc:wallet.unit ))</dd>
+    </dl>
+
+    <dl>
+        <dt>Opłata</dt>
+        <dd>(( tx.fee | format_btc:wallet.unit ))</dd>
+    </dl>
+</div>
+
+<div class="modal-footer">
+    <div class="">
+        <button class="btn btn-default" ng-click="$dismiss()">Anuluj</button>
+        <button class="btn btn-primary" ng-click="$close()">Send transaction</button>
+    </div>
+</div>

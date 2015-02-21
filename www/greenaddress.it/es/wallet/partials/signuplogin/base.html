@@ -67,17 +67,15 @@
                         
                         <a href="" ng-class="{disabled: logging_in}" ng-click="login_with_custom()" class="btn btn-default"><i class="glyphicon glyphicon-lock"></i> Sesión personalizada</a>
                     </div>
-                    
                     <div ng-show="state.hw_detected" class="text-center">
                         <hr>
                         <div class="subtitle">Acceder a través de wallet física</div>
                         <a ng-class="{disabled: logging_in}" href="" ng-click="login_with_hw()" class="btn btn-default"><i class="glyphicon glyphicon-transfer"></i>
-                        <span ng-hide="logging_in">Acceso por BTChip</span>
+                        <span ng-hide="logging_in">(( state.hw_detected ))</span>
                         <span ng-show="logging_in && !hardware_progress">Iniciando sesión, espere por favor...</span>
                         <span ng-show="logging_in && hardware_progress">(( hardware_progress ))%</span>
                         </a>
                     </div>
-                    
                 </form>
             </div>
             <div class="create-modal-footer" ng-show="state.has_pin">
