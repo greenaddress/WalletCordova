@@ -230,12 +230,12 @@ angular.module('greenWalletSendControllers',
                 }
 
                 // check fee
-                var kB = Math.ceil(rawtx.length / 1000) * 2;
-                var expectedMaxFee = Bitcoin.BigInteger.valueOf(100000).multiply(Bitcoin.BigInteger.valueOf(kB));
-                if (fee.compareTo(expectedMaxFee) > 0) {
+                var kB = 2 * rawtx.length / 1000;
+                var expectedMaxFee = Math.floor(500000 * kB);
+                if (fee.compareTo(Bitcoin.BigInteger.valueOf(expectedMaxFee)) > 0) {
                     return $q.reject(gettext('Fee is too large (%1, expected at most %2)').replace('%1', fee.toString()).replace('%2', expectedMaxFee.toString()));
                 }
-                var expectedMinFee = Bitcoin.BigInteger.valueOf(10000);
+                var expectedMinFee = Bitcoin.BigInteger.valueOf(1000);
                 if (fee.compareTo(expectedMinFee) < 0) {
                     return $q.reject(gettext('Fee is too small (%1, expected at least %2)').replace('%1', fee.toString()).replace('%2', expectedMinFee.toString()));
                 }
