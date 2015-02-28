@@ -58,20 +58,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.media/www/MediaError.js",
-        "id": "org.apache.cordova.media.MediaError",
-        "clobbers": [
-            "window.MediaError"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.media/www/Media.js",
-        "id": "org.apache.cordova.media.Media",
-        "clobbers": [
-            "window.Media"
-        ]
-    },
-    {
         "file": "plugins/com.cordova.plugin.softkeyboard/www/softkeyboard.js",
         "id": "com.cordova.plugin.softkeyboard.SoftKeyboard",
         "clobbers": [
@@ -213,6 +199,10 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.file/www/fileSystems.js",
+        "id": "org.apache.cordova.file.fileSystems"
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/requestFileSystem.js",
         "id": "org.apache.cordova.file.requestFileSystem",
         "clobbers": [
@@ -230,7 +220,34 @@ module.exports = [
         "file": "plugins/org.apache.cordova.file/www/android/FileSystem.js",
         "id": "org.apache.cordova.file.androidFileSystem",
         "merges": [
-            "window.FileSystem"
+            "FileSystem"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.file/www/fileSystems-roots.js",
+        "id": "org.apache.cordova.file.fileSystems-roots",
+        "runs": true
+    },
+    {
+        "file": "plugins/org.apache.cordova.file/www/fileSystemPaths.js",
+        "id": "org.apache.cordova.file.fileSystemPaths",
+        "merges": [
+            "cordova"
+        ],
+        "runs": true
+    },
+    {
+        "file": "plugins/org.apache.cordova.media/www/MediaError.js",
+        "id": "org.apache.cordova.media.MediaError",
+        "clobbers": [
+            "window.MediaError"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.media/www/Media.js",
+        "id": "org.apache.cordova.media.Media",
+        "clobbers": [
+            "window.Media"
         ]
     }
 ];
@@ -244,13 +261,13 @@ module.exports.metadata =
     "me.apla.cordova.app-preferences": "0.4.0",
     "com.verso.cordova.clipboard": "0.1.0",
     "org.apache.cordova.vibration": "0.3.9-dev",
-    "org.apache.cordova.media": "0.2.10",
     "com.cordova.plugin.softkeyboard": "1.0.2",
     "org.apache.cordova.dialogs": "0.2.8",
     "com.chariotsolutions.nfc.plugin": "0.5.0",
     "org.apache.cordova.inappbrowser": "0.5.0",
     "it.greenaddress.cordova": "0.0.0",
-    "org.apache.cordova.file": "1.1.0"
+    "org.apache.cordova.file": "1.3.3",
+    "org.apache.cordova.media": "0.2.16"
 }
 // BOTTOM OF METADATA
 });

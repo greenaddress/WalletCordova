@@ -38,20 +38,24 @@ import org.json.JSONObject;
 
 import android.util.Base64;
 import android.net.Uri;
+import android.content.Context;
+import android.content.Intent;
+import android.app.Activity;
 
 public class LocalFilesystem extends Filesystem {
 
-	private String fsRoot;
 	private CordovaInterface cordova;
 
-	public LocalFilesystem(String name, CordovaInterface cordova, String fsRoot) {
-		this.name = name;
-		this.fsRoot = fsRoot;
+    public LocalFilesystem(String name, CordovaInterface cordova, String rootPath) {
+        this(name, cordova, Uri.fromFile(new File(rootPath)));
+    }
+	public LocalFilesystem(String name, CordovaInterface cordova, Uri rootUri) {
+        super(rootUri, name);
 		this.cordova = cordova;
 	}
 
-	public String filesystemPathForFullPath(String fullPath) {
-	    String path = new File(this.fsRoot, fullPath).toString();
+    public String filesystemPathForFullPath(String fullPath) {
+	    String path = new File(rootUri.getPath(), fullPath).toString();
         int questionMark = path.indexOf("?");
         if (questionMark >= 0) {
           path = path.substring(0, questionMark);
@@ -68,8 +72,8 @@ public class LocalFilesystem extends Filesystem {
 	}
 
 	private String fullPathForFilesystemPath(String absolutePath) {
-		if (absolutePath != null && absolutePath.startsWith(this.fsRoot)) {
-			return absolutePath.substring(this.fsRoot.length());
+		if (absolutePath != null && absolutePath.startsWith(rootUri.getPath())) {
+			return absolutePath.substring(rootUri.getPath().length());
 		}
 		return null;
 	}
@@ -96,7 +100,7 @@ public class LocalFilesystem extends Filesystem {
 	    if (isAbsolutePath) {
 	        rawPath = rawPath.substring(1);
 	    }
-	    ArrayList<String> components = new ArrayList<String>(Arrays.asList(rawPath.split("/")));
+	    ArrayList<String> components = new ArrayList<String>(Arrays.asList(rawPath.split("/+")));
 	    for (int index = 0; index < components.size(); ++index) {
 	        if (components.get(index).equals("..")) {
 	            components.remove(index);
@@ -140,23 +144,7 @@ public class LocalFilesystem extends Filesystem {
       if (!fp.canRead()) {
           throw new IOException();
       }
-      try {
-    	  JSONObject entry = new JSONObject();
-    	  entry.put("isFile", fp.isFile());
-    	  entry.put("isDirectory", fp.isDirectory());
-    	  entry.put("name", fp.getName());
-    	  entry.put("fullPath", inputURL.fullPath);
-    	  // The file system can't be specified, as it would lead to an infinite loop.
-    	  // But we can specify the name of the FS, and the rest can be reconstructed
-    	  // in JS.
-    	  entry.put("filesystemName", inputURL.filesystemName);
-    	  // Backwards compatibility
-    	  entry.put("filesystem", "temporary".equals(name) ? 0 : 1);
-    	  entry.put("nativeURL", Uri.fromFile(fp).toString());
-          return entry;
-      } catch (JSONException e) {
-    	  throw new IOException();
-      }
+      return LocalFilesystem.makeEntryForURL(inputURL, fp.isDirectory(),  Uri.fromFile(fp).toString());
 	}
 
 	@Override
@@ -268,10 +256,7 @@ public class LocalFilesystem extends Filesystem {
             File[] files = fp.listFiles();
             for (int i = 0; i < files.length; i++) {
                 if (files[i].canRead()) {
-                    try {
-						entries.put(makeEntryForPath(fullPathForFilesystemPath(files[i].getAbsolutePath()), inputURL.filesystemName, files[i].isDirectory(), Uri.fromFile(files[i]).toString()));
-					} catch (JSONException e) {
-					}
+                    entries.put(makeEntryForPath(fullPathForFilesystemPath(files[i].getAbsolutePath()), inputURL.filesystemName, files[i].isDirectory(), Uri.fromFile(files[i]).toString()));
                 }
             }
         }
@@ -304,21 +289,13 @@ public class LocalFilesystem extends Filesystem {
     /**
      * Check to see if the user attempted to copy an entry into its parent without changing its name,
      * or attempted to copy a directory into a directory that it contains directly or indirectly.
-     *
-     * @param srcDir
-     * @param destinationDir
-     * @return
      */
     private boolean isCopyOnItself(String src, String dest) {
 
         // This weird test is to determine if we are copying or moving a directory into itself.
         // Copy /sdcard/myDir to /sdcard/myDir-backup is okay but
         // Copy /sdcard/myDir to /sdcard/myDir/backup should throw an INVALID_MODIFICATION_ERR
-        if (dest.startsWith(src) && dest.indexOf(File.separator, src.length() - 1) != -1) {
-            return true;
-        }
-
-        return false;
+        return dest.equals(src) || dest.startsWith(src + File.separator);
     }
 
     /**
@@ -591,6 +568,7 @@ public class LocalFilesystem extends Filesystem {
             	// Always close the output
             	out.close();
             }
+            broadcastNewFile(inputURL);
         }
         catch (NullPointerException e)
         {
@@ -601,6 +579,31 @@ public class LocalFilesystem extends Filesystem {
 
         return rawData.length;
 	}
+
+     /**
+     * Send broadcast of new file so files appear over MTP
+     *
+     * @param inputURL
+     */
+    private void broadcastNewFile(LocalFilesystemURL inputURL) {
+        File file = new File(this.filesystemPathForURL(inputURL));
+        if (file.exists()) {
+            //Get the activity
+            Activity activity = this.cordova.getActivity();
+
+            //Get the context
+            Context context = activity.getApplicationContext();
+
+            //Create the URI
+            Uri uri = Uri.fromFile(file);
+
+            //Create the intent
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+
+            //Send broadcast of new file
+            context.sendBroadcast(intent);
+        }
+    }
 
 	@Override
 	public long truncateFileAtURL(LocalFilesystemURL inputURL, long size) throws IOException {

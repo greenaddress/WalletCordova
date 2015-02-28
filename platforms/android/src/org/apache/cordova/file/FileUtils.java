@@ -112,10 +112,10 @@ public class FileUtils extends CordovaPlugin {
                 if (fsRoot != null) {
                     File newRoot = new File(fsRoot);
                     if (newRoot.mkdirs() || newRoot.isDirectory()) {
-                        registerFilesystem(new LocalFilesystem(fsName, cordova, fsRoot));
+                        registerFilesystem(new LocalFilesystem(fsName, cordova, Uri.fromFile(newRoot)));
                         installedFileSystems.add(fsName);
                     } else {
-                       Log.d(LOG_TAG, "Unable to create root dir for fileystem \"" + fsName + "\", skipping");
+                       Log.d(LOG_TAG, "Unable to create root dir for filesystem \"" + fsName + "\", skipping");
                     }
                 } else {
                     Log.d(LOG_TAG, "Unrecognized extra filesystem identifier: " + fsName);
@@ -129,12 +129,19 @@ public class FileUtils extends CordovaPlugin {
         HashMap<String, String> availableFileSystems = new HashMap<String,String>();
 
         availableFileSystems.put("files", context.getFilesDir().getAbsolutePath());
-        availableFileSystems.put("files-external", context.getExternalFilesDir(null).getAbsolutePath());
         availableFileSystems.put("documents", new File(context.getFilesDir(), "Documents").getAbsolutePath());
-        availableFileSystems.put("sdcard", Environment.getExternalStorageDirectory().getAbsolutePath());
         availableFileSystems.put("cache", context.getCacheDir().getAbsolutePath());
-        availableFileSystems.put("cache-external", context.getExternalCacheDir().getAbsolutePath());
         availableFileSystems.put("root", "/");
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+          try {
+            availableFileSystems.put("files-external", context.getExternalFilesDir(null).getAbsolutePath());
+            availableFileSystems.put("sdcard", Environment.getExternalStorageDirectory().getAbsolutePath());
+            availableFileSystems.put("cache-external", context.getExternalCacheDir().getAbsolutePath());
+          }
+          catch(NullPointerException e) {
+              Log.d(LOG_TAG, "External storage unavailable, check to see if USB Mass Storage Mode is on");
+          }
+        }
 
         return availableFileSystems;
     }
@@ -187,7 +194,7 @@ public class FileUtils extends CordovaPlugin {
     		// per spec.
     		this.registerFilesystem(new LocalFilesystem("temporary", cordova, tempRoot));
     		this.registerFilesystem(new LocalFilesystem("persistent", cordova, persistentRoot));
-    		this.registerFilesystem(new ContentFilesystem("content", cordova, webView));
+    		this.registerFilesystem(new ContentFilesystem(cordova, webView));
 
             registerExtraFileSystems(getExtraFileSystemsPreference(activity), getAvailableFileSystems(activity));
 
@@ -212,6 +219,10 @@ public class FileUtils extends CordovaPlugin {
     
     @Override
     public Uri remapUri(Uri uri) {
+        // Remap only cdvfile: URLs (not content:).
+        if (!LocalFilesystemURL.FILESYSTEM_PROTOCOL.equals(uri.getScheme())) {
+            return null;
+        }
         try {
         	LocalFilesystemURL inputURL = new LocalFilesystemURL(uri);
         	Filesystem fs = this.filesystemForURL(inputURL);
@@ -220,7 +231,7 @@ public class FileUtils extends CordovaPlugin {
         	}
         	String path = fs.filesystemPathForURL(inputURL);
         	if (path != null) {
-        		return Uri.parse("file:///" + fs.filesystemPathForURL(inputURL));
+        		return Uri.parse("file://" + fs.filesystemPathForURL(inputURL));
         	}
         	return null;
         } catch (IllegalArgumentException e) {
@@ -338,7 +349,26 @@ public class FileUtils extends CordovaPlugin {
                 }
             }, callbackContext);
         }
-        else if (action.equals("requestFileSystem")) {
+        else if (action.equals("requestAllFileSystems")) {
+            threadhelper( new FileOp( ){
+                public void run() throws IOException, JSONException {
+                    callbackContext.success(requestAllFileSystems());
+                }
+            }, callbackContext);
+        } else if (action.equals("requestAllPaths")) {
+            cordova.getThreadPool().execute(
+                    new Runnable() {
+                        public void run() {
+                        	try {
+					callbackContext.success(requestAllPaths());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                        }
+                    }
+            );
+        } else if (action.equals("requestFileSystem")) {
             final int fstype=args.getInt(0);
             final long size = args.optLong(1);
             threadhelper( new FileOp( ){
@@ -361,7 +391,7 @@ public class FileUtils extends CordovaPlugin {
                 }
             },callbackContext);
         }
-        else if (action.equals("getMetadata") || action.equals("getFileMetadata")) {
+        else if (action.equals("getFileMetadata")) {
             final String fname=args.getString(0);
             threadhelper( new FileOp( ){
                 public void run() throws FileNotFoundException, JSONException, MalformedURLException {
@@ -820,8 +850,51 @@ public class FileUtils extends CordovaPlugin {
             throw new IOException("No filesystem of type requested");        	
         }
         fs.put("name", rootFs.name);
-        fs.put("root", Filesystem.makeEntryForPath("/", rootFs.name, true));
+        fs.put("root", rootFs.getRootEntry());
         return fs;
+    }
+
+
+    /**
+     * Requests a filesystem in which to store application data.
+     *
+     * @param type of file system requested
+     * @return a JSONObject representing the file system
+     * @throws IOException
+     * @throws JSONException
+     */
+    private JSONArray requestAllFileSystems() throws IOException, JSONException {
+        JSONArray ret = new JSONArray();
+        for (Filesystem fs : filesystems) {
+            ret.put(fs.getRootEntry());
+        }
+        return ret;
+    }
+
+    private static String toDirUrl(File f) {
+        return Uri.fromFile(f).toString() + '/';
+    }
+    
+    private JSONObject requestAllPaths() throws JSONException {
+        Context context = cordova.getActivity();
+        JSONObject ret = new JSONObject();
+        ret.put("applicationDirectory", "file:///android_asset/");
+        ret.put("applicationStorageDirectory", toDirUrl(context.getFilesDir().getParentFile()));
+        ret.put("dataDirectory", toDirUrl(context.getFilesDir()));
+        ret.put("cacheDirectory", toDirUrl(context.getCacheDir()));
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+          try {
+            ret.put("externalApplicationStorageDirectory", toDirUrl(context.getExternalFilesDir(null).getParentFile()));
+            ret.put("externalDataDirectory", toDirUrl(context.getExternalFilesDir(null)));
+            ret.put("externalCacheDirectory", toDirUrl(context.getExternalCacheDir()));
+            ret.put("externalRootDirectory", toDirUrl(Environment.getExternalStorageDirectory()));
+          }
+          catch(NullPointerException e) {
+            /* If external storage is unavailable, context.getExternal* returns null */
+              Log.d(LOG_TAG, "Unable to access these paths, most liklely due to USB storage");
+          }
+        }
+        return ret;
     }
 
    /**

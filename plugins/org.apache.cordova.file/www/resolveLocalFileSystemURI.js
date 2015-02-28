@@ -24,6 +24,7 @@ var argscheck = require('cordova/argscheck'),
     FileEntry = require('./FileEntry'),
     FileError = require('./FileError'),
     exec = require('cordova/exec');
+var fileSystems = require('./fileSystems');
 
 /**
  * Look up file system Entry referred to by local URI.
@@ -37,7 +38,8 @@ module.exports.resolveLocalFileSystemURL = function(uri, successCallback, errorC
     var fail = function(error) {
         errorCallback && errorCallback(new FileError(error));
     };
-    // sanity check for 'not:valid:filename'
+    // sanity check for 'not:valid:filename' or '/not:valid:filename'
+    // file.spec.12 window.resolveLocalFileSystemURI should error (ENCODING_ERR) when resolving invalid URI with leading /.
     if(!uri || uri.split(":").length > 2) {
         setTimeout( function() {
             fail(FileError.ENCODING_ERR);
@@ -49,10 +51,15 @@ module.exports.resolveLocalFileSystemURL = function(uri, successCallback, errorC
         if (entry) {
             if (successCallback) {
                 // create appropriate Entry object
-                var fsName = entry.filesystemName || (entry.filesystem == window.PERSISTENT ? 'persistent' : 'temporary');
-                var fs = new FileSystem(fsName, {name:"", fullPath:"/"});
-                var result = (entry.isDirectory) ? new DirectoryEntry(entry.name, entry.fullPath, fs, entry.nativeURL) : new FileEntry(entry.name, entry.fullPath, fs, entry.nativeURL);
-                successCallback(result);
+                var fsName = entry.filesystemName || (entry.filesystem && entry.filesystem.name) || (entry.filesystem == window.PERSISTENT ? 'persistent' : 'temporary');
+                fileSystems.getFs(fsName, function(fs) {
+                    // This should happen only on platforms that haven't implemented requestAllFileSystems (windows)
+                    if (!fs) {
+                        fs = new FileSystem(fsName, {name:"", fullPath:"/"});
+                    }
+                    var result = (entry.isDirectory) ? new DirectoryEntry(entry.name, entry.fullPath, fs, entry.nativeURL) : new FileEntry(entry.name, entry.fullPath, fs, entry.nativeURL);
+                    successCallback(result);
+                });
             }
         }
         else {

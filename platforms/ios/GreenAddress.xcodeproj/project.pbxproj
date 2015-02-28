@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		01FE61DA53894105861B6AF6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F5DA2698434344841BC063 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0811E8FFD0A6425F894DFE28 /* zxing-all-in-one.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C6A6F91EF71402D9D87EF0D /* zxing-all-in-one.cpp */; };
@@ -41,7 +40,6 @@
 		5AADF2FA90794AD487251039 /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93719F4DC0684A8496EA2100 /* CDVLocalFilesystem.m */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
-		5B991BDD32B749358D4E4DBF /* CDVSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C268A42848549ADA9291E6B /* CDVSound.m */; };
 		600E1DB30DB94BFBA25D763D /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DB7C9E7104169BF2D91BB /* CDVReachability.m */; };
 		6135EB5EEF4D48A5A382FDCE /* CDVAssetLibraryFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7E89CA8AE844599ACF7CD7 /* CDVAssetLibraryFilesystem.m */; };
 		7AF42EF7F73542669C74DF10 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EABA4CD232A4AD1AE9EDD9B /* AVFoundation.framework */; };
@@ -735,7 +733,6 @@
 				2F9CAE18F7224180B864564B /* CDVFile.m in Sources */,
 				5AADF2FA90794AD487251039 /* CDVLocalFilesystem.m in Sources */,
 				6135EB5EEF4D48A5A382FDCE /* CDVAssetLibraryFilesystem.m in Sources */,
-				5B991BDD32B749358D4E4DBF /* CDVSound.m in Sources */,
 				4FEBAA674EB548C9B5BC53E5 /* CDVConnection.m in Sources */,
 				600E1DB30DB94BFBA25D763D /* CDVReachability.m in Sources */,
 				B6DD9A0211B44F7B844E64D2 /* CDVSplashScreen.m in Sources */,

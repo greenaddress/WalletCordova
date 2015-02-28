@@ -61,12 +61,12 @@
     // see if exists and is file or dir
     BOOL bExists = [fileMgr fileExistsAtPath:path isDirectory:&isDir];
     if (bExists) {
-        return [self makeEntryForPath:url.fullPath fileSystemName:url.fileSystemName isDirectory:isDir];
+        return [self makeEntryForPath:url.fullPath isDirectory:isDir];
     } else {
         return nil;
     }
 }
-- (NSDictionary*)makeEntryForPath:(NSString*)fullPath fileSystemName:(NSString *)fsName isDirectory:(BOOL)isDir
+- (NSDictionary*)makeEntryForPath:(NSString*)fullPath isDirectory:(BOOL)isDir
 {
     NSMutableDictionary* dirEntry = [NSMutableDictionary dictionaryWithCapacity:5];
     NSString* lastPart = [[self stripQueryParametersFromPath:fullPath] lastPathComponent];
@@ -77,10 +77,8 @@
     [dirEntry setObject:[NSNumber numberWithBool:isDir]  forKey:@"isDirectory"];
     [dirEntry setObject:fullPath forKey:@"fullPath"];
     [dirEntry setObject:lastPart forKey:@"name"];
-    [dirEntry setObject: [NSNumber numberWithInt:([fsName isEqualToString:@"temporary"] ? 0 : 1)] forKey: @"filesystem"];
-    [dirEntry setObject:fsName forKey: @"filesystemName"];
+    [dirEntry setObject:self.name forKey: @"filesystemName"];
     dirEntry[@"nativeURL"] = [[NSURL fileURLWithPath:[self filesystemPathForFullPath:fullPath]] absoluteString];
-
 
     return dirEntry;
 }
@@ -121,17 +119,18 @@
 - (CDVFilesystemURL *)URLforFullPath:(NSString *)fullPath
 {
     if (fullPath) {
+        NSString* escapedPath = [fullPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         if ([fullPath hasPrefix:@"/"]) {
-            return [CDVFilesystemURL fileSystemURLWithString:[NSString stringWithFormat:@"%@://localhost/%@%@", kCDVFilesystemURLPrefix, self.name, fullPath]];
+            return [CDVFilesystemURL fileSystemURLWithString:[NSString stringWithFormat:@"%@://localhost/%@%@", kCDVFilesystemURLPrefix, self.name, escapedPath]];
         }
-        return [CDVFilesystemURL fileSystemURLWithString:[NSString stringWithFormat:@"%@://localhost/%@/%@", kCDVFilesystemURLPrefix, self.name, fullPath]];
+        return [CDVFilesystemURL fileSystemURLWithString:[NSString stringWithFormat:@"%@://localhost/%@/%@", kCDVFilesystemURLPrefix, self.name, escapedPath]];
     }
     return nil;
 }
 
 - (CDVFilesystemURL *)URLforFilesystemPath:(NSString *)path
 {
-    return [self URLforFullPath:[[self fullPathForFileSystemPath:path] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    return [self URLforFullPath:[self fullPathForFileSystemPath:path]];
 
 }
 
@@ -162,6 +161,16 @@
 
 }
 
+- (BOOL)valueForKeyIsNumber:(NSDictionary*)dict key:(NSString*)key
+{
+    BOOL bNumber = NO;
+    NSObject* value = dict[key];
+    if (value) {
+        bNumber = [value isKindOfClass:[NSNumber class]];
+    }
+    return bNumber;
+}
+
 - (CDVPluginResult *)getFileForURL:(CDVFilesystemURL *)baseURI requestedPath:(NSString *)requestedPath options:(NSDictionary *)options
 {
     CDVPluginResult* result = nil;
@@ -170,14 +179,13 @@
     BOOL exclusive = NO;
     int errorCode = 0;  // !!! risky - no error code currently defined for 0
 
-    if ([options valueForKeyIsNumber:@"create"]) {
+    if ([self valueForKeyIsNumber:options key:@"create"]) {
         create = [(NSNumber*)[options valueForKey:@"create"] boolValue];
     }
-    if ([options valueForKeyIsNumber:@"exclusive"]) {
+    if ([self valueForKeyIsNumber:options key:@"exclusive"]) {
         exclusive = [(NSNumber*)[options valueForKey:@"exclusive"] boolValue];
     }
-
-    if ([options valueForKeyIsNumber:@"getDir"]) {
+    if ([self valueForKeyIsNumber:options key:@"getDir"]) {
         // this will not exist for calls directly to getFile but will have been set by getDirectory before calling this method
         bDirRequest = [(NSNumber*)[options valueForKey:@"getDir"] boolValue];
     }
@@ -189,7 +197,7 @@
         // We concatenate the two paths together, and then scan the resulting string to remove
         // parent ("..") references. Any parent references at the beginning of the string are
         // silently removed.
-        NSString *combinedPath = [baseURI.fullPath stringByAppendingPathComponent:[requestedPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        NSString *combinedPath = [baseURI.fullPath stringByAppendingPathComponent:requestedPath];
         combinedPath = [self normalizePath:combinedPath];
         CDVFilesystemURL* requestedURL = [self URLforFullPath:combinedPath];
         
@@ -228,7 +236,7 @@
             } else {
                 // NSLog(@"newly created file/dir (%@) exists: %d", reqFullPath, [fileMgr fileExistsAtPath:reqFullPath]);
                 // file existed or was created
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[self makeEntryForPath:requestedURL.fullPath fileSystemName:baseURI.fileSystemName isDirectory:bDirRequest]];
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[self makeEntryForPath:requestedURL.fullPath isDirectory:bDirRequest]];
             }
         } // are all possible conditions met?
     }
@@ -255,45 +263,12 @@
     BOOL bIsDir;
     BOOL bExists = [fileMgr fileExistsAtPath:[self filesystemPathForURL:newURI] isDirectory:&bIsDir];
     if (bExists) {
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[self makeEntryForPath:newURI.fullPath fileSystemName:newURI.fileSystemName isDirectory:bIsDir]];
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[self makeEntryForPath:newURI.fullPath isDirectory:bIsDir]];
     } else {
         // invalid path or file does not exist
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsInt:NOT_FOUND_ERR];
     }
     return result;
-}
-
-- (void)getMetadataForURL:(CDVFilesystemURL *)url callback:(void (^)(CDVPluginResult *))callback
-{
-
-    NSFileManager* fileMgr = [[NSFileManager alloc] init];
-    NSError* __autoreleasing error = nil;
-
-    CDVPluginResult *result;
-    NSDictionary* fileAttribs = [fileMgr attributesOfItemAtPath:[self  filesystemPathForURL:url] error:&error];
-
-    if (fileAttribs) {
-        // Ensure that directories (and other non-regular files) report size of 0
-        unsigned long long size = ([fileAttribs fileType] == NSFileTypeRegular ? [fileAttribs fileSize] : 0);
-        NSDate* modDate = [fileAttribs fileModificationDate];
-        if (modDate) {
-            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{@"modificationTime": @([modDate timeIntervalSince1970] * 1000), @"size": @(size)}];
-        }
-    } else {
-        // didn't get fileAttribs
-        CDVFileError errorCode = ABORT_ERR;
-        NSLog(@"error getting metadata: %@", [error localizedDescription]);
-        if ([error code] == NSFileNoSuchFileError) {
-            errorCode = NOT_FOUND_ERR;
-        }
-        // log [NSNumber numberWithDouble: theMessage] objCtype to see what it returns
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:errorCode];
-    }
-    if (!result) {
-        // invalid path or file does not exist
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION];
-    }
-    callback(result);
 }
 
 - (CDVPluginResult*)setMetadataForURL:(CDVFilesystemURL *)localURI withObject:(NSDictionary *)options
@@ -424,7 +399,7 @@
                 NSString* entryPath = [fileSystemPath stringByAppendingPathComponent:name];
                 BOOL bIsDir = NO;
                 [fileMgr fileExistsAtPath:entryPath isDirectory:&bIsDir];
-                NSDictionary* entryDict = [self makeEntryForPath:[self fullPathForFileSystemPath:entryPath] fileSystemName:localURI.fileSystemName isDirectory:bIsDir];
+                NSDictionary* entryDict = [self makeEntryForPath:[self fullPathForFileSystemPath:entryPath] isDirectory:bIsDir];
                 [entries addObject:entryDict];
             }
         }
@@ -468,17 +443,21 @@
         NSOutputStream* fileStream = [NSOutputStream outputStreamToFileAtPath:filePath append:shouldAppend];
         if (fileStream) {
             NSUInteger len = [encData length];
-            [fileStream open];
+            if (len == 0) {
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDouble:(double)len];
+            } else {
+                [fileStream open];
 
-            bytesWritten = (int)[fileStream write:[encData bytes] maxLength:len];
+                bytesWritten = (int)[fileStream write:[encData bytes] maxLength:len];
 
-            [fileStream close];
-            if (bytesWritten > 0) {
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:bytesWritten];
-                // } else {
-                // can probably get more detailed error info via [fileStream streamError]
-                // errCode already set to INVALID_MODIFICATION_ERR;
-                // bytesWritten = 0; // may be set to -1 on error
+                [fileStream close];
+                if (bytesWritten > 0) {
+                    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:bytesWritten];
+                    // } else {
+                    // can probably get more detailed error info via [fileStream streamError]
+                    // errCode already set to INVALID_MODIFICATION_ERR;
+                    // bytesWritten = 0; // may be set to -1 on error
+                }
             }
         } // else fileStream not created return INVALID_MODIFICATION_ERR
     } else {
@@ -606,7 +585,7 @@
             }
             if (bSuccess) {
                 // should verify it is there and of the correct type???
-                NSDictionary* newEntry = [self makeEntryForPath:newFullPath fileSystemName:destURL.fileSystemName isDirectory:bSrcIsDir];
+                NSDictionary* newEntry = [self makeEntryForPath:newFullPath isDirectory:bSrcIsDir];
                 result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:newEntry];
             } else {
                 if (error) {
@@ -628,7 +607,7 @@
                 BOOL bSuccess = [data writeToFile:newFileSystemPath atomically:YES];
                 if (bSuccess) {
                     // should verify it is there and of the correct type???
-                    NSDictionary* newEntry = [self makeEntryForPath:newFullPath fileSystemName:destURL.fileSystemName isDirectory:NO];
+                    NSDictionary* newEntry = [self makeEntryForPath:newFullPath isDirectory:NO];
                     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:newEntry];
                 } else {
                     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsInt:ABORT_ERR];
@@ -669,6 +648,8 @@
                     mimeType = @"audio/mp4";
                 } else if ([[fullPath pathExtension] rangeOfString:@"wav"].location != NSNotFound) {
                     mimeType = @"audio/wav";
+                } else if ([[fullPath pathExtension] rangeOfString:@"css"].location != NSNotFound) {
+                    mimeType = @"text/css";
                 }
             }
             CFRelease(typeId);
@@ -704,26 +685,44 @@
 - (void)getFileMetadataForURL:(CDVFilesystemURL *)localURL callback:(void (^)(CDVPluginResult *))callback
 {
     NSString *path = [self filesystemPathForURL:localURL];
-        NSFileManager* fileMgr = [[NSFileManager alloc] init];
-        BOOL bIsDir = NO;
-        // make sure it exists and is not a directory
-        BOOL bExists = [fileMgr fileExistsAtPath:path isDirectory:&bIsDir];
-        if (!bExists || bIsDir) {
-            callback([CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsInt:NOT_FOUND_ERR]);
-        } else {
-            // create dictionary of file info
-            NSError* __autoreleasing error = nil;
-            NSDictionary* fileAttrs = [fileMgr attributesOfItemAtPath:path error:&error];
-            NSMutableDictionary* fileInfo = [NSMutableDictionary dictionaryWithCapacity:5];
-            [fileInfo setObject:[NSNumber numberWithUnsignedLongLong:[fileAttrs fileSize]] forKey:@"size"];
-            [fileInfo setObject:localURL.fullPath forKey:@"fullPath"];
-            [fileInfo setObject:@"" forKey:@"type"];  // can't easily get the mimetype unless create URL, send request and read response so skipping
-            [fileInfo setObject:[path lastPathComponent] forKey:@"name"];
-            NSDate* modDate = [fileAttrs fileModificationDate];
-            NSNumber* msDate = [NSNumber numberWithDouble:[modDate timeIntervalSince1970] * 1000];
-            [fileInfo setObject:msDate forKey:@"lastModifiedDate"];
-            callback([CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:fileInfo]);
+    CDVPluginResult *result;
+    NSFileManager* fileMgr = [[NSFileManager alloc] init];
+
+    NSError* __autoreleasing error = nil;
+    NSDictionary* fileAttrs = [fileMgr attributesOfItemAtPath:path error:&error];
+
+    if (fileAttrs) {
+
+        // create dictionary of file info
+        NSMutableDictionary* fileInfo = [NSMutableDictionary dictionaryWithCapacity:5];
+
+        [fileInfo setObject:localURL.fullPath forKey:@"fullPath"];
+        [fileInfo setObject:@"" forKey:@"type"];  // can't easily get the mimetype unless create URL, send request and read response so skipping
+        [fileInfo setObject:[path lastPathComponent] forKey:@"name"];
+
+        // Ensure that directories (and other non-regular files) report size of 0
+        unsigned long long size = ([fileAttrs fileType] == NSFileTypeRegular ? [fileAttrs fileSize] : 0);
+        [fileInfo setObject:[NSNumber numberWithUnsignedLongLong:size] forKey:@"size"];
+
+        NSDate* modDate = [fileAttrs fileModificationDate];
+        if (modDate) {
+            [fileInfo setObject:[NSNumber numberWithDouble:[modDate timeIntervalSince1970] * 1000] forKey:@"lastModifiedDate"];
         }
+
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:fileInfo];
+
+    } else {
+        // didn't get fileAttribs
+        CDVFileError errorCode = ABORT_ERR;
+        NSLog(@"error getting metadata: %@", [error localizedDescription]);
+        if ([error code] == NSFileNoSuchFileError || [error code] == NSFileReadNoSuchFileError) {
+            errorCode = NOT_FOUND_ERR;
+        }
+        // log [NSNumber numberWithDouble: theMessage] objCtype to see what it returns
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:errorCode];
+    }
+
+    callback(result);
 }
 
 @end

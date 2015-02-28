@@ -18,6 +18,8 @@
  */
 package org.apache.cordova.file;
 
+import android.net.Uri;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilterInputStream;
@@ -31,46 +33,49 @@ import org.json.JSONObject;
 
 public abstract class Filesystem {
 
-	public String name;
-	
-	public interface ReadFileCallback {
+    protected final Uri rootUri;
+    public final String name;
+    private final JSONObject rootEntry;
+
+    public Filesystem(Uri rootUri, String name) {
+        this.rootUri = rootUri;
+        this.name = name;
+        rootEntry = makeEntryForPath("/", name, true, rootUri.toString());
+    }
+
+    public interface ReadFileCallback {
 		public void handleData(InputStream inputStream, String contentType) throws IOException;
 	}
 
-	public static JSONObject makeEntryForPath(String path, String fsName, Boolean isDir)
-			throws JSONException {
-		return makeEntryForPath(path, fsName, isDir, null);
-	}
+	public static JSONObject makeEntryForPath(String path, String fsName, Boolean isDir, String nativeURL) {
+        try {
+            JSONObject entry = new JSONObject();
 
-	public static JSONObject makeEntryForPath(String path, String fsName, Boolean isDir, String nativeURL)
-			throws JSONException {
-        JSONObject entry = new JSONObject();
+            int end = path.endsWith("/") ? 1 : 0;
+            String[] parts = path.substring(0, path.length() - end).split("/+");
+            String fileName = parts[parts.length - 1];
+            entry.put("isFile", !isDir);
+            entry.put("isDirectory", isDir);
+            entry.put("name", fileName);
+            entry.put("fullPath", path);
+            // The file system can't be specified, as it would lead to an infinite loop,
+            // but the filesystem name can be.
+            entry.put("filesystemName", fsName);
+            // Backwards compatibility
+            entry.put("filesystem", "temporary".equals(fsName) ? 0 : 1);
 
-        int end = path.endsWith("/") ? 1 : 0;
-        String[] parts = path.substring(0,path.length()-end).split("/");
-        String fileName = parts[parts.length-1];
-        entry.put("isFile", !isDir);
-        entry.put("isDirectory", isDir);
-        entry.put("name", fileName);
-        entry.put("fullPath", path);
-        // The file system can't be specified, as it would lead to an infinite loop,
-        // but the filesystem name can be.
-        entry.put("filesystemName", fsName);
-        // Backwards compatibility
-        entry.put("filesystem", "temporary".equals(fsName) ? 0 : 1);
-
-        if (nativeURL != null) {
-        	entry.put("nativeURL", nativeURL);
+            if (isDir && !nativeURL.endsWith("/")) {
+                nativeURL += "/";
+            }
+            entry.put("nativeURL", nativeURL);
+            return entry;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return entry;
-
     }
 
-    public static JSONObject makeEntryForURL(LocalFilesystemURL inputURL, Boolean isDir) throws JSONException {
-        return makeEntryForURL(inputURL, isDir, null);
-    }
-
-    public static JSONObject makeEntryForURL(LocalFilesystemURL inputURL, Boolean isDir, String nativeURL) throws JSONException {
+    public static JSONObject makeEntryForURL(LocalFilesystemURL inputURL, Boolean isDir, String nativeURL) {
         return makeEntryForPath(inputURL.fullPath, inputURL.filesystemName, isDir, nativeURL);
     }
 
@@ -87,12 +92,20 @@ public abstract class Filesystem {
 
 	abstract JSONObject getFileMetadataForLocalURL(LocalFilesystemURL inputURL) throws FileNotFoundException;
 
+    public Uri getRootUri() {
+        return rootUri;
+    }
+
+    public JSONObject getRootEntry() {
+        return rootEntry;
+    }
+
 	public JSONObject getParentForLocalURL(LocalFilesystemURL inputURL) throws IOException {
 		LocalFilesystemURL newURL = new LocalFilesystemURL(inputURL.URL);
 	
 		if (!("".equals(inputURL.fullPath) || "/".equals(inputURL.fullPath))) {
-			int end = inputURL.fullPath.endsWith("/") ? 1 : 0;
-	        int lastPathStartsAt = inputURL.fullPath.lastIndexOf('/', inputURL.fullPath.length()-end)+1;
+			String dirURL = inputURL.fullPath.replaceAll("/+$", "");
+			int lastPathStartsAt = dirURL.lastIndexOf('/')+1;
 			newURL.fullPath = newURL.fullPath.substring(0,lastPathStartsAt);
 		}
 		return getEntryForLocalURL(newURL);
@@ -153,7 +166,7 @@ public abstract class Filesystem {
                 // Delete original
                 srcFs.removeFileAtLocalURL(srcURL);
             }
-            return makeEntryForURL(destination, false);
+            return getEntryForLocalURL(destination);
         } else {
             throw new NoModificationAllowedException("Cannot move file at source URL");
         }

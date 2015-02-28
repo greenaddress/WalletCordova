@@ -23,9 +23,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,14 +46,36 @@ public class ContentFilesystem extends Filesystem {
 	private CordovaInterface cordova;
 	private CordovaResourceApi resourceApi;
 	
-	public ContentFilesystem(String name, CordovaInterface cordova, CordovaWebView webView) {
-		this.name = name;
+	public ContentFilesystem(CordovaInterface cordova, CordovaWebView webView) {
+		super(Uri.parse("content://"), "content");
 		this.cordova = cordova;
-		this.resourceApi = new CordovaResourceApi(webView.getContext(), webView.pluginManager);
+
+		Class webViewClass = webView.getClass();
+		PluginManager pm = null;
+		try {
+			Method gpm = webViewClass.getMethod("getPluginManager");
+			pm = (PluginManager) gpm.invoke(webView);
+		} catch (NoSuchMethodException e) {
+		} catch (IllegalAccessException e) {
+		} catch (InvocationTargetException e) {
+		}
+		if (pm == null) {
+			try {
+				Field pmf = webViewClass.getField("pluginManager");
+				pm = (PluginManager)pmf.get(webView);
+			} catch (NoSuchFieldException e) {
+			} catch (IllegalAccessException e) {
+			}
+		}
+		this.resourceApi = new CordovaResourceApi(webView.getContext(), pm);
 	}
 	
 	@Override
 	public JSONObject getEntryForLocalURL(LocalFilesystemURL inputURL) throws IOException {
+	    if ("/".equals(inputURL.fullPath)) {
+            return LocalFilesystem.makeEntryForURL(inputURL, true, inputURL.URL.toString());
+	    }
+
 		// Get the cursor to validate that the file exists
 		Cursor cursor = openCursorForURL(inputURL);
 		String filePath = null;
@@ -66,11 +93,7 @@ public class ContentFilesystem extends Filesystem {
 		} else {
 			filePath = "file://" + filePath;
 		}
-		try {
-			return makeEntryForPath(inputURL.fullPath, inputURL.filesystemName, false /*fp.isDirectory()*/, filePath);
-		} catch (JSONException e) {
-			throw new IOException();
-		}
+        return makeEntryForPath(inputURL.fullPath, inputURL.filesystemName, false /*fp.isDirectory()*/, filePath);
 	}
 	
     @Override

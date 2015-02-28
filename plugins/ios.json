@@ -29,10 +29,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         },
@@ -94,6 +90,10 @@
                         },
                         {
                             "xml": "<feature name=\"BIP39\"><param name=\"ios-package\" value=\"CDVBIP39\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -219,9 +219,6 @@
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.media": {
-            "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
         "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
@@ -235,6 +232,9 @@
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         },
         "it.greenaddress.cordova": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "org.apache.cordova.media": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         }
     },
