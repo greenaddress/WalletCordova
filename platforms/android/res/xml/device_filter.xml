@@ -3,4 +3,6 @@
 <resources>
     <usb-device vendor-id="9601" product-id="11132"/>
     <usb-device vendor-id="9601" product-id="7036"/>
+    <usb-device vendor-id="9601" product-id="15228"/>
+    <usb-device vendor-id="9601" product-id="19324"/>
 </resources>
