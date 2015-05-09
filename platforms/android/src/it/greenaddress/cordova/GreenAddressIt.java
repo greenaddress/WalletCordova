@@ -21,6 +21,7 @@ package it.greenaddress.cordova;
 
 import com.btchip.comm.BTChipTransport;
 import com.btchip.comm.android.BTChipTransportAndroid;
+import com.btchip.comm.android.BTChipTransportAndroidNFC;
 import com.btchip.utils.Dump;
 
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import android.preference.PreferenceManager;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.tech.IsoDep;
+import android.nfc.Tag;
 import java.util.logging.Logger;
 import android.os.Parcelable;
 import android.net.Uri;
@@ -73,7 +76,13 @@ public class GreenAddressIt extends CordovaActivity
             System.out.println("Dongle detected");
             UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
             BTChip.transport = BTChipTransportAndroid.open(manager, device);
+	    BTChip.transport.setDebug(true);
         }
+	Tag tag = (Tag) getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
+	if ((tag != null) && (NfcAdapter.ACTION_TECH_DISCOVERED.equals(getIntent().getAction()))) {
+	    BTChip.transport = new BTChipTransportAndroidNFC(IsoDep.get(tag));
+	    BTChip.transport.setDebug(true);
+	}
 
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) && getIntent().getBooleanExtra("continue", true)) {
             // ignore nfc, to avoid having nfc service and app not reparenting (disappears from history) and send intent just to start app normally
