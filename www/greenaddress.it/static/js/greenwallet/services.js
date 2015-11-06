@@ -133,8 +133,8 @@ angular.module('greenWalletServices', [])
 
     return autotimeoutService;
 
-}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches',
-        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches) {
+}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent',
+        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent) {
     var walletsService = {};
     var handle_double_login = function(retry_fun) {
         return $modal.open({
@@ -183,7 +183,7 @@ angular.module('greenWalletServices', [])
     };
     walletsService._login = function($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
         var d = $q.defer(), that = this;
-        tx_sender.login(logout).then(function(data) {
+        tx_sender.login(logout, false, user_agent($scope.wallet)).then(function(data) {
             if (data) {
                 if (window.disableEuCookieComplianceBanner) {
                     disableEuCookieComplianceBanner();
@@ -1432,7 +1432,7 @@ angular.module('greenWalletServices', [])
     cordovaReady(connect)();
     txSenderService.logged_in = false;
     var waiting_for_device = false;
-    txSenderService.login = function(logout, force_relogin) {
+    txSenderService.login = function(logout, force_relogin, user_agent) {
         var d_main = $q.defer();
         if (txSenderService.logged_in && !force_relogin) {
             d_main.resolve(txSenderService.logged_in);
@@ -1458,7 +1458,7 @@ angular.module('greenWalletServices', [])
                                     if (session_for_login && session_for_login.nc == nconn) {
                                         return session_for_login.call('http://greenaddressit.com/login/authenticate',
                                                 [signature.r.toString(), signature.s.toString()], logout||false,
-                                                 random_path_hex, devid).then(function(data) {
+                                                 random_path_hex, devid, user_agent).then(function(data) {
                                             if (data) {
                                                 txSenderService.logged_in = data;
                                                 return data;
@@ -1938,6 +1938,19 @@ angular.module('greenWalletServices', [])
                 return ret;
             } else return value;
         })
+    };
+}]).factory('user_agent', [function() {
+    var is_chrome_app = window.chrome && chrome.storage,
+        is_cordova_app = window.cordova;
+    return function(wallet) {
+        if (is_cordova_app) {
+            return 'Cordova ' + cordova.platformId +
+                ' (version=' + wallet.version + ')';
+        } else if (is_chrome_app) {
+            return 'Chrome ' + '(version=' + wallet.version + ')';
+        } else {
+            return 'Browser';
+        }
     };
 }]).factory('addressbook', ['$rootScope', 'tx_sender', 'storage', 'crypto', 'notices', '$q',
         function($rootScope, tx_sender, storage, crypto, notices, $q) {
