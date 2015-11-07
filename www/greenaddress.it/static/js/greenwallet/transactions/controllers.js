@@ -30,7 +30,7 @@ angular.module('greenWalletTransactionsControllers',
                          subaccount: $scope.wallet.current_subaccount, script: data.prevout_scripts[i]})
                 }
                 // TODO: verify
-                return wallets.sign_and_send_tx(undefined, data, true);  // priv_der=true
+                return wallets.sign_and_send_tx($scope, data, true);  // priv_der=true
             }, function(error) {
                 gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
                 notices.makeNotice('error', error.desc);

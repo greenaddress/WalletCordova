@@ -125,7 +125,7 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                 }, "BIP39", "calcSeed", [k, m]);
             })();
         } else {
-            var worker = new Worker(BASE_URL+"/static/js/mnemonic_seed_worker.min.js");
+            var worker = new Worker(BASE_URL+"/static/js/greenwallet/mnemonics/mnemonic_seed_worker.js");
             worker.postMessage({k: k, m: m});
             worker.onmessage = function(message) {
                 if(message.data.type == 'seed') {

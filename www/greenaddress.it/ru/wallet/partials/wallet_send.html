@@ -81,8 +81,8 @@
               <div class="input-group">
                 <span class="input-group-addon">((wallet.unit))</span>
                 
-                    <input ng-disabled="send_tx.recipient.amount" class="form-control" type="number" ng-model="send_tx.amount" placeholder="0.0000" ng-show="cordova_platform=='ios'" />
-                    <input ng-disabled="send_tx.recipient.amount" class="form-control" type="tel" ng-model="send_tx.amount" placeholder="0.0000" ng-hide="cordova_platform=='ios'" />
+                    <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="number" ng-model="send_tx.amount" placeholder="0.0000" ng-show="cordova_platform=='ios'" />
+                    <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="tel" ng-model="send_tx.amount" placeholder="0.0000" ng-hide="cordova_platform=='ios'" />
                 
               </div>
             </div>
@@ -90,12 +90,21 @@
               <div class="input-group">
                 <span class="input-group-addon">(( wallet.fiat_currency ))</span>
                 
-                <input ng-disabled="send_tx.recipient.amount" class="form-control" type="number" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-show="cordova_platform=='ios'" />
-                <input ng-disabled="send_tx.recipient.amount" class="form-control" type="tel" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-hide="cordova_platform=='ios'" />
+                <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="number" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-show="cordova_platform=='ios'" />
+                <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="tel" ng-model="send_tx.amount_fiat" placeholder="0.00" ng-hide="cordova_platform=='ios'" />
                 
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="send_tx.advanced_options_visible && send_tx.recipient.type != 'payreq'">
+        <div class="col-sm-offset-2 col-sm-10">
+           <label>
+            <input type="checkbox" ng-model="send_tx.spend_all" />
+            <span>Sweep all the funds from the wallet</span>
+          </label>
         </div>
       </div>
 
@@ -144,7 +153,7 @@
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;">
             Network fee will be added to the amount <br />
-            Rate is <div style="display:inline" ng-include="'../'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div> 
+            Rate is <div style="display:inline" ng-include="'../'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()" ng-hide="wallet.balance_updating"><i class="glyphicon glyphicon-refresh"></i></a>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-show="wallet.balance_updating"><i class="glyphicon spin"></i></a>
           </label>
@@ -171,7 +180,7 @@
       </div>
       <hr class="double">
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
-        <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Послать денежные средства</span>
+        <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Review &amp; Send Money</span>
         <span ng-show="!send_tx.voucher && send_tx.sending && send_tx.signing">
           <span ng-show="send_tx.verifying">Verifying ((send_tx.verifying_percentage))% /</span>
           Signing ((send_tx.signing_percentage))%</span>

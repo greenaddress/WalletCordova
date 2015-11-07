@@ -130,6 +130,23 @@
       </div>
   </div>
 </div>
+<hr class="double">
+<div class="row" ng-controller="PgpController">
+  <div class="col-md-3">
+    <div class="sub-header">PGP</div>
+    <div class="sub-header-desc">Set your Pretty Good Privacy public key for improved privacy.</div>
+  </div>
+  <div class="col-md-9" submittable>
+    <form role="form" class="form-horizontal" ng-submit="save_pgp()">
+        <label class="col-sm-2 control-label" for="wallet-emailpgp">Public Key</label>
+        <div class="input-group">
+            <textarea class="form-control" placeholder="----BEGIN PGP PUBLIC KEY..."
+                   ng-model="pgpstate.pgp" id="wallet-emailpgp" ng-trim="false"></textarea>
+            <input type="submit" class="btn btn-primary" ng-show="wallet.appearance.pgp != pgpstate.pgp" value="Guardar" ng-disabled="pgpstate.enabled" />
+        </div>
+    </form>
+  </div>
+</div>
 <hr class="double" ng-show="!settings.noLocalStorage">
 <div ng-controller="QuickLoginController" class="row" ng-show="!settings.noLocalStorage">
   <div class="col-md-3">
@@ -604,7 +621,9 @@
 <div class="row">
   <div class="col-md-3">
     <div class="sub-header">2of3 accounts</div>
-    <div class="sub-header-desc">Create accounts that allow you to access your funds at any time even without access to GreenAddress, using additional offline recovery key.<br/><strong>NOTE:</strong> instant transactions are not available for these accounts because GreenAddress can't protect them from double spending.</div>
+    
+        <div class="sub-header-desc">Create accounts that allow you to access your funds at any time even without access to GreenAddress, using additional offline recovery key.<br/><strong>NOTE:</strong> instant transactions are not available for these accounts because GreenAddress can't protect them from double spending.</div>
+    
   </div>
   <div class="col-md-9">
     <form ng-submit="subwallets.create_new_2of3()" class="form-horizontal" role="form">

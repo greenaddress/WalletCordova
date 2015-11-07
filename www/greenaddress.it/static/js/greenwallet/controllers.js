@@ -287,20 +287,6 @@ angular.module('greenWalletControllers', [])
     $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue) {
         $modalStack.dismissAll();
         if (newValue == '/') tx_sender.logout();  // logout on navigation to login page
-        var pathname = window.location.pathname
-        // don't include addresses:
-        if (newValue.indexOf('/send/') == 0) newValue = '/send/_ad_';
-        if (pathname.indexOf('/'+LANG+'/pay/') == 0) pathname = BASE_URL+'/'+LANG+'/pay/_ad_';
-        if (pathname.indexOf('/'+LANG+'/redeem/') == 0) pathname = BASE_URL+'/'+LANG+'/redeem/_enckey_';
-        pathname = pathname + '#' + newValue;
-        if ($scope.wallet.signup && !$scope.wallet.signup_info_replaced && pathname.indexOf('wallet/#/info') != -1) {
-            $scope.wallet.signup_info_replaced = true;
-            pathname = pathname.replace('wallet/#/receive', 'wallet/#/receive_from_signup');
-        }
-        try {
-            _gaq.push(['set', 'page', pathname]);
-        } catch(e) {}
-        setTimeout(function() { gaEvent('_pageview', pathname); }, 1000);
     });
 
 }]).controller('UrlQRController', ['$scope', 'url', function UrlQRController($scope, url) {

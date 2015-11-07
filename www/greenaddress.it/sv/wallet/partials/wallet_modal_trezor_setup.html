@@ -1,25 +1,25 @@
 <div class="modal-body text-center">
     <div ng-show="trezor.already_setup && trezor.use_gait_mnemonic">
-        <p>Your TREZOR is already set up. You must wipe it to write GreenAddress mnemonic to it. Do you want to wipe?</p>
+        <p>Your Hardware Wallet is already set up. You must wipe it to write GreenAddress mnemonic to it. Do you want to wipe?</p>
         <button type="button" class="btn btn-default" ng-click="$dismiss()" ng-disabled="trezor.setting_up">No</button>
         <button type="button" class="btn btn-danger" ng-click="trezor.store()"ng-disabled="trezor.setting_up">Yes</button>
     </div>
 	<div ng-show="trezor.already_setup && !trezor.use_gait_mnemonic">
-    	<p>Your TREZOR is already set up. To use it with GreenAddress, you can either reset it, or use the existing wallet seed. To reset it, please go to myTREZOR and use the 'Wipe device' feature from advanced details. Do you want to use the existing seed? <strong>NOTE: if you use it, you won't be able to se myTREZOR transactions in GreenAddress, because we don't support non-multisig transactions.</strong> Do you want to reuse existing seed?</p>
+    	<p>Your Hardware Wallet is already set up. To use it with GreenAddress, you can either reset it, or use the existing wallet seed. To reset it, please go to myTREZOR or equivalent and use the 'Wipe device' feature from advanced details. Do you want to use the existing seed? <strong>NOTE: if you use it, you won't be able to se myTREZOR transactions in GreenAddress, because we don't support non-multisig transactions.</strong> Do you want to reuse existing seed?</p>
     	<button type="button" class="btn btn-default" ng-click="$dismiss()">No</button>
         <button type="button" class="btn btn-success" ng-click="trezor.reuse()">Yes</button>
     </div>
 	<div ng-show="!trezor.already_setup && !trezor.gait_setup">
-    	<p ng-show="trezor.use_gait_mnemonic">Empty TREZOR detected successfully. Click the button below to store your seed on it.</p>
-        <p ng-hide="trezor.use_gait_mnemonic">Empty TREZOR detected successfully. Click the button below to set it up.</p>
-    	<button type="button" class="btn btn-success" ng-click="trezor.store()" ng-hide="trezor.storing || !trezor.use_gait_mnemonic">Save to TREZOR</button>
-        <button type="button" class="btn btn-success" ng-click="trezor.store()" ng-hide="trezor.use_gait_mnemonic" ng-disabled="trezor.setting_up">Set up TREZOR</button>
+    	<p ng-show="trezor.use_gait_mnemonic">Empty Hardware Wallet detected successfully. Click the button below to store your seed on it.</p>
+        <p ng-hide="trezor.use_gait_mnemonic">Empty Hardware Wallet detected successfully. Click the button below to set it up.</p>
+    	<button type="button" class="btn btn-success" ng-click="trezor.store()" ng-hide="trezor.storing || !trezor.use_gait_mnemonic">Save to Hardware Wallet</button>
+        <button type="button" class="btn btn-success" ng-click="trezor.store()" ng-hide="trezor.use_gait_mnemonic" ng-disabled="trezor.setting_up">Set up Hardware Wallet</button>
         <span class="btn btn-success disabled" ng-show="trezor.storing">
            	Genererar dina plånboksnycklar, vänligen vänta ... (( trezor.seed_progress ))%
         </span>
     </div>
 	<div ng-show="trezor.gait_setup">
-        <p>TREZOR setup successful!</p>
+        <p>Hardware Wallet setup successful!</p>
     </div>
 </div>
 <div class="modal-footer" ng-hide="trezor.already_setup">

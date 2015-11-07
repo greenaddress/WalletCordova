@@ -15,12 +15,12 @@
             </div>
 
             <div class="create-modal-body" ng-show="signup.trezor_detected">
-                <div class="title">Use TREZOR to create a GreenAddress wallet<br>
+                <div class="title">Use a Hardware Wallet to create a GreenAddress wallet<br>
                     <small ng-hide="signup.empty_trezor">Please finish this 3-step account setup to fully secure it against intruders</small>
                     <small ng-show="signup.empty_trezor" ng-bind-html="signup.empty_mytrezor_message"></small>
                 </div>
 
-                <p style="text-align: center;">(You can also disconnect the TREZOR and refresh this page to create a wallet without the device.)</p>
+                <p style="text-align: center;">(You can also disconnect the Hardware Wallet and refresh this page to create a wallet without the device.)</p>
             </div>
 
             <div class="create-modal-body" ng-hide="signup.unexpected_error || signup.trezor_detected">

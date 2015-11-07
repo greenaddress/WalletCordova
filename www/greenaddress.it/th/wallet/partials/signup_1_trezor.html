@@ -15,13 +15,13 @@
             </div>
 
             <div class="create-modal-body" ng-hide="signup.unexpected_error">
-                <div class="title">เชื่อมต่อ Trezor การสร้าง GreenAddress wallet<br>
+                <div class="title">Connect Hardware Wallet to create a GreenAddress wallet<br>
                     <small>ตั้งค่าบัญชีด้วย 3 ขั้นตอนนี้ทำให้ปลอดภัยจากการบุกรุก</small>
                 </div>
                 <hr>
-                <div class="subtitle" ng-hide="trezor_dev">กรุณาเชื่อมต่ออุปกรณ์ Trezor ของคุณ </div>
-                <div class="subtitle" ng-show="trezor_dev">Trezor ที่ตรวจพบ</div>
-                <div class="subtitle" ng-show="trezor_dev.signing"><strong>กรุณายืนยันลายเซ็นบนอุปกรณ์ Trezor ของคุณ </strong></div>
+                <div class="subtitle" ng-hide="trezor_dev">Please connect your Hardware Wallet device</div>
+                <div class="subtitle" ng-show="trezor_dev">Hardware Wallet detected.</div>
+                <div class="subtitle" ng-show="trezor_dev.signing"><strong>Please confirm the signature on your Hardware Wallet device.</strong></div>
             </div>
 
             <div class="create-modal-footer" ng-hide="signup.unexpected_error">

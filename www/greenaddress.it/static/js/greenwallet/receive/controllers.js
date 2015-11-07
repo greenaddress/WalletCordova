@@ -48,7 +48,7 @@ angular.module('greenWalletReceiveControllers',
                             {privkey: key, script: data.prevout_scripts[i]})
                     }
                     // TODO: verify
-                    wallets.sign_and_send_tx(undefined, data, false, null, gettext('Funds swept')).then(function() {
+                    wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds swept')).then(function() {
                         $location.url('/info/');
                     }).finally(function() {
                         that.sweeping = false;
@@ -115,7 +115,7 @@ angular.module('greenWalletReceiveControllers',
                         process();
                     }
                 } else {
-                    var worker = new Worker(BASE_URL+"/static/js/bip38_worker.min.js");
+                    var worker = new Worker(BASE_URL+"/static/js/greenwallet/signup/bip38_worker.js");
                     worker.onmessage = function(message) {
                         that.sweeping = false;
                         if (message.data.error) {
@@ -171,7 +171,7 @@ angular.module('greenWalletReceiveControllers',
         stop_scanning_qr_code: function() {
             qrcode.stop_scanning($scope);
         },
-        show_sweep: true  // used to be disabled for testnet
+        show_sweep: cur_net == 'mainnet'  // no testnet
     };
     var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
     var formatAmountBitcoin = function(amount) {

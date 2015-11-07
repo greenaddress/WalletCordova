@@ -854,6 +854,27 @@ angular.module('greenWalletSettingsControllers',
             $scope.altimeout = $scope.wallet.appearance.altimeout;
         });
     };
+}]).controller('PgpController', ['$scope', 'notices', 'wallets', function PgpController($scope, notices, wallets) {
+
+    if (!('appearance' in $scope.wallet)) return;
+
+    $scope.pgpstate = {enabled: false, pgp: $scope.wallet.appearance.pgp};
+
+    $scope.save_pgp = function() {
+        if ($scope.pgpstate['pgp'] === $scope.wallet.appearance.pgp) return;
+        if (!$scope.pgpstate['enabled']) {
+            $scope.pgpstate['enabled'] = true;
+        }
+        wallets.updateAppearance($scope, 'pgp', $scope.pgpstate['pgp']).then(function() {
+            $scope.pgpstate['enabled'] = false;
+            $scope.wallet.appearance.pgp = $scope.pgpstate['pgp'];
+
+        }).catch(function(err) {
+            notices.makeNotice('error', err.desc);
+            $scope.pgpstate['enabled'] = false;
+            $scope.pgp = $scope.wallet.appearance.pgp;
+        });
+    };
 }]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage',
         function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage) {
     if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough

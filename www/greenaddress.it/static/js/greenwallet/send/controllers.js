@@ -171,7 +171,7 @@ angular.module('greenWalletSendControllers',
                     if (chunks[2] != Bitcoin.Opcode.map.OP_EQUAL) return $q.reject(gettext('out OP_EQUAL missing'));
                 }
 
-                if (that.add_fee.party == 'sender') {
+                if (that.add_fee.party == 'sender' && !that.spend_all) {
                     // check output value
                     if (new Bitcoin.BigInteger(tx.outs[out_i].value.toString()).compareTo(
                             new Bitcoin.BigInteger(satoshis)) != 0) {
@@ -220,10 +220,11 @@ angular.module('greenWalletSendControllers',
             // calculate fees
             var fee = in_value.subtract(out_value), recipient_fee = Bitcoin.BigInteger.valueOf(0);
             // subtract mod 10000 to allow anti-dust (<5430) fee
-            if (that.add_fee.party == 'recipient') recipient_fee = fee.subtract(fee.mod(Bitcoin.BigInteger.valueOf(10000)));
+            if (that.add_fee.party == 'recipient' || that.spend_all) recipient_fee = fee.subtract(fee.mod(Bitcoin.BigInteger.valueOf(10000)));
 
             return change_d.then(function(out_i) {
                 // check output value
+                if (that.spend_all) satoshis = $scope.wallet.final_balance;
                 if (new Bitcoin.BigInteger(tx.outs[out_i].value.toString()).compareTo(
                         new Bitcoin.BigInteger(satoshis).subtract(recipient_fee)) != 0) {
                     return $q.reject(gettext('Invalid output value'));
@@ -365,7 +366,7 @@ angular.module('greenWalletSendControllers',
                              script: data.prevout_scripts[i]})
                     }
                     that.signing = true;
-                    wallets.sign_and_send_tx(undefined, data, true, null, gettext('Transaction reversed!'), that._signing_progress_cb.bind(that)).finally(function() {
+                    wallets.sign_and_send_tx($scope, data, true, null, gettext('Transaction reversed!'), that._signing_progress_cb.bind(that)).finally(function() {
                         $rootScope.decrementLoading();
                         $location.url('/info/');
                     });  // priv_der=true
@@ -428,6 +429,7 @@ angular.module('greenWalletSendControllers',
             priv_data.allow_random_change = true;
             priv_data.memo = this.memo;
             priv_data.subaccount = $scope.wallet.current_subaccount;
+            if (that.spend_all) satoshis = $scope.wallet.final_balance;
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(),
                            priv_data).then(function(data) {
                 that.signing = true;
@@ -447,6 +449,9 @@ angular.module('greenWalletSendControllers',
         get_add_fee: function() {
             var add_fee = angular.extend({}, this.add_fee);
             add_fee.amount = add_fee.amount == '' ? null : parseInt(this.amount_to_satoshis(add_fee.amount));
+            if (this.spend_all) {
+                add_fee.party = 'receiver';
+            }
             return add_fee;
         },
         _encrypt_key: function(key) {
@@ -496,6 +501,7 @@ angular.module('greenWalletSendControllers',
                     priv_data.allow_random_change = true;
                     priv_data.memo = that.memo;
                     priv_data.subaccount = $scope.wallet.current_subaccount;
+                    if (that.spend_all) satoshis = $scope.wallet.final_balance;
                     tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
                         var d_verify = verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).catch(function(error) {
                             that.sending = false;
@@ -548,6 +554,7 @@ angular.module('greenWalletSendControllers',
             $rootScope.is_loading += 1;
             var priv_data = {instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount};
+            if (that.spend_all) satoshis = $scope.wallet.final_balance;
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {
                 var d_verify = verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).catch(function(error) {
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
@@ -623,7 +630,7 @@ angular.module('greenWalletSendControllers',
             }).finally(function() { that.sending = false; });
         },
         send_money: function() {
-            if (isNaN(parseFloat(this.amount))) {
+            if (!this.spend_all && isNaN(parseFloat(this.amount))) {
                 notices.makeNotice('error', gettext('Invalid amount'));
                 return;
             }
@@ -688,6 +695,14 @@ angular.module('greenWalletSendControllers',
     };
     $scope.$watch('send_tx.instant', function(newValue, oldValue) {
         if (newValue) $scope.send_tx.add_fee.per_kb = true;
+    });
+    var spend_all_succeeded = false;
+    $scope.$watch('send_tx.spend_all', function(newValue, oldValue) {
+        if (newValue) {
+            $scope.send_tx.amount = 'MAX';
+        } else {
+            $scope.send_tx.amount = '';
+        }
     });
     $scope.$watch('send_tx.recipient', function(newValue, oldValue) {
         if (newValue === oldValue || !newValue) return;

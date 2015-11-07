@@ -227,7 +227,7 @@ angular.module('greenWalletInfoControllers',
                             'BTC']);  // probably not correct for testnet, but simpler, and compatible with our JS impl
                 })();
             } else {
-                var worker = new Worker(BASE_URL+"/static/js/bip38_worker.min.js");
+                var worker = new Worker(BASE_URL+"/static/js/greenwallet/signup/bip38_worker.js");
                 worker.onmessage = function(message) {
                     if (message.data.error) {
                         deferred.reject([message.data.error == 'invalid_passphrase',

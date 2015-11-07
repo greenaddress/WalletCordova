@@ -7,7 +7,7 @@ if (window.cordova) {
 }
 var greenWalletApp = angular.module('greenWalletApp', deps)
 .controller('SignupController', ['$scope', '$injector', '$controller', function($scope, $injector, $controller) {
-    $script(BASE_URL+'/static/js/signup.min.js', function() {
+    $script(BASE_URL+'/static/js/greenwallet/apps/signup.js', function() {
         // injector method takes an array of modules as the first argument
         // if you want your controller to be able to use components from
         // any of your other modules, make sure you include it together with 'ng'

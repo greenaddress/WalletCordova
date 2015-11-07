@@ -1,7 +1,17 @@
 try { importScripts('typedarray.js'); } catch (e) { }  // Cordova polyfill
 importScripts('secp256k1.js');
 importScripts('bitcoinjs.min.js');
-Module._secp256k1_start(3);
+Module.secp256k1ctx = Module._secp256k1_context_create(3);
+
+try {
+    var randArr = new Uint8Array(32);
+    window.crypto.getRandomValues(randArr);
+    if (!Module._secp256k1_context_randomize(Module.secp256k1ctx, randArr)) {
+        throw new Error("Couldn't initialize library, randomized failed");
+    }
+} catch (e) { }  // firefox doesn't find window nor crypto?
+
+
 Bitcoin.ECKey.prototype.getPub = function(compressed) {
     if (compressed === undefined) compressed = this.compressed;
 
@@ -18,7 +28,7 @@ Bitcoin.ECKey.prototype.getPub = function(compressed) {
     writeArrayToMemory(slice, secexp);
     setValue(out_s, 128, 'i32');
 
-    Module._secp256k1_ec_pubkey_create(out, out_s, secexp, compressed ? 1 : 0);
+    Module._secp256k1_ec_pubkey_create(Module.secp256k1ctx, out, out_s, secexp, compressed ? 1 : 0);
 
     var ret = [];
     for (var i = 0; i < getValue(out_s, 'i32'); ++i) {
@@ -56,7 +66,7 @@ funcs = {
             setValue(msg + i, data.hash[i], 'i8');
         }
 
-        Module._secp256k1_ecdsa_sign(msg, sig, siglen_p, seckey, 0, 0);
+        Module._secp256k1_ecdsa_sign(Module.secp256k1ctx, msg, sig, siglen_p, seckey, 0, 0);
 
         var ret = [];
         for (var i = 0; i < getValue(siglen_p, 'i32'); ++i) {

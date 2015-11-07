@@ -174,15 +174,25 @@ if (self.cordova && cordova.platformId == 'ios') {
             script.onload = script.onreadystatechange = function () {
                 if (!ready && (!this.readyState || this.readyState == 'complete')) {
                     ready = true;
-                    Module._secp256k1_start(3);
+                    Module.secp256k1ctx = Module._secp256k1_context_create(3);
+                    var randArr = new Uint8Array(32);
+                    crypto.getRandomValues(randArr);
+                    if (!Module._secp256k1_context_randomize(Module.secp256k1ctx, randArr)) {
+                        throw new Error("Couldn't initialize library, randomized failed");
+                    }
                 }
             };
             var tag = document.getElementsByTagName('script')[0];
             tag.parentNode.insertBefore(script, tag);
         });
 
+        no_secp256k1_getPub = Bitcoin.ECKey.prototype.getPub;
         Bitcoin.ECKey.prototype.getPub = function(compressed) {
             if (compressed === undefined) compressed = this.compressed;
+            if (self.Module === undefined) {
+                // in case it's called before module finishes initialisation
+                return no_secp256k1_getPub.bind(this)(compressed);
+            }
 
             var out = Module._malloc(128);
             var out_s = Module._malloc(4);
@@ -197,7 +207,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             writeArrayToMemory(slice, secexp);
             setValue(out_s, 128, 'i32');
 
-            Module._secp256k1_ec_pubkey_create(out, out_s, secexp, compressed ? 1 : 0);
+            Module._secp256k1_ec_pubkey_create(Module.secp256k1ctx, out, out_s, secexp, compressed ? 1 : 0);
 
             var ret = [];
             for (var i = 0; i < getValue(out_s, 'i32'); ++i) {
