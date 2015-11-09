@@ -541,10 +541,10 @@ angular.module('greenWalletServices', [])
 
             d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range, subaccount: subaccount,
                         populate_csv: function() {
-                            var csv_list = [gettext('Time,Description,satoshis,')+this.fiat_currency];
+                            var csv_list = [gettext('Time,Description,satoshis,%s,txhash,fee,memo').replace('%s', this.fiat_currency)];
                             for (var i = 0; i < this.list.length; i++) {
                                 var item = this.list[i];
-                                csv_list.push(item.ts + ',' + item.description.replace(',', '\'') + ',' + item.value + ',' + item.value_fiat);
+                                csv_list.push(item.ts + ',' + item.description.replace(',', '\'') + ',' + item.value + ',' + item.value_fiat + ',' + item.txhash + ',' + item.fee + ',' + item.memo);
                             }
                             this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
                         },
