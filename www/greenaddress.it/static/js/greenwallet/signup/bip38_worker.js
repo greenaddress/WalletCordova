@@ -2,7 +2,7 @@ importScripts('/static/js/scrypt.js');
 importScripts('/static/js/bitcoinjs.min.js');
 GAIT_IN_WORKER = true;  // used inside bitcoinjs_util.js
 importScripts('/static/js/bitcoinjs_util.js');
-importScripts('/static/js/greenwalelt/signup/bip38.js');
+importScripts('/static/js/greenwallet/signup/bip38.js');
 onmessage = function(input) {
     var input = input.data;
     if (input.eckey) {
