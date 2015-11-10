@@ -16,3 +16,9 @@ After following these steps you should get a debug apk file in `platforms/androi
  3. Run `cordova build ios`
 
 After following these steps you should get an .app in platforms/ios/build/emulator/GreenAddress.It.app.
+
+## Pull Requests
+
+Before making a Pull Request for WalletCordova check if what you want to modify is present in https://github.com/greenaddress/GreenAddressWebFiles - if it is then you should do the PR there.
+
+This repo is updated every time GreenAddressWebFiles is.
