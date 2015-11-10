@@ -133,8 +133,8 @@ angular.module('greenWalletServices', [])
 
     return autotimeoutService;
 
-}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent',
-        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent) {
+}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent', '$http',
+        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent, $http) {
     var walletsService = {};
     var handle_double_login = function(retry_fun) {
         return $modal.open({
@@ -577,38 +577,44 @@ angular.module('greenWalletServices', [])
     walletsService.sign_and_send_tx = function($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
         var d = $q.defer();
         var tx = Bitcoin.Transaction.deserialize(data.tx);
+        var prevouts_d;
+        if ($scope && ($scope.send_tx || $scope.wallet.trezor_dev)) {
+            prevouts_d = $http.get(data.prevout_rawtxs);
+        }
         var ask_for_confirmation = function() {
             if (!$scope.send_tx) {
                 // not all txs support this dialog, like redepositing or sweeping
                 return $q.when();
             }
-            var scope = $scope.$new();
-            var in_value = 0, out_value = 0;
-            tx.ins.forEach(function(txin) {
-                var prevtx = Bitcoin.Transaction.deserialize(data.prevout_rawtxs[txin.outpoint.hash]);
-                var prevout = prevtx.outs[txin.outpoint.index];
-                in_value += prevout.value;
+            return prevouts_d.then(function(response) {
+                var scope = $scope.$new();
+                var in_value = 0, out_value = 0;
+                tx.ins.forEach(function(txin) {
+                    var prevtx = Bitcoin.Transaction.deserialize(response.data[txin.outpoint.hash]);
+                    var prevout = prevtx.outs[txin.outpoint.index];
+                    in_value += prevout.value;
+                });
+                tx.outs.forEach(function(txout) {
+                    out_value += txout.value;
+                });
+                var fee = in_value - out_value, value;
+                if ($scope.send_tx.amount == 'MAX') {
+                    value = $scope.wallet.final_balance - fee;
+                } else {
+                    value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
+                }
+                scope.tx = {
+                    fee: fee,
+                    value: value,
+                    recipient: $scope.send_tx.recipient.name || $scope.send_tx.recipient,
+                };
+                var modal = $modal.open({
+                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
+                    scope: scope,
+                    windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
+                });
+                return modal.result;
             });
-            tx.outs.forEach(function(txout) {
-                out_value += txout.value;
-            });
-            var fee = in_value - out_value, value;
-            if ($scope.send_tx.amount == 'MAX') {
-                value = $scope.wallet.final_balance - fee;
-            } else {
-                value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
-            }
-            scope.tx = {
-                fee: fee,
-                value: value,
-                recipient: $scope.send_tx.recipient.name || $scope.send_tx.recipient,
-            };
-            var modal = $modal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
-                scope: scope,
-                windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
-            });
-            return modal.result;
         }
         var signatures = [], device_deferred = null, signed_n = 0;
         var prevoutToPath = function(prevout, trezor, from_subaccount) {
@@ -922,23 +928,24 @@ angular.module('greenWalletServices', [])
                 }
 
                 var txs = [];
-                for (var k in data.prevout_rawtxs) {
-                    var parsed = Bitcoin.Transaction.deserialize(data.prevout_rawtxs[k]);
-                    txs.push({
-                        hash: k,
-                        version: parsed.version,
-                        lock_time: parsed.locktime,
-                        bin_outputs: convert_outs_bin(parsed.outs),
-                        inputs: convert_ins(parsed.ins)
-                    });
-                }
-
-                return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs, data.change_pointer),
-                    txs, {coin_name: cur_net == 'mainnet' ? 'Bitcoin' : 'Testnet'}).then(function(res) {
-                        return res.message.serialized.signatures.map(function(a) {
-                            return (a.toHex ? a.toHex() : a)+"01";
+                return prevouts_d.then(function(response) {
+                    for (var k in response.data) {
+                        var parsed = Bitcoin.Transaction.deserialize(response.data[k]);
+                        txs.push({
+                            hash: k,
+                            version: parsed.version,
+                            lock_time: parsed.locktime,
+                            bin_outputs: convert_outs_bin(parsed.outs),
+                            inputs: convert_ins(parsed.ins)
                         });
-                    });
+                    }
+                    return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs, data.change_pointer),
+                        txs, {coin_name: cur_net == 'mainnet' ? 'Bitcoin' : 'Testnet'}).then(function(res) {
+                            return res.message.serialized.signatures.map(function(a) {
+                                return (a.toHex ? a.toHex() : a)+"01";
+                            });
+                        });
+                });
             });
         } else {
             var d_all = $q.all(signatures);
