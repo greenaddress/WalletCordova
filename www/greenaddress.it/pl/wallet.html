@@ -151,7 +151,7 @@
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
-    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">WARNING</span>
+    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">WARNING</span>
       You have not verified that you have backed up your mnemonic.
       <a href="" ng-click="verify_mnemonic()">Please verify now by clicking here.</a>
     </p>

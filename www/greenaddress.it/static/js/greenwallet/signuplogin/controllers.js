@@ -138,6 +138,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 $scope.wallet.hdwallet = hdwallet;
                 $scope.wallet.mnemonic = data.mnemonic;
                 $scope.wallet.gait_path_seed = data.path_seed;
+                $scope.wallet.logged_in_with_encrypted_mnemonics = encrypted;
                 state.seed_progress = 100;
                 state.seed = data.seed;
                 var do_login = function() {

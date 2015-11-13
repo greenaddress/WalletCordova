@@ -151,7 +151,7 @@
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">คำเตือน:</span> คุณยังไม่มีการตั้งรหัสผ่านสองขั้น. กรุณา่เข้าไปตั้งค่าใน <a href="#/settings">การตั้งค่า</a>.</p>
-    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">คำเตือน</span>
+    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">คำเตือน</span>
       คุณไม่ได้ตรวจสอบว่า คุณได้สำรองข้อมูลที่ช่วยในการจำ
       <a href="" ng-click="verify_mnemonic()">กรุณาตรวจสอบขณะนี้ โดยคลิกที่นี่</a>
     </p>

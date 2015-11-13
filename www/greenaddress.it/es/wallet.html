@@ -151,7 +151,7 @@
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">ADVERTENCIA:</span> Usted no tiene la autenticación de doble factor configurada. Por favor configúrela en los <a href="#/settings">ajustes</a>.</p>
-    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified"><span class="label label-warning">ADVERTENCIA</span>
+    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">ADVERTENCIA</span>
       Usted no ha verificado que ha respaldado su indicio de clave.
       <a href="" ng-click="verify_mnemonic()">Por favor verifíquelo ahora cliqueando aquí.</a>
     </p>
