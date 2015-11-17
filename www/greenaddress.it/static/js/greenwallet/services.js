@@ -1285,12 +1285,23 @@ angular.module('greenWalletServices', [])
                     if (err.args[0] == 'http://greenaddressit.com/error#internal' && err.args[1] == 'Authentication required') {
                         return; // keep in missed calls queue for after login
                     }
+                    if (err.args[0] == 'http://greenaddressit.com/error#sessionexpired') {
+                        d.reject({args: [
+                            err.args[0],
+                            gettext("Session expired. Please try again.")
+                        ]});
+                        connection.close();
+                        connection = session = session_for_login = null;
+                        connecting = false;
+                        connect(global_login_d);
+                        return;
+                    }
                     if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
                     delete calls_missed[cur_call];
                     d.reject(err);
                 });
                 var args = arguments, timeout;
-                if (args[0] == "http://greenaddressit.com/vault/prepare_sweep_social") timeout = 40000;
+                if (args[0] == "com.greenaddress.vault.prepare_sweep_social") timeout = 40000;
                 else timeout = 10000;
                 setTimeout(function() {
                     delete calls_missed[cur_call];
