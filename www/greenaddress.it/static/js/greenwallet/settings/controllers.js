@@ -21,7 +21,7 @@ angular.module('greenWalletSettingsControllers',
             twofactor_state.twofac_sms_switch = data.sms;
             twofactor_state.twofac_phone_switch = data.phone;
         }, function(err) {
-            notices.makeNotice('error', 'Error fetching two factor authentication configuration: ' + err.desc);
+            notices.makeNotice('error', 'Error fetching two factor authentication configuration: ' + err.args[1]);
             twofactor_state.twofactor_type = 'error';
         });
     };
@@ -70,8 +70,8 @@ angular.module('greenWalletSettingsControllers',
                 update_wallet();
             }, function(err) {
                 twofactor_state.twofac_gauth_code = '';
-                gaEvent('Wallet', 'EnableGauth2FAFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'EnableGauth2FAFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
                 return $q.reject(err);
             });
     };
@@ -86,8 +86,8 @@ angular.module('greenWalletSettingsControllers',
                     twofactor_state.twofac_gauth_switch = false;
                     update_wallet();  // new secret required for re-enabling
                 }, function(err) {
-                    gaEvent('Wallet', 'DisableGauth2FAFailed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', 'DisableGauth2FAFailed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                     return $q.reject(err);
                 })
         } else if (type == 'email') {
@@ -100,8 +100,8 @@ angular.module('greenWalletSettingsControllers',
                     twofactor_state.email_set = false;
                     update_wallet();
                 }, function(err) {
-                    gaEvent('Wallet', 'DisableEmail2FAFailed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', 'DisableEmail2FAFailed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                     return $q.reject(err);
                 })
         } else if (type == 'sms') {
@@ -114,8 +114,8 @@ angular.module('greenWalletSettingsControllers',
                     twofactor_state.sms_set = false;
                     update_wallet();
                 }, function(err) {
-                    gaEvent('Wallet', 'DisableSMS2FAFailed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', 'DisableSMS2FAFailed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                     return $q.reject(err);
                 })
         } else if (type == 'phone') {
@@ -128,8 +128,8 @@ angular.module('greenWalletSettingsControllers',
                     twofactor_state.phone_set = false;
                     update_wallet();
                 }, function(err) {
-                    gaEvent('Wallet', 'DisablePhone2FAFailed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', 'DisablePhone2FAFailed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                     return $q.reject(err);
                 })
         }
@@ -142,8 +142,8 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', 'StartEnablingEmail2FASuccessful');
                 twofactor_state.email_set = true;
             }, function(err) {
-                gaEvent('Wallet', 'StartEnablingEmail2FAFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'StartEnablingEmail2FAFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
             }).finally(function() {
                 twofactor_state.enabling_email = false;
             });
@@ -167,15 +167,15 @@ angular.module('greenWalletSettingsControllers',
             update_wallet();
         };
         var onFail = function(err) {
-            gaEvent('Wallet', 'EnableEmail2FAFailed', err.desc);
+            gaEvent('Wallet', 'EnableEmail2FAFailed', err.args[1]);
             twofactor_state.twofac_email_code = '';
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
             return $q.reject(err);
         };
         return tx_sender.call('http://greenaddressit.com/twofactor/enable_email'+suffix, arg).then(
             onSuccess,
             function(err) {
-                if ($scope.wallet.signup && err.uri == "http://greenaddressit.com/error#alreadyexists") {
+                if ($scope.wallet.signup && err.args[0] == "http://greenaddressit.com/error#alreadyexists") {
                     return $modal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_reset_email.html'
                     }).result.then(function() {
@@ -195,8 +195,8 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', 'StartEnablingSMS2FASuccessful');
                 twofactor_state.sms_set = true;
             }, function(err) {
-                gaEvent('Wallet', 'StartEnablingSMS2FAFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'StartEnablingSMS2FAFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
                 return $q.reject(err);
             }).finally(function() {
                 twofactor_state.enabling_sms = false;
@@ -216,8 +216,8 @@ angular.module('greenWalletSettingsControllers',
                 update_wallet();
             }, function(err) {
                 twofactor_state.twofac_sms_code = '';
-                gaEvent('Wallet', 'EnableSMS2FAFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'EnableSMS2FAFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
             });
     };
     $scope.start_enabling_phone = function(twofac_data) {
@@ -228,8 +228,8 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', 'StartEnablingPhone2FASuccessful');
                 twofactor_state.phone_set = true;
             }, function(err) {
-                gaEvent('Wallet', 'StartEnablingPhone2FAFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'StartEnablingPhone2FAFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
             }).finally(function() {
                 twofactor_state.enabling_phone = false;
             });;
@@ -248,8 +248,8 @@ angular.module('greenWalletSettingsControllers',
                 update_wallet();
             }, function(err) {
                 twofactor_state.twofac_phone_code = '';
-                gaEvent('Wallet', 'EnablePhone2FAFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'EnablePhone2FAFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
             });
     };
 
@@ -297,7 +297,7 @@ angular.module('greenWalletSettingsControllers',
                         $scope.twofactor_state['toggling_'+type] = 'initial';
                         $scope.twofac_data = {'method': 'proxy', 'code': data};
                     }, function(err) {
-                        notices.makeNotice('error', err.desc);
+                        notices.makeNotice('error', err.args[1]);
                         return $q.reject(err);
                     });
                 }
@@ -343,7 +343,7 @@ angular.module('greenWalletSettingsControllers',
                         $scope.wallet.nlocktime_blocks = that.blocks = that.blocks_new;
                         notices.makeNotice('success', gettext('nLockTime settings updated successfully'));
                     }, function(err) {
-                        notices.makeNotice('error', err.desc);
+                        notices.makeNotice('error', err.args[1]);
                     });
                 }).finally(function() { that.updating_nlocktime_blocks = false; });
             }
@@ -404,7 +404,7 @@ angular.module('greenWalletSettingsControllers',
                     scope: $scope
                 });
             }, function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
             });
         },
         send_nlocktime: function() {
@@ -414,7 +414,7 @@ angular.module('greenWalletSettingsControllers',
             tx_sender.call('http://greenaddressit.com/txs/send_nlocktime').then(function(data) {
                 notices.makeNotice('success', gettext('Email sent'));
             }, function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
             }).finally(function() { that.sending_nlocktime = false; });
         }
     };
@@ -486,14 +486,14 @@ angular.module('greenWalletSettingsControllers',
                     settings.updating_pricing_source = false;
                 }).catch(function(err) {
                     settings.updating_pricing_source = false;
-                    if (err.uri == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
+                    if (err.args[0] == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
                         gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
                         notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
                             .replace('{1}', exchanges[exchange])
                             .replace('{2}', err.detail.supported));
                     } else {
-                        gaEvent('Wallet', 'PricingSourceChangeFailed', err.desc);
-                        notices.makeNotice('error', err.desc);
+                        gaEvent('Wallet', 'PricingSourceChangeFailed', err.args[1]);
+                        notices.makeNotice('error', err.args[1]);
                     }
                 });
             };
@@ -520,14 +520,14 @@ angular.module('greenWalletSettingsControllers',
                 settings.updating_currency = false;
             }).catch(function(err) {
                 settings.updating_currency = false;
-                if (err.uri == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
+                if (err.args[0] == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
                     gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
                     notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
                         .replace('{1}', exchanges[settings.exchange])
                         .replace('{2}', err.detail.supported));
                 } else {
-                    gaEvent('Wallet', 'CurrencyChangeFailed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', 'CurrencyChangeFailed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                 }
             });
         }
@@ -544,14 +544,14 @@ angular.module('greenWalletSettingsControllers',
                 settings.updating_exchange = false;
             }).catch(function(err) {
                 settings.updating_exchange = false;
-                if (err.uri == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
+                if (err.args[0] == "http://greenaddressit.com/error#exchangecurrencynotsupported") {
                     gaEvent('Wallet', 'CurrencyNotSupportedByExchange');
                     notices.makeNotice('error', gettext('{1} supports only the following currencies: {2}')
                         .replace('{1}', exchanges[newValue])
                         .replace('{2}', err.detail.supported));
                 } else {
-                    gaEvent('Wallet', 'ExchangeChangeFailed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', 'ExchangeChangeFailed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                 }
             });
         }
@@ -569,8 +569,8 @@ angular.module('greenWalletSettingsControllers',
                     settings.notifications['email_'+inout] = newValue;
                     settings['updating_ntf_email_'+inout] = false;
                 }).catch(function(err) {
-                    gaEvent('Wallet', eventprefix+(newValue?'Enable':'Disable')+'Failed', err.desc);
-                    notices.makeNotice('error', err.desc);
+                    gaEvent('Wallet', eventprefix+(newValue?'Enable':'Disable')+'Failed', err.args[1]);
+                    notices.makeNotice('error', err.args[1]);
                     settings['updating_ntf_email_'+inout] = false;
                 });
             }
@@ -587,8 +587,8 @@ angular.module('greenWalletSettingsControllers',
                 settings.unit = $scope.wallet.unit = newValue;
                 settings.updating_unit = false;
             }).catch(function(err) {
-                gaEvent('Wallet', 'UnitChangeFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', 'UnitChangeFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
                 settings.updating_unit = false;
             });
         }
@@ -637,7 +637,7 @@ angular.module('greenWalletSettingsControllers',
                     storage.remove('encrypted_seed');
                     $location.path('/');
                 }).catch(function(err) {
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                     return $q.reject(err);
                 });
             });
@@ -654,7 +654,7 @@ angular.module('greenWalletSettingsControllers',
                 wallets.getTwoFacConfig($scope, true);  // refresh twofac config
                 notices.makeNotice('success', gettext('Email sent'));
             }).catch(function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
                 return $q.reject(err);
             });
         }).finally(function() { settings.setting_email = false; });
@@ -664,7 +664,7 @@ angular.module('greenWalletSettingsControllers',
             wallets.getTwoFacConfig($scope, true);  // refresh twofac config
             notices.makeNotice('success', gettext('Email confirmed'))
         }).catch(function(err) {
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
         });
     };
 }]).controller('PrivacyController', ['$scope', 'tx_sender', 'wallets', 'notices',
@@ -688,7 +688,7 @@ angular.module('greenWalletSettingsControllers',
                 $scope.privacy[upkey] = false;
                 $scope.privacy[key] = newValue;
             }, function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
                 $scope.privacy[upkey] = false;
             });
         });
@@ -767,8 +767,8 @@ angular.module('greenWalletSettingsControllers',
                 }
             });
         }, function(err) {
-            gaEvent('Wallet', 'AddressBookItemRenameFailed', err.desc);
-            notices.makeNotice('error', 'Error renaming item: ' + err.desc);
+            gaEvent('Wallet', 'AddressBookItemRenameFailed', err.args[1]);
+            notices.makeNotice('error', 'Error renaming item: ' + err.args[1]);
         });
     };
     $scope.start_rename = function(item) {
@@ -796,8 +796,8 @@ angular.module('greenWalletSettingsControllers',
                 $location.path('/address-book/name_'+encodeURIComponent(item.name));
             }
         }, function(err) {
-            gaEvent('Wallet', 'AddressBookItemAddFailed', err.desc);
-            notices.makeNotice('error', gettext('Error saving item: ') + err.desc);
+            gaEvent('Wallet', 'AddressBookItemAddFailed', err.args[1]);
+            notices.makeNotice('error', gettext('Error saving item: ') + err.args[1]);
         });
     }
     $scope.send_url = function(contact) {
@@ -818,8 +818,8 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', "Sound_"+(newValue?'Enabled':'Disabled'));
                 soundstate['sound'] = false;
             }).catch(function(err) {
-                gaEvent('Wallet', "Sound_"+(newValue?'Enable':'Disable')+'Failed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Wallet', "Sound_"+(newValue?'Enable':'Disable')+'Failed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
                 soundstate['sound'] = false;
             });
         }
@@ -849,7 +849,7 @@ angular.module('greenWalletSettingsControllers',
 
         }).catch(function(err) {
             gaEvent('Wallet', "TimeoutsetFailed");
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
             $scope.timeoutstate['timeout'] = false;
             $scope.altimeout = $scope.wallet.appearance.altimeout;
         });
@@ -870,7 +870,7 @@ angular.module('greenWalletSettingsControllers',
             $scope.wallet.appearance.pgp = $scope.pgpstate['pgp'];
 
         }).catch(function(err) {
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
             $scope.pgpstate['enabled'] = false;
             $scope.pgp = $scope.wallet.appearance.pgp;
         });
@@ -910,9 +910,9 @@ angular.module('greenWalletSettingsControllers',
                         storage.remove('encrypted_seed');
                         notices.makeNotice('success', gettext('PIN removed'));
                     }, function(err) {
-                        gaEvent('Wallet', 'QuickLoginRemoveFailed', err.desc);
+                        gaEvent('Wallet', 'QuickLoginRemoveFailed', err.args[1]);
                         $scope.quicklogin.started_unsetting_pin = false;
-                        notices.makeNotice('error', err.desc);
+                        notices.makeNotice('error', err.args[1]);
                     });
                 } else {
                     // finished disabling pin
@@ -960,9 +960,9 @@ angular.module('greenWalletSettingsControllers',
             storage.remove('encrypted_seed');
             notices.makeNotice('success', gettext('All PINs removed'));
         }, function(err) {
-            gaEvent('Wallet', 'AllPinLoginsRemoveFailed', err.desc);
+            gaEvent('Wallet', 'AllPinLoginsRemoveFailed', err.args[1]);
             $scope.quicklogin.started_unsetting_pin = false;
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
         });
     }
 }]).controller('ThirdPartyController', ['$scope', 'tx_sender', 'notices', 'facebook', 'gaEvent', '$q', 'reddit',
@@ -981,9 +981,9 @@ angular.module('greenWalletSettingsControllers',
                     that.fbstate.enabled = false;
                     notices.makeNotice('success', gettext('Facebook integration disabled'));
                 }, function(err) {
-                    gaEvent('Wallet', 'FbSyncDisableFailed', err.desc);
+                    gaEvent('Wallet', 'FbSyncDisableFailed', err.args[1]);
                     that.toggling_fb = false;
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                 });
             } else {
                 gaEvent('Wallet', 'FbSyncEnableAttempt');
@@ -997,7 +997,7 @@ angular.module('greenWalletSettingsControllers',
                             that.fbstate.enabled = true;
                         }, function(err) {
                             gaEvent('Wallet', 'FbSyncEnableFailed');
-                            notices.makeNotice('error', err.desc);
+                            notices.makeNotice('error', err.args[1]);
                             that.toggling_fb = false;
                         });
                     } else {
@@ -1015,9 +1015,9 @@ angular.module('greenWalletSettingsControllers',
                     that.redditstate.enabled = false;
                     notices.makeNotice('success', gettext('Reddit integration disabled'));
                 }, function(err) {
-                    gaEvent('Wallet', 'RedditSyncDisableFailed', err.desc);
+                    gaEvent('Wallet', 'RedditSyncDisableFailed', err.args[1]);
                     that.toggling_reddit = false;
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                 });
             } else {
                 gaEvent('Wallet', 'RedditSyncEnableAttempt');
@@ -1030,7 +1030,7 @@ angular.module('greenWalletSettingsControllers',
                             that.redditstate.enabled = true;
                         }, function(err) {
                             gaEvent('Wallet', 'RedditSyncEnableFailed');
-                            notices.makeNotice('error', err.desc);
+                            notices.makeNotice('error', err.args[1]);
                             that.toggling_reddit = false;
                         });
                     } else {
@@ -1049,9 +1049,9 @@ angular.module('greenWalletSettingsControllers',
                     that.customstate.username = that.customstate.password = null;
                     notices.makeNotice('success', gettext('Custom login disabled'));
                 }, function(err) {
-                    gaEvent('Wallet', 'CustomLoginDisableFailed', err.desc);
+                    gaEvent('Wallet', 'CustomLoginDisableFailed', err.args[1]);
                     that.toggling_custom = 'initial';
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                 });
             } else {
                 gaEvent('Wallet', 'CustomLoginEnableAttempt');
@@ -1068,7 +1068,7 @@ angular.module('greenWalletSettingsControllers',
                     }
                 }, function(err) {
                     gaEvent('Wallet', 'CustomLoginEnableFailed');
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                     // go back to 1st step of toggling
                     that.toggling_custom = 'initial';
                 });
@@ -1191,7 +1191,7 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('success', gettext('Limits updated successfully'));
             modal.close();
         }, function(err) {
-            notices.makeNotice('error', err.desc);
+            notices.makeNotice('error', err.args[1]);
         }).finally(function() { $scope.limits_editor.saving = false; });
     };
 }]).controller('SubwalletsController', ['$scope', 'tx_sender', '$q', 'notices', '$location', '$modal', '$rootScope', 'mnemonics', 'branches',
@@ -1334,7 +1334,7 @@ angular.module('greenWalletSettingsControllers',
                     });
                 });
             }).catch(function(e) {
-                notices.makeNotice('error', e.desc || e);
+                notices.makeNotice('error', e.args[1] || e);
             }).finally(function() {
                 that.generating_2of3_seed = that.adding_subwallet = false;
             });;
@@ -1358,7 +1358,7 @@ angular.module('greenWalletSettingsControllers',
                     $rootScope.safeApply(function() { that.adding_subwallet = false; });
                 });
             }).catch(function(e) {
-                notices.makeNotice('error', e.desc || e);
+                notices.makeNotice('error', e.args[1] || e);
                 $rootScope.safeApply(function() { that.adding_subwallet = false; });
             });
         },
@@ -1377,7 +1377,7 @@ angular.module('greenWalletSettingsControllers',
                     subaccount.renaming = false;
                     notices.makeNotice('success', gettext('Renamed successfully'));
                 }, function(err) {
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                 });
             }
         },

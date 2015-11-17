@@ -180,10 +180,10 @@ angular.module('greenWalletInfoControllers',
                 // TODO: verify
                 wallets.sign_and_send_tx($scope, data, false, null, gettext('Funds redeemed'));
             }, function(error) {
-                if (error.uri == 'http://greenaddressit.com/error#notenoughmoney') {
+                if (error.args[0] == 'http://greenaddressit.com/error#notenoughmoney') {
                     notices.makeNotice('error', gettext('Already redeemed'));
                 } else {
-                    notices.makeNotice('error', error.desc);
+                    notices.makeNotice('error', error.args[1]);
                 }
             });
         };

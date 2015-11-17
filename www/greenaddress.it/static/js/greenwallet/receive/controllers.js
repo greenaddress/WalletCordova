@@ -19,7 +19,7 @@ angular.module('greenWalletReceiveControllers',
                     scope: $scope
                 });
             }, function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
             }).finally(function() { $rootScope.decrementLoading(); });
         },
         show_more_addresses: function() {
@@ -31,7 +31,7 @@ angular.module('greenWalletReceiveControllers',
                 var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1];
                 $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
             }, function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
             }).finally(function() { $rootScope.decrementLoading(); });
         },
         is_bip38: function(privkey) {
@@ -55,10 +55,10 @@ angular.module('greenWalletReceiveControllers',
                     });
                 }, function(error) {
                     that.sweeping = false;
-                    if (error.uri == 'http://greenaddressit.com/error#notenoughmoney') {
+                    if (error.args[0] == 'http://greenaddressit.com/error#notenoughmoney') {
                         notices.makeNotice('error', gettext('Already swept or no funds found'));
                     } else {
-                        notices.makeNotice('error', error.desc);
+                        notices.makeNotice('error', error.args[1]);
                     }
                 });
             }

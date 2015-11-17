@@ -372,8 +372,8 @@ angular.module('greenWalletSendControllers',
                     });  // priv_der=true
                 }, function(error) {
                     $rootScope.decrementLoading();
-                    gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
-                    notices.makeNotice('error', error.desc);
+                    gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.args[1]);
+                    notices.makeNotice('error', error.args[1]);
                 });
             });
         },
@@ -386,7 +386,7 @@ angular.module('greenWalletSendControllers',
                     $location.url('/info/');
                 }, function(err) {
                     $rootScope.decrementLoading();
-                    notices.makeNotice('error', gettext('Failed sending email') + ': ' + err.desc);
+                    notices.makeNotice('error', gettext('Failed sending email') + ': ' + err.args[1]);
                 }
             );
         },
@@ -415,7 +415,7 @@ angular.module('greenWalletSendControllers',
                     $location.url('/info/');
                 }, function(err) {
                     $rootScope.decrementLoading();
-                    notices.makeNotice('error', gettext('Failed sending Reddit message') + ': ' + err.desc);
+                    notices.makeNotice('error', gettext('Failed sending Reddit message') + ': ' + err.args[1]);
                 }
             );
         },
@@ -439,7 +439,7 @@ angular.module('greenWalletSendControllers',
                 }).finally(function() { that.sending = false; });
             }, function(error) {
                 that.sending = false;
-                notices.makeNotice('error', error.desc);
+                notices.makeNotice('error', error.args[1]);
             });
         },
         amount_to_satoshis: function(amount) {
@@ -519,7 +519,7 @@ angular.module('greenWalletSendControllers',
                     }, function(error) {
                         $rootScope.decrementLoading();
                         that.sending = false;
-                        notices.makeNotice('error', error.desc);
+                        notices.makeNotice('error', error.args[1]);
                     });
                 });
             };
@@ -543,7 +543,7 @@ angular.module('greenWalletSendControllers',
             }, function(error) {
                 $rootScope.decrementLoading();
                 that.sending = false;
-                notices.makeNotice('error', error.desc);
+                notices.makeNotice('error', error.args[1]);
             });
         },
         send_address: function() {
@@ -567,8 +567,8 @@ angular.module('greenWalletSendControllers',
                     $location.url('/info/');
                 });
             }, function(error) {
-                if (error && error.desc) {
-                    notices.makeNotice('error', error.desc);
+                if (error && error.args[1]) {
+                    notices.makeNotice('error', error.args[1]);
                 }
             }).finally(function() { $rootScope.decrementLoading(); that.sending = false; });;
         },
@@ -584,7 +584,7 @@ angular.module('greenWalletSendControllers',
                 }
             }, function(error) {
                 that.sending = false;
-                notices.makeNotice('error', error.desc);
+                notices.makeNotice('error', error.args[1]);
             });
         },
         send_social: function(do_send) {
@@ -613,7 +613,7 @@ angular.module('greenWalletSendControllers',
                 }
             }, function(error) {
                 that.sending = false;
-                notices.makeNotice('error', error.desc);
+                notices.makeNotice('error', error.args[1]);
             });
         },
         send_to_payreq: function() {
@@ -627,7 +627,7 @@ angular.module('greenWalletSendControllers',
                     $location.url('/info/');
                 });
             }, function(error) {
-                notices.makeNotice('error', error.desc);
+                notices.makeNotice('error', error.args[1]);
             }).finally(function() { that.sending = false; });
         },
         send_money: function() {
@@ -722,7 +722,7 @@ angular.module('greenWalletSendControllers',
                 $scope.send_tx.recipient = {name: name, data: data, type: 'payreq',
                                             amount: amount, requires_instant: data.requires_instant};
             }).catch(function(err) {
-                notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
+                notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.args[1]);
                 $scope.send_tx.recipient = '';
             }).finally(function() { $scope.send_tx.processing_payreq = false; });
         } else if (parsed_uri.amount) {

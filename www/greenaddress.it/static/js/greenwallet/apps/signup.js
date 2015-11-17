@@ -290,8 +290,8 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                 $scope.signup.any_social_done = true;
                 $scope.signup.fbloginstate.synchronized = true;
             }, function(err) {
-                gaEvent('Signup', 'FbSyncFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Signup', 'FbSyncFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
                 $scope.signup.social_in_progress = false;
                 $scope.signup.fbloginstate.logged_in = false;
             });
@@ -308,8 +308,8 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                 $scope.signup.customloginstate.synchronized = true;
                 modal.close();
             }, function(err) {
-                gaEvent('Signup', 'CustomLoginEnableFailed', err.desc);
-                notices.makeNotice('error', err.desc);
+                gaEvent('Signup', 'CustomLoginEnableFailed', err.args[1]);
+                notices.makeNotice('error', err.args[1]);
             });
         };
         var modal = $modal.open({
@@ -335,7 +335,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                     $scope.signup.redditloginstate.synchronized = true;
                 }, function(err) {
                     gaEvent('Signup', 'RedditSyncEnableFailed');
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                     $scope.signup.social_in_progress = false;
                     that.toggling_reddit = false;
                 });

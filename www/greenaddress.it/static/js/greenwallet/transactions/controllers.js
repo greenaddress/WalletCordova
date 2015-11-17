@@ -32,8 +32,8 @@ angular.module('greenWalletTransactionsControllers',
                 // TODO: verify
                 return wallets.sign_and_send_tx($scope, data, true);  // priv_der=true
             }, function(error) {
-                gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.desc);
-                notices.makeNotice('error', error.desc);
+                gaEvent('Wallet', 'TransactionsTabRedeemFailed', error.args[1]);
+                notices.makeNotice('error', error.args[1]);
                 return $q.reject(error);
             });
         });
@@ -61,7 +61,7 @@ angular.module('greenWalletTransactionsControllers',
                 tx.memo = tx.new_memo;
                 tx.changing_memo = false;
             }, function(err) {
-                notices.makeNotice('error', err.desc);
+                notices.makeNotice('error', err.args[1]);
             });
         }
     };

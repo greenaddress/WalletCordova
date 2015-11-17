@@ -125,7 +125,7 @@ angular.module('greenWalletControllers', [])
                     data.request_url = parsed.r;
                     $scope.wallet.send_to_payment_request = data;
                 }).catch(function(err) {
-                    notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.desc);
+                    notices.makeNotice('error', gettext('Failed processing payment protocol request:') + ' ' + err.args[1]);
                 });
             }
         } else if ($scope.wallet.send_to_receiving_id) {
@@ -229,7 +229,7 @@ angular.module('greenWalletControllers', [])
                     }
                     if (show_qr) $scope.show_url_qr($scope.bitcoin_uri);
                 }, function(err) {
-                    notices.makeNotice('error', err.desc);
+                    notices.makeNotice('error', err.args[1]);
                 }).finally(function() { $scope.generating_bitcoin_uri = false; });
             }
         };
@@ -310,7 +310,7 @@ angular.module('greenWalletControllers', [])
                 deferred.reject(err);
             });
         }, function(error) {
-            deferred.reject(error.desc);
+            deferred.reject(error.args[1]);
         });
         return deferred.promise;
     };
