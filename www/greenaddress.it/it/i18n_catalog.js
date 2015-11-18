@@ -46,7 +46,7 @@ globals.i18n_catalog = {
 "Sent handler registration request": "Richiesta per registrare uri \u0022bitcoin:\u0022 effettuata",
 "nLockTime settings updated successfully": "Impostazione di nLockTime aggiornata con successo",
 "Error changing language:": "C\u0027è stato un errore aggiungendo il contatto: ",
-"Old BTChip firmware version detected. Please upgrade to at least %s.": "Rilevata una versione vecchia di BTChip. Per piacere aggiornata almeno a %s.",
+"Old BTChip firmware version detected. Please upgrade to at least %s.": "Rilevata una versione vecchia di BTChip. Per piacere aggiornala almeno a %s.",
 "Failed processing payment protocol request:": "Fallita la richiesta al protocollo di pagamento:",
 "change OP_EQUAL missing": "Manca il resto OP_EQUAL ",
 "Not a valid private key": "Chiave privata invalida",
