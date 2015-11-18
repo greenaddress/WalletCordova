@@ -216,9 +216,6 @@
         "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
         "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
@@ -234,7 +231,10 @@
         "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         },
-        "org.apache.cordova.media": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "cordova-plugin-media": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         }
     },

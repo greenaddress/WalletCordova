@@ -678,10 +678,10 @@
         "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.file": {
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.media": {
+        "cordova-plugin-media": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         }
     },
