@@ -621,7 +621,7 @@ angular.module('greenWalletSendControllers',
             var satoshis = that.amount_to_satoshis(that.amount);
             var data = angular.extend({}, that.recipient.data);
             data.subaccount = $scope.wallet.current_subaccount;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, data).then(function(data) {
+            tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, data, {prevouts_mode: 'http'}).then(function(data) {
                 that.signing = true;
                 return wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
                     $location.url('/info/');
