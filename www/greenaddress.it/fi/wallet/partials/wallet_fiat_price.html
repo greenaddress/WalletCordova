@@ -1,0 +1,8 @@
+((100000000|format_btc_floor:wallet.unit)) &asymp; ((wallet.fiat_rate)) ((wallet.fiat_currency)) @ ((wallet.fiat_exchange_extended))
+<div style="display: inline;" ng-show="wallet.fiat_last_fetch_ss > 0">
+    (<span ng-show="wallet.fiat_last_fetch_ss == 60">1 min </span><span ng-show="wallet.fiat_lastupdate_mm == 1">((wallet.fiat_lastupdate_mm)) min </span><span ng-show="wallet.fiat_lastupdate_mm > 1">((wallet.fiat_lastupdate_mm)) mins </span><span ng-show="wallet.fiat_lastupdate_ss == 1">((wallet.fiat_lastupdate_ss)) sec</span><span ng-show="wallet.fiat_lastupdate_ss > 1">((wallet.fiat_lastupdate_ss)) secs</span>
+    ago)
+</div>
+<div style="display: inline;" ng-show="wallet.fiat_last_fetch_ss == 0">
+    (just updated)
+</div>
