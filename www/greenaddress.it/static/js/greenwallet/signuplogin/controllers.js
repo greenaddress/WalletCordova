@@ -390,7 +390,10 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     if(decoded && JSON.parse(decoded).seed) {
                         gaEvent('Login', 'PinLoginSucceeded');
                         var parsed = JSON.parse(decoded);
-                        if (!parsed.path_seed) {
+                        if (!parsed.path_seed && parsed.mnemonic) {
+                            // FIXME: if path_seed and mnemonics is missing, we
+                            // should calculate the path_seed from seed
+                            // (hw wallets)
                             return mnemonics.toSeed(parsed.mnemonic, 'greenaddress_path').then(function(path_seed) {
                                 parsed.path_seed = path_seed;
                                 crypto.encrypt(JSON.stringify(parsed), password).then(function(encrypted) {

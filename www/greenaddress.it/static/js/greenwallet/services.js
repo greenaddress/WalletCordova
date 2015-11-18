@@ -258,7 +258,7 @@ angular.module('greenWalletServices', [])
                     return that.login($scope, hdwallet, mnemonic, signup, true, path_seed);
                 });
             } else {
-                notices.makeNotice('error', gettext('Login failed') + (err && err.args[1] && (': ' + err.args[1]) || ''));
+                notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
                 return $q.reject(err);
             }
         });
