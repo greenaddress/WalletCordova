@@ -245,8 +245,6 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     debugCompile project(path: "CordovaLib", configuration: "debug")
     releaseCompile project(path: "CordovaLib", configuration: "release")
-    debugCompile project(path: "..:..:facebook-android-sdk-3.7:facebook:", configuration: "debug")
-    releaseCompile project(path: "..:..:facebook-android-sdk-3.7:facebook:", configuration: "release")
     // SUB-PROJECT DEPENDENCIES END
 }
 

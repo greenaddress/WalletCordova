@@ -239,6 +239,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "GAIT": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         }
     },
     "dependent_plugins": {}

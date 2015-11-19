@@ -117,7 +117,6 @@ public class GreenAddressIt extends CordovaActivity
             processView(getIntent());
         } else {
             ((SystemWebViewEngine)super.appView.getEngine()).clearCache();
-            super.setIntegerProperty("splashscreen", R.drawable.splash);
             final Intent intent = getIntent();
             if (intent != null) {
                 final String hash = intent.getStringExtra("hash");

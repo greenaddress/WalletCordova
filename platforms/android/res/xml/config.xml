@@ -1,31 +1,46 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="it.greenaddress.cordova" version="0.0.72" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
-    <preference name="AndroidLaunchMode" value="singleTop" />
-    <feature name="App">
-        <param name="android-package" value="org.apache.cordova.App" />
+    <feature name="SoftKeyboard">
+        <param name="android-package" value="com.cordova.plugin.softkeyboard.SoftKeyboard" />
     </feature>
     <feature name="WebSocket">
         <param name="android-package" value="com.ququplay.websocket.WebSocket" />
     </feature>
-    <feature name="NetworkStatus">
-        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
-    </feature>
-    <feature name="NfcPlugin">
-        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
-    </feature>
-    <feature name="BarcodeScanner">
-        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
-    </feature>
-    <feature name="org.apache.cordova.facebook.Connect">
-        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
-    </feature>
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+    <feature name="Clipboard">
+        <param name="android-package" value="com.verso.cordova.clipboard.Clipboard" />
     </feature>
     <feature name="AppPreferences">
         <param name="android-package" value="me.apla.cordova.AppPreferences" />
     </feature>
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Vibration">
+        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="AndroidLaunchMode" value="singleTop" />
     <feature name="PINInput">
         <param name="android-package" value="it.greenaddress.cordova.PINInput" />
     </feature>
@@ -38,51 +53,21 @@
     <feature name="BTChip">
         <param name="android-package" value="it.greenaddress.cordova.BTChip" />
     </feature>
-    <feature name="Clipboard">
-        <param name="android-package" value="com.verso.cordova.clipboard.Clipboard" />
-    </feature>
-    <feature name="Vibration">
-        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
-    </feature>
-    <feature name="SoftKeyboard">
-        <param name="android-package" value="com.cordova.plugin.softkeyboard.SoftKeyboard" />
-    </feature>
-    <feature name="Notification">
-        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
-    </feature>
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
-    </feature>
     <feature name="NfcPlugin">
         <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
-    </feature>
-
-    <feature name="File">
-        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="Media">
-        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    <feature name="BarcodeScanner">
+        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
-    </feature>
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
-    <splash density="land-hdpi" src="../platforms/android/res/drawable-hdpi/splash.9.png" />
-    <splash density="land-ldpi" src="../platforms/android/res/drawable-ldpi/splash.9.png" />
-    <splash density="land-mdpi" src="../platforms/android/res/drawable-mdpi/splash.9.png" />
-    <splash density="land-xhdpi" src="../platforms/android/res/drawable-xhdpi/splash.9.png" />
-    <splash density="port-hdpi" src="../platforms/android/res/drawable-hdpi/splash.9.png" />
-    <splash density="port-ldpi" src="../platforms/android/res/drawable-ldpi/splash.9.png" />
-    <splash density="port-mdpi" src="../platforms/android/res/drawable-mdpi/splash.9.png" />
-    <splash density="port-xhdpi" src="../platforms/android/res/drawable-xhdpi/splash.9.png" />
+    <splash density="land-hdpi" src="res/android/splash-hdpi.png" />
+    <splash density="land-ldpi" src="res/android/splash-ldpi.png" />
+    <splash density="land-mdpi" src="res/android/splash-mdpi.png" />
+    <splash density="land-xhdpi" src="res/android/splash-xhdpi.png" />
+    <splash density="port-hdpi" src="res/android/splash-hdpi.png" />
+    <splash density="port-ldpi" src="res/android/splash-ldpi.png" />
+    <splash density="port-mdpi" src="res/android/splash-mdpi.png" />
+    <splash density="port-xhdpi" src="res/android/splash-xhdpi.png" />
     <name>GreenAddress</name>
     <description>
         GreenAddress Mobile Wallet

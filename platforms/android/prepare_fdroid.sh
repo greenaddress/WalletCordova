@@ -8,7 +8,6 @@ ln -s $PWD/CordovaLib/bin CordovaLib/ant-build
 ln -s $PWD/../../facebook-android-sdk-3.7/facebook/bin $PWD/../../facebook-android-sdk-3.7/facebook/ant-build
 cp -r ../../www/* assets/www
 cp -r platform_www/* assets/www
-cp -r ../../plugins/me.apla.cordova.app-preferences/www/task assets/www
 
 cd scrypt
 patch -p1 < ../scrypt_Makefile.patch

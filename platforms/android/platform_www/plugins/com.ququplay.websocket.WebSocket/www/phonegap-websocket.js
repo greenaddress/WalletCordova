@@ -1,4 +1,5 @@
-cordova.define("com.ququplay.websocket.WebSocket.websocket", function(require, exports, module) { var exec = require('cordova/exec');
+cordova.define("com.ququplay.websocket.WebSocket.websocket", function(require, exports, module) {
+var exec = require('cordova/exec');
 
 function hasWebSocket() {
   var m = /Android ([0-9]+)\.([0-9]+)/i.exec(navigator.userAgent);
@@ -8,16 +9,17 @@ function hasWebSocket() {
 
   var x = parseInt(m[1], 10);
   var y = parseInt(m[2], 10);
+
   return hasConstructor && (x > 4 || (x === 4 && y >= 4));
 }
 
 hasWebSocket() || (function() {
-
+  
   var websocketId = 0;
 
   // Websocket constructor
   var WebSocket = window.WebSocket = function(url, protocols, options) {
-
+      
     var socket = this;
     options || (options = {});
     options.headers || (options.headers = {});
@@ -25,7 +27,7 @@ hasWebSocket() || (function() {
     if (Array.isArray(protocols)) {
       protocols = protocols.join(',');
     }
-
+    
     if (protocols) {
       options.headers["Sec-WebSocket-Protocol"] = protocols;
     }
@@ -36,7 +38,7 @@ hasWebSocket() || (function() {
     this.readyState = WebSocket.CONNECTING;
     this.socketId = "_cordova_websocket_" + websocketId;
     websocketId += 1;
-
+    
     cordova.exec(
       function (event) {
         socket._handleEvent(event);
@@ -50,20 +52,20 @@ hasWebSocket() || (function() {
     send: function (data) {
       if (this.readyState == WebSocket.CLOSED ||
           this.readyState == WebSocket.CLOSING) return;
-
+      
       if (data instanceof ArrayBuffer) {
         data = arrayBufferToArray(data);
-      }
+      } 
       else if (data instanceof Blob) {
         var reader = new FileReader();
         reader.onloadend = function() {
           this.send(reader.result);
         }.bind(this);
-
-        reader.readAsArrayBuffer(data);
+        
+        reader.readAsArrayBuffer(data);  
         return;
       }
-
+      
       cordova.exec(noob, noob, "WebSocket", "send", [ this.socketId, data ]);
     },
 
@@ -121,11 +123,11 @@ hasWebSocket() || (function() {
 
       if (event.type == "message") {
         event = createMessageEvent("message", event.data);
-      }
+      } 
       else if (event.type == "messageBinary") {
         var result = arrayToBinaryType(event.data, this.binaryType);
         event = createBinaryMessageEvent("message", result);
-      }
+      } 
       else {
         var data = event.data;
         event = createSimpleEvent(event.type);
@@ -133,10 +135,10 @@ hasWebSocket() || (function() {
           event.data = JSON.parse(data);
         }
       }
-
+      
       this.dispatchEvent(event);
-
-      if (event.readyState == WebSocket.CLOSING ||
+      
+      if (event.readyState == WebSocket.CLOSING || 
           event.readyState == WebSocket.CLOSED) {
         // cleanup socket from internal map
         cordova.exec(noob, noob, "WebSocket", "close", [ this.socketId ]);
@@ -165,12 +167,12 @@ hasWebSocket() || (function() {
     event.initMessageEvent("message", false, false, data, null, null, window, null);
     return event;
   }
-
+    
   function createBinaryMessageEvent(type, data) {
     // This does not match the WebSocket spec. The Event is suppose to be a
-    // MessageEvent. But in Android WebView, MessageEvent.initMessageEvent()
+    // MessageEvent. But in Android WebView, MessageEvent.initMessageEvent() 
     // makes a mess of ArrayBuffers.  This should work with most clients, as
-    // long as they don't do something odd with the event.  The type is
+    // long as they don't do something odd with the event.  The type is 
     // correctly set to "message", so client event routing logic should work.
     var event = document.createEvent("Event");
 
@@ -182,15 +184,15 @@ hasWebSocket() || (function() {
   function arrayBufferToArray(arrayBuffer) {
     var output = [];
     var utf8arr = new Uint8Array(arrayBuffer);
-
+    
     for ( var i = 0, l = utf8arr.length; i < l; i++) {
       output.push(utf8arr[i]);
     }
-
+    
     return output;
   }
-
-  function arrayToBinaryType(array, binaryType) {
+    
+  function arrayToBinaryType(array, binaryType) {   
     var result = null;
 
     if (!array || !array.length) return result;
@@ -198,16 +200,16 @@ hasWebSocket() || (function() {
     var typedArr = new Uint8Array(array.length);
 
     typedArr.set(array);
-
+    
     if (binaryType === "arraybuffer") {
       result = typedArr.buffer;
-    }
-    else if (binaryType === "blob") {
+    } 
+    else if (binaryType === "blob") { 
       if (window.WebKitBlobBuilder) {
         var builder = new WebKitBlobBuilder();
         builder.append(typedArr.buffer);
         result = builder.getBlob("application/octet-stream");
-      }
+      } 
       else {
         result = new Blob([ bytearray ], {
           type: 'application/octet-stream'
@@ -221,11 +223,11 @@ hasWebSocket() || (function() {
   Array.isArray = Array.isArray || function (args) {
     return Object.prototype.toString.call(args) === "[object Array]";
   }
-
+  
   window.ArrayBuffer = window.ArrayBuffer || function () {
     throw "ArrayBuffer not supported on this platform";
   }
-
+  
   window.Blob = window.Blob || function () {
     throw "Blob not supported on this platform";
   }

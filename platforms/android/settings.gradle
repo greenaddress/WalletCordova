@@ -1,4 +1,3 @@
 // GENERATED FILE - DO NOT EDIT
 include ":"
 include ":CordovaLib"
-include ":..:..:facebook-android-sdk-3.7:facebook:"

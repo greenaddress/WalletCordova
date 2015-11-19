@@ -1,4 +1,5 @@
-cordova.define("com.cordova.plugin.softkeyboard.SoftKeyboard", function(require, exports, module) { (function( cordova ) {
+cordova.define("com.cordova.plugin.softkeyboard.SoftKeyboard", function(require, exports, module) {
+(function( cordova ) {
 
 	function SoftKeyboard() {}
 
