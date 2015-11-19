@@ -1,13 +1,5 @@
 package it.greenaddress.cordova;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import com.github.ghetolay.jwamp.WampWebSocket;
 import com.github.ghetolay.jwamp.WampConnection;
 import com.github.ghetolay.jwamp.utils.WaitResponse;
@@ -18,10 +10,14 @@ import com.github.ghetolay.jwamp.message.SerializationException;
 import java.util.concurrent.TimeoutException;
 import com.github.ghetolay.jwamp.rpc.CallException;
 import com.github.ghetolay.jwamp.UnsupportedWampActionException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Map;
 import java.util.HashMap;
 import java.security.SignatureException;
@@ -32,39 +28,42 @@ public class WalletClient {
     }
 
     private static String getToken() {
+        BufferedReader br = null;
+        final URLConnection connection;
         try {
-            final HttpClient client = new DefaultHttpClient();
-            final HttpGet request = new HttpGet();
-            request.setURI(new URI("https://greenaddress.it/token/"));
-            final HttpResponse response = client.execute(request);
-            final HttpEntity entity = response.getEntity();
-            return EntityUtils.toString(entity, "UTF-8");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } /*finally {
-            if (response == null) {
-                return;
+            final URL uri = new URL("https://greenaddress.it/token/");
+            connection = uri.openConnection();
+        } catch(IOException e) {
+            return "";
+        }
+        try {
+            br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            final StringBuilder sb = new StringBuilder();
+            String inputLine;
+
+            while ((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
             }
-        }*/
-        
-        return "";
+
+            return sb.toString();
+        } catch(IOException e) {
+            return "";
+        } finally {
+            if (br != null) {
+                try {br.close();} catch(final IOException e) {}
+            }
+        }
     }
 
     private WampWebSocket wamp = null;
     private WampConnection connection = null;
-    
+
     private void authenticate() {
         final String token = getToken();
         if (token == "") {
             throw new GaException();
         }
-        
+
 
         WampJettyFactory wampFact = WampJettyFactory.getInstance();
 
@@ -86,7 +85,7 @@ public class WalletClient {
             e.printStackTrace();
         }
 
-        
+
         if(connection != null){
             try {
                 wamp = wr.call();
@@ -120,8 +119,8 @@ public class WalletClient {
         if (wamp == null) {
             throw new GaException();
         }
-            
-        
+
+
         Map<String, String> loginData = new HashMap<String, String>();
         loginData.put("username", username);
         loginData.put("password", password);

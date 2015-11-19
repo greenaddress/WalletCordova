@@ -1,3 +1,62 @@
-cordova build --release
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore platforms/android/bin/*.apk greenaddressit
-zipalign -v 4 platforms/android/bin/*.apk GreenAddressItReleaseSignedAligned.apk 
+Node version: v5.0.0
+
+Cordova version: 5.4.0
+
+Config.xml file: 
+
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="it.greenaddress.cordova" version="0.0.72" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>GreenAddress</name>
+    <description>
+        GreenAddress Mobile Wallet
+    </description>
+    <preference name="loglevel" value="INFO" />
+    <feature name="NfcPlugin">
+        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="WebSocket">
+        <param name="android-package" value="com.ququplay.websocket.WebSocket" />
+    </feature>
+    <feature name="BIP39">
+        <param name="android-package" value="it.greenaddress.cordova.BIP39" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <author email="info@greenaddress.it" href="https://greenaddress.it">
+        GreenAddress IT Ltd
+    </author>
+    <content src="greenaddress.it/en/wallet.html" /> <!-- real content URL hardcoded in Java -->
+    <access origin="*" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="errorUrl" value="file:///android_asset/www/offline.html" />
+    <preference name="SplashScreenDelay" value="10000" />
+    <platform name="android">
+        <!-- you can use any density that exists in the Android project -->
+        <splash src="platforms/android/res/drawable-hdpi/splash.9.png" density="land-hdpi"/>
+        <splash src="platforms/android/res/drawable-ldpi/splash.9.png" density="land-ldpi"/>
+        <splash src="platforms/android/res/drawable-mdpi/splash.9.png" density="land-mdpi"/>
+        <splash src="platforms/android/res/drawable-xhdpi/splash.9.png" density="land-xhdpi"/>
+
+        <splash src="platforms/android/res/drawable-hdpi/splash.9.png" density="port-hdpi"/>
+        <splash src="platforms/android/res/drawable-ldpi/splash.9.png" density="port-ldpi"/>
+        <splash src="platforms/android/res/drawable-mdpi/splash.9.png" density="port-mdpi"/>
+        <splash src="platforms/android/res/drawable-xhdpi/splash.9.png" density="port-xhdpi"/>
+    </platform>
+
+</widget>
+
+
+Plugins: 
+
+com.chariotsolutions.nfc.plugin,com.cordova.plugin.softkeyboard,com.phonegap.plugins.barcodescanner,com.ququplay.websocket.WebSocket,com.verso.cordova.clipboard,cordova-plugin-file,cordova-plugin-inappbrowser,cordova-plugin-media,it.greenaddress.cordova,me.apla.cordova.app-preferences,org.apache.cordova.dialogs,org.apache.cordova.network-information,org.apache.cordova.splashscreen,org.apache.cordova.vibration
+
+Error retrieving Android platform information: Error: android: Command failed with exit code ENOENT
+
+iOS platform:
+
+Xcode 7.1
+Build version 7B85
+

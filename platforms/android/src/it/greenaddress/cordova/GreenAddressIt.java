@@ -25,6 +25,8 @@ import com.btchip.utils.Dump;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -109,13 +111,12 @@ public class GreenAddressIt extends CordovaActivity
         }
         super.init();
         // Set by <content src="index.html" /> in config.xml
-        super.appView.getSettings().setUserAgentString("GAITCordova;" + super.appView.getSettings().getUserAgentString());
-        super.appView.addJavascriptInterface(new CustomNativeAccess(), "CustomNativeAccess");
+        ((SystemWebView)((SystemWebViewEngine)super.appView.getEngine()).getView()).getSettings().setUserAgentString("GAITCordova;" + ((SystemWebView)((SystemWebViewEngine)super.appView.getEngine()).getView()).getSettings().getUserAgentString());
+        ((SystemWebView)((SystemWebViewEngine)super.appView.getEngine()).getView()).addJavascriptInterface(new CustomNativeAccess(), "CustomNativeAccess");
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             processView(getIntent());
         } else {
-            super.clearCache();
-            super.setIntegerProperty("splashscreen", R.drawable.splash);
+            ((SystemWebViewEngine)super.appView.getEngine()).clearCache();
             final Intent intent = getIntent();
             if (intent != null) {
                 final String hash = intent.getStringExtra("hash");
@@ -129,7 +130,7 @@ public class GreenAddressIt extends CordovaActivity
     }
 
     protected String getBaseURL() {
-        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        final SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String language;
         if (sharedPrefs.contains("language")) {
             language = (String)sharedPrefs.getAll().get("language");
@@ -183,7 +184,7 @@ public class GreenAddressIt extends CordovaActivity
             if (hash != null) {
                 if (("/send".equals(hash) || "/receive".equals(hash))) {
                         final String js = "location.hash=\"#" +hash+"\"";
-                        super.sendJavascript(js);
+                        super.appView.loadUrl("javascript:" + js);
                 }
             }
         }

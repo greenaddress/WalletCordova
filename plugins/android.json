@@ -651,9 +651,6 @@
         "com.phonegap.plugins.barcodescanner": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.splashscreen": {
-            "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
         "me.apla.cordova.app-preferences": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
@@ -672,9 +669,6 @@
         "com.chariotsolutions.nfc.plugin": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
         "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
@@ -682,6 +676,15 @@
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
         "cordova-plugin-media": {
+            "PACKAGE_NAME": "it.greenaddress.cordova"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "it.greenaddress.cordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "it.greenaddress.cordova"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         }
     },

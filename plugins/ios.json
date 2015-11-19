@@ -219,14 +219,8 @@
         "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
         },
-        "org.apache.cordova.splashscreen": {
-            "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
         "org.apache.cordova.vibration": {
             "PACKAGE_NAME": "it.greenaddress.cordova"
-        },
-        "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         },
         "it.greenaddress.cordova": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
@@ -235,6 +229,15 @@
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         },
         "cordova-plugin-media": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         }
     },

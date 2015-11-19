@@ -30,13 +30,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.splashscreen/www/splashscreen.js",
-        "id": "org.apache.cordova.splashscreen.SplashScreen",
-        "clobbers": [
-            "navigator.splashscreen"
-        ]
-    },
-    {
         "file": "plugins/me.apla.cordova.app-preferences/www/apppreferences.js",
         "id": "me.apla.cordova.app-preferences.apppreferences",
         "clobbers": [
@@ -84,99 +77,105 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
-        "id": "org.apache.cordova.inappbrowser.inappbrowser",
-        "clobbers": [
-            "window.open"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
-        "id": "org.apache.cordova.file.DirectoryEntry",
+        "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
+        "id": "cordova-plugin-file.DirectoryEntry",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.DirectoryEntry"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/DirectoryReader.js",
-        "id": "org.apache.cordova.file.DirectoryReader",
+        "file": "plugins/cordova-plugin-file/www/DirectoryReader.js",
+        "id": "cordova-plugin-file.DirectoryReader",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.DirectoryReader"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/Entry.js",
-        "id": "org.apache.cordova.file.Entry",
+        "file": "plugins/cordova-plugin-file/www/Entry.js",
+        "id": "cordova-plugin-file.Entry",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.Entry"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/File.js",
-        "id": "org.apache.cordova.file.File",
+        "file": "plugins/cordova-plugin-file/www/File.js",
+        "id": "cordova-plugin-file.File",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.File"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileEntry.js",
-        "id": "org.apache.cordova.file.FileEntry",
+        "file": "plugins/cordova-plugin-file/www/FileEntry.js",
+        "id": "cordova-plugin-file.FileEntry",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileEntry"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileError.js",
-        "id": "org.apache.cordova.file.FileError",
+        "file": "plugins/cordova-plugin-file/www/FileError.js",
+        "id": "cordova-plugin-file.FileError",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileError"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileReader.js",
-        "id": "org.apache.cordova.file.FileReader",
+        "file": "plugins/cordova-plugin-file/www/FileReader.js",
+        "id": "cordova-plugin-file.FileReader",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileReader"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileSystem.js",
-        "id": "org.apache.cordova.file.FileSystem",
+        "file": "plugins/cordova-plugin-file/www/FileSystem.js",
+        "id": "cordova-plugin-file.FileSystem",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileSystem"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileUploadOptions.js",
-        "id": "org.apache.cordova.file.FileUploadOptions",
+        "file": "plugins/cordova-plugin-file/www/FileUploadOptions.js",
+        "id": "cordova-plugin-file.FileUploadOptions",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileUploadOptions"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileUploadResult.js",
-        "id": "org.apache.cordova.file.FileUploadResult",
+        "file": "plugins/cordova-plugin-file/www/FileUploadResult.js",
+        "id": "cordova-plugin-file.FileUploadResult",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileUploadResult"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/FileWriter.js",
-        "id": "org.apache.cordova.file.FileWriter",
+        "file": "plugins/cordova-plugin-file/www/FileWriter.js",
+        "id": "cordova-plugin-file.FileWriter",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.FileWriter"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/Flags.js",
-        "id": "org.apache.cordova.file.Flags",
+        "file": "plugins/cordova-plugin-file/www/Flags.js",
+        "id": "cordova-plugin-file.Flags",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.Flags"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/LocalFileSystem.js",
-        "id": "org.apache.cordova.file.LocalFileSystem",
+        "file": "plugins/cordova-plugin-file/www/LocalFileSystem.js",
+        "id": "cordova-plugin-file.LocalFileSystem",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.LocalFileSystem"
         ],
@@ -185,79 +184,109 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/Metadata.js",
-        "id": "org.apache.cordova.file.Metadata",
+        "file": "plugins/cordova-plugin-file/www/Metadata.js",
+        "id": "cordova-plugin-file.Metadata",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.Metadata"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/ProgressEvent.js",
-        "id": "org.apache.cordova.file.ProgressEvent",
+        "file": "plugins/cordova-plugin-file/www/ProgressEvent.js",
+        "id": "cordova-plugin-file.ProgressEvent",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.ProgressEvent"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/fileSystems.js",
-        "id": "org.apache.cordova.file.fileSystems"
+        "file": "plugins/cordova-plugin-file/www/fileSystems.js",
+        "id": "cordova-plugin-file.fileSystems",
+        "pluginId": "cordova-plugin-file"
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/requestFileSystem.js",
-        "id": "org.apache.cordova.file.requestFileSystem",
+        "file": "plugins/cordova-plugin-file/www/requestFileSystem.js",
+        "id": "cordova-plugin-file.requestFileSystem",
+        "pluginId": "cordova-plugin-file",
         "clobbers": [
             "window.requestFileSystem"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/resolveLocalFileSystemURI.js",
-        "id": "org.apache.cordova.file.resolveLocalFileSystemURI",
+        "file": "plugins/cordova-plugin-file/www/resolveLocalFileSystemURI.js",
+        "id": "cordova-plugin-file.resolveLocalFileSystemURI",
+        "pluginId": "cordova-plugin-file",
         "merges": [
             "window"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/android/FileSystem.js",
-        "id": "org.apache.cordova.file.androidFileSystem",
+        "file": "plugins/cordova-plugin-file/www/android/FileSystem.js",
+        "id": "cordova-plugin-file.androidFileSystem",
+        "pluginId": "cordova-plugin-file",
         "merges": [
             "FileSystem"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/fileSystems-roots.js",
-        "id": "org.apache.cordova.file.fileSystems-roots",
+        "file": "plugins/cordova-plugin-file/www/fileSystems-roots.js",
+        "id": "cordova-plugin-file.fileSystems-roots",
+        "pluginId": "cordova-plugin-file",
         "runs": true
     },
     {
-        "file": "plugins/org.apache.cordova.file/www/fileSystemPaths.js",
-        "id": "org.apache.cordova.file.fileSystemPaths",
+        "file": "plugins/cordova-plugin-file/www/fileSystemPaths.js",
+        "id": "cordova-plugin-file.fileSystemPaths",
+        "pluginId": "cordova-plugin-file",
         "merges": [
             "cordova"
         ],
         "runs": true
     },
     {
-        "file": "plugins/org.apache.cordova.media/www/MediaError.js",
-        "id": "org.apache.cordova.media.MediaError",
+        "file": "plugins/cordova-plugin-media/www/MediaError.js",
+        "id": "cordova-plugin-media.MediaError",
+        "pluginId": "cordova-plugin-media",
         "clobbers": [
             "window.MediaError"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.media/www/Media.js",
-        "id": "org.apache.cordova.media.Media",
+        "file": "plugins/cordova-plugin-media/www/Media.js",
+        "id": "cordova-plugin-media.Media",
+        "pluginId": "cordova-plugin-media",
         "clobbers": [
             "window.Media"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-whitelist/whitelist.js",
+        "id": "cordova-plugin-whitelist.whitelist",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
     }
 ];
-module.exports.metadata = 
+module.exports.metadata =
 // TOP OF METADATA
 {
     "com.ququplay.websocket.WebSocket": "0.1.0",
     "org.apache.cordova.network-information": "0.2.5",
     "com.phonegap.plugins.barcodescanner": "1.0.1",
-    "org.apache.cordova.splashscreen": "0.2.7",
     "me.apla.cordova.app-preferences": "0.4.0",
     "com.verso.cordova.clipboard": "0.1.0",
     "org.apache.cordova.vibration": "0.3.9-dev",

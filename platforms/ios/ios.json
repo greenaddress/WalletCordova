@@ -15,6 +15,10 @@
                         {
                             "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -26,6 +30,12 @@
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         },
         "cordova-plugin-media": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "it.greenaddress.${PRODUCT_NAME:rfc1034identifier}"
         }
     },
@@ -212,6 +222,15 @@
             "pluginId": "cordova-plugin-media",
             "clobbers": [
                 "window.Media"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "pluginId": "cordova-plugin-inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
             ]
         }
     ]

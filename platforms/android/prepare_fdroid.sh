@@ -13,7 +13,7 @@ cp -r ../../plugins/me.apla.cordova.app-preferences/www/task assets/www
 cd scrypt
 patch -p1 < ../scrypt_Makefile.patch
 if [ `uname -m` = "x86_64" ]; then
-    export SYSTEM="linux-x86_64"
+    export SYSTEM="darwin-x86_64"
 else
     export SYSTEM="linux-x86"
 fi

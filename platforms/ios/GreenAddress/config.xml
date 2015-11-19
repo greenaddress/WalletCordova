@@ -26,6 +26,9 @@
     <feature name="Media">
         <param name="ios-package" value="CDVSound" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
     <name>GreenAddress</name>
     <description>
         GreenAddress Mobile Wallet

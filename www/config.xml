@@ -5,9 +5,6 @@
         GreenAddress Mobile Wallet
     </description>
     <preference name="loglevel" value="INFO" />
-    <feature name="App">
-        <param name="android-package" value="org.apache.cordova.App" />
-    </feature>
     <feature name="NfcPlugin">
         <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
         <param name="onload" value="true" />
@@ -30,4 +27,17 @@
     <preference name="webviewbounce" value="true" />
     <preference name="errorUrl" value="file:///android_asset/www/offline.html" />
     <preference name="SplashScreenDelay" value="10000" />
+    <platform name="android">
+        <!-- you can use any density that exists in the Android project -->
+        <splash src="../platforms/android/res/drawable-hdpi/splash.9.png" density="land-hdpi"/>
+        <splash src="../platforms/android/res/drawable-ldpi/splash.9.png" density="land-ldpi"/>
+        <splash src="../platforms/android/res/drawable-mdpi/splash.9.png" density="land-mdpi"/>
+        <splash src="../platforms/android/res/drawable-xhdpi/splash.9.png" density="land-xhdpi"/>
+
+        <splash src="../platforms/android/res/drawable-hdpi/splash.9.png" density="port-hdpi"/>
+        <splash src="../platforms/android/res/drawable-ldpi/splash.9.png" density="port-ldpi"/>
+        <splash src="../platforms/android/res/drawable-mdpi/splash.9.png" density="port-mdpi"/>
+        <splash src="../platforms/android/res/drawable-xhdpi/splash.9.png" density="port-xhdpi"/>
+    </platform>
+
 </widget>
