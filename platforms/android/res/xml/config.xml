@@ -40,6 +40,13 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="NfcPlugin">
+        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="BarcodeScanner">
+        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
+    </feature>
     <preference name="AndroidLaunchMode" value="singleTop" />
     <feature name="PINInput">
         <param name="android-package" value="it.greenaddress.cordova.PINInput" />
@@ -53,21 +60,12 @@
     <feature name="BTChip">
         <param name="android-package" value="it.greenaddress.cordova.BTChip" />
     </feature>
-    <feature name="NfcPlugin">
-        <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="BarcodeScanner">
-        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
-    </feature>
-    <splash density="land-hdpi" src="res/android/splash-hdpi.png" />
-    <splash density="land-ldpi" src="res/android/splash-ldpi.png" />
-    <splash density="land-mdpi" src="res/android/splash-mdpi.png" />
-    <splash density="land-xhdpi" src="res/android/splash-xhdpi.png" />
-    <splash density="port-hdpi" src="res/android/splash-hdpi.png" />
-    <splash density="port-ldpi" src="res/android/splash-ldpi.png" />
-    <splash density="port-mdpi" src="res/android/splash-mdpi.png" />
-    <splash density="port-xhdpi" src="res/android/splash-xhdpi.png" />
+    <splash density="land-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
+    <splash density="land-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
+    <splash density="land-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
+    <splash density="port-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
+    <splash density="port-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
+    <splash density="port-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
     <name>GreenAddress</name>
     <description>
         GreenAddress Mobile Wallet

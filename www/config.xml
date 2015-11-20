@@ -15,14 +15,12 @@
     <preference name="errorUrl" value="file:///android_asset/www/offline.html" />
     <preference name="SplashScreenDelay" value="10000" />
     <platform name="android">
-        <splash density="land-hdpi" src="res/android/splash-hdpi.png" />
-        <splash density="land-ldpi" src="res/android/splash-ldpi.png" />
-        <splash density="land-mdpi" src="res/android/splash-mdpi.png" />
-        <splash density="land-xhdpi" src="res/android/splash-xhdpi.png" />
-        <splash density="port-hdpi" src="res/android/splash-hdpi.png" />
-        <splash density="port-ldpi" src="res/android/splash-ldpi.png" />
-        <splash density="port-mdpi" src="res/android/splash-mdpi.png" />
-        <splash density="port-xhdpi" src="res/android/splash-xhdpi.png" />
+        <splash density="land-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
+        <splash density="land-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
+        <splash density="land-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
+        <splash density="port-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
+        <splash density="port-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
+        <splash density="port-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
     </platform>
     <engine name="android" spec="~5.0.0" />
     <plugin name="cordova-plugin-file" spec="https://github.com/apache/cordova-plugin-file.git" />
