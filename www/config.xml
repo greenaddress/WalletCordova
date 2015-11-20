@@ -22,7 +22,7 @@
         <splash density="port-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
         <splash density="port-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
         <icon density="ldpi" src="res/android/drawable-ldpi/icon.png" />
-        <icno density="hdpi" src="res/android/drawable-hdpi/icon.png" />
+        <icon density="hdpi" src="res/android/drawable-hdpi/icon.png" />
         <icon density="mdpi" src="res/android/drawable-mdpi/icon.png" />
         <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
     </platform>
