@@ -15,8 +15,11 @@ module.exports = function(context) {
     var manifest_path = path.join(
         'platforms', 'android', 'AndroidManifest.xml'
     );
-    var contents = fs.readFileSync(manifest_path, {encoding: 'utf-8'});
-    fs.writeFileSync(manifest_path, contents.replace(
-        'MainActivity', 'GreenAddressIt'
-    ));
+    if (fs.existsSync(manifest_path)) {
+        // Android platform can be absent
+        var contents = fs.readFileSync(manifest_path, {encoding: 'utf-8'});
+        fs.writeFileSync(manifest_path, contents.replace(
+            'MainActivity', 'GreenAddressIt'
+        ));
+    }
 }

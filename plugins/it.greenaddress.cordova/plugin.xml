@@ -144,6 +144,9 @@
     <platform name="ios">
         <framework src="Security.framework" />
         <framework src="CoreBitcoin.framework" custom="true" />
+        <framework src="com.phonegap.plugins.facebookconnect/FacebookSDK.framework" custom="true" />
+        <source-file src="com.phonegap.plugins.facebookconnect/FacebookConnectPlugin.m" />
+        <source-file src="com.phonegap.plugins.facebookconnect/FacebookConnectPlugin.h" />
         <source-file src="bip38/bip38.h" target-dir="bip38" />
         <source-file src="bip38/bip38.m" target-dir="bip38" />
         <source-file src="bip38/c/crypto_scrypt-neon.c" target-dir="bip38/c" />
@@ -165,6 +168,9 @@
         <source-file src="CDVBIP39.h" />
         <source-file src="CDVECDSA.m" />
         <source-file src="CDVECDSA.h" />
+        <config-file target="*-Info.plist" parent="FacebookAppID">
+            <string>1470897776471523</string>
+        </config-file>
         <config-file target="config.xml" parent="/*">
             <feature name="AES">
                 <param name="ios-package" value="CDVAES"/>
@@ -180,6 +186,10 @@
             </feature>
             <feature name="BIP39">
                 <param name="ios-package" value="CDVBIP39"/>
+            </feature>
+            <feature name="org.apache.cordova.facebook.Connect">
+                <param name="ios-package" value="FacebookConnectPlugin" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
     </platform>

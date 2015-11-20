@@ -26,7 +26,6 @@
         <icon density="mdpi" src="res/android/drawable-mdpi/icon.png" />
         <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
     </platform>
-    <engine name="android" spec="~5.0.0" />
     <plugin name="cordova-plugin-file" spec="https://github.com/apache/cordova-plugin-file.git" />
     <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media.git" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.0.1" />
@@ -39,4 +38,6 @@
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-vibration" />
     <plugin name="it.greenaddress.cordova" spec="plugins/it.greenaddress.cordova" />
+    <engine name="android" spec="~5.0.0" />
+    <engine name="ios" spec="~3.9.0" />
 </widget>
