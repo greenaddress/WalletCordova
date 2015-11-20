@@ -245,6 +245,8 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     debugCompile project(path: "CordovaLib", configuration: "debug")
     releaseCompile project(path: "CordovaLib", configuration: "release")
+    debugCompile project(path: "it.greenaddress.cordova:facebook", configuration: "debug")
+    releaseCompile project(path: "it.greenaddress.cordova:facebook", configuration: "release")
     // SUB-PROJECT DEPENDENCIES END
 }
 

@@ -19,7 +19,12 @@
             <feature name="BTChip">
                 <param name="android-package" value="it.greenaddress.cordova.BTChip"/>
             </feature>
+            <feature name="org.apache.cordova.facebook.Connect">
+                <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+            </feature>
         </config-file>
+
+        <framework src="facebook-android-sdk-3.7/facebook" custom="true" />
 
         <!-- sources -->
         <source-file src="BIP38.java" target-dir="src/it/greenaddress/cordova" />
@@ -72,7 +77,10 @@
         <source-file src="libs/log4j-1.2.17.jar" target-dir="libs" />
         <source-file src="libs/slf4j-api-1.6.5.jar" target-dir="libs" />
         <source-file src="libs/slf4j-log4j12-1.6.6.jar" target-dir="libs" />
-        <source-file src="libs/libscrypt.so" target-dir="libs/armeabi" />
+        <source-file src="libs/armeabi/libscrypt.so" target-dir="libs/armeabi" />
+        <source-file src="libs/mips/libscrypt.so" target-dir="libs/mips" />
+        <source-file src="libs/x86/libscrypt.so" target-dir="libs/x86" />
+        <source-file src="build-extras.gradle" target-dir="." />
 
         <!-- dependencies -->
         <source-file src="deps/com/bitsofproof/supernode/api/Address.java" target-dir="src/com/bitsofproof/supernode/api" />
@@ -113,6 +121,7 @@
         <source-file src="deps/org/apache/cordova/facebook/ConnectPlugin.java" target-dir="src/org/apache/cordova/facebook" />
 
         <hook type="after_plugin_install" src="scripts/removeMainActivity.js" />
+        <hook type="after_prepare" src="scripts/removeMainActivity.js" />
     </platform>
     <platform name="ios">
         <framework src="Security.framework" />

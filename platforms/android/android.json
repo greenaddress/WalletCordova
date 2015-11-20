@@ -159,6 +159,10 @@
                         {
                             "xml": "<feature name=\"BTChip\"><param name=\"android-package\" value=\"it.greenaddress.cordova.BTChip\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"org.apache.cordova.facebook.Connect\"><param name=\"android-package\" value=\"org.apache.cordova.facebook.ConnectPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
