@@ -39,5 +39,5 @@
     <plugin name="cordova-plugin-vibration" />
     <plugin name="it.greenaddress.cordova" spec="plugins/it.greenaddress.cordova" />
     <engine name="android" spec="~5.0.0" />
-    <engine name="ios" spec="~3.9.0" />
+    <engine name="ios" spec="~4.0.1" />
 </widget>

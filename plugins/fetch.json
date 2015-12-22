@@ -106,14 +106,6 @@
             "path": "/var/folders/cb/9g67p0vj7hlcj03x6zvxbwlr0000gn/T/me.apla.cordova.app-preferences/package"
         }
     },
-    "cordova-plugin-app-preferences": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-app-preferences"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "org.apache.cordova.dialogs": {
         "source": {
             "type": "local",
@@ -161,6 +153,15 @@
         "source": {
             "type": "local",
             "path": "plugins/it.greenaddress.cordova"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-app-preferences": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apla/me.apla.cordova.app-preferences.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
