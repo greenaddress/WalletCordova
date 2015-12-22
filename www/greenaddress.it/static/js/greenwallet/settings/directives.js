@@ -15,7 +15,7 @@ angular.module('greenWalletSettingsDirectives', [])
             template += '<i class="glyphicon glyphicon-tag"></i>'
         }
         template += '</td>';
-        var item_name = scope.wallet.hdwallet.priv ?
+        var item_name = scope.wallet.hdwallet.keyPair.d ?
                         '<a href="(( send_url(item) ))">(( item.name ))</a>' :
                         '(( item.name ))';  // don't allow opening 'Send' in watch-only
         if (interactive) {
@@ -48,7 +48,7 @@ angular.module('greenWalletSettingsDirectives', [])
         template += '<td>' + address + '</td>';
 
         template += '<td>';
-        if (scope.wallet.hdwallet.priv && item.type != 'facebook') {
+        if (scope.wallet.hdwallet.keyPair.d && item.type != 'facebook') {
             template += '<a href="" ng-click="start_rename(item)"><i class="glyphicon glyphicon-edit"></i></a>';
             if (item.type != 'subaccount')
             template += '<a href="" ng-click="delete(item.address)"><i class="glyphicon glyphicon-trash"></i></a> ';

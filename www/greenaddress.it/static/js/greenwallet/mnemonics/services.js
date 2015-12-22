@@ -40,12 +40,14 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                 binary += binPart;
             }
             var bits = words.length*11 - words.length/3;
-            var retval = new Bitcoin.BigInteger(binary.substr(0, bits), 2).toByteArrayUnsigned();
-            while (retval.length < bits/8) retval.unshift(0);
+            var retval = new Bitcoin.BigInteger(binary.substr(0, bits), 2).toBuffer();
+            while (retval.length < bits/8) {
+                retval = Bitcoin.Buffer.Buffer.concat([0], retval);
+            }
 
             var checksum = binary.substr(bits);
-            var wordArray = Bitcoin.convert.bytesToWordArray(retval);
-            var hash = Bitcoin.convert.wordArrayToBytes(Bitcoin.CryptoJS.SHA256(wordArray));
+            console.log(JSON.stringify(Array.from(retval)));
+            var hash = Bitcoin.bitcoin.crypto.sha256(retval);
             var binHash = '';
             for(var i = 0; i < hash.length; i++) {
                 var binPart = new Bitcoin.BigInteger(hash[i].toString()).toRadix(2);
@@ -73,18 +75,20 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
             if(words.length != 2048) {
                 throw("Wordlist should contain 2048 words, but it contains "+words.length+" words.");
             }
-
-            var binary = Bitcoin.BigInteger.fromByteArrayUnsigned(data).toRadix(2);
+            var binary = Bitcoin.BigInteger.fromBuffer(
+                new Bitcoin.Buffer.Buffer(data, 'hex')
+            ).toRadix(2);
             while (binary.length < data.length*8) { binary = '0' + binary; }
-            var bytes = Bitcoin.CryptoJS.SHA256(Bitcoin.convert.bytesToWordArray(data));
-            bytes = Bitcoin.convert.wordArrayToBytes(bytes);
-            var hash = Bitcoin.BigInteger.fromByteArrayUnsigned(bytes).toRadix(2);
+            console.log(JSON.stringify(Array.from(data)));
+            var bytes = Bitcoin.bitcoin.crypto.sha256(data);
+            var hash = Bitcoin.BigInteger.fromBuffer(bytes).toRadix(2);
             while (hash.length < 256) { hash = '0' + hash; }
             binary += hash.substr(0, data.length / 4);  // checksum
 
             var mnemonic = [];
             for (var i = 0; i < binary.length / 11; ++i) {
                 var index = new Bitcoin.BigInteger(binary.slice(i*11, (i+1)*11), 2);
+                console.log(index[0] + ' ' + index.toString());
                 mnemonic.push(words[index[0]]);
             }
             return mnemonic.join(' ');
@@ -92,7 +96,7 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
     }
     mnemonics.seedToPath = function(seed) {
         var shaObj = new jsSHA(seed, 'HEX');
-        return shaObj.getHMAC('GreenAddress.it HD wallet path', 'TEXT', 'SHA-512', 'HEX'); 
+        return shaObj.getHMAC('GreenAddress.it HD wallet path', 'TEXT', 'SHA-512', 'HEX');
     }
     mnemonics.toSeed = function(mnemonic, k, validated) {
         var that = this;
@@ -110,14 +114,12 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                     if (param.constructor === Number) {
                         deferred.notify(param);
                     } else {
-                        var ArrayBuffer2hex = function (buffer) {
-                            var hex = "";
-                            var view = new Uint8Array(buffer);
-                            for (var i = 0; i < view.length; i++)
-                                hex += ("00" + view[i].toString(16)).slice(-2);
-                            return hex;
-                        };
-                        var hex = ArrayBuffer2hex(param);
+                        var hex = Bitcoin.Buffer.Buffer(
+                            new Uint8Array(param)
+                        ).toString('hex');
+                        console.log(param);
+                        console.log(new Uint8Array(param));
+                        console.log(hex);
                         deferred.resolve(hex);
                     }
                 }, function(fail) {

@@ -33,7 +33,7 @@
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) conferme</span>
               <span ng-show="(transaction.external_social && redeem) || transaction.redeemable">
                 <span ng-show="transaction.unclaimed || (transaction.redeemable && transaction.redeemable_unspent)">unclaimed;
-                    <a href="" ng-click="redeem(transaction)" ng-show="wallet.hdwallet.priv">riprendi indietro</a>
+                    <a href="" ng-click="redeem(transaction)" ng-show="wallet.hdwallet.keyPair.d">riprendi indietro</a>
                 </span>
                 <a class="btn btn-info btn-xs" ng-show="transaction.social_destination.type == 'voucher' && transaction.unclaimed" ng-click="show_voucher(transaction)">
                   Rigenera il voucher

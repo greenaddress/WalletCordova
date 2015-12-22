@@ -3,18 +3,30 @@ importScripts('/static/js/bitcoinjs.min.js');
 GAIT_IN_WORKER = true;  // used inside bitcoinjs_util.js
 importScripts('/static/js/bitcoinjs_util.js');
 importScripts('/static/js/greenwallet/signup/bip38.js');
+bitcoinBip38 = new Bitcoin.bip38();
 onmessage = function(input) {
     var input = input.data;
     if (input.eckey) {
-        postMessage(new Bitcoin.ECKey(input.eckey).getEncryptedFormat(input.password, input.network));
+        cur_net = Bitcoin.bitcoin.networks[
+            input.network == 'BTC' ? 'bitcoin' : 'testnet'
+        ];
+        bitcoinBip38.versions = {private: cur_net.wif};
+        postMessage(bitcoinBip38.encrypt(
+            input.eckey,
+            input.password,
+            Bitcoin.bitcoin.ECPair.fromWIF(input.eckey, cur_net).getAddress()
+        ));
     } else if (input.mnemonic_decrypted) {
         postMessage(bip38.encrypt({data: input.mnemonic_decrypted, key: input.password}, input.salt_a));
     } else if (input.mnemonic_encrypted) {
         postMessage(bip38.decrypt({data: input.mnemonic_encrypted, key: input.password}));
     } else {
+        bitcoinBip38.versions = {private: input.cur_net_wif};
     	try {
-            postMessage(Bitcoin.ECKey.decodeEncryptedFormat(input.b58, input.password, input.cur_net).toWif());
+            var decrypted = bitcoinBip38.decrypt(input.b58, input.password);
+            postMessage(decrypted);
         } catch (e) {
+            console.log(e);
         	if (e.message.indexOf("Hash could not be verified.") != -1) {
         		postMessage({error: 'invalid_passphrase'});
         	} else {

@@ -10,19 +10,19 @@ angular.module('greenWalletTransactionsControllers',
         var key = $q.when($scope.wallet.hdwallet);
         if ($scope.wallet.current_subaccount) {
             key = key.then(function(key) {
-                return key.derivePrivate(branches.SUBACCOUNT);
+                return key.deriveHardened(branches.SUBACCOUNT);
             }).then(function(key) {
-                return key.derivePrivate($scope.wallet.current_subaccount);
+                return key.deriveHardened($scope.wallet.current_subaccount);
             })
         }
         key = key.then(function(key) {
-            return key.derivePrivate(branches.EXTERNAL);
+            return key.deriveHardened(branches.EXTERNAL);
         }).then(function(key) {
-            return key.derivePrivate(transaction.pubkey_pointer);
+            return key.deriveHardened(transaction.pubkey_pointer);
         });
         return key.then(function(key) {
             return tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
-                    key.pub.toBytes(), false, $scope.wallet.current_subaccount).then(function(data) {
+                    Array.from(key.keyPair.getPublicKeyBuffer()), false, $scope.wallet.current_subaccount).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
                     data.prev_outputs.push(
@@ -86,8 +86,8 @@ angular.module('greenWalletTransactionsControllers',
     };
 
     $scope.show_voucher = function(transaction, passphrase) {
-        return $q.when($scope.wallet.hdwallet.derivePrivate(branches.EXTERNAL)).then(function(key) {
-            return $q.when(key.derivePrivate(transaction.pubkey_pointer)).then(function(key) {
+        return $q.when($scope.wallet.hdwallet.deriveHardened(branches.EXTERNAL)).then(function(key) {
+            return $q.when(key.deriveHardened(transaction.pubkey_pointer)).then(function(key) {
                 return encode_key(key, passphrase).then(function(enckey) {
                     $scope.voucher = {
                         encrypted: !!passphrase,

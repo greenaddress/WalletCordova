@@ -801,9 +801,9 @@ angular.module('greenWalletSettingsControllers',
         });
     }
     $scope.send_url = function(contact) {
-        return '#/send/' + Bitcoin.base58.encode(
-            Bitcoin.convert.hexToBytes(Bitcoin.CryptoJS.enc.Utf8.parse(
-                JSON.stringify(contact)).toString()));
+        return '#/send/' + Bitcoin.bs58.encode(
+            new Bitcoin.Buffer.Buffer(JSON.stringify(contact), 'utf-8')
+        );
     };
 }]).controller('SoundController', ['$scope', 'notices', 'wallets', 'gaEvent', function SoundController($scope, notices, wallets, gaEvent) {
 
@@ -1220,20 +1220,23 @@ angular.module('greenWalletSettingsControllers',
         },
         _derive_hd: function(pointer, hdwallet) {
             var hdwallet_ = hdwallet || $scope.wallet.hdwallet;
-            return $q.when(hdwallet_.derivePrivate(3)).then(function(k) {
-                return $q.when(k.derivePrivate(pointer)).then(function(k) {
+            return $q.when(hdwallet_.deriveHardened(3)).then(function(k) {
+                return $q.when(k.deriveHardened(pointer)).then(function(k) {
                     return {
-                        pub: k.pub.toHex(),
-                        chaincode: Bitcoin.convert.bytesToHex(k.chaincode)
+                        pub: k.keyPair.getPublicKeyBuffer().toString('hex'),
+                        chaincode: k.chainCode.toString('hex')
                     };
                 });
             });
         },
         _derive_btchip: function(pointer) {
             return $scope.wallet.btchip.app.getWalletPublicKey_async("3'/"+pointer+"'").then(function(result) {
-                var pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(result.publicKey.toString(HEX)));
+                var pub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                    new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex')
+                );
+                pub.compressed = true;
                 return {
-                    pub: pub.toHex(true),
+                    pub: pub.getPublicKeyBuffer.toString('hex'),
                     chaincode: result.chainCode.toString(HEX)
                 };
             });
@@ -1272,12 +1275,13 @@ angular.module('greenWalletSettingsControllers',
                 });
             }
             var derive_xpub = function(subaccount) {
-                var xpub = new Bitcoin.HDWallet();
-                xpub.pub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(deposit_pubkey));
-                xpub.network = cur_net;
-                xpub.chaincode = Bitcoin.convert.hexToBytes(deposit_chaincode);
-                xpub.depth = 0;
-                xpub.index = 0;
+                var xpub = new Bitcoin.bitcoin.HDNode(
+                    Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                        new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
+                        cur_net
+                    ),
+                    new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
+                );
                 return $q.when(xpub.derive(branches.SUBACCOUNT)).then(function(xpub) {
                     return $q.when(xpub.subpath($scope.wallet.gait_path)).then(function(xpub) {
                         return $q.when(xpub.derive(subaccount)).then(function(xpub) {
@@ -1290,7 +1294,7 @@ angular.module('greenWalletSettingsControllers',
                 that.generating_2of3_seed = false;
 
                 var min_unused_pointer = that._get_min_unused_pointer();
-                if ($scope.wallet.hdwallet.priv) var derive_fun = that._derive_hd;
+                if ($scope.wallet.hdwallet.keyPair.d) var derive_fun = that._derive_hd;
                 else if ($scope.wallet.trezor_dev) var derive_fun = that._derive_trezor;
                 else var derive_fun = that._derive_btchip;
                 return derive_xpub(min_unused_pointer).then(function(ga_xpub) {
@@ -1303,8 +1307,8 @@ angular.module('greenWalletSettingsControllers',
                         if (that.new_2of3_xpub) {
                             // we can't priv-derive 3'/subaccount' from a public key
                             var hdhex_recovery_d = $q.when({
-                                pub: hdwallet.pub.toHex(),
-                                chaincode: Bitcoin.convert.bytesToHex(hdwallet.chaincode)
+                                pub: Bitcoin.bs58check.decode(hdwallet.keyPair.toWIF()).toString('hex'),
+                                chaincode: hdwallet.chainCode.toString('hex')
                             });
                         } else {
                             var hdhex_recovery_d = that._derive_hd(min_unused_pointer, hdwallet)
@@ -1342,7 +1346,7 @@ angular.module('greenWalletSettingsControllers',
         create_new: function() {
             var that = this, min_unused_pointer = this._get_min_unused_pointer();
             that.adding_subwallet = true;
-            if ($scope.wallet.hdwallet.priv) var derive_fun = that._derive_hd;
+            if ($scope.wallet.hdwallet.keyPair.d) var derive_fun = that._derive_hd;
             else if ($scope.wallet.trezor_dev) var derive_fun = that._derive_trezor;
             else var derive_fun = that._derive_btchip;
             derive_fun(min_unused_pointer).then(function(hdhex) {

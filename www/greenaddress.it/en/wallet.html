@@ -51,11 +51,11 @@
         
     
     
-    <script src="../static/wallet/config.js"></script>
     <script src="../en/i18n_catalog.js"></script>
     <script type="text/javascript">
       BASE_URL = '..';
       LANG = 'en';</script>
+    <script src="../static/wallet/config.js"></script>
     
   <link href="../static/css/dc.min.css" rel="stylesheet" />
 
@@ -108,6 +108,7 @@
 
 
 
+    <script src="../static/wallet/network.js"></script>
     
     
     
@@ -151,7 +152,7 @@
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
-    <p ng-show="wallet.hdwallet.priv && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">WARNING</span>
+    <p ng-show="wallet.hdwallet.keyPair.d && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">WARNING</span>
       You have not verified that you have backed up your mnemonic.
       <a href="" ng-click="verify_mnemonic()">Please verify now by clicking here.</a>
     </p>
@@ -161,10 +162,10 @@
   <ul>
     <li class="menu-header"><img src="../static/img/logos/logo-greenaddress-white.png" alt="GreenAddress" /> GreenAddress</li>
     <li path="/info"><a href="#/info">Transactions</a></li>
-    <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">Send Money</a></li>
+    <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">Send Money</a></li>
     <li path="/receive"><a href="#/receive">Receive Money</a></li>
     <li path="/address-book"><a href="#/address-book">Address Book</a></li>
-    <li ng-show="wallet.hdwallet.priv || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">Settings</a></li>
+    <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">Settings</a></li>
 
     <li ng-show="settings" du-scrollspy="general" class="menu-submenu"><a href="#general" du-smooth-scroll>General</a></li>
     <li ng-show="settings" du-scrollspy="security" class="menu-submenu"><a href="#security" du-smooth-scroll>Security</a></li>

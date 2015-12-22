@@ -74,14 +74,15 @@ angular.module('greenWalletControllers', [])
                 // can be also provided already by URL before #hash (useful for facebook opengraph data)
                 window.WalletControllerInitVars.redeem_amount = destAmount;
             }
-            var is_bip38 = window.WalletControllerInitVars.redeem_is_bip38 = Bitcoin.BIP38.isBIP38Format(redeem_key);
+            var is_bip38 = window.WalletControllerInitVars.redeem_is_bip38 = new Bitcoin.bip38().verify(redeem_key);
             var type = is_bip38 ? 'hash' : 'pubkey';
             if (type == 'hash') {
-                var hash_or_pubkey = Bitcoin.convert.wordArrayToBytes(Bitcoin.Util.sha256ripe160(redeem_key));
+                var hash_or_pubkey = Bitcoin.bitcoin.crypto.hash160(redeem_key);
             } else {
-                var hash_or_pubkey = new Bitcoin.ECKey(redeem_key).getPub().toBytes();
+                var hash_or_pubkey = Bitcoin.bitcoin.ECPair.fromWIF(redeem_key).getPublicKeyBuffer();
             }
-            tx_sender.call('http://greenaddressit.com/txs/get_redeem_message', type, hash_or_pubkey).then(function(message) {
+            tx_sender.call('http://greenaddressit.com/txs/get_redeem_message',
+                    type, Array.from(hash_or_pubkey)).then(function(message) {
                 $scope.wallet.redeem_message = message;
             });
         }

@@ -35,8 +35,8 @@ t=r.binLen,l=r.value):n("inputFormat must be HEX, TEXT, ASCII, or B64");a=8*j;b=
     // PBKDF2, 2048 iterations
     // Convert to hex
     var stringToHex = function(str) {
-        var words = Bitcoin.CryptoJS.enc.Utf8.parse(str);
-        return Bitcoin.CryptoJS.enc.Hex.stringify(words);
+        var words = new Bitcoin.Buffer.Buffer(str, 'utf-8');
+        return words.toString('hex');
     };
     password = stringToHex(password);
     salt = stringToHex(salt);
@@ -53,15 +53,17 @@ t=r.binLen,l=r.value):n("inputFormat must be HEX, TEXT, ASCII, or B64");a=8*j;b=
     var derivedKeyHex = '',
         blockindex = 1;
     while (derivedKeyHex.length < keylen*2) {
-        var cur_salt = salt.concat(Bitcoin.convert.bytesToHex(Bitcoin.convert.wordsToBytes([blockindex])));
+        var idx_buf = new Bitcoin.Buffer.Buffer(4);
+        idx_buf.writeUInt32BE(blockindex, 0);
+        var cur_salt = salt.concat(idx_buf.toString('hex'));
         var block = PRF(password, cur_salt);
         for (var u = block, i = 1; i < iterations; i++) {
             u = PRF(password, u);
-            block_bytes = Bitcoin.convert.hexToBytes(block);
-            u_bytes = Bitcoin.convert.hexToBytes(u);
+            block_bytes = new Bitcoin.Buffer.Buffer(block, 'hex');
+            u_bytes = new Bitcoin.Buffer.Buffer(u, 'hex');
             for (var j = 0; j < block_bytes.length; j++) block_bytes[j] ^= u_bytes[j];
-            block = Bitcoin.convert.bytesToHex(block_bytes);
-            
+            block = block_bytes.toString('hex');
+
             var prevProgress = Math.round(100*i/iterations), curProgress = Math.round(100*(i+1)/iterations);
             if (progressCb && curProgress > prevProgress) {
                 progressCb(curProgress);
@@ -73,6 +75,8 @@ t=r.binLen,l=r.value):n("inputFormat must be HEX, TEXT, ASCII, or B64");a=8*j;b=
 
     // Truncate excess bytes
     derivedKeyHex = derivedKeyHex.substr(0, keylen*2);
+
+    console.log(derivedKeyHex);
 
     return derivedKeyHex;
 

@@ -11,18 +11,19 @@ try {
     }
 } catch (e) { }  // firefox doesn't find window nor crypto?
 
-
-Bitcoin.ECKey.prototype.getPub = function(compressed) {
-    if (compressed === undefined) compressed = this.compressed;
+no_secp256k1_getPub = Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer;
+Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer = function() {
+    if (!this.d) return no_secp256k1_getPub.bind(this)();
+    var compressed = this.compressed;
 
     var out = Module._malloc(128);
     var out_s = Module._malloc(4);
     var secexp = Module._malloc(32);
-    var start = this.priv.toByteArray().length - 32;
+    var start = this.d.toByteArray().length - 32;
     if (start >= 0) {  // remove excess zeroes
-        var slice = this.priv.toByteArray().slice(start);
+        var slice = this.d.toByteArray().slice(start);
     } else {  // add missing zeroes
-        var slice = this.priv.toByteArray();
+        var slice = this.d.toByteArray();
         while (slice.length < 32) slice.unshift(0);
     }
     writeArrayToMemory(slice, secexp);
@@ -39,25 +40,33 @@ Bitcoin.ECKey.prototype.getPub = function(compressed) {
     Module._free(out_s);
     Module._free(secexp);
 
-    return Bitcoin.ECPubKey(ret, compressed)
+    return new Bitcoin.Buffer.Buffer(ret)
 };
 funcs = {
 	derive: function(data, cb) {
-		var wallet = Bitcoin.HDWallet.fromBase58(data.wallet);
-		return wallet.derive(data.i).toBase58(wallet.priv);
+		var wallet = Bitcoin.bitcoin.HDNode.fromBase58(
+            data.wallet,
+            [Bitcoin.bitcoin.networks.bitcoin,
+             Bitcoin.bitcoin.networks.testnet]
+        );
+		return wallet.derive(data.i).toBase58();
 	},
 	sign: function(data, cb) {
-		var key = new Bitcoin.ECKey(data.key);
+		var key = Bitcoin.bitcoin.ECPair.fromWIF(
+            data.key,
+            [Bitcoin.bitcoin.networks.bitcoin,
+             Bitcoin.bitcoin.networks.testnet]
+        );
 
         var sig = Module._malloc(128);
         var siglen_p = Module._malloc(4);
         var msg = Module._malloc(32);
         var seckey = Module._malloc(32);
-        var start = key.priv.toByteArray().length - 32;
+        var start = key.d.toByteArray().length - 32;
         if (start >= 0) {  // remove excess zeroes
-            var slice = key.priv.toByteArray().slice(start);
+            var slice = key.d.toByteArray().slice(start);
         } else {  // add missing zeroes
-            var slice = key.priv.toByteArray();
+            var slice = key.d.toByteArray();
             while (slice.length < 32) slice.unshift(0);
         }
         writeArrayToMemory(slice, seckey);

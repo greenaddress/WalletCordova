@@ -69,9 +69,12 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                     }
                 }, 100);
                 btchip_dev.app.getWalletPublicKey_async('').then(function(result) {
-                    var ecPub = new Bitcoin.ECPubKey(Bitcoin.convert.hexToBytes(result.publicKey.toString(HEX)));
+                    var ecPub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                        new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex')
+                    );
+                    ecPub.compressed = true;
                     hd_deferred.resolve({
-                        master_public: ecPub.toHex(true),  // compressed master pubkey
+                        master_public: Bitcoin.bs58check.decode(ecPub.toWIF()).toString('hex'),  // compressed master pubkey
                         master_chaincode: result.chainCode.toString(HEX),
                         btchip_pubkey: result,
                         btchip_dev: btchip_dev
@@ -99,10 +102,10 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
     var signup_with_trezor = function(hd_deferred) {
         trezor.getDevice().then(function(trezor_dev) {
             trezor_dev.getPublicKey([]).then(function(result) {
-                var hdwallet = Bitcoin.HDWallet.fromBase58(result.message.xpub);
+                var hdwallet = Bitcoin.bitcoin.HDNode.fromBase58(result.message.xpub);
                 hd_deferred.resolve({
-                    master_public: hdwallet.pub.toHex(),
-                    master_chaincode: Bitcoin.convert.bytesToHex(hdwallet.chaincode),
+                    master_public: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
+                    master_chaincode: hdwallet.chainCode.toString('hex'),
                     trezor_dev: trezor_dev
                 })
             })
@@ -120,24 +123,21 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
 
         var generate_mnemonic = function() {
             $scope.signup.unexpected_error = false;
-            var max256int_hex = '';
-            while (max256int_hex.length < 256/4) max256int_hex += 'F';
-            var TWOPOWER256 = new Bitcoin.BigInteger(max256int_hex, 16).add(Bitcoin.BigInteger.ONE);
-            entropy = Bitcoin.ecdsa.getBigRandom(TWOPOWER256).toByteArrayUnsigned();
-            $scope.signup.seed = Bitcoin.convert.bytesToHex(entropy);
+            entropy = Bitcoin.randombytes(32);
             while (entropy.length < 32) entropy.unshift(0);
+            $scope.signup.seed = new Bitcoin.Buffer.Buffer(entropy, 'hex');
             mnemonics.toMnemonic(entropy).then(function(mnemonic) {
                 mnemonics.toSeed(mnemonic).then(function(seed) {
                     mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
-                        $q.when(Bitcoin.HDWallet.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
+                        $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(seed, cur_net)).then(function(hdwallet) {
                             secured_confirmed.promise.then(function() {
                                 hdwallet.seed_hex = seed;
                                 if ($scope.wallet.mnemonic) {
                                     // no hardware wallet because user confirmed they backed up their seed:
                                     $scope.wallet.nohw_chosen = true;
                                     var hd_promise = $q.when({
-                                        master_public: hdwallet.pub.toHex(),
-                                        master_chaincode: Bitcoin.convert.bytesToHex(hdwallet.chaincode)
+                                        master_public: hdwallet.keyPair.getPublicKeyBuffer().toString('hex'),
+                                        master_chaincode: hdwallet.chainCode.toString('hex')
                                     });
                                 } else {
                                     // hw wallet
@@ -374,7 +374,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
 
     $scope.signup.encrypt_mnemonic = function() {
         gaEvent('Signup', 'EncryptMnemonic');
-        bip38.encrypt_mnemonic_modal($scope, Bitcoin.convert.hexToBytes($scope.signup.seed)).then(function(encrypted) {
+        bip38.encrypt_mnemonic_modal($scope, new Bitcoin.Buffer.Buffer($scope.signup.seed, 'hex')).then(function(encrypted) {
             $scope.signup.mnemonic_encrypted = encrypted;
         });
     };
