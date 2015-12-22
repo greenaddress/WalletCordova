@@ -168,6 +168,22 @@
         <source-file src="CDVBIP39.h" />
         <source-file src="CDVECDSA.m" />
         <source-file src="CDVECDSA.h" />
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+              <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                  <string>fb1470897776471523</string>
+                </array>
+              </dict>
+              <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                  <string>bitcoin</string>
+                </array>
+              </dict>
+            </array>
+        </config-file>
         <config-file target="*-Info.plist" parent="FacebookAppID">
             <string>1470897776471523</string>
         </config-file>

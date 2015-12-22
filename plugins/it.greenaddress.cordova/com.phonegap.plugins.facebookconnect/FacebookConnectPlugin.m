@@ -22,9 +22,8 @@
 @implementation FacebookConnectPlugin
 
 
--(CDVPlugin *)initWithWebView:(UIWebView *)theWebView {
+-(void)pluginInitialize {
     NSLog(@"Init FacebookConnect Session");
-    self = (FacebookConnectPlugin *)[super initWithWebView:theWebView];
     self.userid = @"";
     
     [FBSession openActiveSessionWithReadPermissions:nil
@@ -36,7 +35,6 @@
                                                           state:state
                                                           error:error];
                                   }];
-    return self;
 }
 
 /* This overrides CDVPlugin's method, which receives a notification when handleOpenURL is called on the main app delegate */
@@ -269,7 +267,7 @@
                                                           messageAsString:permissionsErrorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.loginCallbackId];
     } else {
-        [super writeJavascript:nil];
+//       [super writeJavascript:nil];
     }
 }
 
@@ -346,7 +344,7 @@
              }
              [self.commandDelegate sendPluginResult:pluginResult callbackId:self.dialogCallbackId];
          }];
-        [super writeJavascript:nil];
+//        [super writeJavascript:nil];
     }
     
     // For optional ARC support

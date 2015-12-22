@@ -34,7 +34,7 @@
 		<source-file src="src/android/AppPreferences.java" target-dir="src/me/apla/cordova" />
 	</platform>
 
-	<!-- ios -->
+	<!-- ios  (broken, so commented out)
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
 			<feature name="AppPreferences">
@@ -45,7 +45,7 @@
 		<header-file src="src/ios/AppPreferences.h" />
 		<source-file src="src/ios/AppPreferences.m" />
 
-	</platform>
+	</platform> -->
 
 	<!-- osx -->
 	<platform name="osx">

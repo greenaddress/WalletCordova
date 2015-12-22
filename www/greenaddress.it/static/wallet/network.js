@@ -1,1 +1,1 @@
-var cur_net = Bitcoin.bitcoin.networks.mainnet;
+var cur_net = Bitcoin.bitcoin.networks.bitcoin;

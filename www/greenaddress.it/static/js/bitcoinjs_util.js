@@ -107,7 +107,7 @@ if (self.cordova && cordova.platformId == 'ios') {
         var deferred = $q.defer();
         cordova.exec(function(param) {
             var wallet = new Bitcoin.bitcoin.HDNode(
-                Bitcoin.bitcoin.ECPair(
+                new Bitcoin.bitcoin.ECPair(
                     Bitcoin.BigInteger.fromBuffer(
                         new Bitcoin.Buffer.Buffer(param[0], 'hex')
                     ),
@@ -127,10 +127,10 @@ if (self.cordova && cordova.platformId == 'ios') {
 
     Bitcoin.bitcoin.HDNode.prototype.derive = function(i) {
         var deferred = $q.defer();
-        var usePriv = i >= Bitcoin.HDWallet.HIGHEST_BIT
+        var usePriv = i >= Bitcoin.bitcoin.HDNode.HIGHEST_BIT
 
         if (usePriv) {
-            i -= Bitcoin.HDWallet.HIGHEST_BIT;
+            i -= Bitcoin.bitcoin.HDNode.HIGHEST_BIT;
         }
 
         var that = this;
@@ -139,7 +139,7 @@ if (self.cordova && cordova.platformId == 'ios') {
         cordova.exec(function(param) {
             var ec_pair;
             if (that.keyPair.d) {
-                ec_pair = Bitcoin.bitcoin.ECPair(
+                ec_pair = new Bitcoin.bitcoin.ECPair(
                     Bitcoin.BigInteger.fromBuffer(
                         new Bitcoin.Buffer.Buffer(param[0], 'hex')
                     ),
@@ -164,7 +164,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             console.log('BIP32.derive failed: ' + fail)
             deferred.reject(fail);
         }, "BIP32", "derive", [
-            Bitcoin.bs58check.decode(this.toBase58()),
+            Bitcoin.bs58check.decode(this.toBase58()).toString("hex"),
             parseInt(i), usePriv ? "true" : "false"
         ]);
         this.network = orig_network;
@@ -175,11 +175,14 @@ if (self.cordova && cordova.platformId == 'ios') {
     Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
         var deferred = $q.defer();
         cordova.exec(function(param) {
-            deferred.resolve(Bitcoin.convert.hexToBytes(param));
+            deferred.resolve(new Bitcoin.Buffer.Buffer(param, 'hex'));
         }, function(fail) {
             console.log('ecdsa.sign failed: ' + fail)
             deferred.reject(fail);
-        }, "ECDSA", "sign", [this.toWif(), Bitcoin.convert.bytesToHex(hash)]);
+        }, "ECDSA", "sign", [
+            this.toWIF(),
+            new Bitcoin.Buffer.Buffer(hash).toString('hex')
+        ]);
         return deferred.promise;
     }
 } else {

@@ -62,12 +62,14 @@ var keyboardDidShow = function() {
 
 document.addEventListener('deviceready', function () {
     console.log('app device ready');
-    nfc.addMimeTypeListener('x-ga/en', commonNFCXGaitMNCListener);
-    nfc.addMimeTypeListener('x-gait/mnc', commonNFCXGaitMNCListener);
-    document.addEventListener("offline", function() {
-        // workaround for not being able to open local offline.html file
-        console.log('redirect to error page via hack');
-        window.location.href = window.location.href;
-    });
+    if (window.nfc) {
+        nfc.addMimeTypeListener('x-ga/en', commonNFCXGaitMNCListener);
+        nfc.addMimeTypeListener('x-gait/mnc', commonNFCXGaitMNCListener);
+        document.addEventListener("offline", function() {
+            // workaround for not being able to open local offline.html file
+            console.log('redirect to error page via hack');
+            window.location.href = window.location.href;
+        });
+    }
 });
 
