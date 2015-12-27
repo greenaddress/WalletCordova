@@ -192,6 +192,23 @@
     </div>
   </div>
 </div>
+<div ng-controller="TouchIdController" class="row" ng-show="touchId.isAvailable">
+  <div class="col-md-3">
+    <div class="sub-header">Touch ID</div>
+    <div class="sub-header-desc">Enable Touch ID to quickly access your wallet from this device.</div>
+  </div>
+  <div class="col-md-9">
+    <form ng-submit="set_new_pin()" class="form-horizontal" role="form">
+      <div ng-show="wallet.hdwallet.keyPair.d">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="touchId.enabled" ng-disabled="touchId.started_setting">
+          <span class="switch"></span>
+            Enable Touch ID on this device
+        </label>
+      </div>
+    </form>
+  </div>
+</div>
 <hr class="double">
 <div class="row">
   <div class="col-md-3">

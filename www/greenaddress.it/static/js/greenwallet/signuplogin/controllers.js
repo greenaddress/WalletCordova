@@ -9,12 +9,35 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     }
 
     var state = {};
-    storage.get(['pin_ident', 'encrypted_seed', 'pin_refused']).then(function(data) {
-        state.has_pin = data.pin_ident && data.encrypted_seed;
+    storage.get([
+            'pin_ident_touchid', 'encrypted_seed_touchid',
+            'pin_ident', 'encrypted_seed', 'pin_refused']
+            ).then(function(data) {
+        if (data.pin_ident_touchid) {
+            document.addEventListener('deviceready', function() {
+                cordova.exec(function(param) {
+                    $scope.$apply(function() {
+                        use_pin_data.pin = data;
+                        $scope.logging_in = true;
+                        setTimeout(function() {
+                            $scope.use_pin('_touchid').finally(function() {
+                                $scope.logging_in = false;
+                            });
+                        }, 0);
+                    });
+                    use_pin_data.pin = param;
+                }, function(fail) {
+                    console.log('CDVTouchId.getSecret failed: ' + fail)
+                }, "CDVTouchId", "getSecret", []);
+            });
+        }
+        tx_sender.has_pin = state.has_pin = data.pin_ident && data.encrypted_seed;
         state.refused_pin = data.pin_refused || storage.noLocalStorage;  // don't show the PIN popup if no storage is available
         state.pin_ident = data.pin_ident;
+        state.pin_ident_touchid = data.pin_ident_touchid;
         state.toggleshowpin = !state.has_pin;
         state.encrypted_seed = data.encrypted_seed;
+        state.encrypted_seed_touchid = data.encrypted_seed_touchid;
         $timeout(function() {
             if (!window.cordova || window.cordova.platformId != 'ios') {
                 // focus on iOS seems to break the app - clicking anywhere opens
@@ -375,18 +398,27 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     var use_pin_data = $scope.use_pin_data = {};
 
     var pin_attempts_left = 3;
-    $scope.use_pin = function(valid) {
+    $scope.use_pin = function(storage_suffix) {
+        storage_suffix = storage_suffix || '';
         notices.setLoadingText("Checking PIN");
-        return tx_sender.call('http://greenaddressit.com/pin/get_password', use_pin_data.pin, state.pin_ident).then(
+        return tx_sender.call('http://greenaddressit.com/pin/get_password', use_pin_data.pin, state['pin_ident'+storage_suffix]).then(
             function(password) {
                 if (!password) {
                     gaEvent('Login', 'PinLoginFailed', 'empty password');
                     state.login_error = true;
                     return;
                 }
-                tx_sender.pin_ident = state.pin_ident;
-                tx_sender.pin = use_pin_data.pin;
-                return crypto.decrypt(state.encrypted_seed, password).then(function(decoded) {
+                if (!storage_suffix) {
+                    // necessary for PIN change after reconnect (see "resend
+                    // "PIN to allow PIN changes in the event of reconnect"
+                    // in services.js)
+                    // NOTE: do not set tx_sender.pin_ident unless
+                    // authentication succeeded, otherwise all reconnections
+                    // will fail.
+                    tx_sender.pin = use_pin_data.pin;
+                    tx_sender.pin_ident = state.pin_ident;
+                }
+                return crypto.decrypt(state['encrypted_seed'+storage_suffix], password).then(function(decoded) {
                     if(decoded && JSON.parse(decoded).seed) {
                         gaEvent('Login', 'PinLoginSucceeded');
                         var parsed = JSON.parse(decoded);
@@ -397,7 +429,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                             return mnemonics.toSeed(parsed.mnemonic, 'greenaddress_path').then(function(path_seed) {
                                 parsed.path_seed = path_seed;
                                 crypto.encrypt(JSON.stringify(parsed), password).then(function(encrypted) {
-                                    storage.set('encrypted_seed', encrypted);
+                                    storage.set('encrypted_seed'+storage_suffix, encrypted);
                                 })
                                 var path = mnemonics.seedToPath(path_seed);
                                 return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
@@ -428,8 +460,8 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                         suffix = '; ' + gettext('%s attempts left.').replace('%s', pin_attempts_left);
                     } else {
                         suffix = '; ' + gettext('0 attempts left - PIN removed.').replace('%s', pin_attempts_left);
-                        storage.remove('pin_ident');
-                        storage.remove('encrypted_seed');
+                        storage.remove('pin_ident'+storage_suffix);
+                        storage.remove('encrypted_seed'+storage_suffix);
                         state.has_pin = false;
                         state.toggleshowpin = true;
                         delete use_pin_data.pin;

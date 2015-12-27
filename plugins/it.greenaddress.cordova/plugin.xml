@@ -168,6 +168,8 @@
         <source-file src="CDVBIP39.h" />
         <source-file src="CDVECDSA.m" />
         <source-file src="CDVECDSA.h" />
+        <source-file src="touchid/Keychain.swift" target-dir="touchid" />
+        <source-file src="touchid/CDVTouchId.swift" target-dir="touchid" />
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
               <dict>
@@ -203,10 +205,14 @@
             <feature name="BIP39">
                 <param name="ios-package" value="CDVBIP39"/>
             </feature>
+            <feature name="CDVTouchId">
+                <param name="ios-package" value="CDVTouchId"/>
+            </feature>
             <feature name="org.apache.cordova.facebook.Connect">
                 <param name="ios-package" value="FacebookConnectPlugin" />
                 <param name="onload" value="true" />
             </feature>
         </config-file>
+        <hook type="after_plugin_install" src="scripts/add_swift_support.js" />
     </platform>
 </plugin>

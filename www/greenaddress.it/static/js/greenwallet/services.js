@@ -1632,14 +1632,15 @@ angular.module('greenWalletServices', [])
             walletsService.set_last_fiat_update($scope);
         }, 1000)
     };
-    walletsService.create_pin = function(pin, $scope) {
+    walletsService.create_pin = function(pin, $scope, suffix) {
+        suffix = suffix || '';
         var do_create = function() {
             var deferred = $q.defer();
             tx_sender.call('http://greenaddressit.com/pin/set_pin_login', pin, 'Primary').then(
                 function(data) {
                     if (data) {
-                        var pin_ident = tx_sender.pin_ident = data;
-                        storage.set('pin_ident', pin_ident);
+                        var pin_ident = tx_sender['pin_ident'+suffix] = data;
+                        storage.set('pin_ident'+suffix, pin_ident);
                         tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
                             function(password) {
                                 if (!$scope.wallet.hdwallet.seed_hex) {
@@ -1651,7 +1652,7 @@ angular.module('greenWalletServices', [])
                                                                'path_seed': $scope.wallet.gait_path_seed,
                                                                'mnemonic': $scope.wallet.mnemonic});
                                     crypto.encrypt(data, password).then(function(encrypted) {
-                                        storage.set('encrypted_seed', encrypted);
+                                        storage.set('encrypted_seed'+suffix, encrypted);
                                     });
                                     tx_sender.pin = pin;
                                     deferred.resolve(pin_ident);
@@ -1932,6 +1933,7 @@ angular.module('greenWalletServices', [])
             }
             connection.onclose = function() {
                 session = session_for_login = null;
+                disconnected = true;
             }
             connection.onopen =
                 function(s) {
@@ -2163,6 +2165,7 @@ angular.module('greenWalletServices', [])
         if (session) {
             connection.close();
             session = session_lor_login = null;
+            disconnected = true;
         }
         for (var key in calls_missed) {
             delete calls_missed[key];
@@ -2176,6 +2179,8 @@ angular.module('greenWalletServices', [])
         txSenderService.hdwallet = undefined;
         txSenderService.trezor_dev = undefined;
         txSenderService.watch_only = undefined;
+        txSenderService.pin_ident = undefined;
+        txSenderService.has_pin = undefined;
         if (txSenderService.wallet) txSenderService.wallet.clear();
     };
     txSenderService.loginWatchOnly = function(token_type, token, logout) {

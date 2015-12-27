@@ -878,28 +878,29 @@ angular.module('greenWalletSettingsControllers',
 }]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage',
         function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage) {
     if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough
-    $scope.quicklogin = {enabled: false};
+    $scope.quicklogin = {
+        enabled: tx_sender.has_pin,
+        // NOTE: having tx_sender.pin_ident here means 'chaging PIN' in settings
+        // while logged in via touch ID in reality means creating a new PIN.
+        // This is because backend doesn't allow changing PIN unless logged in
+        // via the same PIN.
+        device_ident: tx_sender.pin_ident
+    };
     tx_sender.call('http://greenaddressit.com/pin/get_devices').then(function(data) {
-        angular.forEach(data, function(device) {
-            if (device.is_current) {
-                $scope.quicklogin.enabled = true;
-                $scope.quicklogin.device_ident = device.device_ident;
-            }
-        });
         $scope.quicklogin.loaded = true;
         $scope.$watch('quicklogin.enabled', function(newValue, oldValue) {
             if (newValue === oldValue) return
-            if (newValue && !$scope.quicklogin.started_unsetting_pin) {
-                if (!$scope.quicklogin.started_setting_pin) {
-                    $scope.quicklogin.started_setting_pin = true;
+            if (newValue && !$scope.quicklogin.started_unsetting) {
+                if (!$scope.quicklogin.started_setting) {
+                    $scope.quicklogin.started_setting = true;
                     $scope.quicklogin.enabled = false;  // not yet enabled
                 } else {
                     // finished setting pin
-                    $scope.quicklogin.started_setting_pin = false;
+                    $scope.quicklogin.started_setting = false;
                 }
-            } else if (!newValue && !$scope.quicklogin.started_setting_pin) {
-                if (!$scope.quicklogin.started_unsetting_pin) {
-                    $scope.quicklogin.started_unsetting_pin = true;
+            } else if (!newValue && !$scope.quicklogin.started_setting) {
+                if (!$scope.quicklogin.started_unsetting) {
+                    $scope.quicklogin.started_unsetting = true;
                     $scope.quicklogin.enabled = true;  // not yet disabled
                     tx_sender.call('http://greenaddressit.com/pin/remove_pin_login',
                             $scope.quicklogin.device_ident).then(function(data) {
@@ -911,22 +912,22 @@ angular.module('greenWalletSettingsControllers',
                         notices.makeNotice('success', gettext('PIN removed'));
                     }, function(err) {
                         gaEvent('Wallet', 'QuickLoginRemoveFailed', err.args[1]);
-                        $scope.quicklogin.started_unsetting_pin = false;
+                        $scope.quicklogin.started_unsetting = false;
                         notices.makeNotice('error', err.args[1]);
                     });
                 } else {
                     // finished disabling pin
-                    $scope.quicklogin.started_unsetting_pin = false;
+                    $scope.quicklogin.started_unsetting = false;
                 }
             }
         })
     });
     $scope.set_new_pin = function() {
         if (!$scope.quicklogin.new_pin) return;
-        $scope.quicklogin.setting_pin = true;
+        $scope.quicklogin.setting = true;
         var success_message;
         var success = function(device_ident) {
-            $scope.quicklogin.setting_pin = false;
+            $scope.quicklogin.setting = false;
             $scope.quicklogin.new_pin = '';
             $scope.quicklogin.enabled = true;
             if (device_ident) {
@@ -934,8 +935,8 @@ angular.module('greenWalletSettingsControllers',
             }
             notices.makeNotice('success', success_message);
         }, error = function(err) {
-            $scope.quicklogin.setting_pin = false;
-            $scope.quicklogin.started_setting_pin = false;
+            $scope.quicklogin.setting = false;
+            $scope.quicklogin.started_setting = false;
             gaEvent('Wallet', 'PinError', err);
             notices.makeNotice('error', err);
         };
@@ -951,7 +952,7 @@ angular.module('greenWalletSettingsControllers',
         }
     };
     $scope.remove_all_pin_logins = function() {
-        $scope.quicklogin.started_unsetting_pin = true;
+        $scope.quicklogin.started_unsetting = true;
         tx_sender.call('http://greenaddressit.com/pin/remove_all_pin_logins').then(function() {
             gaEvent('Wallet', 'AllPinLoginsRemoved');
             $scope.quicklogin.enabled = false;
@@ -961,7 +962,7 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('success', gettext('All PINs removed'));
         }, function(err) {
             gaEvent('Wallet', 'AllPinLoginsRemoveFailed', err.args[1]);
-            $scope.quicklogin.started_unsetting_pin = false;
+            $scope.quicklogin.started_unsetting = false;
             notices.makeNotice('error', err.args[1]);
         });
     }
@@ -1394,4 +1395,69 @@ angular.module('greenWalletSettingsControllers',
             $location.path('/receive');
         }
     };
+}]).controller('TouchIdController', ['$scope', 'tx_sender', 'wallets', 'notices', 'storage',
+        function($scope, tx_sender, wallets, notices, storage) {
+    var touchId = $scope.touchId = {
+        isAvailable: false,
+        enabled: false
+    };
+    storage.get('pin_ident_touchid').then(function(devid) {
+        if (devid) {
+            touchId.enabled = true;
+        }
+    });
+    $scope.$watch('touchId.enabled', function(newValue, oldValue) {
+        if (newValue === oldValue) return
+        if (newValue && !$scope.touchId.started_unsetting) {
+            if (!$scope.touchId.started_setting) {
+                $scope.touchId.started_setting = true;
+                $scope.touchId.enabled = false;  // not yet enabled
+                var randomHex = Bitcoin.randombytes(8).toString('hex').slice(0, 15);
+                cordova.exec(function(param) {
+                    $scope.$apply(function(touchid_ident) {
+                        $scope.touchId.enabled = true;
+                        wallets.create_pin(randomHex, $scope, '_touchid')
+                    });
+                }, function(fail) {
+                    console.log('CDVTouchId.setSecret failed: ' + fail)
+                }, "CDVTouchId", "setSecret", [randomHex]);
+            } else {
+                // finished setting pin
+                $scope.touchId.started_setting = false;
+            }
+        } else if (!newValue && !$scope.touchId.started_setting) {
+            if (!$scope.touchId.started_unsetting) {
+                $scope.touchId.started_unsetting = true;
+                $scope.touchId.enabled = true;  // not yet disabled
+                return storage.get('pin_ident_touchid').then(function(devid) {
+                    tx_sender.call('http://greenaddressit.com/pin/remove_pin_login',
+                        devid).then(function(data) {
+                        cordova.exec(function(param) {
+                            $scope.$apply(function() {
+                                storage.remove('pin_ident_touchid')
+                                storage.remove('encrypted_seed_touchid')
+                                $scope.touchId.enabled = false;
+                            });
+                        }, function(fail) {
+                            console.log('CDVTouchId.removeSecret failed: ' + fail)
+                        }, "CDVTouchId", "removeSecret", []);
+                    });
+                });
+            } else {
+                // finished disabling pin
+                $scope.touchId.started_unsetting = false;
+            }
+        }
+    });
+    if (window.cordova && cordova.platformId == 'ios') {
+        document.addEventListener('deviceready', function () {
+            cordova.exec(function(param) {
+                $scope.$apply(function() {
+                    touchId.isAvailable = param;
+                });
+            }, function(fail) {
+                console.log('CDVTouchId.isAvailable failed: ' + fail)
+            }, "CDVTouchId", "isAvailable", []);
+        });
+    }
 }]);
