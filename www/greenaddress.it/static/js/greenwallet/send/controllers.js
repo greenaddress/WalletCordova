@@ -247,10 +247,12 @@ angular.module('greenWalletSendControllers',
         };
         if (tx_sender.electrum) {
             var d = $q.defer();
-            tx_sender.electrum.checkConnectionsAvailable().then(function() {
+            d.resolve(verify(true));
+            // electrum is now disabled due to many issues with stability:
+/*            tx_sender.electrum.checkConnectionsAvailable().then(function() {
                 $scope.send_tx.verifying = true;
                 $scope.send_tx.verifying_percentage = 0;
-                d.resolve(verify(false).then(function(r) {
+                d.resolve(verify(true).then(function(r) {
                     $scope.send_tx.verifying = false;
                     return r;
                 }, function(err) {
@@ -278,7 +280,7 @@ angular.module('greenWalletSendControllers',
                 }, function() {
                     d.reject(gettext('No Electrum servers reachable'));
                 });
-            });
+            }); */
             return d.promise;
         } else {
             return verify(true);
