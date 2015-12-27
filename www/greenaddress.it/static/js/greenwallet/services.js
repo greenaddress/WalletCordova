@@ -3680,7 +3680,7 @@ angular.module('greenWalletServices', [])
                     d.resolve({data: result});
                 }, function(fail) {
                     d.reject(fail);
-                }, "BIP38", method, [data, password]);
+                }, "BIP38", method, [Array.from(data), password]);
             })();
         } else if (is_chrome_app) {
             var process = function() {
