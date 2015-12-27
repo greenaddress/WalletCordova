@@ -197,7 +197,16 @@ angular.module('greenWalletReceiveControllers',
         } else {
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
             var confidential = cur_net.isAlpha;
-            tx_sender.call('http://greenaddressit.com/vault/fund', $scope.wallet.current_subaccount, confidential, confidential).then(function(data) {
+            var args = [
+                'http://greenaddressit.com/vault/fund',
+                $scope.wallet.current_subaccount,
+                confidential
+            ];
+            if (confidential) {
+                // old server doesn't support the 3rd argument
+                args.push(true);
+            }
+            tx_sender.call.apply(tx_sender, args).then(function(data) {
                 var address;
                 if (confidential) {
                     address = $scope.wallet.hdwallet.deriveHardened(branches.BLINDED).then(function(branch) {
