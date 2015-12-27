@@ -1031,7 +1031,7 @@ angular.module('greenWalletServices', [])
             var in_value = 0, out_value = 0;
             tx.ins.forEach(function(txin) {
                 var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                rev.reverse();
+                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
                 var prevtx = Bitcoin.contrib.transactionFromHex(
                     response.data[rev.toString('hex')]
                 );
@@ -1166,7 +1166,7 @@ angular.module('greenWalletServices', [])
                         var in_value = 0, out_value = 0;
                         tx.ins.forEach(function(txin) {
                             var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                            rev.reverse();
+                            rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
                             var prevtx = Bitcoin.contrib.transactionFromHex(
                                 response.data[rev.toString('hex')]
                             );
@@ -3250,7 +3250,9 @@ angular.module('greenWalletServices', [])
                     var inputs = [];
                     for (var j = 0; j < tx.ins.length; j++) {
                         var input = tx.ins[j];
-                        var txhash = input.hash.reverse().toString('hex');
+                        var txhash = Bitcoin.bitcoin.bufferutils.reverse(
+                            input.hash
+                        ).toString('hex');
                         var outpoint = new Bitcoin.Buffer.Buffer(4);
                         idx_buf.writeUInt32LE(input.index, 0);
                         outpoint = outpoint.toString('hex');
