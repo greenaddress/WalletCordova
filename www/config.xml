@@ -69,9 +69,9 @@
         <splash src="res/ios/splash/Default-Landscape@2x~ipad_2048x1496.png" width="2048" height="1496"/>
         <splash src="res/ios/splash/Default-568h@2x~iphone.png" width="640" height="1136"/>
         <splash src="res/ios/splash/Default-750@2x~iphone6-landscape.png" width="1334" height="750"/>
-        <splash src="res/ios/splash/Default-750@2x~iphone6-portrait.png" width="750" height="1335"/>
-        <splash src="res/ios/splash/Default-1242@3x~iphone6s-landscape.png" width="2208" height="1242"/>
-        <splash src="res/ios/splash/Default-1242@3x~iphone6s-portrait.png" width="1242" height="2208"/>
+        <splash src="res/ios/splash/Default-750@2x~iphone6-portrait.png" width="750" height="1334"/>
+        <splash src="res/ios/splash/Default-1242@3x~iphone6s-landscape.png" width="2048" height="1242"/>
+        <splash src="res/ios/splash/Default-1242@3x~iphone6s-portrait.png" width="1242" height="2048"/>
 
      </platform>
     <plugin name="cordova-plugin-file" spec="https://github.com/apache/cordova-plugin-file.git" />
