@@ -46,7 +46,6 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
             }
 
             var checksum = binary.substr(bits);
-            console.log(JSON.stringify(Array.from(retval)));
             var hash = Bitcoin.bitcoin.crypto.sha256(retval);
             var binHash = '';
             for(var i = 0; i < hash.length; i++) {
@@ -79,7 +78,6 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                 new Bitcoin.Buffer.Buffer(data, 'hex')
             ).toRadix(2);
             while (binary.length < data.length*8) { binary = '0' + binary; }
-            console.log(JSON.stringify(Array.from(data)));
             var bytes = Bitcoin.bitcoin.crypto.sha256(data);
             var hash = Bitcoin.BigInteger.fromBuffer(bytes).toRadix(2);
             while (hash.length < 256) { hash = '0' + hash; }
@@ -88,7 +86,6 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
             var mnemonic = [];
             for (var i = 0; i < binary.length / 11; ++i) {
                 var index = new Bitcoin.BigInteger(binary.slice(i*11, (i+1)*11), 2);
-                console.log(index[0] + ' ' + index.toString());
                 mnemonic.push(words[index[0]]);
             }
             return mnemonic.join(' ');
@@ -117,9 +114,6 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
                         var hex = Bitcoin.Buffer.Buffer(
                             new Uint8Array(param)
                         ).toString('hex');
-                        console.log(param);
-                        console.log(new Uint8Array(param));
-                        console.log(hex);
                         deferred.resolve(hex);
                     }
                 }, function(fail) {

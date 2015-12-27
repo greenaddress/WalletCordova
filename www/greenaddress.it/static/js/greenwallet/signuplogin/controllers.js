@@ -110,7 +110,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         } else {
             var login_data_d = mnemonics.validateMnemonic(state.mnemonic).then(function() {
                 var process = function(mnemonic) {
-                    console.log(mnemonic);
                     return mnemonics.toSeed(mnemonic).then(function(seed) {
                         return mnemonics.toSeed(mnemonic, 'greenaddress_path').then(function(path_seed) {
                             return {seed: seed, path_seed: path_seed, mnemonic: mnemonic};
@@ -133,7 +132,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             });
         }
         return login_data_d.then(function(data) {
-            console.log(JSON.stringify(data));
             return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(data.seed, cur_net)).then(function(hdwallet) {
                 hdwallet.seed_hex = data.seed;
                 // seed, mnemonic, and path seed required already here for PIN setup below

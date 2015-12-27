@@ -14,7 +14,7 @@
         <dd>
             <span ng-hide="selected_transaction.changing_memo">(( selected_transaction.memo ))</span>
 
-            <form ng-submit="edit_tx_memo(selected_transaction)" class="inline" ng-show="selected_transaction.changing_memo">
+            <form submittable ng-submit="edit_tx_memo(selected_transaction)" class="inline" ng-show="selected_transaction.changing_memo">
                 <div class="input-group">
                     <input clickfix class="form-control" type="text" ng-model="selected_transaction.new_memo" focus-on="txmemoedit_(( selected_transaction.txhash ))" />
                     <span class="input-group-btn">

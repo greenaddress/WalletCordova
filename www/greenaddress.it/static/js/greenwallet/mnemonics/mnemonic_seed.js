@@ -76,8 +76,6 @@ t=r.binLen,l=r.value):n("inputFormat must be HEX, TEXT, ASCII, or B64");a=8*j;b=
     // Truncate excess bytes
     derivedKeyHex = derivedKeyHex.substr(0, keylen*2);
 
-    console.log(derivedKeyHex);
-
     return derivedKeyHex;
 
 }

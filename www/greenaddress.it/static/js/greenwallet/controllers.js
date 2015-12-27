@@ -1,6 +1,6 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack', 'sound',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack, sound) {
+.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack', 'sound', 'blind',
+        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack, sound, blind) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
@@ -144,17 +144,85 @@ angular.module('greenWalletControllers', [])
             update_balance: function(first) {
                 var that = this;
                 that.balance_updating = true;
-                tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
-                    that.final_balance = data.satoshi;
-                    that.fiat_currency = data.fiat_currency;
-                    that.fiat_value = data.fiat_value;
-                    that.fiat_rate = data.fiat_exchange;
-                    that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
-                    that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
-                    if (first) {
-                        $scope.$broadcast('first_balance_updated');
-                    }
-                }).finally(function() { updating = that.balance_updating = false; });
+                $scope.wallet.utxo = [];
+                if (!cur_net.isAlpha) {
+                    tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
+                        that.final_balance = data.satoshi;
+                        that.fiat_currency = data.fiat_currency;
+                        that.fiat_value = data.fiat_value;
+                        that.fiat_rate = data.fiat_exchange;
+                        that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
+                        that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
+                        if (first) {
+                            $scope.$broadcast('first_balance_updated');
+                        }
+                    }).finally(function() { updating = that.balance_updating = false; });
+                } else {
+                    var final_balance = 0;
+                    tx_sender.call(
+                        'http://greenaddressit.com/txs/get_all_unspent_outputs',
+                        0   // include zero-confs
+                    ).then(function(utxos) {
+                        var rawtx_ds = [];
+                        for (var i = 0; i < utxos.length; ++i) {
+                            (function(utxo) {
+                                rawtx_ds.push(tx_sender.call(
+                                    'http://greenaddressit.com/txs/get_raw_unspent_output',
+                                    utxo.txhash
+                                ).then(function(rawtx) {
+                                    return {
+                                        txhash: utxo.txhash,
+                                        rawtx: rawtx,
+                                        pt_idx: utxo.pt_idx,
+                                        pointer: utxo.pointer
+                                    };
+                                }));
+                            })(utxos[i]);
+                        }
+                        return $q.all(rawtx_ds);
+                    }).then(function(rawtxs) {
+                        var unblind_ds = [];
+                        for (var i = 0; i < rawtxs.length; ++i) {
+                            (function(rawtx) {
+                                var tx = Bitcoin.contrib.transactionFromHex(
+                                    rawtx.rawtx
+                                );
+                                unblind_ds.push(blind.unblindOutValue(
+                                    $scope, tx.outs[rawtx.pt_idx], rawtx.pointer
+                                ).then(function(data) {
+                                    final_balance += +data.value;
+                                    $scope.wallet.utxo.push({
+                                        txhash: rawtx.txhash,
+                                        data: {
+                                            pubkey_pointer: rawtx.pointer,
+                                            pt_idx: rawtx.pt_idx,
+                                            value: data.value
+                                        },
+                                        out: tx.outs[rawtx.pt_idx]
+                                    })
+                                }, function(e) {
+                                    // ignore invalid transactions
+                                    if (e !== "Invalid transaction.") {
+                                        throw e;
+                                    }
+                                }));
+                            })(rawtxs[i]);
+                        }
+                        return $q.all(unblind_ds);
+                    }).then(function() {
+                        return tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
+                            that.final_balance = final_balance;
+                            that.fiat_currency = data.fiat_currency;
+                            that.fiat_value = data.fiat_value;
+                            that.fiat_rate = data.fiat_exchange;
+                            that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
+                            that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
+                            if (first) {
+                                $scope.$broadcast('first_balance_updated');
+                            }
+                        });
+                    }).finally(function() { updating = that.balance_updating = false; });
+                }
             },
             clear: clearwallet,
             get_tx_output_value: function(txhash, i, no_electrum) {

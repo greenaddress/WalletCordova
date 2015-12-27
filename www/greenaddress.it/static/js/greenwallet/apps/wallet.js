@@ -18,7 +18,9 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
 .constant('branches', {
 	REGULAR: 1,
     EXTERNAL: 2,
-    SUBACCOUNT: 3
+    SUBACCOUNT: 3,
+    NLOCKTIME: 4,
+    BLINDED: 5
 })
 .constant('social_types', {
     FACEBOOK: 0,
