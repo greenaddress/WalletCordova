@@ -2,5 +2,5 @@ var deposit_chaincode = "e9a563d68686999af372a33157209c6860fe79197a4dafd9ec1dbaa
 var deposit_pubkey = "0322c5f5c9c4b9d1c3e22ca995e200d724c2d7d8b6953f7b38fddf9296053c961f";
 var wss_url = "wss://prodwss.greenaddress.it/v2/ws/";
 var root_url = "https://greenaddress.it";
-var LANG = window.location.href.split('/');
+var LANG = window.location.href.split('#')[0].split('/');
 LANG = LANG[LANG.length-2];

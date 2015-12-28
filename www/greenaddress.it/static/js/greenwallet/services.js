@@ -1817,10 +1817,8 @@ angular.module('greenWalletServices', [])
         cordovaReady(function() {
             document.addEventListener("resume", function() {
                 if (!txSenderService.wallet || !txSenderService.logged_in) return;
-                if (session) {
-                    session.close();  // reconnect on resume
-                } else if (session_for_login) {
-                    session_for_login.close();
+                if (session || session_for_login) {
+                    connection.close();  // reconnect on resume
                 }
                 session = session_for_login = null;
                 disconnected = true;
