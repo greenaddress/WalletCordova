@@ -1021,6 +1021,8 @@ angular.module('greenWalletServices', [])
             prevouts_d = $http.get(data.prevout_rawtxs).then(function(response_) {
                 response = response_;
             });
+        } else {
+            prevouts_d = $q.when();
         }
         var ask_for_confirmation = function() {
             if (!$scope.send_tx) {
@@ -1164,20 +1166,22 @@ angular.module('greenWalletServices', [])
                         var SIGHASH_ALL = 1;
                         var scope = $scope.$new();
                         var in_value = 0, out_value = 0;
-                        tx.ins.forEach(function(txin) {
-                            var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                            rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
-                            var prevtx = Bitcoin.contrib.transactionFromHex(
-                                response.data[rev.toString('hex')]
-                            );
-                            var prevout = prevtx.outs[txin.index];
-                            in_value += prevout.value;
-                            txin.prevValue = prevout.value;
-                        });
-                        tx.outs.forEach(function(txout) {
-                            out_value += txout.value;
-                        });
-                        var fee = in_value - out_value, value;
+                        if (cur_net.isAlpha) {
+                            tx.ins.forEach(function(txin) {
+                                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
+                                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
+                                var prevtx = Bitcoin.contrib.transactionFromHex(
+                                    response.data[rev.toString('hex')]
+                                );
+                                var prevout = prevtx.outs[txin.index];
+                                in_value += prevout.value;
+                                txin.prevValue = prevout.value;
+                            });
+                            tx.outs.forEach(function(txout) {
+                                out_value += txout.value;
+                            });
+                            var fee = in_value - out_value, value;
+                        }
                         var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL, fee)));
                         return sign.then(function(sign) {
                             var sign_serialized;
