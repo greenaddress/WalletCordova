@@ -29,6 +29,8 @@
         <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
     </platform>
     <platform name="ios">
+        <preference name="Orientation" value="all" />
+
         <!-- iOS 8.0+ -->
         <!-- iPhone 6 Plus  -->
         <icon src="res/ios/icon-60@3x.png" width="180" height="180" />
