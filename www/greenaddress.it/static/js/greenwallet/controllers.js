@@ -26,7 +26,15 @@ angular.module('greenWalletControllers', [])
     if (window.chrome && chrome.runtime && chrome.runtime.getManifest) {
         var app_version = chrome.runtime.getManifest().version;
     } else if ($scope.cordova_platform) {
-        var app_version = null; //FIXME: Cordova App version plugin
+        var app_version;
+        document.addEventListener('deviceready', function () {
+            cordova.getAppVersion.getVersionNumber().then(function (version) {
+                app_version = version;
+                $scope.$apply(function() {
+                    $scope.wallet.version = app_version;
+                });
+            });
+        });
     } else {
         var app_version = null
     }
