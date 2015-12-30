@@ -8,7 +8,7 @@ module.exports = function (context) {
 		settings = require("./lib/settings")(fs, path),
 		android = require("./lib/android")(fs, path, req('elementtree'), req('cordova-lib/src/cordova/util'), req('cordova-lib').configparser),
 		ios = require("./lib/ios")(Q, fs, path, req('plist'), req('xcode'));
-	
+
     return settings.get()
 		.then(function (config) {
 			return Q.all([

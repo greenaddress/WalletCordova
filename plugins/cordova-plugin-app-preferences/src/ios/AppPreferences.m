@@ -21,7 +21,8 @@
 - (void)defaultsChanged:(NSNotification *)notification {
 
 	NSString * jsCallBack = [NSString stringWithFormat:@"cordova.fireDocumentEvent('preferencesChanged');"];
-	[self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+	// (broken in newest Cordova)
+	// [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
 }
 
 

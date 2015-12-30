@@ -8,7 +8,7 @@
     <author email="info@greenaddress.it" href="https://greenaddress.it">
         GreenAddress IT Ltd
     </author>
-    <content src="greenaddress.it/en/wallet.html" />
+    <content src="start.html" />
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />

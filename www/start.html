@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Wallet | GreenAddress</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
+      var root = window.location.href.replace('start.html', '');
+      document.addEventListener('deviceready', function() {
+        plugins.appPreferences.fetch(
+          function(lang) {
+            lang = lang || 'en';
+            window.location.href = root + 'greenaddress.it/'+lang+'/wallet.html';
+          },
+          function(e) {
+            window.location.href = root + 'greenaddress.it/en/wallet.html';
+          },
+          'language'
+        );
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

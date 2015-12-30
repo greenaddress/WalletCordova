@@ -4,7 +4,7 @@
  *
  */
 'use strict';
-	
+
 var commonMappings = {
 	title: {
 		ios: "Title",
@@ -43,7 +43,9 @@ module.exports = {
 		}
 	},
 	radio: {
-		ios: "PSRadioGroupSpecifier",
+		// PSRadioGroupSpecifier doesn't work properly
+		// (see http://stackoverflow.com/questions/30324452/ios-8-2-and-above-settings-bundle-is-not-showing-selected-item-but-default)
+		ios: "PSMultiValueSpecifier",
 		android: "ListPreference",
 		required: ["title", "key", "default"],
 		attrs: {

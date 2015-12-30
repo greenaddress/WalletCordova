@@ -1,28 +1,22 @@
 [
     {
-        "type":"group",
-        "title":"Common",
-        "items":[{
-			"title":"Title",
-			"type":"textfield",
-			"key":"title"
-		}, {
-			"title":"Language",
-			"type":"radio",
-			"key":"lang",
-			"default": "en-us",
-			"items":[{
-				"value":"en-us",
-				"title":"English (US)"
-			}, {
-				"value":"en-gb",
-				"title":"English (UK)"
-			}]
-		}, {
-			"title":"Debug",
-			"type":"toggle",
-			"default":false,
-			"key":"debug"
-		}]
+        "title":"Language",
+        "type":"radio",
+        "key":"language",
+        "default": "en",
+        "items":[
+            {"value":"en","title":"English"},
+            {"value":"de","title":"Deutsch"},
+            {"value":"es","title":"Español"},
+            {"value":"fr","title":"Français"},
+            {"value":"el","title":"ελληνικά"},
+            {"value":"it","title":"Italiano"},
+            {"value":"nl","title":"Nederlands"},
+            {"value":"pl","title":"Polski"},
+            {"value":"sv","title":"Svenska"},
+            {"value":"th","title":"ภาษาไทย"},
+            {"value":"uk","title":"Українська"},
+            {"value":"ru","title":"Pусский"}
+        ]
     }
 ]
