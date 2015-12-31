@@ -18,7 +18,6 @@ globals.i18n_catalog = {
 "Failed retrieving password.": "Error al obtener contraseña.",
 "Not a valid encrypted private key": "La clave privada encriptada no es válida",
 "(about %s days: 1 day ≈ 144 blocks)": "(aprox. %s días: 1 día ≈ 144 bloques)",
-"No Electrum servers reachable": "No hay servidores Electrum accesibles",
 "Cancelled": "Cancelado",
 "You must provide only one image file.": "Debe proporcionar sólo un archivo de imagen.",
 "Missing change P2SH script": "Falta el cambio del script P2SH",

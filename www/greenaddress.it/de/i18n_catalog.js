@@ -17,7 +17,6 @@ globals.i18n_catalog = {
 "Failed sending email": "Emailversand fehlgeschlagen",
 "Not a valid encrypted private key": "Kein gültiger verschlüsselter privater Schlüssel",
 "(about %s days: 1 day ≈ 144 blocks)": "(ungefähr %s Tage: 1 Tag ≈ 144 Blöcke)",
-"No Electrum servers reachable": "No Electrum servers reachable",
 "Cancelled": "Cancelled",
 "You must provide only one image file.": "You must provide only one image file.",
 "Missing change P2SH script": "Missing change P2SH script",

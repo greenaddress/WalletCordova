@@ -17,7 +17,6 @@ globals.i18n_catalog = {
 "Failed sending email": "การส่งอีเมล์ล้มเหลว",
 "Not a valid encrypted private key": "ไม่ต้องเข้ารหัสลับคีย์ส่วนตัว",
 "(about %s days: 1 day ≈ 144 blocks)": "(ประมาณ %s วัน: 1 วัน ≈ 144 บล็อค)",
-"No Electrum servers reachable": "Electrum servers ติดต่อไม่ได้",
 "Cancelled": "ยกเลิก",
 "You must provide only one image file.": "คุณต้องกำหนดแฟ้มรูปเดียวเท่านั้น",
 "Missing change P2SH script": "Missing change P2SH script",

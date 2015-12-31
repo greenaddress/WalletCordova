@@ -325,6 +325,7 @@ angular.module('greenWalletServices', [])
                 $scope.wallet.subaccounts = [
                     {pointer: 0, name: gettext("Main")}
                 ].concat(data.subaccounts);
+                $scope.wallet.assets = data.assets;
                 $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
                 $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
                 $scope.wallet.cache_password = data.cache_password;
@@ -465,6 +466,7 @@ angular.module('greenWalletServices', [])
                 {pointer: 0, name: gettext("Main")}
             ].concat(data.subaccounts);
             console.log($scope.wallet.subaccounts);
+            $scope.wallet.assets = data.assets;
             $scope.wallet.current_subaccount = 0;
             $scope.wallet.cache_password = data.cache_password;
             $scope.wallet.fiat_exchange = data.exchange;
@@ -569,10 +571,16 @@ angular.module('greenWalletServices', [])
         call.then(function(data) {
             var retval = [];
             var any_unconfirmed_seen = false;
-
+            var asset_name = null;
             for (var i = 0; i < data.list.length; i++) {
                 var tx = data.list[i], inputs = [], outputs = [];
-                var num_confirmations = data.cur_block - tx.block_height + 1;
+                var asset_id = tx.eps[0].asset_id;
+                if (asset_id) {
+                    var num_confirmations = data.cur_block[asset_id] - tx.block_height + 1;
+                    asset_name = $scope.wallet.assets[asset_id];
+                } else {
+                    var num_confirmations = data.cur_block - tx.block_height + 1;
+                }
 
                 any_unconfirmed_seen = any_unconfirmed_seen || (num_confirmations < 6 && !tx.double_spent_by);
 
@@ -702,10 +710,11 @@ angular.module('greenWalletServices', [])
                              redeemable: redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0,
                              redeemable_unspent: redeemable_unspent,
                              sent_back: sent_back, block_height: tx.block_height,
-                             confirmations: tx.block_height ? data.cur_block - tx.block_height + 1: 0,
+                             confirmations: tx.block_height ? num_confirmations: 0,
                              has_payment_request: tx.has_payment_request,
                              double_spent_by: tx.double_spent_by, rawtx: tx.data,
-                             social_destination: tx_social_destination, social_value: tx_social_value});
+                             social_destination: tx_social_destination, social_value: tx_social_value,
+                             asset_id: asset_id, asset_name: asset_name});
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }

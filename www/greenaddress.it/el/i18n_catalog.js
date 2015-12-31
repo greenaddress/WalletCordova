@@ -17,7 +17,6 @@ globals.i18n_catalog = {
 "Failed sending email": "Απέτυχε η αποστολή του email",
 "Not a valid encrypted private key": "Μη έγκυρο κρυπτογραφημένο private key",
 "(about %s days: 1 day ≈ 144 blocks)": "(περίπου %s μέρες: 1 ημέρα ≈ 144 blocks)",
-"No Electrum servers reachable": "No Electrum servers reachable",
 "Cancelled": "Ακυρώθηκε",
 "You must provide only one image file.": "Πρέπει να παρέχετε μόνο ένα αρχείο εικόνας.",
 "Missing change P2SH script": "Missing change P2SH script",

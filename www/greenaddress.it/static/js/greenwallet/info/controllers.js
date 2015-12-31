@@ -146,6 +146,12 @@ angular.module('greenWalletInfoControllers',
         if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
         $scope.$apply(function() {
             for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {
+                if (data.asset_id &&
+                    data.asset_id !=
+                        $scope.filtered_transactions.list[i].asset_id) {
+                    // different asset id
+                    continue;
+                }
                 if (!$scope.filtered_transactions.list[i].block_height) {
                     // if any unconfirmed, we need to refetch all txs to get the block height
                     if ($scope.filtered_transactions.sorting.order_by != 'ts' ||
