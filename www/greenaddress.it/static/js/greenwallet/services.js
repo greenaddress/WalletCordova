@@ -714,7 +714,8 @@ angular.module('greenWalletServices', [])
                              has_payment_request: tx.has_payment_request,
                              double_spent_by: tx.double_spent_by, rawtx: tx.data,
                              social_destination: tx_social_destination, social_value: tx_social_value,
-                             asset_id: asset_id, asset_name: asset_name});
+                             asset_id: asset_id, asset_name: asset_name, size: tx.size,
+                             fee_per_kb: Math.round(tx.fee/(tx.size/1000))});
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
