@@ -502,17 +502,38 @@ angular.module('greenWalletServices', [])
             return social_destination;
         }
     };
-    var unblindOutputs = function($scope, txData) {
+    var unblindOutputs = function($scope, txData, rawTxs) {
         var deferreds = [];
         var tx = Bitcoin.contrib.transactionFromHex(txData.data);
         for (var i = 0; i < txData.eps.length; ++i) {
             (function(ep) {
-                if (ep.value == 0 && ep.is_relevant && ep.is_credit) {
-                    var d = blind.unblindOutValue(
-                        $scope, tx.outs[ep.pt_idx], ep.pubkey_pointer
-                    ).then(function(data) {
-                        ep.value = data.value;
-                    });
+                if (ep.value === null && ep.is_relevant) {
+                    var txhash, pt_idx, out;
+                    if (ep.is_credit) {
+                        txhash = txData.txhash;
+                        pt_idx = ep.pt_idx;
+                        out = tx.outs[ep.pt_idx];
+                    } else {
+                        txhash = ep.prevtxhash;
+                        pt_idx = ep.previdx;
+                        out = Bitcoin.contrib.transactionFromHex(
+                            rawTxs[ep.prevtxhash]
+                        ).outs[pt_idx];
+                    }
+                    var key =
+                        'unblinded_value_' + txhash + ':' + pt_idx;
+                    var d = storage.get(key).then(function(value) {
+                        if (value === null) {
+                            return blind.unblindOutValue(
+                                $scope, out, ep.pubkey_pointer
+                            ).then(function(data) {
+                                ep.value = data.value;
+                                storage.set(key, data.value);
+                            });
+                        } else {
+                            ep.value = value;
+                        }
+                    })
                     deferreds.push(d);
                 }
             })(txData.eps[i]);
@@ -536,8 +557,13 @@ angular.module('greenWalletServices', [])
         if (end) end.setDate(end.getDate() + 1);
         var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
                                             end && end.toISOString()];
-        var call = tx_sender.call('http://greenaddressit.com/txs/get_list_v2',
-            page_id, query, sort_by, date_range_iso, subaccount);
+        var args = ['http://greenaddressit.com/txs/get_list_v2',
+            page_id, query, sort_by, date_range_iso, subaccount];
+        if (cur_net.isAlpha) {
+            // return prev data
+            args.push(true);
+        }
+        var call = tx_sender.call.apply(tx_sender, args);
 
         if (cur_net.isAlpha) {
             call = call.then(function(data) {
@@ -546,8 +572,10 @@ angular.module('greenWalletServices', [])
                 for (var i = 0; i < data.list.length; i++) {
                     (function(i) {
                         var tx = data.list[i];
+                        tx.data = data.data[tx.txhash];
                         valid[i] = true;
-                        deferreds.push(unblindOutputs($scope, tx).catch(function(e) {
+                        deferreds.push(unblindOutputs($scope, tx, data.data)
+                                .catch(function(e) {
                             if (e !== "Invalid transaction.") {
                                 throw e;
                             } else {
@@ -712,7 +740,8 @@ angular.module('greenWalletServices', [])
                              sent_back: sent_back, block_height: tx.block_height,
                              confirmations: tx.block_height ? num_confirmations: 0,
                              has_payment_request: tx.has_payment_request,
-                             double_spent_by: tx.double_spent_by, rawtx: tx.data,
+                             double_spent_by: tx.double_spent_by,
+                             rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
                              social_destination: tx_social_destination, social_value: tx_social_value,
                              asset_id: asset_id, asset_name: asset_name, size: tx.size,
                              fee_per_kb: Math.round(tx.fee/(tx.size/1000))});

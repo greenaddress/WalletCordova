@@ -1,6 +1,6 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack', 'sound', 'blind',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack, sound, blind) {
+.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack', 'sound', 'blind', 'storage',
+        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack, sound, blind, storage) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
@@ -195,9 +195,20 @@ angular.module('greenWalletControllers', [])
                                 var tx = Bitcoin.contrib.transactionFromHex(
                                     rawtx.rawtx
                                 );
-                                unblind_ds.push(blind.unblindOutValue(
-                                    $scope, tx.outs[rawtx.pt_idx], rawtx.pointer
-                                ).then(function(data) {
+                                var key =
+                                    'unblinded_value_' + rawtx.txhash + ':' +
+                                    rawtx.pt_idx;
+                                unblind_ds.push(storage.get(key).then(
+                                        function(value) {
+                                    if (value !== null) {
+                                        return {value: value};
+                                    }
+                                    return blind.unblindOutValue(
+                                        $scope, tx.outs[rawtx.pt_idx],
+                                        rawtx.pointer
+                                    )
+                                }).then(function(data) {
+                                    storage.set(key, data.value);
                                     final_balance += +data.value;
                                     $scope.wallet.utxo.push({
                                         txhash: rawtx.txhash,
