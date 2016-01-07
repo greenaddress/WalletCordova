@@ -298,7 +298,7 @@ angular.module('greenWalletSendControllers',
             Bitcoin.Util.formatValue(new Bitcoin.BigInteger(amount_satoshi.toString()).multiply(Bitcoin.BigInteger.valueOf(mul))));
     }
     var parseContact = function(str) {
-        var json = Bitcoin.bs58.decode(str).toString('utf-8');
+        var json = new Bitcoin.Buffer.Buffer(Bitcoin.bs58.decode(str)).toString('utf-8');
         return JSON.parse(json);
     };
     $scope.send_tx = {

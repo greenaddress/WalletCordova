@@ -2716,9 +2716,9 @@ angular.module('greenWalletServices', [])
     var n = navigator, v, webkit = false, moz = false, gCtx, stream, gotGUMerror = false;
     return {
     stop_scanning: function($scope) {
+        $scope.scanning_qr_video = false;
         v.pause();
         stream.stop()
-        $scope.scanning_qr_video = false;
     },
     scan: function($scope, $event, suffix) {
         var that = this;
@@ -2808,7 +2808,11 @@ angular.module('greenWalletServices', [])
 
                     // https://github.com/kyledrake/coinpunk/blob/master/public/js/coinpunk/controllers/tx.js#L195
                     /*! Copyright (c) 2013, Kyle Drake */
-                    var canvas = document.createElement('canvas');
+
+                    var canvas = document.getElementById("qr-canvas");
+                    if (!canvas) {
+                        canvas = document.createElement('canvas');
+                    }
                     var context = canvas.getContext('2d');
                     var img = new Image();
                     img.onload = function() {
