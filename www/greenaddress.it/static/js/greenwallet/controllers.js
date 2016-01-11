@@ -152,7 +152,6 @@ angular.module('greenWalletControllers', [])
             update_balance: function(first) {
                 var that = this;
                 that.balance_updating = true;
-                $scope.wallet.utxo = [];
                 if (!cur_net.isAlpha) {
                     tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
                         that.final_balance = data.satoshi;
@@ -166,7 +165,13 @@ angular.module('greenWalletControllers', [])
                         }
                     }).finally(function() { updating = that.balance_updating = false; });
                 } else {
-                    var final_balance = 0;
+                    $scope.wallet.utxo = {};
+                    var final_balances = {};
+                    for (var i = 0; i < $scope.wallet.subaccounts.length; ++i) {
+                        var subaccount = $scope.wallet.subaccounts[i];
+                        $scope.wallet.utxo[subaccount.pointer] = [];
+                        final_balances[subaccount.pointer] = 0;
+                    }
                     tx_sender.call(
                         'http://greenaddressit.com/txs/get_all_unspent_outputs',
                         0   // include zero-confs
@@ -182,7 +187,8 @@ angular.module('greenWalletControllers', [])
                                         txhash: utxo.txhash,
                                         rawtx: rawtx,
                                         pt_idx: utxo.pt_idx,
-                                        pointer: utxo.pointer
+                                        pointer: utxo.pointer,
+                                        subaccount: utxo.subaccount
                                     };
                                 }));
                             })(utxos[i]);
@@ -205,12 +211,12 @@ angular.module('greenWalletControllers', [])
                                     }
                                     return blind.unblindOutValue(
                                         $scope, tx.outs[rawtx.pt_idx],
-                                        rawtx.pointer
+                                        rawtx.subaccount, rawtx.pointer
                                     )
                                 }).then(function(data) {
                                     storage.set(key, data.value);
-                                    final_balance += +data.value;
-                                    $scope.wallet.utxo.push({
+                                    final_balances[rawtx.subaccount] += +data.value;
+                                    $scope.wallet.utxo[rawtx.subaccount].push({
                                         txhash: rawtx.txhash,
                                         data: {
                                             pubkey_pointer: rawtx.pointer,
@@ -230,7 +236,7 @@ angular.module('greenWalletControllers', [])
                         return $q.all(unblind_ds);
                     }).then(function() {
                         return tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
-                            that.final_balance = final_balance;
+                            that.final_balance = final_balances[$scope.wallet.current_subaccount];
                             that.fiat_currency = data.fiat_currency;
                             that.fiat_value = data.fiat_value;
                             that.fiat_rate = data.fiat_exchange;

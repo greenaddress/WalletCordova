@@ -203,13 +203,23 @@ angular.module('greenWalletReceiveControllers',
                 confidential
             ];
             if (confidential) {
-                // old server doesn't support the 3rd argument
+                // old server doesn't support the 4th argument
                 args.push(true);
             }
             tx_sender.call.apply(tx_sender, args).then(function(data) {
                 var address;
                 if (confidential) {
-                    address = $scope.wallet.hdwallet.deriveHardened(branches.BLINDED).then(function(branch) {
+                    var key = $q.when($scope.wallet.hdwallet);
+                    if ($scope.wallet.current_subaccount) {
+                        key = key.then(function(key) {
+                            return key.deriveHardened(branches.SUBACCOUNT)
+                        }).then(function(key) {
+                            return key.deriveHardened($scope.wallet.current_subaccount);
+                        });
+                    }
+                    address = key.then(function(key) {
+                        return key.deriveHardened(branches.BLINDED)
+                    }).then(function(branch) {
                         return branch.deriveHardened(data.pointer);
                     }).then(function(blinded_key) {
                         var version;

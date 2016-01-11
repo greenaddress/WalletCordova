@@ -228,10 +228,18 @@ angular.module('greenWalletServices', [])
             blinding_factor_out: blinding_factor_out
         };
     };
-    service.unblindOutValue = function($scope, out, pubkey_pointer) {
-        return $scope.wallet.hdwallet.deriveHardened(branches.BLINDED).then(
-                function(branch) {
-            // TODO: subaccounts
+    service.unblindOutValue = function($scope, out, subaccount, pubkey_pointer) {
+        var key = $q.when($scope.wallet.hdwallet);
+        if (subaccount) {
+            key = key.then(function(key) {
+                return key.deriveHardened(branches.SUBACCOUNT);
+            }).then(function(key) {
+                return key.deriveHardened(subaccount);
+            })
+        }
+        return key.then(function(key) {
+            return key.deriveHardened(branches.BLINDED)
+        }).then(function(branch) {
             return branch.deriveHardened(pubkey_pointer);
         }).then(function(scanning_node) {
             return service._unblindOutValue(
@@ -507,25 +515,29 @@ angular.module('greenWalletServices', [])
         var tx = Bitcoin.contrib.transactionFromHex(txData.data);
         for (var i = 0; i < txData.eps.length; ++i) {
             (function(ep) {
-                if (ep.value === null && ep.is_relevant) {
-                    var txhash, pt_idx, out;
+                if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
+                    // e.pubkey_pointer !== null means it's our ep, can be
+                    // from different subaccount than currently processed
+                    var txhash, pt_idx, out, subaccount;
                     if (ep.is_credit) {
                         txhash = txData.txhash;
                         pt_idx = ep.pt_idx;
                         out = tx.outs[ep.pt_idx];
+                        subaccount = ep.subaccount;
                     } else {
                         txhash = ep.prevtxhash;
                         pt_idx = ep.previdx;
                         out = Bitcoin.contrib.transactionFromHex(
                             rawTxs[ep.prevtxhash]
                         ).outs[pt_idx];
+                        subaccount = ep.prevsubaccount;
                     }
                     var key =
                         'unblinded_value_' + txhash + ':' + pt_idx;
                     var d = storage.get(key).then(function(value) {
                         if (value === null) {
                             return blind.unblindOutValue(
-                                $scope, out, ep.pubkey_pointer
+                                $scope, out, subaccount || 0, ep.pubkey_pointer
                             ).then(function(data) {
                                 ep.value = data.value;
                                 storage.set(key, data.value);
@@ -797,11 +809,12 @@ angular.module('greenWalletServices', [])
         var unspent_found = Bitcoin.BigInteger.ZERO, utxo_num = 0;
         var needed_unspent = [];
         var fee = new Bitcoin.BigInteger('10000');
+        var utxos = $scope.wallet.utxo[$scope.wallet.current_subaccount];
         while (unspent_found.compareTo(satoshis.add(fee)) < 0) {
-            if (utxo_num >= $scope.wallet.utxo.length) {
+            if (utxo_num >= utxos.length) {
                 return $q.reject("Not enough money");
             }
-            var utxo = $scope.wallet.utxo[utxo_num];
+            var utxo = utxos[utxo_num];
             unspent_found = unspent_found.add(new Bitcoin.BigInteger(
                 utxo.data.value));
             needed_unspent.push(utxo);
@@ -812,7 +825,9 @@ angular.module('greenWalletServices', [])
             (function(utxo) {
                 input_blinds_and_change.push(
                     blind.unblindOutValue(
-                        $scope, utxo.out, utxo.data.pubkey_pointer
+                        $scope, utxo.out,
+                        $scope.wallet.current_subaccount,
+                        utxo.data.pubkey_pointer
                     ).then(function(data) {
                         return data.blinding_factor_out;
                     })
@@ -824,9 +839,17 @@ angular.module('greenWalletServices', [])
                 'http://greenaddressit.com/vault/fund',
                 $scope.wallet.current_subaccount, true, true
             ).then(function(data) {
-                return $scope.wallet.hdwallet.deriveHardened(
-                    branches.BLINDED
-                ).then(function(branch) {
+                var key = $q.when($scope.wallet.hdwallet);
+                if ($scope.wallet.current_subaccount) {
+                    key = key.then(function(key) {
+                        return key.deriveHardened(branches.SUBACCOUNT);
+                    }).then(function(key) {
+                        return key.deriveHardened($scope.wallet.current_subaccount);
+                    })
+                }
+                return key.then(function(key) {
+                    return key.deriveHardened(branches.BLINDED);
+                }).then(function(branch) {
                     return branch.deriveHardened(data.pointer);
                 }).then(function(blinded_key) {
                     return tx_sender.call(
@@ -1015,14 +1038,32 @@ angular.module('greenWalletServices', [])
                         ),
                         new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
                     );
-                    var gaKey = gawallet.derive(1).then(function(branch) {
-                        return branch.subpath($scope.wallet.gait_path);
-                    }).then(function(gawallet) {
+                    var gaKey;
+                    if ($scope.wallet.current_subaccount) {
+                        gaKey = gawallet.derive(3).then(function(branch) {
+                            return branch.subpath($scope.wallet.gait_path);
+                        }).then(function(gawallet) {
+                            return gawallet.derive($scope.wallet.current_subaccount);
+                        });
+                    } else {
+                        gaKey = gawallet.derive(1).then(function(branch) {
+                            return branch.subpath($scope.wallet.gait_path);
+                        });
+                    }
+                    gaKey = gaKey.then(function(gawallet) {
                         return gawallet.derive(utxo.data.pubkey_pointer);
                     });
-                    var userKey = $scope.wallet.hdwallet.derive(
-                        branches.REGULAR
-                    ).then(function(branch) {
+                    var userKey = $q.when($scope.wallet.hdwallet);
+                    if ($scope.wallet.current_subaccount) {
+                        userKey = userKey.then(function(key) {
+                            return key.deriveHardened(branches.SUBACCOUNT);
+                        }).then(function(key) {
+                            return key.deriveHardened($scope.wallet.current_subaccount);
+                        })
+                    }
+                    var userKey = userKey.then(function(key) {
+                        return key.derive(branches.REGULAR);
+                    }).then(function(branch) {
                         return branch.derive(utxo.data.pubkey_pointer)
                     });
                     signatures_ds.push($q.all([gaKey, userKey]).then(function(keys) {
