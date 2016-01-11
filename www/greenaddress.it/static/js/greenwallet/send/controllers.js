@@ -549,7 +549,8 @@ angular.module('greenWalletSendControllers',
             var parsed_uri = parse_bitcoin_uri(to_addr);
             if (parsed_uri.recipient) to_addr = parsed_uri.recipient;
             var decoded = Bitcoin.bs58check.decode(to_addr);
-            var satoshis = this.amount_to_satoshis(this.amount);
+            var satoshis =
+                this.spend_all ? "ALL" : this.amount_to_satoshis(this.amount);
             $rootScope.is_loading += 1;
             if (decoded[0] == 25 || decoded[0] == 10) {  // confidential tx
                 wallets.send_confidential_tx($scope, decoded, satoshis)
@@ -560,7 +561,7 @@ angular.module('greenWalletSendControllers',
                     $location.url('/info/');
                 }, function(error) {
                     if (error) {
-                        notices.makeNotice('error', error.args[1]);
+                        notices.makeNotice('error', error.args ? error.args[1] : error);
                     }
                 });
                 return;

@@ -797,9 +797,10 @@ angular.module('greenWalletServices', [])
         return d.promise
     };
     walletsService.send_confidential_tx = function($scope, recipient, satoshis) {
-        satoshis = new Bitcoin.BigInteger(satoshis);
+        if (satoshis !== 'ALL') {
+            satoshis = new Bitcoin.BigInteger(satoshis);
+        }
         var recipient_scanning_pubkey = recipient.slice(2, 35);
-        var change_idx = Bitcoin.randombytes(1)[0] % 2;
         var version;
         if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
             version = 10;
@@ -810,15 +811,24 @@ angular.module('greenWalletServices', [])
         var needed_unspent = [];
         var fee = new Bitcoin.BigInteger('10000');
         var utxos = $scope.wallet.utxo[$scope.wallet.current_subaccount];
-        while (unspent_found.compareTo(satoshis.add(fee)) < 0) {
+        while (satoshis == 'ALL' ||
+                unspent_found.compareTo(satoshis.add(fee)) < 0) {
             if (utxo_num >= utxos.length) {
-                return $q.reject("Not enough money");
+                if (satoshis == 'ALL' && unspent_found.compareTo(fee) > 0) {
+                    // spend all (if enough for fee)
+                    break;
+                } else {
+                    return $q.reject("Not enough money");
+                }
             }
             var utxo = utxos[utxo_num];
             unspent_found = unspent_found.add(new Bitcoin.BigInteger(
                 utxo.data.value));
             needed_unspent.push(utxo);
             utxo_num += 1;
+        }
+        if (satoshis == 'ALL') {
+            satoshis = unspent_found.subtract(fee);
         }
         var input_blinds_and_change = [];
         for (var i = 0; i < needed_unspent.length; ++i) {
@@ -834,63 +844,67 @@ angular.module('greenWalletServices', [])
                 );
             })(needed_unspent[i]);
         }
-        input_blinds_and_change.push(
-            tx_sender.call(
-                'http://greenaddressit.com/vault/fund',
-                $scope.wallet.current_subaccount, true, true
-            ).then(function(data) {
-                var key = $q.when($scope.wallet.hdwallet);
-                if ($scope.wallet.current_subaccount) {
-                    key = key.then(function(key) {
-                        return key.deriveHardened(branches.SUBACCOUNT);
-                    }).then(function(key) {
-                        return key.deriveHardened($scope.wallet.current_subaccount);
-                    })
-                }
-                return key.then(function(key) {
-                    return key.deriveHardened(branches.BLINDED);
-                }).then(function(branch) {
-                    return branch.deriveHardened(data.pointer);
-                }).then(function(blinded_key) {
-                    return tx_sender.call(
-                        'http://greenaddressit.com/vault/set_scanning_key',
-                        $scope.wallet.current_subaccount,
-                        data.pointer,
-                        Array.from(blinded_key.keyPair.getPublicKeyBuffer())
-                    ).then(function() {
-                        return blinded_key;
-                    })
-                }).then(function(blinded_key) {
-                    return [
-                        blinded_key.keyPair.getPublicKeyBuffer(),
-                        Bitcoin.bitcoin.crypto.hash160(
-                            new Bitcoin.Buffer.Buffer(data.script, 'hex')
-                        )
-                    ];
-                });
-            })
-        );
+        var change_value = unspent_found.subtract(satoshis).subtract(fee);
+        if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
+            input_blinds_and_change.push(
+                tx_sender.call(
+                    'http://greenaddressit.com/vault/fund',
+                    $scope.wallet.current_subaccount, true, true
+                ).then(function(data) {
+                    var key = $q.when($scope.wallet.hdwallet);
+                    if ($scope.wallet.current_subaccount) {
+                        key = key.then(function(key) {
+                            return key.deriveHardened(branches.SUBACCOUNT);
+                        }).then(function(key) {
+                            return key.deriveHardened($scope.wallet.current_subaccount);
+                        })
+                    }
+                    return key.then(function(key) {
+                        return key.deriveHardened(branches.BLINDED);
+                    }).then(function(branch) {
+                        return branch.deriveHardened(data.pointer);
+                    }).then(function(blinded_key) {
+                        return tx_sender.call(
+                            'http://greenaddressit.com/vault/set_scanning_key',
+                            $scope.wallet.current_subaccount,
+                            data.pointer,
+                            Array.from(blinded_key.keyPair.getPublicKeyBuffer())
+                        ).then(function() {
+                            return blinded_key;
+                        })
+                    }).then(function(blinded_key) {
+                        return [
+                            blinded_key.keyPair.getPublicKeyBuffer(),
+                            Bitcoin.bitcoin.crypto.hash160(
+                                new Bitcoin.Buffer.Buffer(data.script, 'hex')
+                            )
+                        ];
+                    });
+                })
+            );
+        }
         return $q.all(input_blinds_and_change).then(function(input_blinds) {
-            var change = input_blinds.pop();
-            var outs = [null, null];
-            var in_value = new Bitcoin.BigInteger('0');
-            for (var i = 0; i < needed_unspent.length; ++i) {
-                in_value = in_value.add(new Bitcoin.BigInteger(
-                    needed_unspent[i].data.value
-                ));
-            }
-            outs[change_idx] = {
-                value: in_value.subtract(satoshis).subtract(fee),
-                to_version: cur_net.scriptHash,
-                to_scanning_pubkey: change[0],
-                to_hash: change[1]
-            };
-            outs[1-change_idx] = {
+            var main_out = {
                 value: satoshis,
                 to_version: recipient[1],
                 to_scanning_pubkey: recipient.slice(2, 35),
                 to_hash: recipient.slice(35)
             };
+            var outs;
+            if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
+                var change_idx = Bitcoin.randombytes(1)[0] % 2;
+                var change = input_blinds.pop();
+                outs = [null, null];
+                outs[change_idx] = {
+                    value: change_value,
+                    to_version: cur_net.scriptHash,
+                    to_scanning_pubkey: change[0],
+                    to_hash: change[1]
+                };
+                outs[1-change_idx] = main_out;
+            } else {
+                outs = [main_out];
+            }
             var all = (needed_unspent.length + outs.length);
             var blindptrs = Module._malloc(4 * all);
             var cur_blindptr = 4 * needed_unspent.length;

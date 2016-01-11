@@ -673,9 +673,9 @@ angular.module('greenWalletSettingsControllers',
 
     $scope.privacy = {
         'updating_send_me': false,
-        'send_me': $scope.wallet.privacy.send_me,
+        'send_me': ''+$scope.wallet.privacy.send_me,
         'updating_show_as_sender': false,
-        'show_as_sender': $scope.wallet.privacy.show_as_sender
+        'show_as_sender': ''+$scope.wallet.privacy.show_as_sender
     };
     var init_changer = function(key) {
         $scope.$watch('privacy.' + key, function(newValue, oldValue) {
