@@ -794,14 +794,16 @@ angular.module('greenWalletServices', [])
         } else {
             version = 25;
         }
-        var unspent_found = 0, utxo_num = 0;
+        var unspent_found = Bitcoin.BigInteger.ZERO, utxo_num = 0;
         var needed_unspent = [];
-        while (unspent_found < satoshis) {
-            if (utxo_num + 1 > $scope.wallet.utxo.length) {
+        var fee = new Bitcoin.BigInteger('10000');
+        while (unspent_found.compareTo(satoshis.add(fee)) < 0) {
+            if (utxo_num >= $scope.wallet.utxo.length) {
                 return $q.reject("Not enough money");
             }
             var utxo = $scope.wallet.utxo[utxo_num];
-            unspent_found += +utxo.data.value;
+            unspent_found = unspent_found.add(new Bitcoin.BigInteger(
+                utxo.data.value));
             needed_unspent.push(utxo);
             utxo_num += 1;
         }
@@ -848,7 +850,6 @@ angular.module('greenWalletServices', [])
         return $q.all(input_blinds_and_change).then(function(input_blinds) {
             var change = input_blinds.pop();
             var outs = [null, null];
-            var fee = new Bitcoin.BigInteger('10000');
             var in_value = new Bitcoin.BigInteger('0');
             for (var i = 0; i < needed_unspent.length; ++i) {
                 in_value = in_value.add(new Bitcoin.BigInteger(
@@ -1044,10 +1045,15 @@ angular.module('greenWalletServices', [])
                 })(i);
             }
             return $q.all(signatures_ds).then(function() {
-                return tx_sender.call(
-                    'http://greenaddressit.com/vault/send_raw_tx',
-                    tx.build().toHex(+fee)
-                );
+                return walletsService.get_two_factor_code(
+                    $scope, 'send_raw_tx'
+                ).then(function(twofac_data) {
+                    return tx_sender.call(
+                        'http://greenaddressit.com/vault/send_raw_tx',
+                        tx.build().toHex(+fee),
+                        twofac_data
+                    );
+                });
             })
         })
     };
