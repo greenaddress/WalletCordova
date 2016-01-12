@@ -2808,7 +2808,11 @@ angular.module('greenWalletServices', [])
     stop_scanning: function($scope) {
         $scope.scanning_qr_video = false;
         v.pause();
-        stream.stop()
+        try {
+            stream.stop();
+        } catch (e) {
+            stream.getVideoTracks()[0].stop();
+        }
     },
     scan: function($scope, $event, suffix) {
         var that = this;
@@ -3856,7 +3860,7 @@ angular.module('greenWalletServices', [])
 }]).factory('encode_key', ['$q', function($q) {
     var iframe;
     return function(key, passphrase) {
-        var data = key.keyPair;
+        var data = key.keyPair || key;  // either HDNode or ECPair
         if (!passphrase) {
             return $q.when(data.toWIF());
         } else {
