@@ -1843,7 +1843,8 @@ angular.module('greenWalletServices', [])
 }]).factory('tx_sender', ['$q', '$rootScope', 'cordovaReady', '$http', 'notices', 'gaEvent', '$location', 'autotimeout', 'device_id', 'btchip',
         function($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip) {
     var txSenderService = {};
-    if (window.Electrum) {
+    // disable electrum setup
+    if (false && window.Electrum) {
         if (window.cordova) {
             txSenderService.electrum = new Electrum($http, $q);
         } else {
