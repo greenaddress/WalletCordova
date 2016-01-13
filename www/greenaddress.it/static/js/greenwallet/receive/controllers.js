@@ -133,7 +133,7 @@ angular.module('greenWalletReceiveControllers',
                     worker.postMessage({b58: key_wif, password: this.bip38_password, cur_net_wif: cur_net.wif});
                 }
             } else if (key_wif.indexOf('K') == 0 || key_wif.indexOf('L') == 0 || key_wif.indexOf('5') == 0 // prodnet
-                    || encrypted_key.indexOf('c') == 0 || encrypted_key.indexOf('9') == 0) { // testnet
+                    || key_wif.indexOf('c') == 0 || key_wif.indexOf('9') == 0) { // testnet
                 var key_bytes = Bitcoin.bs58.decode(key_wif);
                 if (key_bytes.length != 38 && key_bytes.length != 37) {
                     notices.makeNotice(gettext('Not a valid private key'));
@@ -180,7 +180,8 @@ angular.module('greenWalletReceiveControllers',
         stop_scanning_qr_code: function() {
             qrcode.stop_scanning($scope);
         },
-        show_sweep: cur_net == 'mainnet'  // no testnet
+        show_sweep: true   // used to be false for testnet, now we support
+                           // testnet sweeping too
     };
     var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
     var formatAmountBitcoin = function(amount) {
