@@ -148,8 +148,8 @@ if (self.cordova && cordova.platformId == 'ios') {
                 );
             } else {
                 ec_pair = Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                    new Bitcoin.Buffer.Buffer(param[1]),
-                    that.network
+                    new Bitcoin.Buffer.Buffer(param[1], 'hex'),
+                    that.keyPair.network
                 )
             }
             var hd = new Bitcoin.bitcoin.HDNode(
