@@ -115,6 +115,8 @@ public class BarcodeScanner extends CordovaPlugin {
             hasCameraPermission();
         } else if (action.equals(REQUEST_CAMERA_PERMISSION)) {
             requestCameraPermission();
+            // this method executes async and we seem to have no known way to receive the result, so simply returning ok now
+            this.callbackContext.success();
         } else {
             return false;
         }
@@ -140,8 +142,6 @@ public class BarcodeScanner extends CordovaPlugin {
                 new String[]{Manifest.permission.CAMERA},
                 444);
         }
-        // this method executes async and we seem to have no known way to receive the result, so simply returning ok now
-        this.callbackContext.success();
     }
 
     public void scan(JSONObject obj) {
