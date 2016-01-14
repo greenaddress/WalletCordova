@@ -1,4 +1,4 @@
-platforms/android/assets
+platforms/
 ant-build
 ant-gen
 local.properties
@@ -6,4 +6,6 @@ local.properties
 *.class
 *.d
 .staging
+plugins/android.json
 my-release-key.keystore
+*.swp

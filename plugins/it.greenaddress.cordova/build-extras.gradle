@@ -4,4 +4,9 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
+    buildTypes {
+        release {
+            lintOptions { disable 'MissingTranslation', 'ExtraTranslation' }
+        }
+    }
 }
