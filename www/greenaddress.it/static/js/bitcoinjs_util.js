@@ -134,8 +134,8 @@ if (self.cordova && cordova.platformId == 'ios') {
         }
 
         var that = this;
-        var orig_network = this.network;
-        this.network = 'mainnet';  // our BIP32 for iOS doesn't support testnet
+        var orig_network = this.keyPair.network;
+        this.keyPair.network = Bitcoin.bitcoin.networks.bitcoin;  // our BIP32 for iOS doesn't support testnet
         cordova.exec(function(param) {
             var ec_pair;
             if (that.keyPair.d) {
@@ -144,7 +144,7 @@ if (self.cordova && cordova.platformId == 'ios') {
                         new Bitcoin.Buffer.Buffer(param[0], 'hex')
                     ),
                     null,
-                    {compressed: true, network: that.network}
+                    {compressed: true, network: that.keyPair.network}
                 );
             } else {
                 ec_pair = Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
@@ -167,7 +167,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             Bitcoin.bs58check.decode(this.toBase58()).toString("hex"),
             parseInt(i), usePriv ? "true" : "false"
         ]);
-        this.network = orig_network;
+        that.keyPair.network = orig_network;
 
         return deferred.promise;
     }
