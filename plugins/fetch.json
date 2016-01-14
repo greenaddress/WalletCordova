@@ -66,14 +66,8 @@
     "com.phonegap.plugins.barcodescanner": {
         "source": {
             "type": "git",
-            "url": "https://github.com/wildabeast/BarcodeScanner.git",
+            "url": "https://github.com/Telerik-Verified-Plugins/BarcodeScanner.git",
             "subdir": "."
-        }
-    },
-    "phonegap-plugin-barcodescanner": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-barcodescanner"
         },
         "is_top_level": true,
         "variables": {}
@@ -178,6 +172,14 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-app-version"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-barcodescanner": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-barcodescanner"
         },
         "is_top_level": true,
         "variables": {}
