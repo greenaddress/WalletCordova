@@ -21,6 +21,7 @@ globals.i18n_catalog = {
 "You must provide only one image file.": "Πρέπει να παρέχετε μόνο ένα αρχείο εικόνας.",
 "Missing change P2SH script": "Missing change P2SH script",
 "You need to log out to update cache.": "Πρέπει να αποσυνδεθείτε για να ενημερώσετε την μνήμη cache.",
+"Create new Wallet": "Δημιουργήστε νέο Πορτοφόλι",
 "Failed sending Reddit message": "Αποτυχία αποστολής μηνύματος Reddit",
 "Dongle is locked \u002D reconnect the dongle and retry": "Dongle is locked \u002D reconnect the dongle and retry",
 "Electrum setup failed": "Η εγκατάσταση του Electrum απέτυχε",

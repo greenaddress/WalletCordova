@@ -21,6 +21,7 @@ globals.i18n_catalog = {
 "You must provide only one image file.": "Du måste ange enbart en bildfil.",
 "Missing change P2SH script": "Missing change P2SH script",
 "You need to log out to update cache.": "Du måste logga ut för att uppdatera cachen.",
+"Create new Wallet": "Skapa ny plånbok",
 "Failed sending Reddit message": "Kunde inte skicka Reddit\u002Dmeddelande",
 "Dongle is locked \u002D reconnect the dongle and retry": "Dongle is locked \u002D reconnect the dongle and retry",
 "Electrum setup failed": "Elektrum\u002Dinställning misslyckad",

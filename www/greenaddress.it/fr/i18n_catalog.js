@@ -21,6 +21,7 @@ globals.i18n_catalog = {
 "You must provide only one image file.": "Vous devez fournir un seul fichier image.",
 "Missing change P2SH script": "Missing change P2SH script",
 "You need to log out to update cache.": "Vous devez vous déconnecter pour mettre à jour l\u0027application.",
+"Create new Wallet": "Créer un nouveau porte\u002Dmonnaie",
 "Failed sending Reddit message": "Erreur lors de l\u0027envoi du message Reddit",
 "Dongle is locked \u002D reconnect the dongle and retry": "Dongle is locked \u002D reconnect the dongle and retry",
 "Electrum setup failed": "Configuration Electrum échouée",
