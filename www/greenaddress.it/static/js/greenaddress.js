@@ -13,7 +13,17 @@ $(document).ready(function() {
         $('#eu-cookie-compliance').click(function() {
             disableEuCookieComplianceBanner();
         });
-    }    
+    }
+    if (window.chrome && chrome.app) {
+        $('#wallet-create, #wallet-login').click(function(ev) {
+            ev.preventDefault();
+            try {
+                chrome.webstore.install();
+            } catch (e) {
+                location.href = $('link[rel="chrome-webstore-item"]').attr('href')
+            }
+        });
+    }
 });
 if (window.cordova) { // outside document.ready for better performance
     $(document).ready(function() {

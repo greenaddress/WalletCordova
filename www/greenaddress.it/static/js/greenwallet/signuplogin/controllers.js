@@ -8,6 +8,22 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         window.WalletControllerInitVars = window.GlobalWalletControllerInitVars;
     }
 
+    $scope.create_new_wallet_label = gettext("Create new Wallet");
+    if (window.chrome && chrome.app && !chrome.storage) {
+        $scope.create_new_wallet_label = gettext("Install the App")
+    }
+    $scope.create_new_wallet = function(ev) {
+        if (window.chrome && chrome.app && !chrome.storage) {
+            // !chrome.storage means we're not inside the chrome app
+            ev.preventDefault();
+            try {
+                chrome.webstore.install();
+            } catch (e) {
+                location.href = $('link[rel="chrome-webstore-item"]').attr('href')
+            }
+        }
+    }
+
     var state = {};
     storage.get([
             'pin_ident_touchid', 'encrypted_seed_touchid',

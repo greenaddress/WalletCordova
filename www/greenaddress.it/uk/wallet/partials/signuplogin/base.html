@@ -4,7 +4,7 @@
         <div class="create-modal-content">
             <div class="create-modal-header" ng-hide="wallet.redeem_key">
                 У Вас ще немає акаунта?
-                <a href="#/create"><strong>Створити новий гаманець</strong></a>
+                <a ng-click="create_new_wallet($event)" href="#/create"><strong>(( create_new_wallet_label ))</strong></a>
             </div>
             <div class="create-modal-body">
                 <div ng-include="wallet.signuplogin_header"></div>
