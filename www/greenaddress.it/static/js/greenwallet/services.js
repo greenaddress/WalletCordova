@@ -414,7 +414,7 @@ angular.module('greenWalletServices', [])
             ),
             cur_net
         );
-        var chainCode = new Bitcion.Buffer.Buffer(
+        var chainCode = new Bitcoin.Buffer.Buffer(
             btchip_pubkey.chainCode.toString(HEX), 'hex'
         );
         var hdwallet = new Bitcoin.bitcoin.HDNode(
