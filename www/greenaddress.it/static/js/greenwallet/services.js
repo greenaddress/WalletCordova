@@ -1480,7 +1480,7 @@ angular.module('greenWalletServices', [])
                         var addr = new Bitcoin.Address(out.address.toString());
                         if (out.script.getOutType() == "P2SH") {
                             // workaround for our old copy of bitcoinjs not supporting testnet here
-                            addr.version = Bitcoin.network[cur_net].p2shVersion;
+                            addr.version = cur_net.scriptHash;
                         }
                         var ret = {
                             amount: out.value,
@@ -3714,8 +3714,8 @@ angular.module('greenWalletServices', [])
                                     0x02 | // deterministic signatures
                                     0x08,  // skip second factor if consuming only P2SH inputs in a transaction
 
-                                    Bitcoin.network[cur_net].addressVersion,
-                                    Bitcoin.network[cur_net].p2shVersion,
+                                    cur_net.pubKeyHash,
+                                    cur_net.scriptHash,
                                     new ByteString(pin, ASCII),
                                     undefined,  // wipePin
 
