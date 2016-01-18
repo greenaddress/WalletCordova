@@ -74,7 +74,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                     );
                     ecPub.compressed = true;
                     hd_deferred.resolve({
-                        master_public: Bitcoin.bs58check.decode(ecPub.toWIF()).toString('hex'),  // compressed master pubkey
+                        master_public: ecPub.getPublicKeyBuffer().toString('hex'),  // compressed master pubkey
                         master_chaincode: result.chainCode.toString(HEX),
                         btchip_pubkey: result,
                         btchip_dev: btchip_dev
@@ -160,8 +160,9 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                                                 cc = cc.toHex ? cc.toHex() : cc;
                                                 pk = pk.toHex ? pk.toHex() : pk;
                                                 var extended = cc.toUpperCase() + pk.toUpperCase();
-                                                var path = Bitcoin.CryptoJS.HmacSHA512(extended, 'GreenAddress.it HD wallet path');
-                                                path = Bitcoin.CryptoJS.enc.Hex.stringify(path);
+                                                extended = new Bitcoin.Buffer.Buffer(extended, 'hex');
+                                                var path = Bitcoin.hmac('sha512', 'GreenAddress.it HD wallet path').update(extended).digest();
+                                                path = path.toString('hex');
                                                 return wallets.login_trezor($scope, hd.trezor_dev, path, true, false);
                                             });
                                         } else {

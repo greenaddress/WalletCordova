@@ -363,7 +363,7 @@ Bitcoin.bitcoin.Transaction.prototype.cloneTransactionForSignature =
 
   // Blank out other inputs' signatures
   txTmp.ins.forEach(function(txin) {
-    txin.script = new Bitcoin.Buffer.Buffer()
+    txin.script = new Bitcoin.Buffer.Buffer([])
   })
 
   txTmp.ins[inIndex].script = connectedScript
