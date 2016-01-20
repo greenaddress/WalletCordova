@@ -7,12 +7,14 @@ var disableEuCookieComplianceBanner = function() {
 
 $(document).ready(function() {
     var appInstalled = false;
-    chrome.runtime.sendMessage(
-        $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
-        {greeting: true}, function(response) {
-            appInstalled = (response == "GreenAddress installed");
-        }
-    );
+    if (window.chrome && chrome.runtime) {
+        chrome.runtime.sendMessage(
+            $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
+            {greeting: true}, function(response) {
+                appInstalled = (response == "GreenAddress installed");
+            }
+        );
+    }
 
     if (!window.cordova && document.cookie.indexOf('eu-cookie-compliance=true') == -1) {
         $('body').append('<div id="eu-cookie-compliance"><span id="eu-cookie-compliance-hide">×</span>'+

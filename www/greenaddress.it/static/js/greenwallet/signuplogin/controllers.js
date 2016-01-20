@@ -9,13 +9,31 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     }
 
     $scope.create_new_wallet_label = gettext("Create new Wallet");
+    var appInstalled = false;
     if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
+        if (chrome.runtime) {
+            chrome.runtime.sendMessage(
+                'dgpnjhgkemjchciplhnfpmfhiojgbmli',  // $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
+                {greeting: true}, function(response) {
+                    appInstalled = (response == "GreenAddress installed");
+                    if (appInstalled) {
+                        $scope.$apply(function() {
+                            $scope.create_new_wallet_label = gettext("Launch the App")
+                        });
+                    }
+                }
+            );
+        }
         $scope.create_new_wallet_label = gettext("Install the App")
     }
     $scope.create_new_wallet = function(ev) {
         if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
             // !chrome.storage means we're not inside the chrome app
             ev.preventDefault();
+            if (appInstalled) {
+                window.location.href = "/launch_chrome_app/";
+                return;
+            }
             try {
                 chrome.webstore.install();
             } catch (e) {
