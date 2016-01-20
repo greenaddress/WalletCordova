@@ -9,11 +9,11 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     }
 
     $scope.create_new_wallet_label = gettext("Create new Wallet");
-    if (window.chrome && chrome.app && !chrome.storage) {
+    if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
         $scope.create_new_wallet_label = gettext("Install the App")
     }
     $scope.create_new_wallet = function(ev) {
-        if (window.chrome && chrome.app && !chrome.storage) {
+        if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
             // !chrome.storage means we're not inside the chrome app
             ev.preventDefault();
             try {
