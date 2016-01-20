@@ -6,6 +6,14 @@ var disableEuCookieComplianceBanner = function() {
 };
 
 $(document).ready(function() {
+    var appInstalled = false;
+    chrome.runtime.sendMessage(
+        $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
+        {greeting: true}, function(response) {
+            appInstalled = (response == "GreenAddress installed");
+        }
+    );
+
     if (!window.cordova && document.cookie.indexOf('eu-cookie-compliance=true') == -1) {
         $('body').append('<div id="eu-cookie-compliance"><span id="eu-cookie-compliance-hide">×</span>'+
             gettext('Cookies help us deliver our services. By using our services, you agree to our use of cookies.')+
@@ -17,6 +25,10 @@ $(document).ready(function() {
     if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app) {
         $('#wallet-create, #wallet-login').click(function(ev) {
             ev.preventDefault();
+            if (appInstalled) {
+                window.location.href = "/launch_chrome_app/";
+                return;
+            }
             try {
                 chrome.webstore.install();
             } catch (e) {
