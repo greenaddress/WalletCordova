@@ -13,7 +13,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     if (!(cur_net.isAlpha || cur_net.isSegwit) && window.chrome && chrome.app && !chrome.storage) {
         if (chrome.runtime) {
             chrome.runtime.sendMessage(
-                'dgpnjhgkemjchciplhnfpmfhiojgbmli',  // $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
+                $('link[rel="chrome-webstore-item"]').attr('href').split('/detail/')[1],
                 {greeting: true}, function(response) {
                     appInstalled = (response == "GreenAddress installed");
                     if (appInstalled) {
