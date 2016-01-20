@@ -31,7 +31,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             // !chrome.storage means we're not inside the chrome app
             ev.preventDefault();
             if (appInstalled) {
-                window.location.href = "/launch_chrome_app/";
+                window.location.href = "/launch_chrome_app_signup/";
                 return;
             }
             try {

@@ -28,7 +28,11 @@ $(document).ready(function() {
         $('#wallet-create, #wallet-login').click(function(ev) {
             ev.preventDefault();
             if (appInstalled) {
-                window.location.href = "/launch_chrome_app/";
+                if ($(ev.target).attr('id') == 'wallet-create') {
+                    window.location.href = "/launch_chrome_app_signup/";
+                } else {
+                    window.location.href = "/launch_chrome_app/";
+                }
                 return;
             }
             try {
