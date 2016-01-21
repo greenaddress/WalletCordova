@@ -246,11 +246,25 @@ angular.module('greenWalletReceiveControllers',
                     });
                 } else {
                     var script = new Bitcoin.Buffer.Buffer(data, 'hex');
-                    var hash = Bitcoin.bitcoin.crypto.hash160(script);
-                    var version = cur_net.scriptHash;
-                    address = $q.when(
-                        Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash)
-                    );
+                    if (cur_net.isSegwit) {
+                        var hash = Bitcoin.bitcoin.crypto.sha256(script);
+                        var buf = Bitcoin.Buffer.Buffer.concat([
+                            new Bitcoin.Buffer.Buffer([0, 32]),
+                            hash
+                        ]);
+                        address = $q.when(
+                            Bitcoin.bitcoin.address.toBase58Check(
+                                Bitcoin.bitcoin.crypto.hash160(buf),
+                                cur_net.scriptHash
+                            )
+                        );
+                    } else {
+                        var hash = Bitcoin.bitcoin.crypto.hash160(script);
+                        var version = cur_net.scriptHash;
+                        address = $q.when(
+                            Bitcoin.bitcoin.address.toBase58Check(hash, cur_net.scriptHash)
+                        );
+                    }
                 }
                 address.then(function(address) {
                     $scope.receive.bitcoin_address = address;

@@ -1284,7 +1284,11 @@ angular.module('greenWalletServices', [])
                             });
                             var fee = in_value - out_value, value;
                         }
-                        var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL, fee)));
+                        if (data.prev_outputs[i].script_type == 14) {
+                            var sign = $q.when(key.sign(tx.hashForSignatureV2(i, script, parseInt(data.prev_outputs[i].value), SIGHASH_ALL)));
+                        } else {
+                            var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
+                        }
                         return sign.then(function(sign) {
                             var sign_serialized;
                             if (cur_net.isAlpha) {

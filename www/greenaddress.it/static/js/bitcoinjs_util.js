@@ -349,6 +349,245 @@ Bitcoin.scrypt = function(passwd, salt, N, r, p, dkLen) {
     return new Bitcoin.Buffer.Buffer(ret);
 }
 
+var Buffer = Bitcoin.Buffer.Buffer;
+var bcrypto = Bitcoin.bitcoin.crypto;
+var bufferutils = Bitcoin.bitcoin.bufferutils;
+var typeforce = Bitcoin.typeforce;
+var types = Bitcoin.types;
+
+var BufferWriter = function(length) {
+  typeforce(types.tuple(types.Number), arguments)
+  this.buffer = new Buffer(length)
+  this.offset = 0
+}
+
+BufferWriter.prototype.writeSlice = function (slice) {
+  slice.copy(this.buffer, this.offset)
+  this.offset += slice.length
+
+  return this
+}
+
+BufferWriter.prototype.writeSliceWithVarInt = function (script) {
+  this.writeVarInt(script.length)
+  this.writeSlice(script)
+
+  return this
+}
+
+BufferWriter.prototype.writeScript = BufferWriter.prototype.writeSliceWithVarInt
+
+BufferWriter.prototype.writeInt = function (i) {
+  this.buffer.writeUInt8(i, this.offset)
+  this.offset += 1
+
+  return this
+}
+
+BufferWriter.prototype.writeUInt64 = function (i) {
+  bufferutils.writeUInt64LE(this.buffer, i, this.offset)
+  this.offset += 8
+
+  return this
+}
+
+BufferWriter.prototype.writeUInt32 = function (i) {
+  this.buffer.writeUInt32LE(i, this.offset)
+  this.offset += 4
+
+  return this
+}
+
+BufferWriter.prototype.writeVarInt = function (i) {
+  var n = bufferutils.writeVarInt(this.buffer, i, this.offset)
+  this.offset += n
+
+  return this
+}
+
+var ADVANCED_TRANSACTION_MARKER = 0;
+var ADVANCED_TRANSACTION_FLAG = 1;
+
+/**
+ * FROM https://github.com/bitcoinjs/bitcoinjs-lib/pull/520
+ * (to be cleaned up / merged with upstream)
+ **/
+Bitcoin.bitcoin.Transaction.fromBuffer = function (buffer, __noStrict) {
+  var offset = 0
+  function readSlice (n) {
+    offset += n
+    return buffer.slice(offset - n, offset)
+  }
+
+  function readUInt32 () {
+    var i = buffer.readUInt32LE(offset)
+    offset += 4
+    return i
+  }
+
+  function readUInt64 () {
+    var i = bufferutils.readUInt64LE(buffer, offset)
+    offset += 8
+    return i
+  }
+
+  function readInt () {
+    var i = buffer.readUInt8(offset)
+    offset += 1
+
+    return i
+  }
+
+  function readVarInt () {
+    var vi = bufferutils.readVarInt(buffer, offset)
+    offset += vi.size
+    return vi.number
+  }
+
+  function readScript () {
+    return readSlice(readVarInt())
+  }
+
+  console.log('fromBuffer')
+
+  var tx = new Bitcoin.bitcoin.Transaction()
+  tx.version = readUInt32()
+
+  tx.marker = readInt()
+  tx.flag = readInt()
+
+  // check if transaction is advanced (segwit) format
+  if (tx.marker === ADVANCED_TRANSACTION_MARKER && tx.flag === ADVANCED_TRANSACTION_FLAG) {
+    // -
+  } else {
+    // undo the reading of the marker and flag byte
+    offset -= 2;
+    tx.marker = null;
+    tx.flag = null;
+  }
+
+  var vinLen = readVarInt()
+  for (var i = 0; i < vinLen; ++i) {
+    tx.ins.push({
+      hash: readSlice(32),
+      index: readUInt32(),
+      script: readScript(),
+      sequence: readUInt32()
+    })
+  }
+
+  var voutLen = readVarInt()
+  for (i = 0; i < voutLen; ++i) {
+    tx.outs.push({
+      value: readUInt64(),
+      script: readScript()
+    })
+  }
+
+  if (tx.flag === ADVANCED_TRANSACTION_FLAG) {
+    for (i = 0; i < vinLen; ++i) {
+      tx.ins[i].witness = []
+      var witnessLen = readVarInt()
+      for (var x = 0; x < witnessLen; ++x) {
+        tx.ins[i].witness.push(readScript())
+      }
+    }
+  }
+
+  tx.locktime = readUInt32()
+
+  if (__noStrict) return tx
+  if (offset !== buffer.length) throw new Error('Transaction has unexpected data')
+
+  return tx
+}
+
+Bitcoin.bitcoin.Transaction.prototype.hashForSignatureV2 = function (inIndex, prevOutScript, amount, hashType) {
+  var Buffer = Bitcoin.Buffer.Buffer,
+      Transaction = Bitcoin.bitcoin.Transaction,
+      bscript = Bitcoin.bitcoin.script;
+
+  var hashPrevouts = new Buffer("00" * 32, 'hex')
+  var hashSequence = new Buffer("00" * 32, 'hex')
+  var hashOutputs = new Buffer("00" * 32, 'hex')
+
+  function txOutToBuffer(txOut) {
+    var bufferWriter = new BufferWriter(8 + bufferutils.varIntSize(txOut.script.length) + txOut.script.length)
+
+    bufferWriter.writeUInt64(txOut.value)
+    bufferWriter.writeScript(txOut.script)
+    console.log('txOut ' + bufferWriter.buffer.toString('hex'));
+
+    return bufferWriter.buffer
+  }
+
+  if (!(hashType & Transaction.SIGHASH_ANYONECANPAY)) {
+    hashPrevouts = bcrypto.hash256(Buffer.concat(this.ins.map(function(txIn) {
+      var bufferWriter = new BufferWriter(36)
+
+      bufferWriter.writeSlice(txIn.hash)
+      bufferWriter.writeUInt32(txIn.index)
+
+      return bufferWriter.buffer
+    })))
+  }
+
+  if (!(hashType & Transaction.SIGHASH_ANYONECANPAY) && hashType & 0x1f != Transaction.SIGHASH_SINGLE && (hashType & 0x1f) != Transaction.SIGHASH_NONE) {
+    hashSequence = bcrypto.hash256(Buffer.concat(this.ins.map(function(txIn) {
+      var bufferWriter = new BufferWriter(4)
+
+      bufferWriter.writeUInt32(txIn.sequence)
+
+      return bufferWriter.buffer
+    })))
+  }
+
+  if ((hashType & 0x1f) != Transaction.SIGHASH_SINGLE && (hashType & 0x1f) != Transaction.SIGHASH_NONE) {
+    hashOutputs = bcrypto.hash256(Buffer.concat(this.outs.map(function(txOut) {
+      return txOutToBuffer(txOut)
+    })))
+  } else if ((hashType & 0x1f) == Transaction.SIGHASH_SINGLE && inIndex < this.outs.length) {
+    hashOutputs = bcrypto.hash256(txOutToBuffer(this.outs[inIndex]))
+  }
+
+  console.log('hashPrevouts', hashPrevouts.toString('hex'))
+  console.log('hashSequence', hashSequence.toString('hex'))
+  console.log('hashOutputs', hashOutputs.toString('hex'))
+
+  // TODO: cache hashPrevouts, hashSequence and hashOutputs for all signatures in a transaction
+
+  var bufferWriter = new BufferWriter(4 + 32 + 32 + 32 + 4 + bufferutils.varIntSize(prevOutScript.length) + prevOutScript.length + 8 + 4 + 32 + 4 + 4)
+
+  bufferWriter.writeUInt32(this.version)
+
+  bufferWriter.writeSlice(hashPrevouts)
+  bufferWriter.writeSlice(hashSequence)
+
+  console.log('prevOutScript', prevOutScript)
+  console.log('prevOutScript', bscript.decompile(prevOutScript))
+
+  console.log('amount', amount)
+
+  // The input being signed (replacing the scriptSig with scriptCode + amount)
+  // The prevout may already be contained in hashPrevout, and the nSequence
+  // may already be contain in hashSequence.
+  bufferWriter.writeSlice(this.ins[inIndex].hash)
+  bufferWriter.writeUInt32(this.ins[inIndex].index)
+  bufferWriter.writeScript(prevOutScript)
+  bufferWriter.writeUInt64(amount)
+  bufferWriter.writeUInt32(this.ins[inIndex].sequence)
+
+  bufferWriter.writeSlice(hashOutputs)
+
+  bufferWriter.writeUInt32(this.locktime)
+  bufferWriter.writeUInt32(hashType)
+
+  console.log('SignatureHashPayload', bufferWriter.buffer.toString('hex'))
+  console.log('SignatureHash', bcrypto.hash256(bufferWriter.buffer).toString('hex'))
+
+  return bcrypto.hash256(bufferWriter.buffer)
+}
+
 Bitcoin.bitcoin.Transaction.prototype.cloneTransactionForSignature =
   function (connectedScript, inIndex, hashType)
 {
