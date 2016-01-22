@@ -128,10 +128,22 @@ angular.module('greenWalletSendControllers',
                     Bitcoin.bitcoin.opcodes.OP_CHECKMULTISIG
                 ]);
 
-                var hash160 = Bitcoin.bitcoin.crypto.hash160(script_to_hash).toString('hex');
+                var hash160 = Bitcoin.bitcoin.crypto.hash160(script_to_hash).toString('hex'),
+                    hash160_segwit = null;
+                if (cur_net.isSegwit) {
+                    var hash256 = Bitcoin.bitcoin.crypto.sha256(script_to_hash);
+                    var buf = Bitcoin.Buffer.Buffer.concat([
+                        new Bitcoin.Buffer.Buffer([0, 32]),
+                        hash256
+                    ]);
+                    hash160_segwit = Bitcoin.bitcoin.crypto.hash160(buf).toString('hex');
+                }
                 for (var i = 0; i < tx.outs.length; i++) {
                     var chunks = Bitcoin.bitcoin.script.decompile(tx.outs[i].script);
-                    if (chunks.length != 3 || chunks[1].toString('hex') != hash160) {
+                    if (chunks.length != 3 || (
+                            hash160 != chunks[1].toString('hex') &&
+                            !(hash160_segwit &&
+                                hash160_segwit == chunks[1].toString('hex')))) {
                         if (i == tx.outs.length - 1) {
                             return $q.reject(gettext('Missing change P2SH script'));
                         }
