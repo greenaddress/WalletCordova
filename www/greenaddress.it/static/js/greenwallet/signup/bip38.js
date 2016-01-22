@@ -16,10 +16,10 @@ var bip38 = (function() {
                 message.push(input.data[i] ^ derivedhalf1[i]);
             }
 
-            var cipher = Bitcoin.aes.createCipher(
+            var cipher = Bitcoin.aes.createCipheriv(
                 'aes-256-ecb',
-                derivedhalf2,
-                salt
+                new Bitcoin.Buffer.Buffer(derivedhalf2),
+                new Bitcoin.Buffer.Buffer(0)
             );
             cipher.setAutoPadding(false);
             cipher.end(new Bitcoin.Buffer.Buffer(message));
@@ -35,10 +35,10 @@ var bip38 = (function() {
 
             var encrypted = bytes.slice(0, -4);
 
-            var cipher = Bitcoin.aes.createDecipher(
+            var cipher = Bitcoin.aes.createDecipheriv(
                 'aes-256-ecb',
-                derivedBytes.subarray(32, 32+32),
-                salt
+                new Bitcoin.Buffer.Buffer(derivedBytes.subarray(32, 32+32)),
+                new Bitcoin.Buffer.Buffer(0)
             );
             cipher.setAutoPadding(false);
             cipher.end(new Bitcoin.Buffer.Buffer(encrypted));
