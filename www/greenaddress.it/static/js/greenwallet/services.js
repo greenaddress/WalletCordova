@@ -2743,7 +2743,8 @@ angular.module('greenWalletServices', [])
                 }
                 var d;
                 var subaccounts = [];
-                for (var i = 0; i < $scope.wallet.subaccounts.length; i++) {
+                // start with i = 1 - do not show 'Main' in the addressbook
+                for (var i = 1; i < $scope.wallet.subaccounts.length; i++) {
                     var account = $scope.wallet.subaccounts[i];
                     subaccounts.push([account.name, account.receiving_id, '', 'subaccount', true]);
                 }
