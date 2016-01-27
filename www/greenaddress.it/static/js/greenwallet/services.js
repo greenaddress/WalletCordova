@@ -758,7 +758,8 @@ angular.module('greenWalletServices', [])
                              rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
                              social_destination: tx_social_destination, social_value: tx_social_value,
                              asset_id: asset_id, asset_name: asset_name, size: tx.size,
-                             fee_per_kb: Math.round(tx.fee/(tx.size/1000))});
+                             fee_per_kb: Math.round(tx.fee/(tx.size/1000)),
+                             rbf_optin: tx.rbf_optin});
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
