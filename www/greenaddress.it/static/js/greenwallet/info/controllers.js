@@ -133,6 +133,7 @@ angular.module('greenWalletInfoControllers',
         tx.estimated_fees = estimates;
     };
     var update_fees = function() {
+        if (!$scope.wallet.rbf) return;
         if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
         $rootScope.safeApply(function() {
             for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {
