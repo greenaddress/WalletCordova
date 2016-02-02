@@ -87,6 +87,181 @@
 </div>
 
 </div> <!-- id="general" -->
+<div id="transactions">
+<hr class="double">
+<div class="header">
+  Transazioni
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">Notifiche</div>
+    <div class="sub-header-desc">Le notifiche offrono una sicurezza migliorata se configurate per i movimenti in uscita e aggiornamenti istantanei quando configurate per i movimenti in entrata</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
+      <div class="form-group">
+        <label class="control-label">Manda notifica di transazioni in ingresso via</label>
+      </div>
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="settings.notifications.email_incoming" ng-disabled="settings.updating_ntf_email_incoming || !wallet.twofac.email_confirmed">
+          <span class="switch"></span>
+          email
+        </label>
+      </div><!--
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch">
+          <span class="switch"></span>
+          SMS
+        </label>
+      </div> -->
+    </div>
+    <hr>
+    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
+        <div class="form-group">
+          <label class="control-label">Manda notifica di transazioni in uscita via</label>
+        </div>
+        <div class="form-group">
+          <label class="switch">
+              <input type="checkbox" class="switch" ng-model="settings.notifications.email_outgoing" ng-disabled="settings.updating_ntf_email_outgoing || !wallet.twofac.email_confirmed">
+              <span class="switch"></span>
+              email
+          </label>
+        </div><!--
+        <div class="form-group">
+          <label class="switch">
+            <input type="checkbox" class="switch">
+            <span class="switch"></span>
+            SMS
+          </label>
+        </div> -->
+      </div>
+      <div ng-hide="wallet.twofac.email_confirmed">
+        <hr>
+        <small class="label label-info" style="white-space: normal"><strong>NOTA</strong>: È necessario avere un email confermata per abilitare questa funzione.</small>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">nLockTime</div>
+    <div class="sub-header-desc">Le transazioni nLockTime permettono di recuperare i tuoi fondi dopo un numero predefinito di blocchi</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
+      <div class="form-group">
+        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
+          <label for="id_nlocktime_blocks" class="control-label">Permetti di ottenere i fondi senza la firma di GreenAddress dopo</label>
+          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
+          blocchi
+          <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
+          <br />(( settings.nlocktime.blocks_userfriendly ))
+        </div>
+        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac.email_confirmed">
+          <hr>
+          <small class="label label-info" style="white-space: normal"><strong>NOTA</strong>: Sia le notifiche per i momvimenti in uscita che per quelli in entrata devono essere abilitati per usare questa fetaure.</small>
+        </div>
+        <hr>
+        <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Mostra gli output in scadenza a breve</a>
+        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Inviare tutte le transazioni nLockTime via e-mail</a>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="TxLimitsController">
+  <div class="col-md-3">
+    <div class="sub-header">Limiti di spesa</div>
+    <div class="sub-header-desc">Configura un limite sotto il quale non ti verrà richiesta l'autenticazioine a due fattori per pagamenti super veloci</div>
+  </div>
+  <div class="col-md-9">
+    <p>È possibile indicare dei limiti di importo (BTC o fiat) per le operazioni che si possono fare senza utilizzare l'autenticazione a due fattori</p>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Limit currency</label>
+        <div class="col-sm-7">
+          <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
+          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (valuta corrente)</span>
+          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: Usare limiti con valuta fiat assume che puoi fidarti della fonte del cambio di offrire il cambio corretto.</small>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <label class="col-sm-3 control-label">Single transaction</label>
+        <div class="col-sm-7">
+          <span class="form-control">((wallet.limits.per_tx|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+        </div>
+      </div> -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Total</label>
+        <div class="col-sm-7">
+          <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+          <small>Questo limite verrà diminiuto ad ogni transazione e avrai bisogno di riempirlo manualmente cambiando questo valore.</small>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Cambia i limiti</button>
+    </div>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="PrivacyController">
+  <div class="col-md-3">
+    <div class="sub-header">Privacy</div>
+    <div class="sub-header-desc">Decidi chi puo' mandarti bitcoin direttamente nel tuo wallet GreenAddress e chi puo' vedere il tuo nome quando riceve bitcoin da te</div>
+  </div>
+  <div class="col-md-9" submittable>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Consentire l'invio al mio portafoglio tramite e-mail/Reddit</label>
+          <br /><small>(Nota: in questo momento la rubrica non supporta i contatti di Reddit, quindi scegliendo 'Rubrica contatti' impedira' l'invio di bitcoin al vostro portafoglio direttamente al vostro user di Reddit)</small></div>
+          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
+            <option value="2">Tutti</option>
+            <option value="1">Contatti in rubrica</option>
+            <option value="0">Nessuno</option>
+          </select>
+        </div>
+      </form>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Mostra la mia email/user Reddit come mittente a </label>
+          <br /><small>(Nota: in questo momento la rubrica non supporta  i contatti di Reddit, quindi scegliendo 'Aggiunto reciprocamente nella rubrica' non sarai visibile come mittente quando tramite mandi bitcoin via Reddit)</small></div>
+          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
+            <option value="2">Tutti</option>
+            <option value="1">Reciprocamente  in rubrica</option>
+            <option value="0">Nessuno</option>
+          </select>
+        </div>
+      </form>
+  </div>
+</div>
+<hr class="double" ng-show="wallet.rbf">
+<div class="row" ng-show="wallet.rbf">
+  <div class="col-md-3">
+    <div class="sub-header">Replace by fee</div>
+    <div class="sub-header-desc">Replace by fee functionality allows re-sending unconfirmed transactions with higher fees to speed up confirmation progress.</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+    <div>
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="settings.replace_by_fee" ng-disabled="settings.replace_by_fee_updating" id="replace_by_fee_switch">
+          <span class="switch"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="replace_by_fee_switch">Allow replacing by fee for all outgoing transactions</label>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+</div> <!-- id="transactions" -->
 <div id="security">
 <hr class="double">
 <div class="header">
@@ -237,91 +412,6 @@
         <input type="submit" class="btn btn-sm btn-default" value="(( thirdparty.customstate.save_button_label ))" ng-show="thirdparty.customstate.username && thirdparty.customstate.password" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" ng-click="thirdparty.customstate.save()" />
       </div>
     </form>
-  </div>
-</div>
-<hr class="double">
-<div class="row">
-  <div class="col-md-3">
-    <div class="sub-header">Notifiche</div>
-    <div class="sub-header-desc">Le notifiche offrono una sicurezza migliorata se configurate per i movimenti in uscita e aggiornamenti istantanei quando configurate per i movimenti in entrata</div>
-  </div>
-  <div class="col-md-9">
-    <form role="form" class="form-inline">
-    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
-      <div class="form-group">
-        <label class="control-label">Manda notifica di transazioni in ingresso via</label>
-      </div>
-      <div class="form-group">
-        <label class="switch">
-          <input type="checkbox" class="switch" ng-model="settings.notifications.email_incoming" ng-disabled="settings.updating_ntf_email_incoming || !wallet.twofac.email_confirmed">
-          <span class="switch"></span>
-          email
-        </label>
-      </div><!--
-      <div class="form-group">
-        <label class="switch">
-          <input type="checkbox" class="switch">
-          <span class="switch"></span>
-          SMS
-        </label>
-      </div> -->
-    </div>
-    <hr>
-    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
-        <div class="form-group">
-          <label class="control-label">Manda notifica di transazioni in uscita via</label>
-        </div>
-        <div class="form-group">
-          <label class="switch">
-              <input type="checkbox" class="switch" ng-model="settings.notifications.email_outgoing" ng-disabled="settings.updating_ntf_email_outgoing || !wallet.twofac.email_confirmed">
-              <span class="switch"></span>
-              email
-          </label>
-        </div><!--
-        <div class="form-group">
-          <label class="switch">
-            <input type="checkbox" class="switch">
-            <span class="switch"></span>
-            SMS
-          </label>
-        </div> -->
-      </div>
-      <div ng-hide="wallet.twofac.email_confirmed">
-        <hr>
-        <small class="label label-info" style="white-space: normal"><strong>NOTA</strong>: È necessario avere un email confermata per abilitare questa funzione.</small>
-      </div>
-    </form>
-  </div>
-</div>
-<hr class="double">
-<div class="row" ng-controller="PrivacyController">
-  <div class="col-md-3">
-    <div class="sub-header">Privacy</div>
-    <div class="sub-header-desc">Decidi chi puo' mandarti bitcoin direttamente nel tuo wallet GreenAddress e chi puo' vedere il tuo nome quando riceve bitcoin da te</div>
-  </div>
-  <div class="col-md-9" submittable>
-      <form role="form" class="row">
-        <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Consentire l'invio al mio portafoglio tramite e-mail/Reddit</label>
-          <br /><small>(Nota: in questo momento la rubrica non supporta i contatti di Reddit, quindi scegliendo 'Rubrica contatti' impedira' l'invio di bitcoin al vostro portafoglio direttamente al vostro user di Reddit)</small></div>
-          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
-            <option value="2">Tutti</option>
-            <option value="1">Contatti in rubrica</option>
-            <option value="0">Nessuno</option>
-          </select>
-        </div>
-      </form>
-      <form role="form" class="row">
-        <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Mostra la mia email/user Reddit come mittente a </label>
-          <br /><small>(Nota: in questo momento la rubrica non supporta  i contatti di Reddit, quindi scegliendo 'Aggiunto reciprocamente nella rubrica' non sarai visibile come mittente quando tramite mandi bitcoin via Reddit)</small></div>
-          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
-            <option value="2">Tutti</option>
-            <option value="1">Reciprocamente  in rubrica</option>
-            <option value="0">Nessuno</option>
-          </select>
-        </div>
-      </form>
   </div>
 </div>
 <hr class="double">
@@ -477,69 +567,6 @@
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Scrivi crittografata su NFC tag</button>
     
     
-  </div>
-</div>
-<hr class="double">
-<div class="row">
-  <div class="col-md-3">
-    <div class="sub-header">nLockTime</div>
-    <div class="sub-header-desc">Le transazioni nLockTime permettono di recuperare i tuoi fondi dopo un numero predefinito di blocchi</div>
-  </div>
-  <div class="col-md-9">
-    <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
-      <div class="form-group">
-        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
-          <label for="id_nlocktime_blocks" class="control-label">Permetti di ottenere i fondi senza la firma di GreenAddress dopo</label>
-          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
-          blocchi
-          <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
-          <br />(( settings.nlocktime.blocks_userfriendly ))
-        </div>
-        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac.email_confirmed">
-          <hr>
-          <small class="label label-info" style="white-space: normal"><strong>NOTA</strong>: Sia le notifiche per i momvimenti in uscita che per quelli in entrata devono essere abilitati per usare questa fetaure.</small>
-        </div>
-        <hr>
-        <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Mostra gli output in scadenza a breve</a>
-        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Inviare tutte le transazioni nLockTime via e-mail</a>
-      </div>
-    </form>
-  </div>
-</div>
-<hr class="double">
-<div class="row" ng-controller="TxLimitsController">
-  <div class="col-md-3">
-    <div class="sub-header">Limiti di spesa</div>
-    <div class="sub-header-desc">Configura un limite sotto il quale non ti verrà richiesta l'autenticazioine a due fattori per pagamenti super veloci</div>
-  </div>
-  <div class="col-md-9">
-    <p>È possibile indicare dei limiti di importo (BTC o fiat) per le operazioni che si possono fare senza utilizzare l'autenticazione a due fattori</p>
-    <div class="form-horizontal">
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Limit currency</label>
-        <div class="col-sm-7">
-          <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
-          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (valuta corrente)</span>
-          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>NOTA</strong>: Usare limiti con valuta fiat assume che puoi fidarti della fonte del cambio di offrire il cambio corretto.</small>
-        </div>
-      </div>
-      <!-- <div class="form-group">
-        <label class="col-sm-3 control-label">Single transaction</label>
-        <div class="col-sm-7">
-          <span class="form-control">((wallet.limits.per_tx|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
-        </div>
-      </div> -->
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Total</label>
-        <div class="col-sm-7">
-          <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
-          <small>Questo limite verrà diminiuto ad ogni transazione e avrai bisogno di riempirlo manualmente cambiando questo valore.</small>
-        </div>
-      </div>
-    </div>
-    <div>
-      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Cambia i limiti</button>
-    </div>
   </div>
 </div>
 <!--

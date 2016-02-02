@@ -430,7 +430,7 @@ angular.module('greenWalletSendControllers',
         },
         _send_social_ga: function(satoshis) {
             var that = this, to_addr = {type: this.recipient.type, id: that.recipient.address};
-            var priv_data = {instant: that.instant, prevouts_mode: 'http'};
+            var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee, instant: that.instant, prevouts_mode: 'http'};
             if (that.recipient.address != that.recipient.name) {
                 priv_data.social_destination = that.recipient.name;
             }
@@ -497,7 +497,8 @@ angular.module('greenWalletSendControllers',
                         social_destination.id = that.recipient.address;
                     }
                 }
-                var priv_data = {pointer: pointer,
+                var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee,
+                                 pointer: pointer,
                                  pubkey: Array.from(key.keyPair.getPublicKeyBuffer()),
                                  social_destination: social_destination,
                                  external_private: true,
@@ -578,7 +579,8 @@ angular.module('greenWalletSendControllers',
                 });
                 return;
             }
-            var priv_data = {instant: that.instant, allow_random_change: true, memo: this.memo,
+            var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee,
+                             instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount, prevouts_mode: 'http'};
             if (that.spend_all) satoshis = $scope.wallet.final_balance;
             tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {
@@ -646,7 +648,9 @@ angular.module('greenWalletSendControllers',
             var satoshis = that.amount_to_satoshis(that.amount);
             var data = angular.extend({}, that.recipient.data);
             data.subaccount = $scope.wallet.current_subaccount;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, data, {prevouts_mode: 'http'}).then(function(data) {
+            tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, data, {
+                    rbf_optin: $scope.wallet.appearance.replace_by_fee,
+                    prevouts_mode: 'http'}).then(function(data) {
                 that.signing = true;
                 return wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
                     $location.url('/info/');

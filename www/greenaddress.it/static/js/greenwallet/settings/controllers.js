@@ -326,6 +326,7 @@ angular.module('greenWalletSettingsControllers',
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
     }
     var settings = $scope.settings = {
+        replace_by_fee: $scope.wallet.appearance.replace_by_fee,
         noLocalStorage: storage.noLocalStorage,
         unit: $scope.wallet.unit,
         pricing_source: $scope.wallet.fiat_currency + '|' + $scope.wallet.fiat_exchange,
@@ -529,6 +530,22 @@ angular.module('greenWalletSettingsControllers',
                     gaEvent('Wallet', 'CurrencyChangeFailed', err.args[1]);
                     notices.makeNotice('error', err.args[1]);
                 }
+            });
+        }
+    });
+    $scope.$watch('settings.replace_by_fee', function(newValue, oldValue) {
+        if (oldValue !== newValue && !settings.replace_by_fee_updating &&
+                // avoid infinite loop by checking for post-update value change:
+                newValue != $scope.wallet.appearance.replace_by_fee) {
+            settings.replace_by_fee_updating = true;
+            settings.replace_by_fee = oldValue;  // set to old until really updated
+            wallets.updateAppearance(
+                $scope, 'replace_by_fee', newValue
+            ).then(function() {
+                settings.replace_by_fee_updating = false;
+                settings.replace_by_fee = newValue;
+            }).finally(function() {
+                settings.replace_by_fee_updating = false;
             });
         }
     });

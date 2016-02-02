@@ -52,6 +52,116 @@ angular.module('greenWalletTransactionsControllers',
         });
     }
 
+    $scope.bump_fee = function(transaction, new_fee) {
+        new_fee = Math.round(new_fee);
+        $scope.bumping_fee = true;
+        transaction.bumping_dropdown_open = false;
+        //tx_sender.call(
+        //              'http://greenaddressit.com/txs/get_all_unspent_outputs',
+        //            1   // do not include zero-confs
+        //      ).then(function(utxos) {
+        var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
+        var targetFeeDelta = new_fee - parseInt(transaction.fee);
+        var requiredFeeDelta = transaction.rawtx.length / 2; // assumes mintxfee = 1000
+        var feeDelta = Math.max(targetFeeDelta, requiredFeeDelta);
+        var newOuts = [];
+        for (var i = 0; i < transaction.outputs.length; ++i) {
+            if (transaction.outputs[i].is_relevant) {
+                // either change or re-deposit
+                if (bumpedTx.outs[i].value < feeDelta) {
+                    // output too small to be decreased - remove it altogether
+                    feeDelta -= bumpedTx.outs[i].value;
+                } else {
+                    bumpedTx.outs[i].value -= feeDelta;
+                    feeDelta = 0;
+                    newOuts.push(bumpedTx.outs[i]);
+                }
+            } else {
+                // keep the original non-change output
+                newOuts.push(bumpedTx.outs[i]);
+            }
+        }
+        bumpedTx.outs = newOuts;
+
+        if (feeDelta > 0) {
+            notices.makeNotice('error', 'Adding inputs not yet supported');
+            return;
+        }
+
+        var builder = Bitcoin.bitcoin.TransactionBuilder.fromTransaction(
+            bumpedTx, cur_net
+        );
+        // (Not really alpha, but we need the same changes allowing signatures
+        //  to be deferreds.)
+        Object.setPrototypeOf(
+            builder,
+            Bitcoin.contrib.AlphaTransactionBuilder.prototype
+        );
+
+        var signatures_ds = [];
+        for (var i = 0; i < transaction.inputs.length; ++i) {
+            (function (i) {
+                var utxo = transaction.inputs[i];
+                var gawallet = new Bitcoin.bitcoin.HDNode(
+                    Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                        new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
+                        cur_net
+                    ),
+                    new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
+                );
+                var gaKey;
+                if ($scope.wallet.current_subaccount) {
+                    gaKey = gawallet.derive(3).then(function (branch) {
+                        return branch.subpath($scope.wallet.gait_path);
+                    }).then(function (gawallet) {
+                        return gawallet.derive($scope.wallet.current_subaccount);
+                    });
+                } else {
+                    gaKey = gawallet.derive(1).then(function (branch) {
+                        return branch.subpath($scope.wallet.gait_path);
+                    });
+                }
+                gaKey = gaKey.then(function (gawallet) {
+                    return gawallet.derive(utxo.pubkey_pointer);
+                });
+                var userKey = $q.when($scope.wallet.hdwallet);
+                if ($scope.wallet.current_subaccount) {
+                    userKey = userKey.then(function (key) {
+                        return key.deriveHardened(branches.SUBACCOUNT);
+                    }).then(function (key) {
+                        return key.deriveHardened($scope.wallet.current_subaccount);
+                    })
+                }
+                var userKey = userKey.then(function (key) {
+                    return key.derive(branches.REGULAR);
+                }).then(function (branch) {
+                    return branch.derive(utxo.pubkey_pointer)
+                });
+                signatures_ds.push($q.all([gaKey, userKey]).then(function (keys) {
+                    var gaKey = keys[0], userKey = keys[1];
+                    var redeemScript = Bitcoin.bitcoin.script.multisigOutput(
+                        2,
+                        [gaKey.keyPair.getPublicKeyBuffer(),
+                         userKey.keyPair.getPublicKeyBuffer()]
+                    )
+                    builder.inputs[i].signatures = [];
+                    return builder.sign(i, userKey.keyPair, redeemScript);
+                }));
+            })(i);
+        }
+
+        return $q.all(signatures_ds).then(function() {
+            return tx_sender.call(
+                'http://greenaddressit.com/vault/send_raw_tx',
+                builder.build().toHex()
+            );
+        }).catch(function(e) {
+            notices.makeNotice('error', e.args ? e.args[1] : e);
+        }).finally(function() {
+            $scope.bumping_fee = false;
+        });
+    };
+
     $scope.edit_tx_memo = function(tx) {
         if (tx.new_memo == tx.memo) {
             // nothing to do

@@ -87,6 +87,181 @@
 </div>
 
 </div> <!-- id="general" -->
+<div id="transactions">
+<hr class="double">
+<div class="header">
+  Συναλλαγές
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
+    <div class="sub-header-desc">Ειδοποιήσεις επιτρέπουν τη βελτίωση της ασφάλειας, όταν ρυθμιστούν για τις εξερχόμενες και πιο ενημερωμένες πληροφορίες, όταν ρυθμιστούν για εισερχόμενες</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
+      <div class="form-group">
+        <label class="control-label">Αποστολή ειδοποίησης για εισερχόμενες συναλλαγές από</label>
+      </div>
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="settings.notifications.email_incoming" ng-disabled="settings.updating_ntf_email_incoming || !wallet.twofac.email_confirmed">
+          <span class="switch"></span>
+          email
+        </label>
+      </div><!--
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch">
+          <span class="switch"></span>
+          SMS
+        </label>
+      </div> -->
+    </div>
+    <hr>
+    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
+        <div class="form-group">
+          <label class="control-label">Αποστολή ειδοποίησης για εξερχόμενες συναλλαγές απο</label>
+        </div>
+        <div class="form-group">
+          <label class="switch">
+              <input type="checkbox" class="switch" ng-model="settings.notifications.email_outgoing" ng-disabled="settings.updating_ntf_email_outgoing || !wallet.twofac.email_confirmed">
+              <span class="switch"></span>
+              email
+          </label>
+        </div><!--
+        <div class="form-group">
+          <label class="switch">
+            <input type="checkbox" class="switch">
+            <span class="switch"></span>
+            SMS
+          </label>
+        </div> -->
+      </div>
+      <div ng-hide="wallet.twofac.email_confirmed">
+        <hr>
+        <small class="label label-info" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: You need to have a confirmed email enabled for this feature to work.</small>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row">
+  <div class="col-md-3">
+    <div class="sub-header">nLockTime</div>
+    <div class="sub-header-desc">nLockTime transactions allow you to redeem your deposited funds without GreenAddress' signature after pre-defined number of blocks</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
+      <div class="form-group">
+        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
+          <label for="id_nlocktime_blocks" class="control-label">Allow redeeming funds without GreenAddress' signature after</label>
+          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
+          blocks
+          <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
+          <br />(( settings.nlocktime.blocks_userfriendly ))
+        </div>
+        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac.email_confirmed">
+          <hr>
+          <small class="label label-info" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: Τόσο οι εξερχόμενες όσο και οι εισερχόμενες ειδοποιήσεις συναλλαγών πρέπει να είναι ενεργοποιημένες για να λειτουργεί αυτή η δυνατότητα.</small>
+        </div>
+        <hr>
+        <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Εμφάνιση εκροών που λήγουν σύντομα</a>
+        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Send all nLockTime transactions by email</a>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="TxLimitsController">
+  <div class="col-md-3">
+    <div class="sub-header">Όρια δαπανών</div>
+    <div class="sub-header-desc">Θέστε κάποια όρια για τα οποία δεν θα σας ζητηθεί έλεγχο ταυρότητας με την μέθοδο των δύο παραγόντων για πληρωμές φιλικές προς το χρήστη.</div>
+  </div>
+  <div class="col-md-9">
+    <p>You can provide amount (BTC or fiat) limits of transactions that you can make without using two factor authentication</p>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Limit currency</label>
+        <div class="col-sm-7">
+          <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
+          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (current currency)</span>
+          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <label class="col-sm-3 control-label">Single transaction</label>
+        <div class="col-sm-7">
+          <span class="form-control">((wallet.limits.per_tx|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+        </div>
+      </div> -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Total</label>
+        <div class="col-sm-7">
+          <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
+          <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Change limits</button>
+    </div>
+  </div>
+</div>
+<hr class="double">
+<div class="row" ng-controller="PrivacyController">
+  <div class="col-md-3">
+    <div class="sub-header">Privacy</div>
+    <div class="sub-header-desc">Decide who can send you money directly to your GreenAddress wallet, and who can see your name when receiving money from you</div>
+  </div>
+  <div class="col-md-9" submittable>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email/Reddit</label>
+          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Addressbook contacts' will disallow sending to you wallet directly using your Reddit handle)</small></div>
+          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
+            <option value="2">Everyone</option>
+            <option value="1">Addressbook contacts</option>
+            <option value="0">No one</option>
+          </select>
+        </div>
+      </form>
+      <form role="form" class="row">
+        <div class="form-group">
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email/Reddit handle as sender to </label>
+          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Mutually added in addressbook' will cause you to be never visible as sender when using Reddit handle for sending)</small></div>
+          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
+            <option value="2">Everyone</option>
+            <option value="1">Mutually added in addressbook</option>
+            <option value="0">No one</option>
+          </select>
+        </div>
+      </form>
+  </div>
+</div>
+<hr class="double" ng-show="wallet.rbf">
+<div class="row" ng-show="wallet.rbf">
+  <div class="col-md-3">
+    <div class="sub-header">Replace by fee</div>
+    <div class="sub-header-desc">Replace by fee functionality allows re-sending unconfirmed transactions with higher fees to speed up confirmation progress.</div>
+  </div>
+  <div class="col-md-9">
+    <form role="form" class="form-inline">
+    <div>
+      <div class="form-group">
+        <label class="switch">
+          <input type="checkbox" class="switch" ng-model="settings.replace_by_fee" ng-disabled="settings.replace_by_fee_updating" id="replace_by_fee_switch">
+          <span class="switch"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="replace_by_fee_switch">Allow replacing by fee for all outgoing transactions</label>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+</div> <!-- id="transactions" -->
 <div id="security">
 <hr class="double">
 <div class="header">
@@ -237,91 +412,6 @@
         <input type="submit" class="btn btn-sm btn-default" value="(( thirdparty.customstate.save_button_label ))" ng-show="thirdparty.customstate.username && thirdparty.customstate.password" ng-disabled="thirdparty.toggling_custom && thirdparty.toggling_custom!='initial'" ng-click="thirdparty.customstate.save()" />
       </div>
     </form>
-  </div>
-</div>
-<hr class="double">
-<div class="row">
-  <div class="col-md-3">
-    <div class="sub-header">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
-    <div class="sub-header-desc">Ειδοποιήσεις επιτρέπουν τη βελτίωση της ασφάλειας, όταν ρυθμιστούν για τις εξερχόμενες και πιο ενημερωμένες πληροφορίες, όταν ρυθμιστούν για εισερχόμενες</div>
-  </div>
-  <div class="col-md-9">
-    <form role="form" class="form-inline">
-    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
-      <div class="form-group">
-        <label class="control-label">Αποστολή ειδοποίησης για εισερχόμενες συναλλαγές από</label>
-      </div>
-      <div class="form-group">
-        <label class="switch">
-          <input type="checkbox" class="switch" ng-model="settings.notifications.email_incoming" ng-disabled="settings.updating_ntf_email_incoming || !wallet.twofac.email_confirmed">
-          <span class="switch"></span>
-          email
-        </label>
-      </div><!--
-      <div class="form-group">
-        <label class="switch">
-          <input type="checkbox" class="switch">
-          <span class="switch"></span>
-          SMS
-        </label>
-      </div> -->
-    </div>
-    <hr>
-    <div ng-class="{grayedout: !wallet.twofac.email_confirmed}">
-        <div class="form-group">
-          <label class="control-label">Αποστολή ειδοποίησης για εξερχόμενες συναλλαγές απο</label>
-        </div>
-        <div class="form-group">
-          <label class="switch">
-              <input type="checkbox" class="switch" ng-model="settings.notifications.email_outgoing" ng-disabled="settings.updating_ntf_email_outgoing || !wallet.twofac.email_confirmed">
-              <span class="switch"></span>
-              email
-          </label>
-        </div><!--
-        <div class="form-group">
-          <label class="switch">
-            <input type="checkbox" class="switch">
-            <span class="switch"></span>
-            SMS
-          </label>
-        </div> -->
-      </div>
-      <div ng-hide="wallet.twofac.email_confirmed">
-        <hr>
-        <small class="label label-info" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: You need to have a confirmed email enabled for this feature to work.</small>
-      </div>
-    </form>
-  </div>
-</div>
-<hr class="double">
-<div class="row" ng-controller="PrivacyController">
-  <div class="col-md-3">
-    <div class="sub-header">Privacy</div>
-    <div class="sub-header-desc">Decide who can send you money directly to your GreenAddress wallet, and who can see your name when receiving money from you</div>
-  </div>
-  <div class="col-md-9" submittable>
-      <form role="form" class="row">
-        <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email/Reddit</label>
-          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Addressbook contacts' will disallow sending to you wallet directly using your Reddit handle)</small></div>
-          <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
-            <option value="2">Everyone</option>
-            <option value="1">Addressbook contacts</option>
-            <option value="0">No one</option>
-          </select>
-        </div>
-      </form>
-      <form role="form" class="row">
-        <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email/Reddit handle as sender to </label>
-          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Mutually added in addressbook' will cause you to be never visible as sender when using Reddit handle for sending)</small></div>
-          <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
-            <option value="2">Everyone</option>
-            <option value="1">Mutually added in addressbook</option>
-            <option value="0">No one</option>
-          </select>
-        </div>
-      </form>
   </div>
 </div>
 <hr class="double">
@@ -477,69 +567,6 @@
     <button ng-hide="cordova_platform=='ios'" class="btn btn-default btn-block-xs" ng-click="settings.nfcmodal_encrypted()"><i class="glyphicon glyphicon-transfer"></i><i class="glyphicon glyphicon-lock"></i> Write encrypted to NFC tag</button>
     
     
-  </div>
-</div>
-<hr class="double">
-<div class="row">
-  <div class="col-md-3">
-    <div class="sub-header">nLockTime</div>
-    <div class="sub-header-desc">nLockTime transactions allow you to redeem your deposited funds without GreenAddress' signature after pre-defined number of blocks</div>
-  </div>
-  <div class="col-md-9">
-    <form role="form" class="form-inline" ng-submit="settings.nlocktime.update()">
-      <div class="form-group">
-        <div ng-class="{grayedout: !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed}">
-          <label for="id_nlocktime_blocks" class="control-label">Allow redeeming funds without GreenAddress' signature after</label>
-          <input class="form-control" type="tel" ng-model="settings.nlocktime.blocks_new" ng-disabled="settings.nlocktime.updating_nlocktime_blocks || !settings.notifications.email_incoming || !settings.notifications.email_outgoing || !wallet.twofac.email_confirmed" />
-          blocks
-          <input type="submit" class="btn btn-sm btn-default" value="Save" ng-show="settings.nlocktime.blocks_new != settings.nlocktime.blocks" ng-disabled="settings.nlocktime.updating_nlocktime_blocks"  />
-          <br />(( settings.nlocktime.blocks_userfriendly ))
-        </div>
-        <div ng-hide="settings.notifications.email_incoming && settings.notifications.email_outgoing && wallet.twofac.email_confirmed">
-          <hr>
-          <small class="label label-info" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: Τόσο οι εξερχόμενες όσο και οι εισερχόμενες ειδοποιήσεις συναλλαγών πρέπει να είναι ενεργοποιημένες για να λειτουργεί αυτή η δυνατότητα.</small>
-        </div>
-        <hr>
-        <a href="" class="btn btn-primary btn-block-xs" ng-click="settings.expiring_soon_modal()"><i class="glyphicon glyphicon-time"></i> Εμφάνιση εκροών που λήγουν σύντομα</a>
-        <a href="" class="btn btn-info btn-block-xs" ng-class="{disabled: settings.sending_nlocktime}" ng-click="settings.send_nlocktime()"><i class="glyphicon glyphicon-send"></i> Send all nLockTime transactions by email</a>
-      </div>
-    </form>
-  </div>
-</div>
-<hr class="double">
-<div class="row" ng-controller="TxLimitsController">
-  <div class="col-md-3">
-    <div class="sub-header">Όρια δαπανών</div>
-    <div class="sub-header-desc">Θέστε κάποια όρια για τα οποία δεν θα σας ζητηθεί έλεγχο ταυρότητας με την μέθοδο των δύο παραγόντων για πληρωμές φιλικές προς το χρήστη.</div>
-  </div>
-  <div class="col-md-9">
-    <p>You can provide amount (BTC or fiat) limits of transactions that you can make without using two factor authentication</p>
-    <div class="form-horizontal">
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Limit currency</label>
-        <div class="col-sm-7">
-          <span class="form-control form-control-noinput" value="BTC" ng-show="!wallet.limits.is_fiat">(( wallet.unit ))</span>
-          <span class="form-control form-control-noinput" value="fiat" ng-show="wallet.limits.is_fiat">(( wallet.fiat_currency)) (current currency)</span>
-          <small ng-show="wallet.limits.is_fiat" class="label label-warning" style="white-space: normal"><strong>ΣΗΜΕΙΩΣΗ</strong>: Using currency values for limits assumes you can trust your pricing source to provide correct values.</small>
-        </div>
-      </div>
-      <!-- <div class="form-group">
-        <label class="col-sm-3 control-label">Single transaction</label>
-        <div class="col-sm-7">
-          <span class="form-control">((wallet.limits.per_tx|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
-        </div>
-      </div> -->
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Total</label>
-        <div class="col-sm-7">
-          <span class="form-control form-control-noinput">((wallet.limits.total|format_btc:wallet.limits.is_fiat?wallet.fiat_currency:wallet.unit))</span>
-          <small>This limit will be decreased with each transaction and you will need to "refill" it manually by changing this value.</small>
-        </div>
-      </div>
-    </div>
-    <div>
-      <button class="btn btn-info btn-block-xs" ng-click="change_tx_limits()"><i class="glyphicon glyphicon-edit"></i> Change limits</button>
-    </div>
   </div>
 </div>
 <!--

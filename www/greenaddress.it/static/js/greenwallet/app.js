@@ -86,18 +86,24 @@ angular.module('greenWalletBaseApp', deps)
 }]).filter('format_btc', ['btc_formatter', function(btc_formatter) {
     return function format_btc(satoshis, unit) {
         if (!satoshis) return '0 ' + unit;
-        return btc_formatter(satoshis, unit) + ' ' + unit;
+        return btc_formatter(Math.round(satoshis), unit) + ' ' + unit;
     };
 }]).filter('format_btc_floor', ['btc_formatter', function(btc_formatter) {
     return function format_btc(satoshis, unit) {
         if (!satoshis) return '0 ' + unit;
-        var num = btc_formatter(satoshis, unit).split('.')[0];  // strip the fractional part
+        var num = btc_formatter(Math.round(satoshis), unit).split('.')[0];  // strip the fractional part
         return num + ' ' + unit;
     };
 }]).filter('format_btc_nounit', ['btc_formatter', function(btc_formatter) {
     return function format_btc_nounit(satoshis, unit) {
-        return btc_formatter(satoshis, unit);
+        return btc_formatter(Math.round(satoshis), unit);
     };
+}]).filter('format_fiat', [function() {
+    return function format_fiat(satoshis, wallet_fiat) {
+        wallet_fiat = JSON.parse(wallet_fiat);
+        var value = satoshis * wallet_fiat.rate / (1000*1000*100);
+        return (Math.round(value * 100) / 100) + ' ' + wallet_fiat.currency;
+    }
 }]).filter('startFrom', function() {
     return function(input, start) {
         if (!input) return input;

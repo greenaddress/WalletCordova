@@ -317,6 +317,8 @@ angular.module('greenWalletServices', [])
                 } catch(e) {
                     $scope.wallet.appearance = {};
                 }
+                $scope.wallet.fee_estimates = data.fee_estimates;
+                $scope.wallet.rbf = data.rbf;
                 if (!('sound' in $scope.wallet.appearance)) {
                     $scope.wallet.appearance.sound = true;
                 }
@@ -325,6 +327,12 @@ angular.module('greenWalletServices', [])
                 }
                 if (!('altimeout' in $scope.wallet.appearance)) {
                     $scope.wallet.appearance.altimeout = 20;
+                }
+                if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
+                    $scope.wallet.appearance.replace_by_fee = data.rbf && (
+                        cur_net === Bitcoin.bitcoin.networks.bitcoin ?
+                            false : true  // enable by default for testnet
+                    );
                 }
                 sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
                 autotimeout.start($scope.wallet.appearance.altimeout);
@@ -754,7 +762,8 @@ angular.module('greenWalletServices', [])
                              sent_back: sent_back, block_height: tx.block_height,
                              confirmations: tx.block_height ? num_confirmations: 0,
                              has_payment_request: tx.has_payment_request,
-                             double_spent_by: tx.double_spent_by,
+                             double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
+                             replacement_of: [],
                              rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
                              social_destination: tx_social_destination, social_value: tx_social_value,
                              asset_id: asset_id, asset_name: asset_name, size: tx.size,
@@ -763,7 +772,29 @@ angular.module('greenWalletServices', [])
                 // tx.unclaimed is later used for cache updating
                 tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
             }
-
+            var hash2tx = {};
+            for (var i = 0; i < retval.length; ++i) {
+                hash2tx[retval[i].txhash] = retval[i];
+            }
+            var new_retval = [];
+            for (var i = 0; i < retval.length; ++i) {
+                var merged = false;
+                if (retval[i].replaced_by && retval[i].replaced_by.length > 0) {
+                    var replaced_by = retval[i].replaced_by;
+                    for (var j = 0; j < replaced_by.length; ++j) {
+                        var tx = hash2tx[replaced_by[j]];
+                        if (tx && !(tx.replaced_by && tx.replaced_by.length)) {
+                            tx.replacement_of.push(retval[i]);
+                            merged = true;
+                            break;
+                        }
+                    }
+                }
+                if (!merged) {
+                    new_retval.push(retval[i]);
+                }
+            }
+            retval = new_retval;
             d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range, subaccount: subaccount,
                         populate_csv: function() {
                             var csv_list = [gettext('Time,Description,satoshis,%s,txhash,fee,memo').replace('%s', this.fiat_currency)];
@@ -1876,6 +1907,10 @@ angular.module('greenWalletServices', [])
                 function(event) {
             gaEvent('Wallet', 'TransactionNotification');
             $rootScope.$broadcast('transaction', event[0]);
+        });
+        s.subscribe('com.greenaddress.fee_estimates',
+                function(event) {
+            $rootScope.$broadcast('fee_estimate', event[0]);
         });
     };
     txSenderService.call = function() {
