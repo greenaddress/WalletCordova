@@ -452,6 +452,16 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     tx_sender.pin = use_pin_data.pin;
                     tx_sender.pin_ident = state.pin_ident;
                 }
+                var check_storage_chaincode = function (chainCode) {
+                    storage.get('pin_chaincode'+storage_suffix).then(function(chaincode) {
+                        if (!chaincode) {
+                            storage.set(
+                                'pin_chaincode'+storage_suffix,
+                                chainCode.toString('hex')
+                            );
+                        }
+                    });
+                }
                 return crypto.decrypt(state['encrypted_seed'+storage_suffix], password).then(function(decoded) {
                     if(decoded && JSON.parse(decoded).seed) {
                         gaEvent('Login', 'PinLoginSucceeded');
@@ -468,6 +478,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                                 var path = mnemonics.seedToPath(path_seed);
                                 return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
                                     hdwallet.seed_hex = parsed.seed;
+                                    check_storage_chaincode(hdwallet.chainCode);
                                     return wallets.login($scope, hdwallet, state.mnemonic, false, false, path_seed);
                                 });
                             }, undefined, function(progress) {
@@ -475,6 +486,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                             });
                         } else {
                             return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(parsed.seed, cur_net)).then(function(hdwallet) {
+                                check_storage_chaincode(hdwallet.chainCode);
                                 hdwallet.seed_hex = parsed.seed;
                                 return wallets.login($scope, hdwallet, parsed.mnemonic, false, false, parsed.path_seed);
                             });
@@ -495,6 +507,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                     } else {
                         suffix = '; ' + gettext('0 attempts left - PIN removed.').replace('%s', pin_attempts_left);
                         storage.remove('pin_ident'+storage_suffix);
+                        storage.remove('pin_chaincode'+storage_suffix);
                         storage.remove('encrypted_seed'+storage_suffix);
                         state.has_pin = false;
                         state.toggleshowpin = true;

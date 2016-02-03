@@ -333,12 +333,12 @@
       <form ng-submit="set_new_pin()" class="form-horizontal" role="form">
         <div ng-show="wallet.hdwallet.keyPair.d">
           <label class="switch">
-            <input type="checkbox" class="switch" ng-model="quicklogin.enabled" ng-disabled="quicklogin.started_setting_pin">
+            <input type="checkbox" class="switch" ng-model="quicklogin.enabled" ng-disabled="quicklogin.started_setting">
             <span class="switch"></span>
               Дозволити швидкий вхід на цьому пристрої
           </label>
-          <hr ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
-          <div class="form-group" ng-show="quicklogin.started_setting_pin || quicklogin.enabled">
+          <hr ng-show="quicklogin.started_setting || quicklogin.enabled">
+          <div class="form-group" ng-show="quicklogin.started_setting || quicklogin.enabled">
             <label ng-show="quicklogin.enabled" class="control-label col-sm-3">Змінити PIN-код</label>
             <label ng-hide="quicklogin.enabled" class="control-label col-sm-3">Встановити PIN-код</label>
             <div class="col-sm-4">

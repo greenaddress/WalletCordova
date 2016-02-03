@@ -1146,6 +1146,56 @@ angular.module('greenWalletServices', [])
             })
         })
     };
+    walletsService.ask_for_tx_confirmation = function(
+        $scope, tx, data
+    ) {
+        if (!($scope.send_tx || $scope.bump_fee)) {
+            // not all txs support this dialog, like redepositing or sweeping
+            return $q.when();
+        }
+        var scope = $scope.$new(), fee, value;
+        if (data.response) {
+            var in_value = 0, out_value = 0;
+            tx.ins.forEach(function(txin) {
+                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
+                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
+                var prevtx = Bitcoin.contrib.transactionFromHex(
+                    data.response.data[rev.toString('hex')]
+                );
+                var prevout = prevtx.outs[txin.index];
+                in_value += prevout.value;
+            });
+            tx.outs.forEach(function(txout) {
+                out_value += txout.value;
+            });
+            fee = in_value - out_value;
+        } else {
+            fee = data.fee;
+        }
+        if ($scope.send_tx.amount == 'MAX') {
+            value = $scope.wallet.final_balance - fee;
+        } else if (data.bumped_tx) {
+            value = -data.bumped_tx.value;
+        } else {
+            value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
+        }
+        scope.tx = {
+            fee: fee,
+            previous_fee: data.bumped_tx && data.bumped_tx.fee,
+            value: value,
+            recipient: data.recipient ? data.recipient :
+                ($scope.send_tx.voucher ?
+                    gettext("Voucher") :
+                    ($scope.send_tx.recipient.name ||
+                        $scope.send_tx.recipient))
+        };
+        var modal = $modal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
+            scope: scope,
+            windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
+        });
+        return modal.result;
+    }
     walletsService.sign_and_send_tx = function($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
         var d = $q.defer();
         var tx = Bitcoin.contrib.transactionFromHex(data.tx);
@@ -1157,45 +1207,6 @@ angular.module('greenWalletServices', [])
             });
         } else {
             prevouts_d = $q.when();
-        }
-        var ask_for_confirmation = function() {
-            if (!$scope.send_tx) {
-                // not all txs support this dialog, like redepositing or sweeping
-                return $q.when();
-            }
-            var scope = $scope.$new();
-            var in_value = 0, out_value = 0;
-            tx.ins.forEach(function(txin) {
-                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
-                var prevtx = Bitcoin.contrib.transactionFromHex(
-                    response.data[rev.toString('hex')]
-                );
-                var prevout = prevtx.outs[txin.index];
-                in_value += prevout.value;
-            });
-            tx.outs.forEach(function(txout) {
-                out_value += txout.value;
-            });
-            var fee = in_value - out_value, value;
-            if ($scope.send_tx.amount == 'MAX') {
-                value = $scope.wallet.final_balance - fee;
-            } else {
-                value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
-            }
-            scope.tx = {
-                fee: fee,
-                value: value,
-                recipient: $scope.send_tx.voucher ?
-                    gettext("Voucher") :
-                    ($scope.send_tx.recipient.name || $scope.send_tx.recipient)
-            };
-            var modal = $modal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
-                scope: scope,
-                windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
-            });
-            return modal.result;
         }
         var signatures = [], device_deferred = null, signed_n = 0;
         var prevoutToPath = function(prevout, trezor, from_subaccount) {
@@ -1590,7 +1601,9 @@ angular.module('greenWalletServices', [])
             });
         }
         d_all = d_all.then(function(signatures) {
-            return ask_for_confirmation().then(function() {
+            return walletsService.ask_for_tx_confirmation(
+                $scope, tx, {response: response}
+            ).then(function() {
                 return signatures;
             });
         }, d.reject);
@@ -1793,6 +1806,10 @@ angular.module('greenWalletServices', [])
                     if (data) {
                         var pin_ident = tx_sender['pin_ident'+suffix] = data;
                         storage.set('pin_ident'+suffix, pin_ident);
+                        storage.set(
+                            'pin_chaincode'+suffix,
+                            $scope.wallet.hdwallet.chainCode.toString('hex')
+                        );
                         tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
                             function(password) {
                                 if (!$scope.wallet.hdwallet.seed_hex) {
@@ -1805,6 +1822,10 @@ angular.module('greenWalletServices', [])
                                                                'mnemonic': $scope.wallet.mnemonic});
                                     crypto.encrypt(data, password).then(function(encrypted) {
                                         storage.set('encrypted_seed'+suffix, encrypted);
+                                        if (!suffix) {
+                                            // chaincode is not used for Touch ID
+                                            storage.set('pin_chaincode', data)
+                                        }
                                     });
                                     tx_sender.pin = pin;
                                     deferred.resolve(pin_ident);
@@ -1996,17 +2017,17 @@ angular.module('greenWalletServices', [])
         session_for_login.subscribe('com.greenaddress.blocks', function(event) {
             $rootScope.$broadcast('block', event[0]);
         });
-        var d1, d2, logging_in = false;
+        var d, logging_in = false;
         if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
-            d1 = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
+            d = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
             logging_in = true;
         } else if (txSenderService.watch_only) {
-            d1 = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
+            d = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
             logging_in = true;
         } else {
-            d1 = $q.when(true);
+            d = $q.when(true);
         }
-        d1.catch(function(err) {
+        d.catch(function(err) {
             if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
                 if (login_d) {
                     // login_d handler may want to handle double login by forcing logout
@@ -2023,17 +2044,10 @@ angular.module('greenWalletServices', [])
                 $location.path('/');
             }
         });
-        if (txSenderService.pin_ident) {
-            // resend PIN to allow PIN changes in the event of reconnect
-            d2 = session_for_login.call('com.greenaddress.pin.get_password',
-                              [txSenderService.pin, txSenderService.pin_ident]);
-        } else {
-            d2 = $q.when(true);
-        }
-        $q.all([d1, d2]).then(function(results) {
+        d.then(function(result) {
             session = session_for_login;
             if (logging_in && login_d) {
-                login_d.resolve(results[0]);
+                login_d.resolve(result);
             }
             // missed calls queues
             for (i in calls_missed) {
@@ -2354,9 +2368,13 @@ angular.module('greenWalletServices', [])
     };
     txSenderService.change_pin = function(new_pin) {
         return txSenderService.call('http://greenaddressit.com/pin/change_pin_login',
-                new_pin, txSenderService.pin_ident).then(function() {
+                new_pin, txSenderService.pin_ident).then(function(res) {
             // keep new pin for reconnection handling
-            txSenderService.pin = new_pin;
+            if (!res) {
+                return $q.reject(gettext('Changing PIN failed.'));
+            } else {
+                txSenderService.pin = new_pin;
+            }
         });
     };
     return txSenderService;

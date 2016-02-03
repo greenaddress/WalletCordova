@@ -3,7 +3,10 @@
 </div>
 
 <div class="modal-body">
-    <p>Please make sure the details below are correct:</p>
+    <p>
+        <span ng-show="tx.previous_fee !== undefined">You are about to bump a fee.</span>
+        Please make sure the details below are correct:
+    </p>
 
     <dl>
         <dt>Destinatario</dt>
@@ -17,7 +20,12 @@
 
     <dl>
         <dt>Fee</dt>
-        <dd>(( tx.fee | format_btc:wallet.unit ))</dd>
+        <dd>
+            (( tx.fee | format_btc:wallet.unit ))
+            <span ng-show="tx.previous_fee">
+                (Previous fee: (( tx.previous_fee | format_btc:wallet.unit )))
+            </span>
+        </dd>
     </dl>
 </div>
 

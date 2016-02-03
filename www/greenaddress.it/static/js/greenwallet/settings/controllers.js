@@ -651,6 +651,7 @@ angular.module('greenWalletSettingsControllers',
                 return tx_sender.call('http://greenaddressit.com/login/remove_account', twofac_data).then(function() {
                     tx_sender.logout();
                     storage.remove('pin_ident');
+                    storage.remove('pin_chaincode');
                     storage.remove('encrypted_seed');
                     $location.path('/');
                 }).catch(function(err) {
@@ -895,15 +896,28 @@ angular.module('greenWalletSettingsControllers',
 }]).controller('QuickLoginController', ['$scope', 'tx_sender', 'notices', 'wallets', 'gaEvent', 'storage',
         function QuickLoginController($scope, tx_sender, notices, wallets, gaEvent, storage) {
     if (!wallets.requireWallet($scope, true)) return;   // dontredirect=true because one redirect in SettingsController is enough
-    $scope.quicklogin = {
-        enabled: tx_sender.has_pin,
-        // NOTE: having tx_sender.pin_ident here means 'chaging PIN' in settings
-        // while logged in via touch ID in reality means creating a new PIN.
-        // This is because backend doesn't allow changing PIN unless logged in
-        // via the same PIN.
-        device_ident: tx_sender.pin_ident
-    };
-    $scope.quicklogin.loaded = true;
+    if (tx_sender.pin_ident) {
+        // logged in via PIN
+        $scope.quicklogin = {
+            enabled: true,
+            device_ident: tx_sender.pin_ident
+        };
+        $scope.quicklogin.loaded = true;
+    } else {
+        storage.get(['pin_chaincode', 'pin_ident']).then(function(res) {
+            if (res.pin_chaincode == $scope.wallet.hdwallet.chainCode.toString('hex')) {
+                // PIN for the same user as currently logged in (via mnemonic)
+                $scope.quicklogin = {
+                    enabled: true,
+                    device_ident: res.pin_ident
+                };
+            } else {
+                $scope.quicklogin = {};
+            }
+            $scope.quicklogin.loaded = true;
+        });
+    }
+
     $scope.$watch('quicklogin.enabled', function(newValue, oldValue) {
         if (newValue === oldValue) return
         if (newValue && !$scope.quicklogin.started_unsetting) {
@@ -925,6 +939,7 @@ angular.module('greenWalletSettingsControllers',
                     $scope.quicklogin.enabled = false;
                     $scope.quicklogin.device_ident = undefined;
                     storage.remove('pin_ident');
+                    storage.remove('pin_chaincode');
                     storage.remove('encrypted_seed');
                     notices.makeNotice('success', gettext('PIN removed'));
                 }, function(err) {
@@ -954,7 +969,7 @@ angular.module('greenWalletSettingsControllers',
             $scope.quicklogin.setting = false;
             $scope.quicklogin.started_setting = false;
             gaEvent('Wallet', 'PinError', err);
-            notices.makeNotice('error', err);
+            notices.makeNotice('error', err.args ? err.args[0] : err);
         };
         if ($scope.quicklogin.device_ident) {  // change the existing PIN
             gaEvent('Wallet', 'PinChangeAttempt');
@@ -975,6 +990,7 @@ angular.module('greenWalletSettingsControllers',
             $scope.quicklogin.device_ident = undefined;
             delete tx_sender.pin_ident;  // don't try using pin on reconnect
             storage.remove('pin_ident');
+            storage.remove('pin_chaincode');
             storage.remove('encrypted_seed');
             notices.makeNotice('success', gettext('All PINs removed'));
         }, function(err) {
