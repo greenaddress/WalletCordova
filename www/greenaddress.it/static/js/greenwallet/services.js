@@ -755,6 +755,7 @@ angular.module('greenWalletServices', [])
                              value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
                              redeemable_value: redeemable_value, negative: negative, positive: positive,
                              description: description, external_social: external_social, unclaimed: unclaimed,
+                             description_short: addresses.length ? addresses.join(', ') : description,
                              pubkey_pointer: pubkey_pointer, inputs: inputs, outputs: outputs, fee: tx.fee,
                              nonzero: value.compareTo(new Bitcoin.BigInteger('0')) != 0,
                              redeemable: redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0,
@@ -1172,7 +1173,7 @@ angular.module('greenWalletServices', [])
         } else {
             fee = data.fee;
         }
-        if ($scope.send_tx.amount == 'MAX') {
+        if ($scope.send_tx && $scope.send_tx.amount == 'MAX') {
             value = $scope.wallet.final_balance - fee;
         } else if (data.bumped_tx) {
             value = -data.bumped_tx.value;

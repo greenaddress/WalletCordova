@@ -64,16 +64,17 @@ angular.module('greenWalletTransactionsControllers',
         var targetFeeDelta = new_fee - parseInt(transaction.fee);
         var requiredFeeDelta = transaction.rawtx.length / 2; // assumes mintxfee = 1000
         var feeDelta = Math.max(targetFeeDelta, requiredFeeDelta);
+        var remainingFeeDelta = feeDelta;
         var newOuts = [];
         for (var i = 0; i < transaction.outputs.length; ++i) {
             if (transaction.outputs[i].is_relevant) {
                 // either change or re-deposit
-                if (bumpedTx.outs[i].value < feeDelta) {
+                if (bumpedTx.outs[i].value < remainingFeeDelta) {
                     // output too small to be decreased - remove it altogether
-                    feeDelta -= bumpedTx.outs[i].value;
+                    remainingFeeDelta -= bumpedTx.outs[i].value;
                 } else {
-                    bumpedTx.outs[i].value -= feeDelta;
-                    feeDelta = 0;
+                    bumpedTx.outs[i].value -= remainingFeeDelta;
+                    remainingFeeDelta = 0;
                     newOuts.push(bumpedTx.outs[i]);
                 }
             } else {
@@ -83,7 +84,7 @@ angular.module('greenWalletTransactionsControllers',
         }
         bumpedTx.outs = newOuts;
 
-        if (feeDelta > 0) {
+        if (remainingFeeDelta > 0) {
             notices.makeNotice('error', 'Adding inputs not yet supported');
             return;
         }
@@ -150,7 +151,14 @@ angular.module('greenWalletTransactionsControllers',
             })(i);
         }
 
-        return $q.all(signatures_ds).then(function() {
+        var modal_d = wallets.ask_for_tx_confirmation(
+            $scope, builder.tx,
+            {fee: parseInt(transaction.fee) + feeDelta,
+             bumped_tx: transaction,
+             recipient: transaction.description_short}
+        );
+
+        return $q.all(signatures_ds.concat([modal_d])).then(function() {
             return tx_sender.call(
                 'http://greenaddressit.com/vault/send_raw_tx',
                 builder.build().toHex()
