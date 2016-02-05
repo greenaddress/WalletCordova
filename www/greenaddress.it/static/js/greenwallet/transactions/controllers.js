@@ -158,11 +158,28 @@ angular.module('greenWalletTransactionsControllers',
              recipient: transaction.description_short}
         );
 
-        return $q.all(signatures_ds.concat([modal_d])).then(function() {
-            return tx_sender.call(
-                'http://greenaddressit.com/vault/send_raw_tx',
-                builder.build().toHex()
-            );
+        return $q.all(signatures_ds.concat([modal_d])).then(function(results) {
+            var try_sending = function(twofac_data) {
+                return tx_sender.call(
+                    'http://greenaddressit.com/vault/send_raw_tx',
+                    builder.build().toHex(), twofac_data
+                );
+            }
+            // try without 2FA to see if it's required
+            // (could be bump amount under the user-defined 2FA threshold)
+            return try_sending().catch(function(e) {
+                if (e.args && e.args[0] &&
+                        e.args[0] == "http://greenaddressit.com/error#auth") {
+                    return wallets.get_two_factor_code(
+                        $scope, 'bump_fee', {amount: feeDelta}
+                    ).then(function(twofac_data) {
+                        twofac_data.bump_fee_amount = feeDelta;
+                        return try_sending(twofac_data);
+                    });
+                } else {
+                    return $q.reject(e);
+                }
+            });
         }).catch(function(e) {
             notices.makeNotice('error', e.args ? e.args[1] : e);
         }).finally(function() {
