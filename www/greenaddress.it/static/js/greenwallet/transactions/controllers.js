@@ -5,6 +5,55 @@ angular.module('greenWalletTransactionsControllers',
     // required already by InfoController
     // if(!wallets.requireWallet($scope)) return;
 
+    var calcRedeemAndKeyPairs = function(subaccount, pubkey_pointer) {
+        var gawallet = new Bitcoin.bitcoin.HDNode(
+            Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
+                cur_net
+            ),
+            new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
+        );
+        var gaKey;
+        if (subaccount) {
+            gaKey = gawallet.derive(3).then(function (branch) {
+                return branch.subpath($scope.wallet.gait_path);
+            }).then(function (gawallet) {
+                return gawallet.derive(subaccount);
+            });
+        } else {
+            gaKey = gawallet.derive(1).then(function (branch) {
+                return branch.subpath($scope.wallet.gait_path);
+            });
+        }
+        gaKey = gaKey.then(function (gawallet) {
+            return gawallet.derive(pubkey_pointer);
+        });
+        var userKey = $q.when($scope.wallet.hdwallet);
+        if (subaccount) {
+            userKey = userKey.then(function (key) {
+                return key.deriveHardened(branches.SUBACCOUNT);
+            }).then(function (key) {
+                return key.deriveHardened($subaccount);
+            })
+        }
+        var userKey = userKey.then(function (key) {
+            return key.derive(branches.REGULAR);
+        }).then(function (branch) {
+            return branch.derive(pubkey_pointer)
+        });
+        return $q.all([gaKey, userKey]).then(function(keys) {
+            return {
+                gaKey: keys[0],
+                userKey: keys[1],
+                redeemScript: Bitcoin.bitcoin.script.multisigOutput(
+                    2,
+                    [keys[0].keyPair.getPublicKeyBuffer(),
+                     keys[1].keyPair.getPublicKeyBuffer()]
+                )
+            }
+        });
+    };
+
     var _redeem = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabRedeem');
         var key = $q.when($scope.wallet.hdwallet);
@@ -56,10 +105,6 @@ angular.module('greenWalletTransactionsControllers',
         new_fee = Math.round(new_fee);
         $scope.bumping_fee = true;
         transaction.bumping_dropdown_open = false;
-        //tx_sender.call(
-        //              'http://greenaddressit.com/txs/get_all_unspent_outputs',
-        //            1   // do not include zero-confs
-        //      ).then(function(utxos) {
         var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
         var targetFeeDelta = new_fee - parseInt(transaction.fee);
         var requiredFeeDelta = transaction.rawtx.length / 2; // assumes mintxfee = 1000
@@ -84,14 +129,13 @@ angular.module('greenWalletTransactionsControllers',
         }
         bumpedTx.outs = newOuts;
 
-        if (remainingFeeDelta > 0) {
-            notices.makeNotice('error', 'Adding inputs not yet supported');
-            return;
-        }
-
         var builder = Bitcoin.bitcoin.TransactionBuilder.fromTransaction(
             bumpedTx, cur_net
         );
+        // reset hashType to allow adding inputs/outputs
+        for (var i = 0; i < builder.inputs.length; ++i) {
+            delete builder.inputs[i].hashType;
+        }
         // (Not really alpha, but we need the same changes allowing signatures
         //  to be deferreds.)
         Object.setPrototypeOf(
@@ -99,93 +143,130 @@ angular.module('greenWalletTransactionsControllers',
             Bitcoin.contrib.AlphaTransactionBuilder.prototype
         );
 
-        var signatures_ds = [];
-        for (var i = 0; i < transaction.inputs.length; ++i) {
-            (function (i) {
-                var utxo = transaction.inputs[i];
-                var gawallet = new Bitcoin.bitcoin.HDNode(
-                    Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                        new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
-                        cur_net
-                    ),
-                    new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
-                );
-                var gaKey;
-                if ($scope.wallet.current_subaccount) {
-                    gaKey = gawallet.derive(3).then(function (branch) {
-                        return branch.subpath($scope.wallet.gait_path);
-                    }).then(function (gawallet) {
-                        return gawallet.derive($scope.wallet.current_subaccount);
-                    });
-                } else {
-                    gaKey = gawallet.derive(1).then(function (branch) {
-                        return branch.subpath($scope.wallet.gait_path);
-                    });
+        if (remainingFeeDelta > 0) {
+            builder_d = tx_sender.call(
+                'http://greenaddressit.com/txs/get_all_unspent_outputs',
+                1   // do not include zero-confs (RBF requirement)
+            ).then(function(utxos) {
+                var required_utxos = [];
+                for (var i = 0; i < utxos.length; ++i) {
+                    remainingFeeDelta -= utxos[i].value;
+                    required_utxos.push(utxos[i]);
+                    if (remainingFeeDelta <= 0) break;
                 }
-                gaKey = gaKey.then(function (gawallet) {
-                    return gawallet.derive(utxo.pubkey_pointer);
-                });
-                var userKey = $q.when($scope.wallet.hdwallet);
-                if ($scope.wallet.current_subaccount) {
-                    userKey = userKey.then(function (key) {
-                        return key.deriveHardened(branches.SUBACCOUNT);
-                    }).then(function (key) {
-                        return key.deriveHardened($scope.wallet.current_subaccount);
+                var change_d = $q.when();
+                if (remainingFeeDelta < 0) {
+                    // new change output needs to be added
+                    change_d = tx_sender.call(
+                        'http://greenaddressit.com/vault/fund',
+                        $scope.wallet.current_subaccount, true, true
+                    ).then(function(data) {
+                        return Bitcoin.bitcoin.crypto.hash160(
+                            new Bitcoin.Buffer.Buffer(data.script, 'hex')
+                        );
                     })
+                } else if (remainingFeeDelta == 0) {
+                    // if we were lucky enough to match the required value,
+                    // no new change output is necessary
+                    change_d = $q.when(null);
+                } else {   // remainingFeeDelta > 0
+                    return $q.reject(gettext("Not enough money"));
                 }
-                var userKey = userKey.then(function (key) {
-                    return key.derive(branches.REGULAR);
-                }).then(function (branch) {
-                    return branch.derive(utxo.pubkey_pointer)
-                });
-                signatures_ds.push($q.all([gaKey, userKey]).then(function (keys) {
-                    var gaKey = keys[0], userKey = keys[1];
-                    var redeemScript = Bitcoin.bitcoin.script.multisigOutput(
-                        2,
-                        [gaKey.keyPair.getPublicKeyBuffer(),
-                         userKey.keyPair.getPublicKeyBuffer()]
-                    )
-                    builder.inputs[i].signatures = [];
-                    return builder.sign(i, userKey.keyPair, redeemScript);
-                }));
-            })(i);
+                return change_d.then(function(change_hash160) {
+                    if (change_hash160) {
+                        builder.addOutput(
+                            Bitcoin.bitcoin.script.scriptHashOutput(
+                                change_hash160
+                            ),
+                            -remainingFeeDelta
+                        );
+                    }
+                    var utxos_ds = [];
+                    for (var i = 0; i < required_utxos.length; ++i) {
+                        var requtxo = required_utxos[i];
+                        utxos_ds.push(calcRedeemAndKeyPairs(
+                            $scope.wallet.current_subaccount,
+                            requtxo.pointer
+                        ));
+                    }
+                    return $q.all(utxos_ds).then(function(utxos) {
+                        for (var i = 0; i < required_utxos.length; ++i) {
+                            var requtxo = required_utxos[i];
+                            builder.addInput(
+                                [].reverse.call(new Buffer(
+                                    requtxo.txhash, 'hex'
+                                )),
+                                requtxo.pt_idx,
+                                0,
+                                Bitcoin.bitcoin.script.scriptHashOutput(
+                                    Bitcoin.bitcoin.crypto.hash160(
+                                        utxos[i].redeemScript
+                                    )
+                                )
+                            )
+                            transaction.inputs.push(
+                                {pubkey_pointer: requtxo.pointer}
+                            );
+                        }
+                        return builder;
+                    });
+                })
+            });
+        } else {
+            builder_d = $q.when(builder);
         }
 
-        var modal_d = wallets.ask_for_tx_confirmation(
-            $scope, builder.tx,
-            {fee: parseInt(transaction.fee) + feeDelta,
-             bumped_tx: transaction,
-             recipient: transaction.description_short}
-        );
+        return builder_d.then(function(builder) {
+            var signatures_ds = [];
+            for (var i = 0; i < transaction.inputs.length; ++i) {
+                (function (i) {
+                    var utxo = transaction.inputs[i];
+                    signatures_ds.push(calcRedeemAndKeyPairs(
+                        $scope.wallet.current_subaccount,
+                        utxo.pubkey_pointer
+                    ).then(function (res) {
+                        builder.inputs[i].signatures = [];
+                        return builder.sign(i, res.userKey.keyPair, res.redeemScript);
+                    }));
+                })(i);
+            }
 
-        return $q.all(signatures_ds.concat([modal_d])).then(function(results) {
-            var try_sending = function(twofac_data) {
-                return tx_sender.call(
-                    'http://greenaddressit.com/vault/send_raw_tx',
-                    builder.build().toHex(), twofac_data
-                ).then(function(data) {
-                    if (data.limit_decrease) {
-                        $scope.wallet.limits.total -= data.limit_decrease;
+            var modal_d = wallets.ask_for_tx_confirmation(
+                $scope, builder.tx,
+                {fee: parseInt(transaction.fee) + feeDelta,
+                 bumped_tx: transaction,
+                 recipient: transaction.description_short}
+            );
+
+            return $q.all(signatures_ds.concat([modal_d])).then(function(results) {
+                var try_sending = function(twofac_data) {
+                    return tx_sender.call(
+                        'http://greenaddressit.com/vault/send_raw_tx',
+                        builder.build().toHex(), twofac_data
+                    ).then(function(data) {
+                        if (data.limit_decrease) {
+                            $scope.wallet.limits.total -= data.limit_decrease;
+                        }
+                    });
+                }
+                // try without 2FA to see if it's required
+                // (could be bump amount under the user-defined 2FA threshold)
+                return try_sending({
+                    'try_under_limits_bump': feeDelta
+                }).catch(function(e) {
+                    if (e.args && e.args[0] &&
+                            e.args[0] == "http://greenaddressit.com/error#auth") {
+                        return wallets.get_two_factor_code(
+                            $scope, 'bump_fee', {amount: feeDelta}
+                        ).then(function(twofac_data) {
+                            twofac_data.bump_fee_amount = feeDelta;
+                            return try_sending(twofac_data);
+                        });
+                    } else {
+                        return $q.reject(e);
                     }
                 });
-            }
-            // try without 2FA to see if it's required
-            // (could be bump amount under the user-defined 2FA threshold)
-            return try_sending({
-                'try_under_limits_bump': feeDelta
-            }).catch(function(e) {
-                if (e.args && e.args[0] &&
-                        e.args[0] == "http://greenaddressit.com/error#auth") {
-                    return wallets.get_two_factor_code(
-                        $scope, 'bump_fee', {amount: feeDelta}
-                    ).then(function(twofac_data) {
-                        twofac_data.bump_fee_amount = feeDelta;
-                        return try_sending(twofac_data);
-                    });
-                } else {
-                    return $q.reject(e);
-                }
-            });
+            })
         }).catch(function(e) {
             notices.makeNotice('error', e.args ? e.args[1] : e);
         }).finally(function() {

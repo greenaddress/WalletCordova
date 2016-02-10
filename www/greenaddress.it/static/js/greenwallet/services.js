@@ -853,7 +853,7 @@ angular.module('greenWalletServices', [])
                     // spend all (if enough for fee)
                     break;
                 } else {
-                    return $q.reject("Not enough money");
+                    return $q.reject(gettext("Not enough money"));
                 }
             }
             var utxo = utxos[utxo_num];
