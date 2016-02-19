@@ -10,6 +10,8 @@ After following these steps you should get a debug apk file in `platforms/androi
 
 ## How to build on iOS
 
+There's an issue with `xcode` node library causing `cordova prepare ios` to fail silently. See https://github.com/apla/me.apla.cordova.app-preferences/issues/65 for a workaround.
+
  1. Install Xcode and Cordova 5.4
  2. `cd` to the WalletCordova directory
  3. Run `cordova prepare ios`
