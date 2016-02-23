@@ -7,14 +7,13 @@
 
 #import "bip38.h"
 #import "crypto_scrypt.h"
-#import <CoreBitcoin/BTCBase58.h>
-#import <CoreBitcoin/BTCData.h>
-#import <CoreBitcoin/BTCBigNumber.h>
-#import <CoreBitcoin/BTCCurvePoint.h>
-#import <CoreBitcoin/BTCKey.h>
-#import <CoreBitcoin/BTCAddress.h>
+#import "../CoreBitcoin/BTCAddress.h"
+#import "../CoreBitcoin/BTCData.h"
+#import "../CoreBitcoin/BTCKey.h"
+#import "../CoreBitcoin/BTCBase58.h"
 #import <CommonCrypto/CommonCryptor.h>
 #import <CommonCrypto/CommonKeyDerivation.h>
+#import "../libsecp256k1/include/secp256k1.h"
 
 @implementation bip38
 
@@ -69,7 +68,7 @@
                       bytes+3, 4,
                       16384, 8, 8, buf, 64);
         
-        uint8_t decrypted[32];
+        uint8_t *decrypted = malloc(32);
         size_t outLength;
         CCCryptorStatus result = CCCrypt(kCCDecrypt, // operation
                                          kCCAlgorithmAES, // Algorithm
@@ -90,6 +89,7 @@
     }
     
     BTCKey* key = [[BTCKey alloc] initWithPrivateKey:[[NSData alloc] initWithBytes:priv length:32]];
+    free(priv);
     [key setPublicKeyCompressed:compressed];
     NSString* addr = [[key publicKeyAddress] base58String];
     NSData* hash = BTCHash256([addr dataUsingEncoding:NSUTF8StringEncoding]);
@@ -109,7 +109,7 @@
                        hasLot:(bool)hasLot {
     // passwd, passwdlen, salt, saltlen, N, r, p, buf, buflen
     const uint8_t* password_bytes = (const uint8_t*)[password UTF8String];
-    uint8_t passfactor[32];
+    uint8_t *passfactor = malloc(32);
     crypto_scrypt(password_bytes, [password lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
                   bytes+7, hasLot ? 4 : 8,
                   16384, 8, 8, passfactor, 32);
@@ -169,12 +169,13 @@
     for (int i = 0; i < 16; ++i) seed[i] = decrypted1[i];
     for (int i = 0; i < 8; ++i) seed[16+i] = decrypted2[8+i];
     
-    BTCMutableBigNumber* priv = [[BTCMutableBigNumber alloc] initWithUnsignedData:[NSData dataWithBytes:passfactor length:32]];
-    [priv multiply:[[BTCBigNumber alloc]
-                    initWithUnsignedData:BTCHash256([NSData dataWithBytes:seed length:24])]
-                                     mod:[BTCCurvePoint curveOrder]];
+    // TODO: needs testing:
+    secp256k1_context* ctx = secp256k1_context_create(0);
+    unsigned char* priv = passfactor;
+    secp256k1_ec_privkey_tweak_mul(ctx, priv, [BTCHash256([NSData dataWithBytes:seed length:24]) bytes]);
+    secp256k1_context_destroy(ctx);
     
-    return [[priv unsignedData] bytes];
+    return priv;
 }
 
 + (NSString*) encode:(NSString*)b58

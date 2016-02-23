@@ -4,7 +4,8 @@
 //
 
 #import "CDVBIP32.h"
-#import <CoreBitcoin/CoreBitcoin.h>
+#import "CoreBitcoin/BTCKeychain.h"
+#import "CoreBitcoin/BTCData.h"
 
 @implementation CDVBIP32
 
@@ -14,8 +15,8 @@
     NSString* seedHex = [command argumentAtIndex:0];
     if (seedHex != nil) {
         BTCKeychain* hdwallet = [[BTCKeychain alloc] initWithSeed:BTCDataWithHexString(seedHex)];
-        NSData* priv = [[hdwallet rootKey] privateKey];
-        NSData* pub = [[hdwallet rootKey] publicKey];
+        NSData* priv = [hdwallet privateKey];
+        NSData* pub = [hdwallet publicKey];
         NSData* chainCode = [hdwallet chainCode];
         NSArray* result = [NSArray arrayWithObjects:
                            BTCHexStringFromData(priv),
@@ -39,11 +40,11 @@
     NSNumber* i = [command argumentAtIndex:1];
     NSString* hardenedStr = [command argumentAtIndex:2];
     if (parentHex != nil && i != nil && hardenedStr != nil) {
-        BTCKeychain* hdwallet = [[BTCKeychain alloc] initWithExtendedKey:BTCDataWithHexString(parentHex)];
+        BTCKeychain* hdwallet = [[BTCKeychain alloc] initWithExtendedKeyData:BTCDataWithHexString(parentHex)];
         BTCKeychain* child = [hdwallet derivedKeychainAtIndex:[i intValue]
                                                      hardened:[hardenedStr isEqualToString:@"true"]];
-        NSData* priv = [[child rootKey] privateKey];
-        NSData* pub = [[child rootKey] publicKey];
+        NSData* priv = [child privateKey];
+        NSData* pub = [child publicKey];
         NSData* chainCode = [child chainCode];
         NSArray* result = [NSArray arrayWithObjects:
                            priv ? BTCHexStringFromData(priv) : @"",

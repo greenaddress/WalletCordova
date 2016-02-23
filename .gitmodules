@@ -1,3 +1,9 @@
 [submodule "platforms/android/scrypt"]
 	path = platforms/android/scrypt
 	url = git@github.com:wg/scrypt.git
+[submodule "plugins/it.greenaddress.cordova/libsecp256k1"]
+	path = plugins/it.greenaddress.cordova/libsecp256k1
+	url = https://github.com/bitcoin/secp256k1.git
+[submodule "plugins/it.greenaddress.cordova/libbase58"]
+	path = plugins/it.greenaddress.cordova/libbase58
+	url = https://github.com/luke-jr/libbase58.git

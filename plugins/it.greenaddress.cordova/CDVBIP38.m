@@ -8,9 +8,8 @@
 #import "crypto_scrypt.h"
 #import <CommonCrypto/CommonCryptor.h>
 #import <CommonCrypto/CommonKeyDerivation.h>
-#import <CoreBitcoin/BTCData.h>
-#import <CoreBitcoin/BTCAddress.h>
-#import <CoreBitcoin/BTCKey.h>
+#import "CoreBitcoin/BTCData.h"
+#import "CoreBitcoin/BTCAddress.h"
 
 @implementation CDVBIP38
 
