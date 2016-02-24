@@ -21,7 +21,7 @@
         withPassword:(NSString*)password
                error:(NSError**)error {
     NSData* data = BTCDataFromBase58Check(encoded);
-    if (data == nil || [data length] != 39) {
+    if (data == nil || [data length] != 39 || *((unsigned char*)[data bytes]) != 0x01) {
         *error = [NSError errorWithDomain:@"invalid_privkey" code:0 userInfo:nil];
         return nil;
     }
@@ -170,7 +170,7 @@
     for (int i = 0; i < 8; ++i) seed[16+i] = decrypted2[8+i];
     
     // TODO: needs testing:
-    secp256k1_context* ctx = secp256k1_context_create(0);
+    secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
     unsigned char* priv = passfactor;
     secp256k1_ec_privkey_tweak_mul(ctx, priv, [BTCHash256([NSData dataWithBytes:seed length:24]) bytes]);
     secp256k1_context_destroy(ctx);

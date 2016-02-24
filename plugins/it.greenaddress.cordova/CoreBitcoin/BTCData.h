@@ -72,11 +72,9 @@ NSMutableData* BTCHash256Concat(NSData* data1, NSData* data2);  // SHA256(SHA256
 NSMutableData* BTCHMACSHA256(NSData* key, NSData* data);
 NSMutableData* BTCHMACSHA512(NSData* key, NSData* data);
 
-#if BTCDataRequiresOpenSSL
 // RIPEMD160 today is provided only by OpenSSL. SHA1 and SHA2 are provided by CommonCrypto framework.
 NSMutableData* BTCRIPEMD160(NSData* data);
 NSMutableData* BTCHash160(NSData* data); // == RIPEMD160(SHA256(data)) (aka Hash160 in BitcoinQT)
-#endif
 
 // 160-bit zero string
 NSMutableData* BTCZero160();

@@ -229,7 +229,7 @@ static BOOL    BTCKeyCheckSignatureElement(const unsigned char *bytes, int lengt
     }
     return self;
 }
-/*
+
 - (BTCPublicKeyAddress*) publicKeyAddress {
     CHECK_IF_CLEARED;
     NSData* pubkey = [self publicKeyCached];
@@ -237,13 +237,7 @@ static BOOL    BTCKeyCheckSignatureElement(const unsigned char *bytes, int lengt
     return [BTCPublicKeyAddress addressWithData:BTCHash160(pubkey)];
 }
 
-- (BTCPublicKeyAddress*) address {
-    CHECK_IF_CLEARED;
-    NSData* pubkey = [self publicKeyCached];
-    if (pubkey.length == 0) return nil;
-    return [BTCPublicKeyAddress addressWithData:BTCHash160(pubkey)];
-}
-*/- (BTCPrivateKeyAddress*) privateKeyAddress {
+- (BTCPrivateKeyAddress*) privateKeyAddress {
     CHECK_IF_CLEARED;
     NSMutableData* privkey = self.privateKey;
     if (privkey.length == 0) return nil;

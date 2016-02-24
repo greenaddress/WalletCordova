@@ -14,10 +14,8 @@
 - (NSData*) SHA256 { return BTCSHA256(self); }
 - (NSData*) BTCHash256 { return BTCHash256(self); }
 
-#if BTCDataRequiresOpenSSL
 - (NSData*) RIPEMD160 { return BTCRIPEMD160(self); }
 - (NSData*) BTCHash160 { return BTCHash160(self); }
-#endif
 
 
 

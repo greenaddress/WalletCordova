@@ -7,7 +7,6 @@
 
 After following these steps you should get a debug apk file in `platforms/android/build/outputs/apk/android-debug.apk`.
 
-
 ## How to build on iOS
 
 There's an issue with `xcode` node library causing `cordova prepare ios` to fail silently. See https://github.com/apla/me.apla.cordova.app-preferences/issues/65 for a workaround.
@@ -18,6 +17,8 @@ There's an issue with `xcode` node library causing `cordova prepare ios` to fail
  4. Run `cordova compile ios`
 
 After following these steps you should get an .app in platforms/ios/build/emulator/GreenAddress.It.app.
+
+You can also run BIP38 unit tests by copying them from `plugins/it.greenaddress.cordova/bip38/BIP38Tests.m` manually and adding a new testing target in XCode.
 
 ## Pull Requests
 
