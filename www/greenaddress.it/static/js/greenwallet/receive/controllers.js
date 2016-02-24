@@ -77,7 +77,7 @@ angular.module('greenWalletReceiveControllers',
                     cordovaReady(function() {
                         cordova.exec(function(data) {
                             $scope.$apply(function() {
-                                do_sweep_key(Bitcoin.Bitcoin.bitcoin.ECPair.fromWIF(data));
+                                do_sweep_key(Bitcoin.bitcoin.ECPair.fromWIF(data));
                             });
                         }, function(fail) {
                             that.sweeping = false;
@@ -93,9 +93,8 @@ angular.module('greenWalletReceiveControllers',
                             if (message.data.error) {
                                 notices.makeNotice('error', errors[message.data.error] || message.data.error);
                             } else {
-                                do_sweep_key(new Bitcoin.bitcoin.ECPair(
-                                    Bitcoin.BigInteger.fromByteArrayUnsigned(message.data),
-                                    null, {network: cur_net}));
+                                var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(message.data);
+                                do_sweep_key(ecpair);
                             }
                         };
                         window.addEventListener('message', listener);
@@ -123,11 +122,8 @@ angular.module('greenWalletReceiveControllers',
                         if (message.data.error) {
                             notices.makeNotice('error', errors[message.data.error] || message.data.error);
                         } else {
-                            do_sweep_key(new Bitcoin.bitcoin.ECPair(
-                                Bitcoin.BigInteger.fromByteArrayUnsigned(message.data),
-                                null,
-                                {network: cur_net})
-                            );
+                            var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(message.data);
+                            do_sweep_key(ecpair);
                         }
                     }
                     worker.postMessage({b58: key_wif, password: this.bip38_password, cur_net_wif: cur_net.wif});

@@ -11,10 +11,13 @@ onmessage = function(input) {
             input.network == 'BTC' ? 'bitcoin' : 'testnet'
         ];
         bitcoinBip38.versions = {private: cur_net.wif};
+        var ecpair = Bitcoin.bitcoin.ECPair.fromWIF(input.eckey, cur_net);
+        // for compatibility with iOS, use mainnet bitcoin addr instead of testnet for salt:
+        ecpair.network = Bitcoin.bitcoin.networks.bitcoin;
         postMessage(bitcoinBip38.encrypt(
             input.eckey,
             input.password,
-            Bitcoin.bitcoin.ECPair.fromWIF(input.eckey, cur_net).getAddress()
+            ecpair.getAddress()
         ));
     } else if (input.mnemonic_decrypted) {
         postMessage(bip38.encrypt({data: input.mnemonic_decrypted, key: input.password}, input.salt_a));
