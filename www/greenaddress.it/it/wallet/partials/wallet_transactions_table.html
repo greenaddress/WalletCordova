@@ -27,12 +27,12 @@
                 !(transaction.double_spent_by=='update' ||
                   transaction.double_spent_by=='malleability')
               ">doppia spesa</span>
-              <span class="label label-warning" ng-show="transaction.rbf_optin">replaceable</span>
+              <span class="label" ng-class="{'label-warning': !transaction.instant, 'label-success': transaction.instant}" ng-show="transaction.rbf_optin && transaction.positive">replaceable</span>
               <span class="label label-warning" ng-show="transaction.double_spent_by=='update'">updated</span>
               <span class="label label-warning" ng-show="transaction.double_spent_by=='malleability'">updated</span>
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">Non confermata</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) conferme</span>
-              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by">
+              <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by && !transaction.instant">
                 <span class="dropdown" is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d">
                   <a class="btn btn-info btn-xs dropdown-toggle" ng-class="{disabled: bumping_fee}" href="">
                     bump fee
