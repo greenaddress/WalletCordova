@@ -430,7 +430,11 @@ angular.module('greenWalletSendControllers',
         },
         _send_social_ga: function(satoshis) {
             var that = this, to_addr = {type: this.recipient.type, id: that.recipient.address};
-            var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee, instant: that.instant, prevouts_mode: 'http'};
+            var priv_data = {
+                rbf_optin: $scope.wallet.appearance.replace_by_fee && !that.instant,
+                instant: that.instant,
+                prevouts_mode: 'http'
+            };
             if (that.recipient.address != that.recipient.name) {
                 priv_data.social_destination = that.recipient.name;
             }
@@ -497,7 +501,7 @@ angular.module('greenWalletSendControllers',
                         social_destination.id = that.recipient.address;
                     }
                 }
-                var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee,
+                var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee && !that.instant,
                                  pointer: pointer,
                                  pubkey: Array.from(key.keyPair.getPublicKeyBuffer()),
                                  social_destination: social_destination,
@@ -579,7 +583,7 @@ angular.module('greenWalletSendControllers',
                 });
                 return;
             }
-            var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee,
+            var priv_data = {rbf_optin: $scope.wallet.appearance.replace_by_fee && !that.instant,
                              instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount, prevouts_mode: 'http'};
             if (that.spend_all) satoshis = $scope.wallet.final_balance;
