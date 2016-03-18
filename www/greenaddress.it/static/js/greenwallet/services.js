@@ -248,11 +248,11 @@ angular.module('greenWalletServices', [])
         });
     }
     return service;
-}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$modal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent', '$http', 'blind',
-        function($q, $rootScope, tx_sender, $location, notices, $modal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent, $http, blind) {
+}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$uibModal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent', '$http', 'blind',
+        function($q, $rootScope, tx_sender, $location, notices, $uibModal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent, $http, blind) {
     var walletsService = {};
     var handle_double_login = function(retry_fun) {
-        return $modal.open({
+        return $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_logout_other_session.html'
         }).result.then(function() {
             return retry_fun();
@@ -1190,7 +1190,7 @@ angular.module('greenWalletServices', [])
                     ($scope.send_tx.recipient.name ||
                         $scope.send_tx.recipient))
         };
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
             scope: scope,
             windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
@@ -1686,7 +1686,7 @@ angular.module('greenWalletServices', [])
                         });
                     }};
                 var show_modal = function() {
-                    var modal = $modal.open({
+                    var modal = $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_2fa.html',
                         scope: $scope,
                         windowClass: 'twofactor'
@@ -1859,7 +1859,7 @@ angular.module('greenWalletServices', [])
     };
     walletsService.askForLogout = function($scope, text) {
         $scope.ask_for_logout_text = text;
-        return $modal.open({
+        return $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_logout.html',
             scope: $scope
         }).result;
@@ -3052,8 +3052,8 @@ angular.module('greenWalletServices', [])
         }
         return deferred.promise;
     }};
-}]).factory('hw_detector', ['$q', 'trezor', 'btchip', '$timeout', '$rootScope', '$modal',
-        function($q, trezor, btchip, $timeout, $rootScope, $modal) {
+}]).factory('hw_detector', ['$q', 'trezor', 'btchip', '$timeout', '$rootScope', '$uibModal',
+        function($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
     return {
         success: false,
         showModal: function(d) {
@@ -3063,7 +3063,7 @@ angular.module('greenWalletServices', [])
                     var options = {
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
                     };
-                    that.modal = $modal.open(options);
+                    that.modal = $uibModal.open(options);
                     that.modal.result.finally(function() {
                         if (!that.success) d.reject();
                     });
@@ -3101,8 +3101,8 @@ angular.module('greenWalletServices', [])
             return d.promise;
         }
     }
-}]).factory('trezor', ['$q', '$interval', '$modal', 'notices', '$rootScope', 'focus',
-        function($q, $interval, $modal, notices, $rootScope, focus) {
+}]).factory('trezor', ['$q', '$interval', '$uibModal', 'notices', '$rootScope', 'focus',
+        function($q, $interval, $uibModal, notices, $rootScope, focus) {
 
     var trezor_api, transport, trezor;
 
@@ -3113,7 +3113,7 @@ angular.module('greenWalletServices', [])
             type: type
         });
 
-        modal = $modal.open({
+        modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_pin.html',
             size: 'sm',
             windowClass: 'pinmodal',
@@ -3135,7 +3135,7 @@ angular.module('greenWalletServices', [])
             passphrase: '',
         });
 
-        modal = $modal.open({
+        modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_passphrase.html',
             size: 'sm',
             windowClass: 'pinmodal',
@@ -3163,7 +3163,7 @@ angular.module('greenWalletServices', [])
     };
 
     var handleButton = function(dev) {
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_confirm_button.html',
             size: 'sm',
             windowClass: 'pinmodal',
@@ -3190,7 +3190,7 @@ angular.module('greenWalletServices', [])
             var tick, modal;
             var showModal = function() {
                 if (!noModal && !modal) {
-                    modal = $modal.open({
+                    modal = $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
                     });
                     modal.result.finally(function() {
@@ -3336,7 +3336,7 @@ angular.module('greenWalletServices', [])
                 }
             };
             var do_modal = function() {
-                modal = $modal.open({
+                modal = $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_setup.html',
                     scope: scope
                 });
@@ -3357,8 +3357,8 @@ angular.module('greenWalletServices', [])
             return d.promise;
         }
     };
-}]).factory('btchip', ['$q', '$interval', '$modal', '$rootScope', 'mnemonics', 'notices', 'focus', 'cordovaReady', '$injector',
-        function($q, $interval, $modal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
+}]).factory('btchip', ['$q', '$interval', '$uibModal', '$rootScope', 'mnemonics', 'notices', 'focus', 'cordovaReady', '$injector',
+        function($q, $interval, $uibModal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
     var cardFactory;
     if (window.ChromeapiPlugupCardTerminalFactory) {
         cardFactory = new ChromeapiPlugupCardTerminalFactory();
@@ -3565,7 +3565,7 @@ angular.module('greenWalletServices', [])
             });
             pinNotCancelable = false;
 
-            modal = $modal.open({
+            modal = $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_pin.html',
                 size: 'sm',
                 windowClass: 'pinmodal',
@@ -3619,7 +3619,7 @@ angular.module('greenWalletServices', [])
                             options.backdrop = 'static';
                             pinNotCancelable = true;
                         }
-                        modal = $modal.open(options);
+                        modal = $uibModal.open(options);
                         $injector.get('hw_detector').modal = modal;
                         modal.result.finally(function() {
                             $interval.cancel(tick);
@@ -3641,7 +3641,7 @@ angular.module('greenWalletServices', [])
                     var scope = angular.extend($rootScope.$new(), {
                         firmware_upgrade_message: notice
                     });
-                    var modal = $modal.open({
+                    var modal = $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_fup.html',
                         scope: scope
                     }).result.then(function() {
@@ -3819,7 +3819,7 @@ angular.module('greenWalletServices', [])
                     }
                 };
                 var do_modal = function() {
-                    $modal.open({
+                    $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_setup.html',
                         scope: scope
                     }).result.finally(function() {
@@ -3846,7 +3846,7 @@ angular.module('greenWalletServices', [])
             return deferred.promise;
         }
     }
-}]).factory('bip38', ['$q', '$modal', 'mnemonics', 'focus', function($q, $modal, mnemonics, focus) {
+}]).factory('bip38', ['$q', '$uibModal', 'mnemonics', 'focus', function($q, $uibModal, mnemonics, focus) {
     var bip38Service = {}, iframe;
     bip38Service.processMessage = function(message) {
         var is_chrome_app = window.chrome && chrome.storage;
@@ -3924,7 +3924,7 @@ angular.module('greenWalletServices', [])
                 });
             }
         };
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/modal_encryption_password.html',
             scope: $scope
         });

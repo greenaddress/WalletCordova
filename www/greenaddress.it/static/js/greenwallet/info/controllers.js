@@ -1,7 +1,7 @@
 angular.module('greenWalletInfoControllers',
     ['greenWalletServices'])
-.controller('InfoController', ['$scope', 'wallets', 'tx_sender', '$modal', '$q', 'notices', '$location', 'gaEvent', 'cordovaReady', '$timeout', '$rootScope',
-        function InfoController($scope, wallets, tx_sender, $modal, $q, notices, $location, gaEvent, cordovaReady, $timeout, $rootScope) {
+.controller('InfoController', ['$scope', 'wallets', 'tx_sender', '$uibModal', '$q', 'notices', '$location', 'gaEvent', 'cordovaReady', '$timeout', '$rootScope',
+        function InfoController($scope, wallets, tx_sender, $uibModal, $q, notices, $location, gaEvent, cordovaReady, $timeout, $rootScope) {
     if(!wallets.requireWallet($scope)) return;
 
     $scope.search = {query: null, today: new Date().toISOString(),
@@ -349,7 +349,7 @@ angular.module('greenWalletInfoControllers',
                     }
                 };
 
-                var modal = $modal.open({
+                var modal = $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/redeem_password_modal.html',
                     scope: $scope
                 });

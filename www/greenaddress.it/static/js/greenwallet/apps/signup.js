@@ -1,8 +1,8 @@
 var SignupControllerAsync = (function() {
 var signup = {};  // bleh (see comment below)
 var secured_confirmed;
-return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '$window', 'facebook', '$modal', 'gaEvent', '$q', 'reddit', 'storage', 'trezor', 'btchip', 'bip38', '$interval', '$sce', 'hw_detector', 'user_agent',
-        function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, facebook, $modal, gaEvent, $q, reddit, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
+return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '$window', 'facebook', '$uibModal', 'gaEvent', '$q', 'reddit', 'storage', 'trezor', 'btchip', 'bip38', '$interval', '$sce', 'hw_detector', 'user_agent',
+        function SignupController($scope, $location, mnemonics, tx_sender, notices, wallets, $window, facebook, $uibModal, gaEvent, $q, reddit, storage, trezor, btchip, bip38, $interval, $sce, hw_detector, user_agent) {
     // some Android devices have window.WebSocket defined and yet still don't support WebSockets
     var isUnsupportedAndroid = navigator.userAgent.match(/Android 4.0/i) ||
                                navigator.userAgent.match(/Android 4.1/i) ||
@@ -313,7 +313,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
                 notices.makeNotice('error', err.args[1]);
             });
         };
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_custom_login.html',
             scope: $scope
         });
@@ -346,7 +346,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
 
     $scope.signup.qrmodal = function() {
         gaEvent('Signup', 'QrModal');
-        $modal.open({
+        $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_qr_modal.html',
             scope: $scope
         });
@@ -365,7 +365,7 @@ return ['$scope', '$location', 'mnemonics', 'tx_sender', 'notices', 'wallets', '
         mnemonics.validateMnemonic(mnemonic).then(function(bytes) {
             $scope.nfc_bytes = bytes;
             $scope.nfc_mime = mime;
-            $modal.open({
+            $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
                 scope: $scope,
                 controller: 'NFCController'

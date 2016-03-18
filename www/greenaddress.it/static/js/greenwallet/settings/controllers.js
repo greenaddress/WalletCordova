@@ -1,7 +1,7 @@
 angular.module('greenWalletSettingsControllers',
     ['greenWalletServices', 'greenWalletSettingsDirectives'])
-.controller('TwoFactorSetupController', ['$scope', '$modal', 'notices', 'focus', 'tx_sender', 'wallets', 'gaEvent', '$q', 'clipboard',
-        function TwoFactorSetupController($scope, $modal, notices, focus, tx_sender, wallets, gaEvent, $q, clipboard) {
+.controller('TwoFactorSetupController', ['$scope', '$uibModal', 'notices', 'focus', 'tx_sender', 'wallets', 'gaEvent', '$q', 'clipboard',
+        function TwoFactorSetupController($scope, $uibModal, notices, focus, tx_sender, wallets, gaEvent, $q, clipboard) {
     if (!wallets.requireWallet($scope, true)) return;  // dontredirect=true because this cocntroller is reused in signup
     var twofactor_state = $scope.twofactor_state = {
         twofactor_type: 'email'
@@ -28,7 +28,7 @@ angular.module('greenWalletSettingsControllers',
     update_wallet();
     $scope.gauth_qr_modal = function() {
         gaEvent('Wallet', 'GoogleAuthQRModal');
-        $modal.open({
+        $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_gauth_qr.html',
             scope: $scope
         });
@@ -176,7 +176,7 @@ angular.module('greenWalletSettingsControllers',
             onSuccess,
             function(err) {
                 if ($scope.wallet.signup && err.args[0] == "http://greenaddressit.com/error#alreadyexists") {
-                    return $modal.open({
+                    return $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_reset_email.html'
                     }).result.then(function() {
                         return tx_sender.call('http://greenaddressit.com/twofactor/enable_email',
@@ -319,8 +319,8 @@ angular.module('greenWalletSettingsControllers',
     setup_2fa('sms');
     setup_2fa('phone');
     setup_2fa('gauth');
-}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$modal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics', 'btchip', 'trezor', 'hw_detector',
-        function SettingsController($scope, $q, wallets, tx_sender, notices, $modal, gaEvent, storage, $location, $timeout, bip38, mnemonics, btchip, trezor, hw_detector) {
+}]).controller('SettingsController', ['$scope', '$q', 'wallets', 'tx_sender', 'notices', '$uibModal', 'gaEvent', 'storage', '$location', '$timeout', 'bip38', 'mnemonics', 'btchip', 'trezor', 'hw_detector',
+        function SettingsController($scope, $q, wallets, tx_sender, notices, $uibModal, gaEvent, storage, $location, $timeout, bip38, mnemonics, btchip, trezor, hw_detector) {
     if (!wallets.requireWallet($scope)) return;
     var userfriendly_blocks = function(num) {
         return gettext("(about %s days: 1 day ≈ 144 blocks)").replace("%s", Math.round(num/144));
@@ -354,7 +354,7 @@ angular.module('greenWalletSettingsControllers',
             mnemonics.validateMnemonic($scope.wallet.mnemonic).then(function(bytes) {
                 $scope.nfc_bytes = bytes;
                 $scope.nfc_mime = 'x-gait/mnc';
-                $modal.open({
+                $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
                     scope: $scope,
                     controller: 'NFCController'
@@ -368,7 +368,7 @@ angular.module('greenWalletSettingsControllers',
                     mnemonics.validateMnemonic(mnemonic_encrypted).then(function(bytes_encrypted) {
                         $scope.nfc_bytes = bytes_encrypted;
                         $scope.nfc_mime = 'x-ga/en';
-                        $modal.open({
+                        $uibModal.open({
                             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signup_nfc_modal.html',
                             scope: $scope,
                             controller: 'NFCController'
@@ -400,7 +400,7 @@ angular.module('greenWalletSettingsControllers',
                     if (remaining_blocks <= 0) return gettext('Already expired');
                     else return gettext('in about %s days').replace('%s', Math.round(remaining_blocks/144));
                 };
-                $modal.open({
+                $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_expiring_soon.html',
                     scope: $scope
                 });
@@ -499,7 +499,7 @@ angular.module('greenWalletSettingsControllers',
                 });
             };
             if ($scope.wallet.limits.is_fiat && parseInt($scope.wallet.limits.total)) {
-                $modal.open({
+                $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_limits_fiat_warning.html'
                 }).result.then(update, function() { settings.updating_pricing_source = false; });
             } else {
@@ -623,7 +623,7 @@ angular.module('greenWalletSettingsControllers',
         mnemonics.fromMnemonic($scope.wallet.mnemonic).then(function(data) {
             bip38.encrypt_mnemonic_modal($scope, data).then(function(mnemonic_encrypted) {
                 $scope.mnemonic_encrypted = mnemonic_encrypted;
-                $modal.open({
+                $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
                     scope: $scope
                 });
@@ -633,7 +633,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.show_mnemonic = function() {
         gaEvent('Wallet', 'ShowMnemonic');
         $scope.mnemonic_encrypted = undefined;
-        $modal.open({
+        $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
             scope: $scope
         });
@@ -644,7 +644,7 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', gettext("Cannot remove an account with non-zero balance"))
             return;
         }
-        $modal.open({
+        $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_remove_account.html',
         }).result.then(function() {
             wallets.get_two_factor_code($scope, 'remove_account', {}).then(function(twofac_data) {
@@ -1165,8 +1165,8 @@ angular.module('greenWalletSettingsControllers',
             $scope.thirdparty.toggling_custom = 'initial';
         });
     });
-}]).controller('TxLimitsController', ['$scope', 'gaEvent', '$modal', 'tx_sender', 'notices', 'wallets',
-        function($scope, gaEvent, $modal, tx_sender, notices, wallets) {
+}]).controller('TxLimitsController', ['$scope', 'gaEvent', '$uibModal', 'tx_sender', 'notices', 'wallets',
+        function($scope, gaEvent, $uibModal, tx_sender, notices, wallets) {
 
     var formatAmountHumanReadable = function(units, is_fiat) {
         // for fiat, to fit the 'satoshi->BTC' conversion, the input value needs to be multiplied by 1M,
@@ -1193,7 +1193,7 @@ angular.module('greenWalletSettingsControllers',
             single_tx: formatAmountHumanReadable($scope.wallet.limits.per_tx, $scope.wallet.limits.is_fiat),
             total: formatAmountHumanReadable($scope.wallet.limits.total, $scope.wallet.limits.is_fiat)
         };
-        modal = $modal.open({
+        modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_limits.html',
             scope: $scope
         });
@@ -1228,8 +1228,8 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.args[1]);
         }).finally(function() { $scope.limits_editor.saving = false; });
     };
-}]).controller('SubwalletsController', ['$scope', 'tx_sender', '$q', 'notices', '$location', '$modal', '$rootScope', 'mnemonics', 'branches',
-        function($scope, tx_sender, $q, notices, $location, $modal, $rootScope, mnemonics, branches) {
+}]).controller('SubwalletsController', ['$scope', 'tx_sender', '$q', 'notices', '$location', '$uibModal', '$rootScope', 'mnemonics', 'branches',
+        function($scope, tx_sender, $q, notices, $location, $uibModal, $rootScope, mnemonics, branches) {
     var subwallets = $scope.subwallets = {
         existing: $scope.wallet.subaccounts,
         _get_min_unused_pointer: function() {
@@ -1356,7 +1356,7 @@ angular.module('greenWalletSettingsControllers',
                                 hdhex_recovery.pub,
                                 hdhex_recovery.chaincode
                             ).then(function(receiving_id) {
-                                $modal.open({
+                                $uibModal.open({
                                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_mnemonic.html',
                                     scope: scope
                                 });

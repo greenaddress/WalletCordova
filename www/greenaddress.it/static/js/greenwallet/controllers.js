@@ -1,6 +1,6 @@
 angular.module('greenWalletControllers', [])
-.controller('WalletController', ['$scope', 'tx_sender', '$modal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$modalStack', 'sound', 'blind', 'storage',
-        function WalletController($scope, tx_sender, $modal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $modalStack, sound, blind, storage) {
+.controller('WalletController', ['$scope', 'tx_sender', '$uibModal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$uibModalStack', 'sound', 'blind', 'storage',
+        function WalletController($scope, tx_sender, $uibModal, notices, gaEvent, $location, wallets, $http, $q, parse_bitcoin_uri, parseKeyValue, backButtonHandler, $uibModalStack, sound, blind, storage) {
     // appcache:
     applicationCache.addEventListener('updateready', function() {
         $scope.$apply(function() {
@@ -312,7 +312,7 @@ angular.module('greenWalletControllers', [])
             }
         });
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
-            $scope.redeposit_modal = $modal.open({
+            $scope.redeposit_modal = $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_redeposit.html',
                 controller: 'RedepositController',
                 scope: $scope
@@ -344,7 +344,7 @@ angular.module('greenWalletControllers', [])
 
     $scope.show_url_qr = function(url) {
         gaEvent('Wallet', 'ShowUrlQRModal');
-        $modal.open({
+        $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_url_qr.html',
             controller: 'UrlQRController',
             resolve: {url: function() { return url; }}
@@ -385,14 +385,14 @@ angular.module('greenWalletControllers', [])
                 })
             }
         }
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_verify_mnemonic.html',
             scope: $scope
         });
     }
 
     $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue) {
-        $modalStack.dismissAll();
+        $uibModalStack.dismissAll();
         if (newValue == '/') tx_sender.logout();  // logout on navigation to login page
     });
 

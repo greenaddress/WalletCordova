@@ -29,11 +29,11 @@
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-search"></span>
             </span>
-            <script id="template/typeahead/typeahead-match.html" type="text/ng-template">
+            <script id="uib/template/typeahead/typeahead-match.html" type="text/ng-template">
               <a tabindex="-1" ng-bind="match.label"></a>
             </script>
             <input ng-disabled="send_tx.processing_payreq" ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Geef bitcoin adres, e-mail of Facebook accountnaam van de ontvanger"
-                    typeahead="item as item.name for item in addressbook.items | filter:$viewValue | limitTo:8" />
+                    uib-typeahead="item as item.name for item in addressbook.items | filter:$viewValue | limitTo:8" />
             
             <!--
             <span class="input-group-btn">

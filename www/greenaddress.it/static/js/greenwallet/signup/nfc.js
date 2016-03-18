@@ -1,6 +1,6 @@
 angular.module('greenWalletNFCControllers', ['greenWalletServices'])
-.controller('NFCController', ['$rootScope', '$scope', '$modalInstance', 'cordovaReady', 'notices',
-        function NFCController($rootScope, $scope, $modalInstance, cordovaReady, notices) {
+.controller('NFCController', ['$rootScope', '$scope', '$uibModalInstance', 'cordovaReady', 'notices',
+        function NFCController($rootScope, $scope, $uibModalInstance, cordovaReady, notices) {
     $scope.nfc_init_error = false;
     $scope.nfc_init_succeeded = 0;
     cordovaReady(function() {
@@ -50,7 +50,7 @@ angular.module('greenWalletNFCControllers', ['greenWalletServices'])
         nfc.addMimeTypeListener('x-ga/en', writeTag, win, fail); // overwrite
         nfc.addNdefFormatableListener(formatTag, win, fail);
         
-        $modalInstance.result.finally(function() {
+        $uibModalInstance.result.finally(function() {
             // TODO: also suspend/resume?
             var removeFail = function() {
                 $rootScope.safeApply(function() {

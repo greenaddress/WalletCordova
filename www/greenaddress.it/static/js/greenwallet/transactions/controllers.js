@@ -1,7 +1,7 @@
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
-.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$modal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
-        function TransactionsController($scope, wallets, tx_sender, notices, branches, $modal, gaEvent, $timeout, $q, encode_key, hostname) {
+.controller('TransactionsController', ['$scope', 'wallets', 'tx_sender', 'notices', 'branches', '$uibModal', 'gaEvent', '$timeout', '$q', 'encode_key', 'hostname',
+        function TransactionsController($scope, wallets, tx_sender, notices, branches, $uibModal, gaEvent, $timeout, $q, encode_key, hostname) {
     // required already by InfoController
     // if(!wallets.requireWallet($scope)) return;
 
@@ -95,7 +95,7 @@ angular.module('greenWalletTransactionsControllers',
                 $scope.redeeming = false;
             });
         }
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_redeem.html',
             scope: $scope
         });
@@ -301,7 +301,7 @@ angular.module('greenWalletTransactionsControllers',
                 transaction.payment_request = 'data:application/bitcoin-paymentrequest;base64,' + payreq_b64;
             });
         }
-        $modal.open({
+        $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_tx_details.html',
             scope: $scope
         })
@@ -318,7 +318,7 @@ angular.module('greenWalletTransactionsControllers',
                         url: 'https://' + hostname + '/redeem/?amount=' + transaction.social_value + '#/redeem/' + enckey,
                         text: transaction.social_destination.text
                     };
-                    $modal.open({
+                    $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_voucher.html',
                         scope: $scope
                     });
@@ -348,7 +348,7 @@ angular.module('greenWalletTransactionsControllers',
                 });
             }
         }
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/modal_encryption_password.html',
             scope: $scope
         });

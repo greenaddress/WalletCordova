@@ -1,6 +1,6 @@
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
-.controller('SignupLoginController', ['$scope', '$modal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
-        function SignupLoginController($scope, $modal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
+.controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
+        function SignupLoginController($scope, $uibModal, focus, wallets, notices, mnemonics, $location, cordovaReady, facebook, tx_sender, crypto, gaEvent, reddit, storage, qrcode, $timeout, $q, trezor, bip38, btchip, $interval, $rootScope) {
 
     if (window.GlobalWalletControllerInitVars) {
         // in case user goes back from send to login and back to send, we want to display the
@@ -134,7 +134,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 }, function(err) { that.error = err; that.decrypting = false; });
             }
         };
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/modal_decryption_password.html',
             scope: $scope
         });
@@ -210,7 +210,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 };
                 if (!state.has_pin && !state.refused_pin) {
                     gaEvent('Login', 'MnemonicLoginPinModalShown');
-                    modal = $modal.open({
+                    modal = $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pin.html',
                         scope: $scope
                     });
@@ -325,7 +325,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
                 notices.makeNotice('error', e.args[1]);
             });
         };
-        var modal = $modal.open({
+        var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_custom_login.html',
             scope: $scope
         });

@@ -1,7 +1,7 @@
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
-.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$modal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
-         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $modal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
+.controller('SendController', ['$scope', 'wallets', 'tx_sender', 'cordovaReady', 'notices', 'branches', 'facebook', 'wallets', '$routeParams', 'hostname', 'gaEvent', 'reddit', '$uibModal', '$location', '$rootScope', '$q', 'parse_bitcoin_uri', 'qrcode', 'sound', 'encode_key',
+         function SendController($scope, wallets, tx_sender, cordovaReady, notices, branches, facebook, wallets, $routeParams, hostname, gaEvent, reddit, $uibModal, $location, $rootScope, $q, parse_bitcoin_uri, qrcode, sound, encode_key) {
     if (!wallets.requireWallet($scope)) return;
 
     var _verify_tx = function(that, rawtx, destination, satoshis, change_pointer, no_electrum) {
@@ -271,7 +271,7 @@ angular.module('greenWalletSendControllers',
                     if (err == 'no electrum') {
                         if (cur_net == 'testnet') return verify(true);
                         // for mainnnet, ask user if they want to skip Electrum:
-                        return $modal.open({
+                        return $uibModal.open({
                             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_no_electrum.html',
                             windowClass: 'twofactor' // display on top of loading indicator
                         }).result.then(function()  {
@@ -284,7 +284,7 @@ angular.module('greenWalletSendControllers',
                     }
                 }));
             }, function() {
-                $modal.open({
+                $uibModal.open({
                     templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_no_electrum.html',
                     windowClass: 'twofactor' // display on top of loading indicator
                 }).result.then(function()  {
@@ -358,7 +358,7 @@ angular.module('greenWalletSendControllers',
             }
             $scope.send_fb_via_fb_clicked = false;
             $rootScope.decrementLoading();
-            $modal.open({
+            $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_fb_message.html',
                 scope: $scope
             }).result.then(function() {
@@ -407,7 +407,7 @@ angular.module('greenWalletSendControllers',
                 url: 'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey,
                 text: that.voucher_text
             };
-            $modal.open({
+            $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_voucher.html',
                 scope: $scope
             }).result.finally(function() { $location.url('/info/'); });
