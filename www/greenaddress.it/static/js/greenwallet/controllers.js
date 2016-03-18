@@ -17,10 +17,10 @@ angular.module('greenWalletControllers', [])
         TRT: 'The Rock Trading',
         BITFINEX: 'BitFinex',
         BTCE: 'BTC-e',
-        CAVIRTEX: 'Cavirtex',
         HUOBI: 'Huobi',
         BTCCHINA: 'BTCChina',
-        KRAKEN: 'Kraken'
+        KRAKEN: 'Kraken',
+        QUADRIGACX: 'QuadrigaCX'
     };
 
     if (window.chrome && chrome.runtime && chrome.runtime.getManifest) {
