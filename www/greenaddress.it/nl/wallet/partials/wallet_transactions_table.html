@@ -33,12 +33,12 @@
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">onbevestigde</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) bevestigingen</span>
               <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by && !transaction.instant">
-                <span class="dropdown" is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d">
-                  <a class="btn btn-info btn-xs dropdown-toggle" ng-class="{disabled: bumping_fee}" href="">
+                <span uib-dropdown is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d">
+                  <a class="btn btn-info btn-xs" uib-dropdown-toggle ng-class="{disabled: bumping_fee}" href="">
                     bump fee
                     <span class="caret"></span>
                   </a>
-                  <ul class="dropdown-menu" ng-if="transaction.estimated_fees.length">
+                  <ul uib-dropdown-menu ng-if="transaction.estimated_fees.length">
                     <li class="dropdown-header">Choose required estimated number of confirmations:
                     <span ng-show="transaction.below_estimate_for"><br/>(Current estimate &lt; (( transaction.below_estimate_for )))</span>
                     </li>
@@ -49,7 +49,7 @@
                     </a>
                     </li>
                   </ul>
-                  <ul class="dropdown-menu" ng-if="!transaction.estimated_fees.length">
+                  <ul uib-dropdown-menu ng-if="!transaction.estimated_fees.length">
                     <li class="dropdown-header">Fee already at 1-conf-estimate level. Choose new fee:</li>
                     <li role="separator" class="divider"></li>
                     <li><a href="" ng-click="bump_fee(transaction, transaction.fee*1.5)">1.5x current fee (~<span>(( transaction.fee*1.5 | format_btc:wallet.unit )) / (( transaction.fee*1.5 | format_fiat:wallet.fiat ))</span>)</a></li>
