@@ -15,44 +15,13 @@ var patchIfNotPatched = function(isAlpha) {
     isPatched = true;
     if (isAlpha) {
         importScripts('secp256k1-alpha.js');
-        Module.secp256k1ctx = Module._secp256k1_context_create(3);
+        Bitcoin.contrib.init_secp256k1(Module, isAlpha);
         // TODO: implementation of getPublicKeyBuffer for alpha's libsecp256k1
         return;
     } else {
         importScripts('secp256k1.js');
-        Module.secp256k1ctx = Module._secp256k1_context_create(3);
+        Bitcoin.contrib.init_secp256k1(Module, isAlpha);
     }
-    no_secp256k1_getPub = Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer;
-    Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer = function() {
-        if (!this.d) return no_secp256k1_getPub.bind(this)();
-        var compressed = this.compressed;
-
-        var out = Module._malloc(128);
-        var out_s = Module._malloc(4);
-        var secexp = Module._malloc(32);
-        var start = this.d.toByteArray().length - 32;
-        if (start >= 0) {  // remove excess zeroes
-            var slice = this.d.toByteArray().slice(start);
-        } else {  // add missing zeroes
-            var slice = this.d.toByteArray();
-            while (slice.length < 32) slice.unshift(0);
-        }
-        writeArrayToMemory(slice, secexp);
-        setValue(out_s, 128, 'i32');
-
-        Module._secp256k1_ec_pubkey_create(Module.secp256k1ctx, out, out_s, secexp, compressed ? 1 : 0);
-
-        var ret = [];
-        for (var i = 0; i < getValue(out_s, 'i32'); ++i) {
-            ret[i] = getValue(out+i, 'i8') & 0xff;
-        }
-
-        Module._free(out);
-        Module._free(out_s);
-        Module._free(secexp);
-
-        return new Bitcoin.Buffer.Buffer(ret)
-    };
 }
 // segnet hack (belongs in bitcoinjs really)
 segnet = {pubKeyHash: 30, scriptHash: 50, wif: 158,
@@ -101,11 +70,20 @@ funcs = {
         }
 
         if (isAlpha) {
-            Module._secp256k1_schnorr_sign(Module.secp256k1ctx, msg, sig, seckey, 0, 0);
+            if (1 != Module._secp256k1_schnorr_sign(Module.secp256k1ctx, msg, sig, seckey, 0, 0)) {
+                throw new Error('secp256k1 Schnorr sign failed');
+            };
             var len = 64;
         } else {
-            Module._secp256k1_ecdsa_sign(Module.secp256k1ctx, msg, sig, siglen_p, seckey, 0, 0);
+            var sig_opaque = Module._malloc(64);
+            if (1 != Module._secp256k1_ecdsa_sign(Module.secp256k1ctx, sig_opaque, msg, seckey, 0, 0)) {
+                throw new Error('secp256k1 ECDSA sign failed');
+            }
+            if (1 != Module._secp256k1_ecdsa_signature_serialize_der(Module.secp256k1ctx, sig, siglen_p, sig_opaque)) {
+                throw new Error('secp256k1 ECDSA signature serialize failed');
+            }
             var len = getValue(siglen_p, 'i32');
+            Module._free(sig_opaque);
         }
         var ret = [];
         for (var i = 0; i < len; ++i) {

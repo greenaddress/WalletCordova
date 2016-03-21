@@ -201,7 +201,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             script.onload = script.onreadystatechange = function () {
                 if (!ready && (!this.readyState || this.readyState == 'complete')) {
                     ready = true;
-                    Module.secp256k1ctx = Module._secp256k1_context_create(3);
+                    Bitcoin.contrib.init_secp256k1(Module, cur_net.isAlpha);
                     if (cur_net.isAlpha) {
                         Module._secp256k1_pedersen_context_initialize(Module.secp256k1ctx);
                         Module._secp256k1_rangeproof_context_initialize(Module.secp256k1ctx);
@@ -216,39 +216,6 @@ if (self.cordova && cordova.platformId == 'ios') {
             var tag = document.getElementsByTagName('script')[0];
             tag.parentNode.insertBefore(script, tag);
         });
-
-        no_secp256k1_getPub = Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer;
-        Bitcoin.bitcoin.ECPair.prototype.getPublicKeyBuffer = function() {
-            // TODO: implementation for alpha's libsecp256k1
-            if (self.Module === undefined || !this.d || cur_net.isAlpha) {
-                // in case it's called before module finishes initialisation,
-                // or in case of pubkey-only ECPair
-                return no_secp256k1_getPub.bind(this)();
-            }
-            var compressed = this.compressed;
-
-            var out = Module._malloc(128);
-            var out_s = Module._malloc(4);
-            var secexp = Module._malloc(32);
-            var start = this.d.toByteArray().length - 32;
-            if (start >= 0) {  // remove excess zeroes
-                var slice = this.d.toByteArray().slice(start);
-            } else {  // add missing zeroes
-                var slice = this.d.toByteArray();
-                while (slice.length < 32) slice.unshift(0);
-            }
-            writeArrayToMemory(slice, secexp);
-            setValue(out_s, 128, 'i32');
-
-            Module._secp256k1_ec_pubkey_create(Module.secp256k1ctx, out, out_s, secexp, compressed ? 1 : 0);
-
-            var ret = [];
-            for (var i = 0; i < getValue(out_s, 'i32'); ++i) {
-                ret[i] = getValue(out+i, 'i8') & 0xff;
-            }
-
-            return new Bitcoin.Buffer.Buffer(ret);
-        };
     }
     if (self.Worker && !self.GAIT_IN_WORKER) {
         (function() {

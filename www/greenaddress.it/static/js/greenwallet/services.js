@@ -166,18 +166,22 @@ angular.module('greenWalletServices', [])
         for (var i = 0; i < 33; ++i) {
             setValue(nonce + i, out.nonce_commitment[i], 'i8');
         }
-        Module._secp256k1_ec_pubkey_parse(
+        if (1 != Module._secp256k1_ec_pubkey_parse(
             Module.secp256k1ctx,
             pubkey_p,
             nonce,
             33
-        );
-        Module._secp256k1_ecdh(
+        )) {
+            throw new Error('secp256k1 EC pubkey parse failed');
+        }
+        if (1 != Module._secp256k1_ecdh(
             Module.secp256k1ctx,
             nonce_res,
             pubkey_p,
             secexp
-        );
+        )) {
+            throw new Error('secp256k1 ECDH failed');
+        }
         var nonce_buf = new Bitcoin.Buffer.Buffer(32);
         for (var i = 0; i < 32; ++i) {
             nonce_buf[i] = getValue(nonce_res + i, 'i8') & 0xff;
@@ -954,22 +958,26 @@ angular.module('greenWalletServices', [])
             }
             for (var i = 0; i < outs.length; ++i) {
                 if (i == outs.length - 1) {
-                    Module._secp256k1_pedersen_blind_sum(
+                    if (1 != Module._secp256k1_pedersen_blind_sum(
                         Module.secp256k1ctx,
                         getValue(blindptrs + 4 * (all - 1), '*'),
                         blindptrs,
                         all - 1,
                         needed_unspent.length
-                    );
+                    )) {
+                        throw new Error('secp256k1 pedersen blind sum failed');
+                    }
                 }
                 var commitment = Module._malloc(33);
-                Module._secp256k1_pedersen_commit(
+                if (1 != Module._secp256k1_pedersen_commit(
                     Module.secp256k1ctx,
                     commitment,
                     getValue(blindptrs + cur_blindptr, '*'),
                     +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
                     +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
-                );
+                )) {
+                    throw new Error('secp256k1 Pedersen commit failed');
+                }
                 var commitment_buf = new Bitcoin.Buffer.Buffer(33);
                 for (var j = 0; j < 33; ++j) {
                     commitment_buf[j] = getValue(
@@ -1007,18 +1015,22 @@ angular.module('greenWalletServices', [])
                 for (var j = 0; j < 33; ++j) {
                     setValue(nonce+j, outs[i].to_scanning_pubkey[j], 'i8');
                 }
-                Module._secp256k1_ec_pubkey_parse(
+                if (1 != Module._secp256k1_ec_pubkey_parse(
                     Module.secp256k1ctx,
                     pubkey_p,
                     nonce,
                     33
-                );
-                Module._secp256k1_ecdh(
+                )) {
+                    throw new Error('secp256k1 EC pubkey parse failed');
+                }
+                if (1 != Module._secp256k1_ecdh(
                     Module.secp256k1ctx,
                     nonce_res,
                     pubkey_p,
                     secexp
-                );
+                )) {
+                    throw new Error('secp256k1 ECDH failed');
+                }
                 var nonce_buf = new Bitcoin.Buffer.Buffer(32);
                 for (var j = 0; j < 32; ++j) {
                     nonce_buf[j] = getValue(nonce_res + j, 'i8') & 0xff;
@@ -1027,7 +1039,7 @@ angular.module('greenWalletServices', [])
                 for (var j = 0; j < 32; ++j) {
                     setValue(nonce_res + j, nonce_buf[j], 'i8');
                 }
-                Module._secp256k1_rangeproof_sign(
+                if (1 != Module._secp256k1_rangeproof_sign(
                     Module.secp256k1ctx,
                     rangeproof,
                     rangeproof_len,
@@ -1038,7 +1050,9 @@ angular.module('greenWalletServices', [])
                     0, 32,
                     +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
                     +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
-                );
+                )) {
+                    throw new Error('secp256k1 rangeproof sign failed');
+                }
                 for (var j = 0; j < 4; ++j) {
                     rangeproof_len_buf[4-j-1] = getValue(
                         rangeproof_len+j, 'i8'
