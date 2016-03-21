@@ -2643,6 +2643,19 @@ angular.module('greenWalletServices', [])
             var d = $q.defer();
             if (window.chrome && chrome.storage) {
                 chrome.storage.local.get(key, function(items) {
+                    var key_arr;
+                    if (key.constructor == Array) {
+                        key_arr = key;
+                    } else {
+                        key_arr = [key];
+                    }
+                    // make it compatible with localStorage.getItem:
+                    // (returns null if key is missing)
+                    for (var i = 0; i < key_arr.length; ++i) {
+                        if (items[key_arr[i]] === undefined) {
+                            items[key_arr[i]] = null;
+                        }
+                    }
                     if (key.constructor === Array) {
                         d.resolve(items);
                     } else {
