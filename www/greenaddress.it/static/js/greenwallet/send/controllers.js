@@ -58,13 +58,15 @@ angular.module('greenWalletSendControllers',
                 }
                 var derive_btchip = function() {
                     return $scope.wallet.btchip.app.getWalletPublicKey_async("3'/"+$scope.wallet.current_subaccount+"'").then(function(result) {
-                        var pub = result.publicKey.toString(HEX)
+                        var pubHex = result.publicKey.toString(HEX)
                         var chainCode = result.chainCode.toString(HEX)
+                        var pubKey = Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                            new Bitcoin.Buffer.Buffer(pubHex, 'hex'),
+                            cur_net
+                        );
+                        pubKey.compressed = true;
                         var subaccount = new Bitcoin.bitcoin.HDNode(
-                            Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                                new Bitcoin.Buffer.Buffer(pub, 'hex'),
-                                cur_net
-                            ),
+                            pubKey,
                             new Bitcoin.Buffer.Buffer(chainCode, 'hex')
                         );
                         return subaccount.derive(branches.REGULAR);

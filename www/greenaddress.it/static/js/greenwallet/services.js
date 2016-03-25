@@ -3099,8 +3099,8 @@ angular.module('greenWalletServices', [])
             var doSuccess = function() {
                 d.resolve();
                 that.success = true;
-                if (modal) {
-                    modal.close();  // modal close cancels the tick
+                if (that.modal) {
+                    that.modal.close();  // modal close cancels the tick
                 }
             }
             var check = function() {

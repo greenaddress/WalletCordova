@@ -1270,7 +1270,7 @@ angular.module('greenWalletSettingsControllers',
                 );
                 pub.compressed = true;
                 return {
-                    pub: pub.getPublicKeyBuffer.toString('hex'),
+                    pub: pub.getPublicKeyBuffer().toString('hex'),
                     chaincode: result.chainCode.toString(HEX)
                 };
             });
@@ -1297,12 +1297,12 @@ angular.module('greenWalletSettingsControllers',
             if (that.new_2of3_xpub) {
                 var hdwallet_2of3_d = $q.when(Bitcoin.HDWallet.fromBase58(that.new_2of3_xpub));
             } else {
-                entropy = Bitcoin.ecdsa.getBigRandom(TWOPOWER256).toByteArrayUnsigned();
+                entropy = Bitcoin.randombytes(32);
                 while (entropy.length < 32) entropy.unshift(0);
                 var hdwallet_2of3_d = mnemonics.toMnemonic(entropy).then(function(mnemonic_) {
                     mnemonic = mnemonic_;
                     return mnemonics.toSeed(mnemonic).then(function (seed) {
-                        return $q.when(Bitcoin.HDWallet.fromSeedHex(seed, cur_net));
+                        return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex(seed, cur_net));
                     }, null, function(progress) {
                         that.seed_progress_2of3 = Math.round(progress);
                     });
@@ -1334,7 +1334,7 @@ angular.module('greenWalletSettingsControllers',
                 return derive_xpub(min_unused_pointer).then(function(ga_xpub) {
                     var scope = angular.extend($scope.$new(), {
                         mnemonic_2of3: mnemonic,
-                        xpub_2of3: hdwallet.toBase58(false),
+                        xpub_2of3: hdwallet.neutered().toBase58(),
                         xpub_ga_2of3: ga_xpub
                     });
                     return derive_fun(min_unused_pointer).then(function(hdhex) {
@@ -1372,7 +1372,7 @@ angular.module('greenWalletSettingsControllers',
                     });
                 });
             }).catch(function(e) {
-                notices.makeNotice('error', e.args[1] || e);
+                notices.makeNotice('error', e && e.args ? e.args[1] : e);
             }).finally(function() {
                 that.generating_2of3_seed = that.adding_subwallet = false;
             });;
