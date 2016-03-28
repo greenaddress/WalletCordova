@@ -1,0 +1,21 @@
+language: android
+android:
+    components:
+        - tools
+        - build-tools-23.0.2
+        - android-23
+        - platform-tools-23
+        - extra-android-support
+        - extra-android-m2repository
+        - extra-google-m2repository
+    licenses:
+        - '.+'
+
+jdk:
+    - oraclejdk7
+
+before_install:
+  - npm install -g cordova
+script:
+  - cordova prepare android
+  - cordova compile android
