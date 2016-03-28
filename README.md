@@ -1,3 +1,6 @@
+Build status: [![Build Status](https://travis-ci.org/greenaddress/WalletCordova.png?branch=master)](https://travis-ci.org/greenaddress/WalletCordova) 
+
+
 ## How to build on Android
 
  1. Install Android SDK and Cordova 5.4
