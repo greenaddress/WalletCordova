@@ -10,7 +10,7 @@ android:
         - extra-google-m2repository
     licenses:
         - '.+'
-
+os: osx
 jdk:
     - oraclejdk7
 sudo: required
