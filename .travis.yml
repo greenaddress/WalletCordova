@@ -1,18 +1,20 @@
 language: android
 android:
-    components:
-        - tools
-        - build-tools-23.0.2
-        - android-23
-        - platform-tools-23
-        - extra-android-support
-        - extra-android-m2repository
-        - extra-google-m2repository
-    licenses:
-        - '.+'
-os: osx
+  components:
+    - tools
+    - build-tools-23.0.2
+    - android-23
+    - platform-tools-23
+    - extra-android-support
+    - extra-android-m2repository
+    - extra-google-m2repository
+  licenses:
+    - '.+'
+os:
+  - osx
+  - linux
 jdk:
-    - oraclejdk7
+  - oraclejdk7
 sudo: required
 
 before_install:
@@ -23,3 +25,7 @@ before_install:
 script:
   - cordova prepare android
   - cordova compile android
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      cordova prepare ios;
+      cordova compile ios;
+      fi
