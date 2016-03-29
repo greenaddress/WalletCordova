@@ -1,18 +1,21 @@
-language: android
-android:
-  components:
-    - tools
-    - build-tools-23.0.2
-    - android-23
-    - platform-tools-23
-    - extra-android-support
-    - extra-android-m2repository
-    - extra-google-m2repository
-  licenses:
-    - '.+'
-os:
-  - osx
-  - linux
+language: java
+matrix:
+  include:
+    - os: linux
+      language: android
+      android:
+        components:
+          - tools
+          - build-tools-23.0.2
+          - android-23
+          - platform-tools-23
+          - extra-android-support
+          - extra-android-m2repository
+          - extra-google-m2repository
+        licenses:
+          - '.+'
+    - os: osx
+      env: ANDROID_HOME=/usr/local/opt/android-sdk
 
 sudo: required
 
@@ -21,10 +24,19 @@ before_install:
   - curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -   # upgrade node manually as we're building on
   - sudo apt-get install -y nodejs                                   # android language and can't pick it in yml
   - sudo npm install -g cordova
+
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew update > /dev/null;
+      brew install android-sdk
+      echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-23.0.2;
+      fi
+
 script:
-  - cordova prepare android
-  - cordova compile android
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       cordova prepare ios;
       cordova compile ios;
+      elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      cordova prepare android
+      cordova compile android
       fi
