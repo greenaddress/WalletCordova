@@ -19,7 +19,7 @@ before_install:
   - rm -rf /home/travis/.nvm                                         #
   - curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -   # upgrade node manually as we're building on
   - sudo apt-get install -y nodejs                                   # android language and can't pick it in yml
-  - npm install -g cordova
+  - sudo npm install -g cordova
 script:
   - cordova prepare android
   - cordova compile android
