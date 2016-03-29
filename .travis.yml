@@ -13,8 +13,7 @@ android:
 os:
   - osx
   - linux
-jdk:
-  - oraclejdk7
+
 sudo: required
 
 before_install:
