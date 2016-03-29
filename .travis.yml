@@ -19,17 +19,19 @@ matrix:
 
 sudo: required
 
-before_install:
-  - rm -rf /home/travis/.nvm
+before_install: rm -rf /home/travis/.nvm
+
+install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update > /dev/null;
       brew install android-sdk node-js;
       echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-23.0.2;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -;   # upgrade node manually as we're building on
-      sudo apt-get install -y nodejs;                                   # android language and can't pick it in yml
+      curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -;
+      sudo apt-get install -y nodejs;
       fi
-  - sudo npm install -g cordova
+
+before_script: sudo npm install -g cordova
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
