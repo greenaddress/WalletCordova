@@ -24,7 +24,9 @@ before_install: rm -rf /home/travis/.nvm
 install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update > /dev/null;
-      brew install android-sdk nodejs;
+      brew install android-sdk nvm;
+      nvm install "5.4";
+      nvm use --delete-prefix "5.4";
       echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-23.0.2;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -;
