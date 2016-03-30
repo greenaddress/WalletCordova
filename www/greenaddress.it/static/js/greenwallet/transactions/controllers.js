@@ -107,7 +107,11 @@ angular.module('greenWalletTransactionsControllers',
         transaction.bumping_dropdown_open = false;
         var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
         var targetFeeDelta = new_fee - parseInt(transaction.fee);
-        var requiredFeeDelta = transaction.rawtx.length / 2; // assumes mintxfee = 1000
+        var requiredFeeDelta = (
+            transaction.rawtx.length / 2 +
+            4 * transaction.inputs.length
+        ); // assumes mintxfee = 1000, and inputs increasing
+           // by at most 4 bytes per input (signatures have variable lengths)
         var feeDelta = Math.max(targetFeeDelta, requiredFeeDelta);
         var remainingFeeDelta = feeDelta;
         var newOuts = [];
