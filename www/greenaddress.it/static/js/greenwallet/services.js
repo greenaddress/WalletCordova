@@ -2093,25 +2093,8 @@ angular.module('greenWalletServices', [])
             connection = new autobahn.Connection({
                 url: wss_url,
                 realm: "realm1",
-                authmethods: ["wampcra"],
-                use_deferred: $q.defer,
-                onchallenge: function(session, method, extra) {
-                   if (method === "wampcra") {
-                      return autobahn.auth_cra.sign(
-                         connection.token,
-                         extra.challenge
-                      );
-                   }
-                }
+                use_deferred: $q.defer
             });
-            var oldjoin = autobahn.Session.prototype.join;
-            autobahn.Session.prototype.join = function(realm, authmethods, authid) {
-                $http.get((window.root_url||'')+'/token/').then(function(response) {
-                    var token = response.data;
-                   connection.token = token;
-                   oldjoin.bind(this)(realm, authmethods, token);
-                }.bind(this));
-            }
             connection.onclose = function() {
                 session = session_for_login = null;
                 disconnected = true;
