@@ -44,7 +44,7 @@
                     </li>
                     <li role="separator" class="divider"></li>
                     <li ng-repeat="estimate in transaction.estimated_fees">
-                    <a href="" ng-click="bump_fee(transaction, estimate.fee)">
+                    <a href="" ng-click="bump_fee(transaction, estimate.feerate)">
                       (( estimate.message )) (~<span>(( estimate.fee | format_btc:wallet.unit )) / (( estimate.fee | format_fiat:wallet.fiat ))</span>)
                     </a>
                     </li>
@@ -52,9 +52,9 @@
                   <ul uib-dropdown-menu ng-if="!transaction.estimated_fees.length">
                     <li class="dropdown-header">Fee already at 1-conf-estimate level. Choose new fee:</li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee*1.5)">1.5x current fee (~<span>(( transaction.fee*1.5 | format_btc:wallet.unit )) / (( transaction.fee*1.5 | format_fiat:wallet.fiat ))</span>)</a></li>
-                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee*2)">2x current fee (~<span>(( transaction.fee*2 | format_btc:wallet.unit )) / (( transaction.fee*2 | format_fiat:wallet.fiat ))</span>)</a></li>
-                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee*3)">3x current fee (~<span>(( transaction.fee*3 | format_btc:wallet.unit )) / (( transaction.fee*3 | format_fiat:wallet.fiat ))</span>)</a></li>
+                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee_per_kb*1.5)">1.5x current fee (~<span>(( transaction.fee*1.5 | format_btc:wallet.unit )) / (( transaction.fee*1.5 | format_fiat:wallet.fiat ))</span>)</a></li>
+                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee_per_kb*2)">2x current fee (~<span>(( transaction.fee*2 | format_btc:wallet.unit )) / (( transaction.fee*2 | format_fiat:wallet.fiat ))</span>)</a></li>
+                    <li><a href="" ng-click="bump_fee(transaction, transaction.fee_per_kb*3)">3x current fee (~<span>(( transaction.fee*3 | format_btc:wallet.unit )) / (( transaction.fee*3 | format_fiat:wallet.fiat ))</span>)</a></li>
                   </ul>
                 </span>
                 <a class="btn btn-info btn-xs dropdown-toggle" ng-show="transaction.replacement_of.length && !transaction.show_replaced" href="" ng-click="transaction.show_replaced = true">

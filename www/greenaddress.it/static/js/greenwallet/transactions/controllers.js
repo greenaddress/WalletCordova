@@ -101,19 +101,30 @@ angular.module('greenWalletTransactionsControllers',
         });
     }
 
-    $scope.bump_fee = function(transaction, new_fee) {
-        new_fee = Math.round(new_fee);
+    $scope.bump_fee = function(transaction, new_feerate, size_override, level) {
+        // copy to avoid adding inputs twice if bump is cancelled:
+        transaction = angular.copy(transaction);
+        level = level || 0;
+        if (level > 10) {
+            notices.makeNotice('error', 'Recursion limit exceeded.');
+            $scope.bumping_fee = false;
+            return $q.reject()
+        }
+        var ret = $q.defer();
+
+        var txsize = (size_override || transaction.size);
+        var new_fee = Math.round(txsize * new_feerate / 1000);
         $scope.bumping_fee = true;
         transaction.bumping_dropdown_open = false;
         var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
         var targetFeeDelta = new_fee - parseInt(transaction.fee);
         var requiredFeeDelta = (
-            transaction.rawtx.length / 2 +
-            4 * transaction.inputs.length
+            txsize + 4 * transaction.inputs.length
         ); // assumes mintxfee = 1000, and inputs increasing
            // by at most 4 bytes per input (signatures have variable lengths)
         var feeDelta = Math.max(targetFeeDelta, requiredFeeDelta);
         var remainingFeeDelta = feeDelta;
+        var new_fee = parseInt(transaction.fee) + feeDelta;
         var newOuts = [];
         for (var i = 0; i < transaction.outputs.length; ++i) {
             if (transaction.outputs[i].is_relevant) {
@@ -147,6 +158,7 @@ angular.module('greenWalletTransactionsControllers',
             Bitcoin.contrib.AlphaTransactionBuilder.prototype
         );
 
+        var builder_d;
         if (remainingFeeDelta > 0) {
             builder_d = tx_sender.call(
                 'http://greenaddressit.com/txs/get_all_unspent_outputs',
@@ -208,6 +220,30 @@ angular.module('greenWalletTransactionsControllers',
                                     )
                                 )
                             )
+                        }
+                        // add estimated prevscript + signatures + scripts
+                        // length (72[prevout] + 74[sig] * 2 for each input)
+                        var new_size = builder.tx.byteLength() + builder.tx.ins.length * (72 + 74 * 2);
+                        if (Math.round(new_size * new_feerate / 1000) > new_fee) {
+                            ret.resolve($scope.bump_fee(
+                                transaction, new_feerate, new_size, level + 1
+                            ));
+                            return;
+                        }
+                        var requiredFeeDelta = (
+                            new_size + 4 * transaction.inputs.length
+                        );
+                        if (parseInt(transaction.fee) + requiredFeeDelta > new_fee) {
+                            ret.resolve($scope.bump_fee(
+                                transaction, new_feerate, new_size, level + 1
+                            ));
+                            return;
+                        }
+                        // add inputs to transaction.inputs only if it passed
+                        // the above checks -- otherwise the recursive call
+                        // would have duplicate inputs in transaction.inputs
+                        for (var i = 0; i < required_utxos.length; ++i) {
+                            var requtxo = required_utxos[i];
                             transaction.inputs.push(
                                 {pubkey_pointer: requtxo.pointer}
                             );
@@ -220,7 +256,9 @@ angular.module('greenWalletTransactionsControllers',
             builder_d = $q.when(builder);
         }
 
-        return builder_d.then(function(builder) {
+        builder_d.then(function(builder) {
+            if (!builder) return;  // recursive call to bump_fee above
+
             var signatures_ds = [];
             for (var i = 0; i < transaction.inputs.length; ++i) {
                 (function (i) {
@@ -242,7 +280,7 @@ angular.module('greenWalletTransactionsControllers',
                  recipient: transaction.description_short}
             );
 
-            return $q.all(signatures_ds.concat([modal_d])).then(function(results) {
+            ret.resolve($q.all(signatures_ds.concat([modal_d])).then(function(results) {
                 var try_sending = function(twofac_data) {
                     return tx_sender.call(
                         'http://greenaddressit.com/vault/send_raw_tx',
@@ -270,12 +308,16 @@ angular.module('greenWalletTransactionsControllers',
                         return $q.reject(e);
                     }
                 });
-            })
+            }).catch(function(e) {
+                notices.makeNotice('error', e.args ? e.args[1] : e);
+            }).finally(function() {
+                $scope.bumping_fee = false;
+            }));
         }).catch(function(e) {
-            notices.makeNotice('error', e.args ? e.args[1] : e);
-        }).finally(function() {
             $scope.bumping_fee = false;
+            notices.makeNotice('error', e.args ? e.args[1] : e);
         });
+        return ret;
     };
 
     $scope.edit_tx_memo = function(tx) {

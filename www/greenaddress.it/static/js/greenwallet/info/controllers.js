@@ -120,6 +120,7 @@ angular.module('greenWalletInfoControllers',
             if (new_fee > parseInt(tx.fee)) {
                 estimates.push({
                     fee: new_fee,
+                    feerate: $scope.wallet.fee_estimates[keys[i]].feerate,
                     message:
                         blocks == 1 ?
                             gettext('1 confirmation') :
