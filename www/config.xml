@@ -16,6 +16,7 @@
     <preference name="SplashScreenDelay" value="10000" />
     <preference name="StatusBarOverlaysWebview" value="false" />
     <preference name="StatusBarBackgroundColor" value="#69b16e" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <platform name="android">
         <splash density="land-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
         <splash density="land-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
