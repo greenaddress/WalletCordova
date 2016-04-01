@@ -55,7 +55,17 @@ angular.module('greenWalletDirectives', [])
     return function(scope, elem, attr) {
         scope.$on('focusOn', function(e, name) {
             if(name === attr.focusOn) {
-                $timeout(function() { elem[0].focus(); });
+                $timeout(function() {
+                    var attempt = function() {
+                        elem[0].focus();
+                        if (elem[0].getBoundingClientRect().width == 0) {
+                            // retry in case the element is invisible
+                            window.requestAnimationFrame(attempt);
+                        }
+                    };
+                    attempt();
+                });
+
             }
         });
     };
