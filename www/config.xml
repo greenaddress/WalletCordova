@@ -77,7 +77,7 @@
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-vibration" />
     <plugin name="it.greenaddress.cordova" spec="plugins/it.greenaddress.cordova" />
-    <engine name="android" spec="~5.0.0" />
+    <engine name="android" spec="~5.1.0" />
     <engine name="ios" spec="~4.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
     <plugin name="cordova-plugin-app-version" spec="~0.1.8" />
