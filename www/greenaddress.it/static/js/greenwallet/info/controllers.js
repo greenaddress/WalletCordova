@@ -104,8 +104,9 @@ angular.module('greenWalletInfoControllers',
         var estimates = [], below = null;
         var keys = Object.keys($scope.wallet.fee_estimates).sort();
         for (var i = 0; i < keys.length; ++i) {
+            var feerate = $scope.wallet.fee_estimates[keys[i]].feerate * 1000*1000*100;
             var estimated_fee = Math.round(
-                $scope.wallet.fee_estimates[keys[i]].feerate * tx.size / 1000
+                feerate * tx.size / 1000
             );
             // If cur fee is already above estimated, don't suggest it.
             // Needs to be checked early to avoid suggesting the minimum of
@@ -120,7 +121,7 @@ angular.module('greenWalletInfoControllers',
             if (new_fee > parseInt(tx.fee)) {
                 estimates.push({
                     fee: new_fee,
-                    feerate: $scope.wallet.fee_estimates[keys[i]].feerate,
+                    feerate: feerate,
                     message:
                         blocks == 1 ?
                             gettext('1 confirmation') :

@@ -31,7 +31,14 @@
         </dd>
 
         <dt>Fee / Size (bytes) / Fee per kB</dt>
-        <dd>(( selected_transaction.fee | format_btc:wallet.unit )) / ((selected_transaction.size)) / (( selected_transaction.fee_per_kb | format_btc:wallet.unit ))</dd>
+        <dd>
+          (( selected_transaction.fee | format_btc:wallet.unit )) /
+          ((selected_transaction.size)) /
+          (( selected_transaction.fee_per_kb | format_btc:wallet.unit ))
+          <span ng-show="selected_transaction.confirmations == 0">
+              (Estimated number of confirmations required: (( selected_transaction.current_estimate )))
+          </span>
+        </dd>
 
         <dt ng-show="selected_transaction.double_spent_by">Transazione</dt>
         <dd ng-show="selected_transaction.double_spent_by">(( selected_transaction.rawtx ))</dd>

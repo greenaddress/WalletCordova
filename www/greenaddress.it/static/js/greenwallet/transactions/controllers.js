@@ -342,6 +342,24 @@ angular.module('greenWalletTransactionsControllers',
     $scope.details = function(transaction) {
         gaEvent('Wallet', 'TransactionsTabDetailsModal');
         $scope.selected_transaction = transaction;
+        var current_estimate = 25, best_estimate;
+        var keys = Object.keys($scope.wallet.fee_estimates).sort();
+        for (var i = 0; i < keys.length; ++i) {
+            var estimate = $scope.wallet.fee_estimates[keys[i]];
+            if (i == 0) best_estimate = estimate.blocks;
+            var feerate = estimate.feerate * 1000*1000*100;
+            var estimated_fee = Math.round(
+                feerate * transaction.size / 1000
+            );
+            // If cur fee is already above estimated, don't suggest it.
+            // Needs to be checked early to avoid suggesting the minimum of
+            // tx.fee + tx.size needlessly.
+            if (parseInt(transaction.fee) >= estimated_fee) {
+                current_estimate = estimate.blocks
+                break;
+            }
+        }
+        transaction.current_estimate = current_estimate;
         if (transaction.has_payment_request && !transaction.payment_request) {
             tx_sender.call('http://greenaddressit.com/txs/get_payment_request', transaction.txhash).then(function(payreq_b64) {
                 transaction.payment_request = 'data:application/bitcoin-paymentrequest;base64,' + payreq_b64;
