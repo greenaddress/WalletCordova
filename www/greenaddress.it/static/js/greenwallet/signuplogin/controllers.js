@@ -73,14 +73,10 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         state.encrypted_seed = data.encrypted_seed;
         state.encrypted_seed_touchid = data.encrypted_seed_touchid;
         $timeout(function() {
-            if (!window.cordova || window.cordova.platformId != 'ios') {
-                // focus on iOS seems to break the app - clicking anywhere opens
-                // the software keyboard which is not what we want
-                if (state.has_pin) {
-                    focus('pin');
-                } else {
-                    focus('mnemonic');
-                }
+            if (state.has_pin) {
+                focus('pin');
+            } else {
+                focus('mnemonic');
             }
         });
 
