@@ -3192,7 +3192,8 @@ angular.module('greenWalletServices', [])
     return {
         getDevice: function(noModal, silentFailure) {
             var deferred = $q.defer();
-            if (window.cordova) return deferred.promise;
+            var is_chrome_app = window.chrome && chrome.storage;
+            if (!is_chrome_app) return deferred.promise;
 
             var tick, modal;
             var showModal = function() {
@@ -3208,44 +3209,10 @@ angular.module('greenWalletServices', [])
                 }
             }
 
-            var is_chrome_app = window.chrome && chrome.storage;
             if (trezor_api) {
                 var plugin_d = $q.when(trezor_api);
-            } else if (is_chrome_app) {
-                var plugin_d = window.trezor.load({configUrl: '/static/trezor_config_signed.bin'});
             } else {
-                trezor = window.trezor;
-
-                function loadHttp() {
-                    console.log('[app] Attempting to load http transport');
-                    return trezor.HttpTransport.connect('https://localhost:21324').then(
-                        function (info) {
-                            console.log('[app] Loading http transport successful',
-                                        info);
-                            return new trezor.HttpTransport('https://localhost:21324');
-                        },
-                        function (err) {
-                            console.warn('[app] Loading http transport failed', err);
-                            throw err;
-                        }
-                    );
-                }
-
-                function loadPlugin() {
-                    console.log('[app] Attempting to load plugin transport');
-                    return trezor.PluginTransport.loadPlugin().then(function (plugin) {
-                        return new trezor.PluginTransport(plugin);
-                    });
-                }
-
-                var plugin_d = loadHttp().catch(loadPlugin).then(function(plugin) {
-                    transport = plugin;
-                    return trezor.http('/static/trezor_config_signed.bin').then(function(config) {
-                        return plugin.configure(config);
-                    }).then(function() {
-                        return plugin;
-                    })
-                });
+                var plugin_d = window.trezor.load();
             }
             plugin_d.then(function(api) {
                 trezor_api = api;
