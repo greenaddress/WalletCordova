@@ -204,6 +204,7 @@ angular.module('greenWalletInfoControllers',
         update_fees();
     });
     $scope.$on('block', function(event, data) {
+        $scope.wallet.cur_block = data.count;
         if (!$scope.filtered_transactions || !$scope.filtered_transactions.list || !$scope.filtered_transactions.list.length) return;
         $scope.$apply(function() {
             for (var i = 0; i < $scope.filtered_transactions.list.length; i++) {

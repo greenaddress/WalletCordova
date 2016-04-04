@@ -620,6 +620,7 @@ angular.module('greenWalletServices', [])
         }
 
         call.then(function(data) {
+            $scope.wallet.cur_block = data.cur_block;
             var retval = [];
             var any_unconfirmed_seen = false;
             var asset_name = null;
@@ -1069,10 +1070,12 @@ angular.module('greenWalletServices', [])
                 outs[i].range_proof = rangeproof_buf;
             }
             var tx = new Bitcoin.contrib.AlphaTransactionBuilder(cur_net);
+            tx.tx.locktime = $scope.wallet.cur_block;  // nLockTime to prevent fee sniping
             for (var i = 0; i < needed_unspent.length; ++i) {
                 tx.addInput(
                     needed_unspent[i].txhash,
-                    needed_unspent[i].data.pt_idx
+                    needed_unspent[i].data.pt_idx,
+                    0xfffffffe  // allow nLockTime to prevent fee sniping
                 );
                 //// tx.tx.ins[i].prevOut = needed_unspent[i].out;
                 //// ^- this doesn't work (see comment below)
