@@ -76,6 +76,7 @@
                         <div class="input-group">
                             <input class="form-control" ng-model="twofactor_state.new_twofac_email"
                                 id="wallet-twofac-email" type="email" name="email" required="required"
+                                ng-disabled="twofactor_state.enabling_email"
                                 placeholder="Por favor ingrese tu email" />
                             <span class="input-group-btn">
                                 <input ng-disabled="!twofactor_state.new_twofac_email || twofactor_state.enabling_email" type="submit" class="btn btn-default" style="margin-top:0; margin-bottom:0;" value="Habilitar"/>
