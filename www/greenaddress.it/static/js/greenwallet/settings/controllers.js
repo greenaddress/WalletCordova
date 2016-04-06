@@ -872,9 +872,40 @@ angular.module('greenWalletSettingsControllers',
             $scope.altimeout = $scope.wallet.appearance.altimeout;
         });
     };
-}]).controller('PgpController', ['$scope', 'notices', 'wallets', function PgpController($scope, notices, wallets) {
+}]).controller('PgpModalController', ['$scope', 'notices', 'wallets', '$uibModalInstance', function PgpController($scope, notices, wallets, $modalInstance) {
+    if (!('appearance' in $scope.wallet)) return;
+
+    $scope.pgpstate = {enabled: false, pgp: $scope.wallet.appearance.pgp};
+
+    $scope.savePGP = function() {
+        if ($scope.pgpstate['pgp'] === $scope.wallet.appearance.pgp) return;
+        if (!$scope.pgpstate['enabled']) {
+            $scope.pgpstate['enabled'] = true;
+        }
+        wallets.updateAppearance($scope, 'pgp', $scope.pgpstate['pgp']).then(function() {
+            $scope.pgpstate['enabled'] = false;
+            $scope.wallet.appearance.pgp = $scope.pgpstate['pgp'];
+            $modalInstance.close($scope.pgpstate['pgp']);
+            notices.makeNotice('success', "PGP settings saved");
+        }).catch(function(err) {
+            notices.makeNotice('error', err.args[1]);
+            $scope.pgpstate['enabled'] = false;
+            $scope.pgp = $scope.wallet.appearance.pgp;
+        });
+    };
+}]).controller('PgpController', ['$scope', '$uibModal', function PgpController($scope, $uibModal) {
 
     if (!('appearance' in $scope.wallet)) return;
+
+    $scope.showPGPModal = showPGPModal;
+
+    function showPGPModal () {
+        $uibModal.open({
+            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_pgp.html',
+            scope: $scope,
+            controller: 'PgpModalController'
+        });
+    }
 
     $scope.pgpstate = {enabled: false, pgp: $scope.wallet.appearance.pgp};
 

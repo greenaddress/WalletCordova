@@ -311,15 +311,26 @@
     <div class="sub-header">PGP</div>
     <div class="sub-header-desc">Set your Pretty Good Privacy public key for improved privacy.</div>
   </div>
-  <div class="col-md-9" submittable>
-    <form role="form" class="form-horizontal" ng-submit="save_pgp()">
-        <label class="col-sm-2 control-label" for="wallet-emailpgp">Public Key</label>
-        <div class="input-group">
-            <textarea class="form-control" placeholder="----BEGIN PGP PUBLIC KEY..."
-                   ng-model="pgpstate.pgp" id="wallet-emailpgp" ng-trim="false"></textarea>
-            <input type="submit" class="btn btn-primary" ng-show="wallet.appearance.pgp != pgpstate.pgp" value="Salva" ng-disabled="pgpstate.enabled" />
-        </div>
-    </form>
+  <div class="col-md-9">
+      <div class="button-group">
+          <input
+            id="wallet-emailpgp"
+            type="button"
+            class="btn btn-primary"
+            value="View/Edit Public Key"
+            ng-show="wallet.appearance.pgp"
+            ng-click="showPGPModal()"
+            ng-disabled="pgpstate.enabled" />
+
+          <input
+            id="wallet-emailpgp"
+            type="button"
+            class="btn btn-primary"
+            value="Add Public Key"
+            ng-show="! wallet.appearance.pgp"
+            ng-click="showPGPModal()"
+            ng-disabled="pgpstate.enabled" />
+      </div>
   </div>
 </div>
 <hr class="double" ng-show="!settings.noLocalStorage">
