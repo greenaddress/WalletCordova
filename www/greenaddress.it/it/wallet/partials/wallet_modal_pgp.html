@@ -1,7 +1,7 @@
 <div submittable>
     <div class="modal-body">
         <p class="text-center">
-            Please enter a valid PGP public key into the box below.
+            Inserire una chiave pubblica PGP valida nel box sottostante per piacere.
         </p>
         <hr>
         <form ng-submit="savePGP(form.$valid)" name="form" class="form-horizontal">
@@ -28,15 +28,15 @@
             <button class="btn btn-primary" ng-click="submit_me()"
                 ng-disabled="pgpstate.enabled"
                 ng-show="pgpstate.pgp && ! wallet.appearance.pgp"
-                >Add PGP Public Key</button>
+                >Aggiungi una chiave PGP</button>
             <button class="btn btn-primary" ng-click="submit_me()"
                 ng-disabled="pgpstate.enabled"
                 ng-show="pgpstate.pgp && wallet.appearance.pgp && pgpstate.pgp != wallet.appearance.pgp"
-                >Change PGP Public Key</button>
+                >Cambia chiave PGP</button>
             <button class="btn btn-primary" ng-click="submit_me()"
                 ng-disabled="pgpstate.enabled"
                 ng-show="! pgpstate.pgp && wallet.appearance.pgp "
-                >Remove PGP Public Key</button>
+                >Rimuovi chiave PGP</button>
         </div>
     </div>
 
