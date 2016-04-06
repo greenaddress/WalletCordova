@@ -535,7 +535,7 @@ angular.module('greenWalletSendControllers',
                     }, function(error) {
                         $rootScope.decrementLoading();
                         that.sending = false;
-                        notices.makeNotice('error', error.args[1]);
+                        notices.makeError($scope, error);
                     });
                 });
             };
