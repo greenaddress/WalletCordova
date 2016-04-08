@@ -309,7 +309,6 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         });
     };
 
-
     $scope.login_with_custom = function() {
         gaEvent('Login', 'CustomLogin');
         $scope.got_username_password = function(username, password) {
@@ -324,6 +323,9 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
         var modal = $uibModal.open({
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_custom_login.html',
             scope: $scope
+        });
+        modal.rendered.then(function() {
+            focus('customLoginModal');
         });
     };
 

@@ -450,9 +450,13 @@ angular.module('greenWalletServices', [])
     walletsService.loginWatchOnly = function($scope, token_type, token, logout) {
         var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
         promise = promise.then(function(json) {
+            // add simple watchOnly flag so that we don't need to check values manually
+            $scope.wallet.watchOnly = true;
+
             if (window.disableEuCookieComplianceBanner) {
                 disableEuCookieComplianceBanner();
             }
+
             var data = JSON.parse(json);
             tx_sender.wallet = $scope.wallet;
             var hdwallet = new Bitcoin.bitcoin.HDNode(
@@ -463,6 +467,7 @@ angular.module('greenWalletServices', [])
                 new Bitcoin.Buffer.Buffer(data.chain_code, 'hex')
             );
             $scope.wallet.hdwallet = hdwallet;
+
             try {
                 $scope.wallet.appearance = JSON.parse(data.appearance);
                 if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};

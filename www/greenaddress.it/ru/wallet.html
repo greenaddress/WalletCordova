@@ -154,6 +154,7 @@
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">ПРЕДУПРЕЖДЕНИЕ:</span> У Вас не активирована двух-факторная проверки подлинности. Пожалуйста, активируйте ее в <a href="#/settings">settings</a>.</p>
+
     <p ng-show="wallet.hdwallet.keyPair.d && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">ПРЕДУПРЕЖДЕНИЕ</span>
       Вы не подтвердили, что Вы сделали резервную копию Вашей мнемоники.
       <a href="" ng-click="verify_mnemonic()">Пожалуйста, проверьте сейчас нажав здесь.</a>

@@ -154,6 +154,7 @@
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">ATTENZIONE:</span> Autenticazione a due fattori non configurata. Puoi configurarla nelle <a href="#/settings">impostazioni</a>.</p>
+
     <p ng-show="wallet.hdwallet.keyPair.d && !wallet.appearance.mnemonic_verified && !wallet.logged_in_with_encrypted_mnemonics"><span class="label label-warning">ATTENZIONE</span>
       Non hai verificato di aver salvato il tuo mnemonico.
       <a href="" ng-click="verify_mnemonic()">Verifica ora cliccando qui.</a>
