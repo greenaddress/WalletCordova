@@ -286,12 +286,9 @@
     
     derivedKeychain.chainCode = BTCDataRange(digest, NSMakeRange(32, 32));
     
-    secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
+    secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     
     if (_privateKey) {
-       /* BTCMutableBigNumber* pkNumber = [[BTCMutableBigNumber alloc] initWithUnsignedBigEndian:_privateKey];
-        [pkNumber add:factor mod:[BTCCurvePoint curveOrder]];
-        */
         NSMutableData *pkNumber = [NSMutableData dataWithData:_privateKey];
         
         int ret = secp256k1_ec_privkey_tweak_add(ctx, [pkNumber mutableBytes], factor);
@@ -319,8 +316,8 @@
             return nil;
         }
         
-        char* compressed[33];
-        int outputlen = 32;
+        char compressed[33];
+        size_t outputlen = 33;
         secp256k1_ec_pubkey_serialize(ctx, compressed, &outputlen, &pubkey, SECP256K1_EC_COMPRESSED);
         derivedKeychain.publicKey = [NSMutableData dataWithBytes:compressed length:outputlen];
     }

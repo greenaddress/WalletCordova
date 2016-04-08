@@ -2,9 +2,6 @@
 //  BIP38Tests.m
 //  GreenAddress
 //
-//  Created by Jerzy K on 23.02.2016.
-//
-//
 
 #import <XCTest/XCTest.h>
 #import "bip38.h"

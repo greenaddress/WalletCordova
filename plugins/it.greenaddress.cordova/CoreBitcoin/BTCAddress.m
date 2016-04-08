@@ -312,11 +312,9 @@ enum
     return key;
 }
 
-#if BTCDataRequiresOpenSSL
 - (BTCAddress*) publicAddress {
     return [BTCPublicKeyAddress addressWithData:BTCHash160(self.key.publicKey)];
 }
-#endif
 
 // Private key itself is not compressed, but it has extra 0x01 byte to indicate
 // that derived pubkey must be compressed (as this affects the pubkey address).
@@ -355,11 +353,9 @@ enum
     return BTCPrivateKeyAddressVersionTestnet;
 }
 
-#if BTCDataRequiresOpenSSL
 - (BTCAddress*) publicAddress {
     return [BTCPublicKeyAddressTestnet addressWithData:BTCHash160(self.key.publicKey)];
 }
-#endif
 
 - (BOOL) isTestnet {
     return YES;
