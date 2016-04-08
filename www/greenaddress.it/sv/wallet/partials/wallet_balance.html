@@ -1,1 +1,9 @@
+<span ng-show="wallet.balanceLoaded">
 ((wallet.final_balance|format_btc:wallet.unit)) &asymp; ((wallet.fiat_value|number:2)) ((wallet.fiat_currency))
+</span>
+<span class="loading" ng-show="!wallet.balanceLoaded">
+  <div class="btn btn-default btn-sm" >
+    <i class="glyphicon spin"></i>
+  </div>
+  (( _('Loading balance...') ))
+</span>

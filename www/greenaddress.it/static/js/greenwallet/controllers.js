@@ -148,28 +148,33 @@ angular.module('greenWalletControllers', [])
 
     var clearwallet = function() {
         $scope.wallet = {
+            balanceLoaded: false,
             version: app_version,
             update_balance: function(first) {
                 var that = this;
                 that.balance_updating = true;
                 if (!cur_net.isAlpha) {
-                    tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
-                        that.final_balance = data.satoshi;
-                        that.fiat_currency = data.fiat_currency;
-                        that.fiat_value = data.fiat_value;
-                        that.fiat_rate = data.fiat_exchange;
-                        // copy in .fiat to allow passing to format_fiat filter
-                        // without running the digest cycle too often
-                        // (having an object here instead of JSON representation
-                        //  causes calling format_fiat repeatedly)
-                        that.fiat = JSON.stringify({rate: data.fiat_exchange,
-                                                    currency: data.fiat_currency});
-                        that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
-                        that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
-                        if (first) {
-                            $scope.$broadcast('first_balance_updated');
-                        }
-                    }).finally(function() { updating = that.balance_updating = false; });
+                    tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount)
+                        .then(function(data) {
+                            that.final_balance = data.satoshi;
+                            that.fiat_currency = data.fiat_currency;
+                            that.fiat_value = data.fiat_value;
+                            that.fiat_rate = data.fiat_exchange;
+                            // copy in .fiat to allow passing to format_fiat filter
+                            // without running the digest cycle too often
+                            // (having an object here instead of JSON representation
+                            //  causes calling format_fiat repeatedly)
+                            that.fiat = JSON.stringify({rate: data.fiat_exchange,
+                                                        currency: data.fiat_currency});
+                            that.fiat_last_fetch = 1*((new Date).getTime()/1000).toFixed();
+                            that.fiat_exchange_extended = exchanges[$scope.wallet.fiat_exchange];
+                            if (first) {
+                                $scope.$broadcast('first_balance_updated');
+                            }
+                        })
+                        .finally(function() {
+                            updating = that.balance_updating = false;
+                        });
                 } else {
                     $scope.wallet.utxo = {};
                     var final_balances = {};
@@ -301,7 +306,12 @@ angular.module('greenWalletControllers', [])
                 oldValue !== undefined) $scope.wallet.update_balance();
     })
     $scope.$on('login', function() {
+        $scope.$on('first_balance_updated', function (event, data) {
+            $scope.wallet.balanceLoaded = true;
+        });
+        // after the handler in case there's a synchronous mock implementation
         $scope.wallet.update_balance(true);
+
         $scope.$on('transaction', function(event, data) {
             if (updating) return;
             updating = true;
@@ -310,7 +320,7 @@ angular.module('greenWalletControllers', [])
                 notices.makeNotice('success', gettext('Bitcoin transaction received!'));
                 sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
             }
-        });
+        });        
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
             $scope.redeposit_modal = $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_redeposit.html',
