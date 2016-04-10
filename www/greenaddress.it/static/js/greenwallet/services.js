@@ -1308,7 +1308,12 @@ angular.module('greenWalletServices', [])
                                     if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
                                 }, 100);
                                 return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function(finished) {
-                                    return $scope.wallet.btchip.app.signTransaction_async(path.join('/')).then(function(sig) {
+                                    return $scope.wallet.btchip.app.signTransaction_async(
+                                            path.join('/'),
+                                            undefined,
+                                            // Cordova requires int, while crx requires ByteString:
+                                            window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
+                                        ).then(function(sig) {
                                         $interval.cancel(int_promise);
                                         signed_n += 1;
                                         sign_deferred.resolve("30" + sig.bytes(1).toString(HEX));
@@ -3496,13 +3501,13 @@ angular.module('greenWalletServices', [])
                     }, "BTChip", "finalizeInputFull", [tx.serializeOutputs().toString('hex')]);
                     return d.promise;
                 },
-                signTransaction_async: function(path) {
+                signTransaction_async: function(path, transactionAuthorization, lockTime) {
                     var d = Q.defer();
                     cordova.exec(function(result) {
                         d.resolve(new ByteString(result, HEX));
                     }, function(fail) {
                         d.reject(fail);
-                    }, "BTChip", "untrustedHashSign", [path]);
+                    }, "BTChip", "untrustedHashSign", [path, lockTime]);
                     return d.promise;
                 }
             },
