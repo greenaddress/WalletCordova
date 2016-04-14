@@ -126,10 +126,12 @@ public class BTChipDongle implements BTChipConstants {
 
 	public class BTChipInput {
 		private byte[] value;
+		private byte[] sequence;
 		private boolean trusted;
 
-		public BTChipInput(byte[] value, boolean trusted) {
+		public BTChipInput(byte[] value, byte[] sequence, boolean trusted) {
 			this.value = value;
+			this.sequence = sequence;
 			this.trusted = trusted;
 		}
 
@@ -138,6 +140,9 @@ public class BTChipDongle implements BTChipConstants {
 		}
 		public boolean isTrusted() {
 			return trusted;
+		}
+		public byte[] getSequence() {
+			return sequence;
 		}
 
 		public String toString() {
@@ -148,8 +153,8 @@ public class BTChipDongle implements BTChipConstants {
 		}
 	}
 
-	public BTChipInput createInput(byte[] value, boolean trusted) {
-		return new BTChipInput(value, trusted);
+	public BTChipInput createInput(byte[] value, byte[] sequence, boolean trusted) {
+		return new BTChipInput(value, sequence, trusted);
 	}
 
 	public class BTChipOutput {
@@ -314,7 +319,7 @@ public class BTChipDongle implements BTChipConstants {
 		}
 		// Locktime
 		byte[] response = exchangeApdu(BTCHIP_CLA, BTCHIP_INS_GET_TRUSTED_INPUT, (byte)0x80, (byte)0x00, transaction.getLockTime(), OK);
-		return new BTChipInput(response, true);
+		return new BTChipInput(response, BitcoinTransaction.DEFAULT_SEQUENCE, true);
 	}
 
 	public void startUntrustedTransaction(boolean newTransaction, long inputIndex, BTChipInput usedInputList[], byte[] redeemScript) throws BTChipException {
@@ -338,7 +343,7 @@ public class BTChipDongle implements BTChipConstants {
 			exchangeApdu(BTCHIP_CLA, BTCHIP_INS_HASH_INPUT_START, (byte)0x80, (byte)0x00, data.toByteArray(), OK);
 			data = new ByteArrayOutputStream();
 			BufferUtils.writeBuffer(data, script);
-			BufferUtils.writeBuffer(data, BitcoinTransaction.DEFAULT_SEQUENCE);
+			BufferUtils.writeBuffer(data, input.getSequence());
 			exchangeApduSplit(BTCHIP_CLA, BTCHIP_INS_HASH_INPUT_START, (byte)0x80, (byte)0x00, data.toByteArray(), OK);
 			currentIndex++;
 		}

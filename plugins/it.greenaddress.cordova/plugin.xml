@@ -23,6 +23,25 @@
                 <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
             </feature>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="bitcoin" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <data android:mimeType="x-gait/mnc" />
+                <data android:mimeType="x-ga/en" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter" />
+        </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
             <activity android:name="it.greenaddress.cordova.PINInputActivity" />
