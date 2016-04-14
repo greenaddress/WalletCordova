@@ -600,7 +600,7 @@ Bitcoin.bitcoin.Transaction.prototype.cloneTransactionForSignature =
 Bitcoin.bitcoin.Transaction.prototype.serializeOutputs = function () {
   var parts = [];
 
-  parts.push(Bitcoin.convert.numToVarInt(this.outs.length))
+  parts.push(Bitcoin.bitcoin.bufferutils.varIntBuffer(this.outs.length));
 
   this.outs.forEach(function(txout) {
     var valueBuf = new Buffer(8);

@@ -3476,13 +3476,12 @@ angular.module('greenWalletServices', [])
                     var inputs = [];
                     for (var j = 0; j < tx.ins.length; j++) {
                         var input = tx.ins[j];
-                        var txhash = Bitcoin.bitcoin.bufferutils.reverse(
-                            input.hash
-                        ).toString('hex');
-                        var outpoint = new Bitcoin.Buffer.Buffer(4);
-                        idx_buf.writeUInt32LE(input.index, 0);
-                        outpoint = outpoint.toString('hex');
-                        inputs.push(txhash + outpoint);
+                        var txhash = input.hash.toString('hex');
+                        var outpointAndSequence = new Bitcoin.Buffer.Buffer(8);
+                        outpointAndSequence.writeUInt32LE(input.index, 0);
+                        outpointAndSequence.writeUInt32LE(input.sequence, 4);
+                        outpointAndSequence = outpointAndSequence.toString('hex');
+                        inputs.push(txhash + outpointAndSequence);
                     }
                     var script = tx.ins[i].script.toString('hex');
                     cordova.exec(function(result) {

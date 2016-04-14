@@ -151,9 +151,14 @@ angular.module('greenWalletTransactionsControllers',
         for (var i = 0; i < builder.inputs.length; ++i) {
             delete builder.inputs[i].hashType;
         }
+        function setPrototypeOf (obj, proto) {
+          obj.__proto__ = proto
+          return obj
+        }
+        setPrototypeOf = Object.setPrototypeOf || setPrototypeOf
         // (Not really alpha, but we need the same changes allowing signatures
         //  to be deferreds.)
-        Object.setPrototypeOf(
+        setPrototypeOf(
             builder,
             Bitcoin.contrib.AlphaTransactionBuilder.prototype
         );

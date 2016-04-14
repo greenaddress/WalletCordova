@@ -33,7 +33,7 @@
               <span class="label label-default" ng-show="transaction.confirmations == 0 && !transaction.instant && !transaction.double_spent_by">unbestätigt</span>
               <span class="label" ng-class="{'label-info': transaction.confirmations < 6, 'label-success': transaction.confirmations >= 6}" ng-show="transaction.confirmations > 0 && transaction.confirmations < 100">((transaction.confirmations)) Bestätigungen</span>
               <span ng-if="transaction.negative && transaction.rbf_optin && !transaction.replaced_by && !transaction.instant">
-                <span uib-dropdown is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d">
+                <span uib-dropdown is-open="transaction.bumping_dropdown_open" ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip">
                   <a class="btn btn-info btn-xs" uib-dropdown-toggle ng-class="{disabled: bumping_fee}" href="">
                     bump fee
                     <span class="caret"></span>
