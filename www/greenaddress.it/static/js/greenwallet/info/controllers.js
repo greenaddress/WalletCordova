@@ -190,8 +190,12 @@ angular.module('greenWalletInfoControllers',
         }
     });
     $scope.$on('transaction', function(event, data) {
-        if (!$scope.loading_txs && (!data.subaccounts ||
-                data.subaccounts.indexOf($scope.wallet.current_subaccount) != -1)) {
+        var subaccounts = data.subaccounts;
+        if (typeof subaccounts == "number") {
+            subaccounts = [subaccounts];
+        }
+        if (!$scope.loading_txs && (!subaccounts ||
+                subaccounts.indexOf($scope.wallet.current_subaccount) != -1)) {
             update_txs(0, true);
             update_graph();
         } else if ($scope.loading_txs) {
