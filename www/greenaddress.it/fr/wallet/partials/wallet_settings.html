@@ -32,7 +32,15 @@
       </div>
       <div class="form-group">
         <div class="btn-group">
-          <button ng-repeat="unit in settings.available_units" type="button" class="btn btn-xs" ng-class="{'btn-primary': settings.unit == unit, 'btn-default': settings.unit != unit}" ng-model="settings.unit" btn-radio="unit" ng-disabled="settings.updating_unit">(( unit ))</button>
+          <button 
+            ng-repeat="unit in settings.available_units"
+            type="button"
+            class="btn btn-xs"
+            ng-class="{'btn-primary': settings.unit == unit, 'btn-default': settings.unit != unit}"
+            ng-click="settings.unit = unit"
+            ng-disabled="settings.updating_unit">
+            (( unit ))
+          </button>
         </div>
       </div>
     </form>
