@@ -117,6 +117,10 @@
         <source-file src="libs/armeabi/libscrypt.so" target-dir="libs/armeabi" />
         <source-file src="libs/mips/libscrypt.so" target-dir="libs/mips" />
         <source-file src="libs/x86/libscrypt.so" target-dir="libs/x86" />
+        <source-file src="libs/armeabi-v7a/libscrypt.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="libs/arm64-v8a/libscrypt.so" target-dir="libs/arm64-v8a" />
+        <source-file src="libs/mips64/libscrypt.so" target-dir="libs/mips64" />
+        <source-file src="libs/x86_64/libscrypt.so" target-dir="libs/x86_64" />
         <source-file src="build-extras.gradle" target-dir="." />
 
         <!-- dependencies -->
