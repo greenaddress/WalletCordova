@@ -2315,7 +2315,10 @@ angular.module('greenWalletServices', [])
                         var challenge_arg_resolves_main = false;
                         dev_d = dev_d.then(function() {
                             if (session_for_login) {
-                                return session_for_login.call('com.greenaddress.login.get_trezor_challenge', [addr]);
+                                return session_for_login.call(
+                                    'com.greenaddress.login.get_trezor_challenge',
+                                    [addr, !trezor_dev]
+                                );
                             } else if (!connecting) {
                                 waiting_for_device = false;
                                 disconnected = false;

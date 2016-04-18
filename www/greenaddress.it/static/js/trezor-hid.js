@@ -15949,6 +15949,7 @@ Session.prototype._call = function (type, msg) {
             return self.receiveMessage();
         }).then(function(result) {
             console.log('[trezor] Received:', result);
+            self.emit('receive');
             resolve(result);
         })
     });

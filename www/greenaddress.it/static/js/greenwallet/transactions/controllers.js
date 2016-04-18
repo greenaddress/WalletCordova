@@ -171,6 +171,7 @@ angular.module('greenWalletTransactionsControllers',
         $scope.bumping_fee = true;
         transaction.bumping_dropdown_open = false;
         var bumpedTx = Bitcoin.contrib.transactionFromHex(transaction.rawtx);
+        var change_pointer;
         var targetFeeDelta = new_fee - parseInt(transaction.fee);
         var requiredFeeDelta = (
             txsize + 4 * transaction.inputs.length
@@ -187,6 +188,7 @@ angular.module('greenWalletTransactionsControllers',
                     // output too small to be decreased - remove it altogether
                     remainingFeeDelta -= bumpedTx.outs[i].value;
                 } else {
+                    change_pointer = transaction.outputs[i].pubkey_pointer;
                     bumpedTx.outs[i].value -= remainingFeeDelta;
                     remainingFeeDelta = 0;
                     newOuts.push(bumpedTx.outs[i]);
@@ -237,6 +239,7 @@ angular.module('greenWalletTransactionsControllers',
                         'http://greenaddressit.com/vault/fund',
                         $scope.wallet.current_subaccount, true, true
                     ).then(function(data) {
+                        change_pointer = data.pointer;
                         return Bitcoin.bitcoin.crypto.hash160(
                             new Bitcoin.Buffer.Buffer(data.script, 'hex')
                         );
@@ -350,7 +353,7 @@ angular.module('greenWalletTransactionsControllers',
                         inp.hash
                     ).toString('hex');
                     return tx_sender.call(
-                        'http://greenaddressit.com/txs/get_raw_unspent_output',
+                        'http://greenaddressit.com/txs/get_raw_output',
                         reversed_hex
                     ).then(function(rawtx) {
                         prevouts_rawtxs[reversed_hex] = rawtx;
@@ -360,7 +363,8 @@ angular.module('greenWalletTransactionsControllers',
 
             var signatures_d = $q.all(prev_outputs).then(function(res) {
                 var txdata = {
-                    prev_outputs: res
+                    prev_outputs: res,
+                    change_pointer: change_pointer
                 };
                 return prevouts_rawtxs_ds.then(function() {
                     return wallets.sign_tx(
