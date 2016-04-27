@@ -3423,6 +3423,20 @@ angular.module('greenWalletServices', [])
     };
 }]).factory('btchip', ['$q', '$interval', '$uibModal', '$rootScope', 'mnemonics', 'notices', 'focus', 'cordovaReady', '$injector',
         function($q, $interval, $uibModal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
+
+    /**@TODO
+        This should be broken into 2 services
+        1 service should monitor and event based on the state of hardware wallets
+        and expose an API for interacting with them
+        a second service should manage UI events based on the behavior of these
+        wallets. This isolation will make HW wallets easier to support and the 
+        UI's related to them easier to maintain... it will also allow us to 
+        cleave off any reusable code for HW wallets we want to publish into the
+        ecosystem
+
+        This will require a refactor since currently the business logic and UI 
+        control flow are bound directly to each other
+    */
     var cardFactory;
     if (window.ChromeapiPlugupCardTerminalFactory) {
         cardFactory = new ChromeapiPlugupCardTerminalFactory();
@@ -3696,23 +3710,6 @@ angular.module('greenWalletServices', [])
                 }
             };
 
-            var showUpgradeModal = function() {
-                var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
-                if (window.cordova) {
-                    notices.makeNotice("error", notice);
-                } else {
-                    var scope = angular.extend($rootScope.$new(), {
-                        firmware_upgrade_message: notice
-                    });
-                    var modal = $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_fup.html',
-                        scope: scope
-                    }).result.then(function() {
-                        deferred.resolve(service.getDevice(noModal, modalNotDisableable, existing_device));
-                    });
-                }
-            };
-
             var check = cordovaReady(function() {
                 if (existing_device) existing_promise = existing_device.app.getFirmwareVersion_async();
                 else existing_promise = $q.reject();
@@ -3778,6 +3775,23 @@ angular.module('greenWalletServices', [])
             check();
 
             return deferred.promise;
+
+            function showUpgradeModal () {
+                var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
+                if (window.cordova) {
+                    notices.makeNotice("error", notice);
+                } else {
+                    var scope = angular.extend($rootScope.$new(), {
+                        firmware_upgrade_message: notice
+                    });
+                    var modal = $uibModal.open({
+                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_fup.html',
+                        scope: scope
+                    }).result.then(function() {
+                        deferred.resolve(service.getDevice(noModal, modalNotDisableable, existing_device));
+                    });
+                }
+            }
         },
         setupSeed: function(mnemonic) {
             var deferred = $q.defer();

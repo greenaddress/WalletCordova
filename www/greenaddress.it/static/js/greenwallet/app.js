@@ -63,6 +63,9 @@ angular.module('greenWalletBaseApp', deps)
             this.$apply(fn);
         }
     };
+
+    // globally expose the root scope so that we can easily modify it
+    window.$rootScope = $rootScope;
 }]).factory('btc_formatter', ['$filter', function($filter) {
     var formatNum = function(num) {
         var num_arr = num.split('.');

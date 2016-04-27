@@ -2,21 +2,18 @@
 
     <div class="modal-body">
     	<p class="text-center">(( firmware_upgrade_message ))</p>
-        <p class="text-center">Do you want to upgrade firmware now?</p>
+        <p class="text-center">
+            To upgrade your firmware, please use the following Chrome extension: 
+            <a href="https://chrome.google.com/webstore/detail/ledger-wallet/kkdpmhnladdopljabkgpacgpliggeeaf" target="_blank">
+                Ledger Wallet
+            </a>
+        </p>
     </div>
 
     <div class="modal-footer">
         <div class="">
-            <button class="btn btn-danger" ng-click="$dismiss()">Cancel</button>
-            <a class="btn btn-primary" target="_blank" ng-click="fup_visible = true">Upgrade</a>
+            <button class="btn btn-primary" ng-click="$dismiss()">Close</button>
         </div>
-    </div>
-
-    <div ng-show="fup_visible" style="position: absolute; background: white; left: -15%; top: 0; width: 130%; height: 600px;" >
-        <div>
-            <a class="btn btn-primary" ng-click="$close()">Close the firmware upgrade window</a>
-        </div>
-        <iframe src="/btchip_fup/index.html" style="width: 100%; height: 100%;"></iframe>
     </div>
 
 </div>
