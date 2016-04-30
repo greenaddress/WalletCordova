@@ -1,15 +1,10 @@
 angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
 .factory('mnemonics', ['$q', '$http', 'cordovaReady', function($q, $http, cordovaReady) {
     var mnemonics = {};
-    var english_txt;
+    var english_txt = require('../english').join('\n');
+
     var getEnglishTxt = function() {
-        if (english_txt) return $q.when(english_txt);
-        else {
-            return $http.get(BASE_URL+'/static/js/greenwallet/english.txt').then(function(response) {
-                english_txt = response.data;
-                return english_txt;
-            });
-        }
+        return $q.resolve(english_txt);
     };
     var getMnemonicMap = function() {
         return getEnglishTxt().then(function(data) {
