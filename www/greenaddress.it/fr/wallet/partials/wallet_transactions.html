@@ -47,7 +47,7 @@
     <div class="col-md-4">
       <form>
         <p class="input-group">
-          <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="search.date_start" placeholder="From date" is-open="search.is_open_from" max-date="search.today" close-text="Fermer" />
+          <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="search.date_start" placeholder="From date" is-open="search.is_open_from" datepicker-options="{maxDate: search.today}" close-text="Fermer" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="search.open_picker($event, 'from')"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
@@ -57,7 +57,7 @@
     <div class="col-md-4">
       <form>
         <p class="input-group">
-          <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="search.date_end" placeholder="To date" is-open="search.is_open_to" max-date="search.today" close-text="Fermer" />
+          <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="search.date_end" placeholder="To date" is-open="search.is_open_to" datepicker-options="{maxDate: search.today}" close-text="Fermer" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="search.open_picker($event, 'to')"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
