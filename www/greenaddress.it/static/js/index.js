@@ -50132,7 +50132,7 @@ var app = module.exports = require('./greenwallet');
 
 Window.app = app;
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_17317817.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_70887e47.js","/")
 },{"./greenwallet":44,"./lib":96,"buffer":28,"global/window":26,"oMfpAn":31}],37:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // replace this with an app object of some sort?
