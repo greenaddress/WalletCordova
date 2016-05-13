@@ -4149,13 +4149,13 @@ angular.module('ngAnimate', [])
 })(window, window.angular);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-animate/angular-animate.js","/../../node_modules/angular-animate")
-},{"buffer":16,"oMfpAn":19}],2:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./angular-animate');
 module.exports = 'ngAnimate';
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-animate/index.js","/../../node_modules/angular-animate")
-},{"./angular-animate":1,"buffer":16,"oMfpAn":19}],3:[function(require,module,exports){
+},{"./angular-animate":1,"buffer":28,"oMfpAn":31}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * @license AngularJS v1.5.5
@@ -5184,13 +5184,13 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 })(window, window.angular);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-route/angular-route.js","/../../node_modules/angular-route")
-},{"buffer":16,"oMfpAn":19}],4:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./angular-route');
 module.exports = 'ngRoute';
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-route/index.js","/../../node_modules/angular-route")
-},{"./angular-route":3,"buffer":16,"oMfpAn":19}],5:[function(require,module,exports){
+},{"./angular-route":3,"buffer":28,"oMfpAn":31}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
   * x is a value between 0 and 1, indicating where in the animation you are.
@@ -5821,7 +5821,7 @@ angular.module('duScroll.scrollspy', ['duScroll.spyAPI'])
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-scroll/angular-scroll.js","/../../node_modules/angular-scroll")
-},{"buffer":16,"oMfpAn":19}],6:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('angular');
 require('./angular-scroll');
@@ -5829,7 +5829,7 @@ require('./angular-scroll');
 module.exports = 'duScroll';
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-scroll/index.js","/../../node_modules/angular-scroll")
-},{"./angular-scroll":5,"angular":12,"buffer":16,"oMfpAn":19}],7:[function(require,module,exports){
+},{"./angular-scroll":5,"angular":12,"buffer":28,"oMfpAn":31}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * @license AngularJS v1.5.5
@@ -6562,13 +6562,13 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 })(window, window.angular);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-touch/angular-touch.js","/../../node_modules/angular-touch")
-},{"buffer":16,"oMfpAn":19}],8:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./angular-touch');
 module.exports = 'ngTouch';
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-touch/index.js","/../../node_modules/angular-touch")
-},{"./angular-touch":7,"buffer":16,"oMfpAn":19}],9:[function(require,module,exports){
+},{"./angular-touch":7,"buffer":28,"oMfpAn":31}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*
  * angular-ui-bootstrap
@@ -13900,14 +13900,14 @@ angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInline
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js","/../../node_modules/angular-ui-bootstrap/dist")
-},{"buffer":16,"oMfpAn":19}],10:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-ui-bootstrap/index.js","/../../node_modules/angular-ui-bootstrap")
-},{"./dist/ui-bootstrap-tpls":9,"buffer":16,"oMfpAn":19}],11:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":9,"buffer":28,"oMfpAn":31}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * @license AngularJS v1.5.5
@@ -44778,13 +44778,325 @@ $provide.value("$locale", {
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular/angular.js","/../../node_modules/angular")
-},{"buffer":16,"oMfpAn":19}],12:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],12:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./angular');
 module.exports = angular;
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular/index.js","/../../node_modules/angular")
-},{"./angular":11,"buffer":16,"oMfpAn":19}],13:[function(require,module,exports){
+},{"./angular":11,"buffer":28,"oMfpAn":31}],13:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var isFunction = require('is-function');
+var isObject = require('is-object');
+var afterAll = require('./plan-results');
+
+module.exports = sugar;
+
+function sugar (root) {
+  var api = {
+    get: get,
+    set: set,
+    remove: remove
+  };
+
+  if (!root.remove) {
+    remove.remove = fakeRemove;
+  }
+
+  return api;
+
+  function fakeRemove (key, cb) {
+    root.set(key, null, cb);
+  }
+
+  function get (key, cb) {
+    if (!isFunction(cb)) {
+      throw new Error('Must pass in a callback to storage.get');
+    }
+    if (Array.isArray(key)) {
+      var next = afterAll(key.length, function (err, result) {
+        if (err) {
+          return cb(err);
+        }
+        cb(null, result);
+      });
+      key.forEach(function (k) {
+        var innerCb = next(k);
+        root.get(k, function (err, value) {
+          if (value === undefined) {
+            value = null;
+          }
+          innerCb(err, value);
+        });
+      });
+      return;
+    }
+    return root.get(key, cb);
+  }
+  function set (key, value, cb) {
+    if (isFunction(value)) {
+      if (!isObject(key)) {
+        throw new Error('If the second parameter to set is a callback then the first must be an object');
+      }
+      cb = value;
+      value = null;
+
+      var keyArr = Object.keys(key);
+      var next = afterAll(keyArr.length, cb);
+      keyArr.forEach(function (k) {
+        root.set(k, key[k], next(k));
+      });
+      return;
+    }
+
+    // callback is optional
+    if (arguments.length === 2) {
+      cb = noop;
+    }
+
+    return root.set(key, value, cb);
+  }
+
+  function remove (key, cb) {
+    if (!isFunction(cb)) {
+      cb = noop;
+    }
+    if (Array.isArray(key)) {
+      var next = afterAll(key.length, function (err, result) {
+        if (err) {
+          return cb(err);
+        }
+        cb(null, result);
+      });
+      key.forEach(function (k) {
+        root.remove(k, next(k));
+      });
+      return;
+    }
+    return root.remove(key, cb);
+  }
+}
+
+function noop () {}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/api-sugar.js","/../../node_modules/any-storage")
+},{"./plan-results":22,"buffer":28,"is-function":17,"is-object":18,"oMfpAn":31}],14:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+
+module.exports = {
+  get: getItem,
+  set: setItem,
+  removeItem: removeItem
+};
+
+var chrome = require('global/window').chrome;
+
+// code taken from https://github.com/zalmoxisus/chrome-storage-local/blob/master/storage.js
+function getItem (key, callback) {
+  chrome.storage.local.get(key, function (obj) {
+    if (obj[key]) {
+      callback(null, obj[key]);
+    } else {
+      callback(chrome.runtime.lastError, null);
+    }
+  });
+}
+
+function setItem (key, value, callback) {
+  var obj = {};
+  obj[key] = value;
+  chrome.storage.local.set(obj, function () {
+    if (callback && chrome.runtime.lastError) callback(key);
+  });
+}
+
+function removeItem (key, cb) {
+  chrome.storage.local.remove(key, cb);
+}
+
+// function getAllKeys (callback) {
+//   chrome.storage.local.get(null, function (obj) {
+//     callback(null, Object.keys(obj));
+//   });
+// }
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/chrome-storage.js","/../../node_modules/any-storage")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],15:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var storage = null;
+var sugar = require('./api-sugar');
+
+if (require('has-chrome-storage')) {
+  storage = require('./chrome-storage');
+} else {
+  // just storage handles local, session, and in-memory
+  storage = require('./just-storage');
+}
+
+module.exports = sugar(storage);
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/index.js","/../../node_modules/any-storage")
+},{"./api-sugar":13,"./chrome-storage":14,"./just-storage":16,"buffer":28,"has-chrome-storage":32,"oMfpAn":31}],16:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var storage = require('just-storage');
+
+module.exports = {
+  get: get,
+  set: set
+};
+
+function get (key, cb) {
+  return cb(null, storage(key));
+}
+function set (key, value, cb) {
+  return cb(null, storage.set(key, value));
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/just-storage.js","/../../node_modules/any-storage")
+},{"buffer":28,"just-storage":19,"oMfpAn":31}],17:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+module.exports = isFunction
+
+var toString = Object.prototype.toString
+
+function isFunction (fn) {
+  var string = toString.call(fn)
+  return string === '[object Function]' ||
+    (typeof fn === 'function' && string !== '[object RegExp]') ||
+    (typeof window !== 'undefined' &&
+     // IE8 and below
+     (fn === window.setTimeout ||
+      fn === window.alert ||
+      fn === window.confirm ||
+      fn === window.prompt))
+};
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/node_modules/is-function/index.js","/../../node_modules/any-storage/node_modules/is-function")
+},{"buffer":28,"oMfpAn":31}],18:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+"use strict";
+
+module.exports = function isObject(x) {
+	return typeof x === "object" && x !== null;
+};
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/node_modules/is-object/index.js","/../../node_modules/any-storage/node_modules/is-object")
+},{"buffer":28,"oMfpAn":31}],19:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict'
+var window = require('global/window')
+
+var storage = hasNativeStorage() ?
+      require('./lib/native-storage') :
+      require('./lib/memory-storage')
+
+module.exports = storage
+
+storage.forKey = function (key) {
+  var forKey = storage.bind(null, key)
+  forKey.set = storage.set.bind(null, key)
+
+  return forKey
+}
+
+function hasNativeStorage () {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      var testKey = '__testKey'
+      window.localStorage.setItem(testKey, testKey)
+      window.localStorage.removeItem(testKey)
+      return true
+    } catch (e) {}
+  }
+  return false
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/node_modules/just-storage/index.js","/../../node_modules/any-storage/node_modules/just-storage")
+},{"./lib/memory-storage":20,"./lib/native-storage":21,"buffer":28,"global/window":26,"oMfpAn":31}],20:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var store = {}
+
+module.exports = get
+module.exports.set = set
+
+function get (key) {
+  return store[key]
+}
+
+function set (key, value) {
+  if (value == null || typeof value === 'undefined') {
+    delete store[key]
+    return null
+  }
+
+  store[key] = value
+  return value
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/node_modules/just-storage/lib/memory-storage.js","/../../node_modules/any-storage/node_modules/just-storage/lib")
+},{"buffer":28,"oMfpAn":31}],21:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window')
+
+module.exports = get
+module.exports.set = set
+
+function get (key) {
+  var savedValue = window.localStorage.getItem(key)
+  try {
+    return JSON.parse(savedValue)
+  } catch (e) {
+    return savedValue
+  }
+}
+function set (key, value) {
+  if (value == null || typeof value === 'undefined') {
+    window.localStorage.removeItem(key)
+    return null
+  }
+
+  try {
+    var savedValue = JSON.stringify(value)
+  } catch (e) {
+    savedValue = value
+  }
+  window.localStorage.setItem(key, savedValue)
+  return value
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/node_modules/just-storage/lib/native-storage.js","/../../node_modules/any-storage/node_modules/just-storage/lib")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],22:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+module.exports = Plan;
+
+function Plan (count, callback) {
+  var errors = [];
+  var result = {};
+
+  return handler;
+
+  function handler (name) {
+    return function (err, data) {
+      count--;
+      if (err) {
+        errors.push(err);
+      } else {
+        result[name] = data;
+      }
+
+      if (count === 0) {
+        if (errors.length) {
+          return callback(errors);
+        } else {
+          return callback(null, result);
+        }
+      }
+    };
+  }
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/any-storage/plan-results.js","/../../node_modules/any-storage")
+},{"buffer":28,"oMfpAn":31}],23:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 (function(exports){
 crossfilter.version = "1.3.12";
@@ -46189,12 +46501,31 @@ function crossfilter_capacity(w) {
 })(typeof exports !== 'undefined' && exports || this);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/crossfilter/crossfilter.js","/../../node_modules/crossfilter")
-},{"buffer":16,"oMfpAn":19}],14:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],24:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = require("./crossfilter").crossfilter;
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/crossfilter/index.js","/../../node_modules/crossfilter")
-},{"./crossfilter":13,"buffer":16,"oMfpAn":19}],15:[function(require,module,exports){
+},{"./crossfilter":23,"buffer":28,"oMfpAn":31}],25:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var topLevel = typeof global !== 'undefined' ? global :
+    typeof window !== 'undefined' ? window : {}
+var minDoc = require('min-document');
+
+if (typeof document !== 'undefined') {
+    module.exports = document;
+} else {
+    var doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
+
+    if (!doccy) {
+        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
+    }
+
+    module.exports = doccy;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/global/document.js","/../../node_modules/global")
+},{"buffer":28,"min-document":27,"oMfpAn":31}],26:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 if (typeof window !== "undefined") {
     module.exports = window;
@@ -46207,7 +46538,11 @@ if (typeof window !== "undefined") {
 }
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/global/window.js","/../../node_modules/global")
-},{"buffer":16,"oMfpAn":19}],16:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],27:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/browser-resolve/empty.js","/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/browser-resolve")
+},{"buffer":28,"oMfpAn":31}],28:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
  * The buffer module from node.js, for the browser.
@@ -47320,7 +47655,7 @@ function assert (test, message) {
 }
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js","/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer")
-},{"base64-js":17,"buffer":16,"ieee754":18,"oMfpAn":19}],17:[function(require,module,exports){
+},{"base64-js":29,"buffer":28,"ieee754":30,"oMfpAn":31}],29:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
@@ -47448,7 +47783,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib/b64.js","/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib")
-},{"buffer":16,"oMfpAn":19}],18:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],30:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -47536,7 +47871,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 }
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/ieee754/index.js","/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/ieee754")
-},{"buffer":16,"oMfpAn":19}],19:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],31:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // shim for using process in browser
 
@@ -47603,7 +47938,7 @@ process.chdir = function (dir) {
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","/../../node_modules/gulp-browserify/node_modules/browserify/node_modules/process")
-},{"buffer":16,"oMfpAn":19}],20:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],32:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var window = require('global/window');
 
@@ -47623,7 +47958,2059 @@ module.exports = (function (data) {
 }({'HAS-CHROME-STORAGE': 'foo'}));
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/has-chrome-storage/index.js","/../../node_modules/has-chrome-storage")
-},{"buffer":16,"global/window":15,"oMfpAn":19}],21:[function(require,module,exports){
+},{"buffer":28,"global/window":26,"oMfpAn":31}],33:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+// vim:ts=4:sts=4:sw=4:
+/*!
+ *
+ * Copyright 2009-2012 Kris Kowal under the terms of the MIT
+ * license found at http://github.com/kriskowal/q/raw/master/LICENSE
+ *
+ * With parts by Tyler Close
+ * Copyright 2007-2009 Tyler Close under the terms of the MIT X license found
+ * at http://www.opensource.org/licenses/mit-license.html
+ * Forked at ref_send.js version: 2009-05-11
+ *
+ * With parts by Mark Miller
+ * Copyright (C) 2011 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+(function (definition) {
+    "use strict";
+
+    // This file will function properly as a <script> tag, or a module
+    // using CommonJS and NodeJS or RequireJS module formats.  In
+    // Common/Node/RequireJS, the module exports the Q API and when
+    // executed as a simple <script>, it creates a Q global instead.
+
+    // Montage Require
+    if (typeof bootstrap === "function") {
+        bootstrap("promise", definition);
+
+    // CommonJS
+    } else if (typeof exports === "object" && typeof module === "object") {
+        module.exports = definition();
+
+    // RequireJS
+    } else if (typeof define === "function" && define.amd) {
+        define(definition);
+
+    // SES (Secure EcmaScript)
+    } else if (typeof ses !== "undefined") {
+        if (!ses.ok()) {
+            return;
+        } else {
+            ses.makeQ = definition;
+        }
+
+    // <script>
+    } else if (typeof window !== "undefined" || typeof self !== "undefined") {
+        // Prefer window over self for add-on scripts. Use self for
+        // non-windowed contexts.
+        var global = typeof window !== "undefined" ? window : self;
+
+        // Get the `window` object, save the previous Q global
+        // and initialize Q as a global.
+        var previousQ = global.Q;
+        global.Q = definition();
+
+        // Add a noConflict function so Q can be removed from the
+        // global namespace.
+        global.Q.noConflict = function () {
+            global.Q = previousQ;
+            return this;
+        };
+
+    } else {
+        throw new Error("This environment was not anticipated by Q. Please file a bug.");
+    }
+
+})(function () {
+"use strict";
+
+var hasStacks = false;
+try {
+    throw new Error();
+} catch (e) {
+    hasStacks = !!e.stack;
+}
+
+// All code after this point will be filtered from stack traces reported
+// by Q.
+var qStartingLine = captureLine();
+var qFileName;
+
+// shims
+
+// used for fallback in "allResolved"
+var noop = function () {};
+
+// Use the fastest possible means to execute a task in a future turn
+// of the event loop.
+var nextTick =(function () {
+    // linked list of tasks (single, with head node)
+    var head = {task: void 0, next: null};
+    var tail = head;
+    var flushing = false;
+    var requestTick = void 0;
+    var isNodeJS = false;
+    // queue for late tasks, used by unhandled rejection tracking
+    var laterQueue = [];
+
+    function flush() {
+        /* jshint loopfunc: true */
+        var task, domain;
+
+        while (head.next) {
+            head = head.next;
+            task = head.task;
+            head.task = void 0;
+            domain = head.domain;
+
+            if (domain) {
+                head.domain = void 0;
+                domain.enter();
+            }
+            runSingle(task, domain);
+
+        }
+        while (laterQueue.length) {
+            task = laterQueue.pop();
+            runSingle(task);
+        }
+        flushing = false;
+    }
+    // runs a single function in the async queue
+    function runSingle(task, domain) {
+        try {
+            task();
+
+        } catch (e) {
+            if (isNodeJS) {
+                // In node, uncaught exceptions are considered fatal errors.
+                // Re-throw them synchronously to interrupt flushing!
+
+                // Ensure continuation if the uncaught exception is suppressed
+                // listening "uncaughtException" events (as domains does).
+                // Continue in next event to avoid tick recursion.
+                if (domain) {
+                    domain.exit();
+                }
+                setTimeout(flush, 0);
+                if (domain) {
+                    domain.enter();
+                }
+
+                throw e;
+
+            } else {
+                // In browsers, uncaught exceptions are not fatal.
+                // Re-throw them asynchronously to avoid slow-downs.
+                setTimeout(function () {
+                    throw e;
+                }, 0);
+            }
+        }
+
+        if (domain) {
+            domain.exit();
+        }
+    }
+
+    nextTick = function (task) {
+        tail = tail.next = {
+            task: task,
+            domain: isNodeJS && process.domain,
+            next: null
+        };
+
+        if (!flushing) {
+            flushing = true;
+            requestTick();
+        }
+    };
+
+    if (typeof process === "object" &&
+        process.toString() === "[object process]" && process.nextTick) {
+        // Ensure Q is in a real Node environment, with a `process.nextTick`.
+        // To see through fake Node environments:
+        // * Mocha test runner - exposes a `process` global without a `nextTick`
+        // * Browserify - exposes a `process.nexTick` function that uses
+        //   `setTimeout`. In this case `setImmediate` is preferred because
+        //    it is faster. Browserify's `process.toString()` yields
+        //   "[object Object]", while in a real Node environment
+        //   `process.nextTick()` yields "[object process]".
+        isNodeJS = true;
+
+        requestTick = function () {
+            process.nextTick(flush);
+        };
+
+    } else if (typeof setImmediate === "function") {
+        // In IE10, Node.js 0.9+, or https://github.com/NobleJS/setImmediate
+        if (typeof window !== "undefined") {
+            requestTick = setImmediate.bind(window, flush);
+        } else {
+            requestTick = function () {
+                setImmediate(flush);
+            };
+        }
+
+    } else if (typeof MessageChannel !== "undefined") {
+        // modern browsers
+        // http://www.nonblocking.io/2011/06/windownexttick.html
+        var channel = new MessageChannel();
+        // At least Safari Version 6.0.5 (8536.30.1) intermittently cannot create
+        // working message ports the first time a page loads.
+        channel.port1.onmessage = function () {
+            requestTick = requestPortTick;
+            channel.port1.onmessage = flush;
+            flush();
+        };
+        var requestPortTick = function () {
+            // Opera requires us to provide a message payload, regardless of
+            // whether we use it.
+            channel.port2.postMessage(0);
+        };
+        requestTick = function () {
+            setTimeout(flush, 0);
+            requestPortTick();
+        };
+
+    } else {
+        // old browsers
+        requestTick = function () {
+            setTimeout(flush, 0);
+        };
+    }
+    // runs a task after all other tasks have been run
+    // this is useful for unhandled rejection tracking that needs to happen
+    // after all `then`d tasks have been run.
+    nextTick.runAfter = function (task) {
+        laterQueue.push(task);
+        if (!flushing) {
+            flushing = true;
+            requestTick();
+        }
+    };
+    return nextTick;
+})();
+
+// Attempt to make generics safe in the face of downstream
+// modifications.
+// There is no situation where this is necessary.
+// If you need a security guarantee, these primordials need to be
+// deeply frozen anyway, and if you don’t need a security guarantee,
+// this is just plain paranoid.
+// However, this **might** have the nice side-effect of reducing the size of
+// the minified code by reducing x.call() to merely x()
+// See Mark Miller’s explanation of what this does.
+// http://wiki.ecmascript.org/doku.php?id=conventions:safe_meta_programming
+var call = Function.call;
+function uncurryThis(f) {
+    return function () {
+        return call.apply(f, arguments);
+    };
+}
+// This is equivalent, but slower:
+// uncurryThis = Function_bind.bind(Function_bind.call);
+// http://jsperf.com/uncurrythis
+
+var array_slice = uncurryThis(Array.prototype.slice);
+
+var array_reduce = uncurryThis(
+    Array.prototype.reduce || function (callback, basis) {
+        var index = 0,
+            length = this.length;
+        // concerning the initial value, if one is not provided
+        if (arguments.length === 1) {
+            // seek to the first value in the array, accounting
+            // for the possibility that is is a sparse array
+            do {
+                if (index in this) {
+                    basis = this[index++];
+                    break;
+                }
+                if (++index >= length) {
+                    throw new TypeError();
+                }
+            } while (1);
+        }
+        // reduce
+        for (; index < length; index++) {
+            // account for the possibility that the array is sparse
+            if (index in this) {
+                basis = callback(basis, this[index], index);
+            }
+        }
+        return basis;
+    }
+);
+
+var array_indexOf = uncurryThis(
+    Array.prototype.indexOf || function (value) {
+        // not a very good shim, but good enough for our one use of it
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] === value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+);
+
+var array_map = uncurryThis(
+    Array.prototype.map || function (callback, thisp) {
+        var self = this;
+        var collect = [];
+        array_reduce(self, function (undefined, value, index) {
+            collect.push(callback.call(thisp, value, index, self));
+        }, void 0);
+        return collect;
+    }
+);
+
+var object_create = Object.create || function (prototype) {
+    function Type() { }
+    Type.prototype = prototype;
+    return new Type();
+};
+
+var object_hasOwnProperty = uncurryThis(Object.prototype.hasOwnProperty);
+
+var object_keys = Object.keys || function (object) {
+    var keys = [];
+    for (var key in object) {
+        if (object_hasOwnProperty(object, key)) {
+            keys.push(key);
+        }
+    }
+    return keys;
+};
+
+var object_toString = uncurryThis(Object.prototype.toString);
+
+function isObject(value) {
+    return value === Object(value);
+}
+
+// generator related shims
+
+// FIXME: Remove this function once ES6 generators are in SpiderMonkey.
+function isStopIteration(exception) {
+    return (
+        object_toString(exception) === "[object StopIteration]" ||
+        exception instanceof QReturnValue
+    );
+}
+
+// FIXME: Remove this helper and Q.return once ES6 generators are in
+// SpiderMonkey.
+var QReturnValue;
+if (typeof ReturnValue !== "undefined") {
+    QReturnValue = ReturnValue;
+} else {
+    QReturnValue = function (value) {
+        this.value = value;
+    };
+}
+
+// long stack traces
+
+var STACK_JUMP_SEPARATOR = "From previous event:";
+
+function makeStackTraceLong(error, promise) {
+    // If possible, transform the error stack trace by removing Node and Q
+    // cruft, then concatenating with the stack trace of `promise`. See #57.
+    if (hasStacks &&
+        promise.stack &&
+        typeof error === "object" &&
+        error !== null &&
+        error.stack &&
+        error.stack.indexOf(STACK_JUMP_SEPARATOR) === -1
+    ) {
+        var stacks = [];
+        for (var p = promise; !!p; p = p.source) {
+            if (p.stack) {
+                stacks.unshift(p.stack);
+            }
+        }
+        stacks.unshift(error.stack);
+
+        var concatedStacks = stacks.join("\n" + STACK_JUMP_SEPARATOR + "\n");
+        error.stack = filterStackString(concatedStacks);
+    }
+}
+
+function filterStackString(stackString) {
+    var lines = stackString.split("\n");
+    var desiredLines = [];
+    for (var i = 0; i < lines.length; ++i) {
+        var line = lines[i];
+
+        if (!isInternalFrame(line) && !isNodeFrame(line) && line) {
+            desiredLines.push(line);
+        }
+    }
+    return desiredLines.join("\n");
+}
+
+function isNodeFrame(stackLine) {
+    return stackLine.indexOf("(module.js:") !== -1 ||
+           stackLine.indexOf("(node.js:") !== -1;
+}
+
+function getFileNameAndLineNumber(stackLine) {
+    // Named functions: "at functionName (filename:lineNumber:columnNumber)"
+    // In IE10 function name can have spaces ("Anonymous function") O_o
+    var attempt1 = /at .+ \((.+):(\d+):(?:\d+)\)$/.exec(stackLine);
+    if (attempt1) {
+        return [attempt1[1], Number(attempt1[2])];
+    }
+
+    // Anonymous functions: "at filename:lineNumber:columnNumber"
+    var attempt2 = /at ([^ ]+):(\d+):(?:\d+)$/.exec(stackLine);
+    if (attempt2) {
+        return [attempt2[1], Number(attempt2[2])];
+    }
+
+    // Firefox style: "function@filename:lineNumber or @filename:lineNumber"
+    var attempt3 = /.*@(.+):(\d+)$/.exec(stackLine);
+    if (attempt3) {
+        return [attempt3[1], Number(attempt3[2])];
+    }
+}
+
+function isInternalFrame(stackLine) {
+    var fileNameAndLineNumber = getFileNameAndLineNumber(stackLine);
+
+    if (!fileNameAndLineNumber) {
+        return false;
+    }
+
+    var fileName = fileNameAndLineNumber[0];
+    var lineNumber = fileNameAndLineNumber[1];
+
+    return fileName === qFileName &&
+        lineNumber >= qStartingLine &&
+        lineNumber <= qEndingLine;
+}
+
+// discover own file name and line number range for filtering stack
+// traces
+function captureLine() {
+    if (!hasStacks) {
+        return;
+    }
+
+    try {
+        throw new Error();
+    } catch (e) {
+        var lines = e.stack.split("\n");
+        var firstLine = lines[0].indexOf("@") > 0 ? lines[1] : lines[2];
+        var fileNameAndLineNumber = getFileNameAndLineNumber(firstLine);
+        if (!fileNameAndLineNumber) {
+            return;
+        }
+
+        qFileName = fileNameAndLineNumber[0];
+        return fileNameAndLineNumber[1];
+    }
+}
+
+function deprecate(callback, name, alternative) {
+    return function () {
+        if (typeof console !== "undefined" &&
+            typeof console.warn === "function") {
+            console.warn(name + " is deprecated, use " + alternative +
+                         " instead.", new Error("").stack);
+        }
+        return callback.apply(callback, arguments);
+    };
+}
+
+// end of shims
+// beginning of real work
+
+/**
+ * Constructs a promise for an immediate reference, passes promises through, or
+ * coerces promises from different systems.
+ * @param value immediate reference or promise
+ */
+function Q(value) {
+    // If the object is already a Promise, return it directly.  This enables
+    // the resolve function to both be used to created references from objects,
+    // but to tolerably coerce non-promises to promises.
+    if (value instanceof Promise) {
+        return value;
+    }
+
+    // assimilate thenables
+    if (isPromiseAlike(value)) {
+        return coerce(value);
+    } else {
+        return fulfill(value);
+    }
+}
+Q.resolve = Q;
+
+/**
+ * Performs a task in a future turn of the event loop.
+ * @param {Function} task
+ */
+Q.nextTick = nextTick;
+
+/**
+ * Controls whether or not long stack traces will be on
+ */
+Q.longStackSupport = false;
+
+// enable long stacks if Q_DEBUG is set
+if (typeof process === "object" && process && process.env && process.env.Q_DEBUG) {
+    Q.longStackSupport = true;
+}
+
+/**
+ * Constructs a {promise, resolve, reject} object.
+ *
+ * `resolve` is a callback to invoke with a more resolved value for the
+ * promise. To fulfill the promise, invoke `resolve` with any value that is
+ * not a thenable. To reject the promise, invoke `resolve` with a rejected
+ * thenable, or invoke `reject` with the reason directly. To resolve the
+ * promise to another thenable, thus putting it in the same state, invoke
+ * `resolve` with that other thenable.
+ */
+Q.defer = defer;
+function defer() {
+    // if "messages" is an "Array", that indicates that the promise has not yet
+    // been resolved.  If it is "undefined", it has been resolved.  Each
+    // element of the messages array is itself an array of complete arguments to
+    // forward to the resolved promise.  We coerce the resolution value to a
+    // promise using the `resolve` function because it handles both fully
+    // non-thenable values and other thenables gracefully.
+    var messages = [], progressListeners = [], resolvedPromise;
+
+    var deferred = object_create(defer.prototype);
+    var promise = object_create(Promise.prototype);
+
+    promise.promiseDispatch = function (resolve, op, operands) {
+        var args = array_slice(arguments);
+        if (messages) {
+            messages.push(args);
+            if (op === "when" && operands[1]) { // progress operand
+                progressListeners.push(operands[1]);
+            }
+        } else {
+            Q.nextTick(function () {
+                resolvedPromise.promiseDispatch.apply(resolvedPromise, args);
+            });
+        }
+    };
+
+    // XXX deprecated
+    promise.valueOf = function () {
+        if (messages) {
+            return promise;
+        }
+        var nearerValue = nearer(resolvedPromise);
+        if (isPromise(nearerValue)) {
+            resolvedPromise = nearerValue; // shorten chain
+        }
+        return nearerValue;
+    };
+
+    promise.inspect = function () {
+        if (!resolvedPromise) {
+            return { state: "pending" };
+        }
+        return resolvedPromise.inspect();
+    };
+
+    if (Q.longStackSupport && hasStacks) {
+        try {
+            throw new Error();
+        } catch (e) {
+            // NOTE: don't try to use `Error.captureStackTrace` or transfer the
+            // accessor around; that causes memory leaks as per GH-111. Just
+            // reify the stack trace as a string ASAP.
+            //
+            // At the same time, cut off the first line; it's always just
+            // "[object Promise]\n", as per the `toString`.
+            promise.stack = e.stack.substring(e.stack.indexOf("\n") + 1);
+        }
+    }
+
+    // NOTE: we do the checks for `resolvedPromise` in each method, instead of
+    // consolidating them into `become`, since otherwise we'd create new
+    // promises with the lines `become(whatever(value))`. See e.g. GH-252.
+
+    function become(newPromise) {
+        resolvedPromise = newPromise;
+        promise.source = newPromise;
+
+        array_reduce(messages, function (undefined, message) {
+            Q.nextTick(function () {
+                newPromise.promiseDispatch.apply(newPromise, message);
+            });
+        }, void 0);
+
+        messages = void 0;
+        progressListeners = void 0;
+    }
+
+    deferred.promise = promise;
+    deferred.resolve = function (value) {
+        if (resolvedPromise) {
+            return;
+        }
+
+        become(Q(value));
+    };
+
+    deferred.fulfill = function (value) {
+        if (resolvedPromise) {
+            return;
+        }
+
+        become(fulfill(value));
+    };
+    deferred.reject = function (reason) {
+        if (resolvedPromise) {
+            return;
+        }
+
+        become(reject(reason));
+    };
+    deferred.notify = function (progress) {
+        if (resolvedPromise) {
+            return;
+        }
+
+        array_reduce(progressListeners, function (undefined, progressListener) {
+            Q.nextTick(function () {
+                progressListener(progress);
+            });
+        }, void 0);
+    };
+
+    return deferred;
+}
+
+/**
+ * Creates a Node-style callback that will resolve or reject the deferred
+ * promise.
+ * @returns a nodeback
+ */
+defer.prototype.makeNodeResolver = function () {
+    var self = this;
+    return function (error, value) {
+        if (error) {
+            self.reject(error);
+        } else if (arguments.length > 2) {
+            self.resolve(array_slice(arguments, 1));
+        } else {
+            self.resolve(value);
+        }
+    };
+};
+
+/**
+ * @param resolver {Function} a function that returns nothing and accepts
+ * the resolve, reject, and notify functions for a deferred.
+ * @returns a promise that may be resolved with the given resolve and reject
+ * functions, or rejected by a thrown exception in resolver
+ */
+Q.Promise = promise; // ES6
+Q.promise = promise;
+function promise(resolver) {
+    if (typeof resolver !== "function") {
+        throw new TypeError("resolver must be a function.");
+    }
+    var deferred = defer();
+    try {
+        resolver(deferred.resolve, deferred.reject, deferred.notify);
+    } catch (reason) {
+        deferred.reject(reason);
+    }
+    return deferred.promise;
+}
+
+promise.race = race; // ES6
+promise.all = all; // ES6
+promise.reject = reject; // ES6
+promise.resolve = Q; // ES6
+
+// XXX experimental.  This method is a way to denote that a local value is
+// serializable and should be immediately dispatched to a remote upon request,
+// instead of passing a reference.
+Q.passByCopy = function (object) {
+    //freeze(object);
+    //passByCopies.set(object, true);
+    return object;
+};
+
+Promise.prototype.passByCopy = function () {
+    //freeze(object);
+    //passByCopies.set(object, true);
+    return this;
+};
+
+/**
+ * If two promises eventually fulfill to the same value, promises that value,
+ * but otherwise rejects.
+ * @param x {Any*}
+ * @param y {Any*}
+ * @returns {Any*} a promise for x and y if they are the same, but a rejection
+ * otherwise.
+ *
+ */
+Q.join = function (x, y) {
+    return Q(x).join(y);
+};
+
+Promise.prototype.join = function (that) {
+    return Q([this, that]).spread(function (x, y) {
+        if (x === y) {
+            // TODO: "===" should be Object.is or equiv
+            return x;
+        } else {
+            throw new Error("Can't join: not the same: " + x + " " + y);
+        }
+    });
+};
+
+/**
+ * Returns a promise for the first of an array of promises to become settled.
+ * @param answers {Array[Any*]} promises to race
+ * @returns {Any*} the first promise to be settled
+ */
+Q.race = race;
+function race(answerPs) {
+    return promise(function (resolve, reject) {
+        // Switch to this once we can assume at least ES5
+        // answerPs.forEach(function (answerP) {
+        //     Q(answerP).then(resolve, reject);
+        // });
+        // Use this in the meantime
+        for (var i = 0, len = answerPs.length; i < len; i++) {
+            Q(answerPs[i]).then(resolve, reject);
+        }
+    });
+}
+
+Promise.prototype.race = function () {
+    return this.then(Q.race);
+};
+
+/**
+ * Constructs a Promise with a promise descriptor object and optional fallback
+ * function.  The descriptor contains methods like when(rejected), get(name),
+ * set(name, value), post(name, args), and delete(name), which all
+ * return either a value, a promise for a value, or a rejection.  The fallback
+ * accepts the operation name, a resolver, and any further arguments that would
+ * have been forwarded to the appropriate method above had a method been
+ * provided with the proper name.  The API makes no guarantees about the nature
+ * of the returned object, apart from that it is usable whereever promises are
+ * bought and sold.
+ */
+Q.makePromise = Promise;
+function Promise(descriptor, fallback, inspect) {
+    if (fallback === void 0) {
+        fallback = function (op) {
+            return reject(new Error(
+                "Promise does not support operation: " + op
+            ));
+        };
+    }
+    if (inspect === void 0) {
+        inspect = function () {
+            return {state: "unknown"};
+        };
+    }
+
+    var promise = object_create(Promise.prototype);
+
+    promise.promiseDispatch = function (resolve, op, args) {
+        var result;
+        try {
+            if (descriptor[op]) {
+                result = descriptor[op].apply(promise, args);
+            } else {
+                result = fallback.call(promise, op, args);
+            }
+        } catch (exception) {
+            result = reject(exception);
+        }
+        if (resolve) {
+            resolve(result);
+        }
+    };
+
+    promise.inspect = inspect;
+
+    // XXX deprecated `valueOf` and `exception` support
+    if (inspect) {
+        var inspected = inspect();
+        if (inspected.state === "rejected") {
+            promise.exception = inspected.reason;
+        }
+
+        promise.valueOf = function () {
+            var inspected = inspect();
+            if (inspected.state === "pending" ||
+                inspected.state === "rejected") {
+                return promise;
+            }
+            return inspected.value;
+        };
+    }
+
+    return promise;
+}
+
+Promise.prototype.toString = function () {
+    return "[object Promise]";
+};
+
+Promise.prototype.then = function (fulfilled, rejected, progressed) {
+    var self = this;
+    var deferred = defer();
+    var done = false;   // ensure the untrusted promise makes at most a
+                        // single call to one of the callbacks
+
+    function _fulfilled(value) {
+        try {
+            return typeof fulfilled === "function" ? fulfilled(value) : value;
+        } catch (exception) {
+            return reject(exception);
+        }
+    }
+
+    function _rejected(exception) {
+        if (typeof rejected === "function") {
+            makeStackTraceLong(exception, self);
+            try {
+                return rejected(exception);
+            } catch (newException) {
+                return reject(newException);
+            }
+        }
+        return reject(exception);
+    }
+
+    function _progressed(value) {
+        return typeof progressed === "function" ? progressed(value) : value;
+    }
+
+    Q.nextTick(function () {
+        self.promiseDispatch(function (value) {
+            if (done) {
+                return;
+            }
+            done = true;
+
+            deferred.resolve(_fulfilled(value));
+        }, "when", [function (exception) {
+            if (done) {
+                return;
+            }
+            done = true;
+
+            deferred.resolve(_rejected(exception));
+        }]);
+    });
+
+    // Progress propagator need to be attached in the current tick.
+    self.promiseDispatch(void 0, "when", [void 0, function (value) {
+        var newValue;
+        var threw = false;
+        try {
+            newValue = _progressed(value);
+        } catch (e) {
+            threw = true;
+            if (Q.onerror) {
+                Q.onerror(e);
+            } else {
+                throw e;
+            }
+        }
+
+        if (!threw) {
+            deferred.notify(newValue);
+        }
+    }]);
+
+    return deferred.promise;
+};
+
+Q.tap = function (promise, callback) {
+    return Q(promise).tap(callback);
+};
+
+/**
+ * Works almost like "finally", but not called for rejections.
+ * Original resolution value is passed through callback unaffected.
+ * Callback may return a promise that will be awaited for.
+ * @param {Function} callback
+ * @returns {Q.Promise}
+ * @example
+ * doSomething()
+ *   .then(...)
+ *   .tap(console.log)
+ *   .then(...);
+ */
+Promise.prototype.tap = function (callback) {
+    callback = Q(callback);
+
+    return this.then(function (value) {
+        return callback.fcall(value).thenResolve(value);
+    });
+};
+
+/**
+ * Registers an observer on a promise.
+ *
+ * Guarantees:
+ *
+ * 1. that fulfilled and rejected will be called only once.
+ * 2. that either the fulfilled callback or the rejected callback will be
+ *    called, but not both.
+ * 3. that fulfilled and rejected will not be called in this turn.
+ *
+ * @param value      promise or immediate reference to observe
+ * @param fulfilled  function to be called with the fulfilled value
+ * @param rejected   function to be called with the rejection exception
+ * @param progressed function to be called on any progress notifications
+ * @return promise for the return value from the invoked callback
+ */
+Q.when = when;
+function when(value, fulfilled, rejected, progressed) {
+    return Q(value).then(fulfilled, rejected, progressed);
+}
+
+Promise.prototype.thenResolve = function (value) {
+    return this.then(function () { return value; });
+};
+
+Q.thenResolve = function (promise, value) {
+    return Q(promise).thenResolve(value);
+};
+
+Promise.prototype.thenReject = function (reason) {
+    return this.then(function () { throw reason; });
+};
+
+Q.thenReject = function (promise, reason) {
+    return Q(promise).thenReject(reason);
+};
+
+/**
+ * If an object is not a promise, it is as "near" as possible.
+ * If a promise is rejected, it is as "near" as possible too.
+ * If it’s a fulfilled promise, the fulfillment value is nearer.
+ * If it’s a deferred promise and the deferred has been resolved, the
+ * resolution is "nearer".
+ * @param object
+ * @returns most resolved (nearest) form of the object
+ */
+
+// XXX should we re-do this?
+Q.nearer = nearer;
+function nearer(value) {
+    if (isPromise(value)) {
+        var inspected = value.inspect();
+        if (inspected.state === "fulfilled") {
+            return inspected.value;
+        }
+    }
+    return value;
+}
+
+/**
+ * @returns whether the given object is a promise.
+ * Otherwise it is a fulfilled value.
+ */
+Q.isPromise = isPromise;
+function isPromise(object) {
+    return object instanceof Promise;
+}
+
+Q.isPromiseAlike = isPromiseAlike;
+function isPromiseAlike(object) {
+    return isObject(object) && typeof object.then === "function";
+}
+
+/**
+ * @returns whether the given object is a pending promise, meaning not
+ * fulfilled or rejected.
+ */
+Q.isPending = isPending;
+function isPending(object) {
+    return isPromise(object) && object.inspect().state === "pending";
+}
+
+Promise.prototype.isPending = function () {
+    return this.inspect().state === "pending";
+};
+
+/**
+ * @returns whether the given object is a value or fulfilled
+ * promise.
+ */
+Q.isFulfilled = isFulfilled;
+function isFulfilled(object) {
+    return !isPromise(object) || object.inspect().state === "fulfilled";
+}
+
+Promise.prototype.isFulfilled = function () {
+    return this.inspect().state === "fulfilled";
+};
+
+/**
+ * @returns whether the given object is a rejected promise.
+ */
+Q.isRejected = isRejected;
+function isRejected(object) {
+    return isPromise(object) && object.inspect().state === "rejected";
+}
+
+Promise.prototype.isRejected = function () {
+    return this.inspect().state === "rejected";
+};
+
+//// BEGIN UNHANDLED REJECTION TRACKING
+
+// This promise library consumes exceptions thrown in handlers so they can be
+// handled by a subsequent promise.  The exceptions get added to this array when
+// they are created, and removed when they are handled.  Note that in ES6 or
+// shimmed environments, this would naturally be a `Set`.
+var unhandledReasons = [];
+var unhandledRejections = [];
+var reportedUnhandledRejections = [];
+var trackUnhandledRejections = true;
+
+function resetUnhandledRejections() {
+    unhandledReasons.length = 0;
+    unhandledRejections.length = 0;
+
+    if (!trackUnhandledRejections) {
+        trackUnhandledRejections = true;
+    }
+}
+
+function trackRejection(promise, reason) {
+    if (!trackUnhandledRejections) {
+        return;
+    }
+    if (typeof process === "object" && typeof process.emit === "function") {
+        Q.nextTick.runAfter(function () {
+            if (array_indexOf(unhandledRejections, promise) !== -1) {
+                process.emit("unhandledRejection", reason, promise);
+                reportedUnhandledRejections.push(promise);
+            }
+        });
+    }
+
+    unhandledRejections.push(promise);
+    if (reason && typeof reason.stack !== "undefined") {
+        unhandledReasons.push(reason.stack);
+    } else {
+        unhandledReasons.push("(no stack) " + reason);
+    }
+}
+
+function untrackRejection(promise) {
+    if (!trackUnhandledRejections) {
+        return;
+    }
+
+    var at = array_indexOf(unhandledRejections, promise);
+    if (at !== -1) {
+        if (typeof process === "object" && typeof process.emit === "function") {
+            Q.nextTick.runAfter(function () {
+                var atReport = array_indexOf(reportedUnhandledRejections, promise);
+                if (atReport !== -1) {
+                    process.emit("rejectionHandled", unhandledReasons[at], promise);
+                    reportedUnhandledRejections.splice(atReport, 1);
+                }
+            });
+        }
+        unhandledRejections.splice(at, 1);
+        unhandledReasons.splice(at, 1);
+    }
+}
+
+Q.resetUnhandledRejections = resetUnhandledRejections;
+
+Q.getUnhandledReasons = function () {
+    // Make a copy so that consumers can't interfere with our internal state.
+    return unhandledReasons.slice();
+};
+
+Q.stopUnhandledRejectionTracking = function () {
+    resetUnhandledRejections();
+    trackUnhandledRejections = false;
+};
+
+resetUnhandledRejections();
+
+//// END UNHANDLED REJECTION TRACKING
+
+/**
+ * Constructs a rejected promise.
+ * @param reason value describing the failure
+ */
+Q.reject = reject;
+function reject(reason) {
+    var rejection = Promise({
+        "when": function (rejected) {
+            // note that the error has been handled
+            if (rejected) {
+                untrackRejection(this);
+            }
+            return rejected ? rejected(reason) : this;
+        }
+    }, function fallback() {
+        return this;
+    }, function inspect() {
+        return { state: "rejected", reason: reason };
+    });
+
+    // Note that the reason has not been handled.
+    trackRejection(rejection, reason);
+
+    return rejection;
+}
+
+/**
+ * Constructs a fulfilled promise for an immediate reference.
+ * @param value immediate reference
+ */
+Q.fulfill = fulfill;
+function fulfill(value) {
+    return Promise({
+        "when": function () {
+            return value;
+        },
+        "get": function (name) {
+            return value[name];
+        },
+        "set": function (name, rhs) {
+            value[name] = rhs;
+        },
+        "delete": function (name) {
+            delete value[name];
+        },
+        "post": function (name, args) {
+            // Mark Miller proposes that post with no name should apply a
+            // promised function.
+            if (name === null || name === void 0) {
+                return value.apply(void 0, args);
+            } else {
+                return value[name].apply(value, args);
+            }
+        },
+        "apply": function (thisp, args) {
+            return value.apply(thisp, args);
+        },
+        "keys": function () {
+            return object_keys(value);
+        }
+    }, void 0, function inspect() {
+        return { state: "fulfilled", value: value };
+    });
+}
+
+/**
+ * Converts thenables to Q promises.
+ * @param promise thenable promise
+ * @returns a Q promise
+ */
+function coerce(promise) {
+    var deferred = defer();
+    Q.nextTick(function () {
+        try {
+            promise.then(deferred.resolve, deferred.reject, deferred.notify);
+        } catch (exception) {
+            deferred.reject(exception);
+        }
+    });
+    return deferred.promise;
+}
+
+/**
+ * Annotates an object such that it will never be
+ * transferred away from this process over any promise
+ * communication channel.
+ * @param object
+ * @returns promise a wrapping of that object that
+ * additionally responds to the "isDef" message
+ * without a rejection.
+ */
+Q.master = master;
+function master(object) {
+    return Promise({
+        "isDef": function () {}
+    }, function fallback(op, args) {
+        return dispatch(object, op, args);
+    }, function () {
+        return Q(object).inspect();
+    });
+}
+
+/**
+ * Spreads the values of a promised array of arguments into the
+ * fulfillment callback.
+ * @param fulfilled callback that receives variadic arguments from the
+ * promised array
+ * @param rejected callback that receives the exception if the promise
+ * is rejected.
+ * @returns a promise for the return value or thrown exception of
+ * either callback.
+ */
+Q.spread = spread;
+function spread(value, fulfilled, rejected) {
+    return Q(value).spread(fulfilled, rejected);
+}
+
+Promise.prototype.spread = function (fulfilled, rejected) {
+    return this.all().then(function (array) {
+        return fulfilled.apply(void 0, array);
+    }, rejected);
+};
+
+/**
+ * The async function is a decorator for generator functions, turning
+ * them into asynchronous generators.  Although generators are only part
+ * of the newest ECMAScript 6 drafts, this code does not cause syntax
+ * errors in older engines.  This code should continue to work and will
+ * in fact improve over time as the language improves.
+ *
+ * ES6 generators are currently part of V8 version 3.19 with the
+ * --harmony-generators runtime flag enabled.  SpiderMonkey has had them
+ * for longer, but under an older Python-inspired form.  This function
+ * works on both kinds of generators.
+ *
+ * Decorates a generator function such that:
+ *  - it may yield promises
+ *  - execution will continue when that promise is fulfilled
+ *  - the value of the yield expression will be the fulfilled value
+ *  - it returns a promise for the return value (when the generator
+ *    stops iterating)
+ *  - the decorated function returns a promise for the return value
+ *    of the generator or the first rejected promise among those
+ *    yielded.
+ *  - if an error is thrown in the generator, it propagates through
+ *    every following yield until it is caught, or until it escapes
+ *    the generator function altogether, and is translated into a
+ *    rejection for the promise returned by the decorated generator.
+ */
+Q.async = async;
+function async(makeGenerator) {
+    return function () {
+        // when verb is "send", arg is a value
+        // when verb is "throw", arg is an exception
+        function continuer(verb, arg) {
+            var result;
+
+            // Until V8 3.19 / Chromium 29 is released, SpiderMonkey is the only
+            // engine that has a deployed base of browsers that support generators.
+            // However, SM's generators use the Python-inspired semantics of
+            // outdated ES6 drafts.  We would like to support ES6, but we'd also
+            // like to make it possible to use generators in deployed browsers, so
+            // we also support Python-style generators.  At some point we can remove
+            // this block.
+
+            if (typeof StopIteration === "undefined") {
+                // ES6 Generators
+                try {
+                    result = generator[verb](arg);
+                } catch (exception) {
+                    return reject(exception);
+                }
+                if (result.done) {
+                    return Q(result.value);
+                } else {
+                    return when(result.value, callback, errback);
+                }
+            } else {
+                // SpiderMonkey Generators
+                // FIXME: Remove this case when SM does ES6 generators.
+                try {
+                    result = generator[verb](arg);
+                } catch (exception) {
+                    if (isStopIteration(exception)) {
+                        return Q(exception.value);
+                    } else {
+                        return reject(exception);
+                    }
+                }
+                return when(result, callback, errback);
+            }
+        }
+        var generator = makeGenerator.apply(this, arguments);
+        var callback = continuer.bind(continuer, "next");
+        var errback = continuer.bind(continuer, "throw");
+        return callback();
+    };
+}
+
+/**
+ * The spawn function is a small wrapper around async that immediately
+ * calls the generator and also ends the promise chain, so that any
+ * unhandled errors are thrown instead of forwarded to the error
+ * handler. This is useful because it's extremely common to run
+ * generators at the top-level to work with libraries.
+ */
+Q.spawn = spawn;
+function spawn(makeGenerator) {
+    Q.done(Q.async(makeGenerator)());
+}
+
+// FIXME: Remove this interface once ES6 generators are in SpiderMonkey.
+/**
+ * Throws a ReturnValue exception to stop an asynchronous generator.
+ *
+ * This interface is a stop-gap measure to support generator return
+ * values in older Firefox/SpiderMonkey.  In browsers that support ES6
+ * generators like Chromium 29, just use "return" in your generator
+ * functions.
+ *
+ * @param value the return value for the surrounding generator
+ * @throws ReturnValue exception with the value.
+ * @example
+ * // ES6 style
+ * Q.async(function* () {
+ *      var foo = yield getFooPromise();
+ *      var bar = yield getBarPromise();
+ *      return foo + bar;
+ * })
+ * // Older SpiderMonkey style
+ * Q.async(function () {
+ *      var foo = yield getFooPromise();
+ *      var bar = yield getBarPromise();
+ *      Q.return(foo + bar);
+ * })
+ */
+Q["return"] = _return;
+function _return(value) {
+    throw new QReturnValue(value);
+}
+
+/**
+ * The promised function decorator ensures that any promise arguments
+ * are settled and passed as values (`this` is also settled and passed
+ * as a value).  It will also ensure that the result of a function is
+ * always a promise.
+ *
+ * @example
+ * var add = Q.promised(function (a, b) {
+ *     return a + b;
+ * });
+ * add(Q(a), Q(B));
+ *
+ * @param {function} callback The function to decorate
+ * @returns {function} a function that has been decorated.
+ */
+Q.promised = promised;
+function promised(callback) {
+    return function () {
+        return spread([this, all(arguments)], function (self, args) {
+            return callback.apply(self, args);
+        });
+    };
+}
+
+/**
+ * sends a message to a value in a future turn
+ * @param object* the recipient
+ * @param op the name of the message operation, e.g., "when",
+ * @param args further arguments to be forwarded to the operation
+ * @returns result {Promise} a promise for the result of the operation
+ */
+Q.dispatch = dispatch;
+function dispatch(object, op, args) {
+    return Q(object).dispatch(op, args);
+}
+
+Promise.prototype.dispatch = function (op, args) {
+    var self = this;
+    var deferred = defer();
+    Q.nextTick(function () {
+        self.promiseDispatch(deferred.resolve, op, args);
+    });
+    return deferred.promise;
+};
+
+/**
+ * Gets the value of a property in a future turn.
+ * @param object    promise or immediate reference for target object
+ * @param name      name of property to get
+ * @return promise for the property value
+ */
+Q.get = function (object, key) {
+    return Q(object).dispatch("get", [key]);
+};
+
+Promise.prototype.get = function (key) {
+    return this.dispatch("get", [key]);
+};
+
+/**
+ * Sets the value of a property in a future turn.
+ * @param object    promise or immediate reference for object object
+ * @param name      name of property to set
+ * @param value     new value of property
+ * @return promise for the return value
+ */
+Q.set = function (object, key, value) {
+    return Q(object).dispatch("set", [key, value]);
+};
+
+Promise.prototype.set = function (key, value) {
+    return this.dispatch("set", [key, value]);
+};
+
+/**
+ * Deletes a property in a future turn.
+ * @param object    promise or immediate reference for target object
+ * @param name      name of property to delete
+ * @return promise for the return value
+ */
+Q.del = // XXX legacy
+Q["delete"] = function (object, key) {
+    return Q(object).dispatch("delete", [key]);
+};
+
+Promise.prototype.del = // XXX legacy
+Promise.prototype["delete"] = function (key) {
+    return this.dispatch("delete", [key]);
+};
+
+/**
+ * Invokes a method in a future turn.
+ * @param object    promise or immediate reference for target object
+ * @param name      name of method to invoke
+ * @param value     a value to post, typically an array of
+ *                  invocation arguments for promises that
+ *                  are ultimately backed with `resolve` values,
+ *                  as opposed to those backed with URLs
+ *                  wherein the posted value can be any
+ *                  JSON serializable object.
+ * @return promise for the return value
+ */
+// bound locally because it is used by other methods
+Q.mapply = // XXX As proposed by "Redsandro"
+Q.post = function (object, name, args) {
+    return Q(object).dispatch("post", [name, args]);
+};
+
+Promise.prototype.mapply = // XXX As proposed by "Redsandro"
+Promise.prototype.post = function (name, args) {
+    return this.dispatch("post", [name, args]);
+};
+
+/**
+ * Invokes a method in a future turn.
+ * @param object    promise or immediate reference for target object
+ * @param name      name of method to invoke
+ * @param ...args   array of invocation arguments
+ * @return promise for the return value
+ */
+Q.send = // XXX Mark Miller's proposed parlance
+Q.mcall = // XXX As proposed by "Redsandro"
+Q.invoke = function (object, name /*...args*/) {
+    return Q(object).dispatch("post", [name, array_slice(arguments, 2)]);
+};
+
+Promise.prototype.send = // XXX Mark Miller's proposed parlance
+Promise.prototype.mcall = // XXX As proposed by "Redsandro"
+Promise.prototype.invoke = function (name /*...args*/) {
+    return this.dispatch("post", [name, array_slice(arguments, 1)]);
+};
+
+/**
+ * Applies the promised function in a future turn.
+ * @param object    promise or immediate reference for target function
+ * @param args      array of application arguments
+ */
+Q.fapply = function (object, args) {
+    return Q(object).dispatch("apply", [void 0, args]);
+};
+
+Promise.prototype.fapply = function (args) {
+    return this.dispatch("apply", [void 0, args]);
+};
+
+/**
+ * Calls the promised function in a future turn.
+ * @param object    promise or immediate reference for target function
+ * @param ...args   array of application arguments
+ */
+Q["try"] =
+Q.fcall = function (object /* ...args*/) {
+    return Q(object).dispatch("apply", [void 0, array_slice(arguments, 1)]);
+};
+
+Promise.prototype.fcall = function (/*...args*/) {
+    return this.dispatch("apply", [void 0, array_slice(arguments)]);
+};
+
+/**
+ * Binds the promised function, transforming return values into a fulfilled
+ * promise and thrown errors into a rejected one.
+ * @param object    promise or immediate reference for target function
+ * @param ...args   array of application arguments
+ */
+Q.fbind = function (object /*...args*/) {
+    var promise = Q(object);
+    var args = array_slice(arguments, 1);
+    return function fbound() {
+        return promise.dispatch("apply", [
+            this,
+            args.concat(array_slice(arguments))
+        ]);
+    };
+};
+Promise.prototype.fbind = function (/*...args*/) {
+    var promise = this;
+    var args = array_slice(arguments);
+    return function fbound() {
+        return promise.dispatch("apply", [
+            this,
+            args.concat(array_slice(arguments))
+        ]);
+    };
+};
+
+/**
+ * Requests the names of the owned properties of a promised
+ * object in a future turn.
+ * @param object    promise or immediate reference for target object
+ * @return promise for the keys of the eventually settled object
+ */
+Q.keys = function (object) {
+    return Q(object).dispatch("keys", []);
+};
+
+Promise.prototype.keys = function () {
+    return this.dispatch("keys", []);
+};
+
+/**
+ * Turns an array of promises into a promise for an array.  If any of
+ * the promises gets rejected, the whole array is rejected immediately.
+ * @param {Array*} an array (or promise for an array) of values (or
+ * promises for values)
+ * @returns a promise for an array of the corresponding values
+ */
+// By Mark Miller
+// http://wiki.ecmascript.org/doku.php?id=strawman:concurrency&rev=1308776521#allfulfilled
+Q.all = all;
+function all(promises) {
+    return when(promises, function (promises) {
+        var pendingCount = 0;
+        var deferred = defer();
+        array_reduce(promises, function (undefined, promise, index) {
+            var snapshot;
+            if (
+                isPromise(promise) &&
+                (snapshot = promise.inspect()).state === "fulfilled"
+            ) {
+                promises[index] = snapshot.value;
+            } else {
+                ++pendingCount;
+                when(
+                    promise,
+                    function (value) {
+                        promises[index] = value;
+                        if (--pendingCount === 0) {
+                            deferred.resolve(promises);
+                        }
+                    },
+                    deferred.reject,
+                    function (progress) {
+                        deferred.notify({ index: index, value: progress });
+                    }
+                );
+            }
+        }, void 0);
+        if (pendingCount === 0) {
+            deferred.resolve(promises);
+        }
+        return deferred.promise;
+    });
+}
+
+Promise.prototype.all = function () {
+    return all(this);
+};
+
+/**
+ * Returns the first resolved promise of an array. Prior rejected promises are
+ * ignored.  Rejects only if all promises are rejected.
+ * @param {Array*} an array containing values or promises for values
+ * @returns a promise fulfilled with the value of the first resolved promise,
+ * or a rejected promise if all promises are rejected.
+ */
+Q.any = any;
+
+function any(promises) {
+    if (promises.length === 0) {
+        return Q.resolve();
+    }
+
+    var deferred = Q.defer();
+    var pendingCount = 0;
+    array_reduce(promises, function (prev, current, index) {
+        var promise = promises[index];
+
+        pendingCount++;
+
+        when(promise, onFulfilled, onRejected, onProgress);
+        function onFulfilled(result) {
+            deferred.resolve(result);
+        }
+        function onRejected() {
+            pendingCount--;
+            if (pendingCount === 0) {
+                deferred.reject(new Error(
+                    "Can't get fulfillment value from any promise, all " +
+                    "promises were rejected."
+                ));
+            }
+        }
+        function onProgress(progress) {
+            deferred.notify({
+                index: index,
+                value: progress
+            });
+        }
+    }, undefined);
+
+    return deferred.promise;
+}
+
+Promise.prototype.any = function () {
+    return any(this);
+};
+
+/**
+ * Waits for all promises to be settled, either fulfilled or
+ * rejected.  This is distinct from `all` since that would stop
+ * waiting at the first rejection.  The promise returned by
+ * `allResolved` will never be rejected.
+ * @param promises a promise for an array (or an array) of promises
+ * (or values)
+ * @return a promise for an array of promises
+ */
+Q.allResolved = deprecate(allResolved, "allResolved", "allSettled");
+function allResolved(promises) {
+    return when(promises, function (promises) {
+        promises = array_map(promises, Q);
+        return when(all(array_map(promises, function (promise) {
+            return when(promise, noop, noop);
+        })), function () {
+            return promises;
+        });
+    });
+}
+
+Promise.prototype.allResolved = function () {
+    return allResolved(this);
+};
+
+/**
+ * @see Promise#allSettled
+ */
+Q.allSettled = allSettled;
+function allSettled(promises) {
+    return Q(promises).allSettled();
+}
+
+/**
+ * Turns an array of promises into a promise for an array of their states (as
+ * returned by `inspect`) when they have all settled.
+ * @param {Array[Any*]} values an array (or promise for an array) of values (or
+ * promises for values)
+ * @returns {Array[State]} an array of states for the respective values.
+ */
+Promise.prototype.allSettled = function () {
+    return this.then(function (promises) {
+        return all(array_map(promises, function (promise) {
+            promise = Q(promise);
+            function regardless() {
+                return promise.inspect();
+            }
+            return promise.then(regardless, regardless);
+        }));
+    });
+};
+
+/**
+ * Captures the failure of a promise, giving an oportunity to recover
+ * with a callback.  If the given promise is fulfilled, the returned
+ * promise is fulfilled.
+ * @param {Any*} promise for something
+ * @param {Function} callback to fulfill the returned promise if the
+ * given promise is rejected
+ * @returns a promise for the return value of the callback
+ */
+Q.fail = // XXX legacy
+Q["catch"] = function (object, rejected) {
+    return Q(object).then(void 0, rejected);
+};
+
+Promise.prototype.fail = // XXX legacy
+Promise.prototype["catch"] = function (rejected) {
+    return this.then(void 0, rejected);
+};
+
+/**
+ * Attaches a listener that can respond to progress notifications from a
+ * promise's originating deferred. This listener receives the exact arguments
+ * passed to ``deferred.notify``.
+ * @param {Any*} promise for something
+ * @param {Function} callback to receive any progress notifications
+ * @returns the given promise, unchanged
+ */
+Q.progress = progress;
+function progress(object, progressed) {
+    return Q(object).then(void 0, void 0, progressed);
+}
+
+Promise.prototype.progress = function (progressed) {
+    return this.then(void 0, void 0, progressed);
+};
+
+/**
+ * Provides an opportunity to observe the settling of a promise,
+ * regardless of whether the promise is fulfilled or rejected.  Forwards
+ * the resolution to the returned promise when the callback is done.
+ * The callback can return a promise to defer completion.
+ * @param {Any*} promise
+ * @param {Function} callback to observe the resolution of the given
+ * promise, takes no arguments.
+ * @returns a promise for the resolution of the given promise when
+ * ``fin`` is done.
+ */
+Q.fin = // XXX legacy
+Q["finally"] = function (object, callback) {
+    return Q(object)["finally"](callback);
+};
+
+Promise.prototype.fin = // XXX legacy
+Promise.prototype["finally"] = function (callback) {
+    callback = Q(callback);
+    return this.then(function (value) {
+        return callback.fcall().then(function () {
+            return value;
+        });
+    }, function (reason) {
+        // TODO attempt to recycle the rejection with "this".
+        return callback.fcall().then(function () {
+            throw reason;
+        });
+    });
+};
+
+/**
+ * Terminates a chain of promises, forcing rejections to be
+ * thrown as exceptions.
+ * @param {Any*} promise at the end of a chain of promises
+ * @returns nothing
+ */
+Q.done = function (object, fulfilled, rejected, progress) {
+    return Q(object).done(fulfilled, rejected, progress);
+};
+
+Promise.prototype.done = function (fulfilled, rejected, progress) {
+    var onUnhandledError = function (error) {
+        // forward to a future turn so that ``when``
+        // does not catch it and turn it into a rejection.
+        Q.nextTick(function () {
+            makeStackTraceLong(error, promise);
+            if (Q.onerror) {
+                Q.onerror(error);
+            } else {
+                throw error;
+            }
+        });
+    };
+
+    // Avoid unnecessary `nextTick`ing via an unnecessary `when`.
+    var promise = fulfilled || rejected || progress ?
+        this.then(fulfilled, rejected, progress) :
+        this;
+
+    if (typeof process === "object" && process && process.domain) {
+        onUnhandledError = process.domain.bind(onUnhandledError);
+    }
+
+    promise.then(void 0, onUnhandledError);
+};
+
+/**
+ * Causes a promise to be rejected if it does not get fulfilled before
+ * some milliseconds time out.
+ * @param {Any*} promise
+ * @param {Number} milliseconds timeout
+ * @param {Any*} custom error message or Error object (optional)
+ * @returns a promise for the resolution of the given promise if it is
+ * fulfilled before the timeout, otherwise rejected.
+ */
+Q.timeout = function (object, ms, error) {
+    return Q(object).timeout(ms, error);
+};
+
+Promise.prototype.timeout = function (ms, error) {
+    var deferred = defer();
+    var timeoutId = setTimeout(function () {
+        if (!error || "string" === typeof error) {
+            error = new Error(error || "Timed out after " + ms + " ms");
+            error.code = "ETIMEDOUT";
+        }
+        deferred.reject(error);
+    }, ms);
+
+    this.then(function (value) {
+        clearTimeout(timeoutId);
+        deferred.resolve(value);
+    }, function (exception) {
+        clearTimeout(timeoutId);
+        deferred.reject(exception);
+    }, deferred.notify);
+
+    return deferred.promise;
+};
+
+/**
+ * Returns a promise for the given value (or promised value), some
+ * milliseconds after it resolved. Passes rejections immediately.
+ * @param {Any*} promise
+ * @param {Number} milliseconds
+ * @returns a promise for the resolution of the given promise after milliseconds
+ * time has elapsed since the resolution of the given promise.
+ * If the given promise rejects, that is passed immediately.
+ */
+Q.delay = function (object, timeout) {
+    if (timeout === void 0) {
+        timeout = object;
+        object = void 0;
+    }
+    return Q(object).delay(timeout);
+};
+
+Promise.prototype.delay = function (timeout) {
+    return this.then(function (value) {
+        var deferred = defer();
+        setTimeout(function () {
+            deferred.resolve(value);
+        }, timeout);
+        return deferred.promise;
+    });
+};
+
+/**
+ * Passes a continuation to a Node function, which is called with the given
+ * arguments provided as an array, and returns a promise.
+ *
+ *      Q.nfapply(FS.readFile, [__filename])
+ *      .then(function (content) {
+ *      })
+ *
+ */
+Q.nfapply = function (callback, args) {
+    return Q(callback).nfapply(args);
+};
+
+Promise.prototype.nfapply = function (args) {
+    var deferred = defer();
+    var nodeArgs = array_slice(args);
+    nodeArgs.push(deferred.makeNodeResolver());
+    this.fapply(nodeArgs).fail(deferred.reject);
+    return deferred.promise;
+};
+
+/**
+ * Passes a continuation to a Node function, which is called with the given
+ * arguments provided individually, and returns a promise.
+ * @example
+ * Q.nfcall(FS.readFile, __filename)
+ * .then(function (content) {
+ * })
+ *
+ */
+Q.nfcall = function (callback /*...args*/) {
+    var args = array_slice(arguments, 1);
+    return Q(callback).nfapply(args);
+};
+
+Promise.prototype.nfcall = function (/*...args*/) {
+    var nodeArgs = array_slice(arguments);
+    var deferred = defer();
+    nodeArgs.push(deferred.makeNodeResolver());
+    this.fapply(nodeArgs).fail(deferred.reject);
+    return deferred.promise;
+};
+
+/**
+ * Wraps a NodeJS continuation passing function and returns an equivalent
+ * version that returns a promise.
+ * @example
+ * Q.nfbind(FS.readFile, __filename)("utf-8")
+ * .then(console.log)
+ * .done()
+ */
+Q.nfbind =
+Q.denodeify = function (callback /*...args*/) {
+    var baseArgs = array_slice(arguments, 1);
+    return function () {
+        var nodeArgs = baseArgs.concat(array_slice(arguments));
+        var deferred = defer();
+        nodeArgs.push(deferred.makeNodeResolver());
+        Q(callback).fapply(nodeArgs).fail(deferred.reject);
+        return deferred.promise;
+    };
+};
+
+Promise.prototype.nfbind =
+Promise.prototype.denodeify = function (/*...args*/) {
+    var args = array_slice(arguments);
+    args.unshift(this);
+    return Q.denodeify.apply(void 0, args);
+};
+
+Q.nbind = function (callback, thisp /*...args*/) {
+    var baseArgs = array_slice(arguments, 2);
+    return function () {
+        var nodeArgs = baseArgs.concat(array_slice(arguments));
+        var deferred = defer();
+        nodeArgs.push(deferred.makeNodeResolver());
+        function bound() {
+            return callback.apply(thisp, arguments);
+        }
+        Q(bound).fapply(nodeArgs).fail(deferred.reject);
+        return deferred.promise;
+    };
+};
+
+Promise.prototype.nbind = function (/*thisp, ...args*/) {
+    var args = array_slice(arguments, 0);
+    args.unshift(this);
+    return Q.nbind.apply(void 0, args);
+};
+
+/**
+ * Calls a method of a Node-style object that accepts a Node-style
+ * callback with a given array of arguments, plus a provided callback.
+ * @param object an object that has the named method
+ * @param {String} name name of the method of object
+ * @param {Array} args arguments to pass to the method; the callback
+ * will be provided by Q and appended to these arguments.
+ * @returns a promise for the value or error
+ */
+Q.nmapply = // XXX As proposed by "Redsandro"
+Q.npost = function (object, name, args) {
+    return Q(object).npost(name, args);
+};
+
+Promise.prototype.nmapply = // XXX As proposed by "Redsandro"
+Promise.prototype.npost = function (name, args) {
+    var nodeArgs = array_slice(args || []);
+    var deferred = defer();
+    nodeArgs.push(deferred.makeNodeResolver());
+    this.dispatch("post", [name, nodeArgs]).fail(deferred.reject);
+    return deferred.promise;
+};
+
+/**
+ * Calls a method of a Node-style object that accepts a Node-style
+ * callback, forwarding the given variadic arguments, plus a provided
+ * callback argument.
+ * @param object an object that has the named method
+ * @param {String} name name of the method of object
+ * @param ...args arguments to pass to the method; the callback will
+ * be provided by Q and appended to these arguments.
+ * @returns a promise for the value or error
+ */
+Q.nsend = // XXX Based on Mark Miller's proposed "send"
+Q.nmcall = // XXX Based on "Redsandro's" proposal
+Q.ninvoke = function (object, name /*...args*/) {
+    var nodeArgs = array_slice(arguments, 2);
+    var deferred = defer();
+    nodeArgs.push(deferred.makeNodeResolver());
+    Q(object).dispatch("post", [name, nodeArgs]).fail(deferred.reject);
+    return deferred.promise;
+};
+
+Promise.prototype.nsend = // XXX Based on Mark Miller's proposed "send"
+Promise.prototype.nmcall = // XXX Based on "Redsandro's" proposal
+Promise.prototype.ninvoke = function (name /*...args*/) {
+    var nodeArgs = array_slice(arguments, 1);
+    var deferred = defer();
+    nodeArgs.push(deferred.makeNodeResolver());
+    this.dispatch("post", [name, nodeArgs]).fail(deferred.reject);
+    return deferred.promise;
+};
+
+/**
+ * If a function would like to support both Node continuation-passing-style and
+ * promise-returning-style, it can end its internal promise chain with
+ * `nodeify(nodeback)`, forwarding the optional nodeback argument.  If the user
+ * elects to use a nodeback, the result will be sent there.  If they do not
+ * pass a nodeback, they will receive the result promise.
+ * @param object a result (or a promise for a result)
+ * @param {Function} nodeback a Node.js-style callback
+ * @returns either the promise or nothing
+ */
+Q.nodeify = nodeify;
+function nodeify(object, nodeback) {
+    return Q(object).nodeify(nodeback);
+}
+
+Promise.prototype.nodeify = function (nodeback) {
+    if (nodeback) {
+        this.then(function (value) {
+            Q.nextTick(function () {
+                nodeback(null, value);
+            });
+        }, function (error) {
+            Q.nextTick(function () {
+                nodeback(error);
+            });
+        });
+    } else {
+        return this;
+    }
+};
+
+Q.noConflict = function() {
+    throw new Error("Q.noConflict only works when Q is used as a global");
+};
+
+// All code before this point will be filtered from stack traces.
+var qEndingLine = captureLine();
+
+return Q;
+
+});
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/q/q.js","/../../node_modules/q")
+},{"buffer":28,"oMfpAn":31}],34:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var now = require('performance-now')
   , root = typeof window === 'undefined' ? global : window
@@ -47699,7 +50086,7 @@ module.exports.polyfill = function() {
 }
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/raf/index.js","/../../node_modules/raf")
-},{"buffer":16,"oMfpAn":19,"performance-now":22}],22:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31,"performance-now":35}],35:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // Generated by CoffeeScript 1.7.1
 (function() {
@@ -47735,7 +50122,7 @@ module.exports.polyfill = function() {
 }).call(this);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/raf/node_modules/performance-now/lib/performance-now.js","/../../node_modules/raf/node_modules/performance-now/lib")
-},{"buffer":16,"oMfpAn":19}],23:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],36:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Window = require('global/window');
 // load libs, this is basically a shame folder
@@ -47745,8 +50132,8 @@ var app = module.exports = require('./greenwallet');
 
 Window.app = app;
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_95e1c2ee.js","/")
-},{"./greenwallet":31,"./lib":59,"buffer":16,"global/window":15,"oMfpAn":19}],24:[function(require,module,exports){
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_17317817.js","/")
+},{"./greenwallet":44,"./lib":96,"buffer":28,"global/window":26,"oMfpAn":31}],37:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // replace this with an app object of some sort?
 var deps = ['duScroll', 'ngAnimate', 'greenWalletServices'];
@@ -47878,7 +50265,7 @@ app.config(['$interpolateProvider', '$httpProvider',
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/app.js","/greenwallet")
-},{"buffer":16,"oMfpAn":19}],25:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],38:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   signup: require('./signup'),
@@ -47886,7 +50273,7 @@ module.exports = {
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/apps/index.js","/greenwallet/apps")
-},{"./signup":26,"./wallet":27,"buffer":16,"oMfpAn":19}],26:[function(require,module,exports){
+},{"./signup":39,"./wallet":40,"buffer":28,"oMfpAn":31}],39:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var signup = {};  // bleh (see comment below)
 var secured_confirmed;
@@ -48343,7 +50730,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
 }
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/apps/signup.js","/greenwallet/apps")
-},{"buffer":16,"oMfpAn":19}],27:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],40:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var deps = ['greenWalletBaseApp', 'ngRoute', 'ui.bootstrap', 'greenWalletDirectives', 'greenWalletControllers',
      'greenWalletInfoControllers', 'greenWalletSettingsControllers', 'greenWalletTransactionsControllers',
@@ -48549,7 +50936,7 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
 });
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/apps/wallet.js","/greenwallet/apps")
-},{"./signup":26,"buffer":16,"oMfpAn":19}],28:[function(require,module,exports){
+},{"./signup":39,"buffer":28,"oMfpAn":31}],41:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletControllers', [])
 .controller('WalletController', ['$scope', 'tx_sender', '$uibModal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$uibModalStack', 'sound', 'blind', 'storage',
@@ -49029,7 +51416,7 @@ angular.module('greenWalletControllers', [])
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/controllers.js","/greenwallet")
-},{"buffer":16,"oMfpAn":19}],29:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],42:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var raf = require('raf');
 
@@ -49123,7 +51510,7 @@ angular.module('greenWalletDirectives', [])
     };
 }]);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/directives.js","/greenwallet")
-},{"buffer":16,"oMfpAn":19,"raf":21}],30:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31,"raf":34}],43:[function(require,module,exports){
 module.exports=[
 "abandon",
 "ability",
@@ -51174,7 +53561,7 @@ module.exports=[
 "zone",
 "zoo"
 ]
-},{}],31:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var app = require('./app');
 require('./signuplogin');
@@ -51185,9 +53572,10 @@ require('./settings');
 require('./transactions');
 require('./controllers');
 require('./directives');
-require('./services');
 require('./mnemonics');
 require('./apps');
+
+require('./services')();
 
 // last minute initialization code attached to app
 require('./init');
@@ -51195,7 +53583,7 @@ require('./init');
 module.exports = app;
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/index.js","/greenwallet")
-},{"./app":24,"./apps":25,"./controllers":28,"./directives":29,"./info":33,"./init":34,"./mnemonics":35,"./receive":38,"./send":40,"./services":41,"./settings":46,"./signuplogin":48,"./transactions":50,"buffer":16,"oMfpAn":19}],32:[function(require,module,exports){
+},{"./app":37,"./apps":38,"./controllers":41,"./directives":42,"./info":46,"./init":47,"./mnemonics":48,"./receive":51,"./send":53,"./services":69,"./settings":83,"./signuplogin":85,"./transactions":87,"buffer":28,"oMfpAn":31}],45:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var crossfilter = require('crossfilter');
 
@@ -51573,36 +53961,36 @@ angular.module('greenWalletInfoControllers',
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/info/controllers.js","/greenwallet/info")
-},{"buffer":16,"crossfilter":14,"oMfpAn":19}],33:[function(require,module,exports){
+},{"buffer":28,"crossfilter":24,"oMfpAn":31}],46:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   controllers: require('./controllers.js')
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/info/index.js","/greenwallet/info")
-},{"./controllers.js":32,"buffer":16,"oMfpAn":19}],34:[function(require,module,exports){
+},{"./controllers.js":45,"buffer":28,"oMfpAn":31}],47:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var app = require('./app');
 var raf = require('raf');
 
-app.run(['$templateCache', '$uibModal', function($templateCache, uid) {
+app.run(['$templateCache', '$uibModal', function ($templateCache, uid) {
   // we wait eeevvveerryyything loaded
-  process.nextTick(function() {
-    var content = $templateCache.get("uib/template/typeahead/typeahead-popup.html");
+  process.nextTick(function () {
+    var content = $templateCache.get('uib/template/typeahead/typeahead-popup.html');
     content = content.replace(/\)\}\}/g, ') }}');
-    $templateCache.put("uib/template/typeahead/typeahead-popup.html", content);
+    $templateCache.put('uib/template/typeahead/typeahead-popup.html', content);
   });
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/init.js","/greenwallet")
-},{"./app":24,"buffer":16,"oMfpAn":19,"raf":21}],35:[function(require,module,exports){
+},{"./app":37,"buffer":28,"oMfpAn":31,"raf":34}],48:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   services: require('./services.js')
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/mnemonics/index.js","/greenwallet/mnemonics")
-},{"./services.js":36,"buffer":16,"oMfpAn":19}],36:[function(require,module,exports){
+},{"./services.js":49,"buffer":28,"oMfpAn":31}],49:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
 .factory('mnemonics', ['$q', '$http', 'cordovaReady', function($q, $http, cordovaReady) {
@@ -51738,7 +54126,7 @@ angular.module('greenWalletMnemonicsServices', ['greenWalletServices'])
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/mnemonics/services.js","/greenwallet/mnemonics")
-},{"../english":30,"buffer":16,"oMfpAn":19}],37:[function(require,module,exports){
+},{"../english":43,"buffer":28,"oMfpAn":31}],50:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletReceiveControllers',
     ['greenWalletServices'])
@@ -52070,14 +54458,14 @@ angular.module('greenWalletReceiveControllers',
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/receive/controllers.js","/greenwallet/receive")
-},{"buffer":16,"oMfpAn":19}],38:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],51:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   controllers: require('./controllers.js')
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/receive/index.js","/greenwallet/receive")
-},{"./controllers.js":37,"buffer":16,"oMfpAn":19}],39:[function(require,module,exports){
+},{"./controllers.js":50,"buffer":28,"oMfpAn":31}],52:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletSendControllers',
     ['greenWalletServices'])
@@ -52897,4011 +55285,1566 @@ angular.module('greenWalletSendControllers',
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/send/controllers.js","/greenwallet/send")
-},{"buffer":16,"oMfpAn":19}],40:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],53:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   controllers: require('./controllers.js')
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/send/index.js","/greenwallet/send")
-},{"./controllers.js":39,"buffer":16,"oMfpAn":19}],41:[function(require,module,exports){
+},{"./controllers.js":52,"buffer":28,"oMfpAn":31}],54:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-var greenWalletServices = angular.module('greenWalletServices', []);
-module.exports = greenWalletServices;
+var window = require('global/window');
+var angular = require('angular');
 
-require('./services/index')(greenWalletServices);
+var gettext = window.gettext;
 
-greenWalletServices.factory('focus', ['$rootScope', '$timeout', 'cordovaReady', function ($rootScope, $timeout, cordovaReady) {
-   return function(name) {
-        $timeout(function (){
-            $rootScope.$broadcast('focusOn', name);
-            /* doesn't work very well
-            if (window.cordova) {
-                cordovaReady(function() {
-                    window.plugins.SoftKeyboard.show();
-                })();
-            } */
-        });
-   }
-}]).factory('crypto', ['cordovaReady', '$q', function(cordovaReady, $q) {
-    var pbkdf2_iterations = 10; //Not ideal, but limitations of using javascript
-    var cryptoService = {};
-    cryptoService.encrypt = function(data, password) {
-        if (window.cordova && cordova.platformId == 'ios') {
-            var deferred = $q.defer();
-            cordovaReady(function() {
-                cordova.exec(function(param) {
-                    deferred.resolve(param);
-                }, function(fail) {
-                    console.log('cryptoService.encrypt failed: ' + fail)
-                    deferred.resolve();
-                }, "AES", "encrypt", [data, password]);
-            })();
-            return deferred.promise;
-        } else {
-            var salt = Bitcoin.randombytes(16);
-            var key256Bits = Bitcoin.pbkdf2.pbkdf2Sync(
-                password,
-                salt,
-                pbkdf2_iterations,
-                256/8
-            );
-            var cipher = Bitcoin.aes.createCipheriv(
-                'aes-256-cbc',
-                key256Bits,
-                salt
-            );
-            cipher.end(data);
-            return $q.when(Bitcoin.Buffer.Buffer.concat([
-                salt, cipher.read()
-            ]).toString('base64'));
+module.exports = factory;
+
+factory.dependencies = ['$rootScope', 'tx_sender', 'storage', 'crypto', 'notices', '$q'];
+
+function factory ($rootScope, tx_sender, storage, crypto, notices, $q) {
+  var PER_PAGE = 15;
+  return {
+    items: [],
+    reverse: {},
+    new_item: undefined,
+    populate_csv: function () {
+      var csv_list = [];
+      for (var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        csv_list.push(item.name + ',' + (item.href || item.address));
+      }
+      this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
+    },
+    init_partitions: function (items) {
+      var next_prefix;
+      var next_partition;
+      var i;
+      var items_copy = [];
+      items = items || this.items;
+
+      for (i = 0; i < items.length; i++) {
+        items_copy.push(items[i]);
+      }
+      this.partitions = [];
+      var get_name = function (item) {
+        // works with 'unprocessed' and 'processed' items
+        if (item.name) return item.name;
+        else return item[0];
+      };
+      while (items_copy.length) {
+        var prefix = next_prefix || get_name(items_copy[0])[0];
+        var partition = next_partition || [];
+        for (i = 0; i < PER_PAGE; i++) {
+          if (!items_copy.length) break;
+          var next_item = this._process_item(items_copy.shift());
+          if (next_item) partition.push(next_item);
+          else i -= 1; // crx facebook
         }
-    }
-    cryptoService.decrypt = function(data, password) {
-        if (window.cordova && cordova.platformId == 'ios') {
-            var deferred = $q.defer();
-            cordovaReady(function() {
-                cordova.exec(function(param) {
-                    deferred.resolve(param);
-                }, function(fail) {
-                    console.log('cryptoService.encrypt failed: ' + fail)
-                    deferred.resolve();
-                }, "AES", "decrypt", [data, password]);
-            })();
-            return deferred.promise;
-        } else {
-            try {
-                var parsed_data = new Bitcoin.Buffer.Buffer(data, 'base64');
-                var salt = parsed_data.slice(0, 16);
-                parsed_data = parsed_data.slice(16);
-                var key256Bits = Bitcoin.pbkdf2.pbkdf2Sync(
-                    password,
-                    salt,
-                    pbkdf2_iterations,
-                    256/8
-                );
-                var cipher = Bitcoin.aes.createDecipheriv(
-                    'aes-256-cbc',
-                    key256Bits,
-                    salt
-                );
-                cipher.setAutoPadding(false);
-                cipher.end(parsed_data);
-                var decoded = cipher.read();
-                // ignore padding bytes for backwards compatibility,
-                // because our old implementation used the iso10126 padding:
-                var padding = decoded[decoded.length-1];
-                decoded = decoded.slice(0, decoded.length-padding);
-                if (decoded != null) {
-                    return $q.when(decoded.toString('utf-8'));
-                };
-            } catch (e) {
-                console.log(e);
+        if (items_copy.length) {
+          next_prefix = get_name(items_copy[0])[0];
+          next_partition = [];
+          while (next_prefix === partition[partition.length - 1].name.substring(0, next_prefix.length) &&
+            next_prefix.length < get_name(items_copy[0]).length) {
+            next_prefix += get_name(items_copy[0])[next_prefix.length];
+            if (next_prefix.length === 3) {
+              while (partition.length &&
+                partition[partition.length - 1].name.substring(0, 3) === next_prefix) {
+                next_partition.push(partition.pop());
+              }
+              break;
             }
-            return $q.when();
+          }
         }
-    }
-    return cryptoService;
-}]).factory('autotimeout', ['$timeout', '$document', function($timeout, $document) {
-    var timeoutms = 1000;
-    var autotimeoutService = {promise: false, callbacks: []};
-
-    var notifyObservers = function(){
-        angular.forEach(autotimeoutService['callbacks'], function(callback){
-            callback();
-        });
-    };
-    var reset = function(amountminutes) {
-        autotimeoutService.left = amountminutes * 1000 * 60;
-    };
-
-    var countdown = function() {
-        if (autotimeoutService.left <= 0) {
-            autotimeoutService.stop();
-            var is_chrome_app = window.chrome && chrome.storage;
-            if (is_chrome_app) {
-                chrome.runtime.reload();
-            } else {
-                window.location.reload();
-            }
-        } else {
-            autotimeoutService.left = autotimeoutService.left - timeoutms;
-            notifyObservers();
-            autotimeoutService.promise = $timeout(countdown, timeoutms);
+        if (partition.length) {
+          this.partitions.push([this.partitions.length + 1, prefix, partition]);
         }
-    };
-
-    autotimeoutService.registerObserverCallback = function(callback){
-        autotimeoutService['callbacks'].push(callback);
-    };
-
-    autotimeoutService.stop = function() {
-        $document.find('body').off('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart');
-        if (autotimeoutService.promise) {
-            $timeout.cancel(autotimeoutService.promise);
-            autotimeoutService.promise = false;
+      }
+    },
+    _process_item: function (value) {
+      var is_chrome_app = require('has-chrome-storage');
+      if (value.name) {
+        return value;
+      }
+      if (value[3] === 'facebook') {
+        var has_wallet = value[4];
+        if (!has_wallet && (is_chrome_app || window.cordova)) return; // can't send FB messages from Chrome/Cordova app
+        var href = 'https://www.facebook.com/' + value[1];
+        return {name: value[0], type: value[3], address: value[1], has_wallet: has_wallet, href: href};
+      } else {
+        return {name: value[0], type: value[3], has_wallet: value[4], address: value[1]};
+      }
+    },
+    update_with_items: function (items, $routeParams) {
+      while (this.items.length) this.items.pop();
+      this.reverse = {};
+      if (!$routeParams) $routeParams = {};
+      var that = this;
+      items.sort(function (a, b) { return a[0].localeCompare(b[0]); });
+      this.init_partitions(items);
+      var i = 0;
+      angular.forEach(items, function (value) {
+        var item = that._process_item(value);
+        if (!item) return; // crx facebook
+        if (value[3] !== 'facebook') {
+          that.reverse[value[1]] = value[0];
         }
-    };
-
-    autotimeoutService.start = function(amountminutes) {
-        autotimeoutService.stop();
-        if (amountminutes != 0) {
-            reset(amountminutes);
-            autotimeoutService.promise = $timeout(countdown, timeoutms);
-            $document.find('body').on('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart', function() {
-                try {
-                    reset(amountminutes);
-                } catch(err) {
-                    // already logged out
-                    console.log(err);
-                    //autotimeoutService.stop();
-                }
-            });
-        }
-    };
-
-    return autotimeoutService;
-
-}]).factory('blind', ['branches', function(branches) {
-    var service = {};
-    service._unblindOutValue = function($scope, out, scanning_key) {
-        var secexp_buf = scanning_key.d.toBuffer();
-        var secexp = Module._malloc(32);
-        var nonce = Module._malloc(33);
-        var nonce_res = Module._malloc(32);
-        var pubkey_p = Module._malloc(64);
-        var p_arr = Array.from(new Bitcoin.BigInteger(''+pubkey_p).toBuffer());
-        while (p_arr.length < 4) p_arr.unshift(0);
-        for (var i = 0; i < 32; ++i) {
-            setValue(secexp+i, secexp_buf[i], 'i8');
-        }
-        for (var i = 0; i < 33; ++i) {
-            setValue(nonce + i, out.nonce_commitment[i], 'i8');
-        }
-        if (1 != Module._secp256k1_ec_pubkey_parse(
-            Module.secp256k1ctx,
-            pubkey_p,
-            nonce,
-            33
-        )) {
-            throw new Error('secp256k1 EC pubkey parse failed');
-        }
-        if (1 != Module._secp256k1_ecdh(
-            Module.secp256k1ctx,
-            nonce_res,
-            pubkey_p,
-            secexp
-        )) {
-            throw new Error('secp256k1 ECDH failed');
-        }
-        var nonce_buf = new Bitcoin.Buffer.Buffer(32);
-        for (var i = 0; i < 32; ++i) {
-            nonce_buf[i] = getValue(nonce_res + i, 'i8') & 0xff;
-        }
-        nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
-        for (var i = 0; i < 32; ++i) {
-            setValue(nonce_res + i, nonce_buf[i], 'i8');
-        }
-        var blinding_factor_out = Module._malloc(32);
-        var amount_out = Module._malloc(8);
-        var min_value = Module._malloc(8);
-        var max_value = Module._malloc(8);
-        var msg_out = Module._malloc(4096);
-        var msg_size = Module._malloc(4);
-        var commitment = Module._malloc(33);
-        for (var i = 0; i < 33; ++i) {
-            setValue(commitment + i, out.commitment[i], 'i8');
-        }
-        var range_proof = Module._malloc(out.range_proof.length);
-        for (var i = 0; i < out.range_proof.length; ++i) {
-            setValue(range_proof + i, out.range_proof[i], 'i8');
-        }
-        var rewindRes = Module._secp256k1_rangeproof_rewind(
-            Module.secp256k1ctx,
-            blinding_factor_out,
-            amount_out,
-            msg_out,
-            msg_size,
-            nonce_res,
-            min_value,
-            max_value,
-            commitment,
-            range_proof,
-            out.range_proof.length
-        );
-        if (rewindRes != 1) {
-            throw "Invalid transaction."
-        }
-        var ret = [];
-        for (var i = 0; i < 8; ++i) {
-            ret[8-i-1] = getValue(amount_out+i, 'i8') & 0xff;
-        }
-        var val = Bitcoin.BigInteger.fromBuffer(
-            new Bitcoin.Buffer.Buffer(ret)
-        );
-        return {
-            value: ''+(+val),
-            blinding_factor_out: blinding_factor_out
-        };
-    };
-    service.unblindOutValue = function($scope, out, subaccount, pubkey_pointer) {
-        var key = $q.when($scope.wallet.hdwallet);
-        if (subaccount) {
-            key = key.then(function(key) {
-                return key.deriveHardened(branches.SUBACCOUNT);
-            }).then(function(key) {
-                return key.deriveHardened(subaccount);
-            })
-        }
-        return key.then(function(key) {
-            return key.deriveHardened(branches.BLINDED)
-        }).then(function(branch) {
-            return branch.deriveHardened(pubkey_pointer);
-        }).then(function(scanning_node) {
-            return service._unblindOutValue(
-                $scope, out, scanning_node.keyPair
-            );
-        });
-    }
-    return service;
-}]).factory('wallets', ['$q', '$rootScope', 'tx_sender', '$location', 'notices', '$uibModal', 'focus', 'crypto', 'gaEvent', 'storage', 'mnemonics', 'addressbook', 'autotimeout', 'social_types', 'sound', '$interval', '$timeout', 'branches', 'user_agent', '$http', 'blind',
-        function($q, $rootScope, tx_sender, $location, notices, $uibModal, focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout, social_types, sound, $interval, $timeout, branches, user_agent, $http, blind) {
-    var walletsService = {};
-    var handle_double_login = function(retry_fun) {
-        return $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_logout_other_session.html'
-        }).result.then(function() {
-            return retry_fun();
-        });
-    }
-    walletsService.requireWallet = function($scope, dontredirect) {
-        if (!$scope.wallet.hdwallet && !$scope.wallet.trezor_dev && !$scope.wallet.btchip) {
-            if (!dontredirect) {
-                var location = '/?redir=' + $location.path();
-                var search = '';
-                for (var key in $location.search()) {
-                    if (i > 0) search += '&';
-                    search += key + '=' + encodeURIComponent($location.search()[key]);
-                }
-                if (search) {
-                    location += encodeURIComponent('?' + search);
-                }
-                $location.url(location);
-                $scope.processWalletVars();  // update payment values with redir value
-            }
-            return false;
-        }
-        return true;
-    };
-    walletsService.updateAppearance = function($scope, key, value) {
-        var oldValue = $scope.wallet.appearance[key];
-        $scope.wallet.appearance[key] = value;
-        return tx_sender.call('http://greenaddressit.com/login/set_appearance', JSON.stringify($scope.wallet.appearance)).catch(function(e) {
-            $scope.wallet.appearance[key] = oldValue;
-            return $q.reject(e);
-        });
-    }
-    var openInitialPage = function(wallet, has_txs) {
-        if ($location.search().redir) {
-            $location.url($location.search().redir);
-        } else if (!has_txs) {
-            $location.path('/receive');
-        } else if (window.IS_MOBILE || wallet.send_to_receiving_id || wallet.send_to_payment_request) {
-            $location.path('/send');
-        } else {
-            $location.url('/info');
-        }
-    };
-    walletsService._login = function($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
-        var d = $q.defer(), that = this;
-        tx_sender.login(logout, false, user_agent($scope.wallet)).then(function(data) {
-            if (data) {
-                if (window.disableEuCookieComplianceBanner) {
-                    disableEuCookieComplianceBanner();
-                }
-                tx_sender.wallet = $scope.wallet;
-                $scope.wallet.hdwallet = hdwallet;
-                $scope.wallet.trezor_dev = tx_sender.trezor_dev;
-                $scope.wallet.btchip = tx_sender.btchip;
-                $scope.wallet.mnemonic = mnemonic;
-                if (data.last_login) {
-                    $scope.wallet.last_login = data.last_login;
-                }
-                try {
-                    $scope.wallet.appearance = JSON.parse(data.appearance);
-                    if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
-                } catch(e) {
-                    $scope.wallet.appearance = {};
-                }
-                $scope.wallet.fee_estimates = data.fee_estimates;
-                $scope.wallet.rbf = data.rbf;
-                if (!('sound' in $scope.wallet.appearance)) {
-                    $scope.wallet.appearance.sound = true;
-                }
-                if (!('pgp' in $scope.wallet.appearance)) {
-                    $scope.wallet.appearance.pgp = "";
-                }
-                if (!('altimeout' in $scope.wallet.appearance)) {
-                    $scope.wallet.appearance.altimeout = 20;
-                }
-                if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
-                    $scope.wallet.appearance.replace_by_fee = data.rbf;
-                }
-                sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
-                autotimeout.start($scope.wallet.appearance.altimeout);
-                $scope.wallet.privacy = data.privacy;
-                $scope.wallet.limits = data.limits;
-                $scope.wallet.subaccounts = [
-                    {pointer: 0, name: gettext("Main")}
-                ].concat(data.subaccounts);
-                $scope.wallet.assets = data.assets;
-                $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
-                $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
-                $scope.wallet.cache_password = data.cache_password;
-                $scope.wallet.fiat_exchange = data.exchange;
-                $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
-                $scope.wallet.receiving_id = data.receiving_id;
-                $scope.wallet.expired_deposits = data.expired_deposits;
-                $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
-                if (data.gait_path) {
-                    $scope.wallet.gait_path = data.gait_path;
-                } else if (path) {
-                    $scope.wallet.gait_path = path;
-                } else if (path_seed) {
-                    $scope.wallet.gait_path_seed = path_seed;
-                    $scope.wallet.gait_path = mnemonics.seedToPath(path_seed);
-                }
-                if (!data.gait_path) {  // *NOTE*: don't change the path after signup, because it *will* cause locked funds
-                    tx_sender.call('http://greenaddressit.com/login/set_gait_path', $scope.wallet.gait_path).catch(function(err) {
-                        if (err.uri != 'http://api.wamp.ws/error#NoSuchRPCEndpoint') {
-                            notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.args[1] + '")');
-                        } else {
-                            $scope.wallet.old_server = true;
-                        }
-                    });
-                }
-                if (!signup) {  // don't change URL on initial login in signup
-                    openInitialPage($scope.wallet, data.has_txs);
-                }
-                $rootScope.$broadcast('login');
-            } else if (!signup) {  // signup has its own error handling
-                d.reject();
-                return;
-            }
-            d.resolve(data);
-        }).catch(function(e) { d.reject(e); });
-        return d.promise.catch(function(err) {
-            if (err && err.uri == 'http://greenaddressit.com/error#doublelogin') {
-                return handle_double_login(function() {
-                    if (double_login_callback) double_login_callback();
-                    return that.login($scope, hdwallet, mnemonic, signup, true, path_seed);
-                });
-            } else {
-                notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
-                return $q.reject(err);
-            }
-        });
-    }
-    walletsService.login = function($scope, hdwallet, mnemonic, signup, logout, path_seed) {
-        tx_sender.hdwallet = hdwallet;
-        return this._login($scope, hdwallet, mnemonic, signup, logout, path_seed);
-    };
-    walletsService.login_trezor = function($scope, trezor_dev, path, signup, logout) {
-        tx_sender.trezor_dev = trezor_dev;
-        var that = this;
-        return trezor_dev.getPublicKey([]).then(function(pubkey) {
-            var pk = pubkey.message.node.public_key;
-            pk = pk.toHex ? pk.toHex() : pk;
-            var keyPair = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                new Bitcoin.Buffer.Buffer(pk, 'hex'),
-                cur_net
-            );
-            tx_sender.trezor_address = keyPair.getAddress();
-            var cc = pubkey.message.node.chain_code;
-            cc = cc.toHex ? cc.toHex() : cc;
-            var chainCode = new Bitcoin.Buffer.Buffer(cc, 'hex');
-            var hdwallet = new Bitcoin.bitcoin.HDNode(keyPair, chainCode);
-            tx_sender.hdwallet = hdwallet;
-            return that._login($scope, hdwallet, undefined, signup, logout, undefined, path);
-        });
-    };
-    walletsService.login_btchip = function($scope, btchip, btchip_pubkey, double_login_callback, signup) {
-        tx_sender.btchip = btchip;
-        tx_sender.btchip_address = btchip_pubkey.bitcoinAddress.value;
-        var keyPair = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-            new Bitcoin.Buffer.Buffer(
-                btchip_pubkey.publicKey.toString(HEX),
-                'hex'
-            ),
-            cur_net
-        );
-        var chainCode = new Bitcoin.Buffer.Buffer(
-            btchip_pubkey.chainCode.toString(HEX), 'hex'
-        );
-        keyPair.compressed = true;
-        var hdwallet = new Bitcoin.bitcoin.HDNode(
-            keyPair,
-            chainCode
-        );
-        tx_sender.hdwallet = hdwallet;
-        if (signup) {
-            var path_d = btchip.app.getWalletPublicKey_async("18241'").then(function(result) {
-                var ecPub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex'));
-                ecPub.compressed = true;
-                var extended = result.chainCode.toString(HEX) + ecPub.getPublicKeyBuffer().toString('hex');
-                extended = new Bitcoin.Buffer.Buffer(extended, 'hex');
-                var path = Bitcoin.hmac('sha512', 'GreenAddress.it HD wallet path').update(extended).digest();
-                return path.toString('hex');
-            });
-        } else path_d = $q.when();
-        var that = this;
-        return path_d.then(function(path) {
-            return that._login($scope, hdwallet, undefined, signup, false, undefined, path, undefined, double_login_callback);
-        });
-    };
-    walletsService.loginWatchOnly = function($scope, token_type, token, logout) {
-        var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
-        promise = promise.then(function(json) {
-            // add simple watchOnly flag so that we don't need to check values manually
-            $scope.wallet.watchOnly = true;
-
-            if (window.disableEuCookieComplianceBanner) {
-                disableEuCookieComplianceBanner();
-            }
-
-            var data = JSON.parse(json);
-            tx_sender.wallet = $scope.wallet;
-            var hdwallet = new Bitcoin.bitcoin.HDNode(
-                Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                    new Bitcoin.Buffer.Buffer(data.public_key, 'hex'),
-                    cur_net
-                ),
-                new Bitcoin.Buffer.Buffer(data.chain_code, 'hex')
-            );
-            $scope.wallet.hdwallet = hdwallet;
-
-            try {
-                $scope.wallet.appearance = JSON.parse(data.appearance);
-                if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
-            } catch(e) {
-                $scope.wallet.appearance = {};
-            }
-            if (!('sound' in $scope.wallet.appearance)) {
-                $scope.wallet.appearance.sound = true;
-            }
-            if (!('pgp' in $scope.wallet.appearance)) {
-                $scope.wallet.appearance.pgp = "";
-            }
-            if (!('altimeout' in $scope.wallet.appearance)) {
-                $scope.wallet.appearance.altimeout = 20;
-            }
-
-            autotimeout.start($scope.wallet.appearance.altimeout);
-            $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
-            $scope.wallet.subaccounts = [
-                {pointer: 0, name: gettext("Main")}
-            ].concat(data.subaccounts);
-            console.log($scope.wallet.subaccounts);
-            $scope.wallet.assets = data.assets;
-            $scope.wallet.current_subaccount = 0;
-            $scope.wallet.cache_password = data.cache_password;
-            $scope.wallet.fiat_exchange = data.exchange;
-            $scope.wallet.receiving_id = data.receiving_id;
-            if (data.has_txs) {
-                $location.url('/info/');
-            } else {
-                $location.url('/receive/');
-            }
-            $rootScope.$broadcast('login');
-        }, function(err) {
-            if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
-                return handle_double_login(function() {
-                    return that.loginWatchOnly($scope, token_type, token, true);
-                });
-            } else {
-                return $q.reject(err);
-            }
-        });
-        return promise;
-    };
-    walletsService.getTransactions = function($scope, notifydata, query, sorting, date_range, subaccount) {
-        return addressbook.load($scope).then(function() {
-            return walletsService._getTransactions($scope, notifydata, null, query, sorting, date_range, subaccount);
-        });
-    };
-    var parseSocialDestination = function(social_destination) {
-        try {
-            var data = JSON.parse(social_destination);
-            if (data.type == 'voucher') return gettext('Voucher');
-            else return social_destination;
-        } catch (e) {
-            return social_destination;
-        }
-    };
-    var unblindOutputs = function($scope, txData, rawTxs) {
-        var deferreds = [];
-        var tx = Bitcoin.contrib.transactionFromHex(txData.data);
-        for (var i = 0; i < txData.eps.length; ++i) {
-            (function(ep) {
-                if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
-                    // e.pubkey_pointer !== null means it's our ep, can be
-                    // from different subaccount than currently processed
-                    var txhash, pt_idx, out, subaccount;
-                    if (ep.is_credit) {
-                        txhash = txData.txhash;
-                        pt_idx = ep.pt_idx;
-                        out = tx.outs[ep.pt_idx];
-                        subaccount = ep.subaccount;
-                    } else {
-                        txhash = ep.prevtxhash;
-                        pt_idx = ep.previdx;
-                        out = Bitcoin.contrib.transactionFromHex(
-                            rawTxs[ep.prevtxhash]
-                        ).outs[pt_idx];
-                        subaccount = ep.prevsubaccount;
-                    }
-                    var key =
-                        'unblinded_value_' + txhash + ':' + pt_idx;
-                    var d = storage.get(key).then(function(value) {
-                        if (value === null) {
-                            return blind.unblindOutValue(
-                                $scope, out, subaccount || 0, ep.pubkey_pointer
-                            ).then(function(data) {
-                                ep.value = data.value;
-                                storage.set(key, data.value);
-                            });
-                        } else {
-                            ep.value = value;
-                        }
-                    })
-                    deferreds.push(d);
-                }
-            })(txData.eps[i]);
-        }
-        return $q.all(deferreds);
-    }
-    walletsService._getTransactions = function($scope, notifydata, page_id, query, sorting, date_range, subaccount) {
-        var transactions_key = $scope.wallet.receiving_id + 'transactions';
-        var d = $q.defer();
-        $rootScope.is_loading += 1;
-        var unclaimed = [];
-
-        if (sorting) {
-            var sort_by = sorting.order_by;
-            if (sorting.reversed) { sort_by = '-'+sort_by; }
-        } else {
-            var sort_by = null;
-        }
-        sorting = sorting || {order_by: 'ts', reversed: true};
-        var end = date_range && date_range[1] && new Date(date_range[1]);
-        if (end) end.setDate(end.getDate() + 1);
-        var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
-                                            end && end.toISOString()];
-        var args = ['http://greenaddressit.com/txs/get_list_v2',
-            page_id, query, sort_by, date_range_iso, subaccount];
-        if (cur_net.isAlpha) {
-            // return prev data
-            args.push(true);
-        }
-        var call = tx_sender.call.apply(tx_sender, args);
-
-        if (cur_net.isAlpha) {
-            call = call.then(function(data) {
-                var deferreds = [];
-                var valid = {};
-                for (var i = 0; i < data.list.length; i++) {
-                    (function(i) {
-                        var tx = data.list[i];
-                        tx.data = data.data[tx.txhash];
-                        valid[i] = true;
-                        deferreds.push(unblindOutputs($scope, tx, data.data)
-                                .catch(function(e) {
-                            if (e !== "Invalid transaction.") {
-                                throw e;
-                            } else {
-                                // skip invalid transactions
-                                valid[i] = false;
-                            }
-                        }));
-                    })(i);
-                }
-                return $q.all(deferreds).then(function() {
-                    var orig_list = data.list;
-                    data.list = [];
-                    for (var i = 0; i < orig_list.length; ++i) {
-                        if (valid[i]) data.list.push(orig_list[i]);
-                    }
-                    return data;
-                });
-            });
-        }
-
-        call.then(function(data) {
-            $scope.wallet.cur_block = data.cur_block;
-            var retval = [];
-            var any_unconfirmed_seen = false;
-            var asset_name = null;
-            for (var i = 0; i < data.list.length; i++) {
-                var tx = data.list[i], inputs = [], outputs = [];
-                var asset_id = tx.eps[0].asset_id;
-                if (asset_id) {
-                    var num_confirmations = data.cur_block[asset_id] - tx.block_height + 1;
-                    asset_name = $scope.wallet.assets[asset_id];
-                } else {
-                    var num_confirmations = data.cur_block - tx.block_height + 1;
-                }
-
-                any_unconfirmed_seen = any_unconfirmed_seen || (num_confirmations < 6 && !tx.double_spent_by);
-
-                var value = new Bitcoin.BigInteger('0'),
-                    in_val = new Bitcoin.BigInteger('0'), out_val = new Bitcoin.BigInteger('0'),
-                    redeemable_value = new Bitcoin.BigInteger('0'), sent_back_from, redeemable_unspent = false,
-                    pubkey_pointer, sent_back = false, from_me = false, tx_social_destination, tx_social_value;
-                var negative = false, positive = false, unclaimed = false, external_social = false;
-                for (var j = 0; j < tx.eps.length; j++) {
-                    var ep = tx.eps[j];
-                    if (ep.is_relevant && !ep.is_credit) from_me = true;
-                }
-                for (var j = 0; j < tx.eps.length; j++) {
-                    var ep = tx.eps[j];
-                    if (ep.is_relevant) {
-                        if (ep.is_credit) {
-                            var bytes = Bitcoin.bs58.decode(ep.ad);
-                            var version = bytes[0];
-                            var _external_social = version != cur_net.scriptHash
-                            external_social = external_social || _external_social;
-
-                            if (ep.social_destination && external_social) {
-                                pubkey_pointer = ep.pubkey_pointer;
-                                if (!from_me) {
-                                    redeemable_value = redeemable_value.add(new Bitcoin.BigInteger(ep.value));
-                                    sent_back_from = parseSocialDestination(ep.social_destination);
-                                    redeemable_unspent = redeemable_unspent || !ep.is_spent;
-                                }
-                            } else {
-                                value = value.add(new Bitcoin.BigInteger(ep.value));
-                                ep.nlocktime = true;
-                            }
-                        }
-                        else {
-                            value = value.subtract(new Bitcoin.BigInteger(ep.value));
-                        }
-                    }
-                    if (ep.is_credit) {
-                        outputs.push(ep);
-                        out_val = out_val.add(new Bitcoin.BigInteger(ep.value));
-                    } else { inputs.push(ep); in_val = in_val.add(new Bitcoin.BigInteger(ep.value)); }
-                }
-                if (value.compareTo(new Bitcoin.BigInteger('0')) > 0 || redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
-                    positive = true;
-                    if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
-                        var description = gettext('Back from ') + sent_back_from;
-                    } else {
-                        var description = gettext('From ');
-                        var addresses = [];
-                        for (var j = 0; j < tx.eps.length; j++) {
-                            var ep = tx.eps[j];
-                            if (!ep.is_credit && !ep.is_relevant) {
-                                if (ep.social_source) {
-                                    if (addresses.indexOf(ep.social_source) == -1) {
-                                        addresses.push(ep.social_source);
-                                    }
-                                } else {
-                                    var ad = addressbook.reverse[ep.ad] || ep.ad;
-                                    if (addresses.indexOf(ad) == -1) {
-                                        addresses.push(ad);
-                                    }
-                                }
-                            }
-                        }
-                        description += addresses.length ? addresses[0] : '';
-                        if (addresses.length > 1) {
-                            description += ', ...';
-                        }
-                    }
-                } else {
-                    negative = value.compareTo(new Bitcoin.BigInteger('0')) < 0;
-                    var addresses = [];
-                    var description = gettext('To ');
-                    for (var j = 0; j < tx.eps.length; j++) {
-                        var ep = tx.eps[j];
-                        if (ep.is_credit && (!ep.is_relevant || ep.social_destination)) {
-                            if (ep.social_destination && ep.social_destination_type != social_types.PAYMENTREQUEST) {
-                                try {
-                                    tx_social_destination = JSON.parse(ep.social_destination);
-                                    tx_social_value = ep.value;
-                                } catch (e) {
-                                }
-                                pubkey_pointer = ep.pubkey_pointer;
-                                var bytes = Bitcoin.bs58.decode(ep.ad);
-                                var version = bytes[0];
-                                var _external_social = version != cur_net.scriptHash;
-                                external_social = external_social || _external_social;
-                                if (!ep.is_spent && ep.is_relevant) {
-                                    unclaimed = true;
-                                    addresses.push(parseSocialDestination(ep.social_destination));
-                                } else if (!ep.is_relevant && external_social) {
-                                    sent_back = true;
-                                    addresses.push(ep.ad);
-                                } else {
-                                    addresses.push(parseSocialDestination(ep.social_destination));
-                                }
-                            } else if (ep.social_destination && ep.social_destination_type == social_types.PAYMENTREQUEST) {
-                                if (addresses.indexOf(ep.social_destination) == -1) {
-                                    addresses.push(ep.social_destination);
-                                }
-                            } else {
-                                var ad = addressbook.reverse[ep.ad] || ep.ad;
-                                addresses.push(ad);
-                            }
-                        }
-                    }
-
-                    if(sent_back) {
-                        description = gettext('Sent back to ')
-                    }
-                    if (!addresses.length) {
-                        description = gettext('Re-deposited');
-                    } else {
-                        description += addresses.join(', ');
-                    }
-                }
-                // prepend zeroes for sorting
-                var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
-                while (value_sort.length < 20) value_sort = '0' + value_sort;
-                retval.push({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
-                             value_sort: value_sort, value: value, instant: tx.instant,
-                             value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
-                             redeemable_value: redeemable_value, negative: negative, positive: positive,
-                             description: description, external_social: external_social, unclaimed: unclaimed,
-                             description_short: addresses.length ? addresses.join(', ') : description,
-                             pubkey_pointer: pubkey_pointer, inputs: inputs, outputs: outputs, fee: tx.fee,
-                             nonzero: value.compareTo(new Bitcoin.BigInteger('0')) != 0,
-                             redeemable: redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0,
-                             redeemable_unspent: redeemable_unspent,
-                             sent_back: sent_back, block_height: tx.block_height,
-                             confirmations: tx.block_height ? num_confirmations: 0,
-                             has_payment_request: tx.has_payment_request,
-                             double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
-                             replacement_of: [],
-                             rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
-                             social_destination: tx_social_destination, social_value: tx_social_value,
-                             asset_id: asset_id, asset_name: asset_name, size: tx.size,
-                             fee_per_kb: Math.round(tx.fee/(tx.size/1000)),
-                             rbf_optin: tx.rbf_optin});
-                // tx.unclaimed is later used for cache updating
-                tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
-            }
-            var hash2tx = {};
-            for (var i = 0; i < retval.length; ++i) {
-                hash2tx[retval[i].txhash] = retval[i];
-            }
-            var new_retval = [];
-            for (var i = 0; i < retval.length; ++i) {
-                var merged = false;
-                if (retval[i].replaced_by && retval[i].replaced_by.length > 0) {
-                    var replaced_by = retval[i].replaced_by;
-                    for (var j = 0; j < replaced_by.length; ++j) {
-                        var tx = hash2tx[replaced_by[j]];
-                        if (tx && !(tx.replaced_by && tx.replaced_by.length)) {
-                            tx.replacement_of.push(retval[i]);
-                            merged = true;
-                            break;
-                        }
-                    }
-                }
-                if (!merged) {
-                    new_retval.push(retval[i]);
-                }
-            }
-            retval = new_retval;
-            d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range, subaccount: subaccount,
-                        populate_csv: function() {
-                            var csv_list = [gettext('Time,Description,satoshis,%s,txhash,fee,memo').replace('%s', this.fiat_currency)];
-                            for (var i = 0; i < this.list.length; i++) {
-                                var item = this.list[i];
-                                csv_list.push(item.ts + ',' + item.description.replace(',', '\'') + ',' + item.value + ',' + item.value_fiat + ',' + item.txhash + ',' + item.fee + ',' + item.memo);
-                            }
-                            this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
-                        },
-                        next_page_id: data.next_page_id,
-                        fetch_next_page: function() {
-                            var that = this;
-                            walletsService._getTransactions($scope, notifydata, that.next_page_id, query, that.sorting, that.date_range, that.subaccount).then(function(result) {
-                                that.list = that.list.concat(result.list);
-                                that.next_page_id = result.next_page_id;
-                            });
-                        },
-                        sort_by: function(sorting) {
-                            var that = this;
-                            walletsService._getTransactions($scope, notifydata, null, query, sorting, that.date_range, that.subaccount).then(function(result) {
-                                that.sorting = sorting;
-                                if (sorting.order_by == 'ts' && sorting.reversed) {
-                                    that.pending_from_notification = false;
-                                    that.pending_conf_from_notification = false;
-                                }
-                                that.list = result.list;
-                                that.next_page_id = result.next_page_id;
-                            });
-                        }});
-        }, function(err) {
-            notices.makeNotice('error', err.args[1]);
-            d.reject(err);
-        }).finally(function() { $rootScope.decrementLoading(); });
-        return d.promise
-    };
-    walletsService.send_confidential_tx = function($scope, recipient, satoshis) {
-        if (satoshis !== 'ALL') {
-            satoshis = new Bitcoin.BigInteger(satoshis);
-        }
-        var recipient_scanning_pubkey = recipient.slice(2, 35);
-        var version;
-        if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
-            version = 10;
-        } else {
-            version = 25;
-        }
-        var unspent_found = Bitcoin.BigInteger.ZERO, utxo_num = 0;
-        var needed_unspent = [];
-        var fee = new Bitcoin.BigInteger('10000');
-        var utxos = $scope.wallet.utxo[$scope.wallet.current_subaccount];
-        while (satoshis == 'ALL' ||
-                unspent_found.compareTo(satoshis.add(fee)) < 0) {
-            if (utxo_num >= utxos.length) {
-                if (satoshis == 'ALL' && unspent_found.compareTo(fee) > 0) {
-                    // spend all (if enough for fee)
-                    break;
-                } else {
-                    return $q.reject(gettext("Not enough money"));
-                }
-            }
-            var utxo = utxos[utxo_num];
-            unspent_found = unspent_found.add(new Bitcoin.BigInteger(
-                utxo.data.value));
-            needed_unspent.push(utxo);
-            utxo_num += 1;
-        }
-        if (satoshis == 'ALL') {
-            satoshis = unspent_found.subtract(fee);
-        }
-        var input_blinds_and_change = [];
-        for (var i = 0; i < needed_unspent.length; ++i) {
-            (function(utxo) {
-                input_blinds_and_change.push(
-                    blind.unblindOutValue(
-                        $scope, utxo.out,
-                        $scope.wallet.current_subaccount,
-                        utxo.data.pubkey_pointer
-                    ).then(function(data) {
-                        return data.blinding_factor_out;
-                    })
-                );
-            })(needed_unspent[i]);
-        }
-        var change_value = unspent_found.subtract(satoshis).subtract(fee);
-        if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
-            input_blinds_and_change.push(
-                tx_sender.call(
-                    'http://greenaddressit.com/vault/fund',
-                    $scope.wallet.current_subaccount, true, true
-                ).then(function(data) {
-                    var key = $q.when($scope.wallet.hdwallet);
-                    if ($scope.wallet.current_subaccount) {
-                        key = key.then(function(key) {
-                            return key.deriveHardened(branches.SUBACCOUNT);
-                        }).then(function(key) {
-                            return key.deriveHardened($scope.wallet.current_subaccount);
-                        })
-                    }
-                    return key.then(function(key) {
-                        return key.deriveHardened(branches.BLINDED);
-                    }).then(function(branch) {
-                        return branch.deriveHardened(data.pointer);
-                    }).then(function(blinded_key) {
-                        return tx_sender.call(
-                            'http://greenaddressit.com/vault/set_scanning_key',
-                            $scope.wallet.current_subaccount,
-                            data.pointer,
-                            Array.from(blinded_key.keyPair.getPublicKeyBuffer())
-                        ).then(function() {
-                            return blinded_key;
-                        })
-                    }).then(function(blinded_key) {
-                        return [
-                            blinded_key.keyPair.getPublicKeyBuffer(),
-                            Bitcoin.bitcoin.crypto.hash160(
-                                new Bitcoin.Buffer.Buffer(data.script, 'hex')
-                            )
-                        ];
-                    });
-                })
-            );
-        }
-        return $q.all(input_blinds_and_change).then(function(input_blinds) {
-            var main_out = {
-                value: satoshis,
-                to_version: recipient[1],
-                to_scanning_pubkey: recipient.slice(2, 35),
-                to_hash: recipient.slice(35)
-            };
-            var outs;
-            if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
-                var change_idx = Bitcoin.randombytes(1)[0] % 2;
-                var change = input_blinds.pop();
-                outs = [null, null];
-                outs[change_idx] = {
-                    value: change_value,
-                    to_version: cur_net.scriptHash,
-                    to_scanning_pubkey: change[0],
-                    to_hash: change[1]
-                };
-                outs[1-change_idx] = main_out;
-            } else {
-                outs = [main_out];
-            }
-            var all = (needed_unspent.length + outs.length);
-            var blindptrs = Module._malloc(4 * all);
-            var cur_blindptr = 4 * needed_unspent.length;
-            for (var i = 0; i < all; ++i) {
-                if (i < needed_unspent.length) {
-                    setValue(blindptrs + 4*i, input_blinds[i], '*');
-                } else {
-                    var cur = Module._malloc(32);
-                    setValue(blindptrs + 4*i, cur, '*');
-                    var rand = Bitcoin.randombytes(32);
-                    for (var j = 0; j < 32; ++j) {
-                        setValue(cur + j, rand[j], 'i8');
-                    }
-                }
-            }
-            for (var i = 0; i < outs.length; ++i) {
-                if (i == outs.length - 1) {
-                    if (1 != Module._secp256k1_pedersen_blind_sum(
-                        Module.secp256k1ctx,
-                        getValue(blindptrs + 4 * (all - 1), '*'),
-                        blindptrs,
-                        all - 1,
-                        needed_unspent.length
-                    )) {
-                        throw new Error('secp256k1 pedersen blind sum failed');
-                    }
-                }
-                var commitment = Module._malloc(33);
-                if (1 != Module._secp256k1_pedersen_commit(
-                    Module.secp256k1ctx,
-                    commitment,
-                    getValue(blindptrs + cur_blindptr, '*'),
-                    +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
-                    +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
-                )) {
-                    throw new Error('secp256k1 Pedersen commit failed');
-                }
-                var commitment_buf = new Bitcoin.Buffer.Buffer(33);
-                for (var j = 0; j < 33; ++j) {
-                    commitment_buf[j] = getValue(
-                        commitment + j, 'i8'
-                    ) & 0xff;
-                }
-                var rangeproof_len = Module._malloc(4);
-                var len = 5134;
-                var rangeproof = Module._malloc(len);
-                var rangeproof_len_buf = new Bitcoin.BigInteger(''+len).toBuffer();
-                while (rangeproof_len_buf.length < 4) {
-                    rangeproof_len_buf = Bitcoin.Buffer.Buffer.concat([
-                        new Bitcoin.Buffer.Buffer([0]),
-                        rangeproof_len_buf
-                    ]);
-                }
-                for (var j = 0; j < 4; ++j) {
-                    setValue(
-                        rangeproof_len+j,
-                        rangeproof_len_buf[4-j-1],
-                        'i8'
-                    );
-                }
-                var ephemeral_key = Bitcoin.bitcoin.ECPair.makeRandom();
-                var secexp_buf = ephemeral_key.d.toBuffer();
-                var secexp = Module._malloc(32);
-                var nonce = Module._malloc(33);
-                var nonce_res = Module._malloc(32);
-                var pubkey_p = Module._malloc(64);
-                var p_arr = Array.from(new Bitcoin.BigInteger(''+pubkey_p).toBuffer());
-                while (p_arr.length < 4) p_arr.unshift(0);
-                for (var j = 0; j < 32; ++j) {
-                    setValue(secexp+j, secexp_buf[j], 'i8');
-                }
-                for (var j = 0; j < 33; ++j) {
-                    setValue(nonce+j, outs[i].to_scanning_pubkey[j], 'i8');
-                }
-                if (1 != Module._secp256k1_ec_pubkey_parse(
-                    Module.secp256k1ctx,
-                    pubkey_p,
-                    nonce,
-                    33
-                )) {
-                    throw new Error('secp256k1 EC pubkey parse failed');
-                }
-                if (1 != Module._secp256k1_ecdh(
-                    Module.secp256k1ctx,
-                    nonce_res,
-                    pubkey_p,
-                    secexp
-                )) {
-                    throw new Error('secp256k1 ECDH failed');
-                }
-                var nonce_buf = new Bitcoin.Buffer.Buffer(32);
-                for (var j = 0; j < 32; ++j) {
-                    nonce_buf[j] = getValue(nonce_res + j, 'i8') & 0xff;
-                }
-                nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
-                for (var j = 0; j < 32; ++j) {
-                    setValue(nonce_res + j, nonce_buf[j], 'i8');
-                }
-                if (1 != Module._secp256k1_rangeproof_sign(
-                    Module.secp256k1ctx,
-                    rangeproof,
-                    rangeproof_len,
-                    0, 0,
-                    commitment,
-                    getValue(blindptrs + cur_blindptr, '*'),
-                    nonce_res,
-                    0, 32,
-                    +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
-                    +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
-                )) {
-                    throw new Error('secp256k1 rangeproof sign failed');
-                }
-                for (var j = 0; j < 4; ++j) {
-                    rangeproof_len_buf[4-j-1] = getValue(
-                        rangeproof_len+j, 'i8'
-                    ) & 0xff;
-                }
-                len = +Bitcoin.BigInteger(rangeproof_len_buf);
-                var rangeproof_buf = new Bitcoin.Buffer.Buffer(len);
-                for (var j = 0; j < len; ++j) {
-                    rangeproof_buf[j] = getValue(rangeproof+j, 'i8') & 0xff;
-                }
-                cur_blindptr += 4;
-                outs[i].nonce_commitment = ephemeral_key.getPublicKeyBuffer();
-                outs[i].commitment = commitment_buf;
-                outs[i].range_proof = rangeproof_buf;
-            }
-            var tx = new Bitcoin.contrib.AlphaTransactionBuilder(cur_net);
-            tx.tx.locktime = $scope.wallet.cur_block;  // nLockTime to prevent fee sniping
-            for (var i = 0; i < needed_unspent.length; ++i) {
-                tx.addInput(
-                    needed_unspent[i].txhash,
-                    needed_unspent[i].data.pt_idx,
-                    0xfffffffe  // allow nLockTime to prevent fee sniping
-                );
-                //// tx.tx.ins[i].prevOut = needed_unspent[i].out;
-                //// ^- this doesn't work (see comment below)
-            }
-            for (var i = 0; i < outs.length; ++i) {
-                tx.addOutput(
-                    Bitcoin.bitcoin.address.toBase58Check(
-                        outs[i].to_hash, outs[i].to_version
-                    ), 0
-                )
-                tx.tx.outs[i].commitment = outs[i].commitment;
-                tx.tx.outs[i].range_proof = outs[i].range_proof;
-                tx.tx.outs[i].nonce_commitment = outs[i].nonce_commitment;
-            }
-            var signatures_ds = [];
-            for (var i = 0; i < needed_unspent.length; ++i) {
-                (function(i) {
-                    var utxo = needed_unspent[i];
-                    var gawallet = new Bitcoin.bitcoin.HDNode(
-                        Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                            new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
-                            cur_net
-                        ),
-                        new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
-                    );
-                    var gaKey;
-                    if ($scope.wallet.current_subaccount) {
-                        gaKey = gawallet.derive(3).then(function(branch) {
-                            return branch.subpath($scope.wallet.gait_path);
-                        }).then(function(gawallet) {
-                            return gawallet.derive($scope.wallet.current_subaccount);
-                        });
-                    } else {
-                        gaKey = gawallet.derive(1).then(function(branch) {
-                            return branch.subpath($scope.wallet.gait_path);
-                        });
-                    }
-                    gaKey = gaKey.then(function(gawallet) {
-                        return gawallet.derive(utxo.data.pubkey_pointer);
-                    });
-                    var userKey = $q.when($scope.wallet.hdwallet);
-                    if ($scope.wallet.current_subaccount) {
-                        userKey = userKey.then(function(key) {
-                            return key.deriveHardened(branches.SUBACCOUNT);
-                        }).then(function(key) {
-                            return key.deriveHardened($scope.wallet.current_subaccount);
-                        })
-                    }
-                    var userKey = userKey.then(function(key) {
-                        return key.derive(branches.REGULAR);
-                    }).then(function(branch) {
-                        return branch.derive(utxo.data.pubkey_pointer)
-                    });
-                    signatures_ds.push($q.all([gaKey, userKey]).then(function(keys) {
-                        var gaKey = keys[0], userKey = keys[1];
-                        var redeemScript = Bitcoin.bitcoin.script.multisigOutput(
-                            2,
-                            [gaKey.keyPair.getPublicKeyBuffer(),
-                             userKey.keyPair.getPublicKeyBuffer()]
-                        )
-                        for (var j = 0; j < tx.tx.ins.length; ++j) {
-                            // this is slightly confusing, but alphad requires
-                            // all ins to serialize with the same prevout,
-                            // even though this prevout is connected to only a
-                            // single input
-                            tx.tx.ins[j].prevOut = needed_unspent[i].out;
-                        }
-
-                        return tx.sign(i, userKey.keyPair, redeemScript, +fee);
-                    }));
-                })(i);
-            }
-            return $q.all(signatures_ds).then(function() {
-                return walletsService.get_two_factor_code(
-                    $scope, 'send_raw_tx'
-                ).then(function(twofac_data) {
-                    return tx_sender.call(
-                        'http://greenaddressit.com/vault/send_raw_tx',
-                        tx.build().toHex(+fee),
-                        twofac_data
-                    );
-                });
-            })
-        })
-    };
-    walletsService.ask_for_tx_confirmation = function(
-        $scope, tx, data
-    ) {
-        if (!($scope.send_tx || $scope.bump_fee)) {
-            // not all txs support this dialog, like redepositing or sweeping
-            return $q.when();
-        }
-        var scope = $scope.$new(), fee, value;
-        if (data.response) {
-            var in_value = 0, out_value = 0;
-            tx.ins.forEach(function(txin) {
-                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
-                var prevtx = Bitcoin.contrib.transactionFromHex(
-                    data.response.data[rev.toString('hex')]
-                );
-                var prevout = prevtx.outs[txin.index];
-                in_value += prevout.value;
-            });
-            tx.outs.forEach(function(txout) {
-                out_value += txout.value;
-            });
-            fee = in_value - out_value;
-        } else {
-            fee = data.fee;
-        }
-        if ($scope.send_tx && $scope.send_tx.amount == 'MAX') {
-            value = $scope.wallet.final_balance - fee;
-        } else if (data.bumped_tx) {
-            value = -data.bumped_tx.value;
-        } else {
-            value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
-        }
-        scope.tx = {
-            fee: fee,
-            previous_fee: data.bumped_tx && data.bumped_tx.fee,
-            value: value,
-            recipient: data.recipient ? data.recipient :
-                ($scope.send_tx.voucher ?
-                    gettext("Voucher") :
-                    ($scope.send_tx.recipient.name ||
-                        $scope.send_tx.recipient))
-        };
-        var modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_confirm_tx.html',
-            scope: scope,
-            windowClass: 'twofactor'  // is a 'sibling' to 2fa - show with the same z-index
-        });
-        return modal.result;
-    }
-    walletsService.sign_tx = function($scope, tx, data, prevouts, progress_cb, priv_der) {
-        var prevoutToPath = function(prevout, trezor, from_subaccount) {
-            var path = [];
-            if (prevout.subaccount && !from_subaccount) {
-                if (trezor) {
-                    path.push(3 + 0x80000000);
-                    path.push(prevout.subaccount + 0x80000000);
-                } else {
-                    path.push("3'");
-                    path.push(prevout.subaccount + "'");
-                }
-            }
-            if (priv_der) {
-                if (trezor) {
-                    path.push(prevout.branch + 0x80000000);
-                    path.push(prevout.pointer + 0x80000000);
-                } else {
-                    path.push(prevout.branch + "'");
-                    path.push(prevout.pointer + "'");
-                }
-            } else {
-                path.push(prevout.branch);
-                path.push(prevout.pointer);
-            }
-            return path;
-        }
-        var signatures = [], device_deferred = null, signed_n = 0;
-        for (var i = 0; i < tx.ins.length; ++i) {
-            (function(i) {
-                var key, path = [];
-                if (data.prev_outputs[i].privkey) {
-                    key = $q.when(data.prev_outputs[i].privkey);
-                } else if (tx_sender.hdwallet.keyPair.d) {
-                    if (data.prev_outputs[i].subaccount) {
-                        key = $q.when(tx_sender.hdwallet.deriveHardened(3)).then(function(key) {
-                            return key.deriveHardened(data.prev_outputs[i].subaccount);
-                        });
-                    } else {
-                        key = $q.when(tx_sender.hdwallet);
-                    }
-                    if (priv_der) {
-                        key = key.then(function(key) {
-                            return key.deriveHardened(data.prev_outputs[i].branch);
-                        }).then(function(key) {
-                            return key.deriveHardened(data.prev_outputs[i].pointer);
-                        });
-                    } else {
-                        key = key.then(function(key) {
-                            return key.derive(data.prev_outputs[i].branch);
-                        }).then(function(key) {
-                            return key.derive(data.prev_outputs[i].pointer);
-                        });
-                    }
-                    key = key.then(function(key) {
-                        return key.keyPair;
-                    });
-                } else {
-                    path = prevoutToPath(data.prev_outputs[i]);
-                }
-                if (!key) {
-                    // btchip or trezor -- trezor is handled separately
-                    // at the end of walletsService.sign_tx
-                    var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
-                    var SIGHASH_ALL = 1;
-                    var sign_deferred = $q.defer();
-
-                    if ($scope.wallet.btchip) {
-                        var next = function() {
-                            return $scope.wallet.btchip.gaStartUntrustedHashTransactionInput_async(
-                                i == 0,
-                                tx.cloneTransactionForSignature(script, i, SIGHASH_ALL),
-                                i
-                            ).then(function(finished) {
-                                    var this_ms = 0, this_expected_ms = 6500;
-                                    if ($scope.wallet.btchip.features.quickerVersion) this_expected_ms *= 0.55;
-                                    var int_promise = $interval(function() {
-                                        this_ms += 100;
-                                        var progress = signed_n / tx.ins.length;
-                                        progress += (1/tx.ins.length) * (this_ms/this_expected_ms);
-                                        if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
-                                    }, 100);
-                                    return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function(finished) {
-                                        return $scope.wallet.btchip.app.signTransaction_async(
-                                            path.join('/'),
-                                            undefined,
-                                            // Cordova requires int, while crx requires ByteString:
-                                            window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
-                                        ).then(function(sig) {
-                                                $interval.cancel(int_promise);
-                                                signed_n += 1;
-                                                sign_deferred.resolve("30" + sig.bytes(1).toString(HEX));
-                                            }, sign_deferred.reject);
-                                    }, sign_deferred.reject)
-                                }, sign_deferred.reject);
-                        }
-                        if (!device_deferred) {
-                            device_deferred = next();
-                        } else {
-                            device_deferred = device_deferred.then(next);
-                        }
-                    }
-                    var sign = sign_deferred.promise;
-                } else {
-                    var sign = key.then(function(key) {
-                        signed_n += 1;
-                        if (progress_cb) progress_cb(Math.round(100 * signed_n / tx.ins.length));
-                        var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
-                        var SIGHASH_ALL = 1;
-                        var scope = $scope.$new();
-                        var in_value = 0, out_value = 0;
-                        if (cur_net.isAlpha) {
-                            tx.ins.forEach(function(txin) {
-                                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
-                                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
-                                var prevtx = Bitcoin.contrib.transactionFromHex(
-                                    prevouts.data[rev.toString('hex')]
-                                );
-                                var prevout = prevtx.outs[txin.index];
-                                in_value += prevout.value;
-                                txin.prevValue = prevout.value;
-                            });
-                            tx.outs.forEach(function(txout) {
-                                out_value += txout.value;
-                            });
-                            var fee = in_value - out_value, value;
-                        }
-                        if (data.prev_outputs[i].script_type == 14) {
-                            var sign = $q.when(key.sign(tx.hashForSignatureV2(i, script, parseInt(data.prev_outputs[i].value), SIGHASH_ALL)));
-                        } else {
-                            var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
-                        }
-                        return sign.then(function(sign) {
-                            var sign_serialized;
-                            if (cur_net.isAlpha) {
-                                sign_serialized = sign;
-                            } else {
-                                sign_serialized = sign.toDER();
-                            }
-                            sign = Bitcoin.Buffer.Buffer.concat([
-                                new Bitcoin.Buffer.Buffer(sign_serialized),
-                                new Bitcoin.Buffer.Buffer([SIGHASH_ALL]),
-                            ]);
-                            return sign.toString('hex');
-                        });
-                    });
-                }
-                signatures.push(sign);
-            })(i);
-        }
-        if (!($scope && $scope.wallet.trezor_dev)) {
-            return $q.all(signatures);
-        } else {
-            var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
-                return x;
-            };
-            var gawallet_hd = new Bitcoin.bitcoin.HDNode(
-                Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                    new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
-                    cur_net
-                ),
-                new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
-            );
-            var is_2of3 = false, cur_subaccount, recovery_wallet, recovery_wallet_hd;
-            for (var j = 0; j < $scope.wallet.subaccounts.length; j++) {
-                if ($scope.wallet.subaccounts[j].pointer == $scope.wallet.current_subaccount &&
-                    $scope.wallet.subaccounts[j].type == '2of3') {
-                    is_2of3 = true;
-                    cur_subaccount = $scope.wallet.subaccounts[j];
-                    break;
-                }
-            }
-            if ($scope.wallet.current_subaccount) {
-                var gawallet_path = $q.when(gawallet_hd.derive(branches.SUBACCOUNT)).then(function (gawallet_hd) {
-                    return gawallet_hd.subpath($scope.wallet.gait_path);
-                }).then(function (subaccounts) {
-                    return subaccounts.derive($scope.wallet.current_subaccount);
-                });
-            } else {
-                var gawallet_path = $q.when(gawallet_hd.derive(branches.REGULAR)).then(function (gawallet_hd) {
-                    return gawallet_hd.subpath($scope.wallet.gait_path);
-                });
-            }
-            var hdwallet = {
-                depth: 0,
-                child_num: 0,
-                fingerprint: 0,    // FIXME (is it important?): real fingerprint
-                chain_code: fromHex($scope.wallet.hdwallet.chainCode.toString('hex')),
-                public_key: fromHex($scope.wallet.hdwallet.keyPair.getPublicKeyBuffer().toString('hex'))
-            };
-            var path_bytes = new Bitcoin.Buffer.Buffer($scope.wallet.gait_path, 'hex'), ga_path = [];
-            for (var i = 0; i < 32; i++) {
-                ga_path.push(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)));
-                path_bytes = path_bytes.slice(2);
-            }
-            var script_to_hash = [];
-            var change_key_bytes, recovery_wallet;
-            return gawallet_path.then(function (gawallet_path_result) {
-                gawallet_path = gawallet_path_result;
-                gawallet = {
-                    depth: 33,
-                    child_num: 0,   // FIXME (is it important?): real child_num
-                    fingerprint: 0,   // FIXME (is it important?): real fingerprint
-                    chain_code: fromHex(gawallet_path.chainCode.toString('hex')),
-                    public_key: fromHex(gawallet_path.keyPair.getPublicKeyBuffer().toString('hex'))
-                };
-                if ($scope.wallet.current_subaccount) {
-                    return $scope.wallet.trezor_dev.getPublicKey(
-                        [branches.SUBACCOUNT + 0x80000000, $scope.wallet.current_subaccount + 0x80000000]
-                    ).then(function (pubkey) {
-                            var pk = pubkey.message.node.public_key;
-                            pk = pk.toHex ? pk.toHex() : pk;
-                            var cc = pubkey.message.node.chain_code;
-                            cc = cc.toHex ? cc.toHex() : cc;
-                            var hd = new Bitcoin.bitcoin.HDNode(
-                                Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                                    new Bitcoin.Buffer.Buffer(pk, 'hex'),
-                                    cur_net
-                                ),
-                                new Bitcoin.Buffer.Buffer(cc, 'hex')
-                            );
-
-                            hdwallet = {
-                                depth: 0,
-                                child_num: 0,
-                                fingerprint: 0,    // FIXME (is it important?): real fingerprint
-                                chain_code: fromHex(hd.chainCode.toString('hex')),
-                                public_key: fromHex(hd.keyPair.getPublicKeyBuffer().toString('hex'))
-                            };
-
-                            return hd.derive(1);
-                        });
-                } else {
-                    return $scope.wallet.hdwallet.derive(1);
-                }
-            }).then(function (hdwallet_branch) {
-                return hdwallet_branch.derive(data.change_pointer);
-            }).then(function (change_key) {
-                change_key_bytes = change_key.keyPair.getPublicKeyBuffer();
-                return gawallet_path.derive(data.change_pointer)
-            }).then(function (change_gait_key) {
-                if (is_2of3) {
-                    var recovery_wallet_hd = new Bitcoin.bitcoin.HDNode(
-                        Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
-                            new Bitcoin.Buffer.Buffer(cur_subaccount['2of3_backup_pubkey'], 'hex'),
-                            cur_net
-                        ),
-                        new Bitcoin.Buffer.Buffer(cur_subaccount['2of3_backup_chaincode'], 'hex')
-                    );
-                    recovery_wallet = {
-                        depth: 0,
-                        child_num: 0,
-                        fingerprint: 0,    // FIXME (is it important?): real fingerprint
-                        chain_code: fromHex(cur_subaccount['2of3_backup_chaincode']),
-                        public_key: fromHex(cur_subaccount['2of3_backup_pubkey'])
-                    };
-                    return recovery_wallet_hd.derive(1).then(function (branch) {
-                        return branch.derive(data.change_pointer);
-                    }).then(function (change_key_recovery) {
-                        return [change_gait_key.keyPair.getPublicKeyBuffer(),
-                            change_key_bytes,
-                            change_key_recovery.keyPair.getPublicKeyBuffer()];
-                    });
-                } else {
-                    return [change_gait_key.keyPair.getPublicKeyBuffer(), change_key_bytes];
-                }
-            }).then(function (keys) {
-                script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
-                script_to_hash.push(keys[0]);
-                script_to_hash.push(keys[1]);
-                if (is_2of3) {
-                    script_to_hash.push(keys[2]);
-                    script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_3);
-                } else {
-                    script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
-                }
-                script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_CHECKMULTISIG);
-                script_to_hash = Bitcoin.bitcoin.script.compile(
-                    script_to_hash
-                );
-                var change_addr = Bitcoin.bitcoin.address.fromOutputScript(
-                    Bitcoin.bitcoin.script.scriptHashOutput(
-                        Bitcoin.bitcoin.crypto.hash160(script_to_hash)
-                    ),
-                    cur_net
-                );
-                var get_pubkeys = function (prevout, is2of3) {
-                    var ret = [{
-                        node: gawallet,
-                        address_n: [prevout.pointer]
-                    },
-                        {
-                            node: hdwallet,
-                            address_n: prevoutToPath(prevout, true, $scope.wallet.current_subaccount)
-                        }];
-                    if (is2of3) {
-                        ret.push({
-                            node: recovery_wallet,
-                            address_n: prevoutToPath(prevout, true, true)
-                        });
-                    }
-                    return ret;
-                }
-                var inputs = [];
-                for (var i = 0; i < tx.ins.length; ++i) {
-                    inputs.push({
-                        address_n: prevoutToPath(data.prev_outputs[i], true),
-                        prev_hash: fromHex(
-                            Bitcoin.bitcoin.bufferutils.reverse(
-                                tx.ins[i].hash
-                            ).toString('hex')
-                        ),
-                        prev_index: tx.ins[i].index,
-                        script_type: (window.trezor && trezor.ByteBuffer) ? 1 : 'SPENDMULTISIG',
-                        multisig: {
-                            pubkeys: get_pubkeys(data.prev_outputs[i], is_2of3),
-                            m: 2
-                        },
-                        sequence: tx.ins[i].sequence
-                    })
-                }
-
-                var convert_ins = function (ins) {
-                    return ins.map(function (inp) {
-                        var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
-                            return x;
-                        };
-                        return {
-                            prev_hash: fromHex(
-                                Bitcoin.bitcoin.bufferutils.reverse(
-                                    inp.hash
-                                ).toString('hex')
-                            ),
-                            prev_index: inp.index,
-                            script_sig: fromHex(inp.script.toString('hex')),
-                            sequence: inp.sequence
-                        }
-                    })
-                }
-                var convert_outs = function (outs) {
-                    return outs.map(function (out) {
-                        var TYPE_ADDR = (window.trezor && trezor.ByteBuffer) ? 0 : 'PAYTOADDRESS';
-                        var TYPE_P2SH = (window.trezor && trezor.ByteBuffer) ? 1 : 'PAYTOSCRIPTHASH';
-                        var TYPE_MULTISIG = (window.trezor && trezor.ByteBuffer) ? 2 : 'PAYTOMULTISIG';
-                        var addr = Bitcoin.bitcoin.address.fromOutputScript(
-                            out.script, cur_net
-                        );
-                        var ret = {
-                            amount: out.value,
-                            address: addr,
-                            script_type: Bitcoin.bitcoin.script.isScriptHashOutput(
-                                out.script
-                            ) ? TYPE_P2SH : TYPE_ADDR
-                        };
-                        if (ret.address == change_addr) {
-                            ret.script_type = TYPE_MULTISIG;
-                            ret.multisig = {
-                                pubkeys: get_pubkeys({
-                                    branch: 1,
-                                    pointer: data.change_pointer
-                                }, is_2of3),
-                                m: 2
-                            }
-                        } else if (data.out_pointers && data.out_pointers.length == 1) {
-                            // FIXME: perhaps at some point implement the case of 'single redeposit transaction',
-                            // which is a bit complicated because different outputs can be from different
-                            // subaccounts
-                            ret.script_type = TYPE_MULTISIG;
-                            ret.multisig = {
-                                pubkeys: get_pubkeys({
-                                    branch: 1,
-                                    pointer: data.out_pointers[0].pointer
-                                }, is_2of3),
-                                m: 2
-                            }
-                        }
-                        return ret;
-                    })
-                }
-                var convert_outs_bin = function (outs) {
-                    return outs.map(function (out) {
-                        var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
-                            return x;
-                        };
-                        return {
-                            amount: out.value,
-                            script_pubkey: fromHex(out.script.toString('hex'))
-                        };
-                    })
-                }
-
-                var txs = [];
-
-                for (var k in prevouts.data) {
-                    var parsed = Bitcoin.bitcoin.Transaction.fromHex(prevouts.data[k]);
-                    txs.push({
-                        hash: k.toString('hex'),
-                        version: parsed.version,
-                        lock_time: parsed.locktime,
-                        bin_outputs: convert_outs_bin(parsed.outs),
-                        inputs: convert_ins(parsed.ins)
-                    });
-                }
-                return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs),
-                    txs, {
-                        coin_name: cur_net == Bitcoin.bitcoin.networks.bitcoin
-                            ? 'Bitcoin' : 'Testnet'
-                    }).then(function (res) {
-                        return res.message.serialized.signatures.map(function (a) {
-                            return (a.toHex ? a.toHex() : a) + "01";
-                        });
-                    });
-
-            });
-        }
-    }
-    walletsService.sign_and_send_tx = function($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
-        var d = $q.defer();
-        var tx = Bitcoin.contrib.transactionFromHex(data.tx);
-        var prevouts_d;
-        var response;
-        if ($scope && ($scope.send_tx || $scope.wallet.trezor_dev)) {
-            prevouts_d = $http.get(data.prevout_rawtxs).then(function(response_) {
-                response = response_;
-                return response;
-            });
-        } else {
-            prevouts_d = $q.when();
-        }
-        var d_all = prevouts_d.then(function(prevouts) {
-            return walletsService.sign_tx($scope, tx, data, prevouts, progress_cb, priv_der);
-        })
-        if (!send_after) {
-            send_after = $q.when();
-        }
-        d_all = d_all.then(function(signatures) {
-            return walletsService.ask_for_tx_confirmation(
-                $scope, tx, {response: response}
-            ).then(function() {
-                    return signatures;
-                });
-        }, d.reject);
-        var do_send = function() {
-            return d_all.then(function(signatures) {
-                if (!twofactor && data.requires_2factor) {
-                    return walletsService.get_two_factor_code($scope, 'send_tx').then(function(twofac_data) {
-                        return [signatures, twofac_data];
-                    });
-                } else {
-                    return [signatures, twofactor];
-                }
-            }).then(function(signatures_twofactor) {
-                var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
-                tx_sender.call("http://greenaddressit.com/vault/send_tx", signatures, twofactor||null).then(function(data) {
-                    d.resolve();
-                    if (!twofactor && $scope) {
-                        tx_sender.call("http://greenaddressit.com/login/get_spending_limits").then(function(data) {
-                            $scope.wallet.limits.total = data.total;
-                        });
-                    }
-                    if (notify !== false) {
-                        sound.play(BASE_URL + "/static/sound/coinsent.mp3", $scope);
-                        notices.makeNotice('success', notify || gettext('Bitcoin transaction sent!'));
-                    }
-                }, function(reason) {
-                    d.reject();
-                    notices.makeNotice('error', gettext('Transaction failed: ') + reason.args[1]);
-                    sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
-                });
-            }, d.reject);
-        }
-        send_after.then(do_send, d.reject);
-        return d.promise;
-    }
-    walletsService.getTwoFacConfig = function($scope, force) {
-        var d = $q.defer();
-        if ($scope.wallet.twofac !== undefined && !force) {
-            d.resolve($scope.wallet.twofac);
-        } else {
-            tx_sender.call('http://greenaddressit.com/twofactor/get_config').then(function(data) {
-                $scope.wallet.twofac = data;
-                d.resolve($scope.wallet.twofac);
-            });
-        }
-        return d.promise;
-    };
-    walletsService.get_two_factor_code = function($scope, action, data, redeposit) {
-        var deferred = $q.defer();
-        walletsService.getTwoFacConfig($scope).then(function(twofac_data) {
-            if (twofac_data.any) {
-                $scope.twofactor_method_names = {
-                    'gauth': 'Google Authenticator',
-                    'email': 'Email',
-                    'sms': 'SMS',
-                    'phone': gettext('Phone')
-                };
-                $scope.twofactor_methods = [];
-                for (var key in $scope.twofactor_method_names) {
-                    if (twofac_data[key] === true) {
-                        $scope.twofactor_methods.push(key);
-                    }
-                }
-                var order = ['gauth', 'email', 'sms', 'phone'];
-                $scope.twofactor_methods.sort(function(a,b) { return order.indexOf(a)-order.indexOf(b); })
-                $scope.twofac = {
-                    twofactor_method: $scope.twofactor_methods[0],
-                    codes_requested: {},
-                    request_code: function() {
-                        var that = this;
-                        this.requesting_code = true;
-                        return tx_sender.call('http://greenaddressit.com/twofactor/request_' + this.twofactor_method,
-                                action, data).then(function() {
-                            that.codes_requested[that.twofactor_method] = true;
-                            that.requesting_code = false;
-                        }, function(err) {
-                            notices.makeNotice('error', err.args[1]);
-                            that.requesting_code = false;
-                        });
-                    }};
-                var show_modal = function() {
-                    var modal = $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_2fa.html',
-                        scope: $scope,
-                        windowClass: 'twofactor'
-                    });
-                    modal.opened.then(function() { focus("twoFactorModal"); });
-                    deferred.resolve(modal.result.then(function(twofac_data) {
-                        if (twofac_data.method == 'gauth' && redeposit) {
-                            return tx_sender.call('http://greenaddressit.com/twofactor/request_redeposit_proxy', twofac_data).then(function(data) {
-                                return {'method': 'proxy', 'code': data};
-                            });
-                        } else {
-                            return twofac_data;
-                        }
-                    }));
-                };
-                if ($scope.twofactor_methods.length == 1) {
-                    if ($scope.twofactor_methods[0] == 'gauth') {
-                        // just gauth - no request required
-                        $scope.twofac.gauth_only = true;  // don't display the radio buttons
-                                                          // (not required in 'else' because codes_requested takes care of it)
-                        show_modal();
-                    } else {
-                        // just sth else than gauth - request it because user can't choose anything else anyway
-                        $scope.twofac.twofactor_method = $scope.twofactor_methods[0];
-                        $scope.twofac.request_code().then(function() {
-                            show_modal();
-                        })
-                    }
-                } else {
-                    // more than one auth method available - allow the user to select
-                    show_modal();
-                }
-            } else {
-                return deferred.resolve(null);
-            }
-        });
-        return deferred.promise;
-    }
-    walletsService.addCurrencyConversion = function($scope, model_name) {
-        var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits':1000000}[$scope.wallet.unit];
-        var unitPlaces = {'BTC': 8, 'mBTC': 5, 'µBTC': 2, 'bits': 2}[$scope.wallet.unit];
-        var trimDecimalPlaces = function(numPlaces, val) {
-            return (Math.round(val * Math.pow(10, numPlaces)) / Math.pow(10, numPlaces));
-        }
-        $scope.$watch(model_name+'.amount', function(newValue, oldValue) {
-            // don't check for newValue == oldValue to allow conversion to happen
-            // in 'send' form even when using plain (non-payreq) bitcoin: URI with amount
-            var _update = function() {
-                if ($scope[model_name].updated_by_conversion) {
-                    $scope[model_name].updated_by_conversion = false;
-                } else {
-                    var oldFiat = $scope[model_name].amount_fiat;
-                    if (!newValue) {
-                        $scope[model_name].amount_fiat = undefined;
-                    } else {
-                        if (newValue == 'MAX') {
-                            $scope[model_name].amount_fiat = 'MAX';
-                        } else {
-                            $scope[model_name].amount_fiat = newValue * $scope.wallet.fiat_rate / div;
-                            $scope[model_name].amount_fiat = trimDecimalPlaces(2, $scope[model_name].amount_fiat);
-                        }
-                    }
-                    if ($scope[model_name].amount_fiat !== oldFiat) {
-                        $scope[model_name].updated_by_conversion = true;
-                    }
-                }
-            }
-            if ($scope.wallet.fiat_rate) {
-                _update();
-            } else {
-                $scope.$on('first_balance_updated', _update);
-            }
-        });
-        $scope.$watch(model_name+'.amount_fiat', function(newValue, oldValue) {
-            if (newValue === oldValue) return;
-            var _update = function() {
-                if ($scope[model_name].updated_by_conversion) {
-                    $scope[model_name].updated_by_conversion = false;
-                } else {
-                    var oldBTC = $scope[model_name].amount;
-                    if (!newValue) {
-                        $scope[model_name].amount = undefined;
-                    } else {
-                        if (newValue == 'MAX') {
-                            $scope[model_name].amount = 'MAX';
-                        } else {
-                            $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate);
-                            $scope[model_name].amount = trimDecimalPlaces(unitPlaces, $scope[model_name].amount);
-                        }
-                    }
-                    if ($scope[model_name].amount !== oldBTC) {
-                        $scope[model_name].updated_by_conversion = true;
-                    }
-                }
-            }
-            if ($scope.wallet.fiat_rate) {
-                _update();
-            } else {
-                $scope.$on('first_balance_updated', _update);
-            }
-        });
-    };
-    walletsService.set_last_fiat_update = function($scope) {
-        $timeout(function(){
-            var now = 1*((new Date()).getTime()/1000).toFixed()
-            var diff = $scope.wallet.fiat_last_fetch_ss = $scope.wallet.fiat_last_fetch ? (now - $scope.wallet.fiat_last_fetch) : 0;
-            $scope.wallet.fiat_lastupdate_mm = (diff > 60) ? Math.floor(diff / 60) : 0;
-            $scope.wallet.fiat_lastupdate_ss = (diff % 60);
-            walletsService.set_last_fiat_update($scope);
-        }, 1000)
-    };
-    walletsService.create_pin = function(pin, $scope, suffix) {
-        suffix = suffix || '';
-        var do_create = function() {
-            var deferred = $q.defer();
-            tx_sender.call('http://greenaddressit.com/pin/set_pin_login', pin, 'Primary').then(
-                function(data) {
-                    if (data) {
-                        var pin_ident = tx_sender['pin_ident'+suffix] = data;
-                        storage.set('pin_ident'+suffix, pin_ident);
-                        storage.set(
-                            'pin_chaincode'+suffix,
-                            $scope.wallet.hdwallet.chainCode.toString('hex')
-                        );
-                        tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
-                            function(password) {
-                                if (!$scope.wallet.hdwallet.seed_hex) {
-                                    deferred.reject(gettext('Internal error')+': Missing seed');
-                                    return;
-                                }
-                                if (password) {
-                                    var data = JSON.stringify({'seed': $scope.wallet.hdwallet.seed_hex,
-                                                               'path_seed': $scope.wallet.gait_path_seed,
-                                                               'mnemonic': $scope.wallet.mnemonic});
-                                    crypto.encrypt(data, password).then(function(encrypted) {
-                                        storage.set('encrypted_seed'+suffix, encrypted);
-                                        if (!suffix) {
-                                            // chaincode is not used for Touch ID
-                                            storage.set('pin_chaincode', data)
-                                        }
-                                    });
-                                    tx_sender.pin = pin;
-                                    deferred.resolve(pin_ident);
-                                } else {
-                                    deferred.reject(gettext('Failed retrieving password.'))
-                                }
-                            }, function(err) {
-                                deferred.reject(err.args[1]);
-                            });
-                    } else {
-                        deferred.reject();
-                    }
-                }, function(err) {
-                    deferred.reject(err.args[1]);
-                }
-            );
-            return deferred.promise;
-        };
-        if (!tx_sender.logged_in) {
-            return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex($scope.wallet.hdwallet.seed_hex, cur_net)).then(function(hdwallet) {
-                hdwallet.seed_hex = $scope.wallet.hdwallet.seed_hex;
-                return walletsService.login($scope||{wallet:{}}, hdwallet,
-                        $scope.wallet.mnemonic, false, false, $scope.wallet.gait_path_seed).then(function() {
-                    return do_create();
-                });
-            });
-        } else {  // already logged in
-            return do_create();
-        }
-    };
-    walletsService.askForLogout = function($scope, text) {
-        $scope.ask_for_logout_text = text;
-        return $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_logout.html',
-            scope: $scope
-        }).result;
-    };
-    return walletsService;
-}]).factory('tx_sender', ['$q', '$rootScope', 'cordovaReady', '$http', 'notices', 'gaEvent', '$location', 'autotimeout', 'device_id', 'btchip',
-        function($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip) {
-    var txSenderService = {};
-    // disable electrum setup
-    if (false && window.Electrum) {
-        if (window.cordova) {
-            txSenderService.electrum = new Electrum($http, $q);
-        } else {
-            txSenderService.electrum = new Electrum();
-            txSenderService.electrum.connectToServer();
-        }
-    }
-    var connection, session, session_for_login, calls = [], calls_missed = {}, calls_counter = 0, global_login_d;
-    var onLogin = function(data) {
-        var s = session || session_for_login;
-        s.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
-                function(event) {
-            gaEvent('Wallet', 'TransactionNotification');
-            $rootScope.$broadcast('transaction', event[0]);
-        });
-        s.subscribe('com.greenaddress.fee_estimates',
-                function(event) {
-            $rootScope.$broadcast('fee_estimate', event[0]);
-        });
-    };
-    txSenderService.call = function() {
-        var d = $q.defer();
-        if (session) {
-            var cur_call = calls_counter++;
-            calls_missed[cur_call] = [arguments, d];  // will be called on new session
-            try {
-                var uri = arguments[0].replace('http://greenaddressit.com/', 'com.greenaddress.').replace('/', '.');
-                session.call.apply(session, [uri, Array.prototype.slice.call(arguments, 1)]).then(function(data) {
-                    if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
-                    delete calls_missed[cur_call];
-                    d.resolve(data);
-                }, function(err) {
-                    if (err.args[0] == 'http://greenaddressit.com/error#internal' && err.args[1] == 'Authentication required') {
-                        return; // keep in missed calls queue for after login
-                    }
-                    if (err.args[0] == 'http://greenaddressit.com/error#sessionexpired') {
-                        d.reject({args: [
-                            err.args[0],
-                            gettext("Session expired. Please try again.")
-                        ]});
-                        connection.close();
-                        connection = session = session_for_login = null;
-                        connecting = false;
-                        connect(global_login_d);
-                        return;
-                    }
-                    if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
-                    delete calls_missed[cur_call];
-                    d.reject(err);
-                });
-                var args = arguments, timeout;
-                if (args[0] == "com.greenaddress.vault.prepare_sweep_social") timeout = 40000;
-                else timeout = 10000;
-                setTimeout(function() {
-                    delete calls_missed[cur_call];
-                    $rootScope.safeApply(function() {
-                        d.reject({desc:
-                            gettext('Request timed out (%s)')
-                                .replace('%s', args[0].split('/').slice(3).join('/'))
-                        });
-                    });
-                }, timeout);
-            } catch (e) {
-                //if (!calls_missed[cur_call]) return;  // avoid resolving the same call twice
-                delete calls_missed[cur_call];
-                d.reject(gettext('Problem with connection detected. Please try again.'));
-            }
-        } else {
-            if (disconnected) {
-                disconnected = false;
-                connect(global_login_d);
-            }
-            calls.push([arguments, d]);
-        }
-        return d.promise;
-    };
-    var isMobile = /Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
-    if (window.cordova) {
-        cordovaReady(function() {
-            document.addEventListener("resume", function() {
-                if (!txSenderService.wallet || !txSenderService.logged_in) return;
-                if (session || session_for_login) {
-                    connection.close();  // reconnect on resume
-                }
-                session = session_for_login = null;
-                disconnected = true;
-                txSenderService.wallet.update_balance();
-            }, false);
-        })();
-    } else if (isMobile && typeof document.addEventListener !== undefined) {
-        // reconnect on tab shown in mobile browsers
-        document.addEventListener("visibilitychange", function() {
-            if (!document.hidden && txSenderService.wallet && txSenderService.logged_in) {
-                txSenderService.wallet.update_balance();
-            }
-        }, false);
-    }
-    var attempt_login = false;
-    var onAuthed = function(s, login_d) {
-        session_for_login = s;
-        session_for_login.subscribe('com.greenaddress.blocks', function(event) {
-            $rootScope.$broadcast('block', event[0]);
-        });
-        var d, logging_in = false;
-        if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
-            d = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
-            logging_in = true;
-        } else if (txSenderService.watch_only) {
-            d = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
-            logging_in = true;
-        } else {
-            d = $q.when(true);
-        }
-        d.catch(function(err) {
-            if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
-                if (login_d) {
-                    // login_d handler may want to handle double login by forcing logout
-                    login_d.reject(err);
-                    return;
-                }
-                autotimeout.stop();
-                if (txSenderService.wallet) txSenderService.wallet.clear();
-                $location.path('/concurrent_login');
-            } else {
-                console.log(err);
-                notices.makeNotice('error', gettext('An error has occured which forced us to log you out.'))
-                if (txSenderService.wallet) txSenderService.wallet.clear();
-                $location.path('/');
-            }
-        });
-        d.then(function(result) {
-            session = session_for_login;
-            if (logging_in && login_d) {
-                login_d.resolve(result);
-            }
-            // missed calls queues
-            for (i in calls_missed) {
-                var item = calls_missed[i];
-                delete calls_missed[i];
-                item[1].resolve(txSenderService.call.apply(session, item[0]));
-            }
-            while (calls.length) {
-                var item = calls.shift();
-                item[1].resolve(txSenderService.call.apply(session, item[0]));
-            }
-        }, function(err) {
-            // missed calls queue - reject them as well
-            // safeApply because txSenderService.login might've called $apply already
-            $rootScope.safeApply(function() {
-                while (calls.length) {
-                    var item = calls.shift();
-                    item[1].reject(err);
-                }
-            });
-        });
-    };
-    var disconnected = false, connecting = false, nconn = 0;
-    var connect = function(login_d) {
-        global_login_d = login_d;
-        if (connecting) return;
-        connecting = true;
-        nconn += 1;
-        var retries = 60, everConnected = false;
-        (function (nc) {
-            connection = new autobahn.Connection({
-                url: wss_url,
-                realm: "realm1",
-                use_deferred: $q.defer
-            });
-            connection.onclose = function() {
-                session = session_for_login = null;
-                disconnected = true;
-            }
-            connection.onopen =
-                function(s) {
-                    s.caller_disclose_me = true;
-                    everConnected = true;
-                    if (nc != nconn) {
-                        // newer connection created - close the old one
-                        s.close();
-                        return;
-                    }
-                    s.nc = nc;
-                    connecting = false;
-                    global_login_d = undefined;
-                    onAuthed(s, login_d, nc);
-                }; /*,
-                function(code, reason) {
-                    if (retries && !everConnected) {  // autobahnjs doesn't reconnect automatically if it never managed to connect
-                        retries -= 1;
-                        setTimeout(function() { connecting = false; connect(login_d); }, 5000);
-                        return;
-                    }
-                    if (reason && reason.indexOf('WS-4000') != -1) {
-                        $rootScope.$apply(function() {
-                            autotimeout.stop();
-                            txSenderService.logout();
-                            $location.path('/concurrent_login');
-                        });
-                    }
-                    if (reason && reason.indexOf('WS-4001') != -1 &&  // concurrent login on the same device
-                            nc == nconn) {  // allow concurrent logins in the same session in case of service restarts
-                        $rootScope.$apply(function() {
-                            autotimeout.stop();
-                            txSenderService.logout();
-                            $location.path('/');
-                        });
-                    }
-                    if (nc == nconn) {
-                        session = session_for_login = null;
-                        disconnected = true;
-                        connecting = false;
-                        global_login_d = undefined;
-                    }
-                },
-                {maxRetries: 60}
-            ); */
-
-            connection.open();
-        })(nconn);
-    };
-    cordovaReady(connect)();
-    txSenderService.logged_in = false;
-    var waiting_for_device = false;
-    txSenderService.login = function(logout, force_relogin, user_agent) {
-        var d_main = $q.defer();
-        if (txSenderService.logged_in && !force_relogin) {
-            d_main.resolve(txSenderService.logged_in);
-        } else {
-            var hdwallet = txSenderService.hdwallet;
-            attempt_login = true;
-            if (hdwallet.keyPair.d) {
-                if (session_for_login) {
-                    session_for_login.call('com.greenaddress.login.get_challenge',
-                            [hdwallet.getAddress().toString()]).then(function(challenge) {
-
-                        var challenge_bytes = new Bitcoin.BigInteger(challenge).toBuffer();
-
-                        // generate random path to derive key from - avoids signing using the same key twice
-                        var random_path_hex = new Bitcoin.BigInteger.fromBuffer(
-                            Bitcoin.randombytes(8)
-                        ).toString(16);
-                        while (random_path_hex.length < 16) random_path_hex = '0' + random_path_hex;
-                        $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function(subhd) {
-                            $q.when(subhd.keyPair.sign(challenge_bytes)).then(function(signature) {
-                                d_main.resolve(device_id().then(function(devid) {
-                                    if (session_for_login && session_for_login.nc == nconn) {
-                                        if (!cur_net.isAlpha) {
-                                            signature = [signature.r.toString(), signature.s.toString()];
-                                        }
-                                        return session_for_login.call('com.greenaddress.login.authenticate',
-                                                [signature, logout||false,
-                                                 random_path_hex, devid, user_agent]).then(function(data) {
-                                            if (data) {
-                                                txSenderService.logged_in = data;
-                                                onLogin(data);
-                                                return data;
-                                            } else { return $q.reject(gettext('Login failed')); }
-                                        });
-                                    } else if (!connecting) {
-                                        disconnected = false;
-                                        d = $q.defer();
-                                        connect(d);
-                                        d_main.resolve(d.promise);
-                                    }
-                                }));
-                            });
-                        });
-                    });
-                } else if (!connecting) {
-                    disconnected = false;
-                    d = $q.defer();
-                    connect(d);
-                    d_main.resolve(d.promise);
-                }
-            } else {  // trezor_dev || btchip
-                if (waiting_for_device) return;
-                var trezor_dev = txSenderService.trezor_dev,
-                    btchip_dev = txSenderService.btchip;
-                var get_pubkey = function() {
-                    if (trezor_dev) {
-                        return $q.when(txSenderService.trezor_address);
-                    } else {
-                        return $q.when(txSenderService.btchip_address);
-                    }
-                }
-                get_pubkey().then(function (addr) {
-                    if (session_for_login) {
-                        if (trezor_dev) {
-                            dev_d = $q.when(trezor_dev);
-                        } else {
-                            dev_d = btchip.getDevice(false, true,
-                                    // FIXME not sure why it doesn't work with Cordova
-                                    // ("suspend app, disconnect dongle, resume app, reconnect dongle" case fails)
-                                    window.cordova ? null : btchip_dev).then(function(btchip_dev_) {
-                                txSenderService.btchip = btchip_dev = btchip_dev_;
-                            });
-                        }
-                        waiting_for_device = true;
-                        var challenge_arg_resolves_main = false;
-                        dev_d = dev_d.then(function() {
-                            if (session_for_login) {
-                                return session_for_login.call(
-                                    'com.greenaddress.login.get_trezor_challenge',
-                                    [addr, !trezor_dev]
-                                );
-                            } else if (!connecting) {
-                                waiting_for_device = false;
-                                disconnected = false;
-                                d = $q.defer();
-                                connect(d);
-                                challenge_arg_resolves_main = true;
-                                return d.promise;
-                            } else waiting_for_device = false;
-                        });
-                        d_main.resolve(dev_d.then(function(challenge) {
-                            if (challenge_arg_resolves_main) return challenge;
-                            if (!challenge) return $q.defer().promise;  // never resolve
-
-                            var msg_plain = 'greenaddress.it      login ' + challenge;
-                            var msg = (new Bitcoin.Buffer.Buffer(
-                                msg_plain, 'utf8'
-                            )).toString('hex');
-                            // btchip requires 0xB11E to skip HID authentication
-                            // 0x4741 = 18241 = 256*G + A in ASCII
-                            var path = [0x4741b11e];
-
-                            if (trezor_dev) {
-                                trezor_dev.signing = true;
-                                return trezor_dev._typedCommonCall('SignMessage', 'MessageSignature',
-                                        {'message': msg, address_n: path}).then(function(res) {
-                                    var sig = res.message.signature;
-                                    sig = sig.toHex ? sig.toHex() : sig;
-                                    var signature = Bitcoin.bitcoin.ECSignature.parseCompact(
-                                        new Bitcoin.Buffer.Buffer(sig, 'hex')
-                                    );
-                                    trezor_dev.signing = false;
-                                    return device_id().then(function(devid) {
-                                        return session_for_login.call('com.greenaddress.login.authenticate',
-                                                [[signature.signature.r.toString(), signature.signature.s.toString(), signature.i.toString()], logout||false,
-                                                 'GA', devid]).then(function(data) {
-                                            if (data) {
-                                                txSenderService.logged_in = data;
-                                                onLogin(data);
-                                                return data;
-                                            } else { return $q.reject(gettext('Login failed')); }
-                                        });
-                                    });
-                                }, function(err) {
-                                    trezor_dev.signing = false;
-                                    return $q.reject(err.message);
-                                });
-                            } else {
-                                var t0 = new Date();
-                                return $q.when(hdwallet.derive(path[0])).then(function(result_pk) {
-                                    return btchip_dev.signMessagePrepare_async(path.join('/'), new ByteString(msg, HEX)).then(function(result) {
-                                        return btchip_dev.app.signMessageSign_async(new ByteString("00", HEX)).then(function(result) {
-                                            waiting_for_device = false;
-                                            var signature = Bitcoin.bitcoin.ECSignature.fromDER(
-                                                new Bitcoin.Buffer.Buffer("30" + result.bytes(1).toString(HEX), 'hex')
-                                            );
-                                            if (btchip_dev.features.signMessageRecoveryParam) {
-                                                var i = result.byteAt(0) & 0x01;
-                                            } else {
-                                                var i = Bitcoin.ecdsa.calcPubKeyRecoveryParam(
-                                                    Bitcoin.BigInteger.fromBuffer(Bitcoin.message.magicHash(msg_plain)),
-                                                    {r: signature.r, s: signature.s},
-                                                    result_pk.keyPair.Q
-                                                )
-                                            }
-                                            return device_id().then(function(devid) {
-                                                if (session_for_login && session_for_login.nc == nconn) {
-                                                    return session_for_login.call('com.greenaddress.login.authenticate',
-                                                            [[signature.r.toString(), signature.s.toString(), i.toString()], logout||false,
-                                                             'GA', devid]).then(function(data) {
-                                                        if (data) {
-                                                            txSenderService.logged_in = data;
-                                                            onLogin(data);
-                                                            return data;
-                                                        } else { return $q.reject(gettext('Login failed')); }
-                                                    });
-                                                } else if (!connecting) {
-                                                    disconnected = false;
-                                                    d = $q.defer();
-                                                    connect(d);
-                                                    return d.promise;
-                                                }
-                                            });
-                                        });
-                                    });
-                                });
-                            }
-                        }).finally(function() { waiting_for_device = false; }));
-                    } else if (!connecting) {
-                        disconnected = false;
-                        d = $q.defer();
-                        connect(d);
-                        d_main.resolve(d.promise);
-                    }
-                });
-            }
-        }
-        return d_main.promise;
-    };
-    txSenderService.logout = function() {
-        if (session) {
-            connection.close();
-            session = session_lor_login = null;
-            disconnected = true;
-        }
-        for (var key in calls_missed) {
-            delete calls_missed[key];
-        }
-        if (txSenderService.btchip) {
-            txSenderService.btchip.dongle.disconnect_async();
-        }
-        disconnected = true;
-        txSenderService.logged_in = false;
-        attempt_login = false;
-        txSenderService.hdwallet = undefined;
-        txSenderService.trezor_dev = undefined;
-        txSenderService.watch_only = undefined;
-        txSenderService.pin_ident = undefined;
-        txSenderService.has_pin = undefined;
-        if (txSenderService.wallet) txSenderService.wallet.clear();
-    };
-    txSenderService.loginWatchOnly = function(token_type, token, logout) {
-        var d = $q.defer();
-        txSenderService.call('http://greenaddressit.com/login/watch_only',
-            token_type, token, logout||false).then(function(data) {
-                txSenderService.watch_only = [token_type, token];
-                onLogin(data);
-                d.resolve(data);
-            }, function(err) {
-                d.reject(err);
-            });
-        return d.promise;
-    };
-    txSenderService.change_pin = function(new_pin) {
-        return txSenderService.call('http://greenaddressit.com/pin/change_pin_login',
-                new_pin, txSenderService.pin_ident).then(function(res) {
-            // keep new pin for reconnection handling
-            if (!res) {
-                return $q.reject(gettext('Changing PIN failed.'));
-            } else {
-                txSenderService.pin = new_pin;
-            }
-        });
-    };
-    return txSenderService;
-}]).factory('facebook', ['$q', '$rootScope', 'cordovaReady', '$interval', function($q, $rootScope, cordovaReady, $interval) {
-    if (!document.getElementById('fb-root')) return;
-
-    var FB_deferred = $q.defer();
-    var FB_promise = FB_deferred.promise;
-    var initd = false;
-    window.fbAsyncInit = function() {
-        $interval.cancel(FB_interval_promise);
-        cordovaReady(function() {
-            FB_deferred.resolve();
-        })();
-    };
-    if (window.cordova) {
-        // fbAsyncInit is not called for some reason in Cordova, so we poll for FB
-        var FB_interval_promise = $interval(function() {
-            if (window.FB) {
-                window.fbAsyncInit();
-            }
-        }, 100, 50);  // try for 5 seconds
-    }
-
-    cordovaReady(function() {
-        var e = document.createElement('script');e.async = true;
-        e.src = 'https://connect.facebook.net/en_US/all.js';
-        document.getElementById('fb-root').appendChild(e);
-    })();
-
-    var logged_in = false;
-    var login_deferred = $q.defer();
-    FB_promise = FB_promise.then(function() {
-        FB.Event.subscribe('auth.authResponseChange', function(response) {
-            if (response.status == 'connected') {
-                logged_in = true;
-                $rootScope.safeApply(function() {
-                    login_deferred.resolve();
-                });
-            }
-        });
-
-        if (window.cordova) {
-            FB.init({
-                appId: FB_APP_ID,
-                nativeInterface: CDV.FB,
-                useCachedDialogs: false
-            });
-        } else {
-            FB.init({
-                appId: FB_APP_ID,
-                status: true
-            });
-        }
-
-        initd = true;
-    });
-
-
-    var facebookService = {};
-    facebookService.login = function(loginstate) {
-        if (loginstate.logging_in && !initd) return;
-        if (logged_in) {
-            loginstate.logged_in = true;
-            return $q.when(true);
-        }
-        loginstate.logging_in = true;
-        var deferred = $q.defer();
-        FB.login(function(response) {
-            $rootScope.$apply(function() {
-                if (response.authResponse) {
-                    loginstate.logged_in = true;
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                }
-                loginstate.logging_in = false;
-            });
-        }, {scope: ''});
-        return deferred.promise;
-    };
-
-    facebookService.getUser = function() {
-        login_deferred = login_deferred.then(function() {
-            var inner_deferred = $q.defer();
-            FB.api('/me', function(response) {
-                $rootScope.$apply(function() {
-                    inner_deferred.resolve(response);
-                });
-            });
-            return inner_deferred.promise;
-        });
-        return login_deferred;
-    };
-
-    return facebookService;
-}]).factory('reddit', ['$q', function($q) {
-    var redditService = {
-        getToken: function(scope) {
-            var tokenDeferred = $q.defer();
-            var state = Math.random();
-            var left = screen.width / 2 - 500, top = screen.height / 2 - 300;
-            if (window.location.hostname == 'localhost') {
-                var redir = 'http://localhost:9908/reddit/';
-            } else {
-                var redir = 'https://'+window.location.hostname+'/reddit/';
-            }
-            var w = window.open('https://ssl.reddit.com/api/v1/authorize?client_id='+REDDIT_APP_ID+'&redirect_uri='+redir+'&response_type=code&scope='+scope+'&state=' + state,
-                        '_blank', 'toolbar=0,menubar=0,width=1000,height=600,left='+left+',top='+top);
-            var deferred = $q.defer();
-            var interval = setInterval(function() { if (w.closed) {
-                clearInterval(interval);
-                deferred.resolve(true);
-            } }, 500);
-            deferred.promise.then(function() {
-                if (window._reddit_token) {
-                    tokenDeferred.resolve(_reddit_token);
-                    _reddit_token = undefined;
-                } else {
-                    tokenDeferred.resolve(null);
-                }
-            });
-            return tokenDeferred.promise;
-        }
-    };
-    return redditService;
-}]).factory('cordovaReady', function cordovaReady() {
-  return function (fn) {
-    // cordovaReady is called even when there is no Cordova support, hence
-    // the plain `return fn` below.
-
-    // This is because WebSockets are implemented on Android in Cordova,
-    // so the initial implementation was a generic wrapper which runs
-    // code even without Cordova, to allow running the same WebSockets
-    // code on desktop and Android.
-
-    // (See the usage in js/greenwallet/services.js: ab.connect()
-    // is wrapped inside cordovaReady, because it uses WebSockets)
-
-    // Maybe it might be better to add some runEvenWithoutCordova
-    // argument to cordovaReady for that WebSockets special case,
-    // and by default don't run anything on desktop from the function
-    // returned there...
-    if (!window.cordova) {
-        return fn;
-    }
-
-    var queue = [];
-
-    var impl = function () {
-      queue.push([this, Array.prototype.slice.call(arguments)]);
-    };
-
-    document.addEventListener('deviceready', function () {
-      queue.forEach(function (args) {
-        fn.apply(args[0], args[1]);
+        that.items.push(item);
+        if (value[0] === $routeParams.name) $routeParams.page = Math.ceil((i + 1) / PER_PAGE);
+        i += 1;
       });
-      impl = fn;
-      navigator.splashscreen.hide();
-    }, false);
+      that.num_pages = Math.ceil(that.items.length / 20);
+      that.pages = [];
+      for (i = 1; i <= that.num_pages; i++) that.pages.push(i);
+      that.populate_csv();
+    },
+    load: function ($scope, $routeParams) {
+      var addressbook_key = $scope.wallet.receiving_id + 'addressbook';
+      var that = this;
+      return storage.get(addressbook_key).then(function (cache) {
+        try {
+          cache = JSON.parse(cache) || {};
+        } catch (e) {
+          cache = {};
+        }
+        var d;
+        var subaccounts = [];
+        // start with i = 1 - do not show 'Main' in the addressbook
+        for (var i = 1; i < $scope.wallet.subaccounts.length; i++) {
+          var account = $scope.wallet.subaccounts[i];
+          subaccounts.push([account.name, account.receiving_id, '', 'subaccount', true]);
+        }
+        if (cache.hashed) {
+          d = crypto.decrypt(cache.items, $scope.wallet.cache_password).then(function (decrypted) {
+            that.update_with_items(JSON.parse(decrypted).concat(subaccounts), $routeParams);
+          });
+          var requires_load = false;
+        } else {
+          $rootScope.is_loading += 1;
+          d = $q.when();
+          requires_load = true;
+        }
 
-    return function () {
-      return impl.apply(this, arguments);
+        return d.then(function () {
+          return tx_sender.call('http://greenaddressit.com/addressbook/read_all', cache.hashed).then(function (data) {
+            if (data.items) {
+              var items = data.items;
+              crypto.encrypt(JSON.stringify(data.items), $scope.wallet.cache_password).then(function (encrypted) {
+                cache.items = encrypted;
+                cache.hashed = data.hashed;
+                storage.set(addressbook_key, JSON.stringify(cache));
+              });
+              that.update_with_items(items.concat(subaccounts), $routeParams);
+            }
+          }, function (err) {
+            notices.makeNotice('error', gettext('Error reading address book: ') + err.args[1]);
+          }).finally(function () {
+            if (requires_load) {
+              $rootScope.decrementLoading();
+            }
+          });
+        });
+      });
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/addressbook.js","/greenwallet/services")
+},{"angular":12,"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],55:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+module.exports = factory;
+
+factory.dependencies = ['$timeout', '$document'];
+
+function factory ($timeout, $document) {
+  var timeoutms = 1000;
+  var autotimeoutService = {
+    promise: false,
+    callbacks: [],
+
+    registerObserverCallback: registerObserverCallback,
+    stop: stop,
+    start: start
+  };
+
+  return autotimeoutService;
+
+  function start (amountminutes) {
+    autotimeoutService.stop();
+    if (Number(amountminutes) !== 0) {
+      reset(amountminutes);
+      autotimeoutService.promise = $timeout(countdown, timeoutms);
+      $document.find('body').on('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart', function () {
+        try {
+          reset(amountminutes);
+        } catch (err) {
+          // already logged out
+          console.log(err.stack || err);
+        // autotimeoutService.stop()
+        }
+      });
+    }
+  }
+  function stop () {
+    $document.find('body').off('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart');
+    if (autotimeoutService.promise) {
+      $timeout.cancel(autotimeoutService.promise);
+      autotimeoutService.promise = false;
+    }
+  }
+  function registerObserverCallback (callback) {
+    autotimeoutService.callbacks.push(callback);
+  }
+
+  function notifyObservers () {
+    autotimeoutService.callbacks.map(runObserver);
+  }
+
+  function runObserver (fn) {
+    try {
+      fn();
+    } catch (_) {}
+  }
+
+  function reset (amountminutes) {
+    autotimeoutService.left = amountminutes * 1000 * 60;
+  }
+
+  function countdown () {
+    if (autotimeoutService.left <= 0) {
+      autotimeoutService.stop();
+      if (require('has-chrome-storage')) {
+        window.chrome.runtime.reload();
+      } else {
+        window.location.reload();
+      }
+    } else {
+      autotimeoutService.left = autotimeoutService.left - timeoutms;
+      notifyObservers();
+      autotimeoutService.promise = $timeout(countdown, timeoutms);
+    }
+  }
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/autotimeout.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],56:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var is_chrome_app = require('has-chrome-storage');
+
+var gettext = window.gettext;
+var BASE_URL = window.BASE_URL;
+var LANG = window.LANG;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', '$uibModal', 'mnemonics', 'focus', 'cordovaReady'];
+
+function factory ($q, $uibModal, mnemonics, focus, cordovaReady) {
+  var bip38Service = {};
+  var iframe;
+  bip38Service.processMessage = function (message) {
+    var d = $q.defer();
+    if (window.cordova) {
+      var method;
+      var data;
+      var password = message.password;
+      if (message.mnemonic_decrypted) {
+        method = 'encrypt_raw';
+        data = message.mnemonic_decrypted;
+      } else if (message.mnemonic_encrypted) {
+        method = 'decrypt_raw';
+        data = message.mnemonic_encrypted;
+      }
+      cordovaReady(function () {
+        window.cordova.exec(function (result) {
+          d.resolve({data: result});
+        }, function (fail) {
+          d.reject(fail);
+        }, 'BIP38', method, [Array.from(data), password]);
+      })();
+    } else if (is_chrome_app) {
+      var process = function () {
+        var listener = function (message) {
+          window.removeEventListener('message', listener);
+          d.resolve(message);
+        };
+        window.addEventListener('message', listener);
+        iframe.contentWindow.postMessage(message, '*');
+      };
+      if (!iframe) {
+        if (document.getElementById('id_iframe_bip38_service')) {
+          iframe = document.getElementById('id_iframe_bip38_service');
+          process();
+        } else {
+          iframe = document.createElement('IFRAME');
+          iframe.onload = process;
+          iframe.setAttribute('src', '/bip38_sandbox.html');
+          iframe.setAttribute('class', 'ng-hide');
+          iframe.setAttribute('id', 'id_iframe_bip38_service');
+          document.body.appendChild(iframe);
+        }
+      } else {
+        process();
+      }
+    } else {
+      var worker = new window.Worker('/static/js/greenwallet/signup/bip38_worker.js');
+      worker.onmessage = function (message) {
+        d.resolve(message);
+      };
+      worker.postMessage(message);
+    }
+    return d.promise;
+  };
+  bip38Service.encrypt_mnemonic_modal = function ($scope, seed) {
+    var d = $q.defer();
+    $scope.encrypt_password_modal = {
+      encrypt: function () {
+        this.error = undefined;
+        if (!this.password) {
+          this.error = gettext('Please provide a password.');
+          return;
+        }
+        if (this.password !== this.password_repeated) {
+          this.error = gettext('Passwords do not match.');
+          return;
+        }
+        this.encrypting = true;
+        var that = this;
+        bip38Service.processMessage({password: that.password, mnemonic_decrypted: seed}).then(function (message) {
+          mnemonics.toMnemonic(message.data).then(function (mnemonic) {
+            that.encrypting = false;
+            d.resolve(mnemonic);
+            modal.close();
+          });
+        });
+      }
+    };
+    var modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/signuplogin/modal_encryption_password.html',
+      scope: $scope
+    });
+    modal.opened.then(function () { focus('encryptPasswordModal'); });
+    return d.promise;
+  };
+  return bip38Service;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/bip38.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],57:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var Module = window.Module;
+var setValue = window.setValue;
+var getValue = window.getValue;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', 'branches'];
+
+function factory ($q, branches) {
+  var service = {};
+  service._unblindOutValue = function ($scope, out, scanning_key) {
+    var Bitcoin = window.Bitcoin;
+    var secexp_buf = scanning_key.d.toBuffer();
+    var secexp = Module._malloc(32);
+    var nonce = Module._malloc(33);
+    var nonce_res = Module._malloc(32);
+    var pubkey_p = Module._malloc(64);
+    var p_arr = Array.from(new Bitcoin.BigInteger('' + pubkey_p).toBuffer());
+    var i;
+
+    while (p_arr.length < 4) {
+      p_arr.unshift(0);
+    }
+    for (i = 0; i < 32; ++i) {
+      setValue(secexp + i, secexp_buf[i], 'i8');
+    }
+    for (i = 0; i < 33; ++i) {
+      setValue(nonce + i, out.nonce_commitment[i], 'i8');
+    }
+    if (Module._secp256k1_ec_pubkey_parse(
+        Module.secp256k1ctx,
+        pubkey_p,
+        nonce,
+        33
+      ) !== 1) {
+      throw new Error('secp256k1 EC pubkey parse failed');
+    }
+    if (Module._secp256k1_ecdh(
+        Module.secp256k1ctx,
+        nonce_res,
+        pubkey_p,
+        secexp
+      ) !== 1) {
+      throw new Error('secp256k1 ECDH failed');
+    }
+    var nonce_buf = new Bitcoin.Buffer.Buffer(32);
+    for (i = 0; i < 32; ++i) {
+      nonce_buf[i] = getValue(nonce_res + i, 'i8') & 0xff;
+    }
+    nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
+    for (i = 0; i < 32; ++i) {
+      setValue(nonce_res + i, nonce_buf[i], 'i8');
+    }
+    var blinding_factor_out = Module._malloc(32);
+    var amount_out = Module._malloc(8);
+    var min_value = Module._malloc(8);
+    var max_value = Module._malloc(8);
+    var msg_out = Module._malloc(4096);
+    var msg_size = Module._malloc(4);
+    var commitment = Module._malloc(33);
+    for (i = 0; i < 33; ++i) {
+      setValue(commitment + i, out.commitment[i], 'i8');
+    }
+    var range_proof = Module._malloc(out.range_proof.length);
+    for (i = 0; i < out.range_proof.length; ++i) {
+      setValue(range_proof + i, out.range_proof[i], 'i8');
+    }
+    var rewindRes = Module._secp256k1_rangeproof_rewind(
+      Module.secp256k1ctx,
+      blinding_factor_out,
+      amount_out,
+      msg_out,
+      msg_size,
+      nonce_res,
+      min_value,
+      max_value,
+      commitment,
+      range_proof,
+      out.range_proof.length
+    );
+    if (rewindRes !== 1) {
+      throw new Error('Invalid transaction.');
+    }
+    var ret = [];
+    for (i = 0; i < 8; ++i) {
+      ret[8 - i - 1] = getValue(amount_out + i, 'i8') & 0xff;
+    }
+    var val = Bitcoin.BigInteger.fromBuffer(
+      new Bitcoin.Buffer.Buffer(ret)
+    );
+    return {
+      value: '' + (+val),
+      blinding_factor_out: blinding_factor_out
     };
   };
-}).factory('hostname', function() {
-    var is_chrome_app = window.chrome && chrome.storage;
-    if (is_chrome_app || window.cordova) {
-        return 'greenaddress.it';
-    } else {
-        return window.location.hostname.replace('cordova.', '').replace('cordova-t.', '')
+  service.unblindOutValue = function ($scope, out, subaccount, pubkey_pointer) {
+    var key = $q.when($scope.wallet.hdwallet);
+    if (subaccount) {
+      key = key.then(function (key) {
+        return key.deriveHardened(branches.SUBACCOUNT);
+      }).then(function (key) {
+        return key.deriveHardened(subaccount);
+      });
     }
-}).factory('gaEvent', function gaEvent() {
-    return function(category, action, label) {
-        if (window._gaq) {
-            try {
-                if (category == '_pageview') {
-                    _gaq.push(['_trackPageview', action]);
-                } else {
-                    _gaq.push(['_trackEvent', category, action, label]);
-                }
-            } catch (e) {}
-        }
-    }
-}).factory('parseKeyValue', function() {
-    var tryDecodeURIComponent = function (value) {
-        try {
-            return decodeURIComponent(value);
-        } catch(e) {
-            // Ignore any invalid uri component
-        }
-    };
-    return function parseKeyValue(keyValue) {
-        var obj = {}, key_value, key;
-        angular.forEach((keyValue || "").split('&'), function(keyValue){
-            if ( keyValue ) {
-                key_value = keyValue.split('=');
-                key = tryDecodeURIComponent(key_value[0]);
-                if ( key !== undefined ) {
-                    var val = (key_value[1] !== undefined) ? tryDecodeURIComponent(key_value[1]) : true;
-                    if (!obj[key]) {
-                        obj[key] = val;
-                    } else if(toString.call(obj[key]) === '[object Array]') {
-                        obj[key].push(val);
-                    } else {
-                        obj[key] = [obj[key],val];
-                    }
-                }
-            }
-        });
-        return obj;
-    };
-}).factory('parse_bitcoin_uri', ['parseKeyValue', function(parseKeyValue) {
-    return function parse_bitcoin_uri(uri) {
-        if (uri.indexOf === undefined || uri.indexOf("bitcoin:") == -1) {
-            // not a URI
-            return {};
-        } else {
-            if (uri.indexOf("?") == -1) {
-                // no amount
-                return {recipient: uri.split("bitcoin:")[1]};
-            } else {
-                var recipient =  uri.split("bitcoin:")[1].split("?")[0];
-                var variables = parseKeyValue(uri.split('bitcoin:')[1].split('?')[1]);
-                variables.recipient = recipient;
-                return variables;
-            }
-        }
-    }
-}]).factory('storage', ['$q', function($q) {
-    if (window.chrome && chrome.storage) {
-        var noLocalStorage = false;
-    } else {
-        try {
-            var noLocalStorage = !window.localStorage;
-        } catch(e) {
-            var noLocalStorage = true;
-        }
-    }
-    var storageService = {
-        noLocalStorage: noLocalStorage,
-        set: function(key, value) {
-            if (window.chrome && chrome.storage) {
-                var set_value = {};
-                set_value[key] = value;
-                chrome.storage.local.set(set_value);
-            } else {
-                if(!noLocalStorage) {
-                    localStorage.setItem(key, value);
-                }
-            }
-        },
-        get: function(key) {
-            var d = $q.defer();
-            if (window.chrome && chrome.storage) {
-                chrome.storage.local.get(key, function(items) {
-                    var key_arr;
-                    if (key.constructor == Array) {
-                        key_arr = key;
-                    } else {
-                        key_arr = [key];
-                    }
-                    // make it compatible with localStorage.getItem:
-                    // (returns null if key is missing)
-                    for (var i = 0; i < key_arr.length; ++i) {
-                        if (items[key_arr[i]] === undefined) {
-                            items[key_arr[i]] = null;
-                        }
-                    }
-                    if (key.constructor === Array) {
-                        d.resolve(items);
-                    } else {
-                        d.resolve(items[key]);
-                    }
-                });
-            } else {
-                if (key.constructor === Array) {
-                    var ret = {};
-                    if (!noLocalStorage) {
-                        for (var i = 0; i < key.length; ++i) {
-                            ret[key[i]] = localStorage.getItem(key[i]);
-                        }
-                    }
-                    d.resolve(ret);
-                } else {
-                    if (!noLocalStorage) {
-                        d.resolve(localStorage.getItem(key));
-                    } else {
-                        d.resolve();
-                    }
-                }
-            }
-            return d.promise;
-        },
-        remove: function(key) {
-            if (window.chrome && chrome.storage) {
-                chrome.storage.local.remove(key);
-            } else {
-                localStorage.removeItem(key);
-            }
-        }
-    };
-    return storageService;
-}]).factory('device_id', ['storage', function(storage) {
-    var uuid4 = function() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var nums = new Uint32Array(1), r, v;
-            window.crypto.getRandomValues(nums);
-            r = nums[0] % 16,
-            v = (c === 'x') ? r : (r&0x3|0x8);
-            return v.toString(16);
-        });
-    }
-    return function() {
-        return storage.get('device_id').then(function(value) {
-            if (!value) {
-                var ret = uuid4();
-                storage.set('device_id', ret)
-                return ret;
-            } else return value;
-        })
-    };
-}]).factory('user_agent', [function() {
-    var is_chrome_app = window.chrome && chrome.storage,
-        is_cordova_app = window.cordova;
-    return function(wallet) {
-        if (is_cordova_app) {
-            return 'Cordova ' + cordova.platformId +
-                ' (version=' + wallet.version + ')';
-        } else if (is_chrome_app) {
-            return 'Chrome ' + '(version=' + wallet.version + ')';
-        } else {
-            return 'Browser';
-        }
-    };
-}]).factory('addressbook', ['$rootScope', 'tx_sender', 'storage', 'crypto', 'notices', '$q',
-        function($rootScope, tx_sender, storage, crypto, notices, $q) {
-    var PER_PAGE = 15;
-    return {
-        items: [],
-        reverse: {},
-        new_item: undefined,
-        populate_csv: function() {
-            var csv_list = [];
-            for (var i = 0; i < this.items.length; i++) {
-                var item = this.items[i];
-                csv_list.push(item.name + ',' + (item.href || item.address));
-            }
-            this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
-        },
-        init_partitions: function(items) {
-            var items = items || this.items, next_prefix, next_partition;
-            var items_copy = [];
-            for (var i = 0; i < items.length; i++) items_copy.push(items[i]);
-            this.partitions = [];
-            var get_name = function (item) {
-                // works with 'unprocessed' and 'processed' items
-                if (item.name) return item.name;
-                else return item[0];
-            }
-            while (items_copy.length) {
-                var prefix = next_prefix || get_name(items_copy[0])[0];
-                var partition = next_partition || [];
-                for (var i = 0; i < PER_PAGE; i++) {
-                    if (!items_copy.length) break;
-                    var next_item = this._process_item(items_copy.shift());
-                    if (next_item) partition.push(next_item);
-                    else i -= 1;  // crx facebook
-                }
-                if (items_copy.length) {
-                    var next_prefix = get_name(items_copy[0])[0], next_partition = [];
-                    while (next_prefix == partition[partition.length-1].name.substring(0, next_prefix.length) &&
-                           next_prefix.length < get_name(items_copy[0]).length) {
-                        next_prefix += get_name(items_copy[0])[next_prefix.length];
-                        if (next_prefix.length == 3) {
-                            while (partition.length &&
-                                    partition[partition.length-1].name.substring(0, 3) == next_prefix) {
-                                next_partition.push(partition.pop());
-                            }
-                            break;
-                        }
-                    }
-                }
-                if (partition.length) {
-                    this.partitions.push([this.partitions.length+1, prefix, partition]);
-                }
-            }
-        },
-        _process_item: function(value) {
-            var is_chrome_app = window.chrome && chrome.storage;
-            if (value.name) return value;
-            if (value[3] == 'facebook') {
-                var has_wallet = value[4];
-                if (!has_wallet && (is_chrome_app || window.cordova)) return;  // can't send FB messages from Chrome/Cordova app
-                var href = 'https://www.facebook.com/' + value[1];
-                return {name: value[0], type: value[3], address: value[1], has_wallet: has_wallet, href: href};
-            } else {
-                return {name: value[0], type: value[3], has_wallet: value[4], address: value[1]};
-            }
-        },
-        update_with_items: function(items, $routeParams) {
-            while (this.items.length) this.items.pop();
-            this.reverse = {};
-            if (!$routeParams) $routeParams = {};
-            var that = this;
-            items.sort(function(a, b) { return a[0].localeCompare(b[0]); });
-            this.init_partitions(items);
-            var i = 0;
-            angular.forEach(items, function(value) {
-                var item = that._process_item(value);
-                if (!item) return;  // crx facebook
-                if (value[3] != 'facebook') {
-                    that.reverse[value[1]] = value[0];
-                }
-                that.items.push(item);
-                if (value[0] === $routeParams.name) $routeParams.page = Math.ceil((i+1)/PER_PAGE);
-                i += 1;
-            });
-            that.num_pages = Math.ceil(that.items.length / 20);
-            that.pages = [];
-            for (var i = 1; i <= that.num_pages; i++) that.pages.push(i);
-            that.populate_csv();
-        },
-        load: function($scope, $routeParams) {
-            var addressbook_key = $scope.wallet.receiving_id + 'addressbook'
-            var cache;
-            var that = this;
-            return storage.get(addressbook_key).then(function(cache) {
-                try {
-                    cache = JSON.parse(cache) || {};
-                } catch(e) {
-                    cache = {};
-                }
-                var d;
-                var subaccounts = [];
-                // start with i = 1 - do not show 'Main' in the addressbook
-                for (var i = 1; i < $scope.wallet.subaccounts.length; i++) {
-                    var account = $scope.wallet.subaccounts[i];
-                    subaccounts.push([account.name, account.receiving_id, '', 'subaccount', true]);
-                }
-                if (cache.hashed) {
-                    d = crypto.decrypt(cache.items, $scope.wallet.cache_password).then(function(decrypted) {
-                        that.update_with_items(JSON.parse(decrypted).concat(subaccounts), $routeParams);
-                    });
-                    var requires_load = false;
-                } else {
-                    $rootScope.is_loading += 1;
-                    d = $q.when();
-                    requires_load = true;
-                }
+    return key.then(function (key) {
+      return key.deriveHardened(branches.BLINDED);
+    }).then(function (branch) {
+      return branch.deriveHardened(pubkey_pointer);
+    }).then(function (scanning_node) {
+      return service._unblindOutValue(
+        $scope, out, scanning_node.keyPair
+      );
+    });
+  };
+  return service;
+}
 
-                return d.then(function() {
-                    return tx_sender.call('http://greenaddressit.com/addressbook/read_all', cache.hashed).then(function(data) {
-                        if (data.items) {
-                            var items = data.items;
-                            crypto.encrypt(JSON.stringify(data.items), $scope.wallet.cache_password).then(function(encrypted) {
-                                cache.items = encrypted;
-                                cache.hashed = data.hashed;
-                                storage.set(addressbook_key, JSON.stringify(cache));
-                            });
-                            that.update_with_items(items.concat(subaccounts), $routeParams);
-                        }
-                    }, function(err) {
-                        notices.makeNotice('error', gettext('Error reading address book: ') + err.args[1]);
-                    }).finally(function() {
-                        if (requires_load) {
-                            $rootScope.decrementLoading();
-                        }
-                    });
-                });
-            });
-        }
-    };
-}]).factory('clipboard', ['$q', 'cordovaReady', function($q, cordovaReady) {
-    return {
-        copy: function(data) {
-            var deferred = $q.defer();
-            cordovaReady(function(){
-                cordova.plugins.clipboard.copy(data, function() {
-                    deferred.resolve(gettext('Copied'));
-                }, function() {
-                    deferred.reject(gettext('Error copying'));
-                });
-            })();
-            return deferred.promise;
-    }};
-
-}]).factory('sound', ['cordovaReady', '$timeout', function(cordovaReady, $timeout) {
-    return {
-        play: function(src, $scope) {
-            cordovaReady(function(){
-                if (!$scope || !$scope.wallet.appearance.sound) {
-                    return;
-                }
-                if (window.cordova && typeof Media != "undefined") {
-                    // Phonegap media
-                    var mediaRes = new Media(src,
-                        function onSuccess() {
-                            // release the media resource once finished playing
-                            mediaRes.release();
-                        },
-                        function onError(e){
-                            console.log("error playing sound: " + JSON.stringify(e));
-                        });
-                    mediaRes.play();
-                } else if (typeof Audio != "undefined") {
-                    //HTML5 Audio
-                    $timeout(function() { new Audio(src).play(); });
-                } else {
-                    console.log("no sound API to play: " + src);
-                }
-            })();
-    }};
-
-}]).factory('qrcode', ['$q', 'cordovaReady', '$timeout', function($q, cordovaReady, $timeout) {
-    var n = navigator, v, webkit = false, moz = false, gCtx, stream, gotGUMerror = false;
-    return {
-    stop_scanning: function($scope) {
-        $scope.scanning_qr_video = false;
-        v.pause();
-        try {
-            stream.stop();
-        } catch (e) {
-            stream.getVideoTracks()[0].stop();
-        }
-    },
-    scan: function($scope, $event, suffix) {
-        var that = this;
-        var deferred = $q.defer();
-        if (window.cordova) {
-            $event.preventDefault();
-            cordovaReady(function()  {
-                cordova.plugins.barcodeScanner.scan(
-                    function (result) {
-                        console.log("We got a barcode\n" +
-                        "Result: " + result.text + "\n" +
-                        "Format: " + result.format + "\n" +
-                        "Cancelled: " + result.cancelled);
-                        if (!result.cancelled && result.format == "QR_CODE") {
-                              $timeout(function() { deferred.resolve(result.text); });
-                        } else {
-                            if (result.cancelled) {
-                                $timeout(function() { deferred.reject(gettext('Cancelled')); });
-                            } else {
-                                $timeout(function() { deferred.reject(gettext('Invalid format')); });
-                            }
-                        }
-                    },
-                    deferred.reject
-                );
-            })();
-        } else {
-            v = document.getElementById("v" + (suffix||''));
-            qrcode.callback = function(result) {
-                if(result === 'error decoding QR Code') {
-                    deferred.reject(gettext('Could not process the QR code, the image may be blurry. Please try again.'));
-                    return;
-                }
-                deferred.resolve(result);
-            };
-            function captureToCanvas() {
-                try{
-                    gCtx.drawImage(v,0,0);
-                    try{
-                        qrcode.decode();
-                        that.stop_scanning($scope);
-                    }
-                    catch(e){
-                        console.log(e);
-                        setTimeout(captureToCanvas, 500);
-                    };
-                }
-                catch(e){
-                        console.log(e);
-                        setTimeout(captureToCanvas, 500);
-                };
-            }
-            var success = function(stream_) {
-                $scope.$apply(function() {
-                    $scope.scanning_qr_video = true;
-                });
-                stream = stream_;
-                gCanvas = document.getElementById("qr-canvas");
-                var w = 800, h = 600;
-                gCanvas.style.width = w + "px";
-                gCanvas.style.height = h + "px";
-                gCanvas.width = w;
-                gCanvas.height = h;
-                gCtx = gCanvas.getContext("2d");
-                gCtx.clearRect(0, 0, w, h);
-                if(webkit)
-                    v.src = window.webkitURL.createObjectURL(stream);
-                else if(moz){
-                    v.mozSrcObject = stream;
-                    v.play();
-                } else {
-                    v.src = stream;
-                }
-                setTimeout(captureToCanvas, 500);
-            }
-            var error = function() {
-                $scope.gotGUMerror = true; // for some reason dispatchEvent doesn't work inside error()
-                deferred.reject(gettext('Access denied. Retry to scan from file.'));
-            };
-            var scan_input = function() {
-                var qr = $event.target;
-                angular.element(qr).on('change', function(event) {
-                    if (event.target.files.length != 1 && event.target.files[0].type.indexOf("image/") != 0) {
-                        notices.makeNotice('error', gettext('You must provide only one image file.'));
-                        return;
-                    }
-
-                    // https://github.com/kyledrake/coinpunk/blob/master/public/js/coinpunk/controllers/tx.js#L195
-                    /*! Copyright (c) 2013, Kyle Drake */
-
-                    var canvas = document.getElementById("qr-canvas");
-                    if (!canvas) {
-                        canvas = document.createElement('canvas');
-                    }
-                    var context = canvas.getContext('2d');
-                    var img = new Image();
-                    img.onload = function() {
-                        /*
-                        Helpful URLs:
-                        http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
-                        http://stackoverflow.com/questions/19432269/ios-html5-canvas-drawimage-vertical-scaling-bug-even-for-small-images
-
-                        There are a lot of arbitrary things here. Help to clean this up welcome.
-
-                        context.save();
-                        context.scale(1e6, 1e6);
-                        context.drawImage(img, 0, 0, 1e-7, 1e-7, 0, 0, 1e-7, 1e-7);
-                        context.restore();
-                        */
-
-                        if((img.width == 2448 && img.height == 3264) || (img.width == 3264 && img.height == 2448)) {
-                            canvas.width = 1024;
-                            canvas.height = 1365;
-                            context.drawImage(img, 0, 0, 1024, 1365);
-                        } else if(img.width > 1024 || img.height > 1024) {
-                            canvas.width = img.width*0.15;
-                            canvas.height = img.height*0.15;
-                            context.drawImage(img, 0, 0, img.width*0.15, img.height*0.15);
-                        } else {
-                            canvas.width = img.width;
-                            canvas.height = img.height;
-                            context.drawImage(img, 0, 0, img.width, img.height);
-                        }
-                        qrcode.decode(canvas.toDataURL('image/png'));
-                    }
-
-                    img.src = URL.createObjectURL(event.target.files[0]);
-                });
-            };
-            var tryGUM = function(source) {
-                if (n.getUserMedia && !$scope.gotGUMerror) {
-                    n.getUserMedia({video: source, audio: false}, success, error);
-                    $event.preventDefault();
-                } else if (n.webkitGetUserMedia && !$scope.gotGUMerror) {
-                    webkit = true;
-                    n.webkitGetUserMedia({video: source, audio: false}, success, error);
-                    $event.preventDefault();
-                } else if (n.mozGetUserMedia && !$scope.gotGUMerror) {
-                    moz = true;
-                    n.mozGetUserMedia({video: source, audio: false}, success, error);
-                    $event.preventDefault();
-                } else {
-                    scan_input();
-                }
-            };
-            if (window.MediaStreamTrack && MediaStreamTrack.getSources && !$scope.gotGUMerror) {
-                $event.preventDefault();
-                MediaStreamTrack.getSources(function(sources) {
-                    var found = false;
-                    for (var i = 0; i < sources.length; i++) {
-                        if (sources[i].kind == 'video' && sources[i].facing == 'environment') {
-                            found = true;
-                            tryGUM({optional: [{sourceId: sources[i].id}]});
-                            break;
-                        }
-                    }
-                    if (!found) tryGUM(true);
-                });
-            } else {
-                tryGUM(true);
-            }
-        }
-        return deferred.promise;
-    }};
-}]).factory('hw_detector', ['$q', 'trezor', 'btchip', '$timeout', '$rootScope', '$uibModal',
-        function($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
-    return {
-        success: false,
-        showModal: function(d) {
-            var that = this;
-            if (!that.modal) {
-                $rootScope.safeApply(function() {
-                    var options = {
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
-                    };
-                    that.modal = $uibModal.open(options);
-                    that.modal.result.finally(function() {
-                        if (!that.success) d.reject();
-                    });
-                });
-            };
-        },
-        waitForHwWallet: function() {
-            var d = $q.defer(), that = this;
-            var doSuccess = function() {
-                d.resolve();
-                that.success = true;
-                if (that.modal) {
-                    that.modal.close();  // modal close cancels the tick
-                }
-            }
-            var check = function() {
-                trezor.getDevice(true).then(function() {
-                    doSuccess();
-                }, function(err) {
-                    if (err && (err.pluginLoadFailed || err.outdatedFirmware)) {
-                        // don't retry on unrecoverable errors
-                        d.reject();
-                        return;
-                    }
-                    btchip.getDevice(true).then(function() {
-                        doSuccess();
-                    }, function() {
-                        // can be set to success by signup (if trezor got connected)
-                        if (!that.success) that.showModal(d);
-                        $timeout(check, 1000);
-                    });
-                })
-            }
-            check();
-            return d.promise;
-        }
-    }
-}]).factory('trezor', ['$q', '$interval', '$uibModal', 'notices', '$rootScope', 'focus',
-        function($q, $interval, $uibModal, notices, $rootScope, focus) {
-
-    var trezor_api, transport, trezor;
-
-    var promptPin = function(type, callback) {
-        var scope, modal;
-        scope = angular.extend($rootScope.$new(), {
-            pin: '',
-            type: type
-        });
-
-        modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_pin.html',
-            size: 'sm',
-            windowClass: 'pinmodal',
-            backdrop: 'static',
-            keyboard: false,
-            scope: scope
-        });
-
-        modal.result.then(
-            function (res) { callback(null, res); },
-            function (err) { callback(err); }
-        );
-    };
-
-    var promptPassphrase = function(callback) {
-        var scope, modal;
-
-        scope = angular.extend($rootScope.$new(), {
-            passphrase: '',
-        });
-
-        modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_passphrase.html',
-            size: 'sm',
-            windowClass: 'pinmodal',
-            backdrop: 'static',
-            keyboard: false,
-            scope: scope
-        });
-
-        modal.result.then(
-            function (res) { callback(null, res); },
-            function (err) { callback(err); }
-        );
-    };
-
-    var handleError = function(e) {
-        var message;
-        if (e == 'Opening device failed') {
-            message = gettext("Device could not be opened. Make sure you don't have any TREZOR client running in another tab or browser window!");
-        } else {
-            message = e;
-        }
-        $rootScope.safeApply(function() {
-            notices.makeNotice('error', message);
-        });
-    };
-
-    var handleButton = function(dev) {
-        var modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_confirm_button.html',
-            size: 'sm',
-            windowClass: 'pinmodal',
-            backdrop: 'static',
-            keyboard: false
-        });
-
-        dev.once('pin', function () {
-            try { modal.close(); } catch (e) {}
-        });
-        dev.once('receive', function () {
-            try { modal.close(); } catch (e) {}
-        });
-        dev.once('error', function () {
-            try { modal.close(); } catch (e) {}
-        });
-    }
-
-    return {
-        getDevice: function(noModal, silentFailure) {
-            var deferred = $q.defer();
-            var is_chrome_app = window.chrome && chrome.storage;
-            if (!is_chrome_app) return deferred.promise;
-
-            var tick, modal;
-            var showModal = function() {
-                if (!noModal && !modal) {
-                    modal = $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
-                    });
-                    modal.result.finally(function() {
-                        if (tick) {
-                            $interval.cancel(tick);
-                        }
-                    });
-                }
-            }
-
-            if (trezor_api) {
-                var plugin_d = $q.when(trezor_api);
-            } else {
-                var plugin_d = window.trezor.load();
-            }
-            plugin_d.then(function(api) {
-                trezor_api = api;
-                tick = $interval(function() {
-                    var enumerate_fun = is_chrome_app ? 'devices' : 'enumerate';
-                    $q.when(trezor_api[enumerate_fun]()).then(function(devices) {
-                        if (devices.length) {
-                            if (noModal) {
-                                $interval.cancel(tick);
-                            } else if (modal) {
-                                modal.close();  // modal close cancels the tick
-                            } else {
-                                $interval.cancel(tick);
-                            }
-                            var acquire_fun = is_chrome_app ? 'open' : 'acquire';
-                            $q.when(trezor_api[acquire_fun](devices[0])).then(function(dev_) {
-                                if (!is_chrome_app) dev_ = new trezor.Session(transport, dev_.session);
-                                deferred.resolve(dev_.initialize().then(function(init_res) {
-                                    var outdated = false;
-                                    if (init_res.message.major_version < 1) outdated = true;
-                                    else if (init_res.message.major_version == 1 &&
-                                             init_res.message.minor_version < 3) outdated = true;
-                                    if (outdated) {
-                                        notices.makeNotice('error', gettext("Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/"));
-                                        return $q.reject({outdatedFirmware: true});
-                                    } else {
-                                        return dev_;
-                                    }
-                                }).then(function(dev) {
-                                    trezor_dev = dev;
-                                    trezor_dev.on('pin', promptPin);
-                                    trezor_dev.on('passphrase', promptPassphrase);
-                                    trezor_dev.on('error', handleError);
-                                    trezor_dev.on('button', function () {
-                                        handleButton(dev);
-                                    });
-                                    return trezor_dev;
-                                }));
-                            }, function(err) {
-                                handleError('Opening device failed');
-                            });
-                        } else if (noModal) {
-                            if (noModal == 'retry') return;
-                            deferred.reject();
-                        } else showModal();
-                    }, function() {
-                        if (noModal) {
-                            if (noModal == 'retry') return;
-                            $interval.cancel(tick);
-                            deferred.reject();
-                        } else showModal();
-                    })
-                }, 1000);
-            }).catch(function(e) {
-                if (!silentFailure) {
-                    $rootScope.safeApply(function() {
-                        // notices.makeNotice('error', gettext('TREZOR initialisation failed') + ': ' + e);
-                    });
-                }
-                deferred.reject({pluginLoadFailed: true})
-            });
-            return deferred.promise;
-        },
-        recovery: function(mnemonic) {
-            return this.getDevice().then(function(dev) {
-                return dev.wipeDevice().then(function(res) {
-                    return dev.loadDevice({mnemonic: mnemonic});
-                });
-            });
-        },
-        setupSeed: function(mnemonic) {
-            var scope = $rootScope.$new(), d = $q.defer(), trezor_dev, modal, service = this;
-            scope.trezor = {
-                use_gait_mnemonic: !!mnemonic,
-                store: function() {
-                    this.setting_up = true;
-                    var store_d;
-                    if (mnemonic) {
-                        store_d = service.recovery(mnemonic);
-                    } else {
-                        store_d = trezor_dev.resetDevice({strength: 256});
-                    }
-                    store_d.then(function() {
-                        modal.close();
-                        d.resolve();
-                    }).catch(function(err) {
-                        this.setting_up = false;
-                        if (err.message) return;  // handled by handleError in services.js
-                        notices.makeNotice('error', err);
-                    });
-                },
-                reuse: function() {
-                    modal.close();
-                    d.resolve();
-                }
-            };
-            var do_modal = function() {
-                modal = $uibModal.open({
-                    templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_trezor_setup.html',
-                    scope: scope
-                });
-                modal.result.catch(function() { d.reject(); });
-            }
-            this.getDevice().then(function(trezor_dev_) {
-                trezor_dev = trezor_dev_;
-                trezor_dev.getPublicKey([]).then(function(pk) {
-                    scope.trezor.already_setup = true;
-                    do_modal();
-                }, function(err) {
-                    if (err.code != 11) {  // Failure_NotInitialized
-                        notices.makeNotice("error", err.message)
-                    }
-                    do_modal();
-                })
-            });
-            return d.promise;
-        }
-    };
-}]).factory('btchip', ['$q', '$interval', '$uibModal', '$rootScope', 'mnemonics', 'notices', 'focus', 'cordovaReady', '$injector',
-        function($q, $interval, $uibModal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
-
-    /**@TODO
-        This should be broken into 2 services
-        1 service should monitor and event based on the state of hardware wallets
-        and expose an API for interacting with them
-        a second service should manage UI events based on the behavior of these
-        wallets. This isolation will make HW wallets easier to support and the 
-        UI's related to them easier to maintain... it will also allow us to 
-        cleave off any reusable code for HW wallets we want to publish into the
-        ecosystem
-
-        This will require a refactor since currently the business logic and UI 
-        control flow are bound directly to each other
-    */
-    var cardFactory;
-    if (window.ChromeapiPlugupCardTerminalFactory) {
-        cardFactory = new ChromeapiPlugupCardTerminalFactory();
-        cardFactoryBootloader = new ChromeapiPlugupCardTerminalFactory(0x1808);
-    }
-
-    var BTChipCordovaWrapper = function() {
-        var dongle = {
-            disconnect_async: function() {
-                var d = $q.defer();
-                cordova.exec(function() {
-                    d.resolve();
-                }, function(fail) {
-                    d.reject(fail);
-                }, "BTChip", "disconnect", []);
-                return d.promise;
-            }
-        }
-        return {
-            app: {
-                getFirmwareVersion_async: function() {
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        result = new ByteString(result, HEX);
-                        d.resolve({
-                            compressedPublicKeys: result.byteAt(0) == 0x01,
-                            firmwareVersion: result.bytes(1)
-                        });
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "getFirmwareVersion", []);
-                    return d.promise;
-                },
-                verifyPin_async: function(pin) {
-                    if (this.pin_verified) return $q.when();
-                    var that = this;
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        that.pin_verified = true;
-                        d.resolve();
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "verifyPin", [pin.toString(HEX)]);
-                    return d.promise;
-                },
-                getWalletPublicKey_async: function(path) {
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        d.resolve({
-                            bitcoinAddress: {value: result.bitcoinAddress},
-                            chainCode: new ByteString(result.chainCode, HEX),
-                            publicKey: new ByteString(result.publicKey, HEX),
-                        });
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "getWalletPublicKey", [path]);
-                    return d.promise;
-                },
-                signMessagePrepare_async: function(path, msg) {
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        d.resolve(result);
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "signMessagePrepare", [path, msg.toString(HEX)]);
-                    return d.promise;
-                },
-                signMessageSign_async: function(pin) {
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        d.resolve(new ByteString(result, HEX));
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "signMessageSign", [pin.toString(HEX)]);
-                    return d.promise;
-                },
-                gaStartUntrustedHashTransactionInput_async: function(newTransaction, tx, i) {
-                    var d = Q.defer();
-                    var inputs = [];
-                    for (var j = 0; j < tx.ins.length; j++) {
-                        var input = tx.ins[j];
-                        var txhash = input.hash.toString('hex');
-                        var outpointAndSequence = new Bitcoin.Buffer.Buffer(8);
-                        outpointAndSequence.writeUInt32LE(input.index, 0);
-                        outpointAndSequence.writeUInt32LE(input.sequence, 4);
-                        outpointAndSequence = outpointAndSequence.toString('hex');
-                        inputs.push(txhash + outpointAndSequence);
-                    }
-                    var script = tx.ins[i].script.toString('hex');
-                    cordova.exec(function(result) {
-                        d.resolve(result);
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "startUntrustedTransaction", [newTransaction, i, inputs, script]);
-                    return d.promise;
-                },
-                gaUntrustedHashTransactionInputFinalizeFull_async: function(tx) {
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        d.resolve(result);
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "finalizeInputFull", [tx.serializeOutputs().toString('hex')]);
-                    return d.promise;
-                },
-                signTransaction_async: function(path, transactionAuthorization, lockTime) {
-                    var d = Q.defer();
-                    cordova.exec(function(result) {
-                        d.resolve(new ByteString(result, HEX));
-                    }, function(fail) {
-                        d.reject(fail);
-                    }, "BTChip", "untrustedHashSign", [path, lockTime]);
-                    return d.promise;
-                }
-            },
-            dongle: dongle
-        }
-    }
-    var pinModalCallbacks = [], pinNotCancelable = false, devnum = 0;
-    return {
-        _setupWrappers: function(btchip) {
-            // wrap some functions to allow using them even after disconnecting the dongle
-            // (prompting user to reconnect and enter pin)
-            var service = this;
-            var WRAP_FUNCS = [
-                'gaStartUntrustedHashTransactionInput_async',
-                'signMessagePrepare_async'
-            ];
-            for (var i = 0; i < WRAP_FUNCS.length; i++) { (function(func_name) {
-                btchip[func_name] = function() {
-                    var deferred = $q.defer();
-                    var origArguments = arguments;
-                    try {
-                        var d = btchip.app[func_name].apply(btchip.app, arguments)
-                    } catch (e) {
-                        // handle `throw "Connection is not open"` gracefully - getDevice() below
-                        var d = $q.reject();
-                    }
-                    d.then(function(data) {
-                        deferred.resolve(data);
-                    }, function(error) {
-                        if (!error || !error.indexOf || error.indexOf('Write failed') != -1) {
-                            notices.makeNotice('error', gettext('BTChip communication failed'));
-                            // no btchip - try polling for it
-                            service.getDevice().then(function(btchip_) {
-                                btchip.app = btchip_.app;
-                                btchip.dongle = btchip_.dongle;
-                                deferred.resolve(btchip[func_name].apply(btchip, origArguments));
-                            });
-                        } else {
-                            if (error.indexOf("6982") >= 0) {
-                                btchip.app.pin_verified = false;
-                                // setMsg("Dongle is locked - enter the PIN");
-                                return service.promptPin('', function(err, pin) {
-                                    if (!pin) {
-                                        deferred.reject();
-                                        return;
-                                    }
-                                    return btchip.app.verifyPin_async(new ByteString(pin, ASCII)).then(function() {
-                                        var d = $q.defer();  // don't call two functions at once in pinModalCallbacks
-                                        btchip[func_name].apply(btchip, origArguments).then(function(ret) {
-                                            deferred.resolve();
-                                            d.resolve(ret);
-                                        })
-                                        return d.promise;
-                                    }).fail(function(error) {
-                                        btchip.dongle.disconnect_async();
-                                        if (error.indexOf("6982") >= 0) {
-                                            notices.makeNotice("error", gettext("Invalid PIN"));
-                                        } else if (error.indexOf("6985") >= 0) {
-                                            notices.makeNotice("error", gettext("Dongle is not set up"));
-                                        } else if (error.indexOf("6faa") >= 0) {
-                                            notices.makeNotice("error", gettext("Dongle is locked - reconnect the dongle and retry"));
-                                        } else {
-                                            notices.makeNotice("error", error);
-                                        }
-                                        deferred.reject();
-                                    });
-                                });
-                            } else if (error.indexOf("6985") >= 0) {
-                                notices.makeMessage('error', gettext("Dongle is not set up"));
-                                deferred.reject();
-                            } else if (error.indexOf("6faa") >= 0) {
-                                notices.makeMessage('error', gettext("Dongle is locked - remove the dongle and retry"));
-                                deferred.reject();
-                            }
-                        }
-                    });
-                    return deferred.promise;
-                }
-            })(WRAP_FUNCS[i]) }
-            return btchip;
-        },
-        promptPin: function(type, callback) {
-            pinModalCallbacks.push({cb: callback, devnum: devnum});
-            if (pinModalCallbacks.length > 1) return;  // modal already displayed
-            var scope, modal;
-
-            scope = angular.extend($rootScope.$new(), {
-                pin: '',
-                type: type,
-                pinNotCancelable: pinNotCancelable
-            });
-            pinNotCancelable = false;
-
-            modal = $uibModal.open({
-                templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_pin.html',
-                size: 'sm',
-                windowClass: 'pinmodal',
-                backdrop: 'static',
-                keyboard: false,
-                scope: scope
-            });
-
-            focus('btchipPinModal');
-
-            return modal.result.then(
-                function (res) {
-                    var oldCallbacks = pinModalCallbacks.slice();
-                    var d = $q.when();
-                    for (var i = 0; i < oldCallbacks.length; i++) {
-                        if (oldCallbacks[i].devnum == devnum) {
-                            (function(i) { d = d.then(function() {
-                                return oldCallbacks[i].cb(null, res);
-                            }); })(i);
-                        }
-                    }
-                    pinModalCallbacks = [];
-                    return d;
-                },
-                function (err) {
-                    var oldCallbacks = pinModalCallbacks.slice();
-                    for (var i = 0; i < oldCallbacks.length; i++) {
-                        oldCallbacks[i].cb(err);
-                    }
-                    pinModalCallbacks = [];
-                }
-            );
-        },
-        getDevice: function(noModal, modalNotDisableable, existing_device) {
-            var service = this;
-            var deferred = $q.defer();
-
-            if (window.cordova && cordova.platformId == 'ios') return deferred.promise;
-            if (!cardFactory && !window.cordova) return $q.reject();
-
-            var modal, showModal = function() {
-                if (!noModal && !modal) {
-                    $rootScope.safeApply(function() {
-                        options = {
-                            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_usb_device.html',
-                        };
-                        if (modalNotDisableable) {
-                            options.scope = angular.extend($rootScope.$new(), {
-                                notCancelable: true
-                            });
-                            options.backdrop = 'static';
-                            pinNotCancelable = true;
-                        }
-                        modal = $uibModal.open(options);
-                        $injector.get('hw_detector').modal = modal;
-                        modal.result.finally(function() {
-                            $interval.cancel(tick);
-                        });
-                    });
-                }
-                if (noModal) {
-                    if (noModal == 'retry') return;
-                    $interval.cancel(tick);
-                    deferred.reject();
-                }
-            };
-
-            var check = cordovaReady(function() {
-                if (existing_device) existing_promise = existing_device.app.getFirmwareVersion_async();
-                else existing_promise = $q.reject();
-                existing_promise.then(function() {
-                    $interval.cancel(tick);
-                    deferred.resolve(existing_device);
-                }, function() {
-                    if (window.cordova) {
-                        var app_d = $q.defer(), app_promise = app_d.promise;
-                        cordova.exec(function(result) {
-                            if (result) {
-                                var wrapper = new BTChipCordovaWrapper();
-                                app_d.resolve({app: wrapper.app, dongle: wrapper.dongle});
-                            } else showModal();
-                        }, function(fail) {}, "BTChip", "has_dongle", []);
-                    } else {
-                        var app_promise = cardFactory.list_async().then(function(result) {
-                            if (result.length) {
-                                return cardFactory.getCardTerminal(result[0]).getCard_async().then(function(dongle) {
-                                    devnum += 1;
-                                    return {app: new BTChip(dongle), dongle: dongle, devnum: devnum};
-                                });
-                            } else {
-                                cardFactoryBootloader.list_async().then(function(result) {
-                                    if (result.length) {
-                                        showUpgradeModal();
-                                        $interval.cancel(tick);
-                                    } else {
-                                        showModal();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                    app_promise.then(function(btchip) {
-                        if (!btchip) { return; };
-                        btchip.app.getFirmwareVersion_async().then(function(version) {
-                            if (noModal) {
-                                $interval.cancel(tick);
-                            } else if (modal) {
-                                modal.close();  // modal close cancels the tick
-                            } else {
-                                $interval.cancel(tick);
-                            }
-                            var features = {};
-                            var firmwareVersion = version.firmwareVersion.bytes(0, 4);
-                            if (firmwareVersion.toString(HEX) < '00010408') {
-                                btchip.dongle.disconnect_async();
-                                showUpgradeModal();
-                                return;
-                            }
-                            features.signMessageRecoveryParam =
-                                firmwareVersion.toString(HEX) >= '00010409';
-                            features.quickerVersion =
-                                firmwareVersion.toString(HEX) >= '0001040b';
-                            deferred.resolve(service._setupWrappers({dongle: btchip.dongle,
-                                                                     app: btchip.app,
-                                                                     features: features}));
-                        });
-                    });
-                });
-            });
-            var tick = $interval(check, 1000);
-            check();
-
-            return deferred.promise;
-
-            function showUpgradeModal () {
-                var notice = gettext("Old BTChip firmware version detected. Please upgrade to at least %s.").replace('%s', '1.4.8');
-                if (window.cordova) {
-                    notices.makeNotice("error", notice);
-                } else {
-                    var scope = angular.extend($rootScope.$new(), {
-                        firmware_upgrade_message: notice
-                    });
-                    var modal = $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_fup.html',
-                        scope: scope
-                    }).result.then(function() {
-                        deferred.resolve(service.getDevice(noModal, modalNotDisableable, existing_device));
-                    });
-                }
-            }
-        },
-        setupSeed: function(mnemonic) {
-            var deferred = $q.defer();
-            var service = this;
-
-            this.getDevice().then(function(btchip_) {
-                var scope = $rootScope.$new(),
-                    wrong_pin, btchip = btchip_;
-                scope.btchip = {
-                    already_setup: false,
-                    gait_setup: false,
-                    use_gait_mnemonic: !!mnemonic,
-                    storing: false,
-                    seed_progress: 0,
-                    reset: function() {
-                        this.resetting = true;
-                        this.resets_remaining = 3;
-                        wrong_pin = '00000000000000000000000000000000';
-                        var attempt = function() {
-                            btchip.app.verifyPin_async(new ByteString(wrong_pin, ASCII)).then(function() {
-                                wrong_pin = '1234';
-                                attempt();
-                            }).fail(function(error) {
-                                $rootScope.$apply(function() {
-                                    console.log('reset pin error ' + error);
-                                    if (error.indexOf("6982") >= 0 || error.indexOf("63c") >= 0) {
-                                        // setMsg("Dongle is locked - enter the PIN");
-                                        if (error.indexOf("63c") >= 0) {
-                                            scope.btchip.resets_remaining = Number.parseInt(error[error.indexOf("63c") + 3]);
-                                        } else {
-                                            scope.btchip.resets_remaining -= 1;
-                                        }
-                                    } else if (error.indexOf("6985") >= 0) {
-                                        // var setupText = "Dongle is not set up";
-                                        scope.btchip.resets_remaining = 0;
-                                    }
-                                    scope.btchip.replug_required = true;
-                                    if (scope.btchip.resets_remaining) {
-                                        service.getDevice('retry').then(function(btchip_) {
-                                            btchip = btchip_;
-                                            scope.btchip.replug_required = false;
-                                            attempt();
-                                        })
-                                    } else {
-                                        service.getDevice('retry').then(function(btchip_) {
-                                            btchip = btchip_;
-                                            scope.btchip.replug_required = false;
-                                            scope.btchip.resetting = false;
-                                            scope.btchip.already_setup = false;
-                                        });
-                                    }
-                                });
-                            });
-                        };
-                        attempt();
-                    },
-                    store: function() {
-                        if (!mnemonic) {
-                            this.setting_up = true;
-                        } else {
-                            this.storing = true;
-                        }
-                        service.promptPin('', function(err, pin) {
-                            if (!pin) return;
-                            if (mnemonic) seed_deferred = mnemonics.toSeed(mnemonic);
-                            else seed_deferred = $q.when();
-                            seed_deferred.then(function(seed) {
-                                btchip.app.setupNew_async(
-                                    0x01,  // wallet mode
-
-                                    0x02 | // deterministic signatures
-                                    0x08,  // skip second factor if consuming only P2SH inputs in a transaction
-
-                                    cur_net.pubKeyHash,
-                                    cur_net.scriptHash,
-                                    new ByteString(pin, ASCII),
-                                    undefined,  // wipePin
-
-                                    // undefined,  // keymapEncoding
-                                    // true,  // restoreSeed
-                                    seed && new ByteString(seed, HEX) // bip32Seed
-                                ).then(function() {
-                                    btchip.app.setKeymapEncoding_async().then(function() {
-                                        $rootScope.$apply(function() {
-                                            scope.btchip.storing = scope.btchip.setting_up = false;
-                                            scope.btchip.gait_setup = true;
-                                            scope.btchip.replug_for_backup = !mnemonic;
-                                            deferred.resolve({pin: pin});
-                                        });
-                                    }).fail(function(error) {
-                                        notices.makeNotice('error', error);
-                                        console.log('setKeymapEncoding_async error: ' + error);
-                                    });
-                                }).fail(function(error) {
-                                    notices.makeNotice('error', error);
-                                    console.log('setupNew_async error: ' + error);
-                                });
-                            }, null, function(progress) {
-                                scope.btchip.seed_progress = progress;
-                            });
-                        });
-                    }
-                };
-                var do_modal = function() {
-                    $uibModal.open({
-                        templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_btchip_setup.html',
-                        scope: scope
-                    }).result.finally(function() {
-                        btchip.dongle.disconnect_async();
-                    });
-                }
-                btchip.app.getWalletPublicKey_async("").then(function(result) {
-                    scope.btchip.already_setup = true;
-                    do_modal();
-                }).fail(function(error) {
-                    if (error.indexOf("6982") >= 0) {
-                        // setMsg("Dongle is locked - enter the PIN");
-                        scope.btchip.already_setup = true;
-                    } else if (error.indexOf("6985") >= 0) {
-                        // var setupText = "Dongle is not set up";
-                    } else if (error.indexOf("6faa") >= 0) {
-                        // setMsg("Dongle is locked - remove the dongle and retry");
-                        scope.btchip.already_setup = true;
-                    }
-                    do_modal();
-                });
-            });
-
-            return deferred.promise;
-        }
-    }
-}]).factory('bip38', ['$q', '$uibModal', 'mnemonics', 'focus', function($q, $uibModal, mnemonics, focus) {
-    var bip38Service = {}, iframe;
-    bip38Service.processMessage = function(message) {
-        var is_chrome_app = window.chrome && chrome.storage;
-        d = $q.defer();
-        if (window.cordova) {
-            var method, data, password = message.password;
-            if (message.mnemonic_decrypted) {
-                method = "encrypt_raw";
-                data = message.mnemonic_decrypted;
-            } else if (message.mnemonic_encrypted) {
-                method = "decrypt_raw";
-                data = message.mnemonic_encrypted;
-            }
-            cordovaReady(function() {
-                cordova.exec(function(result) {
-                    d.resolve({data: result});
-                }, function(fail) {
-                    d.reject(fail);
-                }, "BIP38", method, [Array.from(data), password]);
-            })();
-        } else if (is_chrome_app) {
-            var process = function() {
-                var listener = function(message) {
-                    window.removeEventListener('message', listener);
-                    d.resolve(message);
-                };
-                window.addEventListener('message', listener);
-                iframe.contentWindow.postMessage(message, '*');
-            };
-            if (!iframe) {
-                if (document.getElementById("id_iframe_bip38_service")) {
-                    iframe = document.getElementById("id_iframe_bip38_service");
-                    process();
-                } else {
-                    iframe = document.createElement("IFRAME");
-                    iframe.onload = process;
-                    iframe.setAttribute("src", "/bip38_sandbox.html");
-                    iframe.setAttribute("class", "ng-hide");
-                    iframe.setAttribute("id", "id_iframe_bip38_service");
-                    document.body.appendChild(iframe);
-                }
-            } else {
-                process();
-            }
-        } else {
-            var worker = new Worker("/static/js/greenwallet/signup/bip38_worker.js");
-            worker.onmessage = function(message) {
-                d.resolve(message);
-            }
-            worker.postMessage(message);
-        }
-        return d.promise;
-    }
-    bip38Service.encrypt_mnemonic_modal = function($scope, seed) {
-        var d = $q.defer();
-        $scope.encrypt_password_modal = {
-            encrypt: function() {
-                this.error = undefined;
-                if (!this.password) {
-                    this.error = gettext('Please provide a password.');
-                    return;
-                }
-                if (this.password != this.password_repeated) {
-                    this.error = gettext('Passwords do not match.');
-                    return;
-                }
-                this.encrypting = true;
-                var that = this;
-                bip38Service.processMessage({password: that.password, mnemonic_decrypted: seed}).then(function(message) {
-                    mnemonics.toMnemonic(message.data).then(function(mnemonic) {
-                        that.encrypting = false;
-                        d.resolve(mnemonic);
-                        modal.close();
-                    });
-                });
-            }
-        };
-        var modal = $uibModal.open({
-            templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/signuplogin/modal_encryption_password.html',
-            scope: $scope
-        });
-        modal.opened.then(function() { focus('encryptPasswordModal'); })
-        return d.promise;
-    };
-    return bip38Service;
-}]).factory('encode_key', ['$q', function($q) {
-    var iframe;
-    return function(key, passphrase) {
-        var data = key.keyPair || key;  // either HDNode or ECPair
-        if (!passphrase) {
-            return $q.when(data.toWIF());
-        } else {
-            var is_chrome_app = window.chrome && chrome.storage;
-            var d = $q.defer();
-            if (window.cordova) {
-                cordovaReady(function() {
-                    cordova.exec(function(b58) {
-                        d.resolve(b58);
-                    }, function(fail) {
-                        $rootScope.decrementLoading();
-                        notices.makeNotice('error', fail);
-                        d.reject(fail);
-                    }, "BIP38", "encrypt", [
-                        Array.from(data.d.toBuffer()),
-                        passphrase,
-                        (cur_net === Bitcoin.bitcoin.networks.bitcoin ?
-                            'BTC' : 'BTT')]);
-                })();
-            } else if (is_chrome_app) {
-                var process = function() {
-                    var listener = function(message) {
-                        window.removeEventListener('message', listener);
-                        d.resolve(message.data);
-                    };
-                    window.addEventListener('message', listener);
-                    iframe.contentWindow.postMessage({
-                        eckey: data.toWIF(),
-                        network: cur_net,
-                        password: passphrase
-                    }, '*');
-                };
-                if (!iframe) {
-                    if (document.getElementById("id_iframe_send_bip38")) {
-                        iframe = document.getElementById("id_iframe_send_bip38");
-                        process();
-                    } else {
-                        iframe = document.createElement("IFRAME");
-                        iframe.onload = process;
-                        iframe.setAttribute("src", "/bip38_sandbox.html");
-                        iframe.setAttribute("class", "ng-hide");
-                        iframe.setAttribute("id", "id_iframe_send_bip38");
-                        document.body.appendChild(iframe);
-                    }
-                } else {
-                    process();
-                }
-            } else {
-                var worker = new Worker("/static/js/greenwallet/signup/bip38_worker.js");
-                worker.onmessage = function(message) {
-                    d.resolve(message.data);
-                }
-                worker.postMessage({
-                    eckey: data.toWIF(),
-                    network: cur_net,
-                    password: passphrase
-                });
-            }
-            return d.promise;
-        }
-    };
-}]);
-
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services.js","/greenwallet")
-},{"./services/index":42,"buffer":16,"oMfpAn":19}],42:[function(require,module,exports){
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/blind.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],58:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-// expects an angular module
-// attaches all of the services to it!
+var angular = require('angular');
+var window = require('global/window');
 
-module.exports = Services;
+var cordova = window.cordova;
+var ByteString = window.ByteString;
+var Bitcoin = window.Bitcoin;
+var gettext = window.gettext;
+var HEX = window.HEX;
+var ASCII = window.ASCII;
+var BASE_URL = window.BASE_URL;
+var LANG = window.LANG;
+var Q = require('q');
+
+module.exports = factory;
+
+factory.dependencies = ['$q', '$interval', '$uibModal', '$rootScope', 'mnemonics', 'notices', 'focus', 'cordovaReady', '$injector'];
+
+function factory ($q, $interval, $uibModal, $rootScope, mnemonics, notices, focus, cordovaReady, $injector) {
+  /* *@TODO
+      This should be broken into 2 services
+      1 service should monitor and event based on the state of hardware wallets
+      and expose an API for interacting with them
+      a second service should manage UI events based on the behavior of these
+      wallets. This isolation will make HW wallets easier to support and the
+      UI's related to them easier to maintain... it will also allow us to
+      cleave off any reusable code for HW wallets we want to publish into the
+      ecosystem
+
+      This will require a refactor since currently the business logic and UI
+      control flow are bound directly to each other
+  */
+  var cardFactory;
+  var cardFactoryBootloader;
+  if (window.ChromeapiPlugupCardTerminalFactory) {
+    cardFactory = new window.ChromeapiPlugupCardTerminalFactory();
+    cardFactoryBootloader = new window.ChromeapiPlugupCardTerminalFactory(0x1808);
+  }
+
+  var BTChipCordovaWrapper = function () {
+    var dongle = {
+      disconnect_async: function () {
+        var d = $q.defer();
+        cordova.exec(function () {
+          d.resolve();
+        }, function (fail) {
+          d.reject(fail);
+        }, 'BTChip', 'disconnect', []);
+        return d.promise;
+      }
+    };
+    return {
+      app: {
+        callQueue: [],
+        makeFirstCall: function () {
+          var next = function () {
+            this.callQueue.shift();
+            if (this.callQueue.length) {
+              this.makeFirstCall();
+            }
+          }.bind(this);
+          var call = this.callQueue[0];
+          cordova.exec(function (result) {
+            call[0](result);
+            next();
+          }, function (fail) {
+            call[1](fail);
+            next();
+          }, 'BTChip', call[2], call[3]);
+        },
+        queuedCordovaCall: function (cb, eb, func, args) {
+          this.callQueue.push([cb, eb, func, args]);
+          if (this.callQueue.length === 1) {
+            this.makeFirstCall();
+          }
+        },
+        getFirmwareVersion_async: function () {
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            result = new ByteString(result, HEX);
+            d.resolve({
+              compressedPublicKeys: result.byteAt(0) === 0x01,
+              firmwareVersion: result.bytes(1)
+            });
+          }, function (fail) {
+            d.reject(fail);
+          }, 'getFirmwareVersion', []);
+          return d.promise;
+        },
+        verifyPin_async: function (pin) {
+          if (this.pin_verified) return $q.when();
+          var that = this;
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            that.pin_verified = true;
+            d.resolve();
+          }, function (fail) {
+            d.reject(fail);
+          }, 'verifyPin', [pin.toString(HEX)]);
+          return d.promise;
+        },
+        getWalletPublicKey_async: function (path) {
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            d.resolve({
+              bitcoinAddress: {value: result.bitcoinAddress},
+              chainCode: new ByteString(result.chainCode, HEX),
+              publicKey: new ByteString(result.publicKey, HEX)
+            });
+          }, function (fail) {
+            d.reject(fail);
+          }, 'getWalletPublicKey', [path]);
+          return d.promise;
+        },
+        signMessagePrepare_async: function (path, msg) {
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            d.resolve(result);
+          }, function (fail) {
+            d.reject(fail);
+          }, 'signMessagePrepare', [path, msg.toString(HEX)]);
+          return d.promise;
+        },
+        signMessageSign_async: function (pin) {
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            d.resolve(new ByteString(result, HEX));
+          }, function (fail) {
+            d.reject(fail);
+          }, 'signMessageSign', [pin.toString(HEX)]);
+          return d.promise;
+        },
+        gaStartUntrustedHashTransactionInput_async: function (newTransaction, tx, i) {
+          var d = Q.defer();
+          var inputs = [];
+          for (var j = 0; j < tx.ins.length; j++) {
+            var input = tx.ins[j];
+            var txhash = input.hash.toString('hex');
+            var outpointAndSequence = new Bitcoin.Buffer.Buffer(8);
+            outpointAndSequence.writeUInt32LE(input.index, 0);
+            outpointAndSequence.writeUInt32LE(input.sequence, 4);
+            outpointAndSequence = outpointAndSequence.toString('hex');
+            inputs.push(txhash + outpointAndSequence);
+          }
+          var script = tx.ins[i].script.toString('hex');
+          this.queuedCordovaCall(function (result) {
+            d.resolve(result);
+          }, function (fail) {
+            d.reject(fail);
+          }, 'startUntrustedTransaction', [newTransaction, i, inputs, script]);
+          return d.promise;
+        },
+        gaUntrustedHashTransactionInputFinalizeFull_async: function (tx) {
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            d.resolve(result);
+          }, function (fail) {
+            d.reject(fail);
+          }, 'finalizeInputFull', [tx.serializeOutputs().toString('hex')]);
+          return d.promise;
+        },
+        signTransaction_async: function (path, transactionAuthorization, lockTime) {
+          var d = Q.defer();
+          this.queuedCordovaCall(function (result) {
+            d.resolve(new ByteString(result, HEX));
+          }, function (fail) {
+            d.reject(fail);
+          }, 'untrustedHashSign', [path, lockTime]);
+          return d.promise;
+        }
+      },
+      dongle: dongle
+    };
+  };
+  var pinModalCallbacks = [];
+  var pinNotCancelable = false;
+  var devnum = 0;
+  return {
+    _setupWrappers: function (btchip) {
+      // wrap some functions to allow using them even after disconnecting the dongle
+      // (prompting user to reconnect and enter pin)
+      var service = this;
+      var WRAP_FUNCS = [
+        'gaStartUntrustedHashTransactionInput_async',
+        'signMessagePrepare_async'
+      ];
+      WRAP_FUNCS.map(function (func_name) {
+        btchip[func_name] = function () {
+          var deferred = $q.defer();
+          var origArguments = arguments;
+          var d;
+          try {
+            d = btchip.app[func_name].apply(btchip.app, arguments);
+          } catch (e) {
+            // handle `throw "Connection is not open"` gracefully - getDevice() below
+            d = $q.reject();
+          }
+          d.then(function (data) {
+            deferred.resolve(data);
+          }, function (error) {
+            if (!error || !error.indexOf || error.indexOf('Write failed') !== -1) {
+              notices.makeNotice('error', gettext('BTChip communication failed'));
+              // no btchip - try polling for it
+              service.getDevice().then(function (btchip_) {
+                btchip.app = btchip_.app;
+                btchip.dongle = btchip_.dongle;
+                deferred.resolve(btchip[func_name].apply(btchip, origArguments));
+              });
+            } else {
+              if (error.indexOf('6982') >= 0) {
+                btchip.app.pin_verified = false;
+                // setMsg("Dongle is locked - enter the PIN")
+                return service.promptPin('', function (err, pin) {
+                  if (err || !pin) {
+                    deferred.reject(err);
+                    return;
+                  }
+                  return btchip.app.verifyPin_async(new ByteString(pin, ASCII)).then(function () {
+                    var d = $q.defer(); // don't call two functions at once in pinModalCallbacks
+                    btchip[func_name].apply(btchip, origArguments).then(function (ret) {
+                      deferred.resolve();
+                      d.resolve(ret);
+                    });
+                    return d.promise;
+                  }).fail(function (error) {
+                    btchip.dongle.disconnect_async();
+                    if (error.indexOf('6982') >= 0) {
+                      notices.makeNotice('error', gettext('Invalid PIN'));
+                    } else if (error.indexOf('6985') >= 0) {
+                      notices.makeNotice('error', gettext('Dongle is not set up'));
+                    } else if (error.indexOf('6faa') >= 0) {
+                      notices.makeNotice('error', gettext('Dongle is locked - reconnect the dongle and retry'));
+                    } else {
+                      notices.makeNotice('error', error);
+                    }
+                    deferred.reject();
+                  });
+                });
+              } else if (error.indexOf('6985') >= 0) {
+                notices.makeMessage('error', gettext('Dongle is not set up'));
+                deferred.reject();
+              } else if (error.indexOf('6faa') >= 0) {
+                notices.makeMessage('error', gettext('Dongle is locked - remove the dongle and retry'));
+                deferred.reject();
+              }
+            }
+          });
+          return deferred.promise;
+        };
+      });
+      return btchip;
+    },
+    promptPin: function (type, callback) {
+      pinModalCallbacks.push({cb: callback, devnum: devnum});
+      if (pinModalCallbacks.length > 1) return; // modal already displayed
+      var scope, modal;
+
+      scope = angular.extend($rootScope.$new(), {
+        pin: '',
+        type: type,
+        pinNotCancelable: pinNotCancelable
+      });
+      pinNotCancelable = false;
+
+      modal = $uibModal.open({
+        templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_pin.html',
+        size: 'sm',
+        windowClass: 'pinmodal',
+        backdrop: 'static',
+        keyboard: false,
+        scope: scope
+      });
+
+      focus('btchipPinModal');
+
+      return modal.result.then(
+        function (res) {
+          var oldCallbacks = pinModalCallbacks.slice();
+          var d = $q.when();
+          for (var i = 0; i < oldCallbacks.length; i++) {
+            if (oldCallbacks[i].devnum === devnum) {
+              d = queueCallback(i);
+            }
+          }
+          pinModalCallbacks = [];
+          return d;
+
+          function queueCallback (i) {
+            return d.then(function () {
+              return oldCallbacks[i].cb(null, res);
+            });
+          }
+        },
+        function (err) {
+          var oldCallbacks = pinModalCallbacks.slice();
+          for (var i = 0; i < oldCallbacks.length; i++) {
+            oldCallbacks[i].cb(err);
+          }
+          pinModalCallbacks = [];
+        }
+      );
+    },
+    getDevice: function (noModal, modalNotDisableable, existing_device) {
+      var service = this;
+      var deferred = $q.defer();
+
+      if (window.cordova && cordova.platformId === 'ios') return deferred.promise;
+      if (!cardFactory && !window.cordova) return $q.reject();
+
+      var modal;
+      function showModal () {
+        if (!noModal && !modal) {
+          $rootScope.safeApply(function () {
+            var options = {
+              templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_usb_device.html'
+            };
+            if (modalNotDisableable) {
+              options.scope = angular.extend($rootScope.$new(), {
+                notCancelable: true
+              });
+              options.backdrop = 'static';
+              pinNotCancelable = true;
+            }
+            modal = $uibModal.open(options);
+            $injector.get('hw_detector').modal = modal;
+            modal.result.finally(function () {
+              $interval.cancel(tick);
+            });
+          });
+        }
+        if (noModal) {
+          if (noModal === 'retry') return;
+          $interval.cancel(tick);
+          deferred.reject();
+        }
+      }
+
+      var check = cordovaReady(function () {
+        var existing_promise;
+        if (existing_device) {
+          existing_promise = existing_device.app.getFirmwareVersion_async();
+        } else {
+          existing_promise = $q.reject();
+        }
+        window.existing_promise = existing_promise;
+
+        existing_promise.then(function () {
+          $interval.cancel(tick);
+          deferred.resolve(existing_device);
+        }, function () {
+          var app_promise;
+          if (window.cordova) {
+            var app_d = $q.defer();
+            app_promise = app_d.promise;
+            cordova.exec(function (result) {
+              if (result) {
+                var wrapper = new BTChipCordovaWrapper();
+                app_d.resolve({app: wrapper.app, dongle: wrapper.dongle});
+              } else showModal();
+            }, function (fail) {}, 'BTChip', 'has_dongle', []);
+          } else {
+            app_promise = cardFactory.list_async().then(function (result) {
+              if (result.length) {
+                return cardFactory.getCardTerminal(result[0]).getCard_async().then(function (dongle) {
+                  devnum += 1;
+                  return {app: new window.BTChip(dongle), dongle: dongle, devnum: devnum};
+                });
+              } else {
+                cardFactoryBootloader.list_async().then(function (result) {
+                  if (result.length) {
+                    showUpgradeModal();
+                    $interval.cancel(tick);
+                  } else {
+                    showModal();
+                  }
+                });
+              }
+            });
+          }
+          app_promise.then(function (btchip) {
+            if (!btchip) { return; }
+            btchip.app.getFirmwareVersion_async().then(function (version) {
+              if (noModal) {
+                $interval.cancel(tick);
+              } else if (modal) {
+                modal.close(); // modal close cancels the tick
+              } else {
+                $interval.cancel(tick);
+              }
+              var features = {};
+              var firmwareVersion = version.firmwareVersion.bytes(0, 4);
+              if (firmwareVersion.toString(HEX) < '00010408') {
+                btchip.dongle.disconnect_async();
+                showUpgradeModal();
+                return;
+              }
+              features.signMessageRecoveryParam =
+                firmwareVersion.toString(HEX) >= '00010409';
+              features.quickerVersion =
+                firmwareVersion.toString(HEX) >= '0001040b';
+              deferred.resolve(service._setupWrappers({dongle: btchip.dongle,
+                app: btchip.app,
+              features: features}));
+            });
+          });
+        });
+      });
+      var tick = $interval(check, 1000);
+      check();
+
+      return deferred.promise;
+
+      function showUpgradeModal () {
+        var notice = gettext('Old BTChip firmware version detected. Please upgrade to at least %s.').replace('%s', '1.4.8');
+        if (window.cordova) {
+          notices.makeNotice('error', notice);
+        } else {
+          var scope = angular.extend($rootScope.$new(), {
+            firmware_upgrade_message: notice
+          });
+          $uibModal.open({
+            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_fup.html',
+            scope: scope
+          }).result.then(function () {
+            deferred.resolve(service.getDevice(noModal, modalNotDisableable, existing_device));
+          });
+        }
+      }
+    },
+    setupSeed: function (mnemonic) {
+      var deferred = $q.defer();
+      var service = this;
+
+      this.getDevice().then(function (btchip_) {
+        var scope = $rootScope.$new();
+        var wrong_pin;
+        var btchip = btchip_;
+        scope.btchip = {
+          already_setup: false,
+          gait_setup: false,
+          use_gait_mnemonic: !!mnemonic,
+          storing: false,
+          seed_progress: 0,
+          reset: function () {
+            this.resetting = true;
+            this.resets_remaining = 3;
+            wrong_pin = '00000000000000000000000000000000';
+            var attempt = function () {
+              btchip.app.verifyPin_async(new ByteString(wrong_pin, ASCII)).then(function () {
+                wrong_pin = '1234';
+                attempt();
+              }).fail(function (error) {
+                $rootScope.$apply(function () {
+                  console.log('reset pin error ' + error);
+                  if (error.indexOf('6982') >= 0 || error.indexOf('63c') >= 0) {
+                    // setMsg("Dongle is locked - enter the PIN")
+                    if (error.indexOf('63c') >= 0) {
+                      scope.btchip.resets_remaining = Number.parseInt(error[error.indexOf('63c') + 3], 10);
+                    } else {
+                      scope.btchip.resets_remaining -= 1;
+                    }
+                  } else if (error.indexOf('6985') >= 0) {
+                    // var setupText = "Dongle is not set up"
+                    scope.btchip.resets_remaining = 0;
+                  }
+                  scope.btchip.replug_required = true;
+                  if (scope.btchip.resets_remaining) {
+                    service.getDevice('retry').then(function (btchip_) {
+                      btchip = btchip_;
+                      scope.btchip.replug_required = false;
+                      attempt();
+                    });
+                  } else {
+                    service.getDevice('retry').then(function (btchip_) {
+                      btchip = btchip_;
+                      scope.btchip.replug_required = false;
+                      scope.btchip.resetting = false;
+                      scope.btchip.already_setup = false;
+                    });
+                  }
+                });
+              });
+            };
+            attempt();
+          },
+          store: function () {
+            if (!mnemonic) {
+              this.setting_up = true;
+            } else {
+              this.storing = true;
+            }
+            service.promptPin('', function (err, pin) {
+              if (!pin || err) {
+                return;
+              }
+              var seed_deferred;
+              if (mnemonic) {
+                seed_deferred = mnemonics.toSeed(mnemonic);
+              } else {
+                seed_deferred = $q.when();
+              }
+              seed_deferred.then(function (seed) {
+                btchip.app.setupNew_async(
+                  0x01, // wallet mode
+
+                  0x02 | // deterministic signatures
+                  0x08, // skip second factor if consuming only P2SH inputs in a transaction
+
+                  window.cur_net.pubKeyHash,
+                  window.cur_net.scriptHash,
+                  new ByteString(pin, ASCII),
+                  undefined, // wipePin
+
+                  // undefined,  // keymapEncoding
+                  // true,  // restoreSeed
+                  seed && new ByteString(seed, HEX) // bip32Seed
+                ).then(function () {
+                  btchip.app.setKeymapEncoding_async().then(function () {
+                    $rootScope.$apply(function () {
+                      scope.btchip.storing = scope.btchip.setting_up = false;
+                      scope.btchip.gait_setup = true;
+                      scope.btchip.replug_for_backup = !mnemonic;
+                      deferred.resolve({pin: pin});
+                    });
+                  }).fail(function (error) {
+                    notices.makeNotice('error', error);
+                    console.log('setKeymapEncoding_async error: ' + error);
+                  });
+                }).fail(function (error) {
+                  notices.makeNotice('error', error);
+                  console.log('setupNew_async error: ' + error);
+                });
+              }, null, function (progress) {
+                scope.btchip.seed_progress = progress;
+              });
+            });
+          }
+        };
+        var do_modal = function () {
+          $uibModal.open({
+            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_btchip_setup.html',
+            scope: scope
+          }).result.finally(function () {
+            btchip.dongle.disconnect_async();
+          });
+        };
+        btchip.app.getWalletPublicKey_async('').then(function (result) {
+          scope.btchip.already_setup = true;
+          do_modal();
+        }).fail(function (error) {
+          if (error.indexOf('6982') >= 0) {
+            // setMsg("Dongle is locked - enter the PIN")
+            scope.btchip.already_setup = true;
+          } else if (error.indexOf('6985') >= 0) {
+            // var setupText = "Dongle is not set up"
+          } else if (error.indexOf('6faa') >= 0) {
+            // setMsg("Dongle is locked - remove the dongle and retry")
+            scope.btchip.already_setup = true;
+          }
+          do_modal();
+        });
+      });
+
+      return deferred.promise;
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/btchip.js","/greenwallet/services")
+},{"angular":12,"buffer":28,"global/window":26,"oMfpAn":31,"q":33}],59:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var cordova = window.cordova;
+var gettext = window.gettext;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', 'cordovaReady'];
+
+function factory ($q, cordovaReady) {
+  return {
+    copy: function (data) {
+      var deferred = $q.defer();
+      cordovaReady(function () {
+        cordova.plugins.clipboard.copy(data, function () {
+          deferred.resolve(gettext('Copied'));
+        }, function () {
+          deferred.reject(gettext('Error copying'));
+        });
+      })();
+      return deferred.promise;
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/clipboard.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],60:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+module.exports = factory;
+
+function factory () {
+  return cordovaReady;
+}
+
+function cordovaReady (fn) {
+  // cordovaReady is called even when there is no Cordova support, hence
+  // the plain `return fn` below.
+
+  // This is because WebSockets are implemented on Android in Cordova,
+  // so the initial implementation was a generic wrapper which runs
+  // code even without Cordova, to allow running the same WebSockets
+  // code on desktop and Android.
+
+  // (See the usage in js/greenwallet/services.js: ab.connect()
+  // is wrapped inside cordovaReady, because it uses WebSockets)
+
+  // Maybe it might be better to add some runEvenWithoutCordova
+  // argument to cordovaReady for that WebSockets special case,
+  // and by default don't run anything on desktop from the function
+  // returned there...
+  if (!window.cordova) {
+    return fn;
+  }
+
+  var queue = [];
+
+  var impl = function () {
+    queue.push([this, Array.prototype.slice.call(arguments)]);
+  };
+
+  document.addEventListener('deviceready', function () {
+    queue.forEach(function (args) {
+      fn.apply(args[0], args[1]);
+    });
+    impl = fn;
+    navigator.splashscreen.hide();
+  }, false);
+
+  return function () {
+    return impl.apply(this, arguments);
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/cordovaReady.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],61:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var cordova = window.cordova;
+
+module.exports = factory;
+
+factory.dependencies = ['cordovaReady', '$q'];
+
+function factory (cordovaReady, $q) {
+  var pbkdf2_iterations = 10; // Not ideal, but limitations of using javascript
+  var cryptoService = {};
+  cryptoService.encrypt = function (data, password) {
+    var Bitcoin = window.Bitcoin;
+    if (window.cordova && cordova.platformId === 'ios') {
+      var deferred = $q.defer();
+      cordovaReady(function () {
+        cordova.exec(function (param) {
+          deferred.resolve(param);
+        }, function (fail) {
+          console.log('cryptoService.encrypt failed: ' + fail);
+          deferred.resolve();
+        }, 'AES', 'encrypt', [data, password]);
+      })();
+      return deferred.promise;
+    } else {
+      var salt = Bitcoin.randombytes(16);
+      var key256Bits = Bitcoin.pbkdf2.pbkdf2Sync(
+        password,
+        salt,
+        pbkdf2_iterations,
+        256 / 8
+      );
+      var cipher = Bitcoin.aes.createCipheriv(
+        'aes-256-cbc',
+        key256Bits,
+        salt
+      );
+      cipher.end(data);
+      return $q.when(Bitcoin.Buffer.Buffer.concat([
+        salt, cipher.read()
+      ]).toString('base64'));
+    }
+  };
+  cryptoService.decrypt = function (data, password) {
+    var Bitcoin = window.Bitcoin;
+    if (window.cordova && cordova.platformId === 'ios') {
+      var deferred = $q.defer();
+      cordovaReady(function () {
+        cordova.exec(function (param) {
+          deferred.resolve(param);
+        }, function (fail) {
+          console.log('cryptoService.encrypt failed: ' + fail);
+          deferred.resolve();
+        }, 'AES', 'decrypt', [data, password]);
+      })();
+      return deferred.promise;
+    } else {
+      try {
+        var parsed_data = new Bitcoin.Buffer.Buffer(data, 'base64');
+        var salt = parsed_data.slice(0, 16);
+        parsed_data = parsed_data.slice(16);
+        var key256Bits = Bitcoin.pbkdf2.pbkdf2Sync(
+          password,
+          salt,
+          pbkdf2_iterations,
+          256 / 8
+        );
+        var cipher = Bitcoin.aes.createDecipheriv(
+          'aes-256-cbc',
+          key256Bits,
+          salt
+        );
+        cipher.setAutoPadding(false);
+        cipher.end(parsed_data);
+        var decoded = cipher.read();
+        // ignore padding bytes for backwards compatibility,
+        // because our old implementation used the iso10126 padding:
+        var padding = decoded[decoded.length - 1];
+        decoded = decoded.slice(0, decoded.length - padding);
+        if (decoded != null) {
+          return $q.when(decoded.toString('utf-8'));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      return $q.when();
+    }
+  };
+  return cryptoService;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/crypto.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],62:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+module.exports = factory;
+
+factory.dependencies = ['storage'];
+
+function factory (storage) {
+  var uuid4 = function () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var nums = new Uint32Array(1);
+      var r;
+      var v;
+
+      window.crypto.getRandomValues(nums);
+      r = nums[0] % 16;
+      v = (c === 'x') ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  };
+  return function () {
+    return storage.get('device_id').then(function (value) {
+      if (!value) {
+        var ret = uuid4();
+        storage.set('device_id', ret);
+        return ret;
+      } else return value;
+    });
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/device_id.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],63:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var is_chrome_app = require('has-chrome-storage');
+
+var Bitcoin = window.Bitcoin;
+
+module.exports = factory;
+
+factory.dependencies = ['$rootScope', '$q', 'cordovaReady', 'notices'];
+
+function factory ($rootScope, $q, cordovaReady, notices) {
+  var iframe;
+  return function (key, passphrase) {
+    var data = key.keyPair || key; // either HDNode or ECPair
+    if (!passphrase) {
+      return $q.when(data.toWIF());
+    } else {
+      var d = $q.defer();
+      if (window.cordova) {
+        cordovaReady(function () {
+          window.cordova.exec(function (b58) {
+            d.resolve(b58);
+          }, function (fail) {
+            $rootScope.decrementLoading();
+            notices.makeNotice('error', fail);
+            d.reject(fail);
+          }, 'BIP38', 'encrypt', [
+            Array.from(data.d.toBuffer()),
+            passphrase,
+            (window.cur_net === Bitcoin.bitcoin.networks.bitcoin
+              ? 'BTC'
+              : 'BTT')
+          ]);
+        })();
+      } else if (is_chrome_app) {
+        var process = function () {
+          var listener = function (message) {
+            window.removeEventListener('message', listener);
+            d.resolve(message.data);
+          };
+          window.addEventListener('message', listener);
+          iframe.contentWindow.postMessage({
+            eckey: data.toWIF(),
+            network: window.cur_net,
+            password: passphrase
+          }, '*');
+        };
+        if (!iframe) {
+          if (document.getElementById('id_iframe_send_bip38')) {
+            iframe = document.getElementById('id_iframe_send_bip38');
+            process();
+          } else {
+            iframe = document.createElement('IFRAME');
+            iframe.onload = process;
+            iframe.setAttribute('src', '/bip38_sandbox.html');
+            iframe.setAttribute('class', 'ng-hide');
+            iframe.setAttribute('id', 'id_iframe_send_bip38');
+            document.body.appendChild(iframe);
+          }
+        } else {
+          process();
+        }
+      } else {
+        var worker = new window.Worker('/static/js/greenwallet/signup/bip38_worker.js');
+        worker.onmessage = function (message) {
+          d.resolve(message.data);
+        };
+        worker.postMessage({
+          eckey: data.toWIF(),
+          network: window.cur_net,
+          password: passphrase
+        });
+      }
+      return d.promise;
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/encode_key.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],64:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var document = require('global/document');
+
+var FB = window.FB;
+var FB_APP_ID = window.FB_APP_ID;
+var CDV = window.CDV;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', '$rootScope', 'cordovaReady', '$interval'];
+
+function factory ($q, $rootScope, cordovaReady, $interval) {
+  if (!document.getElementById('fb-root')) return;
+
+  var FB_deferred = $q.defer();
+  var FB_promise = FB_deferred.promise;
+  var initd = false;
+  window.fbAsyncInit = function () {
+    $interval.cancel(FB_interval_promise);
+    cordovaReady(function () {
+      FB_deferred.resolve();
+    })();
+  };
+  if (window.cordova) {
+    // fbAsyncInit is not called for some reason in Cordova, so we poll for FB
+    var FB_interval_promise = $interval(function () {
+      if (window.FB) {
+        window.fbAsyncInit();
+      }
+    }, 100, 50); // try for 5 seconds
+  }
+
+  cordovaReady(function () {
+    var e = document.createElement('script');
+    e.async = true;
+    e.src = 'https://connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  })();
+
+  var logged_in = false;
+  var login_deferred = $q.defer();
+  FB_promise = FB_promise.then(function () {
+    FB.Event.subscribe('auth.authResponseChange', function (response) {
+      if (response.status === 'connected') {
+        logged_in = true;
+        $rootScope.safeApply(function () {
+          login_deferred.resolve();
+        });
+      }
+    });
+
+    if (window.cordova) {
+      FB.init({
+        appId: FB_APP_ID,
+        nativeInterface: CDV.FB,
+        useCachedDialogs: false
+      });
+    } else {
+      FB.init({
+        appId: FB_APP_ID,
+        status: true
+      });
+    }
+
+    initd = true;
+  });
+
+  var facebookService = {};
+  facebookService.login = function (loginstate) {
+    if (loginstate.logging_in && !initd) return;
+    if (logged_in) {
+      loginstate.logged_in = true;
+      return $q.when(true);
+    }
+    loginstate.logging_in = true;
+    var deferred = $q.defer();
+    FB.login(function (response) {
+      $rootScope.$apply(function () {
+        if (response.authResponse) {
+          loginstate.logged_in = true;
+          deferred.resolve();
+        } else {
+          deferred.reject();
+        }
+        loginstate.logging_in = false;
+      });
+    }, {scope: ''});
+    return deferred.promise;
+  };
+
+  facebookService.getUser = function () {
+    login_deferred = login_deferred.then(function () {
+      var inner_deferred = $q.defer();
+      FB.api('/me', function (response) {
+        $rootScope.$apply(function () {
+          inner_deferred.resolve(response);
+        });
+      });
+      return inner_deferred.promise;
+    });
+    return login_deferred;
+  };
+
+  return facebookService;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/facebook.js","/greenwallet/services")
+},{"buffer":28,"global/document":25,"oMfpAn":31}],65:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+module.exports = factory;
+
+factory.dependencies = ['$rootScope', '$timeout', 'cordovaReady'];
+
+function factory ($rootScope, $timeout, cordovaReady) {
+  return function (name) {
+    $timeout(function () {
+      $rootScope.$broadcast('focusOn', name);
+    /* doesn't work very well
+    if (window.cordova) {
+        cordovaReady(function() {
+            window.plugins.SoftKeyboard.show()
+        })()
+    } */
+    });
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/focus.js","/greenwallet/services")
+},{"buffer":28,"oMfpAn":31}],66:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+module.exports = factory;
+
+function factory () {
+  return gaEvent;
+
+  function gaEvent (category, action, label) {
+    if (window._gaq) {
+      var _gaq = window._gaq;
+      try {
+        if (category === '_pageview') {
+          _gaq.push(['_trackPageview', action]);
+        } else {
+          _gaq.push(['_trackEvent', category, action, label]);
+        }
+      } catch (e) {}
+    }
+  }
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/gaEvent.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],67:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+module.exports = factory;
+
+function factory () {
+  if (require('has-chrome-storage') || window.cordova) {
+    return 'greenaddress.it';
+  } else {
+    return window.location.hostname;
+  }
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/hostname.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],68:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var BASE_URL = window.BASE_URL;
+var LANG = window.LANG;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', 'trezor', 'btchip', '$timeout', '$rootScope', '$uibModal'];
+function factory ($q, trezor, btchip, $timeout, $rootScope, $uibModal) {
+  return {
+    success: false,
+    showModal: function (d) {
+      var that = this;
+      if (!that.modal) {
+        $rootScope.safeApply(function () {
+          var options = {
+            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_usb_device.html'
+          };
+          that.modal = $uibModal.open(options);
+          that.modal.result.finally(function () {
+            if (!that.success) d.reject();
+          });
+        });
+      }
+    },
+    waitForHwWallet: function () {
+      var d = $q.defer();
+      var that = this;
+      var doSuccess = function () {
+        d.resolve();
+        that.success = true;
+        if (that.modal) {
+          that.modal.close(); // modal close cancels the tick
+        }
+      };
+      var check = function () {
+        trezor.getDevice(true).then(function () {
+          doSuccess();
+        }, function (err) {
+          if (err && (err.pluginLoadFailed || err.outdatedFirmware)) {
+            // don't retry on unrecoverable errors
+            d.reject();
+            return;
+          }
+          btchip.getDevice(true).then(function () {
+            doSuccess();
+          }, function () {
+            // can be set to success by signup (if trezor got connected)
+            if (!that.success) that.showModal(d);
+            $timeout(check, 1000);
+          });
+        });
+      };
+      check();
+      return d.promise;
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/hw_detector.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],69:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var angular = require('angular');
+
+module.exports = Service;
 
 // these are all the services exposed when this runs
 // we would just iterate over the FS and include them all,
@@ -56909,10 +56852,38 @@ module.exports = Services;
 // it's easier to just maintain this list manually,
 // also you can swap out implementations if you want based on runtime logic
 var serviceMap = {
-  notices: require('./notices')
+  addressbook: require('./addressbook'),
+  autotimeout: require('./autotimeout'),
+  bip38: require('./bip38'),
+  blind: require('./blind'),
+  btchip: require('./btchip'),
+  clipboard: require('./clipboard'),
+  cordovaReady: require('./cordovaReady'),
+  crypto: require('./crypto'),
+  device_id: require('./device_id'),
+  encode_key: require('./encode_key'),
+  facebook: require('./facebook'),
+  focus: require('./focus'),
+  gaEvent: require('./gaEvent'),
+  hostname: require('./hostname'),
+  hw_detector: require('./hw_detector'),
+  notices: require('./notices'),
+  parseKeyValue: require('./parseKeyValue'),
+  parse_bitcoin_uri: require('./parse_bitcoin_uri'),
+  reddit: require('./reddit'),
+  sound: require('./sound'),
+  storage: require('./storage'),
+  user_agent: require('./user_agent'),
+  wallets: require('./wallets'),
+  qrcode: require('./qrcode'),
+  trezor: require('./trezor'),
+  tx_sender: require('./tx_sender')
 };
 
-function Services (module) {
+// takes in the module and returns all the services
+function Service () {
+  var module = angular.module('greenWalletServices', []);
+
   Object.keys(serviceMap).forEach(function (serviceName) {
     var service = serviceMap[serviceName];
     module.factory(
@@ -56920,10 +56891,10 @@ function Services (module) {
       (service.dependencies || []).concat(service)
     );
   });
-};
+}
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/index.js","/greenwallet/services")
-},{"./notices":43,"buffer":16,"oMfpAn":19}],43:[function(require,module,exports){
+},{"./addressbook":54,"./autotimeout":55,"./bip38":56,"./blind":57,"./btchip":58,"./clipboard":59,"./cordovaReady":60,"./crypto":61,"./device_id":62,"./encode_key":63,"./facebook":64,"./focus":65,"./gaEvent":66,"./hostname":67,"./hw_detector":68,"./notices":70,"./parseKeyValue":71,"./parse_bitcoin_uri":72,"./qrcode":73,"./reddit":74,"./sound":75,"./storage":76,"./trezor":77,"./tx_sender":78,"./user_agent":79,"./wallets":80,"angular":12,"buffer":28,"oMfpAn":31}],70:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var window = require('global/window');
 var is_chrome_app = require('has-chrome-storage');
@@ -57033,7 +57004,2861 @@ function factory ($rootScope, $timeout) {
 }
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/notices.js","/greenwallet/services")
-},{"buffer":16,"global/window":15,"has-chrome-storage":20,"oMfpAn":19}],44:[function(require,module,exports){
+},{"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],71:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var angular = require('angular');
+
+module.exports = factory;
+
+function factory () {
+  return parseKeyValue;
+
+  function parseKeyValue (keyValue) {
+    var obj = {};
+    var key_value;
+    var key;
+    angular.forEach((keyValue || '').split('&'), function (keyValue) {
+      if (keyValue) {
+        key_value = keyValue.split('=');
+        key = tryDecodeURIComponent(key_value[0]);
+        if (key !== undefined) {
+          var val = (key_value[1] !== undefined) ? tryDecodeURIComponent(key_value[1]) : true;
+          if (!obj[key]) {
+            obj[key] = val;
+          } else if (toString.call(obj[key]) === '[object Array]') {
+            obj[key].push(val);
+          } else {
+            obj[key] = [obj[key], val];
+          }
+        }
+      }
+    });
+    return obj;
+  }
+
+  function tryDecodeURIComponent (value) {
+    try {
+      return window.decodeURIComponent(value);
+    } catch (e) {
+      // Ignore any invalid uri component
+    }
+  }
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/parseKeyValue.js","/greenwallet/services")
+},{"angular":12,"buffer":28,"global/window":26,"oMfpAn":31}],72:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+module.exports = factory;
+
+factory.dependencies = ['parseKeyValue'];
+
+function factory (parseKeyValue) {
+  return function parse_bitcoin_uri (uri) {
+    if (uri.indexOf === undefined || uri.indexOf('bitcoin:') === -1) {
+      // not a URI
+      return {};
+    } else {
+      if (uri.indexOf('?') === -1) {
+        // no amount
+        return {recipient: uri.split('bitcoin:')[1]};
+      } else {
+        var recipient = uri.split('bitcoin:')[1].split('?')[0];
+        var variables = parseKeyValue(uri.split('bitcoin:')[1].split('?')[1]);
+        variables.recipient = recipient;
+        return variables;
+      }
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/parse_bitcoin_uri.js","/greenwallet/services")
+},{"buffer":28,"oMfpAn":31}],73:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var angular = require('angular');
+
+var cordova = window.cordova;
+var gettext = window.gettext;
+var qrcode = window.qrcode;
+var Image = window.Image;
+var URL = window.URL;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', 'cordovaReady', '$timeout', 'notices'];
+
+function factory ($q, cordovaReady, $timeout, notices) {
+  var n = navigator;
+  var v;
+  var webkit = false;
+  var moz = false;
+  var gCtx;
+  var stream;
+  return {
+    stop_scanning: function ($scope) {
+      $scope.scanning_qr_video = false;
+      v.pause();
+      try {
+        stream.stop();
+      } catch (e) {
+        stream.getVideoTracks()[0].stop();
+      }
+    },
+    scan: function ($scope, $event, suffix) {
+      var that = this;
+      var deferred = $q.defer();
+      if (cordova) {
+        $event.preventDefault();
+        cordovaReady(function () {
+          cordova.plugins.barcodeScanner.scan(
+            function (result) {
+              console.log('We got a barcode\n' +
+                'Result: ' + result.text + '\n' +
+                'Format: ' + result.format + '\n' +
+                'Cancelled: ' + result.cancelled);
+              if (!result.cancelled && result.format === 'QR_CODE') {
+                $timeout(function () { deferred.resolve(result.text); });
+              } else {
+                if (result.cancelled) {
+                  $timeout(function () { deferred.reject(gettext('Cancelled')); });
+                } else {
+                  $timeout(function () { deferred.reject(gettext('Invalid format')); });
+                }
+              }
+            },
+            deferred.reject
+          );
+        })();
+      } else {
+        v = document.getElementById('v' + (suffix || ''));
+        qrcode.callback = function (result) {
+          if (result === 'error decoding QR Code') {
+            deferred.reject(gettext('Could not process the QR code, the image may be blurry. Please try again.'));
+            return;
+          }
+          deferred.resolve(result);
+        };
+        var success = function (stream_) {
+          $scope.$apply(function () {
+            $scope.scanning_qr_video = true;
+          });
+          stream = stream_;
+          var gCanvas = document.getElementById('qr-canvas');
+          var w = 800;
+          var h = 600;
+          gCanvas.style.width = w + 'px';
+          gCanvas.style.height = h + 'px';
+          gCanvas.width = w;
+          gCanvas.height = h;
+          gCtx = gCanvas.getContext('2d');
+          gCtx.clearRect(0, 0, w, h);
+          if (webkit) {
+            v.src = window.webkitURL.createObjectURL(stream);
+          } else if (moz) {
+            v.mozSrcObject = stream;
+            v.play();
+          } else {
+            v.src = stream;
+          }
+          setTimeout(captureToCanvas, 500);
+        };
+        var error = function () {
+          $scope.gotGUMerror = true; // for some reason dispatchEvent doesn't work inside error()
+          deferred.reject(gettext('Access denied. Retry to scan from file.'));
+        };
+        var scan_input = function () {
+          var qr = $event.target;
+          angular.element(qr).on('change', function (event) {
+            if (event.target.files.length !== 1 && event.target.files[0].type.indexOf('image/') !== 0) {
+              notices.makeNotice('error', gettext('You must provide only one image file.'));
+              return;
+            }
+
+            // https://github.com/kyledrake/coinpunk/blob/master/public/js/coinpunk/controllers/tx.js#L195
+            /*! Copyright (c) 2013, Kyle Drake */
+
+            var canvas = document.getElementById('qr-canvas');
+            if (!canvas) {
+              canvas = document.createElement('canvas');
+            }
+            var context = canvas.getContext('2d');
+            var img = new Image();
+            img.onload = function () {
+              /*
+              Helpful URLs:
+              http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
+              http://stackoverflow.com/questions/19432269/ios-html5-canvas-drawimage-vertical-scaling-bug-even-for-small-images
+
+              There are a lot of arbitrary things here. Help to clean this up welcome.
+
+              context.save()
+              context.scale(1e6, 1e6)
+              context.drawImage(img, 0, 0, 1e-7, 1e-7, 0, 0, 1e-7, 1e-7)
+              context.restore()
+              */
+
+              if ((img.width === 2448 && img.height === 3264) || (img.width === 3264 && img.height === 2448)) {
+                canvas.width = 1024;
+                canvas.height = 1365;
+                context.drawImage(img, 0, 0, 1024, 1365);
+              } else if (img.width > 1024 || img.height > 1024) {
+                canvas.width = img.width * 0.15;
+                canvas.height = img.height * 0.15;
+                context.drawImage(img, 0, 0, img.width * 0.15, img.height * 0.15);
+              } else {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                context.drawImage(img, 0, 0, img.width, img.height);
+              }
+              qrcode.decode(canvas.toDataURL('image/png'));
+            };
+
+            img.src = URL.createObjectURL(event.target.files[0]);
+          });
+        };
+        var tryGUM = function (source) {
+          if (n.getUserMedia && !$scope.gotGUMerror) {
+            n.getUserMedia({video: source, audio: false}, success, error);
+            $event.preventDefault();
+          } else if (n.webkitGetUserMedia && !$scope.gotGUMerror) {
+            webkit = true;
+            n.webkitGetUserMedia({video: source, audio: false}, success, error);
+            $event.preventDefault();
+          } else if (n.mozGetUserMedia && !$scope.gotGUMerror) {
+            moz = true;
+            n.mozGetUserMedia({video: source, audio: false}, success, error);
+            $event.preventDefault();
+          } else {
+            scan_input();
+          }
+        };
+        if (window.MediaStreamTrack && window.MediaStreamTrack.getSources && !$scope.gotGUMerror) {
+          $event.preventDefault();
+          window.MediaStreamTrack.getSources(function (sources) {
+            var found = false;
+            for (var i = 0; i < sources.length; i++) {
+              if (sources[i].kind === 'video' && sources[i].facing === 'environment') {
+                found = true;
+                tryGUM({optional: [{sourceId: sources[i].id}]});
+                break;
+              }
+            }
+            if (!found) tryGUM(true);
+          });
+        } else {
+          tryGUM(true);
+        }
+      }
+      return deferred.promise;
+
+      function captureToCanvas () {
+        try {
+          gCtx.drawImage(v, 0, 0);
+          try {
+            qrcode.decode();
+            that.stop_scanning($scope);
+          } catch (e) {
+            console.error(e.stack || e);
+            setTimeout(captureToCanvas, 500);
+          }
+        } catch (e) {
+          console.error(e.stack || e);
+          setTimeout(captureToCanvas, 500);
+        }
+      }
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/qrcode.js","/greenwallet/services")
+},{"angular":12,"buffer":28,"global/window":26,"oMfpAn":31}],74:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var screen = window.screen;
+var REDDIT_APP_ID = window.REDDIT_APP_ID;
+
+module.exports = factory;
+
+factory.dependencies = ['$q'];
+
+function factory ($q) {
+  var redditService = {
+    getToken: function (scope) {
+      var tokenDeferred = $q.defer();
+      var state = Math.random();
+      var left = screen.width / 2 - 500;
+      var top = screen.height / 2 - 300;
+      var redir;
+      if (window.location.hostname === 'localhost') {
+        redir = 'http://localhost:9908/reddit/';
+      } else {
+        redir = 'https://' + window.location.hostname + '/reddit/';
+      }
+      var w = window.open('https://ssl.reddit.com/api/v1/authorize?client_id=' + REDDIT_APP_ID + '&redirect_uri=' + redir + '&response_type=code&scope=' + scope + '&state=' + state,
+        '_blank', 'toolbar=0,menubar=0,width=1000,height=600,left=' + left + ',top=' + top);
+      var deferred = $q.defer();
+      var interval = setInterval(function () {
+        if (w.closed) {
+          clearInterval(interval);
+          deferred.resolve(true);
+        }
+      }, 500);
+      deferred.promise.then(function () {
+        if (window._reddit_token) {
+          tokenDeferred.resolve(window._reddit_token);
+          window._reddit_token = undefined;
+        } else {
+          tokenDeferred.resolve(null);
+        }
+      });
+      return tokenDeferred.promise;
+    }
+  };
+  return redditService;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/reddit.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],75:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var Media = window.Media;
+var Audio = window.Audio;
+
+module.exports = factory;
+
+factory.dependencies = ['cordovaReady', '$timeout'];
+
+function factory (cordovaReady, $timeout) {
+  return {
+    play: function (src, $scope) {
+      cordovaReady(function () {
+        if (!$scope || !$scope.wallet.appearance.sound) {
+          return;
+        }
+        if (window.cordova && typeof Media !== 'undefined') {
+          // Phonegap media
+          var mediaRes = new Media(src,
+            function onSuccess () {
+              // release the media resource once finished playing
+              mediaRes.release();
+            },
+            function onError (e) {
+              console.log('error playing sound: ' + JSON.stringify(e));
+            });
+          mediaRes.play();
+        } else if (typeof Audio !== 'undefined') {
+          // HTML5 Audio
+          $timeout(function () { new Audio(src).play(); });
+        } else {
+          console.log('no sound API to play: ' + src);
+        }
+      })();
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/sound.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],76:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var storage = require('any-storage');
+
+module.exports = factory;
+
+factory.dependencies = ['$q'];
+
+function factory ($q) {
+  var storageService = {
+    noLocalStorage: false,
+    set: storage.set,
+    get: function (key) {
+      var d = $q.defer();
+      storage.get(key, function (err, results) {
+        if (err) {
+          return d.reject(err);
+        }
+        d.resolve(results);
+      });
+
+      return d.promise;
+    },
+    remove: storage.remove
+  };
+
+  window.storageService = storageService;
+
+  return storageService;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/storage.js","/greenwallet/services")
+},{"any-storage":15,"buffer":28,"global/window":26,"oMfpAn":31}],77:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var angular = require('angular');
+var window = require('global/window');
+
+var BASE_URL = window.BASE_URL;
+var LANG = window.LANG;
+var gettext = window.gettext;
+
+module.exports = factory;
+
+factory.dependencies = ['$q', '$interval', '$uibModal', 'notices', '$rootScope', 'focus'];
+
+function factory ($q, $interval, $uibModal, notices, $rootScope, focus) {
+  var trezor_api, transport, trezor;
+
+  var promptPin = function (type, callback) {
+    var scope, modal;
+    scope = angular.extend($rootScope.$new(), {
+      pin: '',
+      type: type
+    });
+
+    modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_pin.html',
+      size: 'sm',
+      windowClass: 'pinmodal',
+      backdrop: 'static',
+      keyboard: false,
+      scope: scope
+    });
+
+    modal.result.then(
+      function (res) { callback(null, res); },
+      function (err) { callback(err); }
+    );
+  };
+
+  var promptPassphrase = function (callback) {
+    var scope, modal;
+
+    scope = angular.extend($rootScope.$new(), {
+      passphrase: ''
+    });
+
+    modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_passphrase.html',
+      size: 'sm',
+      windowClass: 'pinmodal',
+      backdrop: 'static',
+      keyboard: false,
+      scope: scope
+    });
+
+    modal.result.then(
+      function (res) { callback(null, res); },
+      function (err) { callback(err); }
+    );
+  };
+
+  var handleError = function (e) {
+    var message;
+    if (e === 'Opening device failed') {
+      message = gettext("Device could not be opened. Make sure you don't have any TREZOR client running in another tab or browser window!");
+    } else {
+      message = e;
+    }
+    $rootScope.safeApply(function () {
+      notices.makeNotice('error', message);
+    });
+  };
+
+  var handleButton = function (dev) {
+    var modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_confirm_button.html',
+      size: 'sm',
+      windowClass: 'pinmodal',
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    dev.once('pin', function () {
+      try { modal.close(); } catch (e) {}
+    });
+    dev.once('receive', function () {
+      try { modal.close(); } catch (e) {}
+    });
+    dev.once('error', function () {
+      try { modal.close(); } catch (e) {}
+    });
+  };
+
+  return {
+    getDevice: function (noModal, silentFailure) {
+      var deferred = $q.defer();
+      var is_chrome_app = require('has-chrome-storage');
+      if (!is_chrome_app) return deferred.promise;
+
+      var tick, modal;
+      var showModal = function () {
+        if (!noModal && !modal) {
+          modal = $uibModal.open({
+            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_usb_device.html'
+          });
+          modal.result.finally(function () {
+            if (tick) {
+              $interval.cancel(tick);
+            }
+          });
+        }
+      };
+      var plugin_d;
+
+      if (trezor_api) {
+        plugin_d = $q.when(trezor_api);
+      } else {
+        plugin_d = window.trezor.load();
+      }
+      plugin_d.then(function (api) {
+        trezor_api = api;
+        tick = $interval(function () {
+          var enumerate_fun = is_chrome_app ? 'devices' : 'enumerate';
+          $q.when(trezor_api[enumerate_fun]()).then(function (devices) {
+            if (devices.length) {
+              if (noModal) {
+                $interval.cancel(tick);
+              } else if (modal) {
+                modal.close(); // modal close cancels the tick
+              } else {
+                $interval.cancel(tick);
+              }
+              var acquire_fun = is_chrome_app ? 'open' : 'acquire';
+              $q.when(trezor_api[acquire_fun](devices[0])).then(function (dev_) {
+                if (!is_chrome_app) dev_ = new trezor.Session(transport, dev_.session);
+                deferred.resolve(dev_.initialize().then(function (init_res) {
+                  var outdated = false;
+                  if (init_res.message.major_version < 1) outdated = true;
+                  else if (init_res.message.major_version === 1 &&
+                    init_res.message.minor_version < 3) outdated = true;
+                  if (outdated) {
+                    notices.makeNotice('error', gettext('Outdated firmware. Please upgrade to at least 1.3.0 at http://mytrezor.com/'));
+                    return $q.reject({outdatedFirmware: true});
+                  } else {
+                    return dev_;
+                  }
+                }).then(function (dev) {
+                  var trezor_dev = window.trezor_dev = dev;
+                  trezor_dev.on('pin', promptPin);
+                  trezor_dev.on('passphrase', promptPassphrase);
+                  trezor_dev.on('error', handleError);
+                  trezor_dev.on('button', function () {
+                    handleButton(dev);
+                  });
+                  return trezor_dev;
+                }));
+              }, function (err) {
+                console.error(err.stack || err);
+                handleError('Opening device failed');
+              });
+            } else if (noModal) {
+              if (noModal === 'retry') return;
+              deferred.reject();
+            } else showModal();
+          }, function () {
+            if (noModal) {
+              if (noModal === 'retry') return;
+              $interval.cancel(tick);
+              deferred.reject();
+            } else showModal();
+          });
+        }, 1000);
+      }).catch(function (e) {
+        if (!silentFailure) {
+          $rootScope.safeApply(function () {
+            // notices.makeNotice('error', gettext('TREZOR initialisation failed') + ': ' + e)
+          });
+        }
+        deferred.reject({pluginLoadFailed: true});
+      });
+      return deferred.promise;
+    },
+    recovery: function (mnemonic) {
+      return this.getDevice().then(function (dev) {
+        return dev.wipeDevice().then(function (res) {
+          return dev.loadDevice({mnemonic: mnemonic});
+        });
+      });
+    },
+    setupSeed: function (mnemonic) {
+      var scope = $rootScope.$new();
+      var d = $q.defer();
+      var trezor_dev;
+      var modal;
+      var service = this;
+      scope.trezor = {
+        use_gait_mnemonic: !!mnemonic,
+        store: function () {
+          this.setting_up = true;
+          var store_d;
+          if (mnemonic) {
+            store_d = service.recovery(mnemonic);
+          } else {
+            store_d = trezor_dev.resetDevice({strength: 256});
+          }
+          store_d.then(function () {
+            modal.close();
+            d.resolve();
+          }).catch(function (err) {
+            this.setting_up = false;
+            if (err.message) return; // handled by handleError in services.js
+            notices.makeNotice('error', err);
+          });
+        },
+        reuse: function () {
+          modal.close();
+          d.resolve();
+        }
+      };
+      var do_modal = function () {
+        modal = $uibModal.open({
+          templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_trezor_setup.html',
+          scope: scope
+        });
+        modal.result.catch(function () { d.reject(); });
+      };
+      this.getDevice().then(function (trezor_dev_) {
+        trezor_dev = trezor_dev_;
+        trezor_dev.getPublicKey([]).then(function (pk) {
+          scope.trezor.already_setup = true;
+          do_modal();
+        }, function (err) {
+          if (err.code !== 11) { // Failure_NotInitialized
+            notices.makeNotice('error', err.message);
+          }
+          do_modal();
+        });
+      });
+      return d.promise;
+    }
+  };
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/trezor.js","/greenwallet/services")
+},{"angular":12,"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],78:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var Electrum = window.Electrum;
+var gettext = window.gettext;
+var autobahn = window.autobahn;
+var wss_url = window.wss_url;
+var dev_d = window.dev_d;
+var Bitcoin = window.Bitcoin;
+var ByteString = window.ByteString;
+var HEX = window.HEX;
+
+module.exports = factory;
+
+factory.dependencies = ['$q',
+  '$rootScope',
+  'cordovaReady',
+  '$http',
+  'notices',
+  'gaEvent',
+  '$location',
+  'autotimeout',
+  'device_id',
+  'btchip'
+];
+
+function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $location, autotimeout, device_id, btchip) {
+  var txSenderService = {};
+  // disable electrum setup
+  if (false && window.Electrum) {
+    if (window.cordova) {
+      txSenderService.electrum = new Electrum($http, $q);
+    } else {
+      txSenderService.electrum = new Electrum();
+      txSenderService.electrum.connectToServer();
+    }
+  }
+  var connection;
+  var session;
+  var session_for_login;
+  var calls = [];
+  var calls_missed = {};
+  var calls_counter = 0;
+  var global_login_d;
+  var onLogin = function (data) {
+    var s = session || session_for_login;
+    s.subscribe('com.greenaddress.txs.wallet_' + data.receiving_id,
+      function (event) {
+        gaEvent('Wallet', 'TransactionNotification');
+        $rootScope.$broadcast('transaction', event[0]);
+      });
+    s.subscribe('com.greenaddress.fee_estimates',
+      function (event) {
+        $rootScope.$broadcast('fee_estimate', event[0]);
+      });
+  };
+  txSenderService.call = function () {
+    var d = $q.defer();
+    if (session) {
+      var cur_call = calls_counter++;
+      calls_missed[cur_call] = [arguments, d]; // will be called on new session
+      try {
+        var uri = arguments[0].replace('http://greenaddressit.com/', 'com.greenaddress.').replace('/', '.');
+        session.call(uri, Array.prototype.slice.call(arguments, 1)).then(function (data) {
+          if (!calls_missed[cur_call]) {
+            // avoid resolving the same call twice
+            return;
+          }
+          delete calls_missed[cur_call];
+          d.resolve(data);
+        }, function (err) {
+          if (err.args[0] === 'http://greenaddressit.com/error#internal' && err.args[1] === 'Authentication required') {
+            return; // keep in missed calls queue for after login
+          }
+          if (err.args[0] === 'http://greenaddressit.com/error#sessionexpired') {
+            d.reject({
+              args: [
+                err.args[0],
+                gettext('Session expired. Please try again.')
+              ]
+            });
+            connection.close();
+            connection = session = session_for_login = null;
+            connecting = false;
+            connect(global_login_d);
+            return;
+          }
+          if (!calls_missed[cur_call]) return; // avoid resolving the same call twice
+          delete calls_missed[cur_call];
+          d.reject(err);
+        });
+        var args = arguments;
+        var timeout;
+        if (args[0] === 'com.greenaddress.vault.prepare_sweep_social') timeout = 40000;
+        else timeout = 10000;
+        setTimeout(function () {
+          delete calls_missed[cur_call];
+          $rootScope.safeApply(function () {
+            d.reject({desc: gettext('Request timed out (%s)')
+                .replace('%s', args[0].split('/').slice(3).join('/'))
+            });
+          });
+        }, timeout);
+      } catch (e) {
+        // if (!calls_missed[cur_call]) return  // avoid resolving the same call twice
+        delete calls_missed[cur_call];
+        d.reject(gettext('Problem with connection detected. Please try again.'));
+      }
+    } else {
+      if (disconnected) {
+        disconnected = false;
+        connect(global_login_d);
+      }
+      calls.push([arguments, d]);
+    }
+    return d.promise;
+  };
+  var isMobile = /Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
+  if (window.cordova) {
+    cordovaReady(function () {
+      document.addEventListener('resume', function () {
+        if (!txSenderService.wallet || !txSenderService.logged_in) return;
+        if (session || session_for_login) {
+          connection.close(); // reconnect on resume
+        }
+        session = session_for_login = null;
+        disconnected = true;
+        txSenderService.wallet.update_balance();
+      }, false);
+    })();
+  } else if (isMobile && typeof document.addEventListener !== undefined) {
+    // reconnect on tab shown in mobile browsers
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && txSenderService.wallet && txSenderService.logged_in) {
+        txSenderService.wallet.update_balance();
+      }
+    }, false);
+  }
+  var attempt_login = false;
+  var onAuthed = function (s, login_d) {
+    session_for_login = s;
+    session_for_login.subscribe('com.greenaddress.blocks', function (event) {
+      $rootScope.$broadcast('block', event[0]);
+    });
+    var d;
+    var logging_in = false;
+    if (txSenderService.hdwallet && (txSenderService.logged_in || attempt_login)) {
+      d = txSenderService.login('if_same_device', true); // logout=if_same_device, force_relogin
+      logging_in = true;
+    } else if (txSenderService.watch_only) {
+      d = txSenderService.loginWatchOnly(txSenderService.watch_only[0], txSenderService.watch_only[1]);
+      logging_in = true;
+    } else {
+      d = $q.when(true);
+    }
+    d.catch(function (err) {
+      if (err.uri === 'http://greenaddressit.com/error#doublelogin') {
+        if (login_d) {
+          // login_d handler may want to handle double login by forcing logout
+          login_d.reject(err);
+          return;
+        }
+        autotimeout.stop();
+        if (txSenderService.wallet) txSenderService.wallet.clear();
+        $location.path('/concurrent_login');
+      } else {
+        console.log(err);
+        notices.makeNotice('error', gettext('An error has occured which forced us to log you out.'));
+        if (txSenderService.wallet) txSenderService.wallet.clear();
+        $location.path('/');
+      }
+    });
+    d.then(function (result) {
+      session = session_for_login;
+      if (logging_in && login_d) {
+        login_d.resolve(result);
+      }
+      var i;
+      var item;
+      // warning: Never made the following code async without a rewrite or it'll break
+      // object refs and stuff
+
+      // missed calls queues
+      for (i in calls_missed) {
+        item = calls_missed[i];
+        delete calls_missed[i];
+        item[1].resolve(txSenderService.call.apply(session, item[0]));
+      }
+      while (calls.length) {
+        item = calls.shift();
+        item[1].resolve(txSenderService.call.apply(session, item[0]));
+      }
+    }, function (err) {
+      // missed calls queue - reject them as well
+      // safeApply because txSenderService.login might've called $apply already
+      $rootScope.safeApply(function () {
+        while (calls.length) {
+          var item = calls.shift();
+          item[1].reject(err);
+        }
+      });
+    });
+  };
+  var disconnected = false;
+  var connecting = false;
+  var nconn = 0;
+  var connect = function (login_d) {
+    global_login_d = login_d;
+    if (connecting) return;
+    connecting = true;
+    nconn += 1;
+    // var retries = 60
+    // var everConnected = false
+
+    doConnect(nconn);
+
+    function doConnect (nc) {
+      connection = new autobahn.Connection({
+        url: wss_url,
+        realm: 'realm1',
+        use_deferred: $q.defer
+      });
+      connection.onclose = function () {
+        session = session_for_login = null;
+        disconnected = true;
+      };
+      connection.onopen = function (s) {
+        s.caller_disclose_me = true;
+        // everConnected = true
+        if (nc !== nconn) {
+          // newer connection created - close the old one
+          s.close();
+          return;
+        }
+        s.nc = nc;
+        connecting = false;
+        global_login_d = undefined;
+        onAuthed(s, login_d, nc);
+      };
+      connection.open();
+    }
+  };
+  cordovaReady(connect)();
+  txSenderService.logged_in = false;
+  var waiting_for_device = false;
+
+  // @TODO: refactor indentation hell to be function
+  txSenderService.login = function (logout, force_relogin, user_agent) {
+    var d_main = $q.defer();
+    var d;
+    if (txSenderService.logged_in && !force_relogin) {
+      d_main.resolve(txSenderService.logged_in);
+    } else {
+      var hdwallet = txSenderService.hdwallet;
+      attempt_login = true;
+      if (hdwallet.keyPair.d) {
+        if (session_for_login) {
+          session_for_login.call('com.greenaddress.login.get_challenge', [hdwallet.getAddress().toString()])
+            .then(function (challenge) {
+              var challenge_bytes = new Bitcoin.BigInteger(challenge).toBuffer();
+
+              // generate random path to derive key from - avoids signing using the same key twice
+              var random_path_hex = Bitcoin.BigInteger
+                .fromBuffer(Bitcoin.randombytes(8))
+                .toString(16);
+
+              while (random_path_hex.length < 16) {
+                random_path_hex = '0' + random_path_hex;
+              }
+
+              $q.when(hdwallet.subpath_for_login(random_path_hex)).then(function (subhd) {
+                $q.when(subhd.keyPair.sign(challenge_bytes)).then(function (signature) {
+                  d_main.resolve(device_id().then(function (devid) {
+                    if (session_for_login && session_for_login.nc === nconn) {
+                      if (!window.cur_net.isAlpha) {
+                        signature = [signature.r.toString(), signature.s.toString()];
+                      }
+                      var args = [
+                        signature,
+                        logout || false,
+                        random_path_hex,
+                        devid,
+                        user_agent
+                      ];
+                      return session_for_login.call('com.greenaddress.login.authenticate', args)
+                        .then(function (data) {
+                          if (data) {
+                            txSenderService.logged_in = data;
+                            onLogin(data);
+                            return data;
+                          } else {
+                            return $q.reject(gettext('Login failed'));
+                          }
+                        });
+                    } else if (!connecting) {
+                      disconnected = false;
+                      d = $q.defer();
+                      connect(d);
+                      d_main.resolve(d.promise);
+                    }
+                  }));
+                });
+              });
+            });
+        } else if (!connecting) {
+          disconnected = false;
+          d = $q.defer();
+          connect(d);
+          d_main.resolve(d.promise);
+        }
+      } else { // trezor_dev || btchip
+        if (waiting_for_device) return;
+        var trezor_dev = txSenderService.trezor_dev;
+        var btchip_dev = txSenderService.btchip;
+        var get_pubkey = function () {
+          if (trezor_dev) {
+            return $q.when(txSenderService.trezor_address);
+          } else {
+            return $q.when(txSenderService.btchip_address);
+          }
+        };
+        get_pubkey().then(function (addr) {
+          if (session_for_login) {
+            if (trezor_dev) {
+              dev_d = $q.when(trezor_dev);
+            } else {
+              dev_d = btchip.getDevice(false, true,
+                // FIXME not sure why it doesn't work with Cordova
+                // ("suspend app, disconnect dongle, resume app, reconnect dongle" case fails)
+                window.cordova ? null : btchip_dev)
+                .then(function (btchip_dev_) {
+                  txSenderService.btchip = btchip_dev = btchip_dev_;
+                });
+            }
+            waiting_for_device = true;
+            var challenge_arg_resolves_main = false;
+            dev_d = dev_d.then(function () {
+              if (session_for_login) {
+                return session_for_login.call(
+                  'com.greenaddress.login.get_trezor_challenge',
+                  [addr, !trezor_dev]
+                );
+              } else if (!connecting) {
+                waiting_for_device = false;
+                disconnected = false;
+                d = $q.defer();
+                connect(d);
+                challenge_arg_resolves_main = true;
+                return d.promise;
+              } else waiting_for_device = false;
+            });
+            d_main.resolve(dev_d.then(function (challenge) {
+              if (challenge_arg_resolves_main) return challenge;
+              if (!challenge) return $q.defer().promise; // never resolve
+
+              var msg_plain = 'greenaddress.it      login ' + challenge;
+              var msg = (new Bitcoin.Buffer.Buffer(
+                msg_plain, 'utf8'
+              )).toString('hex');
+              // btchip requires 0xB11E to skip HID authentication
+              // 0x4741 = 18241 = 256*G + A in ASCII
+              var path = [0x4741b11e];
+
+              if (trezor_dev) {
+                trezor_dev.signing = true;
+                return trezor_dev._typedCommonCall('SignMessage', 'MessageSignature',
+                  {'message': msg, address_n: path})
+                  .then(function (res) {
+                    var sig = res.message.signature;
+                    sig = sig.toHex ? sig.toHex() : sig;
+                    var signature = Bitcoin.bitcoin.ECSignature.parseCompact(
+                      new Bitcoin.Buffer.Buffer(sig, 'hex')
+                    );
+                    trezor_dev.signing = false;
+                    return device_id().then(function (devid) {
+                      return session_for_login.call('com.greenaddress.login.authenticate', [
+                        [signature.signature.r.toString(), signature.signature.s.toString(), signature.i.toString()],
+                        logout || false,
+                        'GA',
+                        devid
+                      ]).then(function (data) {
+                        if (data) {
+                          txSenderService.logged_in = data;
+                          onLogin(data);
+                          return data;
+                        } else { return $q.reject(gettext('Login failed')); }
+                      });
+                    });
+                  }, function (err) {
+                    trezor_dev.signing = false;
+                    return $q.reject(err.message);
+                  });
+              } else {
+                // var t0 = new Date()
+                return $q.when(hdwallet.derive(path[0])).then(function (result_pk) {
+                  return btchip_dev.signMessagePrepare_async(path.join('/'), new ByteString(msg, HEX)).then(function (result) {
+                    return btchip_dev.app.signMessageSign_async(new ByteString('00', HEX)).then(function (result) {
+                      waiting_for_device = false;
+                      var signature = Bitcoin.bitcoin.ECSignature.fromDER(
+                        new Bitcoin.Buffer.Buffer('30' + result.bytes(1).toString(HEX), 'hex')
+                      );
+                      var i;
+                      if (btchip_dev.features.signMessageRecoveryParam) {
+                        i = result.byteAt(0) & 0x01;
+                      } else {
+                        i = Bitcoin.ecdsa.calcPubKeyRecoveryParam(
+                          Bitcoin.BigInteger.fromBuffer(Bitcoin.message.magicHash(msg_plain)),
+                          {r: signature.r, s: signature.s},
+                          result_pk.keyPair.Q
+                        );
+                      }
+                      return device_id().then(function (devid) {
+                        if (session_for_login && session_for_login.nc === nconn) {
+                          return session_for_login.call('com.greenaddress.login.authenticate', [
+                            [signature.r.toString(), signature.s.toString(), i.toString()],
+                            logout || false,
+                            'GA',
+                            devid
+                          ]).then(function (data) {
+                            if (data) {
+                              txSenderService.logged_in = data;
+                              onLogin(data);
+                              return data;
+                            } else { return $q.reject(gettext('Login failed')); }
+                          });
+                        } else if (!connecting) {
+                          disconnected = false;
+                          d = $q.defer();
+                          connect(d);
+                          return d.promise;
+                        }
+                      });
+                    });
+                  });
+                });
+              }
+            }).finally(function () { waiting_for_device = false; }));
+          } else if (!connecting) {
+            disconnected = false;
+            d = $q.defer();
+            connect(d);
+            d_main.resolve(d.promise);
+          }
+        });
+      }
+    }
+    return d_main.promise;
+  };
+  txSenderService.logout = function () {
+    if (session) {
+      connection.close();
+      session = session_for_login = null;
+      disconnected = true;
+    }
+    for (var key in calls_missed) {
+      delete calls_missed[key];
+    }
+    if (txSenderService.btchip) {
+      txSenderService.btchip.dongle.disconnect_async();
+    }
+    disconnected = true;
+    txSenderService.logged_in = false;
+    attempt_login = false;
+    txSenderService.hdwallet = undefined;
+    txSenderService.trezor_dev = undefined;
+    txSenderService.watch_only = undefined;
+    txSenderService.pin_ident = undefined;
+    txSenderService.has_pin = undefined;
+    if (txSenderService.wallet) txSenderService.wallet.clear();
+  };
+  txSenderService.loginWatchOnly = function (token_type, token, logout) {
+    var d = $q.defer();
+    txSenderService.call('http://greenaddressit.com/login/watch_only', token_type, token, logout || false)
+      .then(function (data) {
+        txSenderService.watch_only = [token_type, token];
+        onLogin(data);
+        d.resolve(data);
+      }, function (err) {
+        d.reject(err);
+      });
+    return d.promise;
+  };
+  txSenderService.change_pin = function (new_pin) {
+    return txSenderService.call('http://greenaddressit.com/pin/change_pin_login', new_pin, txSenderService.pin_ident)
+      .then(function (res) {
+        // keep new pin for reconnection handling
+        if (!res) {
+          return $q.reject(gettext('Changing PIN failed.'));
+        } else {
+          txSenderService.pin = new_pin;
+        }
+      });
+  };
+  return txSenderService;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/tx_sender.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],79:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+var is_chrome_app = require('has-chrome-storage');
+
+var is_cordova_app = window.cordova;
+
+module.exports = function () {
+  return function (wallet) {
+    if (is_cordova_app) {
+      return 'Cordova ' + window.cordova.platformId +
+      ' (version=' + wallet.version + ')';
+    } else if (is_chrome_app) {
+      return 'Chrome ' + '(version=' + wallet.version + ')';
+    } else {
+      return 'Browser';
+    }
+  };
+};
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/user_agent.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"has-chrome-storage":32,"oMfpAn":31}],80:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+///@TODO Refactor this file, it's huge and crazy. Also get it to pass lint
+
+var gettext = window.gettext;
+var LANG = window.LANG;
+var BASE_URL = window.BASE_URL;
+var Bitcoin = window.Bitcoin;
+
+module.exports = factory;
+
+factory.dependencies = [
+  '$q',
+  '$rootScope',
+  'tx_sender',
+  '$location',
+  'notices',
+  '$uibModal',
+  'focus',
+  'crypto',
+  'gaEvent',
+  'storage',
+  'mnemonics',
+  'addressbook',
+  'autotimeout',
+  'social_types',
+  'sound',
+  '$interval',
+  '$timeout',
+  'branches',
+  'user_agent',
+  '$http',
+  'blind'
+];
+
+function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
+  focus, crypto, gaEvent, storage, mnemonics, addressbook, autotimeout,
+  social_types, sound, $interval, $timeout, branches, user_agent, $http,
+  blind) {
+  var walletsService = {};
+  var handle_double_login = function (retry_fun) {
+    return $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_logout_other_session.html'
+    }).result.then(function () {
+      return retry_fun();
+    });
+  };
+  walletsService.requireWallet = function ($scope, dontredirect) {
+    if (!$scope.wallet.hdwallet && !$scope.wallet.trezor_dev && !$scope.wallet.btchip) {
+      if (!dontredirect) {
+        var location = '/?redir=' + $location.path();
+        var search = [];
+        for (var key in $location.search()) {
+          search.push(key + '=' + encodeURIComponent($location.search()[key]));
+        }
+        if (search) {
+          location += encodeURIComponent('?' + search.join('&'));
+        }
+        $location.url(location);
+        $scope.processWalletVars(); // update payment values with redir value
+      }
+      return false;
+    }
+    return true;
+  };
+  walletsService.updateAppearance = function ($scope, key, value) {
+    var oldValue = $scope.wallet.appearance[key];
+    $scope.wallet.appearance[key] = value;
+    return tx_sender.call('http://greenaddressit.com/login/set_appearance', JSON.stringify($scope.wallet.appearance)).catch(function (e) {
+      $scope.wallet.appearance[key] = oldValue;
+      return $q.reject(e);
+    });
+  };
+  var openInitialPage = function (wallet, has_txs) {
+    if ($location.search().redir) {
+      $location.url($location.search().redir);
+    } else if (!has_txs) {
+      $location.path('/receive');
+    } else if (window.IS_MOBILE || wallet.send_to_receiving_id || wallet.send_to_payment_request) {
+      $location.path('/send');
+    } else {
+      $location.url('/info');
+    }
+  };
+  walletsService._login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed, path, double_login_callback) {
+    var d = $q.defer();
+    var that = this;
+    tx_sender.login(logout, false, user_agent($scope.wallet)).then(function (data) {
+      if (data) {
+        if (window.disableEuCookieComplianceBanner) {
+          window.disableEuCookieComplianceBanner();
+        }
+        tx_sender.wallet = $scope.wallet;
+        $scope.wallet.hdwallet = hdwallet;
+        $scope.wallet.trezor_dev = tx_sender.trezor_dev;
+        $scope.wallet.btchip = tx_sender.btchip;
+        $scope.wallet.mnemonic = mnemonic;
+        if (data.last_login) {
+          $scope.wallet.last_login = data.last_login;
+        }
+        try {
+          $scope.wallet.appearance = JSON.parse(data.appearance);
+          if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
+        } catch (e) {
+          $scope.wallet.appearance = {};
+        }
+        $scope.wallet.fee_estimates = data.fee_estimates;
+        $scope.wallet.rbf = data.rbf;
+        if (!('sound' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.sound = true;
+        }
+        if (!('pgp' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.pgp = '';
+        }
+        if (!('altimeout' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.altimeout = 20;
+        }
+        if (data.rbf && !('replace_by_fee' in $scope.wallet.appearance)) {
+          $scope.wallet.appearance.replace_by_fee = data.rbf;
+        }
+        sound.play(BASE_URL + '/static/sound/coinreceived.mp3', $scope);
+        autotimeout.start($scope.wallet.appearance.altimeout);
+        $scope.wallet.privacy = data.privacy;
+        $scope.wallet.limits = data.limits;
+        $scope.wallet.subaccounts = [
+          {pointer: 0, name: gettext('Main')}
+        ].concat(data.subaccounts);
+        $scope.wallet.assets = data.assets;
+        $scope.wallet.current_subaccount = $scope.wallet.appearance.current_subaccount || 0;
+        $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
+        $scope.wallet.cache_password = data.cache_password;
+        $scope.wallet.fiat_exchange = data.exchange;
+        $scope.wallet.fiat_exchange_extended = $scope.exchanges[data.exchange];
+        $scope.wallet.receiving_id = data.receiving_id;
+        $scope.wallet.expired_deposits = data.expired_deposits;
+        $scope.wallet.nlocktime_blocks = data.nlocktime_blocks;
+        if (data.gait_path) {
+          $scope.wallet.gait_path = data.gait_path;
+        } else if (path) {
+          $scope.wallet.gait_path = path;
+        } else if (path_seed) {
+          $scope.wallet.gait_path_seed = path_seed;
+          $scope.wallet.gait_path = mnemonics.seedToPath(path_seed);
+        }
+        if (!data.gait_path) { // *NOTE*: don't change the path after signup, because it *will* cause locked funds
+          tx_sender.call('http://greenaddressit.com/login/set_gait_path', $scope.wallet.gait_path).catch(function (err) {
+            if (err.uri !== 'http://api.wamp.ws/error#NoSuchRPCEndpoint') {
+              notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.args[1] + '")');
+            } else {
+              $scope.wallet.old_server = true;
+            }
+          });
+        }
+        if (!signup) { // don't change URL on initial login in signup
+          openInitialPage($scope.wallet, data.has_txs);
+        }
+        $rootScope.$broadcast('login');
+      } else if (!signup) { // signup has its own error handling
+        d.reject();
+        return;
+      }
+      d.resolve(data);
+    }).catch(function (e) { d.reject(e); });
+    return d.promise.catch(function (err) {
+      console.log(err);
+      if (err && err.uri === 'http://greenaddressit.com/error#doublelogin') {
+        return handle_double_login(function () {
+          if (double_login_callback) double_login_callback();
+          return that.login($scope, hdwallet, mnemonic, signup, true, path_seed);
+        });
+      } else {
+        notices.makeNotice('error', gettext('Login failed') + (err && err.args && err.args[1] && (': ' + err.args[1]) || ''));
+        return $q.reject(err);
+      }
+    });
+  };
+  walletsService.login = function ($scope, hdwallet, mnemonic, signup, logout, path_seed) {
+    tx_sender.hdwallet = hdwallet;
+    return this._login($scope, hdwallet, mnemonic, signup, logout, path_seed);
+  };
+  walletsService.login_trezor = function ($scope, trezor_dev, path, signup, logout) {
+    tx_sender.trezor_dev = trezor_dev;
+    var that = this;
+    return trezor_dev.getPublicKey([]).then(function (pubkey) {
+      var pk = pubkey.message.node.public_key;
+      pk = pk.toHex ? pk.toHex() : pk;
+      var keyPair = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+        new Bitcoin.Buffer.Buffer(pk, 'hex'),
+        cur_net
+      );
+      tx_sender.trezor_address = keyPair.getAddress();
+      var cc = pubkey.message.node.chain_code;
+      cc = cc.toHex ? cc.toHex() : cc;
+      var chainCode = new Bitcoin.Buffer.Buffer(cc, 'hex');
+      var hdwallet = new Bitcoin.bitcoin.HDNode(keyPair, chainCode);
+      tx_sender.hdwallet = hdwallet;
+      return that._login($scope, hdwallet, undefined, signup, logout, undefined, path);
+    });
+  };
+  walletsService.login_btchip = function ($scope, btchip, btchip_pubkey, double_login_callback, signup) {
+    tx_sender.btchip = btchip;
+    tx_sender.btchip_address = btchip_pubkey.bitcoinAddress.value;
+    var keyPair = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+      new Bitcoin.Buffer.Buffer(
+        btchip_pubkey.publicKey.toString(HEX),
+        'hex'
+      ),
+      cur_net
+    );
+    var chainCode = new Bitcoin.Buffer.Buffer(
+      btchip_pubkey.chainCode.toString(HEX), 'hex'
+    );
+    keyPair.compressed = true;
+    var hdwallet = new Bitcoin.bitcoin.HDNode(
+      keyPair,
+      chainCode
+    );
+    tx_sender.hdwallet = hdwallet;
+    if (signup) {
+      var path_d = btchip.app.getWalletPublicKey_async("18241'").then(function (result) {
+        var ecPub = new Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(new Bitcoin.Buffer.Buffer(result.publicKey.toString(HEX), 'hex'));
+        ecPub.compressed = true;
+        var extended = result.chainCode.toString(HEX) + ecPub.getPublicKeyBuffer().toString('hex');
+        extended = new Bitcoin.Buffer.Buffer(extended, 'hex');
+        var path = Bitcoin.hmac('sha512', 'GreenAddress.it HD wallet path').update(extended).digest();
+        return path.toString('hex');
+      });
+    } else path_d = $q.when();
+    var that = this;
+    return path_d.then(function (path) {
+      return that._login($scope, hdwallet, undefined, signup, false, undefined, path, undefined, double_login_callback);
+    });
+  };
+  walletsService.loginWatchOnly = function ($scope, token_type, token, logout) {
+    var promise = tx_sender.loginWatchOnly(token_type, token, logout), that = this;
+    promise = promise.then(function (json) {
+      // add simple watchOnly flag so that we don't need to check values manually
+      $scope.wallet.watchOnly = true;
+
+      if (window.disableEuCookieComplianceBanner) {
+        disableEuCookieComplianceBanner();
+      }
+
+      var data = JSON.parse(json);
+      tx_sender.wallet = $scope.wallet;
+      var hdwallet = new Bitcoin.bitcoin.HDNode(
+        Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+          new Bitcoin.Buffer.Buffer(data.public_key, 'hex'),
+          cur_net
+        ),
+        new Bitcoin.Buffer.Buffer(data.chain_code, 'hex')
+      );
+      $scope.wallet.hdwallet = hdwallet;
+
+      try {
+        $scope.wallet.appearance = JSON.parse(data.appearance);
+        if ($scope.wallet.appearance.constructor !== Object) $scope.wallet.appearance = {};
+      } catch(e) {
+        $scope.wallet.appearance = {};
+      }
+      if (!('sound' in $scope.wallet.appearance)) {
+        $scope.wallet.appearance.sound = true;
+      }
+      if (!('pgp' in $scope.wallet.appearance)) {
+        $scope.wallet.appearance.pgp = '';
+      }
+      if (!('altimeout' in $scope.wallet.appearance)) {
+        $scope.wallet.appearance.altimeout = 20;
+      }
+
+      autotimeout.start($scope.wallet.appearance.altimeout);
+      $scope.wallet.unit = $scope.wallet.appearance.unit || 'mBTC';
+      $scope.wallet.subaccounts = [
+        {pointer: 0, name: gettext('Main')}
+      ].concat(data.subaccounts);
+      console.log($scope.wallet.subaccounts);
+      $scope.wallet.assets = data.assets;
+      $scope.wallet.current_subaccount = 0;
+      $scope.wallet.cache_password = data.cache_password;
+      $scope.wallet.fiat_exchange = data.exchange;
+      $scope.wallet.receiving_id = data.receiving_id;
+      if (data.has_txs) {
+        $location.url('/info/');
+      } else {
+        $location.url('/receive/');
+      }
+      $rootScope.$broadcast('login');
+    }, function (err) {
+      if (err.uri == 'http://greenaddressit.com/error#doublelogin') {
+        return handle_double_login(function () {
+          return that.loginWatchOnly($scope, token_type, token, true);
+        });
+      } else {
+        return $q.reject(err);
+      }
+    });
+    return promise;
+  };
+  walletsService.getTransactions = function ($scope, notifydata, query, sorting, date_range, subaccount) {
+    return addressbook.load($scope).then(function () {
+      return walletsService._getTransactions($scope, notifydata, null, query, sorting, date_range, subaccount);
+    });
+  };
+  var parseSocialDestination = function (social_destination) {
+    try {
+      var data = JSON.parse(social_destination);
+      if (data.type == 'voucher') return gettext('Voucher');
+      else return social_destination;
+    } catch (e) {
+      return social_destination;
+    }
+  };
+  var unblindOutputs = function ($scope, txData, rawTxs) {
+    var deferreds = [];
+    var tx = Bitcoin.contrib.transactionFromHex(txData.data);
+    for (var i = 0; i < txData.eps.length; ++i) {
+      (function (ep) {
+        if (ep.value === null && (ep.is_relevant || ep.pubkey_pointer)) {
+          // e.pubkey_pointer !== null means it's our ep, can be
+          // from different subaccount than currently processed
+          var txhash, pt_idx, out, subaccount;
+          if (ep.is_credit) {
+            txhash = txData.txhash;
+            pt_idx = ep.pt_idx;
+            out = tx.outs[ep.pt_idx];
+            subaccount = ep.subaccount;
+          } else {
+            txhash = ep.prevtxhash;
+            pt_idx = ep.previdx;
+            out = Bitcoin.contrib.transactionFromHex(
+              rawTxs[ep.prevtxhash]
+            ).outs[pt_idx];
+            subaccount = ep.prevsubaccount;
+          }
+          var key =
+          'unblinded_value_' + txhash + ':' + pt_idx;
+          var d = storage.get(key).then(function (value) {
+            if (value === null) {
+              return blind.unblindOutValue(
+                $scope, out, subaccount || 0, ep.pubkey_pointer
+              ).then(function (data) {
+                ep.value = data.value;
+                storage.set(key, data.value);
+              });
+            } else {
+              ep.value = value;
+            }
+          });
+          deferreds.push(d);
+        }
+      })(txData.eps[i]);
+    }
+    return $q.all(deferreds);
+  };
+  walletsService._getTransactions = function ($scope, notifydata, page_id, query, sorting, date_range, subaccount) {
+    var transactions_key = $scope.wallet.receiving_id + 'transactions';
+    var d = $q.defer();
+    $rootScope.is_loading += 1;
+    var unclaimed = [];
+
+    if (sorting) {
+      var sort_by = sorting.order_by;
+      if (sorting.reversed) { sort_by = '-' + sort_by; }
+    } else {
+      var sort_by = null;
+    }
+    sorting = sorting || {order_by: 'ts', reversed: true};
+    var end = date_range && date_range[1] && new Date(date_range[1]);
+    if (end) end.setDate(end.getDate() + 1);
+    var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
+      end && end.toISOString()];
+    var args = ['http://greenaddressit.com/txs/get_list_v2',
+      page_id, query, sort_by, date_range_iso, subaccount];
+    if (cur_net.isAlpha) {
+      // return prev data
+      args.push(true);
+    }
+    var call = tx_sender.call.apply(tx_sender, args);
+
+    if (cur_net.isAlpha) {
+      call = call.then(function (data) {
+        var deferreds = [];
+        var valid = {};
+        for (var i = 0; i < data.list.length; i++) {
+          (function (i) {
+            var tx = data.list[i];
+            tx.data = data.data[tx.txhash];
+            valid[i] = true;
+            deferreds.push(unblindOutputs($scope, tx, data.data)
+              .catch(function (e) {
+                if (e !== 'Invalid transaction.') {
+                  throw e;
+                } else {
+                  // skip invalid transactions
+                  valid[i] = false;
+                }
+              }));
+          })(i);
+        }
+        return $q.all(deferreds).then(function () {
+          var orig_list = data.list;
+          data.list = [];
+          for (var i = 0; i < orig_list.length; ++i) {
+            if (valid[i]) data.list.push(orig_list[i]);
+          }
+          return data;
+        });
+      });
+    }
+
+    call.then(function (data) {
+      $scope.wallet.cur_block = data.cur_block;
+      var retval = [];
+      var any_unconfirmed_seen = false;
+      var asset_name = null;
+      for (var i = 0; i < data.list.length; i++) {
+        var tx = data.list[i], inputs = [], outputs = [];
+        var asset_id = tx.eps[0].asset_id;
+        if (asset_id) {
+          var num_confirmations = data.cur_block[asset_id] - tx.block_height + 1;
+          asset_name = $scope.wallet.assets[asset_id];
+        } else {
+          var num_confirmations = data.cur_block - tx.block_height + 1;
+        }
+
+        any_unconfirmed_seen = any_unconfirmed_seen || (num_confirmations < 6 && !tx.double_spent_by);
+
+        var value = new Bitcoin.BigInteger('0'),
+          in_val = new Bitcoin.BigInteger('0'), out_val = new Bitcoin.BigInteger('0'),
+          redeemable_value = new Bitcoin.BigInteger('0'), sent_back_from, redeemable_unspent = false,
+          pubkey_pointer, sent_back = false, from_me = false, tx_social_destination, tx_social_value;
+        var negative = false, positive = false, unclaimed = false, external_social = false;
+        for (var j = 0; j < tx.eps.length; j++) {
+          var ep = tx.eps[j];
+          if (ep.is_relevant && !ep.is_credit) from_me = true;
+        }
+        for (var j = 0; j < tx.eps.length; j++) {
+          var ep = tx.eps[j];
+          if (ep.is_relevant) {
+            if (ep.is_credit) {
+              var bytes = Bitcoin.bs58.decode(ep.ad);
+              var version = bytes[0];
+              var _external_social = version != cur_net.scriptHash;
+              external_social = external_social || _external_social;
+
+              if (ep.social_destination && external_social) {
+                pubkey_pointer = ep.pubkey_pointer;
+                if (!from_me) {
+                  redeemable_value = redeemable_value.add(new Bitcoin.BigInteger(ep.value));
+                  sent_back_from = parseSocialDestination(ep.social_destination);
+                  redeemable_unspent = redeemable_unspent || !ep.is_spent;
+                }
+              } else {
+                value = value.add(new Bitcoin.BigInteger(ep.value));
+                ep.nlocktime = true;
+              }
+            } else {
+              value = value.subtract(new Bitcoin.BigInteger(ep.value));
+            }
+          }
+          if (ep.is_credit) {
+            outputs.push(ep);
+            out_val = out_val.add(new Bitcoin.BigInteger(ep.value));
+          } else { inputs.push(ep); in_val = in_val.add(new Bitcoin.BigInteger(ep.value)); }
+        }
+        if (value.compareTo(new Bitcoin.BigInteger('0')) > 0 || redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
+          positive = true;
+          if (redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0) {
+            var description = gettext('Back from ') + sent_back_from;
+          } else {
+            var description = gettext('From ');
+            var addresses = [];
+            for (var j = 0; j < tx.eps.length; j++) {
+              var ep = tx.eps[j];
+              if (!ep.is_credit && !ep.is_relevant) {
+                if (ep.social_source) {
+                  if (addresses.indexOf(ep.social_source) == -1) {
+                    addresses.push(ep.social_source);
+                  }
+                } else {
+                  var ad = addressbook.reverse[ep.ad] || ep.ad;
+                  if (addresses.indexOf(ad) == -1) {
+                    addresses.push(ad);
+                  }
+                }
+              }
+            }
+            description += addresses.length ? addresses[0] : '';
+            if (addresses.length > 1) {
+              description += ', ...';
+            }
+          }
+        } else {
+          negative = value.compareTo(new Bitcoin.BigInteger('0')) < 0;
+          var addresses = [];
+          var description = gettext('To ');
+          for (var j = 0; j < tx.eps.length; j++) {
+            var ep = tx.eps[j];
+            if (ep.is_credit && (!ep.is_relevant || ep.social_destination)) {
+              if (ep.social_destination && ep.social_destination_type != social_types.PAYMENTREQUEST) {
+                try {
+                  tx_social_destination = JSON.parse(ep.social_destination);
+                  tx_social_value = ep.value;
+                } catch (e) {}
+                pubkey_pointer = ep.pubkey_pointer;
+                var bytes = Bitcoin.bs58.decode(ep.ad);
+                var version = bytes[0];
+                var _external_social = version != cur_net.scriptHash;
+                external_social = external_social || _external_social;
+                if (!ep.is_spent && ep.is_relevant) {
+                  unclaimed = true;
+                  addresses.push(parseSocialDestination(ep.social_destination));
+                } else if (!ep.is_relevant && external_social) {
+                  sent_back = true;
+                  addresses.push(ep.ad);
+                } else {
+                  addresses.push(parseSocialDestination(ep.social_destination));
+                }
+              } else if (ep.social_destination && ep.social_destination_type == social_types.PAYMENTREQUEST) {
+                if (addresses.indexOf(ep.social_destination) == -1) {
+                  addresses.push(ep.social_destination);
+                }
+              } else {
+                var ad = addressbook.reverse[ep.ad] || ep.ad;
+                addresses.push(ad);
+              }
+            }
+          }
+
+          if (sent_back) {
+            description = gettext('Sent back to ');
+          }
+          if (!addresses.length) {
+            description = gettext('Re-deposited');
+          } else {
+            description += addresses.join(', ');
+          }
+        }
+        // prepend zeroes for sorting
+        var value_sort = new Bitcoin.BigInteger(Math.pow(10, 19).toString()).add(value).toString();
+        while (value_sort.length < 20) value_sort = '0' + value_sort;
+        retval.push({ts: new Date(tx.created_at.replace(' ', 'T')), txhash: tx.txhash, memo: tx.memo,
+          value_sort: value_sort, value: value, instant: tx.instant,
+          value_fiat: data.fiat_value ? value * data.fiat_value / Math.pow(10, 8) : undefined,
+          redeemable_value: redeemable_value, negative: negative, positive: positive,
+          description: description, external_social: external_social, unclaimed: unclaimed,
+          description_short: addresses.length ? addresses.join(', ') : description,
+          pubkey_pointer: pubkey_pointer, inputs: inputs, outputs: outputs, fee: tx.fee,
+          nonzero: value.compareTo(new Bitcoin.BigInteger('0')) != 0,
+          redeemable: redeemable_value.compareTo(new Bitcoin.BigInteger('0')) > 0,
+          redeemable_unspent: redeemable_unspent,
+          sent_back: sent_back, block_height: tx.block_height,
+          confirmations: tx.block_height ? num_confirmations : 0,
+          has_payment_request: tx.has_payment_request,
+          double_spent_by: tx.double_spent_by, replaced_by: tx.replaced_by,
+          replacement_of: [],
+          rawtx: cur_net.isAlpha ? data.data[tx.txhash] : tx.data,
+          social_destination: tx_social_destination, social_value: tx_social_value,
+          asset_id: asset_id, asset_name: asset_name, size: tx.size,
+          fee_per_kb: Math.round(tx.fee / (tx.size / 1000)),
+        rbf_optin: tx.rbf_optin});
+        // tx.unclaimed is later used for cache updating
+        tx.unclaimed = retval[0].unclaimed || (retval[0].redeemable && retval[0].redeemable_unspent);
+      }
+      var hash2tx = {};
+      for (var i = 0; i < retval.length; ++i) {
+        hash2tx[retval[i].txhash] = retval[i];
+      }
+      var new_retval = [];
+      for (var i = 0; i < retval.length; ++i) {
+        var merged = false;
+        if (retval[i].replaced_by && retval[i].replaced_by.length > 0) {
+          var replaced_by = retval[i].replaced_by;
+          for (var j = 0; j < replaced_by.length; ++j) {
+            var tx = hash2tx[replaced_by[j]];
+            if (tx && !(tx.replaced_by && tx.replaced_by.length)) {
+              tx.replacement_of.push(retval[i]);
+              merged = true;
+              break;
+            }
+          }
+        }
+        if (!merged) {
+          new_retval.push(retval[i]);
+        }
+      }
+      retval = new_retval;
+      d.resolve({fiat_currency: data.fiat_currency, list: retval, sorting: sorting, date_range: date_range, subaccount: subaccount,
+        populate_csv: function () {
+          var csv_list = [gettext('Time,Description,satoshis,%s,txhash,fee,memo').replace('%s', this.fiat_currency)];
+          for (var i = 0; i < this.list.length; i++) {
+            var item = this.list[i];
+            csv_list.push(item.ts + ',' + item.description.replace(',', "'") + ',' + item.value + ',' + item.value_fiat + ',' + item.txhash + ',' + item.fee + ',' + item.memo);
+          }
+          this.csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_list.join('\n'));
+        },
+        next_page_id: data.next_page_id,
+        fetch_next_page: function () {
+          var that = this;
+          walletsService._getTransactions($scope, notifydata, that.next_page_id, query, that.sorting, that.date_range, that.subaccount).then(function (result) {
+            that.list = that.list.concat(result.list);
+            that.next_page_id = result.next_page_id;
+          });
+        },
+        sort_by: function (sorting) {
+          var that = this;
+          walletsService._getTransactions($scope, notifydata, null, query, sorting, that.date_range, that.subaccount).then(function (result) {
+            that.sorting = sorting;
+            if (sorting.order_by == 'ts' && sorting.reversed) {
+              that.pending_from_notification = false;
+              that.pending_conf_from_notification = false;
+            }
+            that.list = result.list;
+            that.next_page_id = result.next_page_id;
+          });
+      }});
+    }, function (err) {
+      notices.makeNotice('error', err.args[1]);
+      d.reject(err);
+    }).finally(function () { $rootScope.decrementLoading(); });
+    return d.promise;
+  };
+  walletsService.send_confidential_tx = function ($scope, recipient, satoshis) {
+    if (satoshis !== 'ALL') {
+      satoshis = new Bitcoin.BigInteger(satoshis);
+    }
+    var recipient_scanning_pubkey = recipient.slice(2, 35);
+    var version;
+    if (cur_net === Bitcoin.bitcoin.networks.bitcoin) {
+      version = 10;
+    } else {
+      version = 25;
+    }
+    var unspent_found = Bitcoin.BigInteger.ZERO, utxo_num = 0;
+    var needed_unspent = [];
+    var fee = new Bitcoin.BigInteger('10000');
+    var utxos = $scope.wallet.utxo[$scope.wallet.current_subaccount];
+    while (satoshis == 'ALL' ||
+      unspent_found.compareTo(satoshis.add(fee)) < 0) {
+      if (utxo_num >= utxos.length) {
+        if (satoshis == 'ALL' && unspent_found.compareTo(fee) > 0) {
+          // spend all (if enough for fee)
+          break;
+        } else {
+          return $q.reject(gettext('Not enough money'));
+        }
+      }
+      var utxo = utxos[utxo_num];
+      unspent_found = unspent_found.add(new Bitcoin.BigInteger(
+        utxo.data.value));
+      needed_unspent.push(utxo);
+      utxo_num += 1;
+    }
+    if (satoshis == 'ALL') {
+      satoshis = unspent_found.subtract(fee);
+    }
+    var input_blinds_and_change = [];
+    for (var i = 0; i < needed_unspent.length; ++i) {
+      (function (utxo) {
+        input_blinds_and_change.push(
+          blind.unblindOutValue(
+            $scope, utxo.out,
+            $scope.wallet.current_subaccount,
+            utxo.data.pubkey_pointer
+          ).then(function (data) {
+            return data.blinding_factor_out;
+          })
+        );
+      })(needed_unspent[i]);
+    }
+    var change_value = unspent_found.subtract(satoshis).subtract(fee);
+    if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
+      input_blinds_and_change.push(
+        tx_sender.call(
+          'http://greenaddressit.com/vault/fund',
+          $scope.wallet.current_subaccount, true, true
+        ).then(function (data) {
+          var key = $q.when($scope.wallet.hdwallet);
+          if ($scope.wallet.current_subaccount) {
+            key = key.then(function (key) {
+              return key.deriveHardened(branches.SUBACCOUNT);
+            }).then(function (key) {
+              return key.deriveHardened($scope.wallet.current_subaccount);
+            });
+          }
+          return key.then(function (key) {
+            return key.deriveHardened(branches.BLINDED);
+          }).then(function (branch) {
+            return branch.deriveHardened(data.pointer);
+          }).then(function (blinded_key) {
+            return tx_sender.call(
+              'http://greenaddressit.com/vault/set_scanning_key',
+              $scope.wallet.current_subaccount,
+              data.pointer,
+              Array.from(blinded_key.keyPair.getPublicKeyBuffer())
+            ).then(function () {
+              return blinded_key;
+            });
+          }).then(function (blinded_key) {
+            return [
+              blinded_key.keyPair.getPublicKeyBuffer(),
+              Bitcoin.bitcoin.crypto.hash160(
+                new Bitcoin.Buffer.Buffer(data.script, 'hex')
+              )
+            ];
+          });
+        })
+      );
+    }
+    return $q.all(input_blinds_and_change).then(function (input_blinds) {
+      var main_out = {
+        value: satoshis,
+        to_version: recipient[1],
+        to_scanning_pubkey: recipient.slice(2, 35),
+        to_hash: recipient.slice(35)
+      };
+      var outs;
+      if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
+        var change_idx = Bitcoin.randombytes(1)[0] % 2;
+        var change = input_blinds.pop();
+        outs = [null, null];
+        outs[change_idx] = {
+          value: change_value,
+          to_version: cur_net.scriptHash,
+          to_scanning_pubkey: change[0],
+          to_hash: change[1]
+        };
+        outs[1 - change_idx] = main_out;
+      } else {
+        outs = [main_out];
+      }
+      var all = (needed_unspent.length + outs.length);
+      var blindptrs = Module._malloc(4 * all);
+      var cur_blindptr = 4 * needed_unspent.length;
+      for (var i = 0; i < all; ++i) {
+        if (i < needed_unspent.length) {
+          setValue(blindptrs + 4 * i, input_blinds[i], '*');
+        } else {
+          var cur = Module._malloc(32);
+          setValue(blindptrs + 4 * i, cur, '*');
+          var rand = Bitcoin.randombytes(32);
+          for (var j = 0; j < 32; ++j) {
+            setValue(cur + j, rand[j], 'i8');
+          }
+        }
+      }
+      for (var i = 0; i < outs.length; ++i) {
+        if (i == outs.length - 1) {
+          if (1 != Module._secp256k1_pedersen_blind_sum(
+              Module.secp256k1ctx,
+              getValue(blindptrs + 4 * (all - 1), '*'),
+              blindptrs,
+              all - 1,
+              needed_unspent.length
+            )) {
+            throw new Error('secp256k1 pedersen blind sum failed');
+          }
+        }
+        var commitment = Module._malloc(33);
+        if (1 != Module._secp256k1_pedersen_commit(
+            Module.secp256k1ctx,
+            commitment,
+            getValue(blindptrs + cur_blindptr, '*'),
+            +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
+            +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
+          )) {
+          throw new Error('secp256k1 Pedersen commit failed');
+        }
+        var commitment_buf = new Bitcoin.Buffer.Buffer(33);
+        for (var j = 0; j < 33; ++j) {
+          commitment_buf[j] = getValue(
+              commitment + j, 'i8'
+            ) & 0xff;
+        }
+        var rangeproof_len = Module._malloc(4);
+        var len = 5134;
+        var rangeproof = Module._malloc(len);
+        var rangeproof_len_buf = new Bitcoin.BigInteger('' + len).toBuffer();
+        while (rangeproof_len_buf.length < 4) {
+          rangeproof_len_buf = Bitcoin.Buffer.Buffer.concat([
+            new Bitcoin.Buffer.Buffer([0]),
+            rangeproof_len_buf
+          ]);
+        }
+        for (var j = 0; j < 4; ++j) {
+          setValue(
+            rangeproof_len + j,
+            rangeproof_len_buf[4 - j - 1],
+            'i8'
+          );
+        }
+        var ephemeral_key = Bitcoin.bitcoin.ECPair.makeRandom();
+        var secexp_buf = ephemeral_key.d.toBuffer();
+        var secexp = Module._malloc(32);
+        var nonce = Module._malloc(33);
+        var nonce_res = Module._malloc(32);
+        var pubkey_p = Module._malloc(64);
+        var p_arr = Array.from(new Bitcoin.BigInteger('' + pubkey_p).toBuffer());
+        while (p_arr.length < 4) p_arr.unshift(0);
+        for (var j = 0; j < 32; ++j) {
+          setValue(secexp + j, secexp_buf[j], 'i8');
+        }
+        for (var j = 0; j < 33; ++j) {
+          setValue(nonce + j, outs[i].to_scanning_pubkey[j], 'i8');
+        }
+        if (1 != Module._secp256k1_ec_pubkey_parse(
+            Module.secp256k1ctx,
+            pubkey_p,
+            nonce,
+            33
+          )) {
+          throw new Error('secp256k1 EC pubkey parse failed');
+        }
+        if (1 != Module._secp256k1_ecdh(
+            Module.secp256k1ctx,
+            nonce_res,
+            pubkey_p,
+            secexp
+          )) {
+          throw new Error('secp256k1 ECDH failed');
+        }
+        var nonce_buf = new Bitcoin.Buffer.Buffer(32);
+        for (var j = 0; j < 32; ++j) {
+          nonce_buf[j] = getValue(nonce_res + j, 'i8') & 0xff;
+        }
+        nonce_buf = Bitcoin.bitcoin.crypto.sha256(nonce_buf);
+        for (var j = 0; j < 32; ++j) {
+          setValue(nonce_res + j, nonce_buf[j], 'i8');
+        }
+        if (1 != Module._secp256k1_rangeproof_sign(
+            Module.secp256k1ctx,
+            rangeproof,
+            rangeproof_len,
+            0, 0,
+            commitment,
+            getValue(blindptrs + cur_blindptr, '*'),
+            nonce_res,
+            0, 32,
+            +outs[i].value.mod(Bitcoin.BigInteger('2').pow(32)),
+            +outs[i].value.divide(Bitcoin.BigInteger('2').pow(32))
+          )) {
+          throw new Error('secp256k1 rangeproof sign failed');
+        }
+        for (var j = 0; j < 4; ++j) {
+          rangeproof_len_buf[4 - j - 1] = getValue(
+              rangeproof_len + j, 'i8'
+            ) & 0xff;
+        }
+        len = +Bitcoin.BigInteger(rangeproof_len_buf);
+        var rangeproof_buf = new Bitcoin.Buffer.Buffer(len);
+        for (var j = 0; j < len; ++j) {
+          rangeproof_buf[j] = getValue(rangeproof + j, 'i8') & 0xff;
+        }
+        cur_blindptr += 4;
+        outs[i].nonce_commitment = ephemeral_key.getPublicKeyBuffer();
+        outs[i].commitment = commitment_buf;
+        outs[i].range_proof = rangeproof_buf;
+      }
+      var tx = new Bitcoin.contrib.AlphaTransactionBuilder(cur_net);
+      tx.tx.locktime = $scope.wallet.cur_block; // nLockTime to prevent fee sniping
+      for (var i = 0; i < needed_unspent.length; ++i) {
+        tx.addInput(
+          needed_unspent[i].txhash,
+          needed_unspent[i].data.pt_idx,
+          0xfffffffe // allow nLockTime to prevent fee sniping
+        );
+      // // tx.tx.ins[i].prevOut = needed_unspent[i].out
+      // // ^- this doesn't work (see comment below)
+      }
+      for (var i = 0; i < outs.length; ++i) {
+        tx.addOutput(
+          Bitcoin.bitcoin.address.toBase58Check(
+            outs[i].to_hash, outs[i].to_version
+          ), 0
+        );
+        tx.tx.outs[i].commitment = outs[i].commitment;
+        tx.tx.outs[i].range_proof = outs[i].range_proof;
+        tx.tx.outs[i].nonce_commitment = outs[i].nonce_commitment;
+      }
+      var signatures_ds = [];
+      for (var i = 0; i < needed_unspent.length; ++i) {
+        (function (i) {
+          var utxo = needed_unspent[i];
+          var gawallet = new Bitcoin.bitcoin.HDNode(
+            Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+              new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
+              cur_net
+            ),
+            new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
+          );
+          var gaKey;
+          if ($scope.wallet.current_subaccount) {
+            gaKey = gawallet.derive(3).then(function (branch) {
+              return branch.subpath($scope.wallet.gait_path);
+            }).then(function (gawallet) {
+              return gawallet.derive($scope.wallet.current_subaccount);
+            });
+          } else {
+            gaKey = gawallet.derive(1).then(function (branch) {
+              return branch.subpath($scope.wallet.gait_path);
+            });
+          }
+          gaKey = gaKey.then(function (gawallet) {
+            return gawallet.derive(utxo.data.pubkey_pointer);
+          });
+          var userKey = $q.when($scope.wallet.hdwallet);
+          if ($scope.wallet.current_subaccount) {
+            userKey = userKey.then(function (key) {
+              return key.deriveHardened(branches.SUBACCOUNT);
+            }).then(function (key) {
+              return key.deriveHardened($scope.wallet.current_subaccount);
+            });
+          }
+          var userKey = userKey.then(function (key) {
+            return key.derive(branches.REGULAR);
+          }).then(function (branch) {
+            return branch.derive(utxo.data.pubkey_pointer);
+          });
+          signatures_ds.push($q.all([gaKey, userKey]).then(function (keys) {
+            var gaKey = keys[0], userKey = keys[1];
+            var redeemScript = Bitcoin.bitcoin.script.multisigOutput(
+              2,
+              [gaKey.keyPair.getPublicKeyBuffer(),
+                userKey.keyPair.getPublicKeyBuffer()]
+            );
+            for (var j = 0; j < tx.tx.ins.length; ++j) {
+              // this is slightly confusing, but alphad requires
+              // all ins to serialize with the same prevout,
+              // even though this prevout is connected to only a
+              // single input
+              tx.tx.ins[j].prevOut = needed_unspent[i].out;
+            }
+
+            return tx.sign(i, userKey.keyPair, redeemScript, +fee);
+          }));
+        })(i);
+      }
+      return $q.all(signatures_ds).then(function () {
+        return walletsService.get_two_factor_code(
+          $scope, 'send_raw_tx'
+        ).then(function (twofac_data) {
+          return tx_sender.call(
+            'http://greenaddressit.com/vault/send_raw_tx',
+            tx.build().toHex(+fee),
+            twofac_data
+          );
+        });
+      });
+    });
+  };
+  walletsService.ask_for_tx_confirmation = function (
+    $scope, tx, data
+  ) {
+    if (!($scope.send_tx || $scope.bump_fee)) {
+      // not all txs support this dialog, like redepositing or sweeping
+      return $q.when();
+    }
+    var scope = $scope.$new(), fee, value;
+    if (data.response) {
+      var in_value = 0, out_value = 0;
+      tx.ins.forEach(function (txin) {
+        var rev = new Bitcoin.Buffer.Buffer(txin.hash);
+        rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
+        var prevtx = Bitcoin.contrib.transactionFromHex(
+          data.response.data[rev.toString('hex')]
+        );
+        var prevout = prevtx.outs[txin.index];
+        in_value += prevout.value;
+      });
+      tx.outs.forEach(function (txout) {
+        out_value += txout.value;
+      });
+      fee = in_value - out_value;
+    } else {
+      fee = data.fee;
+    }
+    if ($scope.send_tx && $scope.send_tx.amount == 'MAX') {
+      value = $scope.wallet.final_balance - fee;
+    } else if (data.bumped_tx) {
+      value = -data.bumped_tx.value;
+    } else {
+      value = $scope.send_tx.amount_to_satoshis($scope.send_tx.amount);
+    }
+    scope.tx = {
+      fee: fee,
+      previous_fee: data.bumped_tx && data.bumped_tx.fee,
+      value: value,
+      recipient: data.recipient ? data.recipient :
+        ($scope.send_tx.voucher ?
+          gettext('Voucher') :
+          ($scope.send_tx.recipient.name ||
+          $scope.send_tx.recipient))
+    };
+    var modal = $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_confirm_tx.html',
+      scope: scope,
+      windowClass: 'twofactor' // is a 'sibling' to 2fa - show with the same z-index
+    });
+    return modal.result;
+  };
+  walletsService.sign_tx = function ($scope, tx, data, prevouts, progress_cb, priv_der) {
+    var prevoutToPath = function (prevout, trezor, from_subaccount) {
+      var path = [];
+      if (prevout.subaccount && !from_subaccount) {
+        if (trezor) {
+          path.push(3 + 0x80000000);
+          path.push(prevout.subaccount + 0x80000000);
+        } else {
+          path.push("3'");
+          path.push(prevout.subaccount + "'");
+        }
+      }
+      if (priv_der) {
+        if (trezor) {
+          path.push(prevout.branch + 0x80000000);
+          path.push(prevout.pointer + 0x80000000);
+        } else {
+          path.push(prevout.branch + "'");
+          path.push(prevout.pointer + "'");
+        }
+      } else {
+        path.push(prevout.branch);
+        path.push(prevout.pointer);
+      }
+      return path;
+    };
+    var signatures = [], device_deferred = null, signed_n = 0;
+    for (var i = 0; i < tx.ins.length; ++i) {
+      (function (i) {
+        var key, path = [];
+        if (data.prev_outputs[i].privkey) {
+          key = $q.when(data.prev_outputs[i].privkey);
+        } else if (tx_sender.hdwallet.keyPair.d) {
+          if (data.prev_outputs[i].subaccount) {
+            key = $q.when(tx_sender.hdwallet.deriveHardened(3)).then(function (key) {
+              return key.deriveHardened(data.prev_outputs[i].subaccount);
+            });
+          } else {
+            key = $q.when(tx_sender.hdwallet);
+          }
+          if (priv_der) {
+            key = key.then(function (key) {
+              return key.deriveHardened(data.prev_outputs[i].branch);
+            }).then(function (key) {
+              return key.deriveHardened(data.prev_outputs[i].pointer);
+            });
+          } else {
+            key = key.then(function (key) {
+              return key.derive(data.prev_outputs[i].branch);
+            }).then(function (key) {
+              return key.derive(data.prev_outputs[i].pointer);
+            });
+          }
+          key = key.then(function (key) {
+            return key.keyPair;
+          });
+        } else {
+          path = prevoutToPath(data.prev_outputs[i]);
+        }
+        if (!key) {
+          // btchip or trezor -- trezor is handled separately
+          // at the end of walletsService.sign_tx
+          var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
+          var SIGHASH_ALL = 1;
+          var sign_deferred = $q.defer();
+
+          if ($scope.wallet.btchip) {
+            var next = function () {
+              return $scope.wallet.btchip.gaStartUntrustedHashTransactionInput_async(
+                i == 0,
+                tx.cloneTransactionForSignature(script, i, SIGHASH_ALL),
+                i
+              ).then(function (finished) {
+                var this_ms = 0, this_expected_ms = 6500;
+                if ($scope.wallet.btchip.features.quickerVersion) this_expected_ms *= 0.55;
+                var int_promise = $interval(function () {
+                  this_ms += 100;
+                  var progress = signed_n / tx.ins.length;
+                  progress += (1 / tx.ins.length) * (this_ms / this_expected_ms);
+                  if (progress_cb) progress_cb(Math.min(100, Math.round(100 * progress)));
+                }, 100);
+                return $scope.wallet.btchip.app.gaUntrustedHashTransactionInputFinalizeFull_async(tx).then(function (finished) {
+                  return $scope.wallet.btchip.app.signTransaction_async(
+                    path.join('/'),
+                    undefined,
+                    // Cordova requires int, while crx requires ByteString:
+                    window.cordova ? tx.locktime : new ByteString(Convert.toHexInt(tx.locktime), HEX)
+                  ).then(function (sig) {
+                    $interval.cancel(int_promise);
+                    signed_n += 1;
+                    sign_deferred.resolve('30' + sig.bytes(1).toString(HEX));
+                  }, sign_deferred.reject);
+                }, sign_deferred.reject);
+              }, sign_deferred.reject);
+            };
+            if (!device_deferred) {
+              device_deferred = next();
+            } else {
+              device_deferred = device_deferred.then(next);
+            }
+          }
+          var sign = sign_deferred.promise;
+        } else {
+          var sign = key.then(function (key) {
+            signed_n += 1;
+            if (progress_cb) progress_cb(Math.round(100 * signed_n / tx.ins.length));
+            var script = new Bitcoin.Buffer.Buffer(data.prev_outputs[i].script, 'hex');
+            var SIGHASH_ALL = 1;
+            var scope = $scope.$new();
+            var in_value = 0, out_value = 0;
+            if (cur_net.isAlpha) {
+              tx.ins.forEach(function (txin) {
+                var rev = new Bitcoin.Buffer.Buffer(txin.hash);
+                rev = Bitcoin.bitcoin.bufferutils.reverse(rev);
+                var prevtx = Bitcoin.contrib.transactionFromHex(
+                  prevouts.data[rev.toString('hex')]
+                );
+                var prevout = prevtx.outs[txin.index];
+                in_value += prevout.value;
+                txin.prevValue = prevout.value;
+              });
+              tx.outs.forEach(function (txout) {
+                out_value += txout.value;
+              });
+              var fee = in_value - out_value, value;
+            }
+            if (data.prev_outputs[i].script_type == 14) {
+              var sign = $q.when(key.sign(tx.hashForSignatureV2(i, script, parseInt(data.prev_outputs[i].value), SIGHASH_ALL)));
+            } else {
+              var sign = $q.when(key.sign(tx.hashForSignature(i, script, SIGHASH_ALL)));
+            }
+            return sign.then(function (sign) {
+              var sign_serialized;
+              if (cur_net.isAlpha) {
+                sign_serialized = sign;
+              } else {
+                sign_serialized = sign.toDER();
+              }
+              sign = Bitcoin.Buffer.Buffer.concat([
+                new Bitcoin.Buffer.Buffer(sign_serialized),
+                new Bitcoin.Buffer.Buffer([SIGHASH_ALL]),
+              ]);
+              return sign.toString('hex');
+            });
+          });
+        }
+        signatures.push(sign);
+      })(i);
+    }
+    if (!($scope && $scope.wallet.trezor_dev)) {
+      return $q.all(signatures);
+    } else {
+      var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
+        return x;
+      };
+      var gawallet_hd = new Bitcoin.bitcoin.HDNode(
+        Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+          new Bitcoin.Buffer.Buffer(deposit_pubkey, 'hex'),
+          cur_net
+        ),
+        new Bitcoin.Buffer.Buffer(deposit_chaincode, 'hex')
+      );
+      var is_2of3 = false, cur_subaccount, recovery_wallet, recovery_wallet_hd;
+      for (var j = 0; j < $scope.wallet.subaccounts.length; j++) {
+        if ($scope.wallet.subaccounts[j].pointer == $scope.wallet.current_subaccount &&
+          $scope.wallet.subaccounts[j].type == '2of3') {
+          is_2of3 = true;
+          cur_subaccount = $scope.wallet.subaccounts[j];
+          break;
+        }
+      }
+      if ($scope.wallet.current_subaccount) {
+        var gawallet_path = $q.when(gawallet_hd.derive(branches.SUBACCOUNT)).then(function (gawallet_hd) {
+          return gawallet_hd.subpath($scope.wallet.gait_path);
+        }).then(function (subaccounts) {
+          return subaccounts.derive($scope.wallet.current_subaccount);
+        });
+      } else {
+        var gawallet_path = $q.when(gawallet_hd.derive(branches.REGULAR)).then(function (gawallet_hd) {
+          return gawallet_hd.subpath($scope.wallet.gait_path);
+        });
+      }
+      var hdwallet = {
+        depth: 0,
+        child_num: 0,
+        fingerprint: 0, // FIXME (is it important?): real fingerprint
+        chain_code: fromHex($scope.wallet.hdwallet.chainCode.toString('hex')),
+        public_key: fromHex($scope.wallet.hdwallet.keyPair.getPublicKeyBuffer().toString('hex'))
+      };
+      var path_bytes = new Bitcoin.Buffer.Buffer($scope.wallet.gait_path, 'hex'), ga_path = [];
+      for (var i = 0; i < 32; i++) {
+        ga_path.push(+Bitcoin.BigInteger.fromByteArrayUnsigned(path_bytes.slice(0, 2)));
+        path_bytes = path_bytes.slice(2);
+      }
+      var script_to_hash = [];
+      var change_key_bytes, recovery_wallet;
+      return gawallet_path.then(function (gawallet_path_result) {
+        gawallet_path = gawallet_path_result;
+        gawallet = {
+          depth: 33,
+          child_num: 0, // FIXME (is it important?): real child_num
+          fingerprint: 0, // FIXME (is it important?): real fingerprint
+          chain_code: fromHex(gawallet_path.chainCode.toString('hex')),
+          public_key: fromHex(gawallet_path.keyPair.getPublicKeyBuffer().toString('hex'))
+        };
+        if ($scope.wallet.current_subaccount) {
+          return $scope.wallet.trezor_dev.getPublicKey(
+            [branches.SUBACCOUNT + 0x80000000, $scope.wallet.current_subaccount + 0x80000000]
+          ).then(function (pubkey) {
+            var pk = pubkey.message.node.public_key;
+            pk = pk.toHex ? pk.toHex() : pk;
+            var cc = pubkey.message.node.chain_code;
+            cc = cc.toHex ? cc.toHex() : cc;
+            var hd = new Bitcoin.bitcoin.HDNode(
+              Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+                new Bitcoin.Buffer.Buffer(pk, 'hex'),
+                cur_net
+              ),
+              new Bitcoin.Buffer.Buffer(cc, 'hex')
+            );
+
+            hdwallet = {
+              depth: 0,
+              child_num: 0,
+              fingerprint: 0, // FIXME (is it important?): real fingerprint
+              chain_code: fromHex(hd.chainCode.toString('hex')),
+              public_key: fromHex(hd.keyPair.getPublicKeyBuffer().toString('hex'))
+            };
+
+            return hd.derive(1);
+          });
+        } else {
+          return $scope.wallet.hdwallet.derive(1);
+        }
+      }).then(function (hdwallet_branch) {
+        return hdwallet_branch.derive(data.change_pointer);
+      }).then(function (change_key) {
+        change_key_bytes = change_key.keyPair.getPublicKeyBuffer();
+        return gawallet_path.derive(data.change_pointer);
+      }).then(function (change_gait_key) {
+        if (is_2of3) {
+          var recovery_wallet_hd = new Bitcoin.bitcoin.HDNode(
+            Bitcoin.bitcoin.ECPair.fromPublicKeyBuffer(
+              new Bitcoin.Buffer.Buffer(cur_subaccount['2of3_backup_pubkey'], 'hex'),
+              cur_net
+            ),
+            new Bitcoin.Buffer.Buffer(cur_subaccount['2of3_backup_chaincode'], 'hex')
+          );
+          recovery_wallet = {
+            depth: 0,
+            child_num: 0,
+            fingerprint: 0, // FIXME (is it important?): real fingerprint
+            chain_code: fromHex(cur_subaccount['2of3_backup_chaincode']),
+            public_key: fromHex(cur_subaccount['2of3_backup_pubkey'])
+          };
+          return recovery_wallet_hd.derive(1).then(function (branch) {
+            return branch.derive(data.change_pointer);
+          }).then(function (change_key_recovery) {
+            return [change_gait_key.keyPair.getPublicKeyBuffer(),
+              change_key_bytes,
+              change_key_recovery.keyPair.getPublicKeyBuffer()];
+          });
+        } else {
+          return [change_gait_key.keyPair.getPublicKeyBuffer(), change_key_bytes];
+        }
+      }).then(function (keys) {
+        script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
+        script_to_hash.push(keys[0]);
+        script_to_hash.push(keys[1]);
+        if (is_2of3) {
+          script_to_hash.push(keys[2]);
+          script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_3);
+        } else {
+          script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_2);
+        }
+        script_to_hash.push(Bitcoin.bitcoin.opcodes.OP_CHECKMULTISIG);
+        script_to_hash = Bitcoin.bitcoin.script.compile(
+          script_to_hash
+        );
+        var change_addr = Bitcoin.bitcoin.address.fromOutputScript(
+          Bitcoin.bitcoin.script.scriptHashOutput(
+            Bitcoin.bitcoin.crypto.hash160(script_to_hash)
+          ),
+          cur_net
+        );
+        var get_pubkeys = function (prevout, is2of3) {
+          var ret = [{
+            node: gawallet,
+            address_n: [prevout.pointer]
+          },
+            {
+              node: hdwallet,
+              address_n: prevoutToPath(prevout, true, $scope.wallet.current_subaccount)
+            }];
+          if (is2of3) {
+            ret.push({
+              node: recovery_wallet,
+              address_n: prevoutToPath(prevout, true, true)
+            });
+          }
+          return ret;
+        };
+        var inputs = [];
+        for (var i = 0; i < tx.ins.length; ++i) {
+          inputs.push({
+            address_n: prevoutToPath(data.prev_outputs[i], true),
+            prev_hash: fromHex(
+              Bitcoin.bitcoin.bufferutils.reverse(
+                tx.ins[i].hash
+              ).toString('hex')
+            ),
+            prev_index: tx.ins[i].index,
+            script_type: (window.trezor && trezor.ByteBuffer) ? 1 : 'SPENDMULTISIG',
+            multisig: {
+              pubkeys: get_pubkeys(data.prev_outputs[i], is_2of3),
+              m: 2
+            },
+            sequence: tx.ins[i].sequence
+          });
+        }
+
+        var convert_ins = function (ins) {
+          return ins.map(function (inp) {
+            var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
+              return x;
+            };
+            return {
+              prev_hash: fromHex(
+                Bitcoin.bitcoin.bufferutils.reverse(
+                  inp.hash
+                ).toString('hex')
+              ),
+              prev_index: inp.index,
+              script_sig: fromHex(inp.script.toString('hex')),
+              sequence: inp.sequence
+            };
+          });
+        };
+        var convert_outs = function (outs) {
+          return outs.map(function (out) {
+            var TYPE_ADDR = (window.trezor && trezor.ByteBuffer) ? 0 : 'PAYTOADDRESS';
+            var TYPE_P2SH = (window.trezor && trezor.ByteBuffer) ? 1 : 'PAYTOSCRIPTHASH';
+            var TYPE_MULTISIG = (window.trezor && trezor.ByteBuffer) ? 2 : 'PAYTOMULTISIG';
+            var addr = Bitcoin.bitcoin.address.fromOutputScript(
+              out.script, cur_net
+            );
+            var ret = {
+              amount: out.value,
+              address: addr,
+              script_type: Bitcoin.bitcoin.script.isScriptHashOutput(
+                out.script
+              ) ? TYPE_P2SH : TYPE_ADDR
+            };
+            if (ret.address == change_addr) {
+              ret.script_type = TYPE_MULTISIG;
+              ret.multisig = {
+                pubkeys: get_pubkeys({
+                  branch: 1,
+                  pointer: data.change_pointer
+                }, is_2of3),
+                m: 2
+              };
+            } else if (data.out_pointers && data.out_pointers.length == 1) {
+              // FIXME: perhaps at some point implement the case of 'single redeposit transaction',
+              // which is a bit complicated because different outputs can be from different
+              // subaccounts
+              ret.script_type = TYPE_MULTISIG;
+              ret.multisig = {
+                pubkeys: get_pubkeys({
+                  branch: 1,
+                  pointer: data.out_pointers[0].pointer
+                }, is_2of3),
+                m: 2
+              };
+            }
+            return ret;
+          });
+        };
+        var convert_outs_bin = function (outs) {
+          return outs.map(function (out) {
+            var fromHex = (window.trezor && trezor.ByteBuffer) ? trezor.ByteBuffer.fromHex : function (x) {
+              return x;
+            };
+            return {
+              amount: out.value,
+              script_pubkey: fromHex(out.script.toString('hex'))
+            };
+          });
+        };
+
+        var txs = [];
+
+        for (var k in prevouts.data) {
+          var parsed = Bitcoin.bitcoin.Transaction.fromHex(prevouts.data[k]);
+          txs.push({
+            hash: k.toString('hex'),
+            version: parsed.version,
+            lock_time: parsed.locktime,
+            bin_outputs: convert_outs_bin(parsed.outs),
+            inputs: convert_ins(parsed.ins)
+          });
+        }
+        return $scope.wallet.trezor_dev.signTx(inputs, convert_outs(tx.outs),
+          txs, {
+            coin_name: cur_net == Bitcoin.bitcoin.networks.bitcoin
+              ? 'Bitcoin' : 'Testnet'
+          }).then(function (res) {
+          return res.message.serialized.signatures.map(function (a) {
+            return (a.toHex ? a.toHex() : a) + '01';
+          });
+        });
+      });
+    }
+  };
+  walletsService.sign_and_send_tx = function ($scope, data, priv_der, twofactor, notify, progress_cb, send_after) {
+    var d = $q.defer();
+    var tx = Bitcoin.contrib.transactionFromHex(data.tx);
+    var prevouts_d;
+    var response;
+    if ($scope && ($scope.send_tx || $scope.wallet.trezor_dev)) {
+      prevouts_d = $http.get(data.prevout_rawtxs).then(function (response_) {
+        response = response_;
+        return response;
+      });
+    } else {
+      prevouts_d = $q.when();
+    }
+    var d_all = prevouts_d.then(function (prevouts) {
+      return walletsService.sign_tx($scope, tx, data, prevouts, progress_cb, priv_der);
+    });
+    if (!send_after) {
+      send_after = $q.when();
+    }
+    d_all = d_all.then(function (signatures) {
+      return walletsService.ask_for_tx_confirmation(
+        $scope, tx, {response: response}
+      ).then(function () {
+        return signatures;
+      });
+    }, d.reject);
+    var do_send = function () {
+      return d_all.then(function (signatures) {
+        if (!twofactor && data.requires_2factor) {
+          return walletsService.get_two_factor_code($scope, 'send_tx').then(function (twofac_data) {
+            return [signatures, twofac_data];
+          });
+        } else {
+          return [signatures, twofactor];
+        }
+      }).then(function (signatures_twofactor) {
+        var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
+        tx_sender.call('http://greenaddressit.com/vault/send_tx', signatures, twofactor || null).then(function (data) {
+          d.resolve();
+          if (!twofactor && $scope) {
+            tx_sender.call('http://greenaddressit.com/login/get_spending_limits').then(function (data) {
+              $scope.wallet.limits.total = data.total;
+            });
+          }
+          if (notify !== false) {
+            sound.play(BASE_URL + '/static/sound/coinsent.mp3', $scope);
+            notices.makeNotice('success', notify || gettext('Bitcoin transaction sent!'));
+          }
+        }, function (reason) {
+          d.reject();
+          notices.makeNotice('error', gettext('Transaction failed: ') + reason.args[1]);
+          sound.play(BASE_URL + '/static/sound/wentwrong.mp3', $scope);
+        });
+      }, d.reject);
+    };
+    send_after.then(do_send, d.reject);
+    return d.promise;
+  };
+  walletsService.getTwoFacConfig = function ($scope, force) {
+    var d = $q.defer();
+    if ($scope.wallet.twofac !== undefined && !force) {
+      d.resolve($scope.wallet.twofac);
+    } else {
+      tx_sender.call('http://greenaddressit.com/twofactor/get_config').then(function (data) {
+        $scope.wallet.twofac = data;
+        d.resolve($scope.wallet.twofac);
+      });
+    }
+    return d.promise;
+  };
+  walletsService.get_two_factor_code = function ($scope, action, data, redeposit) {
+    var deferred = $q.defer();
+    walletsService.getTwoFacConfig($scope).then(function (twofac_data) {
+      if (twofac_data.any) {
+        $scope.twofactor_method_names = {
+          'gauth': 'Google Authenticator',
+          'email': 'Email',
+          'sms': 'SMS',
+          'phone': gettext('Phone')
+        };
+        $scope.twofactor_methods = [];
+        for (var key in $scope.twofactor_method_names) {
+          if (twofac_data[key] === true) {
+            $scope.twofactor_methods.push(key);
+          }
+        }
+        var order = ['gauth', 'email', 'sms', 'phone'];
+        $scope.twofactor_methods.sort(function (a, b) { return order.indexOf(a) - order.indexOf(b); });
+        $scope.twofac = {
+          twofactor_method: $scope.twofactor_methods[0],
+          codes_requested: {},
+          request_code: function () {
+            var that = this;
+            this.requesting_code = true;
+            return tx_sender.call('http://greenaddressit.com/twofactor/request_' + this.twofactor_method,
+              action, data).then(function () {
+              that.codes_requested[that.twofactor_method] = true;
+              that.requesting_code = false;
+            }, function (err) {
+              notices.makeNotice('error', err.args[1]);
+              that.requesting_code = false;
+            });
+        }};
+        var show_modal = function () {
+          var modal = $uibModal.open({
+            templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_2fa.html',
+            scope: $scope,
+            windowClass: 'twofactor'
+          });
+          modal.opened.then(function () { focus('twoFactorModal'); });
+          deferred.resolve(modal.result.then(function (twofac_data) {
+            if (twofac_data.method == 'gauth' && redeposit) {
+              return tx_sender.call('http://greenaddressit.com/twofactor/request_redeposit_proxy', twofac_data).then(function (data) {
+                return {'method': 'proxy', 'code': data};
+              });
+            } else {
+              return twofac_data;
+            }
+          }));
+        };
+        if ($scope.twofactor_methods.length == 1) {
+          if ($scope.twofactor_methods[0] == 'gauth') {
+            // just gauth - no request required
+            $scope.twofac.gauth_only = true; // don't display the radio buttons
+            // (not required in 'else' because codes_requested takes care of it)
+            show_modal();
+          } else {
+            // just sth else than gauth - request it because user can't choose anything else anyway
+            $scope.twofac.twofactor_method = $scope.twofactor_methods[0];
+            $scope.twofac.request_code().then(function () {
+              show_modal();
+            });
+          }
+        } else {
+          // more than one auth method available - allow the user to select
+          show_modal();
+        }
+      } else {
+        return deferred.resolve(null);
+      }
+    });
+    return deferred.promise;
+  };
+  walletsService.addCurrencyConversion = function ($scope, model_name) {
+    var div = {'BTC': 1, 'mBTC': 1000, 'µBTC': 1000000, 'bits': 1000000}[$scope.wallet.unit];
+    var unitPlaces = {'BTC': 8, 'mBTC': 5, 'µBTC': 2, 'bits': 2}[$scope.wallet.unit];
+    var trimDecimalPlaces = function (numPlaces, val) {
+      return (Math.round(val * Math.pow(10, numPlaces)) / Math.pow(10, numPlaces));
+    };
+    $scope.$watch(model_name + '.amount', function (newValue, oldValue) {
+      // don't check for newValue == oldValue to allow conversion to happen
+      // in 'send' form even when using plain (non-payreq) bitcoin: URI with amount
+      var _update = function () {
+        if ($scope[model_name].updated_by_conversion) {
+          $scope[model_name].updated_by_conversion = false;
+        } else {
+          var oldFiat = $scope[model_name].amount_fiat;
+          if (!newValue) {
+            $scope[model_name].amount_fiat = undefined;
+          } else {
+            if (newValue == 'MAX') {
+              $scope[model_name].amount_fiat = 'MAX';
+            } else {
+              $scope[model_name].amount_fiat = newValue * $scope.wallet.fiat_rate / div;
+              $scope[model_name].amount_fiat = trimDecimalPlaces(2, $scope[model_name].amount_fiat);
+            }
+          }
+          if ($scope[model_name].amount_fiat !== oldFiat) {
+            $scope[model_name].updated_by_conversion = true;
+          }
+        }
+      };
+      if ($scope.wallet.fiat_rate) {
+        _update();
+      } else {
+        $scope.$on('first_balance_updated', _update);
+      }
+    });
+    $scope.$watch(model_name + '.amount_fiat', function (newValue, oldValue) {
+      if (newValue === oldValue) return;
+      var _update = function () {
+        if ($scope[model_name].updated_by_conversion) {
+          $scope[model_name].updated_by_conversion = false;
+        } else {
+          var oldBTC = $scope[model_name].amount;
+          if (!newValue) {
+            $scope[model_name].amount = undefined;
+          } else {
+            if (newValue == 'MAX') {
+              $scope[model_name].amount = 'MAX';
+            } else {
+              $scope[model_name].amount = (div * newValue / $scope.wallet.fiat_rate);
+              $scope[model_name].amount = trimDecimalPlaces(unitPlaces, $scope[model_name].amount);
+            }
+          }
+          if ($scope[model_name].amount !== oldBTC) {
+            $scope[model_name].updated_by_conversion = true;
+          }
+        }
+      };
+      if ($scope.wallet.fiat_rate) {
+        _update();
+      } else {
+        $scope.$on('first_balance_updated', _update);
+      }
+    });
+  };
+  walletsService.set_last_fiat_update = function ($scope) {
+    $timeout(function () {
+      var now = 1 * ((new Date()).getTime() / 1000).toFixed();
+      var diff = $scope.wallet.fiat_last_fetch_ss = $scope.wallet.fiat_last_fetch ? (now - $scope.wallet.fiat_last_fetch) : 0;
+      $scope.wallet.fiat_lastupdate_mm = (diff > 60) ? Math.floor(diff / 60) : 0;
+      $scope.wallet.fiat_lastupdate_ss = (diff % 60);
+      walletsService.set_last_fiat_update($scope);
+    }, 1000);
+  };
+  walletsService.create_pin = function (pin, $scope, suffix) {
+    suffix = suffix || '';
+    var do_create = function () {
+      var deferred = $q.defer();
+      tx_sender.call('http://greenaddressit.com/pin/set_pin_login', pin, 'Primary').then(
+        function (data) {
+          if (data) {
+            var pin_ident = tx_sender['pin_ident' + suffix] = data;
+            storage.set('pin_ident' + suffix, pin_ident);
+            storage.set(
+              'pin_chaincode' + suffix,
+              $scope.wallet.hdwallet.chainCode.toString('hex')
+            );
+            tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
+              function (password) {
+                if (!$scope.wallet.hdwallet.seed_hex) {
+                  deferred.reject(gettext('Internal error') + ': Missing seed');
+                  return;
+                }
+                if (password) {
+                  var data = JSON.stringify({'seed': $scope.wallet.hdwallet.seed_hex,
+                    'path_seed': $scope.wallet.gait_path_seed,
+                  'mnemonic': $scope.wallet.mnemonic});
+                  crypto.encrypt(data, password).then(function (encrypted) {
+                    storage.set('encrypted_seed' + suffix, encrypted);
+                    if (!suffix) {
+                      // chaincode is not used for Touch ID
+                      storage.set('pin_chaincode', data);
+                    }
+                  });
+                  tx_sender.pin = pin;
+                  deferred.resolve(pin_ident);
+                } else {
+                  deferred.reject(gettext('Failed retrieving password.'));
+                }
+              }, function (err) {
+                deferred.reject(err.args[1]);
+              });
+          } else {
+            deferred.reject();
+          }
+        }, function (err) {
+          deferred.reject(err.args[1]);
+        }
+      );
+      return deferred.promise;
+    };
+    if (!tx_sender.logged_in) {
+      return $q.when(Bitcoin.bitcoin.HDNode.fromSeedHex($scope.wallet.hdwallet.seed_hex, cur_net)).then(function (hdwallet) {
+        hdwallet.seed_hex = $scope.wallet.hdwallet.seed_hex;
+        return walletsService.login($scope || {wallet: {}}, hdwallet,
+          $scope.wallet.mnemonic, false, false, $scope.wallet.gait_path_seed).then(function () {
+          return do_create();
+        });
+      });
+    } else { // already logged in
+      return do_create();
+    }
+  };
+  walletsService.askForLogout = function ($scope, text) {
+    $scope.ask_for_logout_text = text;
+    return $uibModal.open({
+      templateUrl: BASE_URL + '/' + LANG + '/wallet/partials/wallet_modal_logout.html',
+      scope: $scope
+    }).result;
+  };
+  return walletsService;
+}
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/services/wallets.js","/greenwallet/services")
+},{"buffer":28,"global/window":26,"oMfpAn":31}],81:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletSettingsControllers',
     ['greenWalletServices', 'greenWalletSettingsDirectives'])
@@ -58564,7 +61389,7 @@ angular.module('greenWalletSettingsControllers',
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/settings/controllers.js","/greenwallet/settings")
-},{"buffer":16,"oMfpAn":19}],45:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],82:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletSettingsDirectives', [])
 .directive('addressbookItem', ['$compile', function ($compile) {
@@ -58659,7 +61484,7 @@ angular.module('greenWalletSettingsDirectives', [])
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/settings/directives.js","/greenwallet/settings")
-},{"buffer":16,"oMfpAn":19}],46:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],83:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   controllers: require('./controllers.js'),
@@ -58667,7 +61492,7 @@ module.exports = {
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/settings/index.js","/greenwallet/settings")
-},{"./controllers.js":44,"./directives.js":45,"buffer":16,"oMfpAn":19}],47:[function(require,module,exports){
+},{"./controllers.js":81,"./directives.js":82,"buffer":28,"oMfpAn":31}],84:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServices'])
 .controller('SignupLoginController', ['$scope', '$uibModal', 'focus', 'wallets', 'notices', 'mnemonics', '$location', 'cordovaReady', 'facebook', 'tx_sender', 'crypto', 'gaEvent', 'reddit', 'storage', 'qrcode', '$timeout', '$q', 'trezor', 'bip38', 'btchip', '$interval', '$rootScope',
@@ -59190,14 +62015,14 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/signuplogin/controllers.js","/greenwallet/signuplogin")
-},{"buffer":16,"oMfpAn":19}],48:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],85:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   controllers: require('./controllers.js')
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/signuplogin/index.js","/greenwallet/signuplogin")
-},{"./controllers.js":47,"buffer":16,"oMfpAn":19}],49:[function(require,module,exports){
+},{"./controllers.js":84,"buffer":28,"oMfpAn":31}],86:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletTransactionsControllers',
     ['greenWalletServices'])
@@ -59741,14 +62566,14 @@ angular.module('greenWalletTransactionsControllers',
 }]);
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/transactions/controllers.js","/greenwallet/transactions")
-},{"buffer":16,"oMfpAn":19}],50:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],87:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
   controllers: require('./controllers.js')
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/transactions/index.js","/greenwallet/transactions")
-},{"./controllers.js":49,"buffer":16,"oMfpAn":19}],51:[function(require,module,exports){
+},{"./controllers.js":86,"buffer":28,"oMfpAn":31}],88:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
  * angular-qr v0.1.4
@@ -59757,7 +62582,7 @@ module.exports = {
  */
 !function(a){"use strict";angular.module("ja.qr",[]).controller("QrCtrl",["$scope",function(a){a.getTypeNumeber=function(){return a.typeNumber||0},a.getCorrection=function(){var b={L:1,M:0,Q:3,H:2},c=a.correctionLevel||0;return b[c]||0},a.getText=function(){return a.text||""},a.getSize=function(){return a.size||250},a.isNUMBER=function(a){var b=/^[0-9]*$/;return b.test(a)},a.isALPHA_NUM=function(a){var b=/^[0-9A-Z $%*+\-./:]*$/;return b.test(a)},a.is8bit=function(a){for(var b=0;b<a.length;b++){var c=a.charCodeAt(b);if(c>255)return!1}return!0},a.checkInputMode=function(b,c){if("NUMBER"===b&&!a.isNUMBER(c))throw new Error("The `NUMBER` input mode is invalid for text.");if("ALPHA_NUM"===b&&!a.isALPHA_NUM(c))throw new Error("The `ALPHA_NUM` input mode is invalid for text.");if("8bit"===b&&!a.is8bit(c))throw new Error("The `8bit` input mode is invalid for text.");if(!a.is8bit(c))throw new Error("Input mode is invalid for text.");return!0},a.getInputMode=function(b){var c=a.inputMode;return c=c||(a.isNUMBER(b)?"NUMBER":void 0),c=c||(a.isALPHA_NUM(b)?"ALPHA_NUM":void 0),c=c||(a.is8bit(b)?"8bit":""),a.checkInputMode(c,b)?c:""}}]).directive("qr",["$timeout","$window",function(b,c){return{restrict:"E",template:"<canvas></canvas>",scope:{typeNumber:"=",correctionLevel:"=",inputMode:"=",size:"=",text:"="},controller:"QrCtrl",link:function(d,e){if(void 0===d.text)throw new Error("The `text` attribute is required.");var f=e.find("canvas")[0],g=!!c.CanvasRenderingContext2D;d.TYPE_NUMBER=d.getTypeNumeber(),d.TEXT=d.getText(),d.CORRECTION=d.getCorrection(),d.SIZE=d.getSize(),d.INPUT_MODE=d.getInputMode(d.TEXT);var h=function(a,b,c,d){for(var e=0;c>e;e++)for(var f=0;c>f;f++){var g=Math.ceil((f+1)*d)-Math.floor(f*d),h=Math.ceil((e+1)*d)-Math.floor(e*d);a.fillStyle=b.isDark(e,f)?"#000":"#fff",a.fillRect(Math.round(f*d),Math.round(e*d),g,h)}},i=function(b,c,d,e,f,i){var j=/^\s+|\s+$/g,k=c.replace(j,""),l=new a(d,e,i);l.addData(k),l.make();var m=b.getContext("2d"),n=l.getModuleCount(),o=f/n;b.width=b.height=f,g&&h(m,l,n,o)};i(f,d.TEXT,d.TYPE_NUMBER,d.CORRECTION,d.SIZE,d.INPUT_MODE),b(function(){d.$watch("text",function(a,b){a!==b&&(d.TEXT=d.getText(),d.INPUT_MODE=d.getInputMode(d.TEXT),i(f,d.TEXT,d.TYPE_NUMBER,d.CORRECTION,d.SIZE,d.INPUT_MODE))}),d.$watch("correctionLevel",function(a,b){a!==b&&(d.CORRECTION=d.getCorrection(),i(f,d.TEXT,d.TYPE_NUMBER,d.CORRECTION,d.SIZE,d.INPUT_MODE))}),d.$watch("typeNumber",function(a,b){a!==b&&(d.TYPE_NUMBER=d.getTypeNumeber(),i(f,d.TEXT,d.TYPE_NUMBER,d.CORRECTION,d.SIZE,d.INPUT_MODE))}),d.$watch("size",function(a,b){a!==b&&(d.SIZE=d.getSize(),i(f,d.TEXT,d.TYPE_NUMBER,d.CORRECTION,d.SIZE,d.INPUT_MODE))}),d.$watch("inputMode",function(a,b){a!==b&&(d.INPUT_MODE=d.getInputMode(d.TEXT),i(f,d.TEXT,d.TYPE_NUMBER,d.CORRECTION,d.SIZE,d.INPUT_MODE))})})}}}])}(window.QRCode);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/angular/angular-qr.min.js","/lib/angular")
-},{"buffer":16,"oMfpAn":19}],52:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],89:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Window = require('global/window');
 
@@ -59771,7 +62596,7 @@ require('angular-scroll');
 require('angular-ui-bootstrap');
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/angular/index.js","/lib/angular")
-},{"./angular-qr.min":51,"./qrcode":53,"angular":12,"angular-animate":2,"angular-route":4,"angular-scroll":6,"angular-touch":8,"angular-ui-bootstrap":10,"buffer":16,"global/window":15,"oMfpAn":19}],53:[function(require,module,exports){
+},{"./angular-qr.min":88,"./qrcode":90,"angular":12,"angular-animate":2,"angular-route":4,"angular-scroll":6,"angular-touch":8,"angular-ui-bootstrap":10,"buffer":28,"global/window":26,"oMfpAn":31}],90:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 //---------------------------------------------------------------------
 // QRCode for JavaScript
@@ -61096,7 +63921,7 @@ QRBitBuffer.prototype = {
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/angular/qrcode.js","/lib/angular")
-},{"buffer":16,"oMfpAn":19}],54:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],91:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*
 
@@ -61445,11 +64270,11 @@ c){return b._events&&b._events[c]?a(b._events[c])?1:b._events[c].length:0}},{}],
 [3])(3)});
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/autobahn.min.js","/lib")
-},{"buffer":16,"oMfpAn":19}],55:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],92:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 (function(r){function n(r){return r}function t(r,n){for(var t=0,e=n.length,u=Array(e);e>t;++t)u[t]=r[n[t]];return u}function e(r){function n(n,t,e,u){for(;u>e;){var f=e+u>>>1;r(n[f])<t?e=f+1:u=f}return e}function t(n,t,e,u){for(;u>e;){var f=e+u>>>1;t<r(n[f])?u=f:e=f+1}return e}return t.right=t,t.left=n,t}function u(r){function n(r,n,t){for(var u=t-n,f=(u>>>1)+1;--f>0;)e(r,f,u,n);return r}function t(r,n,t){for(var u,f=t-n;--f>0;)u=r[n],r[n]=r[n+f],r[n+f]=u,e(r,1,f,n);return r}function e(n,t,e,u){for(var f,o=n[--u+t],i=r(o);(f=t<<1)<=e&&(e>f&&r(n[u+f])>r(n[u+f+1])&&f++,!(i<=r(n[u+f])));)n[u+t]=n[u+f],t=f;n[u+t]=o}return n.sort=t,n}function f(r){function n(n,e,u,f){var o,i,a,c,l=Array(f=Math.min(u-e,f));for(i=0;f>i;++i)l[i]=n[e++];if(t(l,0,f),u>e){o=r(l[0]);do(a=r(c=n[e])>o)&&(l[0]=c,o=r(t(l,0,f)[0]));while(++e<u)}return l}var t=u(r);return n}function o(r){function n(n,t,e){for(var u=t+1;e>u;++u){for(var f=u,o=n[u],i=r(o);f>t&&r(n[f-1])>i;--f)n[f]=n[f-1];n[f]=o}return n}return n}function i(r){function n(r,n,u){return(U>u-n?e:t)(r,n,u)}function t(t,e,u){var f,o=0|(u-e)/6,i=e+o,a=u-1-o,c=e+u-1>>1,l=c-o,v=c+o,s=t[i],h=r(s),d=t[l],p=r(d),g=t[c],y=r(g),m=t[v],b=r(m),A=t[a],k=r(A);h>p&&(f=s,s=d,d=f,f=h,h=p,p=f),b>k&&(f=m,m=A,A=f,f=b,b=k,k=f),h>y&&(f=s,s=g,g=f,f=h,h=y,y=f),p>y&&(f=d,d=g,g=f,f=p,p=y,y=f),h>b&&(f=s,s=m,m=f,f=h,h=b,b=f),y>b&&(f=g,g=m,m=f,f=y,y=b,b=f),p>k&&(f=d,d=A,A=f,f=p,p=k,k=f),p>y&&(f=d,d=g,g=f,f=p,p=y,y=f),b>k&&(f=m,m=A,A=f,f=b,b=k,k=f);var x=d,w=p,E=m,O=b;t[i]=s,t[l]=t[e],t[c]=g,t[v]=t[u-1],t[a]=A;var M=e+1,U=u-2,z=O>=w&&w>=O;if(z)for(var N=M;U>=N;++N){var C=t[N],S=r(C);if(w>S)N!==M&&(t[N]=t[M],t[M]=C),++M;else if(S>w)for(;;){var q=r(t[U]);{if(!(q>w)){if(w>q){t[N]=t[M],t[M++]=t[U],t[U--]=C;break}t[N]=t[U],t[U--]=C;break}U--}}}else for(var N=M;U>=N;N++){var C=t[N],S=r(C);if(w>S)N!==M&&(t[N]=t[M],t[M]=C),++M;else if(S>O)for(;;){var q=r(t[U]);{if(!(q>O)){w>q?(t[N]=t[M],t[M++]=t[U],t[U--]=C):(t[N]=t[U],t[U--]=C);break}if(U--,N>U)break}}}if(t[e]=t[M-1],t[M-1]=x,t[u-1]=t[U+1],t[U+1]=E,n(t,e,M-1),n(t,U+2,u),z)return t;if(i>M&&U>a){for(var F,q;(F=r(t[M]))<=w&&F>=w;)++M;for(;(q=r(t[U]))<=O&&q>=O;)--U;for(var N=M;U>=N;N++){var C=t[N],S=r(C);if(w>=S&&S>=w)N!==M&&(t[N]=t[M],t[M]=C),M++;else if(O>=S&&S>=O)for(;;){var q=r(t[U]);{if(!(O>=q&&q>=O)){w>q?(t[N]=t[M],t[M++]=t[U],t[U--]=C):(t[N]=t[U],t[U--]=C);break}if(U--,N>U)break}}}}return n(t,M,U+1)}var e=o(r);return n}function a(r){return Array(r)}function c(r,n){return function(t){var e=t.length;return[r.left(t,n,0,e),r.right(t,n,0,e)]}}function l(r,n){var t=n[0],e=n[1];return function(n){var u=n.length;return[r.left(n,t,0,u),r.left(n,e,0,u)]}}function v(r){return[0,r.length]}function s(){return null}function h(){return 0}function d(r){return r+1}function p(r){return r-1}function g(r){return function(n,t){return n+ +r(t)}}function y(r){return function(n,t){return n-r(t)}}function m(){function r(r){var n=E,t=r.length;return t&&(w=w.concat(r),U=S(U,E+=t),C.forEach(function(e){e(r,n,t)})),m}function e(r){function e(n,e,u){P=n.map(r),Q=Y(A(u),0,u),P=t(P,Q);var f,o,i=Z(P),a=i[0],c=i[1];if(T)for(f=0;u>f;++f)T(P[f],o=Q[f]+e)||(U[o]|=W);else{for(f=0;a>f;++f)U[Q[f]+e]|=W;for(f=c;u>f;++f)U[Q[f]+e]|=W}if(!e)return K=P,L=Q,rn=a,nn=c,void 0;var l=K,v=L,s=0,h=0;for(K=Array(E),L=b(E,E),f=0;e>s&&u>h;++f)l[s]<P[h]?(K[f]=l[s],L[f]=v[s++]):(K[f]=P[h],L[f]=Q[h++]+e);for(;e>s;++s,++f)K[f]=l[s],L[f]=v[s];for(;u>h;++h,++f)K[f]=P[h],L[f]=Q[h]+e;i=Z(K),rn=i[0],nn=i[1]}function o(r,n,t){$.forEach(function(r){r(P,Q,n,t)}),P=Q=null}function a(r){var n=r[0],t=r[1];if(T)return T=null,B(function(r,e){return e>=n&&t>e}),rn=n,nn=t,V;var e,u,f,o=[],i=[];if(rn>n)for(e=n,u=Math.min(rn,t);u>e;++e)U[f=L[e]]^=W,o.push(f);else if(n>rn)for(e=rn,u=Math.min(n,nn);u>e;++e)U[f=L[e]]^=W,i.push(f);if(t>nn)for(e=Math.max(n,nn),u=t;u>e;++e)U[f=L[e]]^=W,o.push(f);else if(nn>t)for(e=Math.max(rn,t),u=nn;u>e;++e)U[f=L[e]]^=W,i.push(f);return rn=n,nn=t,N.forEach(function(r){r(W,o,i)}),V}function m(r){return null==r?R():Array.isArray(r)?F(r):"function"==typeof r?j(r):z(r)}function z(r){return a((Z=c(x,r))(K))}function F(r){return a((Z=l(x,r))(K))}function R(){return a((Z=v)(K))}function j(r){return Z=v,B(T=r),rn=0,nn=E,V}function B(r){var n,t,e,u=[],f=[];for(n=0;E>n;++n)!(U[t=L[n]]&W)^(e=r(K[n],t))&&(e?(U[t]&=X,u.push(t)):(U[t]|=W,f.push(t)));N.forEach(function(r){r(W,u,f)})}function D(r){for(var n,t=[],e=nn;--e>=rn&&r>0;)U[n=L[e]]||(t.push(w[n]),--r);return t}function G(r){for(var n,t=[],e=rn;nn>e&&r>0;)U[n=L[e]]||(t.push(w[n]),--r),e++;return t}function H(r){function t(n,t,u,f){function c(){++P===J&&(m=q(m,I<<=1),R=q(R,I),J=k(I))}var l,v,h,d,p,g,y=F,m=b(P,J),A=D,x=H,O=P,M=0,z=0;for(V&&(A=x=s),F=Array(P),P=0,R=O>1?S(R,E):b(E,J),O&&(h=(v=y[0]).key);f>z&&!((d=r(n[z]))>=d);)++z;for(;f>z;){for(v&&d>=h?(p=v,g=h,m[M]=P,(v=y[++M])&&(h=v.key)):(p={key:d,value:x()},g=d),F[P]=p;!(d>g||(R[l=t[z]+u]=P,U[l]&X||(p.value=A(p.value,w[l])),++z>=f));)d=r(n[z]);c()}for(;O>M;)F[m[M]=P]=y[M++],c();if(P>M)for(M=0;u>M;++M)R[M]=m[R[M]];l=N.indexOf(Q),P>1?(Q=e,T=i):(1===P?(Q=o,T=a):(Q=s,T=s),R=null),N[l]=Q}function e(r,n,t){if(r!==W&&!V){var e,u,f,o;for(e=0,f=n.length;f>e;++e)U[u=n[e]]&X||(o=F[R[u]],o.value=D(o.value,w[u]));for(e=0,f=t.length;f>e;++e)(U[u=t[e]]&X)===r&&(o=F[R[u]],o.value=G(o.value,w[u]))}}function o(r,n,t){if(r!==W&&!V){var e,u,f,o=F[0];for(e=0,f=n.length;f>e;++e)U[u=n[e]]&X||(o.value=D(o.value,w[u]));for(e=0,f=t.length;f>e;++e)(U[u=t[e]]&X)===r&&(o.value=G(o.value,w[u]))}}function i(){var r,n;for(r=0;P>r;++r)F[r].value=H();for(r=0;E>r;++r)U[r]&X||(n=F[R[r]],n.value=D(n.value,w[r]))}function a(){var r,n=F[0];for(n.value=H(),r=0;E>r;++r)U[r]&X||(n.value=D(n.value,w[r]))}function c(){return V&&(T(),V=!1),F}function l(r){var n=j(c(),0,F.length,r);return B.sort(n,0,n.length)}function v(r,n,t){return D=r,G=n,H=t,V=!0,C}function m(){return v(d,p,h)}function A(r){return v(g(r),y(r),h)}function x(r){function n(n){return r(n.value)}return j=f(n),B=u(n),C}function O(){return x(n)}function M(){return P}function z(){var r=N.indexOf(Q);return r>=0&&N.splice(r,1),r=$.indexOf(t),r>=0&&$.splice(r,1),C}var C={top:l,all:c,reduce:v,reduceCount:m,reduceSum:A,order:x,orderNatural:O,size:M,remove:z};_.push(C);var F,R,j,B,D,G,H,I=8,J=k(I),P=0,Q=s,T=s,V=!0;return arguments.length<1&&(r=n),N.push(Q),$.push(t),t(K,L,0,E),m().orderNatural()}function I(){var r=H(s),n=r.all;return delete r.all,delete r.top,delete r.order,delete r.orderNatural,delete r.size,r.value=function(){return n()[0].value},r}function J(){_.forEach(function(r){r.remove()});var r=C.indexOf(e);for(r>=0&&C.splice(r,1),r=C.indexOf(o),r>=0&&C.splice(r,1),r=0;E>r;++r)U[r]&=X;return O&=X,V}var K,L,P,Q,T,V={filter:m,filterExact:z,filterRange:F,filterFunction:j,filterAll:R,top:D,bottom:G,group:H,groupAll:I,remove:J},W=~O&-~O,X=~W,Y=i(function(r){return P[r]}),Z=v,$=[],_=[],rn=0,nn=0;return C.unshift(e),C.push(o),O|=W,(M>=32?!W:O&(1<<M)-1)&&(U=q(U,M<<=1)),e(w,0,E),o(w,0,E),V}function o(){function r(r,n){var t;if(!m)for(t=n;E>t;++t)U[t]||(a=c(a,w[t]))}function n(r,n,t){var e,u,f;if(!m){for(e=0,f=n.length;f>e;++e)U[u=n[e]]||(a=c(a,w[u]));for(e=0,f=t.length;f>e;++e)U[u=t[e]]===r&&(a=l(a,w[u]))}}function t(){var r;for(a=v(),r=0;E>r;++r)U[r]||(a=c(a,w[r]))}function e(r,n,t){return c=r,l=n,v=t,m=!0,s}function u(){return e(d,p,h)}function f(r){return e(g(r),y(r),h)}function o(){return m&&(t(),m=!1),a}function i(){var t=N.indexOf(n);return t>=0&&N.splice(t),t=C.indexOf(r),t>=0&&C.splice(t),s}var a,c,l,v,s={reduce:e,reduceCount:u,reduceSum:f,value:o,remove:i},m=!0;return N.push(n),C.push(r),r(w,0,E),u()}function a(){return E}var m={add:r,dimension:e,groupAll:o,size:a},w=[],E=0,O=0,M=8,U=z(0),N=[],C=[];return arguments.length?r(arguments[0]):m}function b(r,n){return(257>n?z:65537>n?N:C)(r)}function A(r){for(var n=b(r,r),t=-1;++t<r;)n[t]=t;return n}function k(r){return 8===r?256:16===r?65536:4294967296}m.version="1.2.0",m.permute=t;var x=m.bisect=e(n);x.by=e;var w=m.heap=u(n);w.by=u;var E=m.heapselect=f(n);E.by=f;var O=m.insertionsort=o(n);O.by=o;var M=m.quicksort=i(n);M.by=i;var U=32,z=a,N=a,C=a,S=n,q=n;"undefined"!=typeof Uint8Array&&(z=function(r){return new Uint8Array(r)},N=function(r){return new Uint16Array(r)},C=function(r){return new Uint32Array(r)},S=function(r,n){var t=new r.constructor(n);return t.set(r),t},q=function(r,n){var t;switch(n){case 16:t=N(r.length);break;case 32:t=C(r.length);break;default:throw Error("invalid array width!")}return t.set(r),t}),r.crossfilter=m})(this);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/crossfilter.min.js","/lib")
-},{"buffer":16,"oMfpAn":19}],56:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],93:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 d3=function(){function n(n){return null!=n&&!isNaN(n)}function t(n){return n.length}function e(n){for(var t=1;n*t%1;)t*=10;return t}function r(n,t){try{for(var e in t)Object.defineProperty(n.prototype,e,{value:t[e],enumerable:!1})}catch(r){n.prototype=t}}function i(){}function u(){}function a(n,t,e){return function(){var r=e.apply(t,arguments);return r===t?n:r}}function o(n,t){if(t in n)return t;t=t.charAt(0).toUpperCase()+t.substring(1);for(var e=0,r=Ca.length;r>e;++e){var i=Ca[e]+t;if(i in n)return i}}function c(n){for(var t=n.length,e=new Array(t);t--;)e[t]=n[t];return e}function l(n){return Array.prototype.slice.call(n)}function s(){}function f(){}function h(n){function t(){for(var t,r=e,i=-1,u=r.length;++i<u;)(t=r[i].on)&&t.apply(this,arguments);return n}var e=[],r=new i;return t.on=function(t,i){var u,a=r.get(t);return arguments.length<2?a&&a.on:(a&&(a.on=null,e=e.slice(0,u=e.indexOf(a)).concat(e.slice(u+1)),r.remove(t)),i&&e.push(r.set(t,{on:i})),n)},t}function g(){ya.event.preventDefault()}function p(){for(var n,t=ya.event;n=t.sourceEvent;)t=n;return t}function m(n){for(var t=new f,e=0,r=arguments.length;++e<r;)t[arguments[e]]=h(t);return t.of=function(e,r){return function(i){try{var u=i.sourceEvent=ya.event;i.target=n,ya.event=i,t[i.type].apply(e,r)}finally{ya.event=u}}},t}function d(n){return La(n,Ya),n}function v(n){return"function"==typeof n?n:function(){return Ha(n,this)}}function y(n){return"function"==typeof n?n:function(){return Fa(n,this)}}function M(n,t){function e(){this.removeAttribute(n)}function r(){this.removeAttributeNS(n.space,n.local)}function i(){this.setAttribute(n,t)}function u(){this.setAttributeNS(n.space,n.local,t)}function a(){var e=t.apply(this,arguments);null==e?this.removeAttribute(n):this.setAttribute(n,e)}function o(){var e=t.apply(this,arguments);null==e?this.removeAttributeNS(n.space,n.local):this.setAttributeNS(n.space,n.local,e)}return n=ya.ns.qualify(n),null==t?n.local?r:e:"function"==typeof t?n.local?o:a:n.local?u:i}function x(n){return n.trim().replace(/\s+/g," ")}function b(n){return new RegExp("(?:^|\\s+)"+ya.requote(n)+"(?:\\s+|$)","g")}function _(n,t){function e(){for(var e=-1;++e<i;)n[e](this,t)}function r(){for(var e=-1,r=t.apply(this,arguments);++e<i;)n[e](this,r)}n=n.trim().split(/\s+/).map(w);var i=n.length;return"function"==typeof t?r:e}function w(n){var t=b(n);return function(e,r){if(i=e.classList)return r?i.add(n):i.remove(n);var i=e.getAttribute("class")||"";r?(t.lastIndex=0,t.test(i)||e.setAttribute("class",x(i+" "+n))):e.setAttribute("class",x(i.replace(t," ")))}}function S(n,t,e){function r(){this.style.removeProperty(n)}function i(){this.style.setProperty(n,t,e)}function u(){var r=t.apply(this,arguments);null==r?this.style.removeProperty(n):this.style.setProperty(n,r,e)}return null==t?r:"function"==typeof t?u:i}function E(n,t){function e(){delete this[n]}function r(){this[n]=t}function i(){var e=t.apply(this,arguments);null==e?delete this[n]:this[n]=e}return null==t?e:"function"==typeof t?i:r}function k(n){return"function"==typeof n?n:(n=ya.ns.qualify(n)).local?function(){return Ma.createElementNS(n.space,n.local)}:function(){return Ma.createElementNS(this.namespaceURI,n)}}function A(n){return{__data__:n}}function N(n){return function(){return Oa(this,n)}}function q(n){return arguments.length||(n=ya.ascending),function(t,e){return t&&e?n(t.__data__,e.__data__):!t-!e}}function T(n,t){for(var e=0,r=n.length;r>e;e++)for(var i,u=n[e],a=0,o=u.length;o>a;a++)(i=u[a])&&t(i,a,e);return n}function C(n){return La(n,Ua),n}function z(n){var t,e;return function(r,i,u){var a,o=n[u].update,c=o.length;for(u!=e&&(e=u,t=0),i>=t&&(t=i+1);!(a=o[t])&&++t<c;);return a}}function D(n,t,e){function r(){var t=this[a];t&&(this.removeEventListener(n,t,t.$),delete this[a])}function i(){var i=c(t,za(arguments));r.call(this),this.addEventListener(n,this[a]=i,i.$=e),i._=t}function u(){var t,e=new RegExp("^__on([^.]+)"+ya.requote(n)+"$");for(var r in this)if(t=r.match(e)){var i=this[r];this.removeEventListener(t[1],i,i.$),delete this[r]}}var a="__on"+n,o=n.indexOf("."),c=j;o>0&&(n=n.substring(0,o));var l=Va.get(n);return l&&(n=l,c=L),o?t?i:r:t?s:u}function j(n,t){return function(e){var r=ya.event;ya.event=e,t[0]=this.__data__;try{n.apply(this,t)}finally{ya.event=r}}}function L(n,t){var e=j(n,t);return function(n){var t=this,r=n.relatedTarget;r&&(r===t||8&r.compareDocumentPosition(t))||e.call(t,n)}}function H(){var n=".dragsuppress-"+ ++Za,t="touchmove"+n,e="selectstart"+n,r="dragstart"+n,i="click"+n,u=ya.select(ba).on(t,g).on(e,g).on(r,g),a=xa.style,o=a[Xa];return a[Xa]="none",function(t){function e(){u.on(i,null)}u.on(n,null),a[Xa]=o,t&&(u.on(i,function(){g(),e()},!0),setTimeout(e,0))}}function F(n,t){var e=n.ownerSVGElement||n;if(e.createSVGPoint){var r=e.createSVGPoint();if(0>Ba&&(ba.scrollX||ba.scrollY)){e=ya.select("body").append("svg").style({position:"absolute",top:0,left:0,margin:0,padding:0,border:"none"},"important");var i=e[0][0].getScreenCTM();Ba=!(i.f||i.e),e.remove()}return Ba?(r.x=t.pageX,r.y=t.pageY):(r.x=t.clientX,r.y=t.clientY),r=r.matrixTransform(n.getScreenCTM().inverse()),[r.x,r.y]}var u=n.getBoundingClientRect();return[t.clientX-u.left-n.clientLeft,t.clientY-u.top-n.clientTop]}function P(){}function O(n,t,e){return new Y(n,t,e)}function Y(n,t,e){this.h=n,this.s=t,this.l=e}function R(n,t,e){function r(n){return n>360?n-=360:0>n&&(n+=360),60>n?u+(a-u)*n/60:180>n?a:240>n?u+(a-u)*(240-n)/60:u}function i(n){return Math.round(255*r(n))}var u,a;return n=isNaN(n)?0:(n%=360)<0?n+360:n,t=isNaN(t)?0:0>t?0:t>1?1:t,e=0>e?0:e>1?1:e,a=.5>=e?e*(1+t):e+t-e*t,u=2*e-a,at(i(n+120),i(n),i(n-120))}function U(n){return n>0?1:0>n?-1:0}function I(n){return n>1?0:-1>n?Ka:Math.acos(n)}function V(n){return n>1?Ka/2:-1>n?-Ka/2:Math.asin(n)}function X(n){return(Math.exp(n)-Math.exp(-n))/2}function Z(n){return(Math.exp(n)+Math.exp(-n))/2}function B(n){return(n=Math.sin(n/2))*n}function $(n,t,e){return new W(n,t,e)}function W(n,t,e){this.h=n,this.c=t,this.l=e}function J(n,t,e){return isNaN(n)&&(n=0),isNaN(t)&&(t=0),G(e,Math.cos(n*=to)*t,Math.sin(n)*t)}function G(n,t,e){return new K(n,t,e)}function K(n,t,e){this.l=n,this.a=t,this.b=e}function Q(n,t,e){var r=(n+16)/116,i=r+t/500,u=r-e/200;return i=tt(i)*uo,r=tt(r)*ao,u=tt(u)*oo,at(rt(3.2404542*i-1.5371385*r-.4985314*u),rt(-.969266*i+1.8760108*r+.041556*u),rt(.0556434*i-.2040259*r+1.0572252*u))}function nt(n,t,e){return n>0?$(Math.atan2(e,t)*eo,Math.sqrt(t*t+e*e),n):$(0/0,0/0,n)}function tt(n){return n>.206893034?n*n*n:(n-4/29)/7.787037}function et(n){return n>.008856?Math.pow(n,1/3):7.787037*n+4/29}function rt(n){return Math.round(255*(.00304>=n?12.92*n:1.055*Math.pow(n,1/2.4)-.055))}function it(n){return at(n>>16,255&n>>8,255&n)}function ut(n){return it(n)+""}function at(n,t,e){return new ot(n,t,e)}function ot(n,t,e){this.r=n,this.g=t,this.b=e}function ct(n){return 16>n?"0"+Math.max(0,n).toString(16):Math.min(255,n).toString(16)}function lt(n,t,e){var r,i,u,a=0,o=0,c=0;if(r=/([a-z]+)\((.*)\)/i.exec(n))switch(i=r[2].split(","),r[1]){case"hsl":return e(parseFloat(i[0]),parseFloat(i[1])/100,parseFloat(i[2])/100);case"rgb":return t(gt(i[0]),gt(i[1]),gt(i[2]))}return(u=so.get(n))?t(u.r,u.g,u.b):(null!=n&&"#"===n.charAt(0)&&(4===n.length?(a=n.charAt(1),a+=a,o=n.charAt(2),o+=o,c=n.charAt(3),c+=c):7===n.length&&(a=n.substring(1,3),o=n.substring(3,5),c=n.substring(5,7)),a=parseInt(a,16),o=parseInt(o,16),c=parseInt(c,16)),t(a,o,c))}function st(n,t,e){var r,i,u=Math.min(n/=255,t/=255,e/=255),a=Math.max(n,t,e),o=a-u,c=(a+u)/2;return o?(i=.5>c?o/(a+u):o/(2-a-u),r=n==a?(t-e)/o+(e>t?6:0):t==a?(e-n)/o+2:(n-t)/o+4,r*=60):(r=0/0,i=c>0&&1>c?0:r),O(r,i,c)}function ft(n,t,e){n=ht(n),t=ht(t),e=ht(e);var r=et((.4124564*n+.3575761*t+.1804375*e)/uo),i=et((.2126729*n+.7151522*t+.072175*e)/ao),u=et((.0193339*n+.119192*t+.9503041*e)/oo);return G(116*i-16,500*(r-i),200*(i-u))}function ht(n){return(n/=255)<=.04045?n/12.92:Math.pow((n+.055)/1.055,2.4)}function gt(n){var t=parseFloat(n);return"%"===n.charAt(n.length-1)?Math.round(2.55*t):t}function pt(n){return"function"==typeof n?n:function(){return n}}function mt(n){return n}function dt(n){return function(t,e,r){return 2===arguments.length&&"function"==typeof e&&(r=e,e=null),vt(t,e,n,r)}}function vt(n,t,e,r){function i(){var n,t=c.status;if(!t&&c.responseText||t>=200&&300>t||304===t){try{n=e.call(u,c)}catch(r){return a.error.call(u,r),void 0}a.load.call(u,n)}else a.error.call(u,c)}var u={},a=ya.dispatch("progress","load","error"),o={},c=new XMLHttpRequest,l=null;return!ba.XDomainRequest||"withCredentials"in c||!/^(http(s)?:)?\/\//.test(n)||(c=new XDomainRequest),"onload"in c?c.onload=c.onerror=i:c.onreadystatechange=function(){c.readyState>3&&i()},c.onprogress=function(n){var t=ya.event;ya.event=n;try{a.progress.call(u,c)}finally{ya.event=t}},u.header=function(n,t){return n=(n+"").toLowerCase(),arguments.length<2?o[n]:(null==t?delete o[n]:o[n]=t+"",u)},u.mimeType=function(n){return arguments.length?(t=null==n?null:n+"",u):t},u.responseType=function(n){return arguments.length?(l=n,u):l},u.response=function(n){return e=n,u},["get","post"].forEach(function(n){u[n]=function(){return u.send.apply(u,[n].concat(za(arguments)))}}),u.send=function(e,r,i){if(2===arguments.length&&"function"==typeof r&&(i=r,r=null),c.open(e,n,!0),null==t||"accept"in o||(o.accept=t+",*/*"),c.setRequestHeader)for(var a in o)c.setRequestHeader(a,o[a]);return null!=t&&c.overrideMimeType&&c.overrideMimeType(t),null!=l&&(c.responseType=l),null!=i&&u.on("error",i).on("load",function(n){i(null,n)}),c.send(null==r?null:r),u},u.abort=function(){return c.abort(),u},ya.rebind(u,a,"on"),null==r?u:u.get(yt(r))}function yt(n){return 1===n.length?function(t,e){n(null==t?e:null)}:n}function Mt(){var n=bt(),t=_t()-n;t>24?(isFinite(t)&&(clearTimeout(po),po=setTimeout(Mt,t)),go=0):(go=1,vo(Mt))}function xt(n,t,e){var r=arguments.length;2>r&&(t=0),3>r&&(e=Date.now()),mo.callback=n,mo.time=e+t}function bt(){var n=Date.now();for(mo=fo;mo;)n>=mo.time&&(mo.flush=mo.callback(n-mo.time)),mo=mo.next;return n}function _t(){for(var n,t=fo,e=1/0;t;)t.flush?t=n?n.next=t.next:fo=t.next:(t.time<e&&(e=t.time),t=(n=t).next);return ho=n,e}function wt(n,t){var e=Math.pow(10,3*Math.abs(8-t));return{scale:t>8?function(n){return n/e}:function(n){return n*e},symbol:n}}function St(n,t){return t-(n?Math.ceil(Math.log(n)/Math.LN10):1)}function Et(n){return n+""}function kt(){}function At(n,t,e){var r=e.s=n+t,i=r-n,u=r-i;e.t=n-u+(t-i)}function Nt(n,t){n&&qo.hasOwnProperty(n.type)&&qo[n.type](n,t)}function qt(n,t,e){var r,i=-1,u=n.length-e;for(t.lineStart();++i<u;)r=n[i],t.point(r[0],r[1]);t.lineEnd()}function Tt(n,t){var e=-1,r=n.length;for(t.polygonStart();++e<r;)qt(n[e],t,1);t.polygonEnd()}function Ct(){function n(n,t){n*=to,t=t*to/2+Ka/4;var e=n-r,a=Math.cos(t),o=Math.sin(t),c=u*o,l=i*a+c*Math.cos(e),s=c*Math.sin(e);Co.add(Math.atan2(s,l)),r=n,i=a,u=o}var t,e,r,i,u;zo.point=function(a,o){zo.point=n,r=(t=a)*to,i=Math.cos(o=(e=o)*to/2+Ka/4),u=Math.sin(o)},zo.lineEnd=function(){n(t,e)}}function zt(n){var t=n[0],e=n[1],r=Math.cos(e);return[r*Math.cos(t),r*Math.sin(t),Math.sin(e)]}function Dt(n,t){return n[0]*t[0]+n[1]*t[1]+n[2]*t[2]}function jt(n,t){return[n[1]*t[2]-n[2]*t[1],n[2]*t[0]-n[0]*t[2],n[0]*t[1]-n[1]*t[0]]}function Lt(n,t){n[0]+=t[0],n[1]+=t[1],n[2]+=t[2]}function Ht(n,t){return[n[0]*t,n[1]*t,n[2]*t]}function Ft(n){var t=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]);n[0]/=t,n[1]/=t,n[2]/=t}function Pt(n){return[Math.atan2(n[1],n[0]),V(n[2])]}function Ot(n,t){return Math.abs(n[0]-t[0])<Qa&&Math.abs(n[1]-t[1])<Qa}function Yt(n,t){n*=to;var e=Math.cos(t*=to);Rt(e*Math.cos(n),e*Math.sin(n),Math.sin(t))}function Rt(n,t,e){++Do,Lo+=(n-Lo)/Do,Ho+=(t-Ho)/Do,Fo+=(e-Fo)/Do}function Ut(){function n(n,i){n*=to;var u=Math.cos(i*=to),a=u*Math.cos(n),o=u*Math.sin(n),c=Math.sin(i),l=Math.atan2(Math.sqrt((l=e*c-r*o)*l+(l=r*a-t*c)*l+(l=t*o-e*a)*l),t*a+e*o+r*c);jo+=l,Po+=l*(t+(t=a)),Oo+=l*(e+(e=o)),Yo+=l*(r+(r=c)),Rt(t,e,r)}var t,e,r;Vo.point=function(i,u){i*=to;var a=Math.cos(u*=to);t=a*Math.cos(i),e=a*Math.sin(i),r=Math.sin(u),Vo.point=n,Rt(t,e,r)}}function It(){Vo.point=Yt}function Vt(){function n(n,t){n*=to;var e=Math.cos(t*=to),a=e*Math.cos(n),o=e*Math.sin(n),c=Math.sin(t),l=i*c-u*o,s=u*a-r*c,f=r*o-i*a,h=Math.sqrt(l*l+s*s+f*f),g=r*a+i*o+u*c,p=h&&-I(g)/h,m=Math.atan2(h,g);Ro+=p*l,Uo+=p*s,Io+=p*f,jo+=m,Po+=m*(r+(r=a)),Oo+=m*(i+(i=o)),Yo+=m*(u+(u=c)),Rt(r,i,u)}var t,e,r,i,u;Vo.point=function(a,o){t=a,e=o,Vo.point=n,a*=to;var c=Math.cos(o*=to);r=c*Math.cos(a),i=c*Math.sin(a),u=Math.sin(o),Rt(r,i,u)},Vo.lineEnd=function(){n(t,e),Vo.lineEnd=It,Vo.point=Yt}}function Xt(){return!0}function Zt(n,t,e,r,i){var u=[],a=[];if(n.forEach(function(n){if(!((t=n.length-1)<=0)){var t,e=n[0],r=n[t];if(Ot(e,r)){i.lineStart();for(var o=0;t>o;++o)i.point((e=n[o])[0],e[1]);return i.lineEnd(),void 0}var c={point:e,points:n,other:null,visited:!1,entry:!0,subject:!0},l={point:e,points:[e],other:c,visited:!1,entry:!1,subject:!1};c.other=l,u.push(c),a.push(l),c={point:r,points:[r],other:null,visited:!1,entry:!1,subject:!0},l={point:r,points:[r],other:c,visited:!1,entry:!0,subject:!1},c.other=l,u.push(c),a.push(l)}}),a.sort(t),Bt(u),Bt(a),u.length){if(e)for(var o=1,c=!e(a[0].point),l=a.length;l>o;++o)a[o].entry=c=!c;for(var s,f,h,g=u[0];;){for(s=g;s.visited;)if((s=s.next)===g)return;f=s.points,i.lineStart();do{if(s.visited=s.other.visited=!0,s.entry){if(s.subject)for(var o=0;o<f.length;o++)i.point((h=f[o])[0],h[1]);else r(s.point,s.next.point,1,i);s=s.next}else{if(s.subject){f=s.prev.points;for(var o=f.length;--o>=0;)i.point((h=f[o])[0],h[1])}else r(s.point,s.prev.point,-1,i);s=s.prev}s=s.other,f=s.points}while(!s.visited);i.lineEnd()}}}function Bt(n){if(t=n.length){for(var t,e,r=0,i=n[0];++r<t;)i.next=e=n[r],e.prev=i,i=e;i.next=e=n[0],e.prev=i}}function $t(n,t,e,r){return function(i){function u(t,e){n(t,e)&&i.point(t,e)}function a(n,t){m.point(n,t)}function o(){d.point=a,m.lineStart()}function c(){d.point=u,m.lineEnd()}function l(n,t){y.point(n,t),p.push([n,t])}function s(){y.lineStart(),p=[]}function f(){l(p[0][0],p[0][1]),y.lineEnd();var n,t=y.clean(),e=v.buffer(),r=e.length;if(p.pop(),g.push(p),p=null,r){if(1&t){n=e[0];var u,r=n.length-1,a=-1;for(i.lineStart();++a<r;)i.point((u=n[a])[0],u[1]);return i.lineEnd(),void 0}r>1&&2&t&&e.push(e.pop().concat(e.shift())),h.push(e.filter(Wt))}}var h,g,p,m=t(i),d={point:u,lineStart:o,lineEnd:c,polygonStart:function(){d.point=l,d.lineStart=s,d.lineEnd=f,h=[],g=[],i.polygonStart()},polygonEnd:function(){d.point=u,d.lineStart=o,d.lineEnd=c,h=ya.merge(h),h.length?Zt(h,Gt,null,e,i):r(g)&&(i.lineStart(),e(null,null,1,i),i.lineEnd()),i.polygonEnd(),h=g=null},sphere:function(){i.polygonStart(),i.lineStart(),e(null,null,1,i),i.lineEnd(),i.polygonEnd()}},v=Jt(),y=t(v);return d}}function Wt(n){return n.length>1}function Jt(){var n,t=[];return{lineStart:function(){t.push(n=[])},point:function(t,e){n.push([t,e])},lineEnd:s,buffer:function(){var e=t;return t=[],n=null,e},rejoin:function(){t.length>1&&t.push(t.pop().concat(t.shift()))}}}function Gt(n,t){return((n=n.point)[0]<0?n[1]-Ka/2-Qa:Ka/2-n[1])-((t=t.point)[0]<0?t[1]-Ka/2-Qa:Ka/2-t[1])}function Kt(n,t){var e=n[0],r=n[1],i=[Math.sin(e),-Math.cos(e),0],u=0,a=!1,o=!1,c=0;Co.reset();for(var l=0,s=t.length;s>l;++l){var f=t[l],h=f.length;if(h){for(var g=f[0],p=g[0],m=g[1]/2+Ka/4,d=Math.sin(m),v=Math.cos(m),y=1;;){y===h&&(y=0),n=f[y];var M=n[0],x=n[1]/2+Ka/4,b=Math.sin(x),_=Math.cos(x),w=M-p,S=Math.abs(w)>Ka,E=d*b;if(Co.add(Math.atan2(E*Math.sin(w),v*_+E*Math.cos(w))),Math.abs(x)<Qa&&(o=!0),u+=S?w+(w>=0?2:-2)*Ka:w,S^p>=e^M>=e){var k=jt(zt(g),zt(n));Ft(k);var A=jt(i,k);Ft(A);var N=(S^w>=0?-1:1)*V(A[2]);r>N&&(c+=S^w>=0?1:-1)}if(!y++)break;p=M,d=b,v=_,g=n}Math.abs(u)>Qa&&(a=!0)}}return(!o&&!a&&0>Co||-Qa>u)^1&c}function Qt(n){var t,e=0/0,r=0/0,i=0/0;return{lineStart:function(){n.lineStart(),t=1},point:function(u,a){var o=u>0?Ka:-Ka,c=Math.abs(u-e);Math.abs(c-Ka)<Qa?(n.point(e,r=(r+a)/2>0?Ka/2:-Ka/2),n.point(i,r),n.lineEnd(),n.lineStart(),n.point(o,r),n.point(u,r),t=0):i!==o&&c>=Ka&&(Math.abs(e-i)<Qa&&(e-=i*Qa),Math.abs(u-o)<Qa&&(u-=o*Qa),r=ne(e,r,u,a),n.point(i,r),n.lineEnd(),n.lineStart(),n.point(o,r),t=0),n.point(e=u,r=a),i=o},lineEnd:function(){n.lineEnd(),e=r=0/0},clean:function(){return 2-t}}}function ne(n,t,e,r){var i,u,a=Math.sin(n-e);return Math.abs(a)>Qa?Math.atan((Math.sin(t)*(u=Math.cos(r))*Math.sin(e)-Math.sin(r)*(i=Math.cos(t))*Math.sin(n))/(i*u*a)):(t+r)/2}function te(n,t,e,r){var i;if(null==n)i=e*Ka/2,r.point(-Ka,i),r.point(0,i),r.point(Ka,i),r.point(Ka,0),r.point(Ka,-i),r.point(0,-i),r.point(-Ka,-i),r.point(-Ka,0),r.point(-Ka,i);else if(Math.abs(n[0]-t[0])>Qa){var u=(n[0]<t[0]?1:-1)*Ka;i=e*u/2,r.point(-u,i),r.point(0,i),r.point(u,i)}else r.point(t[0],t[1])}function ee(n){return Kt(Zo,n)}function re(n){function t(n,t){return Math.cos(n)*Math.cos(t)>a}function e(n){var e,u,a,c,s;return{lineStart:function(){c=a=!1,s=1},point:function(f,h){var g,p=[f,h],m=t(f,h),d=o?m?0:i(f,h):m?i(f+(0>f?Ka:-Ka),h):0;if(!e&&(c=a=m)&&n.lineStart(),m!==a&&(g=r(e,p),(Ot(e,g)||Ot(p,g))&&(p[0]+=Qa,p[1]+=Qa,m=t(p[0],p[1]))),m!==a)s=0,m?(n.lineStart(),g=r(p,e),n.point(g[0],g[1])):(g=r(e,p),n.point(g[0],g[1]),n.lineEnd()),e=g;else if(l&&e&&o^m){var v;d&u||!(v=r(p,e,!0))||(s=0,o?(n.lineStart(),n.point(v[0][0],v[0][1]),n.point(v[1][0],v[1][1]),n.lineEnd()):(n.point(v[1][0],v[1][1]),n.lineEnd(),n.lineStart(),n.point(v[0][0],v[0][1])))}!m||e&&Ot(e,p)||n.point(p[0],p[1]),e=p,a=m,u=d},lineEnd:function(){a&&n.lineEnd(),e=null},clean:function(){return s|(c&&a)<<1}}}function r(n,t,e){var r=zt(n),i=zt(t),u=[1,0,0],o=jt(r,i),c=Dt(o,o),l=o[0],s=c-l*l;if(!s)return!e&&n;var f=a*c/s,h=-a*l/s,g=jt(u,o),p=Ht(u,f),m=Ht(o,h);Lt(p,m);var d=g,v=Dt(p,d),y=Dt(d,d),M=v*v-y*(Dt(p,p)-1);if(!(0>M)){var x=Math.sqrt(M),b=Ht(d,(-v-x)/y);if(Lt(b,p),b=Pt(b),!e)return b;var _,w=n[0],S=t[0],E=n[1],k=t[1];w>S&&(_=w,w=S,S=_);var A=S-w,N=Math.abs(A-Ka)<Qa,q=N||Qa>A;if(!N&&E>k&&(_=E,E=k,k=_),q?N?E+k>0^b[1]<(Math.abs(b[0]-w)<Qa?E:k):E<=b[1]&&b[1]<=k:A>Ka^(w<=b[0]&&b[0]<=S)){var T=Ht(d,(-v+x)/y);return Lt(T,p),[b,Pt(T)]}}}function i(t,e){var r=o?n:Ka-n,i=0;return-r>t?i|=1:t>r&&(i|=2),-r>e?i|=4:e>r&&(i|=8),i}function u(n){return Kt(c,n)}var a=Math.cos(n),o=a>0,c=[n,0],l=Math.abs(a)>Qa,s=Ne(n,6*to);return $t(t,e,s,u)}function ie(n,t,e,r){function i(r,i){return Math.abs(r[0]-n)<Qa?i>0?0:3:Math.abs(r[0]-e)<Qa?i>0?2:1:Math.abs(r[1]-t)<Qa?i>0?1:0:i>0?3:2}function u(n,t){return a(n.point,t.point)}function a(n,t){var e=i(n,1),r=i(t,1);return e!==r?e-r:0===e?t[1]-n[1]:1===e?n[0]-t[0]:2===e?n[1]-t[1]:t[0]-n[0]}function o(i,u){var a=u[0]-i[0],o=u[1]-i[1],c=[0,1];return Math.abs(a)<Qa&&Math.abs(o)<Qa?n<=i[0]&&i[0]<=e&&t<=i[1]&&i[1]<=r:ue(n-i[0],a,c)&&ue(i[0]-e,-a,c)&&ue(t-i[1],o,c)&&ue(i[1]-r,-o,c)?(c[1]<1&&(u[0]=i[0]+c[1]*a,u[1]=i[1]+c[1]*o),c[0]>0&&(i[0]+=c[0]*a,i[1]+=c[0]*o),!0):!1}return function(c){function l(u){var a=i(u,-1),o=s([0===a||3===a?n:e,a>1?r:t]);return o}function s(n){for(var t=0,e=M.length,r=n[1],i=0;e>i;++i)for(var u,a=1,o=M[i],c=o.length,l=o[0];c>a;++a)u=o[a],l[1]<=r?u[1]>r&&f(l,u,n)>0&&++t:u[1]<=r&&f(l,u,n)<0&&--t,l=u;return 0!==t}function f(n,t,e){return(t[0]-n[0])*(e[1]-n[1])-(e[0]-n[0])*(t[1]-n[1])}function h(u,o,c,l){var s=0,f=0;if(null==u||(s=i(u,c))!==(f=i(o,c))||a(u,o)<0^c>0){do l.point(0===s||3===s?n:e,s>1?r:t);while((s=(s+c+4)%4)!==f)}else l.point(o[0],o[1])}function g(i,u){return i>=n&&e>=i&&u>=t&&r>=u}function p(n,t){g(n,t)&&c.point(n,t)}function m(){T.point=v,M&&M.push(x=[]),A=!0,k=!1,S=E=0/0}function d(){y&&(v(b,_),w&&k&&q.rejoin(),y.push(q.buffer())),T.point=p,k&&c.lineEnd()}function v(n,t){n=Math.max(-Bo,Math.min(Bo,n)),t=Math.max(-Bo,Math.min(Bo,t));var e=g(n,t);if(M&&x.push([n,t]),A)b=n,_=t,w=e,A=!1,e&&(c.lineStart(),c.point(n,t));else if(e&&k)c.point(n,t);else{var r=[S,E],i=[n,t];o(r,i)?(k||(c.lineStart(),c.point(r[0],r[1])),c.point(i[0],i[1]),e||c.lineEnd()):e&&(c.lineStart(),c.point(n,t))}S=n,E=t,k=e}var y,M,x,b,_,w,S,E,k,A,N=c,q=Jt(),T={point:p,lineStart:m,lineEnd:d,polygonStart:function(){c=q,y=[],M=[]},polygonEnd:function(){c=N,(y=ya.merge(y)).length?(c.polygonStart(),Zt(y,u,l,h,c),c.polygonEnd()):s([n,t])&&(c.polygonStart(),c.lineStart(),h(null,null,1,c),c.lineEnd(),c.polygonEnd()),y=M=x=null}};return T}}function ue(n,t,e){if(Math.abs(t)<Qa)return 0>=n;var r=n/t;if(t>0){if(r>e[1])return!1;r>e[0]&&(e[0]=r)}else{if(r<e[0])return!1;r<e[1]&&(e[1]=r)}return!0}function ae(n,t){function e(e,r){return e=n(e,r),t(e[0],e[1])}return n.invert&&t.invert&&(e.invert=function(e,r){return e=t.invert(e,r),e&&n.invert(e[0],e[1])}),e}function oe(n){var t=0,e=Ka/3,r=be(n),i=r(t,e);return i.parallels=function(n){return arguments.length?r(t=n[0]*Ka/180,e=n[1]*Ka/180):[180*(t/Ka),180*(e/Ka)]},i}function ce(n,t){function e(n,t){var e=Math.sqrt(u-2*i*Math.sin(t))/i;return[e*Math.sin(n*=i),a-e*Math.cos(n)]}var r=Math.sin(n),i=(r+Math.sin(t))/2,u=1+r*(2*i-r),a=Math.sqrt(u)/i;return e.invert=function(n,t){var e=a-t;return[Math.atan2(n,e)/i,V((u-(n*n+e*e)*i*i)/(2*i))]},e}function le(){function n(n,t){Wo+=i*n-r*t,r=n,i=t}var t,e,r,i;nc.point=function(u,a){nc.point=n,t=r=u,e=i=a},nc.lineEnd=function(){n(t,e)}}function se(n,t){Jo>n&&(Jo=n),n>Ko&&(Ko=n),Go>t&&(Go=t),t>Qo&&(Qo=t)}function fe(){function n(n,t){a.push("M",n,",",t,u)}function t(n,t){a.push("M",n,",",t),o.point=e}function e(n,t){a.push("L",n,",",t)}function r(){o.point=n}function i(){a.push("Z")}var u=he(4.5),a=[],o={point:n,lineStart:function(){o.point=t},lineEnd:r,polygonStart:function(){o.lineEnd=i},polygonEnd:function(){o.lineEnd=r,o.point=n},pointRadius:function(n){return u=he(n),o},result:function(){if(a.length){var n=a.join("");return a=[],n}}};return o}function he(n){return"m0,"+n+"a"+n+","+n+" 0 1,1 0,"+-2*n+"a"+n+","+n+" 0 1,1 0,"+2*n+"z"}function ge(n,t){Lo+=n,Ho+=t,++Fo}function pe(){function n(n,r){var i=n-t,u=r-e,a=Math.sqrt(i*i+u*u);Po+=a*(t+n)/2,Oo+=a*(e+r)/2,Yo+=a,ge(t=n,e=r)}var t,e;ec.point=function(r,i){ec.point=n,ge(t=r,e=i)}}function me(){ec.point=ge}function de(){function n(n,t){var e=n-r,u=t-i,a=Math.sqrt(e*e+u*u);Po+=a*(r+n)/2,Oo+=a*(i+t)/2,Yo+=a,a=i*n-r*t,Ro+=a*(r+n),Uo+=a*(i+t),Io+=3*a,ge(r=n,i=t)}var t,e,r,i;ec.point=function(u,a){ec.point=n,ge(t=r=u,e=i=a)},ec.lineEnd=function(){n(t,e)}}function ve(n){function t(t,e){n.moveTo(t,e),n.arc(t,e,a,0,2*Ka)}function e(t,e){n.moveTo(t,e),o.point=r}function r(t,e){n.lineTo(t,e)}function i(){o.point=t}function u(){n.closePath()}var a=4.5,o={point:t,lineStart:function(){o.point=e},lineEnd:i,polygonStart:function(){o.lineEnd=u},polygonEnd:function(){o.lineEnd=i,o.point=t},pointRadius:function(n){return a=n,o},result:s};return o}function ye(n){function t(t){function r(e,r){e=n(e,r),t.point(e[0],e[1])}function i(){M=0/0,S.point=a,t.lineStart()}function a(r,i){var a=zt([r,i]),o=n(r,i);e(M,x,y,b,_,w,M=o[0],x=o[1],y=r,b=a[0],_=a[1],w=a[2],u,t),t.point(M,x)}function o(){S.point=r,t.lineEnd()}function c(){i(),S.point=l,S.lineEnd=s}function l(n,t){a(f=n,h=t),g=M,p=x,m=b,d=_,v=w,S.point=a}function s(){e(M,x,y,b,_,w,g,p,f,m,d,v,u,t),S.lineEnd=o,o()}var f,h,g,p,m,d,v,y,M,x,b,_,w,S={point:r,lineStart:i,lineEnd:o,polygonStart:function(){t.polygonStart(),S.lineStart=c},polygonEnd:function(){t.polygonEnd(),S.lineStart=i}};return S}function e(t,u,a,o,c,l,s,f,h,g,p,m,d,v){var y=s-t,M=f-u,x=y*y+M*M;if(x>4*r&&d--){var b=o+g,_=c+p,w=l+m,S=Math.sqrt(b*b+_*_+w*w),E=Math.asin(w/=S),k=Math.abs(Math.abs(w)-1)<Qa?(a+h)/2:Math.atan2(_,b),A=n(k,E),N=A[0],q=A[1],T=N-t,C=q-u,z=M*T-y*C;(z*z/x>r||Math.abs((y*T+M*C)/x-.5)>.3||i>o*g+c*p+l*m)&&(e(t,u,a,o,c,l,N,q,k,b/=S,_/=S,w,d,v),v.point(N,q),e(N,q,k,b,_,w,s,f,h,g,p,m,d,v))}}var r=.5,i=Math.cos(30*to),u=16;return t.precision=function(n){return arguments.length?(u=(r=n*n)>0&&16,t):Math.sqrt(r)},t}function Me(n){var t=ye(function(t,e){return n([t*eo,e*eo])});return function(n){return n=t(n),{point:function(t,e){n.point(t*to,e*to)},sphere:function(){n.sphere()},lineStart:function(){n.lineStart()},lineEnd:function(){n.lineEnd()},polygonStart:function(){n.polygonStart()},polygonEnd:function(){n.polygonEnd()}}}}function xe(n){return be(function(){return n})()}function be(n){function t(n){return n=o(n[0]*to,n[1]*to),[n[0]*h+c,l-n[1]*h]}function e(n){return n=o.invert((n[0]-c)/h,(l-n[1])/h),n&&[n[0]*eo,n[1]*eo]}function r(){o=ae(a=Se(v,y,M),u);var n=u(m,d);return c=g-n[0]*h,l=p+n[1]*h,i()}function i(){return s&&(s.valid=!1,s=null),t}var u,a,o,c,l,s,f=ye(function(n,t){return n=u(n,t),[n[0]*h+c,l-n[1]*h]}),h=150,g=480,p=250,m=0,d=0,v=0,y=0,M=0,x=Xo,b=mt,_=null,w=null;return t.stream=function(n){return s&&(s.valid=!1),s=_e(a,x(f(b(n)))),s.valid=!0,s},t.clipAngle=function(n){return arguments.length?(x=null==n?(_=n,Xo):re((_=+n)*to),i()):_},t.clipExtent=function(n){return arguments.length?(w=n,b=null==n?mt:ie(n[0][0],n[0][1],n[1][0],n[1][1]),i()):w},t.scale=function(n){return arguments.length?(h=+n,r()):h},t.translate=function(n){return arguments.length?(g=+n[0],p=+n[1],r()):[g,p]},t.center=function(n){return arguments.length?(m=n[0]%360*to,d=n[1]%360*to,r()):[m*eo,d*eo]},t.rotate=function(n){return arguments.length?(v=n[0]%360*to,y=n[1]%360*to,M=n.length>2?n[2]%360*to:0,r()):[v*eo,y*eo,M*eo]},ya.rebind(t,f,"precision"),function(){return u=n.apply(this,arguments),t.invert=u.invert&&e,r()}}function _e(n,t){return{point:function(e,r){r=n(e*to,r*to),e=r[0],t.point(e>Ka?e-2*Ka:-Ka>e?e+2*Ka:e,r[1])},sphere:function(){t.sphere()},lineStart:function(){t.lineStart()},lineEnd:function(){t.lineEnd()},polygonStart:function(){t.polygonStart()},polygonEnd:function(){t.polygonEnd()}}}function we(n,t){return[n,t]}function Se(n,t,e){return n?t||e?ae(ke(n),Ae(t,e)):ke(n):t||e?Ae(t,e):we}function Ee(n){return function(t,e){return t+=n,[t>Ka?t-2*Ka:-Ka>t?t+2*Ka:t,e]}}function ke(n){var t=Ee(n);return t.invert=Ee(-n),t}function Ae(n,t){function e(n,t){var e=Math.cos(t),o=Math.cos(n)*e,c=Math.sin(n)*e,l=Math.sin(t),s=l*r+o*i;return[Math.atan2(c*u-s*a,o*r-l*i),V(s*u+c*a)]}var r=Math.cos(n),i=Math.sin(n),u=Math.cos(t),a=Math.sin(t);return e.invert=function(n,t){var e=Math.cos(t),o=Math.cos(n)*e,c=Math.sin(n)*e,l=Math.sin(t),s=l*u-c*a;return[Math.atan2(c*u+l*a,o*r+s*i),V(s*r-o*i)]},e}function Ne(n,t){var e=Math.cos(n),r=Math.sin(n);return function(i,u,a,o){null!=i?(i=qe(e,i),u=qe(e,u),(a>0?u>i:i>u)&&(i+=2*a*Ka)):(i=n+2*a*Ka,u=n);for(var c,l=a*t,s=i;a>0?s>u:u>s;s-=l)o.point((c=Pt([e,-r*Math.cos(s),-r*Math.sin(s)]))[0],c[1])}}function qe(n,t){var e=zt(t);e[0]-=n,Ft(e);var r=I(-e[1]);return((-e[2]<0?-r:r)+2*Math.PI-Qa)%(2*Math.PI)}function Te(n,t,e){var r=ya.range(n,t-Qa,e).concat(t);return function(n){return r.map(function(t){return[n,t]})}}function Ce(n,t,e){var r=ya.range(n,t-Qa,e).concat(t);return function(n){return r.map(function(t){return[t,n]})}}function ze(n){return n.source}function De(n){return n.target}function je(n,t,e,r){var i=Math.cos(t),u=Math.sin(t),a=Math.cos(r),o=Math.sin(r),c=i*Math.cos(n),l=i*Math.sin(n),s=a*Math.cos(e),f=a*Math.sin(e),h=2*Math.asin(Math.sqrt(B(r-t)+i*a*B(e-n))),g=1/Math.sin(h),p=h?function(n){var t=Math.sin(n*=h)*g,e=Math.sin(h-n)*g,r=e*c+t*s,i=e*l+t*f,a=e*u+t*o;return[Math.atan2(i,r)*eo,Math.atan2(a,Math.sqrt(r*r+i*i))*eo]}:function(){return[n*eo,t*eo]};return p.distance=h,p}function Le(){function n(n,i){var u=Math.sin(i*=to),a=Math.cos(i),o=Math.abs((n*=to)-t),c=Math.cos(o);rc+=Math.atan2(Math.sqrt((o=a*Math.sin(o))*o+(o=r*u-e*a*c)*o),e*u+r*a*c),t=n,e=u,r=a}var t,e,r;ic.point=function(i,u){t=i*to,e=Math.sin(u*=to),r=Math.cos(u),ic.point=n},ic.lineEnd=function(){ic.point=ic.lineEnd=s}}function He(n,t){function e(t,e){var r=Math.cos(t),i=Math.cos(e),u=n(r*i);return[u*i*Math.sin(t),u*Math.sin(e)]}return e.invert=function(n,e){var r=Math.sqrt(n*n+e*e),i=t(r),u=Math.sin(i),a=Math.cos(i);return[Math.atan2(n*u,r*a),Math.asin(r&&e*u/r)]},e}function Fe(n,t){function e(n,t){var e=Math.abs(Math.abs(t)-Ka/2)<Qa?0:a/Math.pow(i(t),u);return[e*Math.sin(u*n),a-e*Math.cos(u*n)]}var r=Math.cos(n),i=function(n){return Math.tan(Ka/4+n/2)},u=n===t?Math.sin(n):Math.log(r/Math.cos(t))/Math.log(i(t)/i(n)),a=r*Math.pow(i(n),u)/u;return u?(e.invert=function(n,t){var e=a-t,r=U(u)*Math.sqrt(n*n+e*e);return[Math.atan2(n,e)/u,2*Math.atan(Math.pow(a/r,1/u))-Ka/2]},e):Oe}function Pe(n,t){function e(n,t){var e=u-t;return[e*Math.sin(i*n),u-e*Math.cos(i*n)]}var r=Math.cos(n),i=n===t?Math.sin(n):(r-Math.cos(t))/(t-n),u=r/i+n;return Math.abs(i)<Qa?we:(e.invert=function(n,t){var e=u-t;return[Math.atan2(n,e)/i,u-U(i)*Math.sqrt(n*n+e*e)]},e)}function Oe(n,t){return[n,Math.log(Math.tan(Ka/4+t/2))]}function Ye(n){var t,e=xe(n),r=e.scale,i=e.translate,u=e.clipExtent;return e.scale=function(){var n=r.apply(e,arguments);return n===e?t?e.clipExtent(null):e:n},e.translate=function(){var n=i.apply(e,arguments);return n===e?t?e.clipExtent(null):e:n},e.clipExtent=function(n){var a=u.apply(e,arguments);if(a===e){if(t=null==n){var o=Ka*r(),c=i();u([[c[0]-o,c[1]-o],[c[0]+o,c[1]+o]])}}else t&&(a=null);return a},e.clipExtent(null)}function Re(n,t){var e=Math.cos(t)*Math.sin(n);return[Math.log((1+e)/(1-e))/2,Math.atan2(Math.tan(t),Math.cos(n))]}function Ue(n){function t(t){function a(){l.push("M",u(n(s),o))}for(var c,l=[],s=[],f=-1,h=t.length,g=pt(e),p=pt(r);++f<h;)i.call(this,c=t[f],f)?s.push([+g.call(this,c,f),+p.call(this,c,f)]):s.length&&(a(),s=[]);return s.length&&a(),l.length?l.join(""):null}var e=Ie,r=Ve,i=Xt,u=Xe,a=u.key,o=.7;return t.x=function(n){return arguments.length?(e=n,t):e},t.y=function(n){return arguments.length?(r=n,t):r},t.defined=function(n){return arguments.length?(i=n,t):i},t.interpolate=function(n){return arguments.length?(a="function"==typeof n?u=n:(u=sc.get(n)||Xe).key,t):a},t.tension=function(n){return arguments.length?(o=n,t):o},t}function Ie(n){return n[0]}function Ve(n){return n[1]}function Xe(n){return n.join("L")}function Ze(n){return Xe(n)+"Z"}function Be(n){for(var t=0,e=n.length,r=n[0],i=[r[0],",",r[1]];++t<e;)i.push("H",(r[0]+(r=n[t])[0])/2,"V",r[1]);return e>1&&i.push("H",r[0]),i.join("")}function $e(n){for(var t=0,e=n.length,r=n[0],i=[r[0],",",r[1]];++t<e;)i.push("V",(r=n[t])[1],"H",r[0]);return i.join("")}function We(n){for(var t=0,e=n.length,r=n[0],i=[r[0],",",r[1]];++t<e;)i.push("H",(r=n[t])[0],"V",r[1]);return i.join("")}function Je(n,t){return n.length<4?Xe(n):n[1]+Qe(n.slice(1,n.length-1),nr(n,t))}function Ge(n,t){return n.length<3?Xe(n):n[0]+Qe((n.push(n[0]),n),nr([n[n.length-2]].concat(n,[n[1]]),t))}function Ke(n,t){return n.length<3?Xe(n):n[0]+Qe(n,nr(n,t))}function Qe(n,t){if(t.length<1||n.length!=t.length&&n.length!=t.length+2)return Xe(n);var e=n.length!=t.length,r="",i=n[0],u=n[1],a=t[0],o=a,c=1;if(e&&(r+="Q"+(u[0]-2*a[0]/3)+","+(u[1]-2*a[1]/3)+","+u[0]+","+u[1],i=n[1],c=2),t.length>1){o=t[1],u=n[c],c++,r+="C"+(i[0]+a[0])+","+(i[1]+a[1])+","+(u[0]-o[0])+","+(u[1]-o[1])+","+u[0]+","+u[1];for(var l=2;l<t.length;l++,c++)u=n[c],o=t[l],r+="S"+(u[0]-o[0])+","+(u[1]-o[1])+","+u[0]+","+u[1]}if(e){var s=n[c];r+="Q"+(u[0]+2*o[0]/3)+","+(u[1]+2*o[1]/3)+","+s[0]+","+s[1]}return r}function nr(n,t){for(var e,r=[],i=(1-t)/2,u=n[0],a=n[1],o=1,c=n.length;++o<c;)e=u,u=a,a=n[o],r.push([i*(a[0]-e[0]),i*(a[1]-e[1])]);return r}function tr(n){if(n.length<3)return Xe(n);var t=1,e=n.length,r=n[0],i=r[0],u=r[1],a=[i,i,i,(r=n[1])[0]],o=[u,u,u,r[1]],c=[i,",",u,"L",ur(gc,a),",",ur(gc,o)];for(n.push(n[e-1]);++t<=e;)r=n[t],a.shift(),a.push(r[0]),o.shift(),o.push(r[1]),ar(c,a,o);return n.pop(),c.push("L",r),c.join("")}function er(n){if(n.length<4)return Xe(n);for(var t,e=[],r=-1,i=n.length,u=[0],a=[0];++r<3;)t=n[r],u.push(t[0]),a.push(t[1]);for(e.push(ur(gc,u)+","+ur(gc,a)),--r;++r<i;)t=n[r],u.shift(),u.push(t[0]),a.shift(),a.push(t[1]),ar(e,u,a);return e.join("")}function rr(n){for(var t,e,r=-1,i=n.length,u=i+4,a=[],o=[];++r<4;)e=n[r%i],a.push(e[0]),o.push(e[1]);for(t=[ur(gc,a),",",ur(gc,o)],--r;++r<u;)e=n[r%i],a.shift(),a.push(e[0]),o.shift(),o.push(e[1]),ar(t,a,o);return t.join("")}function ir(n,t){var e=n.length-1;if(e)for(var r,i,u=n[0][0],a=n[0][1],o=n[e][0]-u,c=n[e][1]-a,l=-1;++l<=e;)r=n[l],i=l/e,r[0]=t*r[0]+(1-t)*(u+i*o),r[1]=t*r[1]+(1-t)*(a+i*c);return tr(n)}function ur(n,t){return n[0]*t[0]+n[1]*t[1]+n[2]*t[2]+n[3]*t[3]
 }function ar(n,t,e){n.push("C",ur(fc,t),",",ur(fc,e),",",ur(hc,t),",",ur(hc,e),",",ur(gc,t),",",ur(gc,e))}function or(n,t){return(t[1]-n[1])/(t[0]-n[0])}function cr(n){for(var t=0,e=n.length-1,r=[],i=n[0],u=n[1],a=r[0]=or(i,u);++t<e;)r[t]=(a+(a=or(i=u,u=n[t+1])))/2;return r[t]=a,r}function lr(n){for(var t,e,r,i,u=[],a=cr(n),o=-1,c=n.length-1;++o<c;)t=or(n[o],n[o+1]),Math.abs(t)<1e-6?a[o]=a[o+1]=0:(e=a[o]/t,r=a[o+1]/t,i=e*e+r*r,i>9&&(i=3*t/Math.sqrt(i),a[o]=i*e,a[o+1]=i*r));for(o=-1;++o<=c;)i=(n[Math.min(c,o+1)][0]-n[Math.max(0,o-1)][0])/(6*(1+a[o]*a[o])),u.push([i||0,a[o]*i||0]);return u}function sr(n){return n.length<3?Xe(n):n[0]+Qe(n,lr(n))}function fr(n,t,e,r){var i,u,a,o,c,l,s;return i=r[n],u=i[0],a=i[1],i=r[t],o=i[0],c=i[1],i=r[e],l=i[0],s=i[1],(s-a)*(o-u)-(c-a)*(l-u)>0}function hr(n,t,e){return(e[0]-t[0])*(n[1]-t[1])<(e[1]-t[1])*(n[0]-t[0])}function gr(n,t,e,r){var i=n[0],u=e[0],a=t[0]-i,o=r[0]-u,c=n[1],l=e[1],s=t[1]-c,f=r[1]-l,h=(o*(c-l)-f*(i-u))/(f*a-o*s);return[i+h*a,c+h*s]}function pr(n){var t=n[0],e=n[n.length-1];return!(t[0]-e[0]||t[1]-e[1])}function mr(n,t){var e={list:n.map(function(n,t){return{index:t,x:n[0],y:n[1]}}).sort(function(n,t){return n.y<t.y?-1:n.y>t.y?1:n.x<t.x?-1:n.x>t.x?1:0}),bottomSite:null},r={list:[],leftEnd:null,rightEnd:null,init:function(){r.leftEnd=r.createHalfEdge(null,"l"),r.rightEnd=r.createHalfEdge(null,"l"),r.leftEnd.r=r.rightEnd,r.rightEnd.l=r.leftEnd,r.list.unshift(r.leftEnd,r.rightEnd)},createHalfEdge:function(n,t){return{edge:n,side:t,vertex:null,l:null,r:null}},insert:function(n,t){t.l=n,t.r=n.r,n.r.l=t,n.r=t},leftBound:function(n){var t=r.leftEnd;do t=t.r;while(t!=r.rightEnd&&i.rightOf(t,n));return t=t.l},del:function(n){n.l.r=n.r,n.r.l=n.l,n.edge=null},right:function(n){return n.r},left:function(n){return n.l},leftRegion:function(n){return null==n.edge?e.bottomSite:n.edge.region[n.side]},rightRegion:function(n){return null==n.edge?e.bottomSite:n.edge.region[mc[n.side]]}},i={bisect:function(n,t){var e={region:{l:n,r:t},ep:{l:null,r:null}},r=t.x-n.x,i=t.y-n.y,u=r>0?r:-r,a=i>0?i:-i;return e.c=n.x*r+n.y*i+.5*(r*r+i*i),u>a?(e.a=1,e.b=i/r,e.c/=r):(e.b=1,e.a=r/i,e.c/=i),e},intersect:function(n,t){var e=n.edge,r=t.edge;if(!e||!r||e.region.r==r.region.r)return null;var i=e.a*r.b-e.b*r.a;if(Math.abs(i)<1e-10)return null;var u,a,o=(e.c*r.b-r.c*e.b)/i,c=(r.c*e.a-e.c*r.a)/i,l=e.region.r,s=r.region.r;l.y<s.y||l.y==s.y&&l.x<s.x?(u=n,a=e):(u=t,a=r);var f=o>=a.region.r.x;return f&&"l"===u.side||!f&&"r"===u.side?null:{x:o,y:c}},rightOf:function(n,t){var e=n.edge,r=e.region.r,i=t.x>r.x;if(i&&"l"===n.side)return 1;if(!i&&"r"===n.side)return 0;if(1===e.a){var u=t.y-r.y,a=t.x-r.x,o=0,c=0;if(!i&&e.b<0||i&&e.b>=0?c=o=u>=e.b*a:(c=t.x+t.y*e.b>e.c,e.b<0&&(c=!c),c||(o=1)),!o){var l=r.x-e.region.l.x;c=e.b*(a*a-u*u)<l*u*(1+2*a/l+e.b*e.b),e.b<0&&(c=!c)}}else{var s=e.c-e.a*t.x,f=t.y-s,h=t.x-r.x,g=s-r.y;c=f*f>h*h+g*g}return"l"===n.side?c:!c},endPoint:function(n,e,r){n.ep[e]=r,n.ep[mc[e]]&&t(n)},distance:function(n,t){var e=n.x-t.x,r=n.y-t.y;return Math.sqrt(e*e+r*r)}},u={list:[],insert:function(n,t,e){n.vertex=t,n.ystar=t.y+e;for(var r=0,i=u.list,a=i.length;a>r;r++){var o=i[r];if(!(n.ystar>o.ystar||n.ystar==o.ystar&&t.x>o.vertex.x))break}i.splice(r,0,n)},del:function(n){for(var t=0,e=u.list,r=e.length;r>t&&e[t]!=n;++t);e.splice(t,1)},empty:function(){return 0===u.list.length},nextEvent:function(n){for(var t=0,e=u.list,r=e.length;r>t;++t)if(e[t]==n)return e[t+1];return null},min:function(){var n=u.list[0];return{x:n.vertex.x,y:n.ystar}},extractMin:function(){return u.list.shift()}};r.init(),e.bottomSite=e.list.shift();for(var a,o,c,l,s,f,h,g,p,m,d,v,y,M=e.list.shift();;)if(u.empty()||(a=u.min()),M&&(u.empty()||M.y<a.y||M.y==a.y&&M.x<a.x))o=r.leftBound(M),c=r.right(o),h=r.rightRegion(o),v=i.bisect(h,M),f=r.createHalfEdge(v,"l"),r.insert(o,f),m=i.intersect(o,f),m&&(u.del(o),u.insert(o,m,i.distance(m,M))),o=f,f=r.createHalfEdge(v,"r"),r.insert(o,f),m=i.intersect(f,c),m&&u.insert(f,m,i.distance(m,M)),M=e.list.shift();else{if(u.empty())break;o=u.extractMin(),l=r.left(o),c=r.right(o),s=r.right(c),h=r.leftRegion(o),g=r.rightRegion(c),d=o.vertex,i.endPoint(o.edge,o.side,d),i.endPoint(c.edge,c.side,d),r.del(o),u.del(c),r.del(c),y="l",h.y>g.y&&(p=h,h=g,g=p,y="r"),v=i.bisect(h,g),f=r.createHalfEdge(v,y),r.insert(l,f),i.endPoint(v,mc[y],d),m=i.intersect(l,f),m&&(u.del(l),u.insert(l,m,i.distance(m,h))),m=i.intersect(f,s),m&&u.insert(f,m,i.distance(m,h))}for(o=r.right(r.leftEnd);o!=r.rightEnd;o=r.right(o))t(o.edge)}function dr(n){return n.x}function vr(n){return n.y}function yr(){return{leaf:!0,nodes:[],point:null,x:null,y:null}}function Mr(n,t,e,r,i,u){if(!n(t,e,r,i,u)){var a=.5*(e+i),o=.5*(r+u),c=t.nodes;c[0]&&Mr(n,c[0],e,r,a,o),c[1]&&Mr(n,c[1],a,r,i,o),c[2]&&Mr(n,c[2],e,o,a,u),c[3]&&Mr(n,c[3],a,o,i,u)}}function xr(n,t){n=ya.rgb(n),t=ya.rgb(t);var e=n.r,r=n.g,i=n.b,u=t.r-e,a=t.g-r,o=t.b-i;return function(n){return"#"+ct(Math.round(e+u*n))+ct(Math.round(r+a*n))+ct(Math.round(i+o*n))}}function br(n,t){var e,r={},i={};for(e in n)e in t?r[e]=Sr(n[e],t[e]):i[e]=n[e];for(e in t)e in n||(i[e]=t[e]);return function(n){for(e in r)i[e]=r[e](n);return i}}function _r(n,t){return t-=n=+n,function(e){return n+t*e}}function wr(n,t){var e,r,i,u,a,o=0,c=0,l=[],s=[];for(n+="",t+="",dc.lastIndex=0,r=0;e=dc.exec(t);++r)e.index&&l.push(t.substring(o,c=e.index)),s.push({i:l.length,x:e[0]}),l.push(null),o=dc.lastIndex;for(o<t.length&&l.push(t.substring(o)),r=0,u=s.length;(e=dc.exec(n))&&u>r;++r)if(a=s[r],a.x==e[0]){if(a.i)if(null==l[a.i+1])for(l[a.i-1]+=a.x,l.splice(a.i,1),i=r+1;u>i;++i)s[i].i--;else for(l[a.i-1]+=a.x+l[a.i+1],l.splice(a.i,2),i=r+1;u>i;++i)s[i].i-=2;else if(null==l[a.i+1])l[a.i]=a.x;else for(l[a.i]=a.x+l[a.i+1],l.splice(a.i+1,1),i=r+1;u>i;++i)s[i].i--;s.splice(r,1),u--,r--}else a.x=_r(parseFloat(e[0]),parseFloat(a.x));for(;u>r;)a=s.pop(),null==l[a.i+1]?l[a.i]=a.x:(l[a.i]=a.x+l[a.i+1],l.splice(a.i+1,1)),u--;return 1===l.length?null==l[0]?(a=s[0].x,function(n){return a(n)+""}):function(){return t}:function(n){for(r=0;u>r;++r)l[(a=s[r]).i]=a.x(n);return l.join("")}}function Sr(n,t){for(var e,r=ya.interpolators.length;--r>=0&&!(e=ya.interpolators[r](n,t)););return e}function Er(n,t){var e,r=[],i=[],u=n.length,a=t.length,o=Math.min(n.length,t.length);for(e=0;o>e;++e)r.push(Sr(n[e],t[e]));for(;u>e;++e)i[e]=n[e];for(;a>e;++e)i[e]=t[e];return function(n){for(e=0;o>e;++e)i[e]=r[e](n);return i}}function kr(n){return function(t){return 0>=t?0:t>=1?1:n(t)}}function Ar(n){return function(t){return 1-n(1-t)}}function Nr(n){return function(t){return.5*(.5>t?n(2*t):2-n(2-2*t))}}function qr(n){return n*n}function Tr(n){return n*n*n}function Cr(n){if(0>=n)return 0;if(n>=1)return 1;var t=n*n,e=t*n;return 4*(.5>n?e:3*(n-t)+e-.75)}function zr(n){return function(t){return Math.pow(t,n)}}function Dr(n){return 1-Math.cos(n*Ka/2)}function jr(n){return Math.pow(2,10*(n-1))}function Lr(n){return 1-Math.sqrt(1-n*n)}function Hr(n,t){var e;return arguments.length<2&&(t=.45),arguments.length?e=t/(2*Ka)*Math.asin(1/n):(n=1,e=t/4),function(r){return 1+n*Math.pow(2,10*-r)*Math.sin(2*(r-e)*Ka/t)}}function Fr(n){return n||(n=1.70158),function(t){return t*t*((n+1)*t-n)}}function Pr(n){return 1/2.75>n?7.5625*n*n:2/2.75>n?7.5625*(n-=1.5/2.75)*n+.75:2.5/2.75>n?7.5625*(n-=2.25/2.75)*n+.9375:7.5625*(n-=2.625/2.75)*n+.984375}function Or(n,t){n=ya.hcl(n),t=ya.hcl(t);var e=n.h,r=n.c,i=n.l,u=t.h-e,a=t.c-r,o=t.l-i;return isNaN(a)&&(a=0,r=isNaN(r)?t.c:r),isNaN(u)?(u=0,e=isNaN(e)?t.h:e):u>180?u-=360:-180>u&&(u+=360),function(n){return J(e+u*n,r+a*n,i+o*n)+""}}function Yr(n,t){n=ya.hsl(n),t=ya.hsl(t);var e=n.h,r=n.s,i=n.l,u=t.h-e,a=t.s-r,o=t.l-i;return isNaN(a)&&(a=0,r=isNaN(r)?t.s:r),isNaN(u)?(u=0,e=isNaN(e)?t.h:e):u>180?u-=360:-180>u&&(u+=360),function(n){return R(e+u*n,r+a*n,i+o*n)+""}}function Rr(n,t){n=ya.lab(n),t=ya.lab(t);var e=n.l,r=n.a,i=n.b,u=t.l-e,a=t.a-r,o=t.b-i;return function(n){return Q(e+u*n,r+a*n,i+o*n)+""}}function Ur(n,t){return t-=n,function(e){return Math.round(n+t*e)}}function Ir(n){var t=[n.a,n.b],e=[n.c,n.d],r=Xr(t),i=Vr(t,e),u=Xr(Zr(e,t,-i))||0;t[0]*e[1]<e[0]*t[1]&&(t[0]*=-1,t[1]*=-1,r*=-1,i*=-1),this.rotate=(r?Math.atan2(t[1],t[0]):Math.atan2(-e[0],e[1]))*eo,this.translate=[n.e,n.f],this.scale=[r,u],this.skew=u?Math.atan2(i,u)*eo:0}function Vr(n,t){return n[0]*t[0]+n[1]*t[1]}function Xr(n){var t=Math.sqrt(Vr(n,n));return t&&(n[0]/=t,n[1]/=t),t}function Zr(n,t,e){return n[0]+=e*t[0],n[1]+=e*t[1],n}function Br(n,t){var e,r=[],i=[],u=ya.transform(n),a=ya.transform(t),o=u.translate,c=a.translate,l=u.rotate,s=a.rotate,f=u.skew,h=a.skew,g=u.scale,p=a.scale;return o[0]!=c[0]||o[1]!=c[1]?(r.push("translate(",null,",",null,")"),i.push({i:1,x:_r(o[0],c[0])},{i:3,x:_r(o[1],c[1])})):c[0]||c[1]?r.push("translate("+c+")"):r.push(""),l!=s?(l-s>180?s+=360:s-l>180&&(l+=360),i.push({i:r.push(r.pop()+"rotate(",null,")")-2,x:_r(l,s)})):s&&r.push(r.pop()+"rotate("+s+")"),f!=h?i.push({i:r.push(r.pop()+"skewX(",null,")")-2,x:_r(f,h)}):h&&r.push(r.pop()+"skewX("+h+")"),g[0]!=p[0]||g[1]!=p[1]?(e=r.push(r.pop()+"scale(",null,",",null,")"),i.push({i:e-4,x:_r(g[0],p[0])},{i:e-2,x:_r(g[1],p[1])})):(1!=p[0]||1!=p[1])&&r.push(r.pop()+"scale("+p+")"),e=i.length,function(n){for(var t,u=-1;++u<e;)r[(t=i[u]).i]=t.x(n);return r.join("")}}function $r(n,t){return t=t-(n=+n)?1/(t-n):0,function(e){return(e-n)*t}}function Wr(n,t){return t=t-(n=+n)?1/(t-n):0,function(e){return Math.max(0,Math.min(1,(e-n)*t))}}function Jr(n){for(var t=n.source,e=n.target,r=Kr(t,e),i=[t];t!==r;)t=t.parent,i.push(t);for(var u=i.length;e!==r;)i.splice(u,0,e),e=e.parent;return i}function Gr(n){for(var t=[],e=n.parent;null!=e;)t.push(n),n=e,e=e.parent;return t.push(n),t}function Kr(n,t){if(n===t)return n;for(var e=Gr(n),r=Gr(t),i=e.pop(),u=r.pop(),a=null;i===u;)a=i,i=e.pop(),u=r.pop();return a}function Qr(n){n.fixed|=2}function ni(n){n.fixed&=-7}function ti(n){n.fixed|=4,n.px=n.x,n.py=n.y}function ei(n){n.fixed&=-5}function ri(n,t,e){var r=0,i=0;if(n.charge=0,!n.leaf)for(var u,a=n.nodes,o=a.length,c=-1;++c<o;)u=a[c],null!=u&&(ri(u,t,e),n.charge+=u.charge,r+=u.charge*u.cx,i+=u.charge*u.cy);if(n.point){n.leaf||(n.point.x+=Math.random()-.5,n.point.y+=Math.random()-.5);var l=t*e[n.point.index];n.charge+=n.pointCharge=l,r+=l*n.point.x,i+=l*n.point.y}n.cx=r/n.charge,n.cy=i/n.charge}function ii(n,t){return ya.rebind(n,t,"sort","children","value"),n.nodes=n,n.links=ci,n}function ui(n){return n.children}function ai(n){return n.value}function oi(n,t){return t.value-n.value}function ci(n){return ya.merge(n.map(function(n){return(n.children||[]).map(function(t){return{source:n,target:t}})}))}function li(n){return n.x}function si(n){return n.y}function fi(n,t,e){n.y0=t,n.y=e}function hi(n){return ya.range(n.length)}function gi(n){for(var t=-1,e=n[0].length,r=[];++t<e;)r[t]=0;return r}function pi(n){for(var t,e=1,r=0,i=n[0][1],u=n.length;u>e;++e)(t=n[e][1])>i&&(r=e,i=t);return r}function mi(n){return n.reduce(di,0)}function di(n,t){return n+t[1]}function vi(n,t){return yi(n,Math.ceil(Math.log(t.length)/Math.LN2+1))}function yi(n,t){for(var e=-1,r=+n[0],i=(n[1]-r)/t,u=[];++e<=t;)u[e]=i*e+r;return u}function Mi(n){return[ya.min(n),ya.max(n)]}function xi(n,t){return n.parent==t.parent?1:2}function bi(n){var t=n.children;return t&&t.length?t[0]:n._tree.thread}function _i(n){var t,e=n.children;return e&&(t=e.length)?e[t-1]:n._tree.thread}function wi(n,t){var e=n.children;if(e&&(i=e.length))for(var r,i,u=-1;++u<i;)t(r=wi(e[u],t),n)>0&&(n=r);return n}function Si(n,t){return n.x-t.x}function Ei(n,t){return t.x-n.x}function ki(n,t){return n.depth-t.depth}function Ai(n,t){function e(n,r){var i=n.children;if(i&&(a=i.length))for(var u,a,o=null,c=-1;++c<a;)u=i[c],e(u,o),o=u;t(n,r)}e(n,null)}function Ni(n){for(var t,e=0,r=0,i=n.children,u=i.length;--u>=0;)t=i[u]._tree,t.prelim+=e,t.mod+=e,e+=t.shift+(r+=t.change)}function qi(n,t,e){n=n._tree,t=t._tree;var r=e/(t.number-n.number);n.change+=r,t.change-=r,t.shift+=e,t.prelim+=e,t.mod+=e}function Ti(n,t,e){return n._tree.ancestor.parent==t.parent?n._tree.ancestor:e}function Ci(n,t){return n.value-t.value}function zi(n,t){var e=n._pack_next;n._pack_next=t,t._pack_prev=n,t._pack_next=e,e._pack_prev=t}function Di(n,t){n._pack_next=t,t._pack_prev=n}function ji(n,t){var e=t.x-n.x,r=t.y-n.y,i=n.r+t.r;return.999*i*i>e*e+r*r}function Li(n){function t(n){s=Math.min(n.x-n.r,s),f=Math.max(n.x+n.r,f),h=Math.min(n.y-n.r,h),g=Math.max(n.y+n.r,g)}if((e=n.children)&&(l=e.length)){var e,r,i,u,a,o,c,l,s=1/0,f=-1/0,h=1/0,g=-1/0;if(e.forEach(Hi),r=e[0],r.x=-r.r,r.y=0,t(r),l>1&&(i=e[1],i.x=i.r,i.y=0,t(i),l>2))for(u=e[2],Oi(r,i,u),t(u),zi(r,u),r._pack_prev=u,zi(u,i),i=r._pack_next,a=3;l>a;a++){Oi(r,i,u=e[a]);var p=0,m=1,d=1;for(o=i._pack_next;o!==i;o=o._pack_next,m++)if(ji(o,u)){p=1;break}if(1==p)for(c=r._pack_prev;c!==o._pack_prev&&!ji(c,u);c=c._pack_prev,d++);p?(d>m||m==d&&i.r<r.r?Di(r,i=o):Di(r=c,i),a--):(zi(r,u),i=u,t(u))}var v=(s+f)/2,y=(h+g)/2,M=0;for(a=0;l>a;a++)u=e[a],u.x-=v,u.y-=y,M=Math.max(M,u.r+Math.sqrt(u.x*u.x+u.y*u.y));n.r=M,e.forEach(Fi)}}function Hi(n){n._pack_next=n._pack_prev=n}function Fi(n){delete n._pack_next,delete n._pack_prev}function Pi(n,t,e,r){var i=n.children;if(n.x=t+=r*n.x,n.y=e+=r*n.y,n.r*=r,i)for(var u=-1,a=i.length;++u<a;)Pi(i[u],t,e,r)}function Oi(n,t,e){var r=n.r+e.r,i=t.x-n.x,u=t.y-n.y;if(r&&(i||u)){var a=t.r+e.r,o=i*i+u*u;a*=a,r*=r;var c=.5+(r-a)/(2*o),l=Math.sqrt(Math.max(0,2*a*(r+o)-(r-=o)*r-a*a))/(2*o);e.x=n.x+c*i+l*u,e.y=n.y+c*u-l*i}else e.x=n.x+r,e.y=n.y}function Yi(n){return 1+ya.max(n,function(n){return n.y})}function Ri(n){return n.reduce(function(n,t){return n+t.x},0)/n.length}function Ui(n){var t=n.children;return t&&t.length?Ui(t[0]):n}function Ii(n){var t,e=n.children;return e&&(t=e.length)?Ii(e[t-1]):n}function Vi(n){return{x:n.x,y:n.y,dx:n.dx,dy:n.dy}}function Xi(n,t){var e=n.x+t[3],r=n.y+t[0],i=n.dx-t[1]-t[3],u=n.dy-t[0]-t[2];return 0>i&&(e+=i/2,i=0),0>u&&(r+=u/2,u=0),{x:e,y:r,dx:i,dy:u}}function Zi(n){var t=n[0],e=n[n.length-1];return e>t?[t,e]:[e,t]}function Bi(n){return n.rangeExtent?n.rangeExtent():Zi(n.range())}function $i(n,t,e,r){var i=e(n[0],n[1]),u=r(t[0],t[1]);return function(n){return u(i(n))}}function Wi(n,t){var e,r=0,i=n.length-1,u=n[r],a=n[i];return u>a&&(e=r,r=i,i=e,e=u,u=a,a=e),n[r]=t.floor(u),n[i]=t.ceil(a),n}function Ji(n){return n?{floor:function(t){return Math.floor(t/n)*n},ceil:function(t){return Math.ceil(t/n)*n}}:kc}function Gi(n,t,e,r){var i=[],u=[],a=0,o=Math.min(n.length,t.length)-1;for(n[o]<n[0]&&(n=n.slice().reverse(),t=t.slice().reverse());++a<=o;)i.push(e(n[a-1],n[a])),u.push(r(t[a-1],t[a]));return function(t){var e=ya.bisect(n,t,1,o)-1;return u[e](i[e](t))}}function Ki(n,t,e,r){function i(){var i=Math.min(n.length,t.length)>2?Gi:$i,c=r?Wr:$r;return a=i(n,t,c,e),o=i(t,n,c,Sr),u}function u(n){return a(n)}var a,o;return u.invert=function(n){return o(n)},u.domain=function(t){return arguments.length?(n=t.map(Number),i()):n},u.range=function(n){return arguments.length?(t=n,i()):t},u.rangeRound=function(n){return u.range(n).interpolate(Ur)},u.clamp=function(n){return arguments.length?(r=n,i()):r},u.interpolate=function(n){return arguments.length?(e=n,i()):e},u.ticks=function(t){return ru(n,t)},u.tickFormat=function(t,e){return iu(n,t,e)},u.nice=function(t){return nu(n,t),i()},u.copy=function(){return Ki(n,t,e,r)},i()}function Qi(n,t){return ya.rebind(n,t,"range","rangeRound","interpolate","clamp")}function nu(n,t){return Wi(n,Ji(t?eu(n,t)[2]:tu(n)))}function tu(n){var t=Zi(n),e=t[1]-t[0];return Math.pow(10,Math.round(Math.log(e)/Math.LN10)-1)}function eu(n,t){var e=Zi(n),r=e[1]-e[0],i=Math.pow(10,Math.floor(Math.log(r/t)/Math.LN10)),u=t/r*i;return.15>=u?i*=10:.35>=u?i*=5:.75>=u&&(i*=2),e[0]=Math.ceil(e[0]/i)*i,e[1]=Math.floor(e[1]/i)*i+.5*i,e[2]=i,e}function ru(n,t){return ya.range.apply(ya,eu(n,t))}function iu(n,t,e){var r=-Math.floor(Math.log(eu(n,t)[2])/Math.LN10+.01);return ya.format(e?e.replace(wo,function(n,t,e,i,u,a,o,c,l,s){return[t,e,i,u,a,o,c,l||"."+(r-2*("%"===s)),s].join("")}):",."+r+"f")}function uu(n,t,e,r){function i(n){return(e?Math.log(0>n?0:n):-Math.log(n>0?0:-n))/Math.log(t)}function u(n){return e?Math.pow(t,n):-Math.pow(t,-n)}function a(t){return n(i(t))}return a.invert=function(t){return u(n.invert(t))},a.domain=function(t){return arguments.length?(e=t[0]>=0,n.domain((r=t.map(Number)).map(i)),a):r},a.base=function(e){return arguments.length?(t=+e,n.domain(r.map(i)),a):t},a.nice=function(){var t=Wi(r.map(i),e?Math:Nc);return n.domain(t),r=t.map(u),a},a.ticks=function(){var n=Zi(r),a=[],o=n[0],c=n[1],l=Math.floor(i(o)),s=Math.ceil(i(c)),f=t%1?2:t;if(isFinite(s-l)){if(e){for(;s>l;l++)for(var h=1;f>h;h++)a.push(u(l)*h);a.push(u(l))}else for(a.push(u(l));l++<s;)for(var h=f-1;h>0;h--)a.push(u(l)*h);for(l=0;a[l]<o;l++);for(s=a.length;a[s-1]>c;s--);a=a.slice(l,s)}return a},a.tickFormat=function(n,t){if(!arguments.length)return Ac;arguments.length<2?t=Ac:"function"!=typeof t&&(t=ya.format(t));var r,o=Math.max(.1,n/a.ticks().length),c=e?(r=1e-12,Math.ceil):(r=-1e-12,Math.floor);return function(n){return n/u(c(i(n)+r))<=o?t(n):""}},a.copy=function(){return uu(n.copy(),t,e,r)},Qi(a,n)}function au(n,t,e){function r(t){return n(i(t))}var i=ou(t),u=ou(1/t);return r.invert=function(t){return u(n.invert(t))},r.domain=function(t){return arguments.length?(n.domain((e=t.map(Number)).map(i)),r):e},r.ticks=function(n){return ru(e,n)},r.tickFormat=function(n,t){return iu(e,n,t)},r.nice=function(n){return r.domain(nu(e,n))},r.exponent=function(a){return arguments.length?(i=ou(t=a),u=ou(1/t),n.domain(e.map(i)),r):t},r.copy=function(){return au(n.copy(),t,e)},Qi(r,n)}function ou(n){return function(t){return 0>t?-Math.pow(-t,n):Math.pow(t,n)}}function cu(n,t){function e(t){return a[((u.get(t)||u.set(t,n.push(t)))-1)%a.length]}function r(t,e){return ya.range(n.length).map(function(n){return t+e*n})}var u,a,o;return e.domain=function(r){if(!arguments.length)return n;n=[],u=new i;for(var a,o=-1,c=r.length;++o<c;)u.has(a=r[o])||u.set(a,n.push(a));return e[t.t].apply(e,t.a)},e.range=function(n){return arguments.length?(a=n,o=0,t={t:"range",a:arguments},e):a},e.rangePoints=function(i,u){arguments.length<2&&(u=0);var c=i[0],l=i[1],s=(l-c)/(Math.max(1,n.length-1)+u);return a=r(n.length<2?(c+l)/2:c+s*u/2,s),o=0,t={t:"rangePoints",a:arguments},e},e.rangeBands=function(i,u,c){arguments.length<2&&(u=0),arguments.length<3&&(c=u);var l=i[1]<i[0],s=i[l-0],f=i[1-l],h=(f-s)/(n.length-u+2*c);return a=r(s+h*c,h),l&&a.reverse(),o=h*(1-u),t={t:"rangeBands",a:arguments},e},e.rangeRoundBands=function(i,u,c){arguments.length<2&&(u=0),arguments.length<3&&(c=u);var l=i[1]<i[0],s=i[l-0],f=i[1-l],h=Math.floor((f-s)/(n.length-u+2*c)),g=f-s-(n.length-u)*h;return a=r(s+Math.round(g/2),h),l&&a.reverse(),o=Math.round(h*(1-u)),t={t:"rangeRoundBands",a:arguments},e},e.rangeBand=function(){return o},e.rangeExtent=function(){return Zi(t.a[0])},e.copy=function(){return cu(n,t)},e.domain(n)}function lu(n,t){function e(){var e=0,u=t.length;for(i=[];++e<u;)i[e-1]=ya.quantile(n,e/u);return r}function r(n){return isNaN(n=+n)?void 0:t[ya.bisect(i,n)]}var i;return r.domain=function(t){return arguments.length?(n=t.filter(function(n){return!isNaN(n)}).sort(ya.ascending),e()):n},r.range=function(n){return arguments.length?(t=n,e()):t},r.quantiles=function(){return i},r.invertExtent=function(e){return e=t.indexOf(e),0>e?[0/0,0/0]:[e>0?i[e-1]:n[0],e<i.length?i[e]:n[n.length-1]]},r.copy=function(){return lu(n,t)},e()}function su(n,t,e){function r(t){return e[Math.max(0,Math.min(a,Math.floor(u*(t-n))))]}function i(){return u=e.length/(t-n),a=e.length-1,r}var u,a;return r.domain=function(e){return arguments.length?(n=+e[0],t=+e[e.length-1],i()):[n,t]},r.range=function(n){return arguments.length?(e=n,i()):e},r.invertExtent=function(t){return t=e.indexOf(t),t=0>t?0/0:t/u+n,[t,t+1/u]},r.copy=function(){return su(n,t,e)},i()}function fu(n,t){function e(e){return e>=e?t[ya.bisect(n,e)]:void 0}return e.domain=function(t){return arguments.length?(n=t,e):n},e.range=function(n){return arguments.length?(t=n,e):t},e.invertExtent=function(e){return e=t.indexOf(e),[n[e-1],n[e]]},e.copy=function(){return fu(n,t)},e}function hu(n){function t(n){return+n}return t.invert=t,t.domain=t.range=function(e){return arguments.length?(n=e.map(t),t):n},t.ticks=function(t){return ru(n,t)},t.tickFormat=function(t,e){return iu(n,t,e)},t.copy=function(){return hu(n)},t}function gu(n){return n.innerRadius}function pu(n){return n.outerRadius}function mu(n){return n.startAngle}function du(n){return n.endAngle}function vu(n){for(var t,e,r,i=-1,u=n.length;++i<u;)t=n[i],e=t[0],r=t[1]+Dc,t[0]=e*Math.cos(r),t[1]=e*Math.sin(r);return n}function yu(n){function t(t){function c(){m.push("M",o(n(v),f),s,l(n(d.reverse()),f),"Z")}for(var h,g,p,m=[],d=[],v=[],y=-1,M=t.length,x=pt(e),b=pt(i),_=e===r?function(){return g}:pt(r),w=i===u?function(){return p}:pt(u);++y<M;)a.call(this,h=t[y],y)?(d.push([g=+x.call(this,h,y),p=+b.call(this,h,y)]),v.push([+_.call(this,h,y),+w.call(this,h,y)])):d.length&&(c(),d=[],v=[]);return d.length&&c(),m.length?m.join(""):null}var e=Ie,r=Ie,i=0,u=Ve,a=Xt,o=Xe,c=o.key,l=o,s="L",f=.7;return t.x=function(n){return arguments.length?(e=r=n,t):r},t.x0=function(n){return arguments.length?(e=n,t):e},t.x1=function(n){return arguments.length?(r=n,t):r},t.y=function(n){return arguments.length?(i=u=n,t):u},t.y0=function(n){return arguments.length?(i=n,t):i},t.y1=function(n){return arguments.length?(u=n,t):u},t.defined=function(n){return arguments.length?(a=n,t):a},t.interpolate=function(n){return arguments.length?(c="function"==typeof n?o=n:(o=sc.get(n)||Xe).key,l=o.reverse||o,s=o.closed?"M":"L",t):c},t.tension=function(n){return arguments.length?(f=n,t):f},t}function Mu(n){return n.radius}function xu(n){return[n.x,n.y]}function bu(n){return function(){var t=n.apply(this,arguments),e=t[0],r=t[1]+Dc;return[e*Math.cos(r),e*Math.sin(r)]}}function _u(){return 64}function wu(){return"circle"}function Su(n){var t=Math.sqrt(n/Ka);return"M0,"+t+"A"+t+","+t+" 0 1,1 0,"+-t+"A"+t+","+t+" 0 1,1 0,"+t+"Z"}function Eu(n,t){return La(n,Yc),n.id=t,n}function ku(n,t,e,r){var i=n.id;return T(n,"function"==typeof e?function(n,u,a){n.__transition__[i].tween.set(t,r(e.call(n,n.__data__,u,a)))}:(e=r(e),function(n){n.__transition__[i].tween.set(t,e)}))}function Au(n){return null==n&&(n=""),function(){this.textContent=n}}function Nu(n,t,e,r){var u=n.__transition__||(n.__transition__={active:0,count:0}),a=u[e];if(!a){var o=r.time;a=u[e]={tween:new i,time:o,ease:r.ease,delay:r.delay,duration:r.duration},++u.count,ya.timer(function(r){function i(r){return u.active>e?l():(u.active=e,a.event&&a.event.start.call(n,s,t),a.tween.forEach(function(e,r){(r=r.call(n,s,t))&&p.push(r)}),c(r)?1:(xt(c,0,o),void 0))}function c(r){if(u.active!==e)return l();for(var i=(r-h)/g,o=f(i),c=p.length;c>0;)p[--c].call(n,o);return i>=1?(l(),a.event&&a.event.end.call(n,s,t),1):void 0}function l(){return--u.count?delete u[e]:delete n.__transition__,1}var s=n.__data__,f=a.ease,h=a.delay,g=a.duration,p=[];return r>=h?i(r):(xt(i,h,o),void 0)},0,o)}}function qu(n,t){n.attr("transform",function(n){return"translate("+t(n)+",0)"})}function Tu(n,t){n.attr("transform",function(n){return"translate(0,"+t(n)+")"})}function Cu(n,t,e){if(r=[],e&&t.length>1){for(var r,i,u,a=Zi(n.domain()),o=-1,c=t.length,l=(t[1]-t[0])/++e;++o<c;)for(i=e;--i>0;)(u=+t[o]-i*l)>=a[0]&&r.push(u);for(--o,i=0;++i<e&&(u=+t[o]+i*l)<a[1];)r.push(u)}return r}function zu(){this._=new Date(arguments.length>1?Date.UTC.apply(this,arguments):arguments[0])}function Du(n,t,e){function r(t){var e=n(t),r=u(e,1);return r-t>t-e?e:r}function i(e){return t(e=n(new Zc(e-1)),1),e}function u(n,e){return t(n=new Zc(+n),e),n}function a(n,r,u){var a=i(n),o=[];if(u>1)for(;r>a;)e(a)%u||o.push(new Date(+a)),t(a,1);else for(;r>a;)o.push(new Date(+a)),t(a,1);return o}function o(n,t,e){try{Zc=zu;var r=new zu;return r._=n,a(r,t,e)}finally{Zc=Date}}n.floor=n,n.round=r,n.ceil=i,n.offset=u,n.range=a;var c=n.utc=ju(n);return c.floor=c,c.round=ju(r),c.ceil=ju(i),c.offset=ju(u),c.range=o,n}function ju(n){return function(t,e){try{Zc=zu;var r=new zu;return r._=t,n(r,e)._}finally{Zc=Date}}}function Lu(n,t,e,r){for(var i,u,a=0,o=t.length,c=e.length;o>a;){if(r>=c)return-1;if(i=t.charCodeAt(a++),37===i){if(u=gl[t.charAt(a++)],!u||(r=u(n,e,r))<0)return-1}else if(i!=e.charCodeAt(r++))return-1}return r}function Hu(n){return new RegExp("^(?:"+n.map(ya.requote).join("|")+")","i")}function Fu(n){for(var t=new i,e=-1,r=n.length;++e<r;)t.set(n[e].toLowerCase(),e);return t}function Pu(n,t,e){var r=0>n?"-":"",i=(r?-n:n)+"",u=i.length;return r+(e>u?new Array(e-u+1).join(t)+i:i)}function Ou(n,t,e){il.lastIndex=0;var r=il.exec(t.substring(e));return r?(n.w=ul.get(r[0].toLowerCase()),e+r[0].length):-1}function Yu(n,t,e){el.lastIndex=0;var r=el.exec(t.substring(e));return r?(n.w=rl.get(r[0].toLowerCase()),e+r[0].length):-1}function Ru(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+1));return r?(n.w=+r[0],e+r[0].length):-1}function Uu(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e));return r?(n.U=+r[0],e+r[0].length):-1}function Iu(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e));return r?(n.W=+r[0],e+r[0].length):-1}function Vu(n,t,e){cl.lastIndex=0;var r=cl.exec(t.substring(e));return r?(n.m=ll.get(r[0].toLowerCase()),e+r[0].length):-1}function Xu(n,t,e){al.lastIndex=0;var r=al.exec(t.substring(e));return r?(n.m=ol.get(r[0].toLowerCase()),e+r[0].length):-1}function Zu(n,t,e){return Lu(n,hl.c.toString(),t,e)}function Bu(n,t,e){return Lu(n,hl.x.toString(),t,e)}function $u(n,t,e){return Lu(n,hl.X.toString(),t,e)}function Wu(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+4));return r?(n.y=+r[0],e+r[0].length):-1}function Ju(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+2));return r?(n.y=Gu(+r[0]),e+r[0].length):-1}function Gu(n){return n+(n>68?1900:2e3)}function Ku(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+2));return r?(n.m=r[0]-1,e+r[0].length):-1}function Qu(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+2));return r?(n.d=+r[0],e+r[0].length):-1}function na(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+3));return r?(n.j=+r[0],e+r[0].length):-1}function ta(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+2));return r?(n.H=+r[0],e+r[0].length):-1}function ea(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+2));return r?(n.M=+r[0],e+r[0].length):-1}function ra(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+2));return r?(n.S=+r[0],e+r[0].length):-1}function ia(n,t,e){pl.lastIndex=0;var r=pl.exec(t.substring(e,e+3));return r?(n.L=+r[0],e+r[0].length):-1}function ua(n,t,e){var r=ml.get(t.substring(e,e+=2).toLowerCase());return null==r?-1:(n.p=r,e)}function aa(n){var t=n.getTimezoneOffset(),e=t>0?"-":"+",r=~~(Math.abs(t)/60),i=Math.abs(t)%60;return e+Pu(r,"0",2)+Pu(i,"0",2)}function oa(n,t,e){sl.lastIndex=0;var r=sl.exec(t.substring(e,e+1));return r?e+r[0].length:-1}function ca(n){return n.toISOString()}function la(n,t,e){function r(t){return n(t)}return r.invert=function(t){return sa(n.invert(t))},r.domain=function(t){return arguments.length?(n.domain(t),r):n.domain().map(sa)},r.nice=function(n){return r.domain(Wi(r.domain(),n))},r.ticks=function(e,i){var u=Zi(r.domain());if("function"!=typeof e){var a=u[1]-u[0],o=a/e,c=ya.bisect(vl,o);if(c==vl.length)return t.year(u,e);if(!c)return n.ticks(e).map(sa);o/vl[c-1]<vl[c]/o&&--c,e=t[c],i=e[1],e=e[0].range}return e(u[0],new Date(+u[1]+1),i)},r.tickFormat=function(){return e},r.copy=function(){return la(n.copy(),t,e)},Qi(r,n)}function sa(n){return new Date(n)}function fa(n){return function(t){for(var e=n.length-1,r=n[e];!r[1](t);)r=n[--e];return r[0](t)}}function ha(n){var t=new Date(n,0,1);return t.setFullYear(n),t}function ga(n){var t=n.getFullYear(),e=ha(t),r=ha(t+1);return t+(n-e)/(r-e)}function pa(n){var t=new Date(Date.UTC(n,0,1));return t.setUTCFullYear(n),t}function ma(n){var t=n.getUTCFullYear(),e=pa(t),r=pa(t+1);return t+(n-e)/(r-e)}function da(n){return JSON.parse(n.responseText)}function va(n){var t=Ma.createRange();return t.selectNode(Ma.body),t.createContextualFragment(n.responseText)}var ya={version:"3.2.8"};Date.now||(Date.now=function(){return+new Date});var Ma=document,xa=Ma.documentElement,ba=window;try{Ma.createElement("div").style.setProperty("opacity",0,"")}catch(_a){var wa=ba.Element.prototype,Sa=wa.setAttribute,Ea=wa.setAttributeNS,ka=ba.CSSStyleDeclaration.prototype,Aa=ka.setProperty;wa.setAttribute=function(n,t){Sa.call(this,n,t+"")},wa.setAttributeNS=function(n,t,e){Ea.call(this,n,t,e+"")},ka.setProperty=function(n,t,e){Aa.call(this,n,t+"",e)}}ya.ascending=function(n,t){return t>n?-1:n>t?1:n>=t?0:0/0},ya.descending=function(n,t){return n>t?-1:t>n?1:t>=n?0:0/0},ya.min=function(n,t){var e,r,i=-1,u=n.length;if(1===arguments.length){for(;++i<u&&!(null!=(e=n[i])&&e>=e);)e=void 0;for(;++i<u;)null!=(r=n[i])&&e>r&&(e=r)}else{for(;++i<u&&!(null!=(e=t.call(n,n[i],i))&&e>=e);)e=void 0;for(;++i<u;)null!=(r=t.call(n,n[i],i))&&e>r&&(e=r)}return e},ya.max=function(n,t){var e,r,i=-1,u=n.length;if(1===arguments.length){for(;++i<u&&!(null!=(e=n[i])&&e>=e);)e=void 0;for(;++i<u;)null!=(r=n[i])&&r>e&&(e=r)}else{for(;++i<u&&!(null!=(e=t.call(n,n[i],i))&&e>=e);)e=void 0;for(;++i<u;)null!=(r=t.call(n,n[i],i))&&r>e&&(e=r)}return e},ya.extent=function(n,t){var e,r,i,u=-1,a=n.length;if(1===arguments.length){for(;++u<a&&!(null!=(e=i=n[u])&&e>=e);)e=i=void 0;for(;++u<a;)null!=(r=n[u])&&(e>r&&(e=r),r>i&&(i=r))}else{for(;++u<a&&!(null!=(e=i=t.call(n,n[u],u))&&e>=e);)e=void 0;for(;++u<a;)null!=(r=t.call(n,n[u],u))&&(e>r&&(e=r),r>i&&(i=r))}return[e,i]},ya.sum=function(n,t){var e,r=0,i=n.length,u=-1;if(1===arguments.length)for(;++u<i;)isNaN(e=+n[u])||(r+=e);else for(;++u<i;)isNaN(e=+t.call(n,n[u],u))||(r+=e);return r},ya.mean=function(t,e){var r,i=t.length,u=0,a=-1,o=0;if(1===arguments.length)for(;++a<i;)n(r=t[a])&&(u+=(r-u)/++o);else for(;++a<i;)n(r=e.call(t,t[a],a))&&(u+=(r-u)/++o);return o?u:void 0},ya.quantile=function(n,t){var e=(n.length-1)*t+1,r=Math.floor(e),i=+n[r-1],u=e-r;return u?i+u*(n[r]-i):i},ya.median=function(t,e){return arguments.length>1&&(t=t.map(e)),t=t.filter(n),t.length?ya.quantile(t.sort(ya.ascending),.5):void 0},ya.bisector=function(n){return{left:function(t,e,r,i){for(arguments.length<3&&(r=0),arguments.length<4&&(i=t.length);i>r;){var u=r+i>>>1;n.call(t,t[u],u)<e?r=u+1:i=u}return r},right:function(t,e,r,i){for(arguments.length<3&&(r=0),arguments.length<4&&(i=t.length);i>r;){var u=r+i>>>1;e<n.call(t,t[u],u)?i=u:r=u+1}return r}}};var Na=ya.bisector(function(n){return n});ya.bisectLeft=Na.left,ya.bisect=ya.bisectRight=Na.right,ya.shuffle=function(n){for(var t,e,r=n.length;r;)e=0|Math.random()*r--,t=n[r],n[r]=n[e],n[e]=t;return n},ya.permute=function(n,t){for(var e=t.length,r=new Array(e);e--;)r[e]=n[t[e]];return r},ya.zip=function(){if(!(i=arguments.length))return[];for(var n=-1,e=ya.min(arguments,t),r=new Array(e);++n<e;)for(var i,u=-1,a=r[n]=new Array(i);++u<i;)a[u]=arguments[u][n];return r},ya.transpose=function(n){return ya.zip.apply(ya,n)},ya.keys=function(n){var t=[];for(var e in n)t.push(e);return t},ya.values=function(n){var t=[];for(var e in n)t.push(n[e]);return t},ya.entries=function(n){var t=[];for(var e in n)t.push({key:e,value:n[e]});return t},ya.merge=function(n){return Array.prototype.concat.apply([],n)},ya.range=function(n,t,r){if(arguments.length<3&&(r=1,arguments.length<2&&(t=n,n=0)),1/0===(t-n)/r)throw new Error("infinite range");var i,u=[],a=e(Math.abs(r)),o=-1;if(n*=a,t*=a,r*=a,0>r)for(;(i=n+r*++o)>t;)u.push(i/a);else for(;(i=n+r*++o)<t;)u.push(i/a);return u},ya.map=function(n){var t=new i;if(n instanceof i)n.forEach(function(n,e){t.set(n,e)});else for(var e in n)t.set(e,n[e]);return t},r(i,{has:function(n){return qa+n in this},get:function(n){return this[qa+n]},set:function(n,t){return this[qa+n]=t},remove:function(n){return n=qa+n,n in this&&delete this[n]},keys:function(){var n=[];return this.forEach(function(t){n.push(t)}),n},values:function(){var n=[];return this.forEach(function(t,e){n.push(e)}),n},entries:function(){var n=[];
@@ -61457,13 +64282,13 @@ return this.forEach(function(t,e){n.push({key:t,value:e})}),n},forEach:function(
 sc.forEach(function(n,t){t.key=n,t.closed=/-closed$/.test(n)});var fc=[0,2/3,1/3,0],hc=[0,1/3,2/3,0],gc=[0,1/6,2/3,1/6];ya.geom.hull=function(n){function t(n){if(n.length<3)return[];var t,i,u,a,o,c,l,s,f,h,g,p,m=pt(e),d=pt(r),v=n.length,y=v-1,M=[],x=[],b=0;if(m===Ie&&r===Ve)t=n;else for(u=0,t=[];v>u;++u)t.push([+m.call(this,i=n[u],u),+d.call(this,i,u)]);for(u=1;v>u;++u)(t[u][1]<t[b][1]||t[u][1]==t[b][1]&&t[u][0]<t[b][0])&&(b=u);for(u=0;v>u;++u)u!==b&&(c=t[u][1]-t[b][1],o=t[u][0]-t[b][0],M.push({angle:Math.atan2(c,o),index:u}));for(M.sort(function(n,t){return n.angle-t.angle}),g=M[0].angle,h=M[0].index,f=0,u=1;y>u;++u){if(a=M[u].index,g==M[u].angle){if(o=t[h][0]-t[b][0],c=t[h][1]-t[b][1],l=t[a][0]-t[b][0],s=t[a][1]-t[b][1],o*o+c*c>=l*l+s*s){M[u].index=-1;continue}M[f].index=-1}g=M[u].angle,f=u,h=a}for(x.push(b),u=0,a=0;2>u;++a)M[a].index>-1&&(x.push(M[a].index),u++);for(p=x.length;y>a;++a)if(!(M[a].index<0)){for(;!fr(x[p-2],x[p-1],M[a].index,t);)--p;x[p++]=M[a].index}var _=[];for(u=p-1;u>=0;--u)_.push(n[x[u]]);return _}var e=Ie,r=Ve;return arguments.length?t(n):(t.x=function(n){return arguments.length?(e=n,t):e},t.y=function(n){return arguments.length?(r=n,t):r},t)},ya.geom.polygon=function(n){return La(n,pc),n};var pc=ya.geom.polygon.prototype=[];pc.area=function(){for(var n,t=-1,e=this.length,r=this[e-1],i=0;++t<e;)n=r,r=this[t],i+=n[1]*r[0]-n[0]*r[1];return.5*i},pc.centroid=function(n){var t,e,r=-1,i=this.length,u=0,a=0,o=this[i-1];for(arguments.length||(n=-1/(6*this.area()));++r<i;)t=o,o=this[r],e=t[0]*o[1]-o[0]*t[1],u+=(t[0]+o[0])*e,a+=(t[1]+o[1])*e;return[u*n,a*n]},pc.clip=function(n){for(var t,e,r,i,u,a,o=pr(n),c=-1,l=this.length-pr(this),s=this[l-1];++c<l;){for(t=n.slice(),n.length=0,i=this[c],u=t[(r=t.length-o)-1],e=-1;++e<r;)a=t[e],hr(a,s,i)?(hr(u,s,i)||n.push(gr(u,a,s,i)),n.push(a)):hr(u,s,i)&&n.push(gr(u,a,s,i)),u=a;o&&n.push(n[0]),s=i}return n},ya.geom.delaunay=function(n){var t=n.map(function(){return[]}),e=[];return mr(n,function(e){t[e.region.l.index].push(n[e.region.r.index])}),t.forEach(function(t,r){var i=n[r],u=i[0],a=i[1];t.forEach(function(n){n.angle=Math.atan2(n[0]-u,n[1]-a)}),t.sort(function(n,t){return n.angle-t.angle});for(var o=0,c=t.length-1;c>o;o++)e.push([i,t[o],t[o+1]])}),e},ya.geom.voronoi=function(n){function t(n){var t,u,a,o=n.map(function(){return[]}),c=pt(e),l=pt(r),s=n.length,f=1e6;if(c===Ie&&l===Ve)t=n;else for(t=new Array(s),a=0;s>a;++a)t[a]=[+c.call(this,u=n[a],a),+l.call(this,u,a)];if(mr(t,function(n){var t,e,r,i,u,a;1===n.a&&n.b>=0?(t=n.ep.r,e=n.ep.l):(t=n.ep.l,e=n.ep.r),1===n.a?(u=t?t.y:-f,r=n.c-n.b*u,a=e?e.y:f,i=n.c-n.b*a):(r=t?t.x:-f,u=n.c-n.a*r,i=e?e.x:f,a=n.c-n.a*i);var c=[r,u],l=[i,a];o[n.region.l.index].push(c,l),o[n.region.r.index].push(c,l)}),o=o.map(function(n,e){var r=t[e][0],i=t[e][1],u=n.map(function(n){return Math.atan2(n[0]-r,n[1]-i)}),a=ya.range(n.length).sort(function(n,t){return u[n]-u[t]});return a.filter(function(n,t){return!t||u[n]-u[a[t-1]]>Qa}).map(function(t){return n[t]})}),o.forEach(function(n,e){var r=n.length;if(!r)return n.push([-f,-f],[-f,f],[f,f],[f,-f]);if(!(r>2)){var i=t[e],u=n[0],a=n[1],o=i[0],c=i[1],l=u[0],s=u[1],h=a[0],g=a[1],p=Math.abs(h-l),m=g-s;if(Math.abs(m)<Qa){var d=s>c?-f:f;n.push([-f,d],[f,d])}else if(Qa>p){var v=l>o?-f:f;n.push([v,-f],[v,f])}else{var d=(l-o)*(g-s)>(h-l)*(s-c)?f:-f,y=Math.abs(m)-p;Math.abs(y)<Qa?n.push([0>m?d:-d,d]):(y>0&&(d*=-1),n.push([-f,d],[f,d]))}}}),i)for(a=0;s>a;++a)i.clip(o[a]);for(a=0;s>a;++a)o[a].point=n[a];return o}var e=Ie,r=Ve,i=null;return arguments.length?t(n):(t.x=function(n){return arguments.length?(e=n,t):e},t.y=function(n){return arguments.length?(r=n,t):r},t.clipExtent=function(n){if(!arguments.length)return i&&[i[0],i[2]];if(null==n)i=null;else{var e=+n[0][0],r=+n[0][1],u=+n[1][0],a=+n[1][1];i=ya.geom.polygon([[e,r],[e,a],[u,a],[u,r]])}return t},t.size=function(n){return arguments.length?t.clipExtent(n&&[[0,0],n]):i&&i[2]},t.links=function(n){var t,i,u,a=n.map(function(){return[]}),o=[],c=pt(e),l=pt(r),s=n.length;if(c===Ie&&l===Ve)t=n;else for(t=new Array(s),u=0;s>u;++u)t[u]=[+c.call(this,i=n[u],u),+l.call(this,i,u)];return mr(t,function(t){var e=t.region.l.index,r=t.region.r.index;a[e][r]||(a[e][r]=a[r][e]=!0,o.push({source:n[e],target:n[r]}))}),o},t.triangles=function(n){if(e===Ie&&r===Ve)return ya.geom.delaunay(n);for(var t,i=new Array(c),u=pt(e),a=pt(r),o=-1,c=n.length;++o<c;)(i[o]=[+u.call(this,t=n[o],o),+a.call(this,t,o)]).data=t;return ya.geom.delaunay(i).map(function(n){return n.map(function(n){return n.data})})},t)};var mc={l:"r",r:"l"};ya.geom.quadtree=function(n,t,e,r,i){function u(n){function u(n,t,e,r,i,u,a,o){if(!isNaN(e)&&!isNaN(r))if(n.leaf){var c=n.x,s=n.y;if(null!=c)if(Math.abs(c-e)+Math.abs(s-r)<.01)l(n,t,e,r,i,u,a,o);else{var f=n.point;n.x=n.y=n.point=null,l(n,f,c,s,i,u,a,o),l(n,t,e,r,i,u,a,o)}else n.x=e,n.y=r,n.point=t}else l(n,t,e,r,i,u,a,o)}function l(n,t,e,r,i,a,o,c){var l=.5*(i+o),s=.5*(a+c),f=e>=l,h=r>=s,g=(h<<1)+f;n.leaf=!1,n=n.nodes[g]||(n.nodes[g]=yr()),f?i=l:o=l,h?a=s:c=s,u(n,t,e,r,i,a,o,c)}var s,f,h,g,p,m,d,v,y,M=pt(o),x=pt(c);if(null!=t)m=t,d=e,v=r,y=i;else if(v=y=-(m=d=1/0),f=[],h=[],p=n.length,a)for(g=0;p>g;++g)s=n[g],s.x<m&&(m=s.x),s.y<d&&(d=s.y),s.x>v&&(v=s.x),s.y>y&&(y=s.y),f.push(s.x),h.push(s.y);else for(g=0;p>g;++g){var b=+M(s=n[g],g),_=+x(s,g);m>b&&(m=b),d>_&&(d=_),b>v&&(v=b),_>y&&(y=_),f.push(b),h.push(_)}var w=v-m,S=y-d;w>S?y=d+w:v=m+S;var E=yr();if(E.add=function(n){u(E,n,+M(n,++g),+x(n,g),m,d,v,y)},E.visit=function(n){Mr(n,E,m,d,v,y)},g=-1,null==t){for(;++g<p;)u(E,n[g],f[g],h[g],m,d,v,y);--g}else n.forEach(E.add);return f=h=n=s=null,E}var a,o=Ie,c=Ve;return(a=arguments.length)?(o=dr,c=vr,3===a&&(i=e,r=t,e=t=0),u(n)):(u.x=function(n){return arguments.length?(o=n,u):o},u.y=function(n){return arguments.length?(c=n,u):c},u.extent=function(n){return arguments.length?(null==n?t=e=r=i=null:(t=+n[0][0],e=+n[0][1],r=+n[1][0],i=+n[1][1]),u):null==t?null:[[t,e],[r,i]]},u.size=function(n){return arguments.length?(null==n?t=e=r=i=null:(t=e=0,r=+n[0],i=+n[1]),u):null==t?null:[r-t,i-e]},u)},ya.interpolateRgb=xr,ya.interpolateObject=br,ya.interpolateNumber=_r,ya.interpolateString=wr;var dc=/[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g;ya.interpolate=Sr,ya.interpolators=[function(n,t){var e=typeof t;return("string"===e?so.has(t)||/^(#|rgb\(|hsl\()/.test(t)?xr:wr:t instanceof P?xr:"object"===e?Array.isArray(t)?Er:br:_r)(n,t)}],ya.interpolateArray=Er;var vc=function(){return mt},yc=ya.map({linear:vc,poly:zr,quad:function(){return qr},cubic:function(){return Tr},sin:function(){return Dr},exp:function(){return jr},circle:function(){return Lr},elastic:Hr,back:Fr,bounce:function(){return Pr}}),Mc=ya.map({"in":mt,out:Ar,"in-out":Nr,"out-in":function(n){return Nr(Ar(n))}});ya.ease=function(n){var t=n.indexOf("-"),e=t>=0?n.substring(0,t):n,r=t>=0?n.substring(t+1):"in";return e=yc.get(e)||vc,r=Mc.get(r)||mt,kr(r(e.apply(null,Array.prototype.slice.call(arguments,1))))},ya.interpolateHcl=Or,ya.interpolateHsl=Yr,ya.interpolateLab=Rr,ya.interpolateRound=Ur,ya.transform=function(n){var t=Ma.createElementNS(ya.ns.prefix.svg,"g");return(ya.transform=function(n){if(null!=n){t.setAttribute("transform",n);var e=t.transform.baseVal.consolidate()}return new Ir(e?e.matrix:xc)})(n)},Ir.prototype.toString=function(){return"translate("+this.translate+")rotate("+this.rotate+")skewX("+this.skew+")scale("+this.scale+")"};var xc={a:1,b:0,c:0,d:1,e:0,f:0};ya.interpolateTransform=Br,ya.layout={},ya.layout.bundle=function(){return function(n){for(var t=[],e=-1,r=n.length;++e<r;)t.push(Jr(n[e]));return t}},ya.layout.chord=function(){function n(){var n,l,f,h,g,p={},m=[],d=ya.range(u),v=[];for(e=[],r=[],n=0,h=-1;++h<u;){for(l=0,g=-1;++g<u;)l+=i[h][g];m.push(l),v.push(ya.range(u)),n+=l}for(a&&d.sort(function(n,t){return a(m[n],m[t])}),o&&v.forEach(function(n,t){n.sort(function(n,e){return o(i[t][n],i[t][e])})}),n=(2*Ka-s*u)/n,l=0,h=-1;++h<u;){for(f=l,g=-1;++g<u;){var y=d[h],M=v[y][g],x=i[y][M],b=l,_=l+=x*n;p[y+"-"+M]={index:y,subindex:M,startAngle:b,endAngle:_,value:x}}r[y]={index:y,startAngle:f,endAngle:l,value:(l-f)/n},l+=s}for(h=-1;++h<u;)for(g=h-1;++g<u;){var w=p[h+"-"+g],S=p[g+"-"+h];(w.value||S.value)&&e.push(w.value<S.value?{source:S,target:w}:{source:w,target:S})}c&&t()}function t(){e.sort(function(n,t){return c((n.source.value+n.target.value)/2,(t.source.value+t.target.value)/2)})}var e,r,i,u,a,o,c,l={},s=0;return l.matrix=function(n){return arguments.length?(u=(i=n)&&i.length,e=r=null,l):i},l.padding=function(n){return arguments.length?(s=n,e=r=null,l):s},l.sortGroups=function(n){return arguments.length?(a=n,e=r=null,l):a},l.sortSubgroups=function(n){return arguments.length?(o=n,e=null,l):o},l.sortChords=function(n){return arguments.length?(c=n,e&&t(),l):c},l.chords=function(){return e||n(),e},l.groups=function(){return r||n(),r},l},ya.layout.force=function(){function n(n){return function(t,e,r,i){if(t.point!==n){var u=t.cx-n.x,a=t.cy-n.y,o=1/Math.sqrt(u*u+a*a);if(m>(i-e)*o){var c=t.charge*o*o;return n.px-=u*c,n.py-=a*c,!0}if(t.point&&isFinite(o)){var c=t.pointCharge*o*o;n.px-=u*c,n.py-=a*c}}return!t.charge}}function t(n){n.px=ya.event.x,n.py=ya.event.y,o.resume()}var e,r,i,u,a,o={},c=ya.dispatch("start","tick","end"),l=[1,1],s=.9,f=bc,h=_c,g=-30,p=.1,m=.8,d=[],v=[];return o.tick=function(){if((r*=.99)<.005)return c.end({type:"end",alpha:r=0}),!0;var t,e,o,f,h,m,y,M,x,b=d.length,_=v.length;for(e=0;_>e;++e)o=v[e],f=o.source,h=o.target,M=h.x-f.x,x=h.y-f.y,(m=M*M+x*x)&&(m=r*u[e]*((m=Math.sqrt(m))-i[e])/m,M*=m,x*=m,h.x-=M*(y=f.weight/(h.weight+f.weight)),h.y-=x*y,f.x+=M*(y=1-y),f.y+=x*y);if((y=r*p)&&(M=l[0]/2,x=l[1]/2,e=-1,y))for(;++e<b;)o=d[e],o.x+=(M-o.x)*y,o.y+=(x-o.y)*y;if(g)for(ri(t=ya.geom.quadtree(d),r,a),e=-1;++e<b;)(o=d[e]).fixed||t.visit(n(o));for(e=-1;++e<b;)o=d[e],o.fixed?(o.x=o.px,o.y=o.py):(o.x-=(o.px-(o.px=o.x))*s,o.y-=(o.py-(o.py=o.y))*s);c.tick({type:"tick",alpha:r})},o.nodes=function(n){return arguments.length?(d=n,o):d},o.links=function(n){return arguments.length?(v=n,o):v},o.size=function(n){return arguments.length?(l=n,o):l},o.linkDistance=function(n){return arguments.length?(f="function"==typeof n?n:+n,o):f},o.distance=o.linkDistance,o.linkStrength=function(n){return arguments.length?(h="function"==typeof n?n:+n,o):h},o.friction=function(n){return arguments.length?(s=+n,o):s},o.charge=function(n){return arguments.length?(g="function"==typeof n?n:+n,o):g},o.gravity=function(n){return arguments.length?(p=+n,o):p},o.theta=function(n){return arguments.length?(m=+n,o):m},o.alpha=function(n){return arguments.length?(n=+n,r?r=n>0?n:0:n>0&&(c.start({type:"start",alpha:r=n}),ya.timer(o.tick)),o):r},o.start=function(){function n(n,r){for(var i,u=t(e),a=-1,o=u.length;++a<o;)if(!isNaN(i=u[a][n]))return i;return Math.random()*r}function t(){if(!c){for(c=[],r=0;p>r;++r)c[r]=[];for(r=0;m>r;++r){var n=v[r];c[n.source.index].push(n.target),c[n.target.index].push(n.source)}}return c[e]}var e,r,c,s,p=d.length,m=v.length,y=l[0],M=l[1];for(e=0;p>e;++e)(s=d[e]).index=e,s.weight=0;for(e=0;m>e;++e)s=v[e],"number"==typeof s.source&&(s.source=d[s.source]),"number"==typeof s.target&&(s.target=d[s.target]),++s.source.weight,++s.target.weight;for(e=0;p>e;++e)s=d[e],isNaN(s.x)&&(s.x=n("x",y)),isNaN(s.y)&&(s.y=n("y",M)),isNaN(s.px)&&(s.px=s.x),isNaN(s.py)&&(s.py=s.y);if(i=[],"function"==typeof f)for(e=0;m>e;++e)i[e]=+f.call(this,v[e],e);else for(e=0;m>e;++e)i[e]=f;if(u=[],"function"==typeof h)for(e=0;m>e;++e)u[e]=+h.call(this,v[e],e);else for(e=0;m>e;++e)u[e]=h;if(a=[],"function"==typeof g)for(e=0;p>e;++e)a[e]=+g.call(this,d[e],e);else for(e=0;p>e;++e)a[e]=g;return o.resume()},o.resume=function(){return o.alpha(.1)},o.stop=function(){return o.alpha(0)},o.drag=function(){return e||(e=ya.behavior.drag().origin(mt).on("dragstart.force",Qr).on("drag.force",t).on("dragend.force",ni)),arguments.length?(this.on("mouseover.force",ti).on("mouseout.force",ei).call(e),void 0):e},ya.rebind(o,c,"on")};var bc=20,_c=1;ya.layout.hierarchy=function(){function n(t,a,o){var c=i.call(e,t,a);if(t.depth=a,o.push(t),c&&(l=c.length)){for(var l,s,f=-1,h=t.children=[],g=0,p=a+1;++f<l;)s=n(c[f],p,o),s.parent=t,h.push(s),g+=s.value;r&&h.sort(r),u&&(t.value=g)}else u&&(t.value=+u.call(e,t,a)||0);return t}function t(n,r){var i=n.children,a=0;if(i&&(o=i.length))for(var o,c=-1,l=r+1;++c<o;)a+=t(i[c],l);else u&&(a=+u.call(e,n,r)||0);return u&&(n.value=a),a}function e(t){var e=[];return n(t,0,e),e}var r=oi,i=ui,u=ai;return e.sort=function(n){return arguments.length?(r=n,e):r},e.children=function(n){return arguments.length?(i=n,e):i},e.value=function(n){return arguments.length?(u=n,e):u},e.revalue=function(n){return t(n,0),n},e},ya.layout.partition=function(){function n(t,e,r,i){var u=t.children;if(t.x=e,t.y=t.depth*i,t.dx=r,t.dy=i,u&&(a=u.length)){var a,o,c,l=-1;for(r=t.value?r/t.value:0;++l<a;)n(o=u[l],e,c=o.value*r,i),e+=c}}function t(n){var e=n.children,r=0;if(e&&(i=e.length))for(var i,u=-1;++u<i;)r=Math.max(r,t(e[u]));return 1+r}function e(e,u){var a=r.call(this,e,u);return n(a[0],0,i[0],i[1]/t(a[0])),a}var r=ya.layout.hierarchy(),i=[1,1];return e.size=function(n){return arguments.length?(i=n,e):i},ii(e,r)},ya.layout.pie=function(){function n(u){var a=u.map(function(e,r){return+t.call(n,e,r)}),o=+("function"==typeof r?r.apply(this,arguments):r),c=(("function"==typeof i?i.apply(this,arguments):i)-o)/ya.sum(a),l=ya.range(u.length);null!=e&&l.sort(e===wc?function(n,t){return a[t]-a[n]}:function(n,t){return e(u[n],u[t])});var s=[];return l.forEach(function(n){var t;s[n]={data:u[n],value:t=a[n],startAngle:o,endAngle:o+=t*c}}),s}var t=Number,e=wc,r=0,i=2*Ka;return n.value=function(e){return arguments.length?(t=e,n):t},n.sort=function(t){return arguments.length?(e=t,n):e},n.startAngle=function(t){return arguments.length?(r=t,n):r},n.endAngle=function(t){return arguments.length?(i=t,n):i},n};var wc={};ya.layout.stack=function(){function n(o,c){var l=o.map(function(e,r){return t.call(n,e,r)}),s=l.map(function(t){return t.map(function(t,e){return[u.call(n,t,e),a.call(n,t,e)]})}),f=e.call(n,s,c);l=ya.permute(l,f),s=ya.permute(s,f);var h,g,p,m=r.call(n,s,c),d=l.length,v=l[0].length;for(g=0;v>g;++g)for(i.call(n,l[0][g],p=m[g],s[0][g][1]),h=1;d>h;++h)i.call(n,l[h][g],p+=s[h-1][g][1],s[h][g][1]);return o}var t=mt,e=hi,r=gi,i=fi,u=li,a=si;return n.values=function(e){return arguments.length?(t=e,n):t},n.order=function(t){return arguments.length?(e="function"==typeof t?t:Sc.get(t)||hi,n):e},n.offset=function(t){return arguments.length?(r="function"==typeof t?t:Ec.get(t)||gi,n):r},n.x=function(t){return arguments.length?(u=t,n):u},n.y=function(t){return arguments.length?(a=t,n):a},n.out=function(t){return arguments.length?(i=t,n):i},n};var Sc=ya.map({"inside-out":function(n){var t,e,r=n.length,i=n.map(pi),u=n.map(mi),a=ya.range(r).sort(function(n,t){return i[n]-i[t]}),o=0,c=0,l=[],s=[];for(t=0;r>t;++t)e=a[t],c>o?(o+=u[e],l.push(e)):(c+=u[e],s.push(e));return s.reverse().concat(l)},reverse:function(n){return ya.range(n.length).reverse()},"default":hi}),Ec=ya.map({silhouette:function(n){var t,e,r,i=n.length,u=n[0].length,a=[],o=0,c=[];for(e=0;u>e;++e){for(t=0,r=0;i>t;t++)r+=n[t][e][1];r>o&&(o=r),a.push(r)}for(e=0;u>e;++e)c[e]=(o-a[e])/2;return c},wiggle:function(n){var t,e,r,i,u,a,o,c,l,s=n.length,f=n[0],h=f.length,g=[];for(g[0]=c=l=0,e=1;h>e;++e){for(t=0,i=0;s>t;++t)i+=n[t][e][1];for(t=0,u=0,o=f[e][0]-f[e-1][0];s>t;++t){for(r=0,a=(n[t][e][1]-n[t][e-1][1])/(2*o);t>r;++r)a+=(n[r][e][1]-n[r][e-1][1])/o;u+=a*n[t][e][1]}g[e]=c-=i?u/i*o:0,l>c&&(l=c)}for(e=0;h>e;++e)g[e]-=l;return g},expand:function(n){var t,e,r,i=n.length,u=n[0].length,a=1/i,o=[];for(e=0;u>e;++e){for(t=0,r=0;i>t;t++)r+=n[t][e][1];if(r)for(t=0;i>t;t++)n[t][e][1]/=r;else for(t=0;i>t;t++)n[t][e][1]=a}for(e=0;u>e;++e)o[e]=0;return o},zero:gi});ya.layout.histogram=function(){function n(n,u){for(var a,o,c=[],l=n.map(e,this),s=r.call(this,l,u),f=i.call(this,s,l,u),u=-1,h=l.length,g=f.length-1,p=t?1:1/h;++u<g;)a=c[u]=[],a.dx=f[u+1]-(a.x=f[u]),a.y=0;if(g>0)for(u=-1;++u<h;)o=l[u],o>=s[0]&&o<=s[1]&&(a=c[ya.bisect(f,o,1,g)-1],a.y+=p,a.push(n[u]));return c}var t=!0,e=Number,r=Mi,i=vi;return n.value=function(t){return arguments.length?(e=t,n):e},n.range=function(t){return arguments.length?(r=pt(t),n):r},n.bins=function(t){return arguments.length?(i="number"==typeof t?function(n){return yi(n,t)}:pt(t),n):i},n.frequency=function(e){return arguments.length?(t=!!e,n):t},n},ya.layout.tree=function(){function n(n,u){function a(n,t){var r=n.children,i=n._tree;if(r&&(u=r.length)){for(var u,o,l,s=r[0],f=s,h=-1;++h<u;)l=r[h],a(l,o),f=c(l,o,f),o=l;Ni(n);var g=.5*(s._tree.prelim+l._tree.prelim);t?(i.prelim=t._tree.prelim+e(n,t),i.mod=i.prelim-g):i.prelim=g}else t&&(i.prelim=t._tree.prelim+e(n,t))}function o(n,t){n.x=n._tree.prelim+t;var e=n.children;if(e&&(r=e.length)){var r,i=-1;for(t+=n._tree.mod;++i<r;)o(e[i],t)}}function c(n,t,r){if(t){for(var i,u=n,a=n,o=t,c=n.parent.children[0],l=u._tree.mod,s=a._tree.mod,f=o._tree.mod,h=c._tree.mod;o=_i(o),u=bi(u),o&&u;)c=bi(c),a=_i(a),a._tree.ancestor=n,i=o._tree.prelim+f-u._tree.prelim-l+e(o,u),i>0&&(qi(Ti(o,n,r),n,i),l+=i,s+=i),f+=o._tree.mod,l+=u._tree.mod,h+=c._tree.mod,s+=a._tree.mod;o&&!_i(a)&&(a._tree.thread=o,a._tree.mod+=f-s),u&&!bi(c)&&(c._tree.thread=u,c._tree.mod+=l-h,r=n)}return r}var l=t.call(this,n,u),s=l[0];Ai(s,function(n,t){n._tree={ancestor:n,prelim:0,mod:0,change:0,shift:0,number:t?t._tree.number+1:0}}),a(s),o(s,-s._tree.prelim);var f=wi(s,Ei),h=wi(s,Si),g=wi(s,ki),p=f.x-e(f,h)/2,m=h.x+e(h,f)/2,d=g.depth||1;return Ai(s,i?function(n){n.x*=r[0],n.y=n.depth*r[1],delete n._tree}:function(n){n.x=(n.x-p)/(m-p)*r[0],n.y=n.depth/d*r[1],delete n._tree}),l}var t=ya.layout.hierarchy().sort(null).value(null),e=xi,r=[1,1],i=!1;return n.separation=function(t){return arguments.length?(e=t,n):e},n.size=function(t){return arguments.length?(i=null==(r=t),n):i?null:r},n.nodeSize=function(t){return arguments.length?(i=null!=(r=t),n):i?r:null},ii(n,t)},ya.layout.pack=function(){function n(n,u){var a=e.call(this,n,u),o=a[0],c=i[0],l=i[1],s=null==t?Math.sqrt:"function"==typeof t?t:function(){return t};if(o.x=o.y=0,Ai(o,function(n){n.r=+s(n.value)}),Ai(o,Li),r){var f=r*(t?1:Math.max(2*o.r/c,2*o.r/l))/2;Ai(o,function(n){n.r+=f}),Ai(o,Li),Ai(o,function(n){n.r-=f})}return Pi(o,c/2,l/2,t?1:1/Math.max(2*o.r/c,2*o.r/l)),a}var t,e=ya.layout.hierarchy().sort(Ci),r=0,i=[1,1];return n.size=function(t){return arguments.length?(i=t,n):i},n.radius=function(e){return arguments.length?(t=null==e||"function"==typeof e?e:+e,n):t},n.padding=function(t){return arguments.length?(r=+t,n):r},ii(n,e)},ya.layout.cluster=function(){function n(n,u){var a,o=t.call(this,n,u),c=o[0],l=0;Ai(c,function(n){var t=n.children;t&&t.length?(n.x=Ri(t),n.y=Yi(t)):(n.x=a?l+=e(n,a):0,n.y=0,a=n)});var s=Ui(c),f=Ii(c),h=s.x-e(s,f)/2,g=f.x+e(f,s)/2;return Ai(c,i?function(n){n.x=(n.x-c.x)*r[0],n.y=(c.y-n.y)*r[1]}:function(n){n.x=(n.x-h)/(g-h)*r[0],n.y=(1-(c.y?n.y/c.y:1))*r[1]}),o}var t=ya.layout.hierarchy().sort(null).value(null),e=xi,r=[1,1],i=!1;return n.separation=function(t){return arguments.length?(e=t,n):e},n.size=function(t){return arguments.length?(i=null==(r=t),n):i?null:r},n.nodeSize=function(t){return arguments.length?(i=null!=(r=t),n):i?r:null},ii(n,t)},ya.layout.treemap=function(){function n(n,t){for(var e,r,i=-1,u=n.length;++i<u;)r=(e=n[i]).value*(0>t?0:t),e.area=isNaN(r)||0>=r?0:r}function t(e){var u=e.children;if(u&&u.length){var a,o,c,l=f(e),s=[],h=u.slice(),p=1/0,m="slice"===g?l.dx:"dice"===g?l.dy:"slice-dice"===g?1&e.depth?l.dy:l.dx:Math.min(l.dx,l.dy);for(n(h,l.dx*l.dy/e.value),s.area=0;(c=h.length)>0;)s.push(a=h[c-1]),s.area+=a.area,"squarify"!==g||(o=r(s,m))<=p?(h.pop(),p=o):(s.area-=s.pop().area,i(s,m,l,!1),m=Math.min(l.dx,l.dy),s.length=s.area=0,p=1/0);s.length&&(i(s,m,l,!0),s.length=s.area=0),u.forEach(t)}}function e(t){var r=t.children;if(r&&r.length){var u,a=f(t),o=r.slice(),c=[];for(n(o,a.dx*a.dy/t.value),c.area=0;u=o.pop();)c.push(u),c.area+=u.area,null!=u.z&&(i(c,u.z?a.dx:a.dy,a,!o.length),c.length=c.area=0);r.forEach(e)}}function r(n,t){for(var e,r=n.area,i=0,u=1/0,a=-1,o=n.length;++a<o;)(e=n[a].area)&&(u>e&&(u=e),e>i&&(i=e));return r*=r,t*=t,r?Math.max(t*i*p/r,r/(t*u*p)):1/0}function i(n,t,e,r){var i,u=-1,a=n.length,o=e.x,l=e.y,s=t?c(n.area/t):0;if(t==e.dx){for((r||s>e.dy)&&(s=e.dy);++u<a;)i=n[u],i.x=o,i.y=l,i.dy=s,o+=i.dx=Math.min(e.x+e.dx-o,s?c(i.area/s):0);i.z=!0,i.dx+=e.x+e.dx-o,e.y+=s,e.dy-=s}else{for((r||s>e.dx)&&(s=e.dx);++u<a;)i=n[u],i.x=o,i.y=l,i.dx=s,l+=i.dy=Math.min(e.y+e.dy-l,s?c(i.area/s):0);i.z=!1,i.dy+=e.y+e.dy-l,e.x+=s,e.dx-=s}}function u(r){var i=a||o(r),u=i[0];return u.x=0,u.y=0,u.dx=l[0],u.dy=l[1],a&&o.revalue(u),n([u],u.dx*u.dy/u.value),(a?e:t)(u),h&&(a=i),i}var a,o=ya.layout.hierarchy(),c=Math.round,l=[1,1],s=null,f=Vi,h=!1,g="squarify",p=.5*(1+Math.sqrt(5));return u.size=function(n){return arguments.length?(l=n,u):l},u.padding=function(n){function t(t){var e=n.call(u,t,t.depth);return null==e?Vi(t):Xi(t,"number"==typeof e?[e,e,e,e]:e)}function e(t){return Xi(t,n)}if(!arguments.length)return s;var r;return f=null==(s=n)?Vi:"function"==(r=typeof n)?t:"number"===r?(n=[n,n,n,n],e):e,u},u.round=function(n){return arguments.length?(c=n?Math.round:Number,u):c!=Number},u.sticky=function(n){return arguments.length?(h=n,a=null,u):h},u.ratio=function(n){return arguments.length?(p=n,u):p},u.mode=function(n){return arguments.length?(g=n+"",u):g},ii(u,o)},ya.random={normal:function(n,t){var e=arguments.length;return 2>e&&(t=1),1>e&&(n=0),function(){var e,r,i;do e=2*Math.random()-1,r=2*Math.random()-1,i=e*e+r*r;while(!i||i>1);return n+t*e*Math.sqrt(-2*Math.log(i)/i)}},logNormal:function(){var n=ya.random.normal.apply(ya,arguments);return function(){return Math.exp(n())}},irwinHall:function(n){return function(){for(var t=0,e=0;n>e;e++)t+=Math.random();return t/n}}},ya.scale={};var kc={floor:mt,ceil:mt};ya.scale.linear=function(){return Ki([0,1],[0,1],Sr,!1)},ya.scale.log=function(){return uu(ya.scale.linear().domain([0,1]),10,!0,[1,10])};var Ac=ya.format(".0e"),Nc={floor:function(n){return-Math.ceil(-n)},ceil:function(n){return-Math.floor(-n)}};ya.scale.pow=function(){return au(ya.scale.linear(),1,[0,1])},ya.scale.sqrt=function(){return ya.scale.pow().exponent(.5)},ya.scale.ordinal=function(){return cu([],{t:"range",a:[[]]})},ya.scale.category10=function(){return ya.scale.ordinal().range(qc)},ya.scale.category20=function(){return ya.scale.ordinal().range(Tc)},ya.scale.category20b=function(){return ya.scale.ordinal().range(Cc)},ya.scale.category20c=function(){return ya.scale.ordinal().range(zc)};var qc=[2062260,16744206,2924588,14034728,9725885,9197131,14907330,8355711,12369186,1556175].map(ut),Tc=[2062260,11454440,16744206,16759672,2924588,10018698,14034728,16750742,9725885,12955861,9197131,12885140,14907330,16234194,8355711,13092807,12369186,14408589,1556175,10410725].map(ut),Cc=[3750777,5395619,7040719,10264286,6519097,9216594,11915115,13556636,9202993,12426809,15186514,15190932,8666169,11356490,14049643,15177372,8077683,10834324,13528509,14589654].map(ut),zc=[3244733,7057110,10406625,13032431,15095053,16616764,16625259,16634018,3253076,7652470,10607003,13101504,7695281,10394312,12369372,14342891,6513507,9868950,12434877,14277081].map(ut);ya.scale.quantile=function(){return lu([],[])},ya.scale.quantize=function(){return su(0,1,[0,1])},ya.scale.threshold=function(){return fu([.5],[0,1])},ya.scale.identity=function(){return hu([0,1])},ya.svg.arc=function(){function n(){var n=t.apply(this,arguments),u=e.apply(this,arguments),a=r.apply(this,arguments)+Dc,o=i.apply(this,arguments)+Dc,c=(a>o&&(c=a,a=o,o=c),o-a),l=Ka>c?"0":"1",s=Math.cos(a),f=Math.sin(a),h=Math.cos(o),g=Math.sin(o);return c>=jc?n?"M0,"+u+"A"+u+","+u+" 0 1,1 0,"+-u+"A"+u+","+u+" 0 1,1 0,"+u+"M0,"+n+"A"+n+","+n+" 0 1,0 0,"+-n+"A"+n+","+n+" 0 1,0 0,"+n+"Z":"M0,"+u+"A"+u+","+u+" 0 1,1 0,"+-u+"A"+u+","+u+" 0 1,1 0,"+u+"Z":n?"M"+u*s+","+u*f+"A"+u+","+u+" 0 "+l+",1 "+u*h+","+u*g+"L"+n*h+","+n*g+"A"+n+","+n+" 0 "+l+",0 "+n*s+","+n*f+"Z":"M"+u*s+","+u*f+"A"+u+","+u+" 0 "+l+",1 "+u*h+","+u*g+"L0,0"+"Z"}var t=gu,e=pu,r=mu,i=du;return n.innerRadius=function(e){return arguments.length?(t=pt(e),n):t},n.outerRadius=function(t){return arguments.length?(e=pt(t),n):e},n.startAngle=function(t){return arguments.length?(r=pt(t),n):r},n.endAngle=function(t){return arguments.length?(i=pt(t),n):i},n.centroid=function(){var n=(t.apply(this,arguments)+e.apply(this,arguments))/2,u=(r.apply(this,arguments)+i.apply(this,arguments))/2+Dc;return[Math.cos(u)*n,Math.sin(u)*n]},n};var Dc=-Ka/2,jc=2*Ka-1e-6;ya.svg.line.radial=function(){var n=Ue(vu);return n.radius=n.x,delete n.x,n.angle=n.y,delete n.y,n},$e.reverse=We,We.reverse=$e,ya.svg.area=function(){return yu(mt)},ya.svg.area.radial=function(){var n=yu(vu);return n.radius=n.x,delete n.x,n.innerRadius=n.x0,delete n.x0,n.outerRadius=n.x1,delete n.x1,n.angle=n.y,delete n.y,n.startAngle=n.y0,delete n.y0,n.endAngle=n.y1,delete n.y1,n},ya.svg.chord=function(){function n(n,o){var c=t(this,u,n,o),l=t(this,a,n,o);return"M"+c.p0+r(c.r,c.p1,c.a1-c.a0)+(e(c,l)?i(c.r,c.p1,c.r,c.p0):i(c.r,c.p1,l.r,l.p0)+r(l.r,l.p1,l.a1-l.a0)+i(l.r,l.p1,c.r,c.p0))+"Z"}function t(n,t,e,r){var i=t.call(n,e,r),u=o.call(n,i,r),a=c.call(n,i,r)+Dc,s=l.call(n,i,r)+Dc;return{r:u,a0:a,a1:s,p0:[u*Math.cos(a),u*Math.sin(a)],p1:[u*Math.cos(s),u*Math.sin(s)]}}function e(n,t){return n.a0==t.a0&&n.a1==t.a1}function r(n,t,e){return"A"+n+","+n+" 0 "+ +(e>Ka)+",1 "+t}function i(n,t,e,r){return"Q 0,0 "+r}var u=ze,a=De,o=Mu,c=mu,l=du;return n.radius=function(t){return arguments.length?(o=pt(t),n):o},n.source=function(t){return arguments.length?(u=pt(t),n):u},n.target=function(t){return arguments.length?(a=pt(t),n):a},n.startAngle=function(t){return arguments.length?(c=pt(t),n):c},n.endAngle=function(t){return arguments.length?(l=pt(t),n):l},n},ya.svg.diagonal=function(){function n(n,i){var u=t.call(this,n,i),a=e.call(this,n,i),o=(u.y+a.y)/2,c=[u,{x:u.x,y:o},{x:a.x,y:o},a];return c=c.map(r),"M"+c[0]+"C"+c[1]+" "+c[2]+" "+c[3]}var t=ze,e=De,r=xu;return n.source=function(e){return arguments.length?(t=pt(e),n):t},n.target=function(t){return arguments.length?(e=pt(t),n):e},n.projection=function(t){return arguments.length?(r=t,n):r},n},ya.svg.diagonal.radial=function(){var n=ya.svg.diagonal(),t=xu,e=n.projection;return n.projection=function(n){return arguments.length?e(bu(t=n)):t},n},ya.svg.symbol=function(){function n(n,r){return(Lc.get(t.call(this,n,r))||Su)(e.call(this,n,r))}var t=wu,e=_u;return n.type=function(e){return arguments.length?(t=pt(e),n):t},n.size=function(t){return arguments.length?(e=pt(t),n):e},n};var Lc=ya.map({circle:Su,cross:function(n){var t=Math.sqrt(n/5)/2;return"M"+-3*t+","+-t+"H"+-t+"V"+-3*t+"H"+t+"V"+-t+"H"+3*t+"V"+t+"H"+t+"V"+3*t+"H"+-t+"V"+t+"H"+-3*t+"Z"},diamond:function(n){var t=Math.sqrt(n/(2*Oc)),e=t*Oc;return"M0,"+-t+"L"+e+",0"+" 0,"+t+" "+-e+",0"+"Z"},square:function(n){var t=Math.sqrt(n)/2;return"M"+-t+","+-t+"L"+t+","+-t+" "+t+","+t+" "+-t+","+t+"Z"},"triangle-down":function(n){var t=Math.sqrt(n/Pc),e=t*Pc/2;return"M0,"+e+"L"+t+","+-e+" "+-t+","+-e+"Z"},"triangle-up":function(n){var t=Math.sqrt(n/Pc),e=t*Pc/2;return"M0,"+-e+"L"+t+","+e+" "+-t+","+e+"Z"}});ya.svg.symbolTypes=Lc.keys();var Hc,Fc,Pc=Math.sqrt(3),Oc=Math.tan(30*to),Yc=[],Rc=0;Yc.call=Ya.call,Yc.empty=Ya.empty,Yc.node=Ya.node,Yc.size=Ya.size,ya.transition=function(n){return arguments.length?Hc?n.transition():n:Ia.transition()},ya.transition.prototype=Yc,Yc.select=function(n){var t,e,r,i=this.id,u=[];n=v(n);for(var a=-1,o=this.length;++a<o;){u.push(t=[]);for(var c=this[a],l=-1,s=c.length;++l<s;)(r=c[l])&&(e=n.call(r,r.__data__,l,a))?("__data__"in r&&(e.__data__=r.__data__),Nu(e,l,i,r.__transition__[i]),t.push(e)):t.push(null)}return Eu(u,i)},Yc.selectAll=function(n){var t,e,r,i,u,a=this.id,o=[];n=y(n);for(var c=-1,l=this.length;++c<l;)for(var s=this[c],f=-1,h=s.length;++f<h;)if(r=s[f]){u=r.__transition__[a],e=n.call(r,r.__data__,f,c),o.push(t=[]);for(var g=-1,p=e.length;++g<p;)(i=e[g])&&Nu(i,g,a,u),t.push(i)}return Eu(o,a)},Yc.filter=function(n){var t,e,r,i=[];"function"!=typeof n&&(n=N(n));for(var u=0,a=this.length;a>u;u++){i.push(t=[]);for(var e=this[u],o=0,c=e.length;c>o;o++)(r=e[o])&&n.call(r,r.__data__,o)&&t.push(r)}return Eu(i,this.id)},Yc.tween=function(n,t){var e=this.id;return arguments.length<2?this.node().__transition__[e].tween.get(n):T(this,null==t?function(t){t.__transition__[e].tween.remove(n)}:function(r){r.__transition__[e].tween.set(n,t)})},Yc.attr=function(n,t){function e(){this.removeAttribute(o)}function r(){this.removeAttributeNS(o.space,o.local)}function i(n){return null==n?e:(n+="",function(){var t,e=this.getAttribute(o);return e!==n&&(t=a(e,n),function(n){this.setAttribute(o,t(n))})})}function u(n){return null==n?r:(n+="",function(){var t,e=this.getAttributeNS(o.space,o.local);return e!==n&&(t=a(e,n),function(n){this.setAttributeNS(o.space,o.local,t(n))})})}if(arguments.length<2){for(t in n)this.attr(t,n[t]);return this}var a="transform"==n?Br:Sr,o=ya.ns.qualify(n);return ku(this,"attr."+n,t,o.local?u:i)},Yc.attrTween=function(n,t){function e(n,e){var r=t.call(this,n,e,this.getAttribute(i));return r&&function(n){this.setAttribute(i,r(n))}}function r(n,e){var r=t.call(this,n,e,this.getAttributeNS(i.space,i.local));return r&&function(n){this.setAttributeNS(i.space,i.local,r(n))}}var i=ya.ns.qualify(n);return this.tween("attr."+n,i.local?r:e)},Yc.style=function(n,t,e){function r(){this.style.removeProperty(n)}function i(t){return null==t?r:(t+="",function(){var r,i=ba.getComputedStyle(this,null).getPropertyValue(n);return i!==t&&(r=Sr(i,t),function(t){this.style.setProperty(n,r(t),e)})})}var u=arguments.length;if(3>u){if("string"!=typeof n){2>u&&(t="");for(e in n)this.style(e,n[e],t);return this}e=""}return ku(this,"style."+n,t,i)},Yc.styleTween=function(n,t,e){function r(r,i){var u=t.call(this,r,i,ba.getComputedStyle(this,null).getPropertyValue(n));return u&&function(t){this.style.setProperty(n,u(t),e)}}return arguments.length<3&&(e=""),this.tween("style."+n,r)},Yc.text=function(n){return ku(this,"text",n,Au)},Yc.remove=function(){return this.each("end.transition",function(){var n;!this.__transition__&&(n=this.parentNode)&&n.removeChild(this)})},Yc.ease=function(n){var t=this.id;return arguments.length<1?this.node().__transition__[t].ease:("function"!=typeof n&&(n=ya.ease.apply(ya,arguments)),T(this,function(e){e.__transition__[t].ease=n}))},Yc.delay=function(n){var t=this.id;return T(this,"function"==typeof n?function(e,r,i){e.__transition__[t].delay=0|n.call(e,e.__data__,r,i)}:(n|=0,function(e){e.__transition__[t].delay=n}))},Yc.duration=function(n){var t=this.id;return T(this,"function"==typeof n?function(e,r,i){e.__transition__[t].duration=Math.max(1,0|n.call(e,e.__data__,r,i))}:(n=Math.max(1,0|n),function(e){e.__transition__[t].duration=n}))},Yc.each=function(n,t){var e=this.id;if(arguments.length<2){var r=Fc,i=Hc;Hc=e,T(this,function(t,r,i){Fc=t.__transition__[e],n.call(t,t.__data__,r,i)}),Fc=r,Hc=i}else T(this,function(r){var i=r.__transition__[e];(i.event||(i.event=ya.dispatch("start","end"))).on(n,t)});return this},Yc.transition=function(){for(var n,t,e,r,i=this.id,u=++Rc,a=[],o=0,c=this.length;c>o;o++){a.push(n=[]);for(var t=this[o],l=0,s=t.length;s>l;l++)(e=t[l])&&(r=Object.create(e.__transition__[i]),r.delay+=r.duration,Nu(e,l,u,r)),n.push(e)}return Eu(a,u)},ya.svg.axis=function(){function n(n){n.each(function(){var n,f=ya.select(this),h=null==l?e.ticks?e.ticks.apply(e,c):e.domain():l,g=null==t?e.tickFormat?e.tickFormat.apply(e,c):String:t,p=Cu(e,h,s),m=f.selectAll(".tick.minor").data(p,String),d=m.enter().insert("line",".tick").attr("class","tick minor").style("opacity",1e-6),v=ya.transition(m.exit()).style("opacity",1e-6).remove(),y=ya.transition(m).style("opacity",1),M=f.selectAll(".tick.major").data(h,String),x=M.enter().insert("g",".domain").attr("class","tick major").style("opacity",1e-6),b=ya.transition(M.exit()).style("opacity",1e-6).remove(),_=ya.transition(M).style("opacity",1),w=Bi(e),S=f.selectAll(".domain").data([0]),E=(S.enter().append("path").attr("class","domain"),ya.transition(S)),k=e.copy(),A=this.__chart__||k;
 this.__chart__=k,x.append("line"),x.append("text");var N=x.select("line"),q=_.select("line"),T=M.select("text").text(g),C=x.select("text"),z=_.select("text");switch(r){case"bottom":n=qu,d.attr("y2",u),y.attr("x2",0).attr("y2",u),N.attr("y2",i),C.attr("y",Math.max(i,0)+o),q.attr("x2",0).attr("y2",i),z.attr("x",0).attr("y",Math.max(i,0)+o),T.attr("dy",".71em").style("text-anchor","middle"),E.attr("d","M"+w[0]+","+a+"V0H"+w[1]+"V"+a);break;case"top":n=qu,d.attr("y2",-u),y.attr("x2",0).attr("y2",-u),N.attr("y2",-i),C.attr("y",-(Math.max(i,0)+o)),q.attr("x2",0).attr("y2",-i),z.attr("x",0).attr("y",-(Math.max(i,0)+o)),T.attr("dy","0em").style("text-anchor","middle"),E.attr("d","M"+w[0]+","+-a+"V0H"+w[1]+"V"+-a);break;case"left":n=Tu,d.attr("x2",-u),y.attr("x2",-u).attr("y2",0),N.attr("x2",-i),C.attr("x",-(Math.max(i,0)+o)),q.attr("x2",-i).attr("y2",0),z.attr("x",-(Math.max(i,0)+o)).attr("y",0),T.attr("dy",".32em").style("text-anchor","end"),E.attr("d","M"+-a+","+w[0]+"H0V"+w[1]+"H"+-a);break;case"right":n=Tu,d.attr("x2",u),y.attr("x2",u).attr("y2",0),N.attr("x2",i),C.attr("x",Math.max(i,0)+o),q.attr("x2",i).attr("y2",0),z.attr("x",Math.max(i,0)+o).attr("y",0),T.attr("dy",".32em").style("text-anchor","start"),E.attr("d","M"+a+","+w[0]+"H0V"+w[1]+"H"+a)}if(e.rangeBand){var D=k.rangeBand()/2,j=function(n){return k(n)+D};x.call(n,j),_.call(n,j)}else x.call(n,A),_.call(n,k),b.call(n,k),d.call(n,A),y.call(n,k),v.call(n,k)})}var t,e=ya.scale.linear(),r=Uc,i=6,u=6,a=6,o=3,c=[10],l=null,s=0;return n.scale=function(t){return arguments.length?(e=t,n):e},n.orient=function(t){return arguments.length?(r=t in Ic?t+"":Uc,n):r},n.ticks=function(){return arguments.length?(c=arguments,n):c},n.tickValues=function(t){return arguments.length?(l=t,n):l},n.tickFormat=function(e){return arguments.length?(t=e,n):t},n.tickSize=function(t,e){if(!arguments.length)return i;var r=arguments.length-1;return i=+t,u=r>1?+e:i,a=r>0?+arguments[r]:i,n},n.tickPadding=function(t){return arguments.length?(o=+t,n):o},n.tickSubdivide=function(t){return arguments.length?(s=+t,n):s},n};var Uc="bottom",Ic={top:1,right:1,bottom:1,left:1};ya.svg.brush=function(){function n(u){u.each(function(){var u,a=ya.select(this),s=a.selectAll(".background").data([0]),f=a.selectAll(".extent").data([0]),h=a.selectAll(".resize").data(l,String);a.style("pointer-events","all").on("mousedown.brush",i).on("touchstart.brush",i),s.enter().append("rect").attr("class","background").style("visibility","hidden").style("cursor","crosshair"),f.enter().append("rect").attr("class","extent").style("cursor","move"),h.enter().append("g").attr("class",function(n){return"resize "+n}).style("cursor",function(n){return Vc[n]}).append("rect").attr("x",function(n){return/[ew]$/.test(n)?-3:null}).attr("y",function(n){return/^[ns]/.test(n)?-3:null}).attr("width",6).attr("height",6).style("visibility","hidden"),h.style("display",n.empty()?"none":null),h.exit().remove(),o&&(u=Bi(o),s.attr("x",u[0]).attr("width",u[1]-u[0]),e(a)),c&&(u=Bi(c),s.attr("y",u[0]).attr("height",u[1]-u[0]),r(a)),t(a)})}function t(n){n.selectAll(".resize").attr("transform",function(n){return"translate("+s[+/e$/.test(n)][0]+","+s[+/^s/.test(n)][1]+")"})}function e(n){n.select(".extent").attr("x",s[0][0]),n.selectAll(".extent,.n>rect,.s>rect").attr("width",s[1][0]-s[0][0])}function r(n){n.select(".extent").attr("y",s[0][1]),n.selectAll(".extent,.e>rect,.w>rect").attr("height",s[1][1]-s[0][1])}function i(){function i(){var n=ya.event.changedTouches;return n?ya.touches(M,n)[0]:ya.mouse(M)}function l(){32==ya.event.keyCode&&(k||(v=null,N[0]-=s[1][0],N[1]-=s[1][1],k=2),g())}function h(){32==ya.event.keyCode&&2==k&&(N[0]+=s[1][0],N[1]+=s[1][1],k=0,g())}function p(){var n=i(),u=!1;y&&(n[0]+=y[0],n[1]+=y[1]),k||(ya.event.altKey?(v||(v=[(s[0][0]+s[1][0])/2,(s[0][1]+s[1][1])/2]),N[0]=s[+(n[0]<v[0])][0],N[1]=s[+(n[1]<v[1])][1]):v=null),S&&m(n,o,0)&&(e(_),u=!0),E&&m(n,c,1)&&(r(_),u=!0),u&&(t(_),b({type:"brush",mode:k?"move":"resize"}))}function m(n,t,e){var r,i,a=Bi(t),o=a[0],c=a[1],l=N[e],h=s[1][e]-s[0][e];return k&&(o-=l,c-=h+l),r=f[e]?Math.max(o,Math.min(c,n[e])):n[e],k?i=(r+=l)+h:(v&&(l=Math.max(o,Math.min(c,2*v[e]-r))),r>l?(i=r,r=l):i=l),s[0][e]!==r||s[1][e]!==i?(u=null,s[0][e]=r,s[1][e]=i,!0):void 0}function d(){p(),_.style("pointer-events","all").selectAll(".resize").style("display",n.empty()?"none":null),ya.select("body").style("cursor",null),q.on("mousemove.brush",null).on("mouseup.brush",null).on("touchmove.brush",null).on("touchend.brush",null).on("keydown.brush",null).on("keyup.brush",null),A(),b({type:"brushend"})}var v,y,M=this,x=ya.select(ya.event.target),b=a.of(M,arguments),_=ya.select(M),w=x.datum(),S=!/^(n|s)$/.test(w)&&o,E=!/^(e|w)$/.test(w)&&c,k=x.classed("extent"),A=H(),N=i(),q=ya.select(ba).on("keydown.brush",l).on("keyup.brush",h);if(ya.event.changedTouches?q.on("touchmove.brush",p).on("touchend.brush",d):q.on("mousemove.brush",p).on("mouseup.brush",d),k)N[0]=s[0][0]-N[0],N[1]=s[0][1]-N[1];else if(w){var T=+/w$/.test(w),C=+/^n/.test(w);y=[s[1-T][0]-N[0],s[1-C][1]-N[1]],N[0]=s[T][0],N[1]=s[C][1]}else ya.event.altKey&&(v=N.slice());_.style("pointer-events","none").selectAll(".resize").style("display",null),ya.select("body").style("cursor",x.style("cursor")),b({type:"brushstart"}),p()}var u,a=m(n,"brushstart","brush","brushend"),o=null,c=null,l=Xc[0],s=[[0,0],[0,0]],f=[!0,!0];return n.x=function(t){return arguments.length?(o=t,l=Xc[!o<<1|!c],n):o},n.y=function(t){return arguments.length?(c=t,l=Xc[!o<<1|!c],n):c},n.clamp=function(t){return arguments.length?(o&&c?f=[!!t[0],!!t[1]]:(o||c)&&(f[+!o]=!!t),n):o&&c?f:o||c?f[+!o]:null},n.extent=function(t){var e,r,i,a,l;return arguments.length?(u=[[0,0],[0,0]],o&&(e=t[0],r=t[1],c&&(e=e[0],r=r[0]),u[0][0]=e,u[1][0]=r,o.invert&&(e=o(e),r=o(r)),e>r&&(l=e,e=r,r=l),s[0][0]=0|e,s[1][0]=0|r),c&&(i=t[0],a=t[1],o&&(i=i[1],a=a[1]),u[0][1]=i,u[1][1]=a,c.invert&&(i=c(i),a=c(a)),i>a&&(l=i,i=a,a=l),s[0][1]=0|i,s[1][1]=0|a),n):(t=u||s,o&&(e=t[0][0],r=t[1][0],u||(e=s[0][0],r=s[1][0],o.invert&&(e=o.invert(e),r=o.invert(r)),e>r&&(l=e,e=r,r=l))),c&&(i=t[0][1],a=t[1][1],u||(i=s[0][1],a=s[1][1],c.invert&&(i=c.invert(i),a=c.invert(a)),i>a&&(l=i,i=a,a=l))),o&&c?[[e,i],[r,a]]:o?[e,r]:c&&[i,a])},n.clear=function(){return u=null,s[0][0]=s[0][1]=s[1][0]=s[1][1]=0,n},n.empty=function(){return o&&s[0][0]===s[1][0]||c&&s[0][1]===s[1][1]},ya.rebind(n,a,"on")};var Vc={n:"ns-resize",e:"ew-resize",s:"ns-resize",w:"ew-resize",nw:"nwse-resize",ne:"nesw-resize",se:"nwse-resize",sw:"nesw-resize"},Xc=[["n","e","s","w","nw","ne","se","sw"],["e","w"],["n","s"],[]];ya.time={};var Zc=Date,Bc=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];zu.prototype={getDate:function(){return this._.getUTCDate()},getDay:function(){return this._.getUTCDay()},getFullYear:function(){return this._.getUTCFullYear()},getHours:function(){return this._.getUTCHours()},getMilliseconds:function(){return this._.getUTCMilliseconds()},getMinutes:function(){return this._.getUTCMinutes()},getMonth:function(){return this._.getUTCMonth()},getSeconds:function(){return this._.getUTCSeconds()},getTime:function(){return this._.getTime()},getTimezoneOffset:function(){return 0},valueOf:function(){return this._.valueOf()},setDate:function(){$c.setUTCDate.apply(this._,arguments)},setDay:function(){$c.setUTCDay.apply(this._,arguments)},setFullYear:function(){$c.setUTCFullYear.apply(this._,arguments)},setHours:function(){$c.setUTCHours.apply(this._,arguments)},setMilliseconds:function(){$c.setUTCMilliseconds.apply(this._,arguments)},setMinutes:function(){$c.setUTCMinutes.apply(this._,arguments)},setMonth:function(){$c.setUTCMonth.apply(this._,arguments)},setSeconds:function(){$c.setUTCSeconds.apply(this._,arguments)},setTime:function(){$c.setTime.apply(this._,arguments)}};var $c=Date.prototype,Wc="%a %b %e %X %Y",Jc="%m/%d/%Y",Gc="%H:%M:%S",Kc=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],Qc=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],nl=["January","February","March","April","May","June","July","August","September","October","November","December"],tl=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];ya.time.year=Du(function(n){return n=ya.time.day(n),n.setMonth(0,1),n},function(n,t){n.setFullYear(n.getFullYear()+t)},function(n){return n.getFullYear()}),ya.time.years=ya.time.year.range,ya.time.years.utc=ya.time.year.utc.range,ya.time.day=Du(function(n){var t=new Zc(2e3,0);return t.setFullYear(n.getFullYear(),n.getMonth(),n.getDate()),t},function(n,t){n.setDate(n.getDate()+t)},function(n){return n.getDate()-1}),ya.time.days=ya.time.day.range,ya.time.days.utc=ya.time.day.utc.range,ya.time.dayOfYear=function(n){var t=ya.time.year(n);return Math.floor((n-t-6e4*(n.getTimezoneOffset()-t.getTimezoneOffset()))/864e5)},Bc.forEach(function(n,t){n=n.toLowerCase(),t=7-t;var e=ya.time[n]=Du(function(n){return(n=ya.time.day(n)).setDate(n.getDate()-(n.getDay()+t)%7),n},function(n,t){n.setDate(n.getDate()+7*Math.floor(t))},function(n){var e=ya.time.year(n).getDay();return Math.floor((ya.time.dayOfYear(n)+(e+t)%7)/7)-(e!==t)});ya.time[n+"s"]=e.range,ya.time[n+"s"].utc=e.utc.range,ya.time[n+"OfYear"]=function(n){var e=ya.time.year(n).getDay();return Math.floor((ya.time.dayOfYear(n)+(e+t)%7)/7)}}),ya.time.week=ya.time.sunday,ya.time.weeks=ya.time.sunday.range,ya.time.weeks.utc=ya.time.sunday.utc.range,ya.time.weekOfYear=ya.time.sundayOfYear,ya.time.format=function(n){function t(t){for(var r,i,u,a=[],o=-1,c=0;++o<e;)37===n.charCodeAt(o)&&(a.push(n.substring(c,o)),null!=(i=fl[r=n.charAt(++o)])&&(r=n.charAt(++o)),(u=hl[r])&&(r=u(t,null==i?"e"===r?" ":"0":i)),a.push(r),c=o+1);return a.push(n.substring(c,o)),a.join("")}var e=n.length;return t.parse=function(t){var e={y:1900,m:0,d:1,H:0,M:0,S:0,L:0},r=Lu(e,n,t,0);if(r!=t.length)return null;"p"in e&&(e.H=e.H%12+12*e.p);var i=new Zc;return"j"in e?i.setFullYear(e.y,0,e.j):"w"in e&&("W"in e||"U"in e)?(i.setFullYear(e.y,0,1),i.setFullYear(e.y,0,"W"in e?(e.w+6)%7+7*e.W-(i.getDay()+5)%7:e.w+7*e.U-(i.getDay()+6)%7)):i.setFullYear(e.y,e.m,e.d),i.setHours(e.H,e.M,e.S,e.L),i},t.toString=function(){return n},t};var el=Hu(Kc),rl=Fu(Kc),il=Hu(Qc),ul=Fu(Qc),al=Hu(nl),ol=Fu(nl),cl=Hu(tl),ll=Fu(tl),sl=/^%/,fl={"-":"",_:" ",0:"0"},hl={a:function(n){return Qc[n.getDay()]},A:function(n){return Kc[n.getDay()]},b:function(n){return tl[n.getMonth()]},B:function(n){return nl[n.getMonth()]},c:ya.time.format(Wc),d:function(n,t){return Pu(n.getDate(),t,2)},e:function(n,t){return Pu(n.getDate(),t,2)},H:function(n,t){return Pu(n.getHours(),t,2)},I:function(n,t){return Pu(n.getHours()%12||12,t,2)},j:function(n,t){return Pu(1+ya.time.dayOfYear(n),t,3)},L:function(n,t){return Pu(n.getMilliseconds(),t,3)},m:function(n,t){return Pu(n.getMonth()+1,t,2)},M:function(n,t){return Pu(n.getMinutes(),t,2)},p:function(n){return n.getHours()>=12?"PM":"AM"},S:function(n,t){return Pu(n.getSeconds(),t,2)},U:function(n,t){return Pu(ya.time.sundayOfYear(n),t,2)},w:function(n){return n.getDay()},W:function(n,t){return Pu(ya.time.mondayOfYear(n),t,2)},x:ya.time.format(Jc),X:ya.time.format(Gc),y:function(n,t){return Pu(n.getFullYear()%100,t,2)},Y:function(n,t){return Pu(n.getFullYear()%1e4,t,4)},Z:aa,"%":function(){return"%"}},gl={a:Ou,A:Yu,b:Vu,B:Xu,c:Zu,d:Qu,e:Qu,H:ta,I:ta,j:na,L:ia,m:Ku,M:ea,p:ua,S:ra,U:Uu,w:Ru,W:Iu,x:Bu,X:$u,y:Ju,Y:Wu,"%":oa},pl=/^\s*\d+/,ml=ya.map({am:0,pm:1});ya.time.format.utc=function(n){function t(n){try{Zc=zu;var t=new Zc;return t._=n,e(t)}finally{Zc=Date}}var e=ya.time.format(n);return t.parse=function(n){try{Zc=zu;var t=e.parse(n);return t&&t._}finally{Zc=Date}},t.toString=e.toString,t};var dl=ya.time.format.utc("%Y-%m-%dT%H:%M:%S.%LZ");ya.time.format.iso=Date.prototype.toISOString&&+new Date("2000-01-01T00:00:00.000Z")?ca:dl,ca.parse=function(n){var t=new Date(n);return isNaN(t)?null:t},ca.toString=dl.toString,ya.time.second=Du(function(n){return new Zc(1e3*Math.floor(n/1e3))},function(n,t){n.setTime(n.getTime()+1e3*Math.floor(t))},function(n){return n.getSeconds()}),ya.time.seconds=ya.time.second.range,ya.time.seconds.utc=ya.time.second.utc.range,ya.time.minute=Du(function(n){return new Zc(6e4*Math.floor(n/6e4))},function(n,t){n.setTime(n.getTime()+6e4*Math.floor(t))},function(n){return n.getMinutes()}),ya.time.minutes=ya.time.minute.range,ya.time.minutes.utc=ya.time.minute.utc.range,ya.time.hour=Du(function(n){var t=n.getTimezoneOffset()/60;return new Zc(36e5*(Math.floor(n/36e5-t)+t))},function(n,t){n.setTime(n.getTime()+36e5*Math.floor(t))},function(n){return n.getHours()}),ya.time.hours=ya.time.hour.range,ya.time.hours.utc=ya.time.hour.utc.range,ya.time.month=Du(function(n){return n=ya.time.day(n),n.setDate(1),n},function(n,t){n.setMonth(n.getMonth()+t)},function(n){return n.getMonth()}),ya.time.months=ya.time.month.range,ya.time.months.utc=ya.time.month.utc.range;var vl=[1e3,5e3,15e3,3e4,6e4,3e5,9e5,18e5,36e5,108e5,216e5,432e5,864e5,1728e5,6048e5,2592e6,7776e6,31536e6],yl=[[ya.time.second,1],[ya.time.second,5],[ya.time.second,15],[ya.time.second,30],[ya.time.minute,1],[ya.time.minute,5],[ya.time.minute,15],[ya.time.minute,30],[ya.time.hour,1],[ya.time.hour,3],[ya.time.hour,6],[ya.time.hour,12],[ya.time.day,1],[ya.time.day,2],[ya.time.week,1],[ya.time.month,1],[ya.time.month,3],[ya.time.year,1]],Ml=[[ya.time.format("%Y"),Xt],[ya.time.format("%B"),function(n){return n.getMonth()}],[ya.time.format("%b %d"),function(n){return 1!=n.getDate()}],[ya.time.format("%a %d"),function(n){return n.getDay()&&1!=n.getDate()}],[ya.time.format("%I %p"),function(n){return n.getHours()}],[ya.time.format("%I:%M"),function(n){return n.getMinutes()}],[ya.time.format(":%S"),function(n){return n.getSeconds()}],[ya.time.format(".%L"),function(n){return n.getMilliseconds()}]],xl=ya.scale.linear(),bl=fa(Ml);yl.year=function(n,t){return xl.domain(n.map(ga)).ticks(t).map(ha)},ya.time.scale=function(){return la(ya.scale.linear(),yl,bl)};var _l=yl.map(function(n){return[n[0].utc,n[1]]}),wl=[[ya.time.format.utc("%Y"),Xt],[ya.time.format.utc("%B"),function(n){return n.getUTCMonth()}],[ya.time.format.utc("%b %d"),function(n){return 1!=n.getUTCDate()}],[ya.time.format.utc("%a %d"),function(n){return n.getUTCDay()&&1!=n.getUTCDate()}],[ya.time.format.utc("%I %p"),function(n){return n.getUTCHours()}],[ya.time.format.utc("%I:%M"),function(n){return n.getUTCMinutes()}],[ya.time.format.utc(":%S"),function(n){return n.getUTCSeconds()}],[ya.time.format.utc(".%L"),function(n){return n.getUTCMilliseconds()}]],Sl=fa(wl);return _l.year=function(n,t){return xl.domain(n.map(ma)).ticks(t).map(pa)},ya.time.scale.utc=function(){return la(ya.scale.linear(),_l,Sl)},ya.text=dt(function(n){return n.responseText}),ya.json=function(n,t){return vt(n,"application/json",da,t)},ya.html=function(n,t){return vt(n,"text/html",va,t)},ya.xml=dt(function(n){return n.responseXML}),ya}();
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/d3.min.js","/lib")
-},{"buffer":16,"oMfpAn":19}],57:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],94:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 dc=function(){"use strict";var a={version:"1.6.0",constants:{CHART_CLASS:"dc-chart",DEBUG_GROUP_CLASS:"debug",STACK_CLASS:"stack",DESELECTED_CLASS:"deselected",SELECTED_CLASS:"selected",NODE_INDEX_NAME:"__index__",GROUP_INDEX_NAME:"__group_index__",DEFAULT_CHART_GROUP:"__default_chart_group__",EVENT_DELAY:40,NEGLIGIBLE_NUMBER:1e-10},_renderlet:null};return a.chartRegistry=function(){function b(b){return b||(b=a.constants.DEFAULT_CHART_GROUP),c[b]||(c[b]=[]),b}var c={};return{has:function(a){for(var b in c)if(c[b].indexOf(a)>=0)return!0;return!1},register:function(a,d){d=b(d),c[d].push(a)},clear:function(){c={}},list:function(a){return a=b(a),c[a]}}}(),a.registerChart=function(b,c){a.chartRegistry.register(b,c)},a.hasChart=function(b){return a.chartRegistry.has(b)},a.deregisterAllCharts=function(){a.chartRegistry.clear()},a.filterAll=function(b){for(var c=a.chartRegistry.list(b),d=0;d<c.length;++d)c[d].filterAll()},a.renderAll=function(b){for(var c=a.chartRegistry.list(b),d=0;d<c.length;++d)c[d].render();null!==a._renderlet&&a._renderlet(b)},a.redrawAll=function(b){for(var c=a.chartRegistry.list(b),d=0;d<c.length;++d)c[d].redraw();null!==a._renderlet&&a._renderlet(b)},a.transition=function(a,b,c){if(0>=b||void 0===b)return a;var d=a.transition().duration(b);return c instanceof Function&&c(d),d},a.units={},a.units.integers=function(a,b){return Math.abs(b-a)},a.units.ordinal=function(a,b,c){return c},a.units.fp={},a.units.fp.precision=function(b){var c=function(b,d){var e=Math.abs((d-b)/c.resolution);return a.utils.isNegligible(e-Math.floor(e))?Math.floor(e):Math.ceil(e)};return c.resolution=b,c},a.round={},a.round.floor=function(a){return Math.floor(a)},a.round.ceil=function(a){return Math.ceil(a)},a.round.round=function(a){return Math.round(a)},a.override=function(a,b,c){var d=a[b];a["_"+b]=d,a[b]=c},a.renderlet=function(b){return arguments.length?(a._renderlet=b,a):a._renderlet},a.instanceOfChart=function(a){return a instanceof Object&&a.__dc_flag__},a.errors={},a.errors.Exception=function(a){var b=void 0!==a?a:"Unexpected internal error";this.message=b,this.toString=function(){return b}},a.errors.InvalidStateException=function(){a.errors.Exception.apply(this,arguments)},a.dateFormat=d3.time.format("%m/%d/%Y"),a.printers={},a.printers.filters=function(b){for(var c="",d=0;d<b.length;++d)d>0&&(c+=", "),c+=a.printers.filter(b[d]);return c},a.printers.filter=function(b){var c="";return b&&(b instanceof Array?b.length>=2?c="["+a.utils.printSingleValue(b[0])+" -> "+a.utils.printSingleValue(b[1])+"]":b.length>=1&&(c=a.utils.printSingleValue(b[0])):c=a.utils.printSingleValue(b)),c},a.utils={},a.utils.printSingleValue=function(b){var c=""+b;return b instanceof Date?c=a.dateFormat(b):"string"==typeof b?c=b:a.utils.isFloat(b)?c=a.utils.printSingleValue.fformat(b):a.utils.isInteger(b)&&(c=Math.round(b)),c},a.utils.printSingleValue.fformat=d3.format(".2f"),a.utils.add=function(a,b){if("string"==typeof b&&(b=b.replace("%","")),a instanceof Date){"string"==typeof b&&(b=+b);var c=new Date;return c.setTime(a.getTime()),c.setDate(a.getDate()+b),c}if("string"==typeof b){var d=+b/100;return a>0?a*(1+d):a*(1-d)}return a+b},a.utils.subtract=function(a,b){if("string"==typeof b&&(b=b.replace("%","")),a instanceof Date){"string"==typeof b&&(b=+b);var c=new Date;return c.setTime(a.getTime()),c.setDate(a.getDate()-b),c}if("string"==typeof b){var d=+b/100;return 0>a?a*(1+d):a*(1-d)}return a-b},a.utils.GroupStack=function(){function a(a){c[a]||(c[a]=[])}var b,c=[[]],d=[];this.setDataPoint=function(b,d,e){a(b),c[b][d]=e},this.getDataPoint=function(b,d){a(b);var e=c[b][d];return void 0===e&&(e=0),e},this.addGroup=function(a,c){return c||(c=b),d.push([a,c]),d.length-1},this.getGroupByIndex=function(a){return d[a][0]},this.getAccessorByIndex=function(a){return d[a][1]},this.size=function(){return d.length},this.clear=function(){c=[],d=[]},this.setDefaultAccessor=function(a){b=a},this.getDataLayers=function(){return c},this.toLayers=function(){for(var a=[],b=0;b<c.length;++b){for(var d={index:b,points:[]},e=c[b],f=0;f<e.length;++f)d.points.push(e[f]);a.push(d)}return a}},a.utils.isNumber=function(a){return a===+a},a.utils.isFloat=function(a){return a===+a&&a!==(0|a)},a.utils.isInteger=function(a){return a===+a&&a===(0|a)},a.utils.isNegligible=function(b){return void 0===b||b<a.constants.NEGLIGIBLE_NUMBER&&b>-a.constants.NEGLIGIBLE_NUMBER},a.utils.groupMax=function(b,c){var d=d3.max(b.all(),function(a){return c(a)});return a.utils.isNegligible(d)&&(d=0),d},a.utils.groupMin=function(b,c){var d=d3.min(b.all(),function(a){return c(a)});return a.utils.isNegligible(d)&&(d=0),d},a.utils.nameToId=function(a){return a.toLowerCase().replace(/[\s]/g,"_").replace(/[\.']/g,"")},a.utils.appendOrSelect=function(a,b){var c=a.select(b);return c.empty()&&(c=a.append(b)),c},a.utils.createLegendable=function(a,b,c,d){var e={name:a._getGroupName(b,d),data:b};return"function"==typeof a.colors&&(e.color=a.colors()(c)),e},a.utils.safeNumber=function(b){return a.utils.isNumber(+b)?+b:0},a.events={current:null},a.events.trigger=function(b,c){return c?(a.events.current=b,setTimeout(function(){b==a.events.current&&b()},c),void 0):(b(),void 0)},a.cumulative={},a.cumulative.Base=function(){this._keyIndex=[],this._map={},this.sanitizeKey=function(a){return a+=""},this.clear=function(){this._keyIndex=[],this._map={}},this.size=function(){return this._keyIndex.length},this.getValueByKey=function(a){a=this.sanitizeKey(a);var b=this._map[a];return b},this.setValueByKey=function(a,b){return a=this.sanitizeKey(a),this._map[a]=b},this.indexOfKey=function(a){return a=this.sanitizeKey(a),this._keyIndex.indexOf(a)},this.addToIndex=function(a){a=this.sanitizeKey(a),this._keyIndex.push(a)},this.getKeyByIndex=function(a){return this._keyIndex[a]}},a.cumulative.Sum=function(){a.cumulative.Base.apply(this,arguments),this.add=function(a,b){b||(b=0),void 0===this.getValueByKey(a)?(this.addToIndex(a),this.setValueByKey(a,b)):this.setValueByKey(a,this.getValueByKey(a)+b)},this.minus=function(a,b){this.setValueByKey(a,this.getValueByKey(a)-b)},this.cumulativeSum=function(a){var b=this.indexOfKey(a);if(0>b)return 0;for(var c=0,d=0;b>=d;++d){var e=this.getKeyByIndex(d);c+=this.getValueByKey(e)}return c}},a.cumulative.Sum.prototype=new a.cumulative.Base,a.cumulative.CountUnique=function(){function b(a){var b,c=0;for(b in a)a.hasOwnProperty(b)&&c++;return c}a.cumulative.Base.apply(this,arguments),this.add=function(a,b){void 0===this.getValueByKey(a)&&(this.setValueByKey(a,{}),this.addToIndex(a)),void 0!==b&&(void 0===this.getValueByKey(a)[b]&&(this.getValueByKey(a)[b]=0),this.getValueByKey(a)[b]+=1)},this.minus=function(a,b){this.getValueByKey(a)[b]-=1,this.getValueByKey(a)[b]<=0&&delete this.getValueByKey(a)[b]},this.count=function(a){return b(this.getValueByKey(a))},this.cumulativeCount=function(a){var b=this.indexOfKey(a);if(0>b)return 0;for(var c=0,d=0;b>=d;++d){var e=this.getKeyByIndex(d);c+=this.count(e)}return c}},a.cumulative.CountUnique.prototype=new a.cumulative.Base,a.baseChart=function(b){function c(a,b,c){var d=a.anchor(),e="__names__";c&&c!=a.valueAccessor()||(c="default"),b[e]||(b[e]={}),b[e][d]||(b[e][d]={a:[],n:[]});var f=b[e][d].a.indexOf(c);return-1==f&&(f=b[e][d].a.length,b[e][d].a[f]=c,b[e][d].n[f]={name:""}),b[e][d].n[f]}function d(){return n=b.root().append("svg").attr("width",b.width()).attr("height",b.height())}function e(a){E.splice(E.indexOf(a),1),h(),b._invokeFilteredListener(a)}function f(a){E.push(a),h(),b._invokeFilteredListener(a)}function g(){E=[],h(),b._invokeFilteredListener(null)}function h(){if(b.dataSet()&&void 0!==b.dimension().filter){var a=F(b.dimension(),E);E=a?a:E}}function i(){for(var a=0;a<A.length;++a)A[a](b)}b.__dc_flag__=!0;var j,k,l,m,n,o,p=200,q=200,r=function(a){return a.key},s=function(a){return a.value},t=function(a){return a.key},u=function(a){return a.key},v=!1,w=function(a){return a.key+": "+a.value},x=!1,y=750,z=a.printers.filters,A=[],B=a.constants.DEFAULT_CHART_GROUP,C=function(){},D={preRender:C,postRender:C,preRedraw:C,postRedraw:C,filtered:C,zoomed:C},E=[],F=function(a,b){return a.filter(null),0===b.length?a.filter(null):1===b.length?a.filter(b[0]):a.filterFunction(function(a){return b.indexOf(a)>=0}),b};return b.width=function(a){return arguments.length?(p=a,b):p},b.height=function(a){return arguments.length?(q=a,b):q},b.dimension=function(a){return arguments.length?(j=a,b.expireCache(),b):j},b.group=function(a,c){return arguments.length?(k=a,b.expireCache(),"string"==typeof c&&b._setGroupName(k,c),b):k},b._getGroupName=function(a,d){return c(b,a,d).name},b._setGroupName=function(a,d,e){c(b,a,e).name=d},b.ordering=function(a){return arguments.length?(t=a,b.expireCache(),b):t},b.computeOrderedGroups=function(a){var c=a?a:b.group().all().slice(0);if(c.length<2)return c;var d=crossfilter.quicksort.by(b.ordering());return d(c,0,c.length)},b.filterAll=function(){return b.filter(null)},b.dataSet=function(){return void 0!==j&&void 0!==k},b.select=function(a){return m.select(a)},b.selectAll=function(a){return m?m.selectAll(a):null},b.anchor=function(c,d){return arguments.length?(a.instanceOfChart(c)?(l=c.anchor(),m=c.root()):(l=c,m=d3.select(l),m.classed(a.constants.CHART_CLASS,!0),a.registerChart(b,d)),B=d,b):l},b.anchorName=function(){var a=b.anchor();return a&&a.id?a.id:a?a.replace("#",""):""},b.root=function(a){return arguments.length?(m=a,b):m},b.svg=function(a){return arguments.length?(n=a,b):n},b.resetSvg=function(){return b.select("svg").remove(),d()},b.filterPrinter=function(a){return arguments.length?(z=a,b):z},b.turnOnControls=function(){return m&&(b.selectAll(".reset").style("display",null),b.selectAll(".filter").text(z(b.filters())).style("display",null)),b},b.turnOffControls=function(){return m&&(b.selectAll(".reset").style("display","none"),b.selectAll(".filter").style("display","none").text(b.filter())),b},b.transitionDuration=function(a){return arguments.length?(y=a,b):y},b.render=function(){if(D.preRender(b),void 0===j)throw new a.errors.InvalidStateException("Mandatory attribute chart.dimension is missing on chart[#"+b.anchorName()+"]");if(void 0===k)throw new a.errors.InvalidStateException("Mandatory attribute chart.group is missing on chart[#"+b.anchorName()+"]");var c=b.doRender();return o&&o.render(),b.activateRenderlets("postRender"),c},b.activateRenderlets=function(a){b.transitionDuration()>0&&n?n.transition().duration(b.transitionDuration()).each("end",function(){i(),a&&D[a](b)}):(i(),a&&D[a](b))},b.redraw=function(){D.preRedraw(b);var a=b.doRedraw();return b.activateRenderlets("postRedraw"),a},b._invokeFilteredListener=function(a){void 0!==a&&D.filtered(b,a)},b._invokeZoomedListener=function(){D.zoomed(b)},b.hasFilter=function(a){return arguments.length?E.indexOf(a)>=0:E.length>0},b.filter=function(a){return arguments.length?(null===a?g():b.hasFilter(a)?e(a):f(a),null!==m&&b.hasFilter()?b.turnOnControls():b.turnOffControls(),b):E.length>0?E[0]:null},b.filters=function(){return E},b.highlightSelected=function(b){d3.select(b).classed(a.constants.SELECTED_CLASS,!0),d3.select(b).classed(a.constants.DESELECTED_CLASS,!1)},b.fadeDeselected=function(b){d3.select(b).classed(a.constants.SELECTED_CLASS,!1),d3.select(b).classed(a.constants.DESELECTED_CLASS,!0)},b.resetHighlight=function(b){d3.select(b).classed(a.constants.SELECTED_CLASS,!1),d3.select(b).classed(a.constants.DESELECTED_CLASS,!1)},b.onClick=function(c){var d=b.keyAccessor()(c);a.events.trigger(function(){b.filter(d),a.redrawAll(b.chartGroup())})},b.filterHandler=function(a){return arguments.length?(F=a,b):F},b.doRender=function(){return b},b.doRedraw=function(){return b},b.legendables=function(){return[]},b.legendHighlight=function(){},b.legendReset=function(){},b.keyAccessor=function(a){return arguments.length?(r=a,b):r},b.valueAccessor=function(a){return arguments.length?(s=a,b):s},b.label=function(a){return arguments.length?(u=a,v=!0,b):u},b.renderLabel=function(a){return arguments.length?(v=a,b):v},b.title=function(a){return arguments.length?(w=a,x=!0,b):w},b.renderTitle=function(a){return arguments.length?(x=a,b):x},b.renderlet=function(a){return A.push(a),b},b.chartGroup=function(a){return arguments.length?(B=a,b):B},b.expireCache=function(){return b},b.legend=function(a){return arguments.length?(o=a,o.parent(b),b):o},b.on=function(a,c){return D[a]=c,b},b},a.marginable=function(a){var b={top:10,right:50,bottom:30,left:30};return a.margins=function(c){return arguments.length?(b=c,a):b},a.effectiveWidth=function(){return a.width()-a.margins().left-a.margins().right},a.effectiveHeight=function(){return a.height()-a.margins().top-a.margins().bottom},a},a.coordinateGridChart=function(b){function c(a){b.elasticX()&&!b.isOrdinal()?w.domain([b.xAxisMin(),b.xAxisMax()]):b.isOrdinal()&&0===w.domain().length&&w.domain(b.computeOrderedGroups().map(function(a){return a.key})),b.isOrdinal()?b.prepareOrdinalXAxis():w.range([0,b.xAxisLength()]),F=F.scale(b.x()).orient("bottom"),d(a)}function d(c){var d=c.selectAll("g."+p);if(R){d.empty()&&(d=c.insert("g",":first-child").attr("class",n+" "+p).attr("transform","translate("+b.yAxisX()+","+b.margins().top+")"));var e=F.tickValues()?F.tickValues():w.ticks(F.ticks()[0]),f=d.selectAll("line").data(e),g=f.enter().append("line").attr("x1",function(a){return w(a)}).attr("y1",b.xAxisY()-b.margins().top).attr("x2",function(a){return w(a)}).attr("y2",0).attr("opacity",0);a.transition(g,b.transitionDuration()).attr("opacity",1),a.transition(f,b.transitionDuration()).attr("x1",function(a){return w(a)}).attr("y1",b.xAxisY()-b.margins().top).attr("x2",function(a){return w(a)}).attr("y2",0),f.exit().remove()}else d.selectAll("line").remove()}function e(a){(void 0===z||b.elasticY())&&(z=d3.scale.linear(),z.domain([b.yAxisMin(),b.yAxisMax()]).rangeRound([b.yAxisHeight(),0])),z.range([b.yAxisHeight(),0]),K=K.scale(z).orient("left"),f(a)}function f(c){var d=c.selectAll("g."+o);if(Q){var e=K.tickValues()?K.tickValues():z.ticks(K.ticks()[0]);d.empty()&&(d=c.insert("g",":first-child").attr("class",n+" "+o).attr("transform","translate("+b.yAxisX()+","+b.margins().top+")"));var f=d.selectAll("line").data(e),g=f.enter().append("line").attr("x1",1).attr("y1",function(a){return z(a)}).attr("x2",b.xAxisLength()).attr("y2",function(a){return z(a)}).attr("opacity",0);a.transition(g,b.transitionDuration()).attr("opacity",1),a.transition(f,b.transitionDuration()).attr("x1",1).attr("y1",function(a){return z(a)}).attr("x2",b.xAxisLength()).attr("y2",function(a){return z(a)}),f.exit().remove()}else d.selectAll("line").remove()}function g(){return b.xAxisY()-b.margins().top}function h(){var c=b.extendBrush();b.redrawBrush(u),b.brushIsEmpty(c)?a.events.trigger(function(){b.filter(null),a.redrawAll(b.chartGroup())}):a.events.trigger(function(){b.filter(null),b.filter([c[0],c[1]]),a.redrawAll(b.chartGroup())},a.constants.EVENT_DELAY)}function i(){return b.anchorName()+"-clip"}function j(){var c=a.utils.appendOrSelect(t,"defs"),d=a.utils.appendOrSelect(c,"clipPath").attr("id",i()),e=2*W;a.utils.appendOrSelect(d,"rect").attr("width",b.xAxisLength()+e).attr("height",b.yAxisHeight()+e)}function k(){V&&b.root().call(d3.behavior.zoom().x(b.x()).scaleExtent(T).on("zoom",function(){b.focus(b.x().domain()),b._invokeZoomedListener(),l()}))}function l(){if(D){var c=b.x().domain();if(U){var d=D.xOriginalDomain(),e=[c[0]<d[0]?c[0]:d[0],c[1]>d[1]?c[1]:d[1]];D.focus(e)}else D.focus(c);D.filter(null),D.filter(c),a.events.trigger(function(){a.redrawAll(b.chartGroup())})}}function m(a){return a instanceof Array&&a.length>1}var n="grid-line",o="horizontal",p="vertical",q="y-axis-label",r="x-axis-label",s=12;b=a.colorChart(a.marginable(a.baseChart(b))),b.colors(d3.scale.category10());var t,u,v,w,x,y,z,A,B,C,D,E,F=d3.svg.axis(),G=a.units.integers,H=0,I=!1,J=0,K=d3.svg.axis(),L=0,M=!1,N=0,O=d3.svg.brush(),P=!0,Q=!1,R=!1,S=!1,T=[-10,100],U=!0,V=!1,W=0;return b.title(function(a){return a.data.key+": "+a.data.value}),b.rescale=function(){C=void 0,b.xUnitCount()},b.rangeChart=function(a){return arguments.length?(D=a,D.focusChart(b),b):D},b.zoomScale=function(a){return arguments.length?(T=a,b):T},b.zoomOutRestrict=function(a){return arguments.length?(U=a,b):U},b._generateG=function(a){return t=void 0===a?b.svg():a,u=t.append("g"),v=u.append("g").attr("class","chart-body").attr("transform","translate("+b.margins().left+", "+b.margins().top+")").attr("clip-path","url(#"+i()+")"),u},b.g=function(a){return arguments.length?(u=a,b):u},b.mouseZoomable=function(a){return arguments.length?(V=a,b):V},b.chartBodyG=function(a){return arguments.length?(v=a,b):v},b.x=function(a){return arguments.length?(w=a,x=w.domain(),b):w},b.xOriginalDomain=function(){return x},b.xUnits=function(a){return arguments.length?(G=a,b):G},b.xAxis=function(a){return arguments.length?(F=a,b):F},b.elasticX=function(a){return arguments.length?(I=a,b):I},b.xAxisPadding=function(a){return arguments.length?(H=a,b):H},b.xUnitCount=function(){if(void 0===C){var a=b.xUnits()(b.x().domain()[0],b.x().domain()[1],b.x().domain());C=a instanceof Array?a.length:a}return C},b.isOrdinal=function(){return b.xUnits()===a.units.ordinal},b.prepareOrdinalXAxis=function(a){a||(a=b.xUnitCount());for(var c=[],d=b.xAxisLength()/(a+1),e=d/2,f=0;a>f;f++)c[f]=e,e+=d;w.range(c)},b.renderXAxis=function(c){var d=c.selectAll("g.x");d.empty()&&(d=c.append("g").attr("class","axis x").attr("transform","translate("+b.margins().left+","+b.xAxisY()+")"));var e=c.selectAll("text."+r);e.empty()&&b.xAxisLabel()&&(e=c.append("text").attr("transform","translate("+b.xAxisLength()/2+","+(b.height()-J)+")").attr("class",r).attr("text-anchor","middle").text(b.xAxisLabel())),b.xAxisLabel()&&e.text()!=b.xAxisLabel()&&axisYLab.text(b.xAxisLabel()),a.transition(d,b.transitionDuration()).call(F)},b.xAxisY=function(){return b.height()-b.margins().bottom},b.xAxisLength=function(){return b.effectiveWidth()},b.xAxisLabel=function(a,c){return arguments.length?(y=a,b.margins().bottom-=J,J=void 0===c?s:c,b.margins().bottom+=J,b):y},b.renderYAxis=function(c){var d=c.selectAll("g.y");d.empty()&&(d=c.append("g").attr("class","axis y").attr("transform","translate("+b.yAxisX()+","+b.margins().top+")"));var e=c.selectAll("text."+q);e.empty()&&b.yAxisLabel()&&(e=c.append("text").attr("transform","translate("+N+","+b.yAxisHeight()/2+"),rotate(-90)").attr("class",q).attr("text-anchor","middle").text(b.yAxisLabel())),b.yAxisLabel()&&e.text()!=b.yAxisLabel()&&e.text(b.yAxisLabel()),a.transition(d,b.transitionDuration()).call(K)},b.yAxisX=function(){return b.margins().left},b.yAxisLabel=function(a,c){return arguments.length?(A=a,b.margins().left-=N,N=void 0===c?s:c,b.margins().left+=N,b):A},b.y=function(a){return arguments.length?(z=a,b):z},b.yAxis=function(a){return arguments.length?(K=a,b):K},b.elasticY=function(a){return arguments.length?(M=a,b):M},b.renderHorizontalGridLines=function(a){return arguments.length?(Q=a,b):Q},b.renderVerticalGridLines=function(a){return arguments.length?(R=a,b):R},b.xAxisMin=function(){var c=d3.min(b.group().all(),function(a){return b.keyAccessor()(a)});return a.utils.subtract(c,H)},b.xAxisMax=function(){var c=d3.max(b.group().all(),function(a){return b.keyAccessor()(a)});return a.utils.add(c,H)},b.yAxisMin=function(){var c=d3.min(b.group().all(),function(a){return b.valueAccessor()(a)});return c=a.utils.subtract(c,L)},b.yAxisMax=function(){var c=d3.max(b.group().all(),function(a){return b.valueAccessor()(a)});return c=a.utils.add(c,L)},b.yAxisPadding=function(a){return arguments.length?(L=a,b):L},b.yAxisHeight=function(){return b.effectiveHeight()},b.round=function(a){return arguments.length?(B=a,b):B},a.override(b,"filter",function(a){return arguments.length?(b._filter(a),a?b.brush().extent(a):b.brush().clear(),b):b._filter()}),b.brush=function(a){return arguments.length?(O=a,b):O},b.renderBrush=function(a){if(b.isOrdinal()&&(P=!1),P){O.on("brush",h);var c=a.append("g").attr("class","brush").attr("transform","translate("+b.margins().left+","+b.margins().top+")").call(O.x(b.x()));c.selectAll("rect").attr("height",g()),c.selectAll(".resize").append("path").attr("d",b.resizeHandlePath),b.hasFilter()&&b.redrawBrush(a)}},b.extendBrush=function(){var a=O.extent();return b.round()&&(a[0]=a.map(b.round())[0],a[1]=a.map(b.round())[1],u.select(".brush").call(O.extent(a))),a},b.brushIsEmpty=function(a){return O.empty()||!a||a[1]<=a[0]},b.redrawBrush=function(a){if(P){b.filter()&&b.brush().empty()&&b.brush().extent(b.filter());var c=a.select("g.brush");c.call(b.brush().x(b.x())),c.selectAll("rect").attr("height",g())}b.fadeDeselectedArea()},b.fadeDeselectedArea=function(){},b.resizeHandlePath=function(a){var b=+("e"==a),c=b?1:-1,d=g()/3;return"M"+.5*c+","+d+"A6,6 0 0 "+b+" "+6.5*c+","+(d+6)+"V"+(2*d-6)+"A6,6 0 0 "+b+" "+.5*c+","+2*d+"Z"+"M"+2.5*c+","+(d+8)+"V"+(2*d-8)+"M"+4.5*c+","+(d+8)+"V"+(2*d-8)},b.clipPadding=function(a){return arguments.length?(W=a,b):W},b.doRender=function(){if(void 0===w)throw new a.errors.InvalidStateException("Mandatory attribute chart.x is missing on chart[#"+b.anchorName()+"]");return b.resetSvg(),b.dataSet()&&(b._generateG(),j(),c(b.g()),e(b.g()),b.plotData(),b.renderXAxis(b.g()),b.renderYAxis(b.g()),b.renderBrush(b.g()),k()),b},b.doRedraw=function(){return c(b.g()),e(b.g()),b.plotData(),b.elasticY()&&b.renderYAxis(b.g()),(b.elasticX()||S)&&b.renderXAxis(b.g()),b.redrawBrush(b.g()),b},b.subRender=function(){return b.dataSet()&&b.plotData(),b},b.brushOn=function(a){return arguments.length?(P=a,b):P},b.focus=function(a){S=!0,m(a)?b.x().domain(a):b.x().domain(b.xOriginalDomain()),b.rescale(),b.redraw(),m(a)||(S=!1)},b.refocused=function(){return S},b.focusChart=function(c){return arguments.length?(E=c,b.on("filtered",function(b){a.events.trigger(function(){E.focus(b.filter()),E.filter(b.filter()),a.redrawAll(b.chartGroup())})}),b):E},b},a.colorChart=function(b){var c=d3.scale.category20c(),d=[0,c.range().length],e=function(e){var f=d;"function"==typeof d&&(f=d.call(b));var g=f[0],h=f[1];if(isNaN(e)&&(e=0),!a.utils.isNumber(h))return c(e);var i=b.colors().range().length,j=(h-g)/i,k=Math.abs(Math.min(i-1,Math.round((e-g)/j)));return b.colors()(k)},f=function(a,b){return b};return b.colors=function(a){if(!arguments.length)return c;if(a instanceof Array){c=d3.scale.ordinal().range(a);for(var e=[],f=0;f<a.length;++f)e.push(f);c.domain(e)}else c=a;return d=[0,c.range().length],b},b.colorCalculator=function(a){return arguments.length?(e=a,b):e},b.getColor=function(a,b){return e(f(a,b))},b.colorAccessor=function(a){return arguments.length?(f=a,b):f},b.colorDomain=function(a){return arguments.length?(d=a,b):d},b},a.stackableChart=function(b){function c(){var a=[];if(b.x()){var c,d=b.x().domain();if(b.isOrdinal()){var e=d3.set(d);c=function(a){return e.has(a.x)}}else c=function(a){return a.x>=d[0]&&a.x<=d[d.length-1]};b.stackLayers().forEach(function(b){b.points.forEach(function(b){c(b)&&a.push(b)})})}else b.stackLayers().forEach(function(b){a=a.concat(b.points)});return a}function d(a,c){return b.getKeyAccessorByIndex(a)(c)}function e(a,c){return b.getValueAccessorByIndex(a)(c)}function f(a,b){for(var c=0;c<a.length;++c){var f=a[c],g=d(b,f),h=e(b,f);k.setDataPoint(b,c,{data:f,x:g,y:h,layer:b})}}var g,h,i,j,k=new a.utils.GroupStack,l=d3.layout.stack().offset("zero").order("default").values(function(a){return a.points});return b.stack=function(a,c,d){return arguments.length||k.clear(),"string"==typeof c?b._setGroupName(a,c,d):"function"==typeof c&&(d=c),k.setDefaultAccessor(b.valueAccessor()),k.addGroup(a,d),b.expireCache(),b},b.expireCache=function(){return g=null,h=null,i=null,j=null,b},b.allGroups=function(){if(null===g){g=[],g.push(b.group());for(var a=0;a<k.size();++a)g.push(k.getGroupByIndex(a))}return g},b.allValueAccessors=function(){if(null===h){h=[],h.push(b.valueAccessor());for(var a=0;a<k.size();++a)h.push(k.getAccessorByIndex(a))}return h},b.getValueAccessorByIndex=function(a){return b.allValueAccessors()[a]},b.yAxisMin=function(){var d,e=c();return d=d3.min(e,function(a){return a.y+a.y0<a.y0?a.y+a.y0:a.y0}),d=a.utils.subtract(d,b.yAxisPadding())},b.yAxisMax=function(){var d,e=c();return d=d3.max(e,function(a){return a.y+a.y0}),d=a.utils.add(d,b.yAxisPadding())},b.allKeyAccessors=function(){if(null===i){i=[],i.push(b.keyAccessor());for(var a=0;a<k.size();++a)i.push(b.keyAccessor())}return i},b.getKeyAccessorByIndex=function(a){return b.allKeyAccessors()[a]},b.xAxisMin=function(){for(var c=null,d=b.allGroups(),e=0;e<d.length;++e){var f=d[e],g=a.utils.groupMin(f,b.getKeyAccessorByIndex(e));(null===c||c>g)&&(c=g)}return a.utils.subtract(c,b.xAxisPadding())},b.xAxisMax=function(){for(var c=null,d=b.allGroups(),e=0;e<d.length;++e){var f=d[e],g=a.utils.groupMax(f,b.getKeyAccessorByIndex(e));(null===c||g>c)&&(c=g)}return a.utils.add(c,b.xAxisPadding())},b.calculateDataPointMatrixForAll=function(){for(var a=b.allGroups(),c=0;c<a.length;++c){var d=a[c],e=d.all();f(e,c)}},b.getChartStack=function(){return k},a.override(b,"valueAccessor",function(a){return arguments.length?(b.expireCache(),b._valueAccessor(a)):b._valueAccessor()}),a.override(b,"keyAccessor",function(a){return arguments.length?(b.expireCache(),b._keyAccessor(a)):b._keyAccessor()}),b.stackLayout=function(a){return arguments.length?(l=a,b):l},b.stackLayers=function(a){return arguments.length?(j=a,void 0):(null===j&&(b.calculateDataPointMatrixForAll(),j=b.stackLayout()(k.toLayers())),j)},b.colorAccessor(function(a){return a.layer||a.index}),b.legendables=function(){var c=[];return g.forEach(function(d,e){c.push(a.utils.createLegendable(b,d,e,b.getValueAccessorByIndex(e)))}),c},b},a.abstractBubbleChart=function(b){var c=.3,d=10;b.BUBBLE_NODE_CLASS="node",b.BUBBLE_CLASS="bubble",b.MIN_RADIUS=10,b=a.colorChart(b),b.renderLabel(!0),b.renderTitle(!1);var e=d3.scale.linear().domain([0,100]),f=function(a){return a.r};b.r=function(a){return arguments.length?(e=a,b):e},b.radiusValueAccessor=function(a){return arguments.length?(f=a,b):f},b.rMin=function(){var a=d3.min(b.group().all(),function(a){return b.radiusValueAccessor()(a)});return a},b.rMax=function(){var a=d3.max(b.group().all(),function(a){return b.radiusValueAccessor()(a)});return a},b.bubbleR=function(a){var c=b.radiusValueAccessor()(a),d=b.r()(c);return(isNaN(d)||0>=c)&&(d=0),d};var g=function(a){return b.label()(a)},h=function(a){return b.bubbleR(a)>d?1:0};b.doRenderLabel=function(c){if(b.renderLabel()){var d=c.select("text");d.empty()&&(d=c.append("text").attr("text-anchor","middle").attr("dy",".3em").on("click",b.onClick)),d.attr("opacity",0).text(g),a.transition(d,b.transitionDuration()).attr("opacity",h)}},b.doUpdateLabels=function(c){if(b.renderLabel()){var d=c.selectAll("text").text(g);a.transition(d,b.transitionDuration()).attr("opacity",h)}};var i=function(a){return b.title()(a)};return b.doRenderTitles=function(a){if(b.renderTitle()){var c=a.select("title");c.empty()&&a.append("title").text(i)}},b.doUpdateTitles=function(a){b.renderTitle()&&a.selectAll("title").text(i)},b.minRadiusWithLabel=function(a){return arguments.length?(d=a,b):d},b.maxBubbleRelativeSize=function(a){return arguments.length?(c=a,b):c},b.initBubbleColor=function(c,d){return this[a.constants.NODE_INDEX_NAME]=d,b.getColor(c,d)},b.updateBubbleColor=function(c){return b.getColor(c,this[a.constants.NODE_INDEX_NAME])},b.fadeDeselectedArea=function(){b.hasFilter()?b.selectAll("g."+b.BUBBLE_NODE_CLASS).each(function(a){b.isSelectedNode(a)?b.highlightSelected(this):b.fadeDeselected(this)}):b.selectAll("g."+b.BUBBLE_NODE_CLASS).each(function(){b.resetHighlight(this)})},b.isSelectedNode=function(a){return b.hasFilter(a.key)},b.onClick=function(c){var d=c.key;a.events.trigger(function(){b.filter(d),a.redrawAll(b.chartGroup())})},b},a.pieChart=function(b,c){function d(){if(C.dataSet()){var a=p();w=w?w:d3.min([C.width(),C.height()])/2;var b=C.buildArcs(),c=a(C.assembleCappedData());if(x){var d=x.selectAll("g."+z).data(c);e(d,b,c),j(c,b),n(d),o()}}}function e(a,b,c){var d=f(a);g(d,b),h(d),i(c,b)}function f(a){var b=a.enter().append("g").attr("class",function(a,b){return z+" _"+b});return b}function g(a,b){var c=a.append("path").attr("fill",function(a,b){return C.getColor(a,b)}).on("click",u).attr("d",function(a,c){return v(a,c,b)});c.transition().duration(C.transitionDuration()).attrTween("d",s)}function h(a){C.renderTitle()&&a.append("title").text(function(a){return C.title()(a)})}function i(b,c){if(C.renderLabel()){var d=x.selectAll("text."+z).data(b);d.exit().remove();var e=d.enter().append("text").attr("class",function(a,b){return z+" _"+b}).on("click",u);a.transition(e,C.transitionDuration()).attr("transform",function(a){a.innerRadius=C.innerRadius(),a.outerRadius=w;var b=c.centroid(a);return isNaN(b[0])||isNaN(b[1])?"translate(0,0)":"translate("+b+")"}).attr("text-anchor","middle").text(function(a){var b=a.data;return r(b)||q(a)?"":C.label()(a)})}}function j(a,b){k(a,b),l(a,b),m(a)}function k(b,c){var d=x.selectAll("g."+z).data(b).select("path").attr("d",function(a,b){return v(a,b,c)});a.transition(d,C.transitionDuration(),function(a){a.attrTween("d",s)}).attr("fill",function(a,b){return C.getColor(a,b)})}function l(b,c){if(C.renderLabel()){var d=x.selectAll("text."+z).data(b);a.transition(d,C.transitionDuration()).attr("transform",function(a){a.innerRadius=C.innerRadius(),a.outerRadius=w;var b=c.centroid(a);return isNaN(b[0])||isNaN(b[1])?"translate(0,0)":"translate("+b+")"}).attr("text-anchor","middle").text(function(a){var b=a.data;return r(b)||q(a)?"":C.label()(a)})}}function m(a){C.renderTitle()&&x.selectAll("g."+z).data(a).select("title").text(function(a){return C.title()(a)})}function n(a){a.exit().remove()}function o(){C.hasFilter()?C.selectAll("g."+z).each(function(a){C.isSelectedSlice(a)?C.highlightSelected(this):C.fadeDeselected(this)}):C.selectAll("g."+z).each(function(){C.resetHighlight(this)})}function p(){return d3.layout.pie().sort(null).value(function(a){return C.valueAccessor()(a)})}function q(a){var b=a.endAngle-a.startAngle;return isNaN(b)||B>b}function r(a){return 0===C.valueAccessor()(a)}function s(a){a.innerRadius=C.innerRadius();var b=this._current;t(b)&&(b={startAngle:0,endAngle:0});var c=d3.interpolate(b,a);return this._current=c(0),function(a){return v(c(a),0,C.buildArcs())}}function t(a){return!a||isNaN(a.startAngle)||isNaN(a.endAngle)}function u(a){C.onClick(a.data)}function v(a,b,c){var d=c(a,b);return d.indexOf("NaN")>=0&&(d="M0,0"),d}var w,x,y=.5,z="pie-slice",A=0,B=y,C=a.capped(a.colorChart(a.baseChart({})));return C.slicesCap=C.cap,C.label(function(a){return C.keyAccessor()(a.data)}),C.renderLabel(!0),C.title(function(a){return C.keyAccessor()(a.data)+": "+C.valueAccessor()(a.data)}),C.transitionDuration(350),C.doRender=function(){return C.resetSvg(),x=C.svg().append("g").attr("transform","translate("+C.cx()+","+C.cy()+")"),d(),C},C.innerRadius=function(a){return arguments.length?(A=a,C):A},C.radius=function(a){return arguments.length?(w=a,C):w},C.cx=function(){return C.width()/2},C.cy=function(){return C.height()/2},C.buildArcs=function(){return d3.svg.arc().outerRadius(w).innerRadius(A)},C.isSelectedSlice=function(a){return C.hasFilter(C.keyAccessor()(a.data))},C.doRedraw=function(){return d(),C},C.minAngleForLabel=function(a){return arguments.length?(B=a,C):B},C.anchor(b,c)},a.barChart=function(b,c){function d(b){return a.utils.safeNumber(Math.abs(m.y()(b.y+b.y0)-m.y()(b.y0)))}function e(b,c){var e=b.selectAll("rect.bar").data(c.points);e.enter().append("rect").attr("class","bar").attr("fill",m.getColor).append("title").text(m.title()),m.isOrdinal()&&e.on("click",h),a.transition(e,m.transitionDuration()).attr("x",function(b){var c=m.x()(b.x);return(o||m.isOrdinal())&&(c-=j/2),a.utils.safeNumber(c)}).attr("y",function(b){var c=m.y()(b.y+b.y0);return b.y<0&&(c-=d(b)),a.utils.safeNumber(c)}).attr("width",j).attr("height",function(a){return d(a)}).select("title").text(m.title()),a.transition(e.exit(),m.transitionDuration()).attr("height",0).remove()}function f(){if(void 0===j){var a=m.isOrdinal()?g()+1:g(),b=Math.floor((m.xAxisLength()-(a-1)*n)/a);
 (1/0==b||isNaN(b)||k>b)&&(b=k),j=b}}function g(){return void 0===i&&(i=m.xUnitCount()),i}function h(a){m.onClick(a.data)}var i,j,k=1,l=2,m=a.stackableChart(a.coordinateGridChart({})),n=l,o=!1;return a.override(m,"rescale",function(){m._rescale(),i=void 0,j=void 0,g()}),m.plotData=function(){var a=m.chartBodyG().selectAll("g.stack").data(m.stackLayers());f(),a.enter().append("g").attr("class",function(a,b){return"stack _"+b}),a.each(function(a,b){var c=d3.select(this);e(c,a,b)}),m.stackLayers(null)},m.fadeDeselectedArea=function(){var b=m.chartBodyG().selectAll("rect.bar"),c=m.brush().extent();if(m.isOrdinal())m.hasFilter()?(b.classed(a.constants.SELECTED_CLASS,function(a){return m.hasFilter(m.keyAccessor()(a.data))}),b.classed(a.constants.DESELECTED_CLASS,function(a){return!m.hasFilter(m.keyAccessor()(a.data))})):(b.classed(a.constants.SELECTED_CLASS,!1),b.classed(a.constants.DESELECTED_CLASS,!1));else if(m.brushIsEmpty(c))b.classed(a.constants.DESELECTED_CLASS,!1);else{var d=c[0],e=c[1];b.classed(a.constants.DESELECTED_CLASS,function(a){var b=m.keyAccessor()(a.data);return d>b||b>=e})}},m.centerBar=function(a){return arguments.length?(o=a,m):o},m.gap=function(a){return arguments.length?(n=a,m):n},m.extendBrush=function(){var a=m.brush().extent();return m.round()&&!o&&(a[0]=a.map(m.round())[0],a[1]=a.map(m.round())[1],m.chartBodyG().select(".brush").call(m.brush().extent(a))),a},m.legendHighlight=function(a){m.select(".chart-body").selectAll("rect.bar").filter(function(){return d3.select(this).attr("fill")==a.color}).classed("highlight",!0),m.select(".chart-body").selectAll("rect.bar").filter(function(){return d3.select(this).attr("fill")!=a.color}).classed("fadeout",!0)},m.legendReset=function(a){m.selectAll(".chart-body").selectAll("rect.bar").filter(function(){return d3.select(this).attr("fill")==a.color}).classed("highlight",!1),m.selectAll(".chart-body").selectAll("rect.bar").filter(function(){return d3.select(this).attr("fill")!=a.color}).classed("fadeout",!1)},m.anchor(b,c)},a.lineChart=function(b,c){function d(b,c){var d=d3.svg.line().x(function(a){return s.x()(a.x)}).y(function(a){return s.y()(a.y+a.y0)}).interpolate(v).tension(w);m&&d.defined(m),b.append("path").attr("class","line").attr("stroke",s.getColor).attr("fill",s.getColor),a.transition(c.select("path.line"),s.transitionDuration()).attr("d",function(a){return f(d(a.points))})}function e(b,c){if(t){var d=d3.svg.area().x(function(a){return s.x()(a.x)}).y(function(a){return s.y()(a.y+a.y0)}).y0(function(a){return s.y()(a.y0)}).interpolate(v).tension(w);m&&d.defined(m),b.append("path").attr("class","area").attr("fill",s.getColor).attr("d",function(a){return f(d(a.points))}),a.transition(c.select("path.area"),s.transitionDuration()).attr("d",function(a){return f(d(a.points))})}}function f(a){return!a||a.indexOf("NaN")>=0?"M0,0":a}function g(b){s.brushOn()||b.each(function(){var b=d3.select(this),c=b.select("g."+o);c.empty()&&(c=b.append("g").attr("class",o)),h(c);var d=c.selectAll("circle."+p).data(c.datum().points);d.enter().append("circle").attr("class",p).attr("r",u).attr("fill",s.getColor).style("fill-opacity",1e-6).style("stroke-opacity",1e-6).on("mousemove",function(){var a=d3.select(this);i(a),j(a,c)}).on("mouseout",function(){var a=d3.select(this);k(a),l(c)}).append("title").text(s.title()),d.attr("cx",function(b){return a.utils.safeNumber(s.x()(b.x))}).attr("cy",function(b){return a.utils.safeNumber(s.y()(b.y+b.y0))}).select("title").text(s.title()),d.exit().remove()})}function h(a){var b=a.select("path."+q).empty()?a.append("path").attr("class",q):a.select("path."+q);b.style("display","none").attr("stroke-dasharray","5,5");var c=a.select("path."+r).empty()?a.append("path").attr("class",r):a.select("path."+r);c.style("display","none").attr("stroke-dasharray","5,5")}function i(a){return a.style("fill-opacity",.8),a.style("stroke-opacity",.8),a}function j(a,b){var c=a.attr("cx"),d=a.attr("cy");b.select("path."+q).style("display","").attr("d","M0 "+d+"L"+c+" "+d),b.select("path."+r).style("display","").attr("d","M"+c+" "+s.yAxisHeight()+"L"+c+" "+d)}function k(a){a.style("fill-opacity",1e-6).style("stroke-opacity",1e-6)}function l(a){a.select("path."+q).style("display","none"),a.select("path."+r).style("display","none")}var m,n=5,o="dc-tooltip",p="dot",q="yRef",r="xRef",s=a.stackableChart(a.coordinateGridChart({})),t=!1,u=n,v="linear",w=.7;return s.transitionDuration(500),s.plotData=function(){var a=s.chartBodyG().selectAll("g.stack").data(s.stackLayers()),b=a.enter().append("g").attr("class",function(a,b){return"stack _"+b});d(b,a),e(b,a),g(a),s.stackLayers(null)},s.interpolate=function(a){return arguments.length?(v=a,s):v},s.tension=function(a){return arguments.length?(w=a,s):w},s.defined=function(a){return arguments.length?(m=a,s):m},s.renderArea=function(a){return arguments.length?(t=a,s):t},s.dotRadius=function(a){return arguments.length?(u=a,s):u},s.legendHighlight=function(a){s.selectAll(".chart-body").selectAll("path").filter(function(){return d3.select(this).attr("fill")==a.color}).classed("highlight",!0),s.selectAll(".chart-body").selectAll("path").filter(function(){return d3.select(this).attr("fill")!=a.color}).classed("fadeout",!0)},s.legendReset=function(a){s.selectAll(".chart-body").selectAll("path").filter(function(){return d3.select(this).attr("fill")==a.color}).classed("highlight",!1),s.selectAll(".chart-body").selectAll("path").filter(function(){return d3.select(this).attr("fill")!=a.color}).classed("fadeout",!1)},s.anchor(b,c)},a.dataCount=function(b,c){var d=d3.format(",d"),e=a.baseChart({});return e.doRender=function(){return e.selectAll(".total-count").text(d(e.dimension().size())),e.selectAll(".filter-count").text(d(e.group().value())),e},e.doRedraw=function(){return e.doRender()},e.anchor(b,c)},a.dataTable=function(b,c){function d(){var a=l.root().selectAll("tbody").data(e(),function(a){return l.keyAccessor()(a)}),b=a.enter().append("tbody");return b.append("tr").attr("class",k).append("td").attr("class",h).attr("colspan",n.length).html(function(a){return l.keyAccessor()(a)}),a.exit().remove(),b}function e(){g||(g=crossfilter.quicksort.by(o));var a=l.dimension().top(m);return d3.nest().key(l.group()).sortKeys(p).sortValues(p).entries(g(a,0,a.length))}function f(a){for(var b=a.order().selectAll("tr."+i).data(function(a){return a.values}),c=b.enter().append("tr").attr("class",i),d=0;d<n.length;++d){var e=n[d];c.append("td").attr("class",j+" _"+d).html(function(a){return e(a)})}return b.exit().remove(),b}var g,h="dc-table-label",i="dc-table-row",j="dc-table-column",k="dc-table-group",l=a.baseChart({}),m=25,n=[],o=function(a){return a},p=d3.ascending;return l.doRender=function(){return l.selectAll("tbody").remove(),f(d()),l},l.doRedraw=function(){return l.doRender()},l.size=function(a){return arguments.length?(m=a,l):m},l.columns=function(a){return arguments.length?(n=a,l):n},l.sortBy=function(a){return arguments.length?(o=a,l):o},l.order=function(a){return arguments.length?(p=a,l):p},l.anchor(b,c)},a.bubbleChart=function(b,c){function d(b){var c=b.enter().append("g");c.attr("class",i.BUBBLE_NODE_CLASS).attr("transform",k).append("circle").attr("class",function(a,b){return i.BUBBLE_CLASS+" _"+b}).on("click",i.onClick).attr("fill",i.initBubbleColor).attr("r",0),a.transition(b,i.transitionDuration()).attr("r",function(a){return i.bubbleR(a)}).attr("opacity",function(a){return i.bubbleR(a)>0?1:0}),i.doRenderLabel(c),i.doRenderTitles(c)}function e(b){a.transition(b,i.transitionDuration()).attr("transform",k).selectAll("circle."+i.BUBBLE_CLASS).attr("fill",i.updateBubbleColor).attr("r",function(a){return i.bubbleR(a)}).attr("opacity",function(a){return i.bubbleR(a)>0?1:0}),i.doUpdateLabels(b),i.doUpdateTitles(b)}function f(a){a.exit().remove()}function g(a){var b=i.x()(i.keyAccessor()(a));return isNaN(b)&&(b=0),b}function h(a){var b=i.y()(i.valueAccessor()(a));return isNaN(b)&&(b=0),b}var i=a.abstractBubbleChart(a.coordinateGridChart({})),j=!1;i.transitionDuration(750);var k=function(a){return"translate("+g(a)+","+h(a)+")"};return i.elasticRadius=function(a){return arguments.length?(j=a,i):j},i.plotData=function(){j&&i.r().domain([i.rMin(),i.rMax()]),i.r().range([i.MIN_RADIUS,i.xAxisLength()*i.maxBubbleRelativeSize()]);var a=i.chartBodyG().selectAll("g."+i.BUBBLE_NODE_CLASS).data(i.group().all());d(a),e(a),f(a),i.fadeDeselectedArea()},i.renderBrush=function(){},i.redrawBrush=function(){i.fadeDeselectedArea()},i.anchor(b,c)},a.compositeChart=function(b,c){function d(a,b){a._generateG(j.g()),a.g().attr("class",i+" _"+b)}function e(){for(var a=[],b=0;b<k.length;++b)a.push(k[b].yAxisMin());return a}function f(){for(var a=[],b=0;b<k.length;++b)a.push(k[b].yAxisMax());return a}function g(){for(var a=[],b=0;b<k.length;++b)a.push(k[b].xAxisMin());return a}function h(){for(var a=[],b=0;b<k.length;++b)a.push(k[b].xAxisMax());return a}var i="sub",j=a.coordinateGridChart({}),k=[];return j.transitionDuration(500),j.group({}),a.override(j,"_generateG",function(){for(var a=this.__generateG(),b=0;b<k.length;++b){var c=k[b];d(c,b),void 0===c.dimension()&&c.dimension(j.dimension()),void 0===c.group()&&c.group(j.group()),c.chartGroup(j.chartGroup()),c.svg(j.svg()),c.xUnits(j.xUnits()),c.transitionDuration(j.transitionDuration()),c.brushOn(j.brushOn())}return a}),j.plotData=function(){for(var a=0;a<k.length;++a){var b=k[a];void 0===b.g()&&d(b,a),b.x(j.x()),b.y(j.y()),b.xAxis(j.xAxis()),b.yAxis(j.yAxis()),b.plotData(),b.activateRenderlets()}},j.fadeDeselectedArea=function(){for(var a=0;a<k.length;++a){var b=k[a];b.brush(j.brush()),b.fadeDeselectedArea()}},j.compose=function(a){k=a;for(var b=0;b<k.length;++b){var c=k[b];c.height(j.height()),c.width(j.width()),c.margins(j.margins())}return j},j.children=function(){return k},j.yAxisMin=function(){return d3.min(e())},j.yAxisMax=function(){return a.utils.add(d3.max(f()),j.yAxisPadding())},j.xAxisMin=function(){return a.utils.subtract(d3.min(g()),j.xAxisPadding())},j.xAxisMax=function(){return a.utils.add(d3.max(h()),j.xAxisPadding())},j.legendables=function(){var b=[];return k.forEach(function(c,d){var e=c.legendables();e.length>1?b.push.apply(b,e):b.push(a.utils.createLegendable(c,c.group(),d,c.valueAccessor()))}),b},j.legendHighlight=function(a){for(var b=0;b<k.length;++b){var c=k[b];c.legendHighlight(a)}},j.legendReset=function(a){for(var b=0;b<k.length;++b){var c=k[b];c.legendReset(a)}},j.anchor(b,c)},a.geoChoroplethChart=function(b,c){function d(a){var b=e();if(f(a)){var c=g(a);m(c,a,b),n(c,a,b)}}function e(){for(var a={},b=o.group().all(),c=0;c<b.length;++c)a[o.keyAccessor()(b[c])]=o.valueAccessor()(b[c]);return a}function f(a){return l(a).keyAccessor}function g(b){var c=o.svg().selectAll(h(b)).classed("selected",function(a){return i(b,a)}).classed("deselected",function(a){return j(b,a)}).attr("class",function(c){var d=l(b).name,e=a.utils.nameToId(l(b).keyAccessor(c)),f=d+" "+e;return i(b,c)&&(f+=" selected"),j(b,c)&&(f+=" deselected"),f});return c}function h(a){return"g.layer"+a+" g."+l(a).name}function i(a,b){return o.hasFilter()&&o.hasFilter(k(a,b))}function j(a,b){return o.hasFilter()&&!o.hasFilter(k(a,b))}function k(a,b){return l(a).keyAccessor(b)}function l(a){return r[a]}function m(b,c,d){var e=b.select("path").attr("fill",function(){var a=d3.select(this).attr("fill");return a?a:"none"}).on("click",function(a){return o.onClick(a,c)});a.transition(e,o.transitionDuration()).attr("fill",function(a,b){return o.getColor(d[l(c).keyAccessor(a)],b)})}function n(a,b,c){o.renderTitle()&&a.selectAll("title").text(function(a){var d=k(b,a),e=c[d];return o.title()({key:d,value:e})})}var o=a.colorChart(a.baseChart({}));o.colorAccessor(function(a){return a});var p,q=d3.geo.path(),r=[];return o.doRender=function(){o.resetSvg();for(var a=0;a<r.length;++a){var b=o.svg().append("g").attr("class","layer"+a),c=b.selectAll("g."+l(a).name).data(l(a).data).enter().append("g").attr("class",l(a).name);c.append("path").attr("fill","white").attr("d",q),c.append("title"),d(a)}p=!1},o.onClick=function(b,c){var d=l(c).keyAccessor(b);a.events.trigger(function(){o.filter(d),a.redrawAll(o.chartGroup())})},o.doRedraw=function(){for(var a=0;a<r.length;++a)d(a),p&&o.svg().selectAll("g."+l(a).name+" path").attr("d",q);p=!1},o.overlayGeoJson=function(a,b,c){for(var d=0;d<r.length;++d)if(r[d].name==b)return r[d].data=a,r[d].keyAccessor=c,o;return r.push({name:b,data:a,keyAccessor:c}),o},o.projection=function(a){return q.projection(a),p=!0,o},o.geoJsons=function(){return r},o.removeGeoJson=function(a){for(var b=[],c=0;c<r.length;++c){var d=r[c];d.name!=a&&b.push(d)}return r=b,o},o.anchor(b,c)},a.bubbleOverlay=function(b,c){function d(){return i=m.select("g."+j),i.empty()&&(i=m.svg().append("g").attr("class",j)),i}function e(){var b=f();n.forEach(function(c){var d=g(c,b),e=d.select("circle."+l);e.empty()&&(e=d.append("circle").attr("class",l).attr("r",0).attr("fill",m.initBubbleColor).on("click",m.onClick)),a.transition(e,m.transitionDuration()).attr("r",function(a){return m.bubbleR(a)}),m.doRenderLabel(d),m.doRenderTitles(d)})}function f(){var a={};return m.group().all().forEach(function(b){a[m.keyAccessor()(b)]=b}),a}function g(b,c){var d=k+" "+a.utils.nameToId(b.name),e=i.select("g."+a.utils.nameToId(b.name));return e.empty()&&(e=i.append("g").attr("class",d).attr("transform","translate("+b.x+","+b.y+")")),e.datum(c[b.name]),e}function h(){var b=f();n.forEach(function(c){var d=g(c,b),e=d.select("circle."+l);a.transition(e,m.transitionDuration()).attr("r",function(a){return m.bubbleR(a)}).attr("fill",m.updateBubbleColor),m.doUpdateLabels(d),m.doUpdateTitles(d)})}var i,j="bubble-overlay",k="node",l="bubble",m=a.abstractBubbleChart(a.baseChart({})),n=[];return m.transitionDuration(750),m.radiusValueAccessor(function(a){return a.value}),m.point=function(a,b,c){return n.push({name:a,x:b,y:c}),m},m.doRender=function(){return i=d(),m.r().range([m.MIN_RADIUS,m.width()*m.maxBubbleRelativeSize()]),e(),m.fadeDeselectedArea(),m},m.doRedraw=function(){return h(),m.fadeDeselectedArea(),m},m.debug=function(b){if(b){var c=m.select("g."+a.constants.DEBUG_GROUP_CLASS);c.empty()&&(c=m.svg().append("g").attr("class",a.constants.DEBUG_GROUP_CLASS));var d=c.append("text").attr("x",10).attr("y",20);c.append("rect").attr("width",m.width()).attr("height",m.height()).on("mousemove",function(){var a=d3.mouse(c.node()),b=a[0]+", "+a[1];d.text(b)})}else m.selectAll(".debug").remove();return m},m.anchor(b,c),m},a.rowChart=function(b,c){function d(){if(!q||r){var a=d3.extent(s,x.valueAccessor());a[0]>0&&(a[0]=0),q=d3.scale.linear().domain(a).range([0,x.effectiveWidth()]),y.scale(q)}}function e(){var b=p.select("g.axis");d(),b.empty()&&(b=p.append("g").attr("class","axis").attr("transform","translate(0, "+x.effectiveHeight()+")")),a.transition(b,x.transitionDuration()).call(y)}function f(){p.selectAll("g.tick").select("line.grid-line").remove(),p.selectAll("g.tick").append("line").attr("class","grid-line").attr("x1",0).attr("y1",0).attr("x2",0).attr("y2",function(){return-x.effectiveHeight()})}function g(){s=x.assembleCappedData(),e(),f();var a=p.selectAll("g."+w).data(s);h(a),i(a),j(a)}function h(a){var b=a.enter().append("g").attr("class",function(a,b){return w+" _"+b});b.append("rect").attr("width",0),l(b),m(a)}function i(a){a.exit().remove()}function j(b){var c=s.length,d=(x.effectiveHeight()-(c+1)*v)/c,e=b.attr("transform",function(a,b){return"translate(0,"+((b+1)*v+b*d)+")"}).select("rect").attr("height",d).attr("fill",x.getColor).on("click",n).classed("deselected",function(a){return x.hasFilter()?!x.isSelectedRow(a):!1}).classed("selected",function(a){return x.hasFilter()?x.isSelectedRow(a):!1});a.transition(e,x.transitionDuration()).attr("width",function(a){var b=q(0)==-1/0?q(1):q(0);return Math.abs(b-q(x.valueAccessor()(a)))}).attr("transform",o),k(b),m(b)}function k(a){x.renderTitle()&&(a.selectAll("title").remove(),a.append("title").text(function(a){return x.title()(a)}))}function l(a){x.renderLabel()&&a.append("text").on("click",n)}function m(b){if(x.renderLabel()){var c=b.select("text").attr("x",t).attr("y",u).on("click",n).attr("class",function(a,b){return w+" _"+b}).text(function(a){return x.label()(a)});a.transition(c,x.transitionDuration()).attr("transform",o)}}function n(a){x.onClick(a)}function o(a){var b=q(x.valueAccessor()(a)),c=q(0),d=b>c?c:b;return"translate("+d+",0)"}var p,q,r,s,t=10,u=15,v=5,w="row",x=a.capped(a.marginable(a.colorChart(a.baseChart({})))),y=d3.svg.axis().orient("bottom");return x.rowsCap=x.cap,x.doRender=function(){return x.resetSvg(),p=x.svg().append("g").attr("transform","translate("+x.margins().left+","+x.margins().top+")"),g(),x},x.title(function(a){return x.keyAccessor()(a)+": "+x.valueAccessor()(a)}),x.label(function(a){return x.keyAccessor()(a)}),x.x=function(a){return arguments.length?(q=a,x):q},x.doRedraw=function(){return g(),x},x.xAxis=function(){return y},x.gap=function(a){return arguments.length?(v=a,x):v},x.elasticX=function(a){return arguments.length?(r=a,x):r},x.labelOffsetX=function(a){return arguments.length?(t=a,x):t},x.labelOffsetY=function(a){return arguments.length?(u=a,x):u},x.isSelectedRow=function(a){return x.hasFilter(x.keyAccessor()(a))},x.anchor(b,c)},a.legend=function(){function a(){return i+h}var b,c,d=2,e={},f=0,g=0,h=12,i=5;return e.parent=function(a){return arguments.length?(b=a,e):b},e.render=function(){c=b.svg().append("g").attr("class","dc-legend").attr("transform","translate("+f+","+g+")");var e=c.selectAll("g.dc-legend-item").data(b.legendables()).enter().append("g").attr("class","dc-legend-item").attr("transform",function(b,c){return"translate(0,"+c*a()+")"}).on("mouseover",function(a){b.legendHighlight(a)}).on("mouseout",function(a){b.legendReset(a)});e.append("rect").attr("width",h).attr("height",h).attr("fill",function(a){return a.color}),e.append("text").text(function(a){return a.name}).attr("x",h+d).attr("y",function(){return h/2+(this.clientHeight?this.clientHeight:13)/2-2})},e.x=function(a){return arguments.length?(f=a,e):f},e.y=function(a){return arguments.length?(g=a,e):g},e.gap=function(a){return arguments.length?(i=a,e):i},e.itemHeight=function(a){return arguments.length?(h=a,e):h},e},a.capped=function(b){var c=1/0,d="Others",e=function(a){var c=d3.sum(a,b.valueAccessor()),e=b.group().all(),f=d3.sum(e,b.valueAccessor()),g=a.map(b.keyAccessor()),h=e.map(b.keyAccessor()),i=d3.set(g),j=h.filter(function(a){return!i.has(a)});a.push({others:j,key:d,value:f-c})};return b.assembleCappedData=function(){if(1/0==c)return b.computeOrderedGroups();var a=b.group().top(c);return a=b.computeOrderedGroups(a),e&&e(a),a},b.cap=function(a){return arguments.length?(c=a,b):c},b.othersLabel=function(a){return arguments.length?(d=a,b):d},b.othersGrouper=function(a){return arguments.length?(e=a,b):e},a.override(b,"onClick",function(a){a.others&&a.others.forEach(function(a){b.filter(a)}),b._onClick(a)}),b},a.numberDisplay=function(b,c){var d="number-display",e=d3.format(".2s"),f=a.baseChart({});return f.dimension({}),f.value=function(){var a=f.group().all&&f.group().all()[0]||f.group().value();return f.valueAccessor()(a)},f.transitionDuration(250),f.doRender=function(){var a=f.value(),b=f.selectAll("."+d);return b.empty()&&(b=b.data([0]).enter().append("span").attr("class",d)),b.transition().duration(f.transitionDuration()).ease("quad-out-in").tween("text",function(){var b=d3.interpolateNumber(this.lastValue||0,a);return this.lastValue=a,function(a){this.textContent=f.formatNumber()(b(a))}}),f},f.doRedraw=function(){return f.doRender()},f.formatNumber=function(a){return arguments.length?(e=a,f):e},f.anchor(b,c)},a}();
 //# sourceMappingURL=dc.min.js.map
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/dc.min.js","/lib")
-},{"buffer":16,"oMfpAn":19}],58:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],95:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
@@ -61635,12 +64460,14 @@ ngettext = function(singular, plural, count) {
 };
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/gettext.js","/lib")
-},{"buffer":16,"oMfpAn":19}],59:[function(require,module,exports){
+},{"buffer":28,"oMfpAn":31}],96:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Window = require('global/window');
 
 // include all the libraries
 Window.autobahn = require('./autobahn.min');
+Window.$q = require('q');
+
 require('./angular');
 require('./sha512');
 
@@ -61650,7 +64477,7 @@ require('./dc.min');
 require('./gettext');
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/index.js","/lib")
-},{"./angular":52,"./autobahn.min":54,"./crossfilter.min":55,"./d3.min":56,"./dc.min":57,"./gettext":58,"./sha512":60,"buffer":16,"global/window":15,"oMfpAn":19}],60:[function(require,module,exports){
+},{"./angular":89,"./autobahn.min":91,"./crossfilter.min":92,"./d3.min":93,"./dc.min":94,"./gettext":95,"./sha512":97,"buffer":28,"global/window":26,"oMfpAn":31,"q":33}],97:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 (function() {/*
  A JavaScript implementation of the SHA family of hashes, as defined in FIPS
@@ -61686,4 +64513,4 @@ a?(q===h&&(h=$(m,g,a)),j=e(h,G(d))):"SHA-512"===a?(q===f&&(f=$(m,g,a)),j=e(f,G(d
 t=r.binLen,l=r.value):n("inputFormat must be HEX, TEXT, ASCII, or B64");a=8*j;b=j/4-1;j<t/8?(l=$(l,t,d),l[b]&=4294967040):j>t/8&&(l[b]&=4294967040);for(j=0;j<=b;j+=1)y[j]=l[j]^909522486,z[j]=l[j]^1549556828;d=$(z.concat($(y.concat(k),a+g,d)),a+p,d);return h(d,G(f))}};})();
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/lib/sha512.js","/lib")
-},{"buffer":16,"oMfpAn":19}]},{},[23])
+},{"buffer":28,"oMfpAn":31}]},{},[36])
