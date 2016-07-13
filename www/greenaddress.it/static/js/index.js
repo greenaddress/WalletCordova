@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
- * @license AngularJS v1.5.5
+ * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -134,7 +134,7 @@ function stripCommentsFromElement(element) {
   if (element instanceof jqLite) {
     switch (element.length) {
       case 0:
-        return [];
+        return element;
         break;
 
       case 1:
@@ -3215,8 +3215,6 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
         // may attempt more elements, but custom drivers are more particular
         for (var i = drivers.length - 1; i >= 0; i--) {
           var driverName = drivers[i];
-          if (!$injector.has(driverName)) continue; // TODO(matsko): remove this check
-
           var factory = $injector.get(driverName);
           var driver = factory(animationDetails);
           if (driver) {
@@ -3245,7 +3243,8 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
         }
 
         function update(element) {
-          getRunner(element).setHost(newRunner);
+          var runner = getRunner(element);
+          if (runner) runner.setHost(newRunner);
         }
       }
 
@@ -4158,11 +4157,44 @@ module.exports = 'ngAnimate';
 },{"./angular-animate":1,"buffer":28,"oMfpAn":31}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
- * @license AngularJS v1.5.5
+ * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {'use strict';
+
+/* global shallowCopy: true */
+
+/**
+ * Creates a shallow copy of an object, an array or a primitive.
+ *
+ * Assumes that there are no proto properties for objects.
+ */
+function shallowCopy(src, dst) {
+  if (isArray(src)) {
+    dst = dst || [];
+
+    for (var i = 0, ii = src.length; i < ii; i++) {
+      dst[i] = src[i];
+    }
+  } else if (isObject(src)) {
+    dst = dst || {};
+
+    for (var key in src) {
+      if (!(key.charAt(0) === '$' && key.charAt(1) === '$')) {
+        dst[key] = src[key];
+      }
+    }
+  }
+
+  return dst || src;
+}
+
+/* global shallowCopy: false */
+
+// There are necessary for `shallowCopy()` (included via `src/shallowCopy.js`)
+var isArray = angular.isArray;
+var isObject = angular.isObject;
 
 /**
  * @ngdoc module
@@ -4318,7 +4350,7 @@ function $RouteProvider() {
    */
   this.when = function(path, route) {
     //copy original route object to preserve params inherited from proto chain
-    var routeCopy = angular.copy(route);
+    var routeCopy = shallowCopy(route);
     if (angular.isUndefined(routeCopy.reloadOnSearch)) {
       routeCopy.reloadOnSearch = true;
     }
@@ -4763,35 +4795,7 @@ function $RouteProvider() {
         }
 
         $q.when(nextRoute).
-          then(function() {
-            if (nextRoute) {
-              var locals = angular.extend({}, nextRoute.resolve),
-                  template, templateUrl;
-
-              angular.forEach(locals, function(value, key) {
-                locals[key] = angular.isString(value) ?
-                    $injector.get(value) : $injector.invoke(value, null, null, key);
-              });
-
-              if (angular.isDefined(template = nextRoute.template)) {
-                if (angular.isFunction(template)) {
-                  template = template(nextRoute.params);
-                }
-              } else if (angular.isDefined(templateUrl = nextRoute.templateUrl)) {
-                if (angular.isFunction(templateUrl)) {
-                  templateUrl = templateUrl(nextRoute.params);
-                }
-                if (angular.isDefined(templateUrl)) {
-                  nextRoute.loadedTemplateUrl = $sce.valueOf(templateUrl);
-                  template = $templateRequest(templateUrl);
-                }
-              }
-              if (angular.isDefined(template)) {
-                locals['$template'] = template;
-              }
-              return $q.all(locals);
-            }
-          }).
+          then(resolveLocals).
           then(function(locals) {
             // after route change
             if (nextRoute == $route.current) {
@@ -4807,6 +4811,41 @@ function $RouteProvider() {
             }
           });
       }
+    }
+
+    function resolveLocals(route) {
+      if (route) {
+        var locals = angular.extend({}, route.resolve);
+        angular.forEach(locals, function(value, key) {
+          locals[key] = angular.isString(value) ?
+              $injector.get(value) :
+              $injector.invoke(value, null, null, key);
+        });
+        var template = getTemplateFor(route);
+        if (angular.isDefined(template)) {
+          locals['$template'] = template;
+        }
+        return $q.all(locals);
+      }
+    }
+
+
+    function getTemplateFor(route) {
+      var template, templateUrl;
+      if (angular.isDefined(template = route.template)) {
+        if (angular.isFunction(template)) {
+          template = template(route.params);
+        }
+      } else if (angular.isDefined(templateUrl = route.templateUrl)) {
+        if (angular.isFunction(templateUrl)) {
+          templateUrl = templateUrl(route.params);
+        }
+        if (angular.isDefined(templateUrl)) {
+          route.loadedTemplateUrl = $sce.valueOf(templateUrl);
+          template = $templateRequest(templateUrl);
+        }
+      }
+      return template;
     }
 
 
@@ -5832,7 +5871,7 @@ module.exports = 'duScroll';
 },{"./angular-scroll":5,"angular":12,"buffer":28,"oMfpAn":31}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
- * @license AngularJS v1.5.5
+ * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -6574,7 +6613,7 @@ module.exports = 'ngTouch';
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
- * Version: 1.3.2 - 2016-04-14
+ * Version: 1.3.3 - 2016-05-22
  * License: MIT
  */angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.collapse","ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.buttons","ui.bootstrap.carousel","ui.bootstrap.dateparser","ui.bootstrap.isClass","ui.bootstrap.datepicker","ui.bootstrap.position","ui.bootstrap.datepickerPopup","ui.bootstrap.debounce","ui.bootstrap.dropdown","ui.bootstrap.stackedMap","ui.bootstrap.modal","ui.bootstrap.paging","ui.bootstrap.pager","ui.bootstrap.pagination","ui.bootstrap.tooltip","ui.bootstrap.popover","ui.bootstrap.progressbar","ui.bootstrap.rating","ui.bootstrap.tabs","ui.bootstrap.timepicker","ui.bootstrap.typeahead"]);
 angular.module("ui.bootstrap.tpls", ["uib/template/accordion/accordion-group.html","uib/template/accordion/accordion.html","uib/template/alert/alert.html","uib/template/carousel/carousel.html","uib/template/carousel/slide.html","uib/template/datepicker/datepicker.html","uib/template/datepicker/day.html","uib/template/datepicker/month.html","uib/template/datepicker/year.html","uib/template/datepickerPopup/popup.html","uib/template/modal/backdrop.html","uib/template/modal/window.html","uib/template/pager/pager.html","uib/template/pagination/pagination.html","uib/template/tooltip/tooltip-html-popup.html","uib/template/tooltip/tooltip-popup.html","uib/template/tooltip/tooltip-template-popup.html","uib/template/popover/popover-html.html","uib/template/popover/popover-template.html","uib/template/popover/popover.html","uib/template/progressbar/bar.html","uib/template/progressbar/progress.html","uib/template/progressbar/progressbar.html","uib/template/rating/rating.html","uib/template/tabs/tab.html","uib/template/tabs/tabset.html","uib/template/timepicker/timepicker.html","uib/template/typeahead/typeahead-match.html","uib/template/typeahead/typeahead-popup.html"]);
@@ -6806,13 +6845,23 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     link: function(scope, element, attrs, controller) {
       scope.$watch(function() { return controller[attrs.uibAccordionTransclude]; }, function(heading) {
         if (heading) {
-          var elem = angular.element(element[0].querySelector('[uib-accordion-header]'));
+          var elem = angular.element(element[0].querySelector(getHeaderSelectors()));
           elem.html('');
           elem.append(heading);
         }
       });
     }
   };
+
+  function getHeaderSelectors() {
+      return 'uib-accordion-header,' +
+          'data-uib-accordion-header,' +
+          'x-uib-accordion-header,' +
+          'uib\\:accordion-header,' +
+          '[uib-accordion-header],' +
+          '[data-uib-accordion-header],' +
+          '[x-uib-accordion-header]';
+  }
 });
 
 angular.module('ui.bootstrap.alert', [])
@@ -7756,8 +7805,9 @@ angular.module('ui.bootstrap.dateparser', [])
     return date && timezone ? convertTimezoneToLocal(date, timezone, true) : date;
   }
 
-  //https://github.com/angular/angular.js/blob/4daafd3dbe6a80d578f5a31df1bb99c77559543e/src/Angular.js#L1207
+  //https://github.com/angular/angular.js/blob/622c42169699ec07fc6daaa19fe6d224e5d2f70e/src/Angular.js#L1207
   function timezoneToOffset(timezone, fallback) {
+    timezone = timezone.replace(/:/g, '');
     var requestedTimezoneOffset = Date.parse('Jan 01, 1970 00:00:00 ' + timezone) / 60000;
     return isNaN(requestedTimezoneOffset) ? fallback : requestedTimezoneOffset;
   }
@@ -7770,8 +7820,9 @@ angular.module('ui.bootstrap.dateparser', [])
 
   function convertTimezoneToLocal(date, timezone, reverse) {
     reverse = reverse ? -1 : 1;
-    var timezoneOffset = timezoneToOffset(timezone, date.getTimezoneOffset());
-    return addDateMinutes(date, reverse * (timezoneOffset - date.getTimezoneOffset()));
+    var dateTimezoneOffset = date.getTimezoneOffset();
+    var timezoneOffset = timezoneToOffset(timezone, dateTimezoneOffset);
+    return addDateMinutes(date, reverse * (timezoneOffset - dateTimezoneOffset));
   }
 }]);
 
@@ -8043,8 +8094,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       self.activeDate = new Date();
     }
 
-    this.activeDate = ngModelCtrl.$modelValue ?
-      dateParser.fromTimezone(new Date(ngModelCtrl.$modelValue), ngModelOptions.timezone) :
+    var date = ngModelCtrl.$modelValue ? new Date(ngModelCtrl.$modelValue) : new Date();
+    this.activeDate = !isNaN(date) ?
+      dateParser.fromTimezone(date, ngModelOptions.timezone) :
       dateParser.fromTimezone(new Date(), ngModelOptions.timezone);
 
     ngModelCtrl.$render = function() {
@@ -9249,11 +9301,11 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
           return value;
         }
 
-        $scope.date = dateParser.fromTimezone(value, timezone);
-
-        if (angular.isNumber($scope.date)) {
-          $scope.date = new Date($scope.date);
+        if (angular.isNumber(value)) {
+          value = new Date(value);
         }
+
+        $scope.date = dateParser.fromTimezone(value, timezone);
 
         return dateParser.filter($scope.date, dateFormat);
       });
@@ -9789,7 +9841,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     if (appendTo && self.dropdownMenu) {
       var pos = $position.positionElements($element, self.dropdownMenu, 'bottom-left', true),
         css,
-        rightalign;
+        rightalign,
+        scrollbarWidth;
 
       css = {
         top: pos.top + 'px',
@@ -9802,7 +9855,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         css.right = 'auto';
       } else {
         css.left = 'auto';
-        css.right = window.innerWidth -
+        scrollbarWidth = $position.scrollbarWidth(true);
+        css.right = window.innerWidth - scrollbarWidth -
           (pos.left + $element.prop('offsetWidth')) + 'px';
       }
 
@@ -10689,29 +10743,26 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
                 //controllers
                 if (modalOptions.controller) {
                   ctrlLocals.$scope = modalScope;
+                  ctrlLocals.$scope.$resolve = {};
                   ctrlLocals.$uibModalInstance = modalInstance;
                   angular.forEach(tplAndVars[1], function(value, key) {
                     ctrlLocals[key] = value;
+                    ctrlLocals.$scope.$resolve[key] = value;
                   });
 
                   // the third param will make the controller instantiate later,private api
                   // @see https://github.com/angular/angular.js/blob/master/src/ng/controller.js#L126
-                  ctrlInstantiate = $controller(modalOptions.controller, ctrlLocals, true);
-                  if (modalOptions.controllerAs) {
+                  ctrlInstantiate = $controller(modalOptions.controller, ctrlLocals, true, modalOptions.controllerAs);
+                  if (modalOptions.controllerAs && modalOptions.bindToController) {
                     ctrlInstance = ctrlInstantiate.instance;
-
-                    if (modalOptions.bindToController) {
-                      ctrlInstance.$close = modalScope.$close;
-                      ctrlInstance.$dismiss = modalScope.$dismiss;
-                      angular.extend(ctrlInstance, providedScope);
-                    }
-
-                    ctrlInstance = ctrlInstantiate();
-
-                    modalScope[modalOptions.controllerAs] = ctrlInstance;
-                  } else {
-                    ctrlInstance = ctrlInstantiate();
+                    ctrlInstance.$close = modalScope.$close;
+                    ctrlInstance.$dismiss = modalScope.$dismiss;
+                    angular.extend(ctrlInstance, {
+                      $resolve: ctrlLocals.$scope.$resolve
+                    }, providedScope);
                   }
+
+                  ctrlInstance = ctrlInstantiate();
 
                   if (angular.isFunction(ctrlInstance.$onInit)) {
                     ctrlInstance.$onInit();
@@ -12017,7 +12068,8 @@ angular.module('ui.bootstrap.tabs', [])
       var previousSelected = ctrl.tabs[previousIndex];
       if (previousSelected) {
         previousSelected.tab.onDeselect({
-          $event: evt
+          $event: evt,
+          $selectedIndex: index
         });
         if (evt && evt.isDefaultPrevented()) {
           return;
@@ -12033,7 +12085,7 @@ angular.module('ui.bootstrap.tabs', [])
         selected.tab.active = true;
         ctrl.active = selected.index;
         oldIndex = selected.index;
-      } else if (!selected && angular.isNumber(oldIndex)) {
+      } else if (!selected && angular.isDefined(oldIndex)) {
         ctrl.active = null;
         oldIndex = null;
       }
@@ -12057,7 +12109,7 @@ angular.module('ui.bootstrap.tabs', [])
       return 0;
     });
 
-    if (tab.index === ctrl.active || !angular.isNumber(ctrl.active) && ctrl.tabs.length === 1) {
+    if (tab.index === ctrl.active || !angular.isDefined(ctrl.active) && ctrl.tabs.length === 1) {
       var newActiveIndex = findTabIndex(tab.index);
       ctrl.select(newActiveIndex);
     }
@@ -12082,7 +12134,7 @@ angular.module('ui.bootstrap.tabs', [])
   };
 
   $scope.$watch('tabset.active', function(val) {
-    if (angular.isNumber(val) && val !== oldIndex) {
+    if (angular.isDefined(val) && val !== oldIndex) {
       ctrl.select(findTabIndex(val));
     }
   });
@@ -12120,9 +12172,6 @@ angular.module('ui.bootstrap.tabs', [])
         scope.$parent.$eval(attrs.vertical) : false;
       scope.justified = angular.isDefined(attrs.justified) ?
         scope.$parent.$eval(attrs.justified) : false;
-      if (angular.isUndefined(attrs.active)) {
-        scope.active = 0;
-      }
     }
   };
 })
@@ -12853,7 +12902,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     originalScope.$watch(attrs.typeaheadMinLength, function (newVal) {
         minLength = !newVal && newVal !== 0 ? 1 : newVal;
     });
-    
+
     //minimal wait time after last character typed before typeahead kicks-in
     var waitTime = originalScope.$eval(attrs.typeaheadWaitMs) || 0;
 
@@ -12865,6 +12914,12 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
 
     //binding to a variable that indicates if matches are being retrieved asynchronously
     var isLoadingSetter = $parse(attrs.typeaheadLoading).assign || angular.noop;
+
+    //a function to determine if an event should cause selection
+    var isSelectEvent = attrs.typeaheadShouldSelect ? $parse(attrs.typeaheadShouldSelect) : function(scope, vals) {
+      var evt = vals.$event;
+      return evt.which === 13 || evt.which === 9;
+    };
 
     //a callback executed when a match is selected
     var onSelectCallback = $parse(attrs.typeaheadOnSelect);
@@ -13181,13 +13236,15 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         return;
       }
 
+      var shouldSelect = isSelectEvent(originalScope, {$event: evt});
+
       /**
        * if there's nothing selected (i.e. focusFirst) and enter or tab is hit
        * or
        * shift + tab is pressed to bring focus to the previous element
        * then clear the results
        */
-      if (scope.activeIdx === -1 && (evt.which === 9 || evt.which === 13) || evt.which === 9 && !!evt.shiftKey) {
+      if (scope.activeIdx === -1 && shouldSelect || evt.which === 9 && !!evt.shiftKey) {
         resetMatches();
         scope.$digest();
         return;
@@ -13196,36 +13253,36 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       evt.preventDefault();
       var target;
       switch (evt.which) {
-        case 9:
-        case 13:
-          scope.$apply(function () {
-            if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
-              $$debounce(function() {
-                scope.select(scope.activeIdx, evt);
-              }, angular.isNumber(scope.debounceUpdate) ? scope.debounceUpdate : scope.debounceUpdate['default']);
-            } else {
-              scope.select(scope.activeIdx, evt);
-            }
-          });
-          break;
-        case 27:
+        case 27: // escape
           evt.stopPropagation();
 
           resetMatches();
           originalScope.$digest();
           break;
-        case 38:
+        case 38: // up arrow
           scope.activeIdx = (scope.activeIdx > 0 ? scope.activeIdx : scope.matches.length) - 1;
           scope.$digest();
           target = popUpEl.find('li')[scope.activeIdx];
           target.parentNode.scrollTop = target.offsetTop;
           break;
-        case 40:
+        case 40: // down arrow
           scope.activeIdx = (scope.activeIdx + 1) % scope.matches.length;
           scope.$digest();
           target = popUpEl.find('li')[scope.activeIdx];
           target.parentNode.scrollTop = target.offsetTop;
           break;
+        default:
+          if (shouldSelect) {
+            scope.$apply(function() {
+              if (angular.isNumber(scope.debounceUpdate) || angular.isObject(scope.debounceUpdate)) {
+                $$debounce(function() {
+                  scope.select(scope.activeIdx, evt);
+                }, angular.isNumber(scope.debounceUpdate) ? scope.debounceUpdate : scope.debounceUpdate['default']);
+              } else {
+                scope.select(scope.activeIdx, evt);
+              }
+            });
+          }
       }
     });
 
@@ -13910,7 +13967,7 @@ module.exports = 'ui.bootstrap';
 },{"./dist/ui-bootstrap-tpls":9,"buffer":28,"oMfpAn":31}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
- * @license AngularJS v1.5.5
+ * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -13968,7 +14025,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.5.5/' +
+    message += '\nhttp://errors.angularjs.org/1.5.7/' +
       (module ? module + '/' : '') + code;
 
     for (i = SKIP_INDEXES, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -14037,7 +14094,6 @@ function minErr(module, ErrorConstructor) {
   includes: true,
   arrayRemove: true,
   copy: true,
-  shallowCopy: true,
   equals: true,
   csp: true,
   jq: true,
@@ -14427,12 +14483,22 @@ noop.$inject = [];
  * functional style.
  *
    ```js
-     function transformer(transformationFn, value) {
-       return (transformationFn || angular.identity)(value);
-     };
+   function transformer(transformationFn, value) {
+     return (transformationFn || angular.identity)(value);
+   };
+
+   // E.g.
+   function getResult(fn, input) {
+     return (fn || angular.identity)(input);
+   };
+
+   getResult(function(n) { return n * 2; }, 21);   // returns 42
+   getResult(null, 21);                            // returns 21
+   getResult(undefined, 21);                       // returns 21
    ```
-  * @param {*} value to be returned.
-  * @returns {*} the value passed in.
+ *
+ * @param {*} value to be returned.
+ * @returns {*} the value passed in.
  */
 function identity($) {return $;}
 identity.$inject = [];
@@ -14677,8 +14743,8 @@ var escapeForRegexp = function(s) {
  */
 function isElement(node) {
   return !!(node &&
-    (node.nodeName  // we are a direct element
-    || (node.prop && node.attr && node.find)));  // we have an on and find method part of jQuery API
+    (node.nodeName  // We are a direct element.
+    || (node.prop && node.attr && node.find)));  // We have an on and find method part of jQuery API.
 }
 
 /**
@@ -14903,31 +14969,6 @@ function copy(source, destination) {
       return source.cloneNode(true);
     }
   }
-}
-
-/**
- * Creates a shallow copy of an object, an array or a primitive.
- *
- * Assumes that there are no proto properties for objects.
- */
-function shallowCopy(src, dst) {
-  if (isArray(src)) {
-    dst = dst || [];
-
-    for (var i = 0, ii = src.length; i < ii; i++) {
-      dst[i] = src[i];
-    }
-  } else if (isObject(src)) {
-    dst = dst || {};
-
-    for (var key in src) {
-      if (!(key.charAt(0) === '$' && key.charAt(1) === '$')) {
-        dst[key] = src[key];
-      }
-    }
-  }
-
-  return dst || src;
 }
 
 
@@ -15168,7 +15209,7 @@ function bind(self, fn) {
             : fn.call(self);
         };
   } else {
-    // in IE, native methods are not functions so they cannot be bound (note: they don't need to be)
+    // In IE, native methods are not functions so they cannot be bound (note: they don't need to be).
     return fn;
   }
 }
@@ -15205,6 +15246,27 @@ function toJsonReplacer(key, value) {
  * @param {boolean|number} [pretty=2] If set to true, the JSON output will contain newlines and whitespace.
  *    If set to an integer, the JSON output will contain that many spaces per indentation.
  * @returns {string|undefined} JSON-ified string representing `obj`.
+ * @knownIssue
+ *
+ * The Safari browser throws a `RangeError` instead of returning `null` when it tries to stringify a `Date`
+ * object with an invalid date value. The only reliable way to prevent this is to monkeypatch the
+ * `Date.prototype.toJSON` method as follows:
+ *
+ * ```
+ * var _DatetoJSON = Date.prototype.toJSON;
+ * Date.prototype.toJSON = function() {
+ *   try {
+ *     return _DatetoJSON.call(this);
+ *   } catch(e) {
+ *     if (e instanceof RangeError) {
+ *       return null;
+ *     }
+ *     throw e;
+ *   }
+ * };
+ * ```
+ *
+ * See https://github.com/angular/angular.js/pull/14221 for more information.
  */
 function toJson(obj, pretty) {
   if (isUndefined(obj)) return undefined;
@@ -15295,7 +15357,7 @@ function tryDecodeURIComponent(value) {
   try {
     return decodeURIComponent(value);
   } catch (e) {
-    // Ignore any invalid uri component
+    // Ignore any invalid uri component.
   }
 }
 
@@ -15540,7 +15602,7 @@ function angularInit(element, bootstrap) {
       module,
       config = {};
 
-  // The element `element` has priority over any other element
+  // The element `element` has priority over any other element.
   forEach(ngAttrPrefixes, function(prefix) {
     var name = prefix + 'app';
 
@@ -15634,7 +15696,7 @@ function bootstrap(element, modules, config) {
 
     if (element.injector()) {
       var tag = (element[0] === window.document) ? 'document' : startingTag(element);
-      //Encode angle brackets to prevent input from being sanitized to empty string #8683
+      // Encode angle brackets to prevent input from being sanitized to empty string #8683.
       throw ngMinErr(
           'btstrpd',
           "App already bootstrapped with this element '{0}'",
@@ -16249,7 +16311,34 @@ function setupModuleLoader(window) {
 
 }
 
-/* global: toDebugString: true */
+/* global shallowCopy: true */
+
+/**
+ * Creates a shallow copy of an object, an array or a primitive.
+ *
+ * Assumes that there are no proto properties for objects.
+ */
+function shallowCopy(src, dst) {
+  if (isArray(src)) {
+    dst = dst || [];
+
+    for (var i = 0, ii = src.length; i < ii; i++) {
+      dst[i] = src[i];
+    }
+  } else if (isObject(src)) {
+    dst = dst || {};
+
+    for (var key in src) {
+      if (!(key.charAt(0) === '$' && key.charAt(1) === '$')) {
+        dst[key] = src[key];
+      }
+    }
+  }
+
+  return dst || src;
+}
+
+/* global toDebugString: true */
 
 function serializeObject(obj) {
   var seen = [];
@@ -16390,11 +16479,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.5.5',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.5.7',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 5,
-  dot: 5,
-  codeName: 'material-conspiration'
+  dot: 7,
+  codeName: 'hexagonal-circumvolution'
 };
 
 
@@ -16590,7 +16679,7 @@ function publishExternalAPI(angular) {
  * ## Angular's jqLite
  * jqLite provides only the following jQuery methods:
  *
- * - [`addClass()`](http://api.jquery.com/addClass/)
+ * - [`addClass()`](http://api.jquery.com/addClass/) - Does not support a function as first argument
  * - [`after()`](http://api.jquery.com/after/)
  * - [`append()`](http://api.jquery.com/append/)
  * - [`attr()`](http://api.jquery.com/attr/) - Does not support functions as parameters
@@ -16617,12 +16706,12 @@ function publishExternalAPI(angular) {
  * - [`ready()`](http://api.jquery.com/ready/)
  * - [`remove()`](http://api.jquery.com/remove/)
  * - [`removeAttr()`](http://api.jquery.com/removeAttr/)
- * - [`removeClass()`](http://api.jquery.com/removeClass/)
+ * - [`removeClass()`](http://api.jquery.com/removeClass/) - Does not support a function as first argument
  * - [`removeData()`](http://api.jquery.com/removeData/)
  * - [`replaceWith()`](http://api.jquery.com/replaceWith/)
  * - [`text()`](http://api.jquery.com/text/)
- * - [`toggleClass()`](http://api.jquery.com/toggleClass/)
- * - [`triggerHandler()`](http://api.jquery.com/triggerHandler/) - Passes a dummy event object to handlers.
+ * - [`toggleClass()`](http://api.jquery.com/toggleClass/) - Does not support a function as first argument
+ * - [`triggerHandler()`](http://api.jquery.com/triggerHandler/) - Passes a dummy event object to handlers
  * - [`unbind()`](http://api.jquery.com/unbind/) - Does not support namespaces or event object as parameter
  * - [`val()`](http://api.jquery.com/val/)
  * - [`wrap()`](http://api.jquery.com/wrap/)
@@ -17782,8 +17871,16 @@ var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
 var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 var $injectorMinErr = minErr('$injector');
 
+function stringifyFn(fn) {
+  // Support: Chrome 50-51 only
+  // Creating a new string by adding `' '` at the end, to hack around some bug in Chrome v50/51
+  // (See https://github.com/angular/angular.js/issues/14487.)
+  // TODO (gkalpak): Remove workaround when Chrome v52 is released
+  return Function.prototype.toString.call(fn) + ' ';
+}
+
 function extractArgs(fn) {
-  var fnText = Function.prototype.toString.call(fn).replace(STRIP_COMMENTS, ''),
+  var fnText = stringifyFn(fn).replace(STRIP_COMMENTS, ''),
       args = fnText.match(ARROW_ARG) || fnText.match(FN_ARGS);
   return args;
 }
@@ -18051,18 +18148,20 @@ function annotate(fn, strictDi, name) {
  * these cases the {@link auto.$provide $provide} service has additional helper methods to register
  * services without specifying a provider.
  *
- * * {@link auto.$provide#provider provider(provider)} - registers a **service provider** with the
+ * * {@link auto.$provide#provider provider(name, provider)} - registers a **service provider** with the
  *     {@link auto.$injector $injector}
- * * {@link auto.$provide#constant constant(obj)} - registers a value/object that can be accessed by
+ * * {@link auto.$provide#constant constant(name, obj)} - registers a value/object that can be accessed by
  *     providers and services.
- * * {@link auto.$provide#value value(obj)} - registers a value/object that can only be accessed by
+ * * {@link auto.$provide#value value(name, obj)} - registers a value/object that can only be accessed by
  *     services, not providers.
- * * {@link auto.$provide#factory factory(fn)} - registers a service **factory function**, `fn`,
+ * * {@link auto.$provide#factory factory(name, fn)} - registers a service **factory function**
  *     that will be wrapped in a **service provider** object, whose `$get` property will contain the
  *     given factory function.
- * * {@link auto.$provide#service service(class)} - registers a **constructor function**, `class`
+ * * {@link auto.$provide#service service(name, Fn)} - registers a **constructor function**
  *     that will be wrapped in a **service provider** object, whose `$get` property will instantiate
  *      a new object using the given constructor function.
+ * * {@link auto.$provide#decorator decorator(name, decorFn)} - registers a **decorator function** that
+ *      will be able to modify or replace the implementation of another service.
  *
  * See the individual methods for more information and examples.
  */
@@ -18319,18 +18418,20 @@ function annotate(fn, strictDi, name) {
  * @name $provide#decorator
  * @description
  *
- * Register a **service decorator** with the {@link auto.$injector $injector}. A service decorator
+ * Register a **decorator function** with the {@link auto.$injector $injector}. A decorator function
  * intercepts the creation of a service, allowing it to override or modify the behavior of the
- * service. The object returned by the decorator may be the original service, or a new service
- * object which replaces or wraps and delegates to the original service.
+ * service. The return value of the decorator function may be the original service, or a new service
+ * that replaces (or wraps and delegates to) the original service.
+ *
+ * You can find out more about using decorators in the {@link guide/decorators} guide.
  *
  * @param {string} name The name of the service to decorate.
  * @param {Function|Array.<string|Function>} decorator This function will be invoked when the service needs to be
- *    instantiated and should return the decorated service instance. The function is called using
+ *    provided and should return the decorated service instance. The function is called using
  *    the {@link auto.$injector#invoke injector.invoke} method and is therefore fully injectable.
  *    Local injection arguments:
  *
- *    * `$delegate` - The original service instance, which can be monkey patched, configured,
+ *    * `$delegate` - The original service instance, which can be replaced, monkey patched, configured,
  *      decorated or delegated to.
  *
  * @example
@@ -18556,7 +18657,7 @@ function createInjector(modulesToLoad, strictDi) {
       // Workaround for MS Edge.
       // Check https://connect.microsoft.com/IE/Feedback/Details/2211653
       return typeof func === 'function'
-        && /^(?:class\s|constructor\()/.test(Function.prototype.toString.call(func));
+        && /^(?:class\s|constructor\()/.test(stringifyFn(func));
     }
 
     function invoke(fn, self, locals, serviceName) {
@@ -18647,7 +18748,7 @@ function $AnchorScrollProvider() {
    * When called, it scrolls to the element related to the specified `hash` or (if omitted) to the
    * current value of {@link ng.$location#hash $location.hash()}, according to the rules specified
    * in the
-   * [HTML5 spec](http://www.w3.org/html/wg/drafts/html/master/browsers.html#the-indicated-part-of-the-document).
+   * [HTML5 spec](http://www.w3.org/html/wg/drafts/html/master/browsers.html#an-indicated-part-of-the-document).
    *
    * It also watches the {@link ng.$location#hash $location.hash()} and automatically scrolls to
    * match any anchor whenever it changes. This can be disabled by calling
@@ -19297,7 +19398,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @param {DOMElement} parent the parent element which will append the element as
        *   a child (so long as the after element is not present)
        * @param {DOMElement=} after the sibling element after which the element will be appended
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19323,7 +19430,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @param {DOMElement} parent the parent element which will append the element as
        *   a child (so long as the after element is not present)
        * @param {DOMElement=} after the sibling element after which the element will be appended
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19344,7 +19457,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        * digest once the animation has completed.
        *
        * @param {DOMElement} element the element which will be removed from the DOM
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19368,7 +19487,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        *
        * @param {DOMElement} element the element which the CSS classes will be applied to
        * @param {string} className the CSS class(es) that will be added (multiple classes are separated via spaces)
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19392,7 +19517,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        *
        * @param {DOMElement} element the element which the CSS classes will be applied to
        * @param {string} className the CSS class(es) that will be removed (multiple classes are separated via spaces)
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19417,7 +19548,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @param {DOMElement} element the element which the CSS classes will be applied to
        * @param {string} add the CSS class(es) that will be added (multiple classes are separated via spaces)
        * @param {string} remove the CSS class(es) that will be removed (multiple classes are separated via spaces)
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19458,7 +19595,13 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @param {string=} className an optional CSS class that will be applied to the element for the duration of the animation. If
        *    this value is left as empty then a CSS class of `ng-inline-animate` will be applied to the element.
        *    (Note that if no animation is detected then this value will not be applied to the element.)
-       * @param {object=} options an optional collection of options/styles that will be applied to the element
+       * @param {object=} options an optional collection of options/styles that will be applied to the element.
+       *   The object can have the following properties:
+       *
+       *   - **addClass** - `{string}` - space-separated CSS classes to add to element
+       *   - **from** - `{Object}` - CSS properties & values at the beginning of animation. Must have matching `to`
+       *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
+       *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
        * @return {Promise} the animation callback promise
        */
@@ -19885,7 +20028,7 @@ function Browser(window, document, $log, $sniffer) {
         // Do the assignment again so that those two variables are referentially identical.
         lastHistoryState = cachedState;
       } else {
-        if (!sameBase || pendingLocation) {
+        if (!sameBase) {
           pendingLocation = url;
         }
         if (replace) {
@@ -19898,6 +20041,9 @@ function Browser(window, document, $log, $sniffer) {
         if (location.href !== url) {
           pendingLocation = url;
         }
+      }
+      if (pendingLocation) {
+        pendingLocation = url;
       }
       return self;
     // getter
@@ -20815,8 +20961,9 @@ function $TemplateCacheProvider() {
  * If the `require` property is an object and `bindToController` is truthy, then the required controllers are
  * bound to the controller using the keys of the `require` property. This binding occurs after all the controllers
  * have been constructed but before `$onInit` is called.
+ * If the name of the required controller is the same as the local name (the key), the name can be
+ * omitted. For example, `{parentDir: '^^'}` is equivalent to `{parentDir: '^^parentDir'}`.
  * See the {@link $compileProvider#component} helper for an example of how this can be used.
- *
  * If no such required directive(s) can be found, or if the directive does not have a controller, then an error is
  * raised (unless no link function is specified and the required controllers are not being bound to the directive
  * controller, in which case error checking is skipped). The name can be prefixed with:
@@ -21445,6 +21592,20 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
     }
   }
 
+  function getDirectiveRequire(directive) {
+    var require = directive.require || (directive.controller && directive.name);
+
+    if (!isArray(require) && isObject(require)) {
+      forEach(require, function(value, key) {
+        var match = value.match(REQUIRE_PREFIX_REGEXP);
+        var name = value.substring(match[0].length);
+        if (!name) require[key] = match[0] + key;
+      });
+    }
+
+    return require;
+  }
+
   /**
    * @ngdoc method
    * @name $compileProvider#directive
@@ -21481,7 +21642,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                 directive.priority = directive.priority || 0;
                 directive.index = index;
                 directive.name = directive.name || name;
-                directive.require = directive.require || (directive.controller && directive.name);
+                directive.require = getDirectiveRequire(directive);
                 directive.restrict = directive.restrict || 'EA';
                 directive.$$moduleName = directiveFactory.$$moduleName;
                 directives.push(directive);
@@ -21787,11 +21948,19 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         }
         // We must run this hook in an apply since the $$postDigest runs outside apply
         $rootScope.$apply(function() {
+          var errors = [];
           for (var i = 0, ii = onChangesQueue.length; i < ii; ++i) {
-            onChangesQueue[i]();
+            try {
+              onChangesQueue[i]();
+            } catch (e) {
+              errors.push(e);
+            }
           }
           // Reset the queue to trigger a new schedule next time there is a change
           onChangesQueue = undefined;
+          if (errors.length) {
+            throw errors;
+          }
         });
       } finally {
         onChangesTtl++;
@@ -21938,7 +22107,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             (nodeName === 'img' && key === 'src')) {
           // sanitize a[href] and img[src] values
           this[key] = value = $$sanitizeUri(value, key === 'src');
-        } else if (nodeName === 'img' && key === 'srcset') {
+        } else if (nodeName === 'img' && key === 'srcset' && isDefined(value)) {
           // sanitize img[srcset] values
           var result = "";
 
@@ -22097,7 +22266,8 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
     compile.$$createComment = function(directiveName, comment) {
       var content = '';
       if (debugInfoEnabled) {
-        content = ' ' + (directiveName || '') + ': ' + (comment || '') + ' ';
+        content = ' ' + (directiveName || '') + ': ';
+        if (comment) content += comment + ' ';
       }
       return window.document.createComment(content);
     };
@@ -22829,10 +22999,11 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         } else if (directive.compile) {
           try {
             linkFn = directive.compile($compileNode, templateAttrs, childTranscludeFn);
+            var context = directive.$$originalDirective || directive;
             if (isFunction(linkFn)) {
-              addLinkFns(null, linkFn, attrStart, attrEnd);
+              addLinkFns(null, bind(context, linkFn), attrStart, attrEnd);
             } else if (linkFn) {
-              addLinkFns(linkFn.pre, linkFn.post, attrStart, attrEnd);
+              addLinkFns(bind(context, linkFn.pre), bind(context, linkFn.post), attrStart, attrEnd);
             }
           } catch (e) {
             $exceptionHandler(e, startingTag($compileNode));
@@ -22965,10 +23136,18 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         forEach(elementControllers, function(controller) {
           var controllerInstance = controller.instance;
           if (isFunction(controllerInstance.$onChanges)) {
-            controllerInstance.$onChanges(controller.bindingInfo.initialChanges);
+            try {
+              controllerInstance.$onChanges(controller.bindingInfo.initialChanges);
+            } catch (e) {
+              $exceptionHandler(e);
+            }
           }
           if (isFunction(controllerInstance.$onInit)) {
-            controllerInstance.$onInit();
+            try {
+              controllerInstance.$onInit();
+            } catch (e) {
+              $exceptionHandler(e);
+            }
           }
           if (isFunction(controllerInstance.$onDestroy)) {
             controllerScope.$on('$destroy', function callOnDestroyHook() {
@@ -23232,18 +23411,16 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
       // copy the new attributes on the old attrs object
       forEach(src, function(value, key) {
-        if (key == 'class') {
-          safeAddClass($element, value);
-          dst['class'] = (dst['class'] ? dst['class'] + ' ' : '') + value;
-        } else if (key == 'style') {
-          $element.attr('style', $element.attr('style') + ';' + value);
-          dst['style'] = (dst['style'] ? dst['style'] + ';' : '') + value;
-          // `dst` will never contain hasOwnProperty as DOM parser won't let it.
-          // You will get an "InvalidCharacterError: DOM Exception 5" error if you
-          // have an attribute like "has-own-property" or "data-has-own-property", etc.
-        } else if (key.charAt(0) != '$' && !dst.hasOwnProperty(key)) {
+        // Check if we already set this attribute in the loop above.
+        // `dst` will never contain hasOwnProperty as DOM parser won't let it.
+        // You will get an "InvalidCharacterError: DOM Exception 5" error if you
+        // have an attribute like "has-own-property" or "data-has-own-property", etc.
+        if (!dst.hasOwnProperty(key) && key.charAt(0) !== '$') {
           dst[key] = value;
-          dstAttr[key] = srcAttr[key];
+
+          if (key !== 'class' && key !== 'style') {
+            dstAttr[key] = srcAttr[key];
+          }
         }
       });
     }
@@ -23701,14 +23878,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
             parentGet = $parse(attrs[attrName]);
 
-            destination[scopeName] = parentGet(scope);
+            var initialValue = destination[scopeName] = parentGet(scope);
             initialChanges[scopeName] = new SimpleChange(_UNINITIALIZED_VALUE, destination[scopeName]);
 
             removeWatch = scope.$watch(parentGet, function parentValueWatchAction(newValue, oldValue) {
-              if (newValue === oldValue) {
-                // If the new and old values are identical then this is the first time the watch has been triggered
-                // So instead we use the current value on the destination as the old value
-                oldValue = destination[scopeName];
+              if (oldValue === newValue) {
+                if (oldValue === initialValue) return;
+                oldValue = initialValue;
               }
               recordChanges(scopeName, newValue, oldValue);
               destination[scopeName] = newValue;
@@ -24105,17 +24281,20 @@ function $DocumentProvider() {
  *
  * ## Example:
  *
- * ```js
- *   angular.module('exceptionOverride', []).factory('$exceptionHandler', function() {
- *     return function(exception, cause) {
- *       exception.message += ' (caused by "' + cause + '")';
- *       throw exception;
- *     };
- *   });
- * ```
+ * The example below will overwrite the default `$exceptionHandler` in order to (a) log uncaught
+ * errors to the backend for later inspection by the developers and (b) to use `$log.warn()` instead
+ * of `$log.error()`.
  *
- * This example will override the normal action of `$exceptionHandler`, to make angular
- * exceptions fail hard when they happen, instead of just logging to the console.
+ * ```js
+ *   angular.
+ *     module('exceptionOverwrite', []).
+ *     factory('$exceptionHandler', ['$log', 'logErrorsToBackend', function($log, logErrorsToBackend) {
+ *       return function myExceptionHandler(exception, cause) {
+ *         logErrorsToBackend(exception, cause);
+ *         $log.warn(exception, cause);
+ *       };
+ *     });
+ * ```
  *
  * <hr />
  * Note, that code executed in event-listeners (even those registered using jqLite's `on`/`bind`
@@ -24126,7 +24305,7 @@ function $DocumentProvider() {
  * `try { ... } catch(e) { $exceptionHandler(e); }`
  *
  * @param {Error} exception Exception associated with the error.
- * @param {string=} cause optional information about the context in which
+ * @param {string=} cause Optional information about the context in which
  *       the error was thrown.
  *
  */
@@ -24611,10 +24790,13 @@ function $HttpProvider() {
      *   - **config** – `{Object}` – The configuration object that was used to generate the request.
      *   - **statusText** – `{string}` – HTTP status text of the response.
      *
-     * A response status code between 200 and 299 is considered a success status and
-     * will result in the success callback being called. Note that if the response is a redirect,
-     * XMLHttpRequest will transparently follow it, meaning that the error callback will not be
-     * called for such responses.
+     * A response status code between 200 and 299 is considered a success status and will result in
+     * the success callback being called. Any response status code outside of that range is
+     * considered an error status and will result in the error callback being called.
+     * Also, status codes less than -1 are normalized to zero. -1 usually means the request was
+     * aborted, e.g. using a `config.timeout`.
+     * Note that if the response is a redirect, XMLHttpRequest will transparently follow it, meaning
+     * that the outcome (success or error) will be determined by the final response status code.
      *
      *
      * ## Shortcut methods
@@ -25944,6 +26126,30 @@ function $InterpolateProvider() {
      *  </file>
      * </example>
      *
+     * @knownIssue
+     * It is currently not possible for an interpolated expression to contain the interpolation end
+     * symbol. For example, `{{ '}}' }}` will be incorrectly interpreted as `{{ ' }}` + `' }}`, i.e.
+     * an interpolated expression consisting of a single-quote (`'`) and the `' }}` string.
+     *
+     * @knownIssue
+     * All directives and components must use the standard `{{` `}}` interpolation symbols
+     * in their templates. If you change the application interpolation symbols the {@link $compile}
+     * service will attempt to denormalize the standard symbols to the custom symbols.
+     * The denormalization process is not clever enough to know not to replace instances of the standard
+     * symbols where they would not normally be treated as interpolation symbols. For example in the following
+     * code snippet the closing braces of the literal object will get incorrectly denormalized:
+     *
+     * ```
+     * <div data-context='{"context":{"id":3,"type":"page"}}">
+     * ```
+     *
+     * The workaround is to ensure that such instances are separated by whitespace:
+     * ```
+     * <div data-context='{"context":{"id":3,"type":"page"} }">
+     * ```
+     *
+     * See https://github.com/angular/angular.js/pull/14610#issuecomment-219401099 for more information.
+     *
      * @param {string} text The text with markup to interpolate.
      * @param {boolean=} mustHaveExpression if set to true then the interpolation string must have
      *    embedded expression in order to return an interpolation function. Strings with no
@@ -26366,17 +26572,20 @@ function parseAppUrl(relativeUrl, locationObj) {
   }
 }
 
+function startsWith(haystack, needle) {
+  return haystack.lastIndexOf(needle, 0) === 0;
+}
 
 /**
  *
- * @param {string} begin
- * @param {string} whole
- * @returns {string} returns text from whole after begin or undefined if it does not begin with
- *                   expected string.
+ * @param {string} base
+ * @param {string} url
+ * @returns {string} returns text from `url` after `base` or `undefined` if it does not begin with
+ *                   the expected string.
  */
-function beginsWith(begin, whole) {
-  if (whole.indexOf(begin) === 0) {
-    return whole.substr(begin.length);
+function stripBaseUrl(base, url) {
+  if (startsWith(url, base)) {
+    return url.substr(base.length);
   }
 }
 
@@ -26422,7 +26631,7 @@ function LocationHtml5Url(appBase, appBaseNoFile, basePrefix) {
    * @private
    */
   this.$$parse = function(url) {
-    var pathUrl = beginsWith(appBaseNoFile, url);
+    var pathUrl = stripBaseUrl(appBaseNoFile, url);
     if (!isString(pathUrl)) {
       throw $locationMinErr('ipthprfx', 'Invalid url "{0}", missing path prefix "{1}".', url,
           appBaseNoFile);
@@ -26459,14 +26668,14 @@ function LocationHtml5Url(appBase, appBaseNoFile, basePrefix) {
     var appUrl, prevAppUrl;
     var rewrittenUrl;
 
-    if (isDefined(appUrl = beginsWith(appBase, url))) {
+    if (isDefined(appUrl = stripBaseUrl(appBase, url))) {
       prevAppUrl = appUrl;
-      if (isDefined(appUrl = beginsWith(basePrefix, appUrl))) {
-        rewrittenUrl = appBaseNoFile + (beginsWith('/', appUrl) || appUrl);
+      if (isDefined(appUrl = stripBaseUrl(basePrefix, appUrl))) {
+        rewrittenUrl = appBaseNoFile + (stripBaseUrl('/', appUrl) || appUrl);
       } else {
         rewrittenUrl = appBase + prevAppUrl;
       }
-    } else if (isDefined(appUrl = beginsWith(appBaseNoFile, url))) {
+    } else if (isDefined(appUrl = stripBaseUrl(appBaseNoFile, url))) {
       rewrittenUrl = appBaseNoFile + appUrl;
     } else if (appBaseNoFile == url + '/') {
       rewrittenUrl = appBaseNoFile;
@@ -26500,14 +26709,14 @@ function LocationHashbangUrl(appBase, appBaseNoFile, hashPrefix) {
    * @private
    */
   this.$$parse = function(url) {
-    var withoutBaseUrl = beginsWith(appBase, url) || beginsWith(appBaseNoFile, url);
+    var withoutBaseUrl = stripBaseUrl(appBase, url) || stripBaseUrl(appBaseNoFile, url);
     var withoutHashUrl;
 
     if (!isUndefined(withoutBaseUrl) && withoutBaseUrl.charAt(0) === '#') {
 
       // The rest of the url starts with a hash so we have
       // got either a hashbang path or a plain hash fragment
-      withoutHashUrl = beginsWith(hashPrefix, withoutBaseUrl);
+      withoutHashUrl = stripBaseUrl(hashPrefix, withoutBaseUrl);
       if (isUndefined(withoutHashUrl)) {
         // There was no hashbang prefix so we just have a hash fragment
         withoutHashUrl = withoutBaseUrl;
@@ -26555,7 +26764,7 @@ function LocationHashbangUrl(appBase, appBaseNoFile, hashPrefix) {
       var firstPathSegmentMatch;
 
       //Get the relative path from the input URL.
-      if (url.indexOf(base) === 0) {
+      if (startsWith(url, base)) {
         url = url.replace(base, '');
       }
 
@@ -26618,7 +26827,7 @@ function LocationHashbangInHtml5Url(appBase, appBaseNoFile, hashPrefix) {
 
     if (appBase == stripHash(url)) {
       rewrittenUrl = url;
-    } else if ((appUrl = beginsWith(appBaseNoFile, url))) {
+    } else if ((appUrl = stripBaseUrl(appBaseNoFile, url))) {
       rewrittenUrl = appBase + hashPrefix + appUrl;
     } else if (appBaseNoFile === url + '/') {
       rewrittenUrl = appBaseNoFile;
@@ -26642,6 +26851,12 @@ function LocationHashbangInHtml5Url(appBase, appBaseNoFile, hashPrefix) {
 
 
 var locationPrototype = {
+
+  /**
+   * Ensure absolute url is initialized.
+   * @private
+   */
+  $$absUrl:'',
 
   /**
    * Are we in html5 mode?
@@ -26800,7 +27015,7 @@ var locationPrototype = {
    * ```
    *
    * @param {(string|number)=} path New path
-   * @return {string} path
+   * @return {(string|object)} path if called with no parameters, or `$location` if called with a parameter
    */
   path: locationGetterSetter('$$path', function(path) {
     path = path !== null ? path.toString() : '';
@@ -27226,7 +27441,7 @@ function $LocationProvider() {
     // update $location when $browser url changes
     $browser.onUrlChange(function(newUrl, newState) {
 
-      if (isUndefined(beginsWith(appBaseNoFile, newUrl))) {
+      if (isUndefined(stripBaseUrl(appBaseNoFile, newUrl))) {
         // If we are navigating outside of the app then force a reload
         $window.location.href = newUrl;
         return;
@@ -28016,7 +28231,7 @@ AST.prototype = {
     var args = [];
     if (this.peekToken().text !== ')') {
       do {
-        args.push(this.expression());
+        args.push(this.filterChain());
       } while (this.expect(','));
     }
     return args;
@@ -28062,13 +28277,28 @@ AST.prototype = {
         property = {type: AST.Property, kind: 'init'};
         if (this.peek().constant) {
           property.key = this.constant();
+          property.computed = false;
+          this.consume(':');
+          property.value = this.expression();
         } else if (this.peek().identifier) {
           property.key = this.identifier();
+          property.computed = false;
+          if (this.peek(':')) {
+            this.consume(':');
+            property.value = this.expression();
+          } else {
+            property.value = property.key;
+          }
+        } else if (this.peek('[')) {
+          this.consume('[');
+          property.key = this.expression();
+          this.consume(']');
+          property.computed = true;
+          this.consume(':');
+          property.value = this.expression();
         } else {
           this.throwError("invalid key", this.peek());
         }
-        this.consume(':');
-        property.value = this.expression();
         properties.push(property);
       } while (this.expect(','));
     }
@@ -28237,7 +28467,7 @@ function findConstantAndWatchExpressions(ast, $filter) {
     argsToWatch = [];
     forEach(ast.properties, function(property) {
       findConstantAndWatchExpressions(property.value, $filter);
-      allConstants = allConstants && property.value.constant;
+      allConstants = allConstants && property.value.constant && !property.computed;
       if (!property.value.constant) {
         argsToWatch.push.apply(argsToWatch, property.value.toWatch);
       }
@@ -28409,7 +28639,7 @@ ASTCompiler.prototype = {
   },
 
   recurse: function(ast, intoId, nameId, recursionFn, create, skipWatchIdCheck) {
-    var left, right, self = this, args, expression;
+    var left, right, self = this, args, expression, computed;
     recursionFn = recursionFn || noop;
     if (!skipWatchIdCheck && isDefined(ast.watchId)) {
       intoId = intoId || this.nextId();
@@ -28606,17 +28836,41 @@ ASTCompiler.prototype = {
       break;
     case AST.ObjectExpression:
       args = [];
+      computed = false;
       forEach(ast.properties, function(property) {
-        self.recurse(property.value, self.nextId(), undefined, function(expr) {
-          args.push(self.escape(
-              property.key.type === AST.Identifier ? property.key.name :
-                ('' + property.key.value)) +
-              ':' + expr);
-        });
+        if (property.computed) {
+          computed = true;
+        }
       });
-      expression = '{' + args.join(',') + '}';
-      this.assign(intoId, expression);
-      recursionFn(expression);
+      if (computed) {
+        intoId = intoId || this.nextId();
+        this.assign(intoId, '{}');
+        forEach(ast.properties, function(property) {
+          if (property.computed) {
+            left = self.nextId();
+            self.recurse(property.key, left);
+          } else {
+            left = property.key.type === AST.Identifier ?
+                       property.key.name :
+                       ('' + property.key.value);
+          }
+          right = self.nextId();
+          self.recurse(property.value, right);
+          self.assign(self.member(intoId, left, property.computed), right);
+        });
+      } else {
+        forEach(ast.properties, function(property) {
+          self.recurse(property.value, ast.constant ? undefined : self.nextId(), undefined, function(expr) {
+            args.push(self.escape(
+                property.key.type === AST.Identifier ? property.key.name :
+                  ('' + property.key.value)) +
+                ':' + expr);
+          });
+        });
+        expression = '{' + args.join(',') + '}';
+        this.assign(intoId, expression);
+      }
+      recursionFn(intoId || expression);
       break;
     case AST.ThisExpression:
       this.assign(intoId, 's');
@@ -28942,16 +29196,28 @@ ASTInterpreter.prototype = {
     case AST.ObjectExpression:
       args = [];
       forEach(ast.properties, function(property) {
-        args.push({key: property.key.type === AST.Identifier ?
-                        property.key.name :
-                        ('' + property.key.value),
-                   value: self.recurse(property.value)
-        });
+        if (property.computed) {
+          args.push({key: self.recurse(property.key),
+                     computed: true,
+                     value: self.recurse(property.value)
+          });
+        } else {
+          args.push({key: property.key.type === AST.Identifier ?
+                          property.key.name :
+                          ('' + property.key.value),
+                     computed: false,
+                     value: self.recurse(property.value)
+          });
+        }
       });
       return function(scope, locals, assign, inputs) {
         var value = {};
         for (var i = 0; i < args.length; ++i) {
-          value[args[i].key] = args[i].value(scope, locals, assign, inputs);
+          if (args[i].computed) {
+            value[args[i].key(scope, locals, assign, inputs)] = args[i].value(scope, locals, assign, inputs);
+          } else {
+            value[args[i].key] = args[i].value(scope, locals, assign, inputs);
+          }
         }
         return context ? {value: value} : value;
       };
@@ -30950,15 +31216,19 @@ function $RootScopeProvider() {
           dirty = false;
           current = target;
 
-          while (asyncQueue.length) {
+          // It's safe for asyncQueuePosition to be a local variable here because this loop can't
+          // be reentered recursively. Calling $digest from a function passed to $applyAsync would
+          // lead to a '$digest already in progress' error.
+          for (var asyncQueuePosition = 0; asyncQueuePosition < asyncQueue.length; asyncQueuePosition++) {
             try {
-              asyncTask = asyncQueue.shift();
+              asyncTask = asyncQueue[asyncQueuePosition];
               asyncTask.scope.$eval(asyncTask.expression, asyncTask.locals);
             } catch (e) {
               $exceptionHandler(e);
             }
             lastDirtyWatch = null;
           }
+          asyncQueue.length = 0;
 
           traverseScopesLoop:
           do { // "traverse the scopes" loop
@@ -31029,13 +31299,15 @@ function $RootScopeProvider() {
 
         clearPhase();
 
-        while (postDigestQueue.length) {
+        // postDigestQueuePosition isn't local here because this loop can be reentered recursively.
+        while (postDigestQueuePosition < postDigestQueue.length) {
           try {
-            postDigestQueue.shift()();
+            postDigestQueue[postDigestQueuePosition++]();
           } catch (e) {
             $exceptionHandler(e);
           }
         }
+        postDigestQueue.length = postDigestQueuePosition = 0;
       },
 
 
@@ -31489,6 +31761,8 @@ function $RootScopeProvider() {
     var asyncQueue = $rootScope.$$asyncQueue = [];
     var postDigestQueue = $rootScope.$$postDigestQueue = [];
     var applyAsyncQueue = $rootScope.$$applyAsyncQueue = [];
+
+    var postDigestQueuePosition = 0;
 
     return $rootScope;
 
@@ -32058,7 +32332,7 @@ function $SceDelegateProvider() {
  * You can ensure your document is in standards mode and not quirks mode by adding `<!doctype html>`
  * to the top of your HTML document.
  *
- * SCE assists in writing code in way that (a) is secure by default and (b) makes auditing for
+ * SCE assists in writing code in a way that (a) is secure by default and (b) makes auditing for
  * security vulnerabilities such as XSS, clickjacking, etc. a lot easier.
  *
  * Here's an example of a binding in a privileged context:
@@ -32735,7 +33009,7 @@ function $SnifferProvider() {
       for (var prop in bodyStyle) {
         if (match = vendorRegex.exec(prop)) {
           vendorPrefix = match[0];
-          vendorPrefix = vendorPrefix.substr(0, 1).toUpperCase() + vendorPrefix.substr(1);
+          vendorPrefix = vendorPrefix[0].toUpperCase() + vendorPrefix.substr(1);
           break;
         }
       }
@@ -32858,7 +33132,7 @@ function $TemplateRequestProvider() {
       // are included in there. This also makes Angular accept any script
       // directive, no matter its name. However, we still need to unwrap trusted
       // types.
-      if (!isString(tpl) || !$templateCache.get(tpl)) {
+      if (!isString(tpl) || isUndefined($templateCache.get(tpl))) {
         tpl = $sce.getTrustedResourceUrl(tpl);
       }
 
@@ -34040,7 +34314,7 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
 
     // extract decimals digits
     if (integerLen > 0) {
-      decimals = digits.splice(integerLen);
+      decimals = digits.splice(integerLen, digits.length);
     } else {
       decimals = digits;
       digits = [0];
@@ -34049,10 +34323,10 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
     // format the integer digits with grouping separators
     var groups = [];
     if (digits.length >= pattern.lgSize) {
-      groups.unshift(digits.splice(-pattern.lgSize).join(''));
+      groups.unshift(digits.splice(-pattern.lgSize, digits.length).join(''));
     }
     while (digits.length > pattern.gSize) {
-      groups.unshift(digits.splice(-pattern.gSize).join(''));
+      groups.unshift(digits.splice(-pattern.gSize, digits.length).join(''));
     }
     if (digits.length) {
       groups.unshift(digits.join(''));
@@ -34440,21 +34714,22 @@ var uppercaseFilter = valueFn(uppercase);
  * @kind function
  *
  * @description
- * Creates a new array or string containing only a specified number of elements. The elements
- * are taken from either the beginning or the end of the source array, string or number, as specified by
- * the value and sign (positive or negative) of `limit`. If a number is used as input, it is
- * converted to a string.
+ * Creates a new array or string containing only a specified number of elements. The elements are
+ * taken from either the beginning or the end of the source array, string or number, as specified by
+ * the value and sign (positive or negative) of `limit`. Other array-like objects are also supported
+ * (e.g. array subclasses, NodeLists, jqLite/jQuery collections etc). If a number is used as input,
+ * it is converted to a string.
  *
- * @param {Array|string|number} input Source array, string or number to be limited.
- * @param {string|number} limit The length of the returned array or string. If the `limit` number
+ * @param {Array|ArrayLike|string|number} input - Array/array-like, string or number to be limited.
+ * @param {string|number} limit - The length of the returned array or string. If the `limit` number
  *     is positive, `limit` number of items from the beginning of the source array/string are copied.
  *     If the number is negative, `limit` number  of items from the end of the source array/string
  *     are copied. The `limit` will be trimmed if it exceeds `array.length`. If `limit` is undefined,
  *     the input will be returned unchanged.
- * @param {(string|number)=} begin Index at which to begin limitation. As a negative index, `begin`
- *     indicates an offset from the end of `input`. Defaults to `0`.
- * @returns {Array|string} A new sub-array or substring of length `limit` or less if input array
- *     had less than `limit` elements.
+ * @param {(string|number)=} begin - Index at which to begin limitation. As a negative index,
+ *     `begin` indicates an offset from the end of `input`. Defaults to `0`.
+ * @returns {Array|string} A new sub-array or substring of length `limit` or less if the input had
+ *     less than `limit` elements.
  *
  * @example
    <example module="limitToExample">
@@ -34542,21 +34817,27 @@ function limitToFilter() {
     if (isNaN(limit)) return input;
 
     if (isNumber(input)) input = input.toString();
-    if (!isArray(input) && !isString(input)) return input;
+    if (!isArrayLike(input)) return input;
 
     begin = (!begin || isNaN(begin)) ? 0 : toInt(begin);
     begin = (begin < 0) ? Math.max(0, input.length + begin) : begin;
 
     if (limit >= 0) {
-      return input.slice(begin, begin + limit);
+      return sliceFn(input, begin, begin + limit);
     } else {
       if (begin === 0) {
-        return input.slice(limit, input.length);
+        return sliceFn(input, limit, input.length);
       } else {
-        return input.slice(Math.max(0, begin + limit), begin);
+        return sliceFn(input, Math.max(0, begin + limit), begin);
       }
     }
   };
+}
+
+function sliceFn(input, begin, end) {
+  if (isString(input)) return input.slice(begin, end);
+
+  return slice.call(input, begin, end);
 }
 
 /**
@@ -34565,44 +34846,128 @@ function limitToFilter() {
  * @kind function
  *
  * @description
- * Orders a specified `array` by the `expression` predicate. It is ordered alphabetically
- * for strings and numerically for numbers. Note: if you notice numbers are not being sorted
- * as expected, make sure they are actually being saved as numbers and not strings.
- * Array-like values (e.g. NodeLists, jQuery objects, TypedArrays, Strings, etc) are also supported.
+ * Returns an array containing the items from the specified `collection`, ordered by a `comparator`
+ * function based on the values computed using the `expression` predicate.
  *
- * @param {Array} array The array (or array-like object) to sort.
- * @param {function(*)|string|Array.<(function(*)|string)>=} expression A predicate to be
- *    used by the comparator to determine the order of elements.
+ * For example, `[{id: 'foo'}, {id: 'bar'}] | orderBy:'id'` would result in
+ * `[{id: 'bar'}, {id: 'foo'}]`.
+ *
+ * The `collection` can be an Array or array-like object (e.g. NodeList, jQuery object, TypedArray,
+ * String, etc).
+ *
+ * The `expression` can be a single predicate, or a list of predicates each serving as a tie-breaker
+ * for the preceeding one. The `expression` is evaluated against each item and the output is used
+ * for comparing with other items.
+ *
+ * You can change the sorting order by setting `reverse` to `true`. By default, items are sorted in
+ * ascending order.
+ *
+ * The comparison is done using the `comparator` function. If none is specified, a default, built-in
+ * comparator is used (see below for details - in a nutshell, it compares numbers numerically and
+ * strings alphabetically).
+ *
+ * ### Under the hood
+ *
+ * Ordering the specified `collection` happens in two phases:
+ *
+ * 1. All items are passed through the predicate (or predicates), and the returned values are saved
+ *    along with their type (`string`, `number` etc). For example, an item `{label: 'foo'}`, passed
+ *    through a predicate that extracts the value of the `label` property, would be transformed to:
+ *    ```
+ *    {
+ *      value: 'foo',
+ *      type: 'string',
+ *      index: ...
+ *    }
+ *    ```
+ * 2. The comparator function is used to sort the items, based on the derived values, types and
+ *    indices.
+ *
+ * If you use a custom comparator, it will be called with pairs of objects of the form
+ * `{value: ..., type: '...', index: ...}` and is expected to return `0` if the objects are equal
+ * (as far as the comparator is concerned), `-1` if the 1st one should be ranked higher than the
+ * second, or `1` otherwise.
+ *
+ * In order to ensure that the sorting will be deterministic across platforms, if none of the
+ * specified predicates can distinguish between two items, `orderBy` will automatically introduce a
+ * dummy predicate that returns the item's index as `value`.
+ * (If you are using a custom comparator, make sure it can handle this predicate as well.)
+ *
+ * Finally, in an attempt to simplify things, if a predicate returns an object as the extracted
+ * value for an item, `orderBy` will try to convert that object to a primitive value, before passing
+ * it to the comparator. The following rules govern the conversion:
+ *
+ * 1. If the object has a `valueOf()` method that returns a primitive, its return value will be
+ *    used instead.<br />
+ *    (If the object has a `valueOf()` method that returns another object, then the returned object
+ *    will be used in subsequent steps.)
+ * 2. If the object has a custom `toString()` method (i.e. not the one inherited from `Object`) that
+ *    returns a primitive, its return value will be used instead.<br />
+ *    (If the object has a `toString()` method that returns another object, then the returned object
+ *    will be used in subsequent steps.)
+ * 3. No conversion; the object itself is used.
+ *
+ * ### The default comparator
+ *
+ * The default, built-in comparator should be sufficient for most usecases. In short, it compares
+ * numbers numerically, strings alphabetically (and case-insensitively), for objects falls back to
+ * using their index in the original collection, and sorts values of different types by type.
+ *
+ * More specifically, it follows these steps to determine the relative order of items:
+ *
+ * 1. If the compared values are of different types, compare the types themselves alphabetically.
+ * 2. If both values are of type `string`, compare them alphabetically in a case- and
+ *    locale-insensitive way.
+ * 3. If both values are objects, compare their indices instead.
+ * 4. Otherwise, return:
+ *    -  `0`, if the values are equal (by strict equality comparison, i.e. using `===`).
+ *    - `-1`, if the 1st value is "less than" the 2nd value (compared using the `<` operator).
+ *    -  `1`, otherwise.
+ *
+ * **Note:** If you notice numbers not being sorted as expected, make sure they are actually being
+ *           saved as numbers and not strings.
+ *
+ * @param {Array|ArrayLike} collection - The collection (array or array-like object) to sort.
+ * @param {(Function|string|Array.<Function|string>)=} expression - A predicate (or list of
+ *    predicates) to be used by the comparator to determine the order of elements.
  *
  *    Can be one of:
  *
- *    - `function`: Getter function. The result of this function will be sorted using the
- *      `<`, `===`, `>` operator.
- *    - `string`: An Angular expression. The result of this expression is used to compare elements
- *      (for example `name` to sort by a property called `name` or `name.substr(0, 3)` to sort by
- *      3 first characters of a property called `name`). The result of a constant expression
- *      is interpreted as a property name to be used in comparisons (for example `"special name"`
- *      to sort object by the value of their `special name` property). An expression can be
- *      optionally prefixed with `+` or `-` to control ascending or descending sort order
- *      (for example, `+name` or `-name`). If no property is provided, (e.g. `'+'`) then the array
- *      element itself is used to compare where sorting.
- *    - `Array`: An array of function or string predicates. The first predicate in the array
- *      is used for sorting, but when two items are equivalent, the next predicate is used.
+ *    - `Function`: A getter function. This function will be called with each item as argument and
+ *      the return value will be used for sorting.
+ *    - `string`: An Angular expression. This expression will be evaluated against each item and the
+ *      result will be used for sorting. For example, use `'label'` to sort by a property called
+ *      `label` or `'label.substring(0, 3)'` to sort by the first 3 characters of the `label`
+ *      property.<br />
+ *      (The result of a constant expression is interpreted as a property name to be used for
+ *      comparison. For example, use `'"special name"'` (note the extra pair of quotes) to sort by a
+ *      property called `special name`.)<br />
+ *      An expression can be optionally prefixed with `+` or `-` to control the sorting direction,
+ *      ascending or descending. For example, `'+label'` or `'-label'`. If no property is provided,
+ *      (e.g. `'+'` or `'-'`), the collection element itself is used in comparisons.
+ *    - `Array`: An array of function and/or string predicates. If a predicate cannot determine the
+ *      relative order of two items, the next predicate is used as a tie-breaker.
  *
- *    If the predicate is missing or empty then it defaults to `'+'`.
+ * **Note:** If the predicate is missing or empty then it defaults to `'+'`.
  *
- * @param {boolean=} reverse Reverse the order of the array.
- * @returns {Array} Sorted copy of the source array.
+ * @param {boolean=} reverse - If `true`, reverse the sorting order.
+ * @param {(Function)=} comparator - The comparator function used to determine the relative order of
+ *    value pairs. If omitted, the built-in comparator will be used.
+ *
+ * @returns {Array} - The sorted array.
  *
  *
  * @example
- * The example below demonstrates a simple ngRepeat, where the data is sorted
- * by age in descending order (predicate is set to `'-age'`).
- * `reverse` is not set, which means it defaults to `false`.
-   <example module="orderByExample">
+ * ### Ordering a table with `ngRepeat`
+ *
+ * The example below demonstrates a simple {@link ngRepeat ngRepeat}, where the data is sorted by
+ * age in descending order (expression is set to `'-age'`). The `comparator` is not set, which means
+ * it defaults to the built-in comparator.
+ *
+   <example name="orderBy-static" module="orderByExample1">
      <file name="index.html">
        <div ng-controller="ExampleController">
-         <table class="friend">
+         <table class="friends">
            <tr>
              <th>Name</th>
              <th>Phone Number</th>
@@ -34617,43 +34982,77 @@ function limitToFilter() {
        </div>
      </file>
      <file name="script.js">
-       angular.module('orderByExample', [])
+       angular.module('orderByExample1', [])
          .controller('ExampleController', ['$scope', function($scope) {
-           $scope.friends =
-               [{name:'John', phone:'555-1212', age:10},
-                {name:'Mary', phone:'555-9876', age:19},
-                {name:'Mike', phone:'555-4321', age:21},
-                {name:'Adam', phone:'555-5678', age:35},
-                {name:'Julie', phone:'555-8765', age:29}];
+           $scope.friends = [
+             {name: 'John',   phone: '555-1212',  age: 10},
+             {name: 'Mary',   phone: '555-9876',  age: 19},
+             {name: 'Mike',   phone: '555-4321',  age: 21},
+             {name: 'Adam',   phone: '555-5678',  age: 35},
+             {name: 'Julie',  phone: '555-8765',  age: 29}
+           ];
          }]);
      </file>
+     <file name="style.css">
+       .friends {
+         border-collapse: collapse;
+       }
+
+       .friends th {
+         border-bottom: 1px solid;
+       }
+       .friends td, .friends th {
+         border-left: 1px solid;
+         padding: 5px 10px;
+       }
+       .friends td:first-child, .friends th:first-child {
+         border-left: none;
+       }
+     </file>
+     <file name="protractor.js" type="protractor">
+       // Element locators
+       var names = element.all(by.repeater('friends').column('friend.name'));
+
+       it('should sort friends by age in reverse order', function() {
+         expect(names.get(0).getText()).toBe('Adam');
+         expect(names.get(1).getText()).toBe('Julie');
+         expect(names.get(2).getText()).toBe('Mike');
+         expect(names.get(3).getText()).toBe('Mary');
+         expect(names.get(4).getText()).toBe('John');
+       });
+     </file>
    </example>
+ * <hr />
  *
- * The predicate and reverse parameters can be controlled dynamically through scope properties,
- * as shown in the next example.
  * @example
-   <example module="orderByExample">
+ * ### Changing parameters dynamically
+ *
+ * All parameters can be changed dynamically. The next example shows how you can make the columns of
+ * a table sortable, by binding the `expression` and `reverse` parameters to scope properties.
+ *
+   <example name="orderBy-dynamic" module="orderByExample2">
      <file name="index.html">
        <div ng-controller="ExampleController">
-         <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
+         <pre>Sort by = {{propertyName}}; reverse = {{reverse}}</pre>
          <hr/>
-         <button ng-click="predicate=''">Set to unsorted</button>
-         <table class="friend">
+         <button ng-click="propertyName = null; reverse = false">Set to unsorted</button>
+         <hr/>
+         <table class="friends">
            <tr>
-            <th>
-                <button ng-click="order('name')">Name</button>
-                <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-            </th>
-            <th>
-                <button ng-click="order('phone')">Phone Number</button>
-                <span class="sortorder" ng-show="predicate === 'phone'" ng-class="{reverse:reverse}"></span>
-            </th>
-            <th>
-                <button ng-click="order('age')">Age</button>
-                <span class="sortorder" ng-show="predicate === 'age'" ng-class="{reverse:reverse}"></span>
-            </th>
+             <th>
+               <button ng-click="sortBy('name')">Name</button>
+               <span class="sortorder" ng-show="propertyName === 'name'" ng-class="{reverse: reverse}"></span>
+             </th>
+             <th>
+               <button ng-click="sortBy('phone')">Phone Number</button>
+               <span class="sortorder" ng-show="propertyName === 'phone'" ng-class="{reverse: reverse}"></span>
+             </th>
+             <th>
+               <button ng-click="sortBy('age')">Age</button>
+               <span class="sortorder" ng-show="propertyName === 'age'" ng-class="{reverse: reverse}"></span>
+             </th>
            </tr>
-           <tr ng-repeat="friend in friends | orderBy:predicate:reverse">
+           <tr ng-repeat="friend in friends | orderBy:propertyName:reverse">
              <td>{{friend.name}}</td>
              <td>{{friend.phone}}</td>
              <td>{{friend.age}}</td>
@@ -34662,100 +35061,335 @@ function limitToFilter() {
        </div>
      </file>
      <file name="script.js">
-       angular.module('orderByExample', [])
+       angular.module('orderByExample2', [])
          .controller('ExampleController', ['$scope', function($scope) {
-           $scope.friends =
-               [{name:'John', phone:'555-1212', age:10},
-                {name:'Mary', phone:'555-9876', age:19},
-                {name:'Mike', phone:'555-4321', age:21},
-                {name:'Adam', phone:'555-5678', age:35},
-                {name:'Julie', phone:'555-8765', age:29}];
-           $scope.predicate = 'age';
+           var friends = [
+             {name: 'John',   phone: '555-1212',  age: 10},
+             {name: 'Mary',   phone: '555-9876',  age: 19},
+             {name: 'Mike',   phone: '555-4321',  age: 21},
+             {name: 'Adam',   phone: '555-5678',  age: 35},
+             {name: 'Julie',  phone: '555-8765',  age: 29}
+           ];
+
+           $scope.propertyName = 'age';
            $scope.reverse = true;
-           $scope.order = function(predicate) {
-             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
-             $scope.predicate = predicate;
+           $scope.friends = friends;
+
+           $scope.sortBy = function(propertyName) {
+             $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+             $scope.propertyName = propertyName;
            };
          }]);
-      </file>
+     </file>
      <file name="style.css">
+       .friends {
+         border-collapse: collapse;
+       }
+
+       .friends th {
+         border-bottom: 1px solid;
+       }
+       .friends td, .friends th {
+         border-left: 1px solid;
+         padding: 5px 10px;
+       }
+       .friends td:first-child, .friends th:first-child {
+         border-left: none;
+       }
+
        .sortorder:after {
-         content: '\25b2';
+         content: '\25b2';   // BLACK UP-POINTING TRIANGLE
        }
        .sortorder.reverse:after {
-         content: '\25bc';
+         content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
        }
+     </file>
+     <file name="protractor.js" type="protractor">
+       // Element locators
+       var unsortButton = element(by.partialButtonText('unsorted'));
+       var nameHeader = element(by.partialButtonText('Name'));
+       var phoneHeader = element(by.partialButtonText('Phone'));
+       var ageHeader = element(by.partialButtonText('Age'));
+       var firstName = element(by.repeater('friends').column('friend.name').row(0));
+       var lastName = element(by.repeater('friends').column('friend.name').row(4));
+
+       it('should sort friends by some property, when clicking on the column header', function() {
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+
+         phoneHeader.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Mary');
+
+         nameHeader.click();
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('Mike');
+
+         ageHeader.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Adam');
+       });
+
+       it('should sort friends in reverse order, when clicking on the same column', function() {
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+
+         ageHeader.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Adam');
+
+         ageHeader.click();
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+       });
+
+       it('should restore the original order, when clicking "Set to unsorted"', function() {
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+
+         unsortButton.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Julie');
+       });
+     </file>
+   </example>
+ * <hr />
+ *
+ * @example
+ * ### Using `orderBy` inside a controller
+ *
+ * It is also possible to call the `orderBy` filter manually, by injecting `orderByFilter`, and
+ * calling it with the desired parameters. (Alternatively, you could inject the `$filter` factory
+ * and retrieve the `orderBy` filter with `$filter('orderBy')`.)
+ *
+   <example name="orderBy-call-manually" module="orderByExample3">
+     <file name="index.html">
+       <div ng-controller="ExampleController">
+         <pre>Sort by = {{propertyName}}; reverse = {{reverse}}</pre>
+         <hr/>
+         <button ng-click="sortBy(null)">Set to unsorted</button>
+         <hr/>
+         <table class="friends">
+           <tr>
+             <th>
+               <button ng-click="sortBy('name')">Name</button>
+               <span class="sortorder" ng-show="propertyName === 'name'" ng-class="{reverse: reverse}"></span>
+             </th>
+             <th>
+               <button ng-click="sortBy('phone')">Phone Number</button>
+               <span class="sortorder" ng-show="propertyName === 'phone'" ng-class="{reverse: reverse}"></span>
+             </th>
+             <th>
+               <button ng-click="sortBy('age')">Age</button>
+               <span class="sortorder" ng-show="propertyName === 'age'" ng-class="{reverse: reverse}"></span>
+             </th>
+           </tr>
+           <tr ng-repeat="friend in friends">
+             <td>{{friend.name}}</td>
+             <td>{{friend.phone}}</td>
+             <td>{{friend.age}}</td>
+           </tr>
+         </table>
+       </div>
+     </file>
+     <file name="script.js">
+       angular.module('orderByExample3', [])
+         .controller('ExampleController', ['$scope', 'orderByFilter', function($scope, orderBy) {
+           var friends = [
+             {name: 'John',   phone: '555-1212',  age: 10},
+             {name: 'Mary',   phone: '555-9876',  age: 19},
+             {name: 'Mike',   phone: '555-4321',  age: 21},
+             {name: 'Adam',   phone: '555-5678',  age: 35},
+             {name: 'Julie',  phone: '555-8765',  age: 29}
+           ];
+
+           $scope.propertyName = 'age';
+           $scope.reverse = true;
+           $scope.friends = orderBy(friends, $scope.propertyName, $scope.reverse);
+
+           $scope.sortBy = function(propertyName) {
+             $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName)
+                 ? !$scope.reverse : false;
+             $scope.propertyName = propertyName;
+             $scope.friends = orderBy(friends, $scope.propertyName, $scope.reverse);
+           };
+         }]);
+     </file>
+     <file name="style.css">
+       .friends {
+         border-collapse: collapse;
+       }
+
+       .friends th {
+         border-bottom: 1px solid;
+       }
+       .friends td, .friends th {
+         border-left: 1px solid;
+         padding: 5px 10px;
+       }
+       .friends td:first-child, .friends th:first-child {
+         border-left: none;
+       }
+
+       .sortorder:after {
+         content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+       }
+       .sortorder.reverse:after {
+         content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+       }
+     </file>
+     <file name="protractor.js" type="protractor">
+       // Element locators
+       var unsortButton = element(by.partialButtonText('unsorted'));
+       var nameHeader = element(by.partialButtonText('Name'));
+       var phoneHeader = element(by.partialButtonText('Phone'));
+       var ageHeader = element(by.partialButtonText('Age'));
+       var firstName = element(by.repeater('friends').column('friend.name').row(0));
+       var lastName = element(by.repeater('friends').column('friend.name').row(4));
+
+       it('should sort friends by some property, when clicking on the column header', function() {
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+
+         phoneHeader.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Mary');
+
+         nameHeader.click();
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('Mike');
+
+         ageHeader.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Adam');
+       });
+
+       it('should sort friends in reverse order, when clicking on the same column', function() {
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+
+         ageHeader.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Adam');
+
+         ageHeader.click();
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+       });
+
+       it('should restore the original order, when clicking "Set to unsorted"', function() {
+         expect(firstName.getText()).toBe('Adam');
+         expect(lastName.getText()).toBe('John');
+
+         unsortButton.click();
+         expect(firstName.getText()).toBe('John');
+         expect(lastName.getText()).toBe('Julie');
+       });
+     </file>
+   </example>
+ * <hr />
+ *
+ * @example
+ * ### Using a custom comparator
+ *
+ * If you have very specific requirements about the way items are sorted, you can pass your own
+ * comparator function. For example, you might need to compare some strings in a locale-sensitive
+ * way. (When specifying a custom comparator, you also need to pass a value for the `reverse`
+ * argument - passing `false` retains the default sorting order, i.e. ascending.)
+ *
+   <example name="orderBy-custom-comparator" module="orderByExample4">
+     <file name="index.html">
+       <div ng-controller="ExampleController">
+         <div class="friends-container custom-comparator">
+           <h3>Locale-sensitive Comparator</h3>
+           <table class="friends">
+             <tr>
+               <th>Name</th>
+               <th>Favorite Letter</th>
+             </tr>
+             <tr ng-repeat="friend in friends | orderBy:'favoriteLetter':false:localeSensitiveComparator">
+               <td>{{friend.name}}</td>
+               <td>{{friend.favoriteLetter}}</td>
+             </tr>
+           </table>
+         </div>
+         <div class="friends-container default-comparator">
+           <h3>Default Comparator</h3>
+           <table class="friends">
+             <tr>
+               <th>Name</th>
+               <th>Favorite Letter</th>
+             </tr>
+             <tr ng-repeat="friend in friends | orderBy:'favoriteLetter'">
+               <td>{{friend.name}}</td>
+               <td>{{friend.favoriteLetter}}</td>
+             </tr>
+           </table>
+         </div>
+       </div>
+     </file>
+     <file name="script.js">
+       angular.module('orderByExample4', [])
+         .controller('ExampleController', ['$scope', function($scope) {
+           $scope.friends = [
+             {name: 'John',   favoriteLetter: 'Ä'},
+             {name: 'Mary',   favoriteLetter: 'Ü'},
+             {name: 'Mike',   favoriteLetter: 'Ö'},
+             {name: 'Adam',   favoriteLetter: 'H'},
+             {name: 'Julie',  favoriteLetter: 'Z'}
+           ];
+
+           $scope.localeSensitiveComparator = function(v1, v2) {
+             // If we don't get strings, just compare by index
+             if (v1.type !== 'string' || v2.type !== 'string') {
+               return (v1.index < v2.index) ? -1 : 1;
+             }
+
+             // Compare strings alphabetically, taking locale into account
+             return v1.value.localeCompare(v2.value);
+           };
+         }]);
+     </file>
+     <file name="style.css">
+       .friends-container {
+         display: inline-block;
+         margin: 0 30px;
+       }
+
+       .friends {
+         border-collapse: collapse;
+       }
+
+       .friends th {
+         border-bottom: 1px solid;
+       }
+       .friends td, .friends th {
+         border-left: 1px solid;
+         padding: 5px 10px;
+       }
+       .friends td:first-child, .friends th:first-child {
+         border-left: none;
+       }
+     </file>
+     <file name="protractor.js" type="protractor">
+       // Element locators
+       var container = element(by.css('.custom-comparator'));
+       var names = container.all(by.repeater('friends').column('friend.name'));
+
+       it('should sort friends by favorite letter (in correct alphabetical order)', function() {
+         expect(names.get(0).getText()).toBe('John');
+         expect(names.get(1).getText()).toBe('Adam');
+         expect(names.get(2).getText()).toBe('Mike');
+         expect(names.get(3).getText()).toBe('Mary');
+         expect(names.get(4).getText()).toBe('Julie');
+       });
      </file>
    </example>
  *
- * It's also possible to call the orderBy filter manually, by injecting `$filter`, retrieving the
- * filter routine with `$filter('orderBy')`, and calling the returned filter routine with the
- * desired parameters.
- *
- * Example:
- *
- * @example
-  <example module="orderByExample">
-    <file name="index.html">
-    <div ng-controller="ExampleController">
-      <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
-      <table class="friend">
-        <tr>
-          <th>
-              <button ng-click="order('name')">Name</button>
-              <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-          </th>
-          <th>
-              <button ng-click="order('phone')">Phone Number</button>
-              <span class="sortorder" ng-show="predicate === 'phone'" ng-class="{reverse:reverse}"></span>
-          </th>
-          <th>
-              <button ng-click="order('age')">Age</button>
-              <span class="sortorder" ng-show="predicate === 'age'" ng-class="{reverse:reverse}"></span>
-          </th>
-        </tr>
-        <tr ng-repeat="friend in friends">
-          <td>{{friend.name}}</td>
-          <td>{{friend.phone}}</td>
-          <td>{{friend.age}}</td>
-        </tr>
-      </table>
-    </div>
-    </file>
-
-    <file name="script.js">
-      angular.module('orderByExample', [])
-        .controller('ExampleController', ['$scope', '$filter', function($scope, $filter) {
-          var orderBy = $filter('orderBy');
-          $scope.friends = [
-            { name: 'John',    phone: '555-1212',    age: 10 },
-            { name: 'Mary',    phone: '555-9876',    age: 19 },
-            { name: 'Mike',    phone: '555-4321',    age: 21 },
-            { name: 'Adam',    phone: '555-5678',    age: 35 },
-            { name: 'Julie',   phone: '555-8765',    age: 29 }
-          ];
-          $scope.order = function(predicate) {
-            $scope.predicate = predicate;
-            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
-            $scope.friends = orderBy($scope.friends, predicate, $scope.reverse);
-          };
-          $scope.order('age', true);
-        }]);
-    </file>
-
-    <file name="style.css">
-       .sortorder:after {
-         content: '\25b2';
-       }
-       .sortorder.reverse:after {
-         content: '\25bc';
-       }
-    </file>
-</example>
  */
 orderByFilter.$inject = ['$parse'];
 function orderByFilter($parse) {
-  return function(array, sortPredicate, reverseOrder) {
+  return function(array, sortPredicate, reverseOrder, compareFn) {
 
     if (array == null) return array;
     if (!isArrayLike(array)) {
@@ -34765,11 +35399,12 @@ function orderByFilter($parse) {
     if (!isArray(sortPredicate)) { sortPredicate = [sortPredicate]; }
     if (sortPredicate.length === 0) { sortPredicate = ['+']; }
 
-    var predicates = processPredicates(sortPredicate, reverseOrder);
-    // Add a predicate at the end that evaluates to the element index. This makes the
-    // sort stable as it works as a tie-breaker when all the input predicates cannot
-    // distinguish between two elements.
-    predicates.push({ get: function() { return {}; }, descending: reverseOrder ? -1 : 1});
+    var predicates = processPredicates(sortPredicate);
+
+    var descending = reverseOrder ? -1 : 1;
+
+    // Define the `compare()` function. Use a default comparator if none is specified.
+    var compare = isFunction(compareFn) ? compareFn : defaultCompare;
 
     // The next three lines are a version of a Swartzian Transform idiom from Perl
     // (sometimes called the Decorate-Sort-Undecorate idiom)
@@ -34781,8 +35416,12 @@ function orderByFilter($parse) {
     return array;
 
     function getComparisonObject(value, index) {
+      // NOTE: We are adding an extra `tieBreaker` value based on the element's index.
+      // This will be used to keep the sort stable when none of the input predicates can
+      // distinguish between two elements.
       return {
         value: value,
+        tieBreaker: {value: index, type: 'number', index: index},
         predicateValues: predicates.map(function(predicate) {
           return getPredicateValue(predicate.get(value), index);
         })
@@ -34790,18 +35429,19 @@ function orderByFilter($parse) {
     }
 
     function doComparison(v1, v2) {
-      var result = 0;
-      for (var index=0, length = predicates.length; index < length; ++index) {
-        result = compare(v1.predicateValues[index], v2.predicateValues[index]) * predicates[index].descending;
-        if (result) break;
+      for (var i = 0, ii = predicates.length; i < ii; i++) {
+        var result = compare(v1.predicateValues[i], v2.predicateValues[i]);
+        if (result) {
+          return result * predicates[i].descending * descending;
+        }
       }
-      return result;
+
+      return compare(v1.tieBreaker, v2.tieBreaker) * descending;
     }
   };
 
-  function processPredicates(sortPredicate, reverseOrder) {
-    reverseOrder = reverseOrder ? -1 : 1;
-    return sortPredicate.map(function(predicate) {
+  function processPredicates(sortPredicates) {
+    return sortPredicates.map(function(predicate) {
       var descending = 1, get = identity;
 
       if (isFunction(predicate)) {
@@ -34819,7 +35459,7 @@ function orderByFilter($parse) {
           }
         }
       }
-      return { get: get, descending: descending * reverseOrder };
+      return {get: get, descending: descending};
     });
   }
 
@@ -34834,9 +35474,9 @@ function orderByFilter($parse) {
     }
   }
 
-  function objectValue(value, index) {
+  function objectValue(value) {
     // If `valueOf` is a valid function use that
-    if (typeof value.valueOf === 'function') {
+    if (isFunction(value.valueOf)) {
       value = value.valueOf();
       if (isPrimitive(value)) return value;
     }
@@ -34845,8 +35485,8 @@ function orderByFilter($parse) {
       value = value.toString();
       if (isPrimitive(value)) return value;
     }
-    // We have a basic object so we use the position of the object in the collection
-    return index;
+
+    return value;
   }
 
   function getPredicateValue(value, index) {
@@ -34854,23 +35494,39 @@ function orderByFilter($parse) {
     if (value === null) {
       type = 'string';
       value = 'null';
-    } else if (type === 'string') {
-      value = value.toLowerCase();
     } else if (type === 'object') {
-      value = objectValue(value, index);
+      value = objectValue(value);
     }
-    return { value: value, type: type };
+    return {value: value, type: type, index: index};
   }
 
-  function compare(v1, v2) {
+  function defaultCompare(v1, v2) {
     var result = 0;
-    if (v1.type === v2.type) {
-      if (v1.value !== v2.value) {
-        result = v1.value < v2.value ? -1 : 1;
+    var type1 = v1.type;
+    var type2 = v2.type;
+
+    if (type1 === type2) {
+      var value1 = v1.value;
+      var value2 = v2.value;
+
+      if (type1 === 'string') {
+        // Compare strings case-insensitively
+        value1 = value1.toLowerCase();
+        value2 = value2.toLowerCase();
+      } else if (type1 === 'object') {
+        // For basic objects, use the position of the object
+        // in the collection instead of the value
+        if (isObject(value1)) value1 = v1.index;
+        if (isObject(value2)) value2 = v2.index;
+      }
+
+      if (value1 !== value2) {
+        result = value1 < value2 ? -1 : 1;
       }
     } else {
-      result = v1.type < v2.type ? -1 : 1;
+      result = type1 < type2 ? -1 : 1;
     }
+
     return result;
   }
 }
@@ -35915,7 +36571,9 @@ var ISO_DATE_REGEXP = /^\d{4,}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+(?:[+-
 //   9. Fragment
 //                 1111111111111111 222   333333    44444        555555555555555555555555    666     77777777     8888888     999
 var URL_REGEXP = /^[a-z][a-z\d.+-]*:\/*(?:[^:@]+(?::[^@]+)?@)?(?:[^\s:/?#]+|\[[a-f\d:]+\])(?::\d+)?(?:\/[^?#]*)?(?:\?[^#]*)?(?:#.*)?$/i;
-var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+/* jshint maxlen:220 */
+var EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+\/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+\/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+/* jshint maxlen:200 */
 var NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
 var DATE_REGEXP = /^(\d{4,})-(\d{2})-(\d{2})$/;
 var DATETIMELOCAL_REGEXP = /^(\d{4,})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/;
@@ -35991,11 +36649,11 @@ var inputType = {
              <span class="error" ng-show="myForm.input.$error.pattern">
                Single word only!</span>
            </div>
-           <tt>text = {{example.text}}</tt><br/>
-           <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
-           <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
-           <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
-           <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+           <code>text = {{example.text}}</code><br/>
+           <code>myForm.input.$valid = {{myForm.input.$valid}}</code><br/>
+           <code>myForm.input.$error = {{myForm.input.$error}}</code><br/>
+           <code>myForm.$valid = {{myForm.$valid}}</code><br/>
+           <code>myForm.$error.required = {{!!myForm.$error.required}}</code><br/>
           </form>
         </file>
         <file name="protractor.js" type="protractor">
@@ -37874,8 +38532,9 @@ var ngBindHtmlDirective = ['$sce', '$parse', '$compile', function($sce, $parse, 
     restrict: 'A',
     compile: function ngBindHtmlCompile(tElement, tAttrs) {
       var ngBindHtmlGetter = $parse(tAttrs.ngBindHtml);
-      var ngBindHtmlWatch = $parse(tAttrs.ngBindHtml, function getStringValue(value) {
-        return (value || '').toString();
+      var ngBindHtmlWatch = $parse(tAttrs.ngBindHtml, function sceValueOf(val) {
+        // Unwrap the value to compare the actual inner safe value, not the wrapper object.
+        return $sce.valueOf(val);
       });
       $compile.$$addBindingClass(tElement);
 
@@ -37883,9 +38542,9 @@ var ngBindHtmlDirective = ['$sce', '$parse', '$compile', function($sce, $parse, 
         $compile.$$addBindingInfo(element, attr.ngBindHtml);
 
         scope.$watch(ngBindHtmlWatch, function ngBindHtmlWatchAction() {
-          // we re-evaluate the expr because we want a TrustedValueHolderType
-          // for $sce, not a string
-          element.html($sce.getTrustedHtml(ngBindHtmlGetter(scope)) || '');
+          // The watched value is the unwrapped value. To avoid re-escaping, use the direct getter.
+          var value = ngBindHtmlGetter(scope);
+          element.html($sce.getTrustedHtml(value) || '');
         });
       };
     }
@@ -38038,7 +38697,9 @@ function classDirective(name, selector) {
         }
 
         function ngClassWatchAction(newVal) {
-          if (selector === true || scope.$index % 2 === selector) {
+          // jshint bitwise: false
+          if (selector === true || (scope.$index & 1) === selector) {
+          // jshint bitwise: true
             var newClasses = arrayClasses(newVal || []);
             if (!oldVal) {
               addClasses(newClasses);
@@ -42433,7 +43094,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *   it's a prefix used by Angular for public (`$`) and private (`$$`) properties.
  *
  * - The built-in filters {@link ng.orderBy orderBy} and {@link ng.filter filter} do not work with
- *   objects, and will throw if used with one.
+ *   objects, and will throw an error if used with one.
  *
  * If you are hitting any of these limitations, the recommended workaround is to convert your object into an array
  * that is sorted into the order that you prefer before providing it to `ngRepeat`. You could
@@ -44264,6 +44925,7 @@ var styleDirective = valueFn({
 /**
  * @ngdoc directive
  * @name ngRequired
+ * @restrict A
  *
  * @description
  *
@@ -44800,7 +45462,7 @@ function sugar (root) {
   };
 
   if (!root.remove) {
-    remove.remove = fakeRemove;
+    root.remove = fakeRemove;
   }
 
   return api;
@@ -50132,7 +50794,7 @@ var app = module.exports = require('./greenwallet');
 
 Window.app = app;
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_70887e47.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c1dbfd8d.js","/")
 },{"./greenwallet":44,"./lib":96,"buffer":28,"global/window":26,"oMfpAn":31}],37:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // replace this with an app object of some sort?
@@ -50449,7 +51111,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                                     }
                                 }
                                 hd_promise.then(function(hd) {
-                                    tx_sender.call('http://greenaddressit.com/login/register',
+                                    tx_sender.call('com.greenaddress.login.register',
                                             hd.master_public, hd.master_chaincode,
                                             user_agent($scope.wallet)).then(function(data) {
                                         if (hd.btchip_pubkey) {
@@ -50510,7 +51172,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
                     $scope.$apply(function() {
                         var trezor_chaincode = pubkey.message.node.chain_code;
                         var trezor_pubkey = pubkey.message.node.public_key;
-                        tx_sender.call('http://greenaddressit.com/login/register',
+                        tx_sender.call('com.greenaddress.login.register',
                             trezor_pubkey, trezor_chaincode,
                             user_agent($scope.wallet)).then(try_login, try_login);
                     });
@@ -50585,7 +51247,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         facebook.login($scope.signup.fbloginstate).then(function() {
             var auth = FB.getAuthResponse();
             $scope.signup.social_in_progress = true;
-            tx_sender.call('http://greenaddressit.com/addressbook/sync_fb', auth.accessToken).then(function() {
+            tx_sender.call('com.greenaddress.addressbook.sync_fb', auth.accessToken).then(function() {
                 gaEvent('Signup', 'FbSyncEnabled');
                 $scope.signup.social_in_progress = false;
                 $scope.signup.any_social_done = true;
@@ -50602,7 +51264,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
     $scope.signup.customlogin = function() {
         gaEvent('Signup', 'CustomLoginClicked');
         $scope.got_username_password = function(username, password) {
-            tx_sender.call('http://greenaddressit.com/addressbook/sync_custom', username, password).then(function() {
+            tx_sender.call('com.greenaddress.addressbook.sync_custom', username, password).then(function() {
                 gaEvent('Signup', 'CustomLoginEnabled');
                 notices.makeNotice('success', gettext('Custom login enabled'));
                 $scope.signup.any_social_done = true;
@@ -50629,7 +51291,7 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
         d.then(function(token) {
             if (token) {
                 $scope.signup.social_in_progress = true;
-                tx_sender.call('http://greenaddressit.com/addressbook/sync_reddit', token).then(function() {
+                tx_sender.call('com.greenaddress.addressbook.sync_reddit', token).then(function() {
                     gaEvent('Signup', 'RedditSyncEnabled');
                     $scope.signup.social_in_progress = false;
                     $scope.signup.any_social_done = true;
@@ -51029,7 +51691,7 @@ angular.module('greenWalletControllers', [])
             } else {
                 var hash_or_pubkey = Bitcoin.bitcoin.ECPair.fromWIF(redeem_key).getPublicKeyBuffer();
             }
-            tx_sender.call('http://greenaddressit.com/txs/get_redeem_message',
+            tx_sender.call('com.greenaddress.txs.get_redeem_message',
                     type, Array.from(hash_or_pubkey)).then(function(message) {
                 $scope.wallet.redeem_message = message;
             });
@@ -51062,7 +51724,7 @@ angular.module('greenWalletControllers', [])
                 $scope.wallet.send_to_receiving_id = undefined;  // ignore address from the URI if 'r' is present
                 $scope.payreq_loading = true;
                 $scope.has_payreq = true;
-                return tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed.r).then(function(data) {
+                return tx_sender.call('com.greenaddress.vault.process_bip0070_url', parsed.r).then(function(data) {
                     $scope.payreq_loading = false;
                     var amount = 0;
                     for (var i = 0; i < data.outputs.length; i++) {
@@ -51094,7 +51756,7 @@ angular.module('greenWalletControllers', [])
                 var that = this;
                 that.balance_updating = true;
                 if (!cur_net.isAlpha) {
-                    tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount)
+                    tx_sender.call('com.greenaddress.txs.get_balance', $scope.wallet.current_subaccount)
                         .then(function(data) {
                             that.final_balance = data.satoshi;
                             that.fiat_currency = data.fiat_currency;
@@ -51124,14 +51786,14 @@ angular.module('greenWalletControllers', [])
                         final_balances[subaccount.pointer] = 0;
                     }
                     tx_sender.call(
-                        'http://greenaddressit.com/txs/get_all_unspent_outputs',
+                        'com.greenaddress.txs.get_all_unspent_outputs',
                         0   // include zero-confs
                     ).then(function(utxos) {
                         var rawtx_ds = [];
                         for (var i = 0; i < utxos.length; ++i) {
                             (function(utxo) {
                                 rawtx_ds.push(tx_sender.call(
-                                    'http://greenaddressit.com/txs/get_raw_unspent_output',
+                                    'com.greenaddress.txs.get_raw_unspent_output',
                                     utxo.txhash, utxo.asset_id
                                 ).then(function(rawtx) {
                                     return {
@@ -51186,7 +51848,7 @@ angular.module('greenWalletControllers', [])
                         }
                         return $q.all(unblind_ds);
                     }).then(function() {
-                        return tx_sender.call('http://greenaddressit.com/txs/get_balance', $scope.wallet.current_subaccount).then(function(data) {
+                        return tx_sender.call('com.greenaddress.txs.get_balance', $scope.wallet.current_subaccount).then(function(data) {
                             that.final_balance = final_balances[$scope.wallet.current_subaccount];
                             that.fiat_currency = data.fiat_currency;
                             that.fiat_value = data.fiat_value;
@@ -51260,7 +51922,7 @@ angular.module('greenWalletControllers', [])
                 notices.makeNotice('success', gettext('Bitcoin transaction received!'));
                 sound.play(BASE_URL + "/static/sound/coinreceived.mp3", $scope);
             }
-        });        
+        });
         if ($scope.wallet.expired_deposits && $scope.wallet.expired_deposits.length) {
             $scope.redeposit_modal = $uibModal.open({
                 templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_redeposit.html',
@@ -51278,7 +51940,7 @@ angular.module('greenWalletControllers', [])
             } else {
                 gaEvent('ReceivePage', 'ShowBitcoinUri');
                 $scope.generating_bitcoin_uri = true;
-                tx_sender.call('http://greenaddressit.com/vault/fund_receiving_id',
+                tx_sender.call('com.greenaddress.vault.fund_receiving_id',
                                $scope.wallet.send_to_receiving_id).then(function(p2sh) {
                     $scope.bitcoin_uri = 'bitcoin:' + p2sh;
                     if ($scope.wallet.send_to_receiving_id_amount) {
@@ -51360,7 +52022,7 @@ angular.module('greenWalletControllers', [])
         for (var i = 0; i < txos.length; ++i) {
             txos_in.push([txos[i].txhash, txos[i].out_n]);
         }
-        tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit", txos_in,
+        tx_sender.call('com.greenaddress.vault.prepare_redeposit', txos_in,
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee, prevouts_mode: 'http'}).then(function(data) {
             wallets.sign_and_send_tx($scope, data, false, twofac_data).then(function() {
                 deferred.resolve();
@@ -51384,7 +52046,7 @@ angular.module('greenWalletControllers', [])
     };
     $scope.redeposit_multiple_tx = function() {
         $scope.redepositing = true;
-        return tx_sender.call("http://greenaddressit.com/vault/prepare_redeposit",
+        return tx_sender.call("com.greenaddress.vault.prepare_redeposit",
                 [[$scope.wallet.expired_deposits[0].txhash, $scope.wallet.expired_deposits[0].out_n]],
                 {rbf_optin: $scope.wallet.appearance.replace_by_fee,
                  prevouts_mode: 'http'}).then(function() {
@@ -53611,7 +54273,7 @@ angular.module('greenWalletInfoControllers',
 
     $scope.wallet.has_graph = true;  // element needs to be initially visible to allow computing width
     var update_graph = function() {
-        tx_sender.call("http://greenaddressit.com/txs/get_daily_balance_chart", $scope.wallet.current_subaccount).then(function(balances_arr) {
+        tx_sender.call("com.greenaddress.txs.get_daily_balance_chart", $scope.wallet.current_subaccount).then(function(balances_arr) {
             if (!document.getElementById('btc_graph')) {
                 // not in 'Transactions' tab anymore - don't do anything to avoid breaking it
                 return;
@@ -53837,7 +54499,7 @@ angular.module('greenWalletInfoControllers',
                 {compressed: true,
                  network: cur_net}
             );
-            tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
+            tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
                     Array.from(key.getPublicKeyBuffer())).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
@@ -54141,7 +54803,7 @@ angular.module('greenWalletReceiveControllers',
         payment_url: base_payment_url,
         show_previous_addresses: function() {
             $rootScope.is_loading += 1;
-            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
+            tx_sender.call('com.greenaddress.addressbook.get_my_addresses', $scope.wallet.current_subaccount).then(function(data) {
                 $scope.receive.my_addresses = data;
                 $scope.receive.my_addresses.has_more = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer > 1;
                 $uibModal.open({
@@ -54155,7 +54817,7 @@ angular.module('greenWalletReceiveControllers',
         show_more_addresses: function() {
           $rootScope.is_loading += 1;
             var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1].pointer;
-            tx_sender.call('http://greenaddressit.com/addressbook/get_my_addresses',
+            tx_sender.call('com.greenaddress.addressbook.get_my_addresses',
                     $scope.wallet.current_subaccount, first_pointer).then(function(data) {
                 $scope.receive.my_addresses = $scope.receive.my_addresses.concat(data);
                 var first_pointer = $scope.receive.my_addresses[$scope.receive.my_addresses.length - 1];
@@ -54171,7 +54833,7 @@ angular.module('greenWalletReceiveControllers',
             var do_sweep_key = function(key) {
                 var pubkey = key.getPublicKeyBuffer();
                 that.sweeping = true;
-                tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social", Array.from(pubkey), true).then(function(data) {
+                tx_sender.call("com.greenaddress.vault.prepare_sweep_social", Array.from(pubkey), true).then(function(data) {
                     data.prev_outputs = [];
                     for (var i = 0; i < data.prevout_scripts.length; i++) {
                         data.prev_outputs.push(
@@ -54325,7 +54987,7 @@ angular.module('greenWalletReceiveControllers',
             gaEvent('Wallet', 'ReceiveShowBitcoinUri');
             var confidential = cur_net.isAlpha;
             var args = [
-                'http://greenaddressit.com/vault/fund',
+                'com.greenaddress.vault.fund',
                 $scope.wallet.current_subaccount,
                 confidential
             ];
@@ -54356,7 +55018,7 @@ angular.module('greenWalletReceiveControllers',
                             version = 25;
                         }
                         return tx_sender.call(
-                            'http://greenaddressit.com/vault/set_scanning_key',
+                            'com.greenaddress.vault.set_scanning_key',
                             $scope.wallet.current_subaccount,
                             data.pointer,
                             Array.from(blinded_key.keyPair.getPublicKeyBuffer())
@@ -54837,7 +55499,7 @@ angular.module('greenWalletSendControllers',
             }, function() {
                 // cancel - reverse the tx
                 $rootScope.is_loading += 1;
-                tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
+                tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
                         Array.from(key.keyPair.getPublicKeyBuffer()), false).then(function(data) {
                     data.prev_outputs = [];
                     for (var i = 0; i < data.prevout_scripts.length; i++) {
@@ -54858,7 +55520,7 @@ angular.module('greenWalletSendControllers',
             });
         },
         do_send_email: function(that, enckey, satoshis) {
-            return tx_sender.call("http://greenaddressit.com/vault/send_email", that.recipient.address,
+            return tx_sender.call("com.greenaddress.vault.send_email", that.recipient.address,
                     'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
                 function() {
                     $rootScope.decrementLoading();
@@ -54886,7 +55548,7 @@ angular.module('greenWalletSendControllers',
         },
         do_send_reddit: function(that, enckey, satoshis) {
             if ($scope.wallet.send_from) $scope.wallet.send_from = null;
-            return tx_sender.call("http://greenaddressit.com/vault/send_reddit", that.recipient.address,
+            return tx_sender.call("com.greenaddress.vault.send_reddit", that.recipient.address,
                     'https://' + hostname + '/redeem/?amount=' + satoshis + '#/redeem/' + enckey).then(
                 function(json) {
                     $rootScope.decrementLoading();
@@ -54914,7 +55576,7 @@ angular.module('greenWalletSendControllers',
             priv_data.memo = this.memo;
             priv_data.subaccount = $scope.wallet.current_subaccount;
             if (that.spend_all) satoshis = $scope.wallet.final_balance;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(),
+            tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, this.get_add_fee(),
                            priv_data).then(function(data) {
                 that.signing = true;
                 wallets.sign_and_send_tx($scope, data, undefined, undefined, undefined, that._signing_progress_cb.bind(that)).then(function() {
@@ -54988,7 +55650,7 @@ angular.module('greenWalletSendControllers',
                     priv_data.memo = that.memo;
                     priv_data.subaccount = $scope.wallet.current_subaccount;
                     if (that.spend_all) satoshis = $scope.wallet.final_balance;
-                    tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
+                    tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, add_fee, priv_data).then(function(data) {
                         var d_verify = verify_tx(that, data.tx, key.getAddress().toString(), satoshis, data.change_pointer).catch(function(error) {
                             that.sending = false;
                             sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
@@ -55008,7 +55670,7 @@ angular.module('greenWalletSendControllers',
                     });
                 });
             };
-            tx_sender.call("http://greenaddressit.com/vault/get_next_private_derived_pointer",
+            tx_sender.call("com.greenaddress.vault.get_next_private_derived_pointer",
                     $scope.wallet.current_subaccount).then(function(pointer) {
                 var key = $q.when($scope.wallet.hdwallet);
                 if ($scope.wallet.current_subaccount) {
@@ -55058,7 +55720,7 @@ angular.module('greenWalletSendControllers',
                              instant: that.instant, allow_random_change: true, memo: this.memo,
                 subaccount: $scope.wallet.current_subaccount, prevouts_mode: 'http'};
             if (that.spend_all) satoshis = $scope.wallet.final_balance;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {
+            tx_sender.call("com.greenaddress.vault.prepare_tx", satoshis, to_addr, this.get_add_fee(), priv_data).then(function(data) {
                 var d_verify = verify_tx(that, data.tx, to_addr, satoshis, data.change_pointer).catch(function(error) {
                     sound.play(BASE_URL + "/static/sound/wentwrong.mp3", $scope);
                     notices.makeNotice('error', gettext('Transaction verification failed: ' + error + '. Please contact support.'))
@@ -55076,7 +55738,7 @@ angular.module('greenWalletSendControllers',
         },
         send_to_reddit: function() {
             var that = this;
-            tx_sender.call("http://greenaddressit.com/addressbook/reddit_user_has_wallet", this.recipient.address.replace('reddit:', '')).then(function(has_wallet) {
+            tx_sender.call("com.greenaddress.addressbook.reddit_user_has_wallet", this.recipient.address.replace('reddit:', '')).then(function(has_wallet) {
                 that.recipient.address = that.recipient.address.replace('reddit:', '');
                 if (has_wallet) {
                     var satoshis = that.amount_to_satoshis(that.amount);
@@ -55104,7 +55766,7 @@ angular.module('greenWalletSendControllers',
             if (this.recipient.type == 'reddit') {
                 name = name.replace('reddit:', '');
             }
-            tx_sender.call("http://greenaddressit.com/addressbook/user_has_wallet", this.recipient.type, name).then(function(has_wallet) {
+            tx_sender.call("com.greenaddress.addressbook.user_has_wallet", this.recipient.type, name).then(function(has_wallet) {
                 that.recipient.address = name;
                 if (has_wallet) {
                     var satoshis = that.amount_to_satoshis(that.amount);
@@ -55123,7 +55785,7 @@ angular.module('greenWalletSendControllers',
             var satoshis = that.amount_to_satoshis(that.amount);
             var data = angular.extend({}, that.recipient.data);
             data.subaccount = $scope.wallet.current_subaccount;
-            tx_sender.call("http://greenaddressit.com/vault/prepare_payreq", satoshis, data, {
+            tx_sender.call("com.greenaddress.vault.prepare_payreq", satoshis, data, {
                     rbf_optin: $scope.wallet.appearance.replace_by_fee,
                     prevouts_mode: 'http'}).then(function(data) {
                 that.signing = true;
@@ -55214,7 +55876,7 @@ angular.module('greenWalletSendControllers',
         var parsed_uri = parse_bitcoin_uri(newValue);
         if (parsed_uri.r) {
             $scope.send_tx.processing_payreq = true;
-            tx_sender.call('http://greenaddressit.com/vault/process_bip0070_url', parsed_uri.r).then(function(data) {
+            tx_sender.call('com.greenaddress.vault.process_bip0070_url', parsed_uri.r).then(function(data) {
                 var amount = 0;
                 for (var i = 0; i < data.outputs.length; i++) {
                     var output = data.outputs[i];
@@ -55427,7 +56089,7 @@ function factory ($rootScope, tx_sender, storage, crypto, notices, $q) {
         }
 
         return d.then(function () {
-          return tx_sender.call('http://greenaddressit.com/addressbook/read_all', cache.hashed).then(function (data) {
+          return tx_sender.call('com.greenaddress.addressbook.read_all', cache.hashed).then(function (data) {
             if (data.items) {
               var items = data.items;
               crypto.encrypt(JSON.stringify(data.items), $scope.wallet.cache_password).then(function (encrypted) {
@@ -58110,7 +58772,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
   };
   txSenderService.loginWatchOnly = function (token_type, token, logout) {
     var d = $q.defer();
-    txSenderService.call('http://greenaddressit.com/login/watch_only', token_type, token, logout || false)
+    txSenderService.call('com.greenaddress.login.watch_only', token_type, token, logout || false)
       .then(function (data) {
         txSenderService.watch_only = [token_type, token];
         onLogin(data);
@@ -58121,7 +58783,7 @@ function factory ($q, $rootScope, cordovaReady, $http, notices, gaEvent, $locati
     return d.promise;
   };
   txSenderService.change_pin = function (new_pin) {
-    return txSenderService.call('http://greenaddressit.com/pin/change_pin_login', new_pin, txSenderService.pin_ident)
+    return txSenderService.call('com.greenaddress.pin.change_pin_login', new_pin, txSenderService.pin_ident)
       .then(function (res) {
         // keep new pin for reconnection handling
         if (!res) {
@@ -58226,7 +58888,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
   walletsService.updateAppearance = function ($scope, key, value) {
     var oldValue = $scope.wallet.appearance[key];
     $scope.wallet.appearance[key] = value;
-    return tx_sender.call('http://greenaddressit.com/login/set_appearance', JSON.stringify($scope.wallet.appearance)).catch(function (e) {
+    return tx_sender.call('com.greenaddress.login.set_appearance', JSON.stringify($scope.wallet.appearance)).catch(function (e) {
       $scope.wallet.appearance[key] = oldValue;
       return $q.reject(e);
     });
@@ -58303,7 +58965,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           $scope.wallet.gait_path = mnemonics.seedToPath(path_seed);
         }
         if (!data.gait_path) { // *NOTE*: don't change the path after signup, because it *will* cause locked funds
-          tx_sender.call('http://greenaddressit.com/login/set_gait_path', $scope.wallet.gait_path).catch(function (err) {
+          tx_sender.call('com.greenaddress.login.set_gait_path', $scope.wallet.gait_path).catch(function (err) {
             if (err.uri !== 'http://api.wamp.ws/error#NoSuchRPCEndpoint') {
               notices.makeNotice('error', 'Please contact support (reference "sgp_error ' + err.args[1] + '")');
             } else {
@@ -58529,7 +59191,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if (end) end.setDate(end.getDate() + 1);
     var date_range_iso = date_range && [date_range[0] && date_range[0].toISOString(),
       end && end.toISOString()];
-    var args = ['http://greenaddressit.com/txs/get_list_v2',
+    var args = ['com.greenaddress.txs.get_list_v2',
       page_id, query, sort_by, date_range_iso, subaccount];
     if (cur_net.isAlpha) {
       // return prev data
@@ -58832,7 +59494,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if (change_value.compareTo(Bitcoin.BigInteger.ZERO) > 0) {
       input_blinds_and_change.push(
         tx_sender.call(
-          'http://greenaddressit.com/vault/fund',
+          'com.greenaddress.vault.fund',
           $scope.wallet.current_subaccount, true, true
         ).then(function (data) {
           var key = $q.when($scope.wallet.hdwallet);
@@ -58849,7 +59511,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
             return branch.deriveHardened(data.pointer);
           }).then(function (blinded_key) {
             return tx_sender.call(
-              'http://greenaddressit.com/vault/set_scanning_key',
+              'com.greenaddress.vault.set_scanning_key',
               $scope.wallet.current_subaccount,
               data.pointer,
               Array.from(blinded_key.keyPair.getPublicKeyBuffer())
@@ -59100,7 +59762,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           $scope, 'send_raw_tx'
         ).then(function (twofac_data) {
           return tx_sender.call(
-            'http://greenaddressit.com/vault/send_raw_tx',
+            'com.greenaddress.vault.send_raw_tx',
             tx.build().toHex(+fee),
             twofac_data
           );
@@ -59609,10 +60271,10 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
         }
       }).then(function (signatures_twofactor) {
         var signatures = signatures_twofactor[0], twofactor = signatures_twofactor[1];
-        tx_sender.call('http://greenaddressit.com/vault/send_tx', signatures, twofactor || null).then(function (data) {
+        tx_sender.call('com.greenaddress.vault.send_tx', signatures, twofactor || null).then(function (data) {
           d.resolve();
           if (!twofactor && $scope) {
-            tx_sender.call('http://greenaddressit.com/login/get_spending_limits').then(function (data) {
+            tx_sender.call('com.greenaddress.login.get_spending_limits').then(function (data) {
               $scope.wallet.limits.total = data.total;
             });
           }
@@ -59635,7 +60297,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     if ($scope.wallet.twofac !== undefined && !force) {
       d.resolve($scope.wallet.twofac);
     } else {
-      tx_sender.call('http://greenaddressit.com/twofactor/get_config').then(function (data) {
+      tx_sender.call('com.greenaddress.twofactor.get_config').then(function (data) {
         $scope.wallet.twofac = data;
         d.resolve($scope.wallet.twofac);
       });
@@ -59666,7 +60328,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           request_code: function () {
             var that = this;
             this.requesting_code = true;
-            return tx_sender.call('http://greenaddressit.com/twofactor/request_' + this.twofactor_method,
+            return tx_sender.call('com.greenaddress.twofactor.request_' + this.twofactor_method,
               action, data).then(function () {
               that.codes_requested[that.twofactor_method] = true;
               that.requesting_code = false;
@@ -59684,7 +60346,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
           modal.opened.then(function () { focus('twoFactorModal'); });
           deferred.resolve(modal.result.then(function (twofac_data) {
             if (twofac_data.method == 'gauth' && redeposit) {
-              return tx_sender.call('http://greenaddressit.com/twofactor/request_redeposit_proxy', twofac_data).then(function (data) {
+              return tx_sender.call('com.greenaddress.twofactor.request_redeposit_proxy', twofac_data).then(function (data) {
                 return {'method': 'proxy', 'code': data};
               });
             } else {
@@ -59792,7 +60454,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
     suffix = suffix || '';
     var do_create = function () {
       var deferred = $q.defer();
-      tx_sender.call('http://greenaddressit.com/pin/set_pin_login', pin, 'Primary').then(
+      tx_sender.call('com.greenaddress.pin.set_pin_login', pin, 'Primary').then(
         function (data) {
           if (data) {
             var pin_ident = tx_sender['pin_ident' + suffix] = data;
@@ -59801,7 +60463,7 @@ function factory ($q, $rootScope, tx_sender, $location, notices, $uibModal,
               'pin_chaincode' + suffix,
               $scope.wallet.hdwallet.chainCode.toString('hex')
             );
-            tx_sender.call('http://greenaddressit.com/pin/get_password', pin, data).then(
+            tx_sender.call('com.greenaddress.pin.get_password', pin, data).then(
               function (password) {
                 if (!$scope.wallet.hdwallet.seed_hex) {
                   deferred.reject(gettext('Internal error') + ': Missing seed');
@@ -59923,7 +60585,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_gauth = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_gauth', twofactor_state.twofac_gauth_code, $scope.twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_gauth', twofactor_state.twofac_gauth_code, $scope.twofac_data).then(
             function() {
                 gaEvent('Wallet', 'EnableGauth2FASuccessful');
                 notices.makeNotice('success', 'Enabled Google Authenticator');
@@ -59940,7 +60602,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.disable_2fa = function(type, twofac_data) {
         notices.setLoadingText("Validating code");
         if (type == 'gauth') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_gauth', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_gauth', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisableGauth2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -59953,7 +60615,7 @@ angular.module('greenWalletSettingsControllers',
                     return $q.reject(err);
                 })
         } else if (type == 'email') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_email', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_email', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisableEmail2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -59967,7 +60629,7 @@ angular.module('greenWalletSettingsControllers',
                     return $q.reject(err);
                 })
         } else if (type == 'sms') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_sms', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_sms', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisableSMS2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -59981,7 +60643,7 @@ angular.module('greenWalletSettingsControllers',
                     return $q.reject(err);
                 })
         } else if (type == 'phone') {
-            return tx_sender.call('http://greenaddressit.com/twofactor/disable_phone', twofac_data).then(
+            return tx_sender.call('com.greenaddress.twofactor.disable_phone', twofac_data).then(
                 function() {
                     gaEvent('Wallet', 'DisablePhone2FASuccessful');
                     twofactor_state.disable_2fa_code = '';
@@ -59999,7 +60661,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.start_enabling_email = function(twofac_data) {
         if (twofactor_state.enabling_email) return;
         twofactor_state.enabling_email = true;
-        return tx_sender.call('http://greenaddressit.com/twofactor/init_enable_email', twofactor_state.new_twofac_email, twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.init_enable_email', twofactor_state.new_twofac_email, twofac_data).then(
             function() {
                 gaEvent('Wallet', 'StartEnablingEmail2FASuccessful');
                 twofactor_state.email_set = true;
@@ -60034,14 +60696,14 @@ angular.module('greenWalletSettingsControllers',
             notices.makeNotice('error', err.args[1]);
             return $q.reject(err);
         };
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email'+suffix, arg).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_email'+suffix, arg).then(
             onSuccess,
             function(err) {
                 if ($scope.wallet.signup && err.args[0] == "http://greenaddressit.com/error#alreadyexists") {
                     return $uibModal.open({
                         templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_reset_email.html'
                     }).result.then(function() {
-                        return tx_sender.call('http://greenaddressit.com/twofactor/enable_email',
+                        return tx_sender.call('com.greenaddress.twofactor.enable_email',
                             arg, twofactor_state.new_twofac_email).then(onSuccess, onFail);
                     });
                 } else {
@@ -60052,7 +60714,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.start_enabling_sms = function(twofac_data) {
         if (twofactor_state.enabling_sms) return;
         twofactor_state.enabling_sms = true;
-        return tx_sender.call('http://greenaddressit.com/twofactor/init_enable_sms', twofactor_state.new_twofac_sms, twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.init_enable_sms', twofactor_state.new_twofac_sms, twofac_data).then(
             function() {
                 gaEvent('Wallet', 'StartEnablingSMS2FASuccessful');
                 twofactor_state.sms_set = true;
@@ -60069,7 +60731,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_sms = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_sms', twofactor_state.twofac_sms_code).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_sms', twofactor_state.twofac_sms_code).then(
             function() {
                 gaEvent('Wallet', 'EnableSMS2FASuccessful');
                 notices.makeNotice('success', 'Enabled SMS two factor authentication');
@@ -60085,7 +60747,7 @@ angular.module('greenWalletSettingsControllers',
     $scope.start_enabling_phone = function(twofac_data) {
         if (twofactor_state.enabling_phone) return;
         twofactor_state.enabling_phone = true;
-        return tx_sender.call('http://greenaddressit.com/twofactor/init_enable_phone', twofactor_state.new_twofac_phone, twofac_data).then(
+        return tx_sender.call('com.greenaddress.twofactor.init_enable_phone', twofactor_state.new_twofac_phone, twofac_data).then(
             function() {
                 gaEvent('Wallet', 'StartEnablingPhone2FASuccessful');
                 twofactor_state.phone_set = true;
@@ -60101,7 +60763,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.enable_twofac_phone = function() {
         notices.setLoadingText("Validating code");
-        return tx_sender.call('http://greenaddressit.com/twofactor/enable_phone', twofactor_state.twofac_phone_code).then(
+        return tx_sender.call('com.greenaddress.twofactor.enable_phone', twofactor_state.twofac_phone_code).then(
             function() {
                 gaEvent('Wallet', 'EnablePhone2FASuccessful');
                 notices.makeNotice('success', 'Enabled phone two factor authentication');
@@ -60155,7 +60817,7 @@ angular.module('greenWalletSettingsControllers',
                     $scope.twofac_data = twofac_data;
                     return $scope['enable_twofac_'+type]();
                 } else {
-                    return tx_sender.call('http://greenaddressit.com/twofactor/request_proxy', type, twofac_data).then(function(data) {
+                    return tx_sender.call('com.greenaddress.twofactor.request_proxy', type, twofac_data).then(function(data) {
                         $scope.twofactor_state['toggling_'+type] = 'initial';
                         $scope.twofac_data = {'method': 'proxy', 'code': data};
                     }, function(err) {
@@ -60202,7 +60864,7 @@ angular.module('greenWalletSettingsControllers',
                 this.updating_nlocktime_blocks = true;
                 var that = this;
                 wallets.get_two_factor_code($scope, 'change_nlocktime', {'value': that.blocks_new}).then(function(twofac_data) {
-                    return tx_sender.call('http://greenaddressit.com/login/set_nlocktime', that.blocks_new, twofac_data).then(function() {
+                    return tx_sender.call('com.greenaddress.login.set_nlocktime', that.blocks_new, twofac_data).then(function() {
                         $scope.wallet.nlocktime_blocks = that.blocks = that.blocks_new;
                         notices.makeNotice('success', gettext('nLockTime settings updated successfully'));
                     }, function(err) {
@@ -60255,7 +60917,7 @@ angular.module('greenWalletSettingsControllers',
         },
         expiring_soon_modal: function() {
             gaEvent('Wallet', 'ExpiringSoonModal');
-            tx_sender.call('http://greenaddressit.com/txs/upcoming_nlocktime').then(function(data) {
+            tx_sender.call('com.greenaddress.txs.upcoming_nlocktime').then(function(data) {
                 $scope.soon_nlocktimes = data;
                 $scope.soon_nlocktimes.estimate_days = function(nlocktime_at) {
                     var remaining_blocks = nlocktime_at - this.cur_block;
@@ -60274,7 +60936,7 @@ angular.module('greenWalletSettingsControllers',
             var that = this;
             that.sending_nlocktime = true;
             gaEvent('Wallet', 'SendNlocktimeByEmail');
-            tx_sender.call('http://greenaddressit.com/txs/send_nlocktime').then(function(data) {
+            tx_sender.call('com.greenaddress.txs.send_nlocktime').then(function(data) {
                 notices.makeNotice('success', gettext('Email sent'));
             }, function(err) {
                 notices.makeNotice('error', err.args[1]);
@@ -60282,7 +60944,7 @@ angular.module('greenWalletSettingsControllers',
         }
     };
     $scope.settings.available_units = ['BTC', 'mBTC', 'µBTC', 'bits'];
-    tx_sender.call('http://greenaddressit.com/login/available_currencies').then(function(data) {
+    tx_sender.call('com.greenaddress.login.available_currencies').then(function(data) {
         $scope.settings.pricing_sources = [];
         for (var i = 0; i < data.all.length; i++) {
             var currency = data.all[i];
@@ -60335,12 +60997,12 @@ angular.module('greenWalletSettingsControllers',
             $timeout(function() { settings.pricing_source = oldValue; });
             settings.updating_pricing_source = true;
             var update = function() {
-                tx_sender.call('http://greenaddressit.com/login/set_pricing_source', currency, exchange).then(function() {
+                tx_sender.call('com.greenaddress.login.set_pricing_source', currency, exchange).then(function() {
                     gaEvent('Wallet', 'PricingSourceChanged', newValue);
                     $scope.wallet.fiat_currency = currency;
                     $scope.wallet.fiat_exchange = exchange;
                     $scope.wallet.update_balance();
-                    tx_sender.call("http://greenaddressit.com/login/get_spending_limits").then(function(data) {
+                    tx_sender.call("com.greenaddress.login.get_spending_limits").then(function(data) {
                         // we reset limits if we change currency source while limits are fiat
                         $scope.wallet.limits.per_tx = data.per_tx;
                         $scope.wallet.limits.total = data.total;
@@ -60375,7 +61037,7 @@ angular.module('greenWalletSettingsControllers',
         if (oldValue !== newValue && !settings.updating_currency && newValue != $scope.wallet.fiat_currency) {
             settings.currency = oldValue;
             settings.updating_currency = true;
-            tx_sender.call('http://greenaddressit.com/login/set_currency', newValue).then(function() {
+            tx_sender.call('com.greenaddress.login.set_currency', newValue).then(function() {
                 gaEvent('Wallet', 'CurrencyChanged', newValue);
                 $scope.wallet.fiat_currency = newValue;
                 $scope.wallet.update_balance();
@@ -60415,7 +61077,7 @@ angular.module('greenWalletSettingsControllers',
         if (oldValue !== newValue && !settings.updating_exchange && newValue != $scope.wallet.fiat_exchange) {
             settings.exchange = oldValue;
             settings.updating_exchange = true;
-            tx_sender.call('http://greenaddressit.com/login/set_exchange', newValue).then(function() {
+            tx_sender.call('com.greenaddress.login.set_exchange', newValue).then(function() {
                 gaEvent('Wallet', 'ExchangeChanged', newValue);
                 $scope.wallet.fiat_exchange = newValue;
                 $scope.wallet.update_balance();
@@ -60510,7 +61172,7 @@ angular.module('greenWalletSettingsControllers',
             templateUrl: BASE_URL+'/'+LANG+'/wallet/partials/wallet_modal_remove_account.html',
         }).result.then(function() {
             wallets.get_two_factor_code($scope, 'remove_account', {}).then(function(twofac_data) {
-                return tx_sender.call('http://greenaddressit.com/login/remove_account', twofac_data).then(function() {
+                return tx_sender.call('com.greenaddress.login.remove_account', twofac_data).then(function() {
                     tx_sender.logout();
                     storage.remove('pin_ident');
                     storage.remove('pin_chaincode');
@@ -60530,7 +61192,7 @@ angular.module('greenWalletSettingsControllers',
         }
         settings.setting_email = true;
         wallets.get_two_factor_code($scope, 'set_email', {'address': settings.new_email}).then(function(twofac_data) {
-            return tx_sender.call('http://greenaddressit.com/twofactor/set_email', settings.new_email, twofac_data).then(function() {
+            return tx_sender.call('com.greenaddress.twofactor.set_email', settings.new_email, twofac_data).then(function() {
                 wallets.getTwoFacConfig($scope, true);  // refresh twofac config
                 notices.makeNotice('success', gettext('Email sent'));
             }).catch(function(err) {
@@ -60540,7 +61202,7 @@ angular.module('greenWalletSettingsControllers',
         }).finally(function() { settings.setting_email = false; });
     };
     $scope.confirm_email = function() {
-        tx_sender.call('http://greenaddressit.com/twofactor/activate_email', settings.email_confirmation_code).then(function() {
+        tx_sender.call('com.greenaddress.twofactor.activate_email', settings.email_confirmation_code).then(function() {
             wallets.getTwoFacConfig($scope, true);  // refresh twofac config
             notices.makeNotice('success', gettext('Email confirmed'))
         }).catch(function(err) {
@@ -60563,7 +61225,7 @@ angular.module('greenWalletSettingsControllers',
             var upkey = 'updating_' + key;
             $scope.privacy[upkey] = true;
             $scope.privacy[key] = oldValue;
-            tx_sender.call('http://greenaddressit.com/login/change_settings', 'privacy.' + key, parseInt(newValue)).then(function() {
+            tx_sender.call('com.greenaddress.login.change_settings', 'privacy.' + key, parseInt(newValue)).then(function() {
                 $scope.wallet.privacy[key] = newValue;
                 $scope.privacy[upkey] = false;
                 $scope.privacy[key] = newValue;
@@ -60610,7 +61272,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.delete = function(address) {
         gaEvent('Wallet', 'AddressBookDeleteItem');
-        tx_sender.call('http://greenaddressit.com/addressbook/delete_entry', address).then(function() {
+        tx_sender.call('com.greenaddress.addressbook.delete_entry', address).then(function() {
             var filtered_items = [];
             angular.forEach(addressbook.items, function(value) {
                 if (value.address != address) {
@@ -60633,11 +61295,11 @@ angular.module('greenWalletSettingsControllers',
                     break;
                 }
             }
-            var d = tx_sender.call('http://greenaddressit.com/txs/rename_subaccount', pointer, name).then(function() {
+            var d = tx_sender.call('com.greenaddress.txs.rename_subaccount', pointer, name).then(function() {
                 $scope.wallet.subaccounts[i].name = name;
             });
         } else {
-            var d = tx_sender.call('http://greenaddressit.com/addressbook/edit_entry', address, name, 0)
+            var d = tx_sender.call('com.greenaddress.addressbook.edit_entry', address, name, 0)
         }
         d.then(function(data) {
             gaEvent('Wallet', 'AddressBookItemRenamed');
@@ -60661,7 +61323,7 @@ angular.module('greenWalletSettingsControllers',
         if (item.address.indexOf('@') != -1) {
             item.type = 'email';
         }
-        tx_sender.call('http://greenaddressit.com/addressbook/add_entry',
+        tx_sender.call('com.greenaddress.addressbook.add_entry',
                 item.address, item.name, 0).then(function(data) {
             if (!data) {
                 gaEvent('Wallet', 'AddressBookItemAddFailed', '!data');
@@ -60825,7 +61487,7 @@ angular.module('greenWalletSettingsControllers',
             if (!$scope.quicklogin.started_unsetting) {
                 $scope.quicklogin.started_unsetting = true;
                 $scope.quicklogin.enabled = true;  // not yet disabled
-                tx_sender.call('http://greenaddressit.com/pin/remove_pin_login',
+                tx_sender.call('com.greenaddress.pin.remove_pin_login',
                         $scope.quicklogin.device_ident).then(function(data) {
                     gaEvent('Wallet', 'QuickLoginRemoved');
                     delete tx_sender.pin_ident;  // don't try using pin on reconnect
@@ -60877,7 +61539,7 @@ angular.module('greenWalletSettingsControllers',
     };
     $scope.remove_all_pin_logins = function() {
         $scope.quicklogin.started_unsetting = true;
-        tx_sender.call('http://greenaddressit.com/pin/remove_all_pin_logins').then(function() {
+        tx_sender.call('com.greenaddress.pin.remove_all_pin_logins').then(function() {
             gaEvent('Wallet', 'AllPinLoginsRemoved');
             $scope.quicklogin.enabled = false;
             $scope.quicklogin.device_ident = undefined;
@@ -60902,7 +61564,7 @@ angular.module('greenWalletSettingsControllers',
         toggle_fb: function() {
             var that = this;
             if (this.fbstate.enabled) {
-                tx_sender.call('http://greenaddressit.com/addressbook/disable_sync', 'facebook').then(function(data) {
+                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'facebook').then(function(data) {
                     gaEvent('Wallet', 'FbSyncDisabled');
                     that.toggling_fb = 2;
                     that.fbstate.enabled = false;
@@ -60917,7 +61579,7 @@ angular.module('greenWalletSettingsControllers',
                 facebook.login(that.fbstate).then(function() {
                     var auth = FB.getAuthResponse();
                     if (that.fbstate.logged_in) {
-                        tx_sender.call('http://greenaddressit.com/addressbook/sync_fb', auth.accessToken).then(function() {
+                        tx_sender.call('com.greenaddress.addressbook.sync_fb', auth.accessToken).then(function() {
                             gaEvent('Wallet', 'FbSyncEnabled');
                             notices.makeNotice('success', gettext('Facebook integration enabled'));
                             that.toggling_fb = 2;
@@ -60936,7 +61598,7 @@ angular.module('greenWalletSettingsControllers',
         toggle_reddit: function() {
             var that = this;
             if (this.redditstate.enabled) {
-                tx_sender.call('http://greenaddressit.com/addressbook/disable_sync', 'reddit').then(function(data) {
+                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'reddit').then(function(data) {
                     gaEvent('Wallet', 'RedditSyncDisabled');
                     that.toggling_reddit = 2;
                     that.redditstate.enabled = false;
@@ -60950,7 +61612,7 @@ angular.module('greenWalletSettingsControllers',
                 gaEvent('Wallet', 'RedditSyncEnableAttempt');
                 reddit.getToken('identity').then(function(token) {
                     if (token) {
-                        tx_sender.call('http://greenaddressit.com/addressbook/sync_reddit', token).then(function() {
+                        tx_sender.call('com.greenaddress.addressbook.sync_reddit', token).then(function() {
                             gaEvent('Wallet', 'RedditSyncEnabled');
                             notices.makeNotice('success', gettext('Reddit integration enabled'));
                             that.toggling_reddit = 2;
@@ -60970,7 +61632,7 @@ angular.module('greenWalletSettingsControllers',
             var that = this;
             var change = (that.toggling_custom == 'changing');
             if (this.customstate.enabled && !change) {
-                tx_sender.call('http://greenaddressit.com/addressbook/disable_sync', 'custom').then(function(data) {
+                tx_sender.call('com.greenaddress.addressbook.disable_sync', 'custom').then(function(data) {
                     gaEvent('Wallet', 'CustomLoginDisabled');
                     that.customstate.enabled = false;
                     that.customstate.username = that.customstate.password = null;
@@ -60982,7 +61644,7 @@ angular.module('greenWalletSettingsControllers',
                 });
             } else {
                 gaEvent('Wallet', 'CustomLoginEnableAttempt');
-                tx_sender.call('http://greenaddressit.com/addressbook/sync_custom', that.customstate.username,
+                tx_sender.call('com.greenaddress.addressbook.sync_custom', that.customstate.username,
                         that.customstate.password).then(function() {
                     gaEvent('Wallet', 'CustomLoginEnabled');
                     if (that.customstate.enabled) {
@@ -61002,7 +61664,7 @@ angular.module('greenWalletSettingsControllers',
             }
         }
     };
-    tx_sender.call('http://greenaddressit.com/addressbook/get_sync_status').then(function(data) {
+    tx_sender.call('com.greenaddress.addressbook.get_sync_status').then(function(data) {
         $scope.thirdparty.fbstate.enabled = data.fb;
         $scope.thirdparty.redditstate.enabled = data.reddit;
         $scope.thirdparty.customstate.username = data.username;
@@ -61104,12 +61766,12 @@ angular.module('greenWalletSettingsControllers',
                 data.total > $scope.wallet.limits.total) {
             var do_change = function() {
                 return wallets.get_two_factor_code($scope, 'change_tx_limits', data).then(function(twofac_data) {
-                    return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data, twofac_data);
+                    return tx_sender.call('com.greenaddress.login.change_settings', 'tx_limits', data, twofac_data);
                 });
             }
         } else {
             var do_change = function() {
-                return tx_sender.call('http://greenaddressit.com/login/change_settings', 'tx_limits', data);
+                return tx_sender.call('com.greenaddress.login.change_settings', 'tx_limits', data);
             }
         }
         $scope.limits_editor.saving = true;
@@ -61241,7 +61903,7 @@ angular.module('greenWalletSettingsControllers',
                             var hdhex_recovery_d = that._derive_hd(min_unused_pointer, hdwallet)
                         }
                         return hdhex_recovery_d.then(function(hdhex_recovery) {
-                            return tx_sender.call('http://greenaddressit.com/txs/create_subaccount',
+                            return tx_sender.call('com.greenaddress.txs.create_subaccount',
                                 min_unused_pointer,
                                 that.new_2of3_label,
                                 hdhex.pub,
@@ -61277,7 +61939,7 @@ angular.module('greenWalletSettingsControllers',
             else if ($scope.wallet.trezor_dev) var derive_fun = that._derive_trezor;
             else var derive_fun = that._derive_btchip;
             derive_fun(min_unused_pointer).then(function(hdhex) {
-                return tx_sender.call('http://greenaddressit.com/txs/create_subaccount',
+                return tx_sender.call('com.greenaddress.txs.create_subaccount',
                     min_unused_pointer,
                     that.new_label,
                     hdhex.pub,
@@ -61302,7 +61964,7 @@ angular.module('greenWalletSettingsControllers',
                 // nothing to do
                 subaccount.renaming = false;
             } else {
-                tx_sender.call('http://greenaddressit.com/txs/rename_subaccount',
+                tx_sender.call('com.greenaddress.txs.rename_subaccount',
                         subaccount.pointer, subaccount.new_name).then(function() {
                     subaccount.name = subaccount.new_name;
                     subaccount.renaming = false;
@@ -61356,7 +62018,7 @@ angular.module('greenWalletSettingsControllers',
                 $scope.touchId.started_unsetting = true;
                 $scope.touchId.enabled = true;  // not yet disabled
                 return storage.get('pin_ident_touchid').then(function(devid) {
-                    tx_sender.call('http://greenaddressit.com/pin/remove_pin_login',
+                    tx_sender.call('com.greenaddress.pin.remove_pin_login',
                         devid).then(function(data) {
                         cordova.exec(function(param) {
                             $scope.$apply(function() {
@@ -61929,7 +62591,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
     $scope.use_pin = function(storage_suffix) {
         storage_suffix = storage_suffix || '';
         notices.setLoadingText("Checking PIN");
-        return tx_sender.call('http://greenaddressit.com/pin/get_password', use_pin_data.pin, state['pin_ident'+storage_suffix]).then(
+        return tx_sender.call('com.greenaddress.pin.get_password', use_pin_data.pin, state['pin_ident'+storage_suffix]).then(
             function(password) {
                 if (!password) {
                     gaEvent('Login', 'PinLoginFailed', 'empty password');
@@ -62150,7 +62812,7 @@ angular.module('greenWalletTransactionsControllers',
             return key.deriveHardened(transaction.pubkey_pointer);
         });
         return key.then(function(key) {
-            return tx_sender.call("http://greenaddressit.com/vault/prepare_sweep_social",
+            return tx_sender.call("com.greenaddress.vault.prepare_sweep_social",
                     Array.from(key.keyPair.getPublicKeyBuffer()), false, $scope.wallet.current_subaccount).then(function(data) {
                 data.prev_outputs = [];
                 for (var i = 0; i < data.prevout_scripts.length; i++) {
@@ -62248,7 +62910,7 @@ angular.module('greenWalletTransactionsControllers',
         var builder_d;
         if (remainingFeeDelta > 0) {
             builder_d = tx_sender.call(
-                'http://greenaddressit.com/txs/get_all_unspent_outputs',
+                'com.greenaddress.txs.get_all_unspent_outputs',
                 1,  // do not include zero-confs (RBF requirement)
                 $scope.wallet.current_subaccount
             ).then(function(utxos) {
@@ -62262,7 +62924,7 @@ angular.module('greenWalletTransactionsControllers',
                 if (remainingFeeDelta < 0) {
                     // new change output needs to be added
                     change_d = tx_sender.call(
-                        'http://greenaddressit.com/vault/fund',
+                        'com.greenaddress.vault.fund',
                         $scope.wallet.current_subaccount, true, true
                     ).then(function(data) {
                         change_pointer = data.pointer;
@@ -62379,7 +63041,7 @@ angular.module('greenWalletTransactionsControllers',
                         inp.hash
                     ).toString('hex');
                     return tx_sender.call(
-                        'http://greenaddressit.com/txs/get_raw_output',
+                        'com.greenaddress.txs.get_raw_output',
                         reversed_hex
                     ).then(function(rawtx) {
                         prevouts_rawtxs[reversed_hex] = rawtx;
@@ -62420,7 +63082,7 @@ angular.module('greenWalletTransactionsControllers',
                         builder.inputs[i].hashType = 1;
                     }
                     return tx_sender.call(
-                        'http://greenaddressit.com/vault/send_raw_tx',
+                        'com.greenaddress.vault.send_raw_tx',
                         builder.build().toHex(), twofac_data
                     ).then(function(data) {
                         if (data.limit_decrease) {
@@ -62463,7 +63125,7 @@ angular.module('greenWalletTransactionsControllers',
             // nothing to do
             tx.changing_memo = false;
         } else {
-            tx_sender.call('http://greenaddressit.com/txs/change_memo', tx.txhash, tx.new_memo).then(function() {
+            tx_sender.call('com.greenaddress.txs.change_memo', tx.txhash, tx.new_memo).then(function() {
                 tx.memo = tx.new_memo;
                 tx.changing_memo = false;
             }, function(err) {
@@ -62501,7 +63163,7 @@ angular.module('greenWalletTransactionsControllers',
             transaction.current_estimate = current_estimate;
         }
         if (transaction.has_payment_request && !transaction.payment_request) {
-            tx_sender.call('http://greenaddressit.com/txs/get_payment_request', transaction.txhash).then(function(payreq_b64) {
+            tx_sender.call('com.greenaddress.txs.get_payment_request', transaction.txhash).then(function(payreq_b64) {
                 transaction.payment_request = 'data:application/bitcoin-paymentrequest;base64,' + payreq_b64;
             });
         }
