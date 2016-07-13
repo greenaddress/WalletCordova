@@ -50794,7 +50794,7 @@ var app = module.exports = require('./greenwallet');
 
 Window.app = app;
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c1dbfd8d.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_e9ee126e.js","/")
 },{"./greenwallet":44,"./lib":96,"buffer":28,"global/window":26,"oMfpAn":31}],37:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // replace this with an app object of some sort?
@@ -51394,6 +51394,10 @@ function SignupController($scope, $location, mnemonics, tx_sender, notices, wall
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/apps/signup.js","/greenwallet/apps")
 },{"buffer":28,"oMfpAn":31}],40:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var window = require('global/window');
+
+var BASE_URL = window.BASE_URL;
+
 var deps = ['greenWalletBaseApp', 'ngRoute', 'ui.bootstrap', 'greenWalletDirectives', 'greenWalletControllers',
      'greenWalletInfoControllers', 'greenWalletSettingsControllers', 'greenWalletTransactionsControllers',
      'greenWalletReceiveControllers', 'greenWalletSendControllers', 'greenWalletSignupLoginControllers', 'ja.qr'];
@@ -51598,7 +51602,7 @@ var greenWalletApp = angular.module('greenWalletApp', deps)
 });
 
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/greenwallet/apps/wallet.js","/greenwallet/apps")
-},{"./signup":39,"buffer":28,"oMfpAn":31}],41:[function(require,module,exports){
+},{"./signup":39,"buffer":28,"global/window":26,"oMfpAn":31}],41:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 angular.module('greenWalletControllers', [])
 .controller('WalletController', ['$scope', 'tx_sender', '$uibModal', 'notices', 'gaEvent', '$location', 'wallets', '$http', '$q', 'parse_bitcoin_uri', 'parseKeyValue', 'backButtonHandler', '$uibModalStack', 'sound', 'blind', 'storage',
@@ -62310,6 +62314,7 @@ angular.module('greenWalletSignupLoginControllers', ['greenWalletMnemonicsServic
             });
             return;
         }
+        state.mnemonic = state.mnemonic.trim();
         var encrypted = state.mnemonic.split(" ").length == 27;
         gaEvent('Login', encrypted ? 'MnemonicLogin' : 'MnemonicEncryptedLogin');
         state.mnemonic_error = state.login_error = undefined;
