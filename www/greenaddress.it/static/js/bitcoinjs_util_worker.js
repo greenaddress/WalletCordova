@@ -14,7 +14,7 @@ var patchIfNotPatched = function(isAlpha) {
     if (isPatched) return;
     isPatched = true;
     if (isAlpha) {
-        importScripts('secp256k1-alpha.js');
+        importScripts('secp256k1-alpha/secp256k1-alpha.js');
         Bitcoin.contrib.init_secp256k1(Module, isAlpha);
         // TODO: implementation of getPublicKeyBuffer for alpha's libsecp256k1
         return;
@@ -38,7 +38,7 @@ funcs = {
         );
 		return wallet.derive(data.i).toBase58();
 	},
-	sign: function(data, isAlpha) {
+	sign: function(data, isAlpha, schnorr) {
 		var key = Bitcoin.bitcoin.ECPair.fromWIF(
             data.key,
             [Bitcoin.bitcoin.networks.bitcoin,
@@ -46,7 +46,7 @@ funcs = {
              segnet]
         );
 
-        if (isAlpha) {
+        if (schnorr) {
             var sig = Module._malloc(64);
         } else {
             var sig = Module._malloc(128);
@@ -62,15 +62,15 @@ funcs = {
             while (slice.length < 32) slice.unshift(0);
         }
         writeArrayToMemory(slice, seckey);
-        if (!isAlpha) {
+        if (!schnorr) {
             setValue(siglen_p, 128, 'i32');
         }
         for (var i = 0; i < 32; ++i) {
             setValue(msg + i, data.hash[i], 'i8');
         }
 
-        if (isAlpha) {
-            if (1 != Module._secp256k1_schnorr_sign(Module.secp256k1ctx, msg, sig, seckey, 0, 0)) {
+        if (schnorr) {
+            if (1 != Module._secp256k1_schnorr_sign(Module.secp256k1ctx, sig, msg, seckey, 0, 0)) {
                 throw new Error('secp256k1 Schnorr sign failed');
             };
             var len = 64;
@@ -91,7 +91,7 @@ funcs = {
         }
 
         Module._free(sig);
-        if (!isAlpha) {
+        if (!schnorr) {
             Module._free(siglen_p);
         }
         Module._free(msg);
@@ -101,9 +101,13 @@ funcs = {
 	}
 }
 onmessage = function(message) {
-    patchIfNotPatched(message.data.isAlpha);
+  patchIfNotPatched(message.data.isAlpha);
 	postMessage({
 		callId: message.data.callId,
-		result: funcs[message.data.func](message.data.data, message.data.isAlpha)
+		result: funcs[message.data.func](
+        message.data.data,
+        message.data.isAlpha,
+        message.data.schnorr
+    )
 	});
 }

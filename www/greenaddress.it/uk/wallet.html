@@ -71,7 +71,6 @@
 
 <!-- We manually extend these libraries and therefore cannot use the version from npm -->
 <script type="text/javascript" src="../static/js/bitcoinjs.min.js"></script>
-<script type="text/javascript" src="../static/js/bitcoinjs_util.js"></script>
 
 
 <script src="../static/js/btchip-js-api/thirdparty/class/inheritance.min.js"></script>
@@ -82,6 +81,8 @@
 
 
 <script type="text/javascript" src="../static/js/index.js"></script>
+<!-- bitcoinjs_util.js depends on Angular -->
+<script type="text/javascript" src="../static/js/bitcoinjs_util.js"></script>
 
   <script src="../static/js/greenwallet/signup/nfc.js"></script>
 
@@ -124,9 +125,11 @@
     <small>(( subpage_title ))</small>
   </div>
   <div class="menu-mobile-bottom" toggle-class="visible" ng-show="wallet.final_balance !== undefined">
+    
     <a style="color:inherit;" href="" x-apple-data-detectors="false">((wallet.final_balance|format_btc:wallet.unit))</a> ≈ <a style="color:inherit;"  href="" x-apple-data-detectors="false">((wallet.fiat_value|number:2)) ((wallet.fiat_currency))</a>   <div ng-show="(wallet.hdwallet.pub || wallet.trezor_dev) && !wallet.hidden && is_loading" ng-cloak>
     <div class="spin"></div>
   </div>
+    
   </div>
   <div class="container" toggle-class="visible">
     <p ng-show="wallet.twofac && !wallet.twofac.any"><span class="label label-warning">WARNING:</span> You have no two factor authentication set up. Please set it up in <a href="#/settings">settings</a>.</p>
@@ -141,8 +144,8 @@
   <ul>
     <li class="menu-header"><img src="../static/img/logos/logo-greenaddress-white.png" alt="GreenAddress" /> GreenAddress</li>
     <li path="/info"><a href="#/info">Транзакції</a></li>
-    <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">Відправити кошти</a></li>
-    <li path="/receive"><a href="#/receive">Отримати кошти</a></li>
+    <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/send"><a href="#/send">Відправити</a></li>
+    <li path="/receive"><a href="#/receive">Receive</a></li>
     <li path="/address-book"><a href="#/address-book">Адресна книга</a></li>
     <li ng-show="wallet.hdwallet.keyPair.d || wallet.trezor_dev || wallet.btchip" path="/settings" class="menu-settings"><a href="#/settings">Параметри</a></li>
 

@@ -194,7 +194,7 @@ if (self.cordova && cordova.platformId == 'ios') {
             var script = document.createElement('script')
             script.type = 'text/javascript';
             if (cur_net.isAlpha) {
-                script.src = '/static/js/secp256k1-alpha.js';
+                script.src = '/static/js/secp256k1-alpha/secp256k1-alpha.js';
             } else {
                 script.src = '/static/js/secp256k1.js';
             }
@@ -244,8 +244,16 @@ if (self.cordova && cordova.platformId == 'ios') {
             }
 
             Bitcoin.bitcoin.ECPair.prototype.sign = function(hash) {
+                return _sign(this, hash, false);
+            }
+
+            Bitcoin.bitcoin.ECPair.prototype.signSchnorr = function(hash) {
+                return _sign(this, hash, true);
+            }
+
+            function _sign(_this, hash, schnorr) {
                 var deferred = $q.defer();
-                if (cur_net.isAlpha) {
+                if (schnorr) {
                     cbs[++callId] = deferred.resolve;
                 } else {
                     cbs[++callId] = function(der) {
@@ -253,9 +261,10 @@ if (self.cordova && cordova.platformId == 'ios') {
                     };
                 }
                 worker.postMessage({
+                    schnorr: schnorr,
                     isAlpha: cur_net.isAlpha,
                     func: 'sign',
-                    data: {key: this.toWIF(), hash: hash},
+                    data: {key: _this.toWIF(), hash: hash},
                     callId: callId
                 })
                 return deferred.promise;
