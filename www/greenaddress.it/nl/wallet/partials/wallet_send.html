@@ -1,7 +1,7 @@
 <div class="row hidden-xs hidden-sm">
   <div class="col-md-12">
     <div class="header">
-      Verzenden<span class="balance pull-right" ng-include="'../'+LANG+'/wallet/partials/wallet_balance.html'"></span>
+      Geld overmaken<span class="balance pull-right" ng-include="'../'+LANG+'/wallet/partials/wallet_balance.html'"></span>
     </div>
   </div>
 </div>
@@ -32,9 +32,7 @@
             <script id="uib/template/typeahead/typeahead-match.html" type="text/ng-template">
               <a tabindex="-1" ng-bind="match.label"></a>
             </script>
-            
-              <input ng-disabled="send_tx.processing_payreq" ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Enter recipient's bitcoin address, email or Facebook account name"
-            
+            <input ng-disabled="send_tx.processing_payreq" ng-controller="AddressBookController" ng-model="send_tx.recipient" class="form-control" type="text" id="recipient" name="recipient" placeholder="Enter recipient's bitcoin address, email or  Facebook account name"
                     uib-typeahead="item as item.name for item in addressbook.items | filter:$viewValue | limitTo:8" />
             
             <!--
@@ -79,18 +77,16 @@
         <label class="col-sm-2 control-label" for="amount">Bedrag</label>
         <div class="col-sm-10">
           <div class="row">
-            
-            <div class="col-xs-7 col-sm-4 col-md-4">
+            <div class="col-xs-6 col-sm-5 col-md-4">
               <div class="input-group">
-                <span ng-show="wallet.current_asset == 1" class="input-group-addon">((wallet.unit))</span>
+                <span class="input-group-addon">((wallet.unit))</span>
                 
                     <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="number" ng-model="send_tx.amount" placeholder="0.0000" ng-show="cordova_platform=='ios'" />
                     <input ng-disabled="send_tx.recipient.amount || send_tx.spend_all" class="form-control" type="tel" ng-model="send_tx.amount" placeholder="0.0000" ng-hide="cordova_platform=='ios'" />
                 
               </div>
             </div>
-            
-            <div class="col-xs-7 col-sm-4 col-md-4">
+            <div class="col-xs-6 col-sm-5 col-md-4">
               <div class="input-group">
                 <span class="input-group-addon">(( wallet.fiat_currency ))</span>
                 
@@ -99,7 +95,6 @@
                 
               </div>
             </div>
-            
           </div>
         </div>
       </div>
@@ -158,11 +153,9 @@
         <div class="col-sm-offset-2 col-sm-10">
           <label class="text-petty radio-inline" style="padding:0 5px 0 0; display: inline-block;">
             Network fee will be added to the amount <br />
-            
             Rate is <div style="display:inline" ng-include="'../'+LANG+'/wallet/partials/wallet_fiat_price.html'"></div>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-click="wallet.update_balance()" ng-hide="wallet.balance_updating"><i class="glyphicon glyphicon-refresh"></i></a>
                 <a class="btn btn-default btn-sm" style="min-width: 35px !important; width: 35px !important" ng-show="wallet.balance_updating"><i class="glyphicon spin"></i></a>
-            
           </label>
         </div>
       </div>
@@ -187,7 +180,7 @@
       </div>
       <hr class="double">
       <button ng-disabled="send_tx.sending || send_tx.processing_payreq" class="btn btn-primary btn-block-xs pull-right" ng-click="send_tx.send_money()" href=""><i class="glyphicon glyphicon-send"></i>
-        <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Review &amp; Send</span>
+        <span ng-hide="send_tx.voucher || (send_tx.sending && send_tx.signing)">Review &amp; Send Money</span>
         <span ng-show="!send_tx.voucher && send_tx.sending && send_tx.signing">
           <span ng-show="send_tx.verifying">Verifying ((send_tx.verifying_percentage))% /</span>
           Signing ((send_tx.signing_percentage))%</span>

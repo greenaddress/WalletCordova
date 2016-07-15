@@ -6,14 +6,13 @@
     </div>
   </div>
 </div>
-<div class="row currencies" ng-show="settings.pricing_source">
+<div class="row currencies" ng-show="settings.pricing_sources">
   <div class="col-md-3">
     <div class="sub-header">Currency</div>
-    <div ng-show="settings.pricing_sources.length > 0" class="sub-header-desc">Select your currency and pricing source.</div>
-    <div ng-show="settings.pricing_sources.length === 0" class="sub-header-desc">Select unit of measurement.</div>
+    <div class="sub-header-desc">Select your currency and pricing source.</div>
   </div>
   <div class="col-md-9">
-    <form role="form" class="form-inline" ng-show="settings.pricing_sources.length > 0">
+    <form role="form" class="form-inline">
       <div class="form-group">
         <label class="control-label">Pricing source to use</label>
       </div>
@@ -25,15 +24,15 @@
           </select>
         </div>
       </div>
-      <hr>
     </form>
+    <hr>
     <form role="form" class="form-inline">
       <div class="form-group">
         <label class="control-label">Show amounts in</label>
       </div>
       <div class="form-group">
         <div class="btn-group">
-          <button
+          <button 
             ng-repeat="unit in settings.available_units"
             type="button"
             class="btn btn-xs"
@@ -413,7 +412,6 @@
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
     
-    
       <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
       <label class="switch">
         <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
@@ -421,7 +419,6 @@
       </label>
       <hr ng-hide="cordova_platform=='ios'">
       
-    
     
       <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> Custom Login</button>
       <label class="switch">
