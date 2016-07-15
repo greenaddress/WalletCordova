@@ -59,8 +59,10 @@
     <table class="table">
         <tr><th>Dirección</th><th>Monto</th></tr>
         <tr ng-repeat="input in selected_transaction.inputs|limitTo:10">
-            <td>(( input.ad ))</td>
+          <td>(( input.ad ))</td>
+          
             <td ng-if="input.value !== null">(( input.value | format_btc:wallet.unit ))</td>
+          
             <td ng-if="input.value === null">Confidential</td>
         </tr>
     </table>
@@ -73,7 +75,9 @@
         <tr><th>Dirección</th><th>Monto</th></tr>
         <tr ng-repeat="output in selected_transaction.outputs|limitTo:10">
             <td>(( output.ad ))</td>
+          
             <td ng-if="output.value !== null">(( output.value | format_btc:wallet.unit ))</td>
+          
             <td ng-if="output.value === null">Confidential</td>
         </tr>
     </table>

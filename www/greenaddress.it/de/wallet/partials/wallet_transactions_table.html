@@ -85,9 +85,22 @@
         </div>
       </td>
       <td class="amount" ng-style="{opacity: (!transaction.replaced_by && !transaction.replacement_of.length && transaction.double_spent_by !== undefined) ? 0.3 : 1}">
-        <span class="amount" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}" ng-hide="!transaction.nonzero && transaction.redeemable">(( transaction.value|format_btc_nounit:wallet.unit ))</span>
-        <span class="amount amount-redeemable" ng-show="!transaction.nonzero && transaction.redeemable">(( transaction.redeemable_value|format_btc_nounit:wallet.unit ))</span><br>
-        <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>
+
+        
+          <span
+                class="amount"
+                ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}"
+                ng-hide="!transaction.nonzero && transaction.redeemable">
+              (( transaction.value|format_btc_nounit:wallet.unit ))
+          </span>
+          <span
+                class="amount amount-redeemable"
+                ng-show="!transaction.nonzero && transaction.redeemable">
+              (( transaction.redeemable_value|format_btc_nounit:wallet.unit ))
+          </span>
+          <br>
+          <span class="amount info" ng-class="{'amount-plus': transaction.positive, 'amount-minus': transaction.negative}">(( transaction.value_fiat|number:2 )) (( filtered_transactions.fiat_currency ))</span>
+        
       </td>
     </tr>
     <tr ng-show="loading_txs && !filtered_transactions.list">
