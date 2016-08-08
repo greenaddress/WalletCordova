@@ -75,7 +75,6 @@
     <plugin name="cordova-plugin-app-preferences" />
     <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-network-information" />
-    <plugin name="cordova-plugin-vibration" />
     <plugin name="it.greenaddress.cordova" spec="plugins/it.greenaddress.cordova" />
     <engine name="android" spec="~5.1.0" />
     <engine name="ios" spec="~4.0.1" />
