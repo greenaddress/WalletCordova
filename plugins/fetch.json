@@ -11,8 +11,9 @@
     "cordova-plugin-media": {
         "source": {
             "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-media.git",
-            "subdir": "."
+            "url": "https://github.com/greenaddress/cordova-plugin-media.git",
+            "subdir": ".",
+            "ref": "rel/2.3.0-gaperms"
         },
         "is_top_level": true,
         "variables": {}
@@ -182,6 +183,14 @@
             "id": "phonegap-plugin-barcodescanner"
         },
         "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": false,
         "variables": {}
     }
 }

@@ -21,11 +21,13 @@ package org.apache.cordova.media;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaResourceApi;
+import org.apache.cordova.PermissionHelper;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -54,8 +56,9 @@ import java.util.HashMap;
 public class AudioHandler extends CordovaPlugin {
 
     public static String TAG = "AudioHandler";
-    HashMap<String, AudioPlayer> players;	// Audio player object
-    ArrayList<AudioPlayer> pausedForPhone;     // Audio players that were paused when phone call came in
+    HashMap<String, AudioPlayer> players;  // Audio player object
+    ArrayList<AudioPlayer> pausedForPhone; // Audio players that were paused when phone call came in
+    ArrayList<AudioPlayer> pausedForFocus; // Audio players that were paused when focus was lost
     private int origVolumeStream = -1;
     private CallbackContext messageChannel;
 
@@ -75,18 +78,19 @@ public class AudioHandler extends CordovaPlugin {
     public AudioHandler() {
         this.players = new HashMap<String, AudioPlayer>();
         this.pausedForPhone = new ArrayList<AudioPlayer>();
+        this.pausedForFocus = new ArrayList<AudioPlayer>();
     }
 
 
     protected void getWritePermission(int requestCode)
     {
-        cordova.requestPermission(this, requestCode, permissions[WRITE_EXTERNAL_STORAGE]);
+        PermissionHelper.requestPermission(this, requestCode, permissions[WRITE_EXTERNAL_STORAGE]);
     }
 
 
     protected void getMicPermission(int requestCode)
     {
-        cordova.requestPermission(this, requestCode, permissions[RECORD_AUDIO]);
+        PermissionHelper.requestPermission(this, requestCode, permissions[RECORD_AUDIO]);
     }
 
 
@@ -100,7 +104,6 @@ public class AudioHandler extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaResourceApi resourceApi = webView.getResourceApi();
         PluginResult.Status status = PluginResult.Status.OK;
-        messageChannel = callbackContext;
         String result = "";
 
         if (action.equals("startRecordingAudio")) {
@@ -164,6 +167,10 @@ public class AudioHandler extends CordovaPlugin {
         }
         else if (action.equals("messageChannel")) {
             messageChannel = callbackContext;
+            return true;
+        } else if (action.equals("getCurrentAmplitudeAudio")) {
+            float f = this.getCurrentAmplitudeAudio(args.getString(0));
+            callbackContext.sendPluginResult(new PluginResult(status, f));
             return true;
         }
         else { // Unrecognized action.
@@ -293,6 +300,7 @@ public class AudioHandler extends CordovaPlugin {
     public void startPlayingAudio(String id, String file) {
         AudioPlayer audio = getOrCreatePlayer(id, file);
         audio.startPlaying(file);
+        getAudioFocus();
     }
 
     /**
@@ -371,6 +379,55 @@ public class AudioHandler extends CordovaPlugin {
             System.out.println("AudioHandler.setAudioOutputDevice() Error: Unknown output device.");
         }
     }
+
+    public void pauseAllLostFocus() {
+        for (AudioPlayer audio : this.players.values()) {
+            if (audio.getState() == AudioPlayer.STATE.MEDIA_RUNNING.ordinal()) {
+                this.pausedForFocus.add(audio);
+                audio.pausePlaying();
+            }
+        }
+    }
+
+    public void resumeAllGainedFocus() {
+        for (AudioPlayer audio : this.pausedForFocus) {
+            audio.startPlaying(null);
+        }
+        this.pausedForFocus.clear();
+    }
+
+    /**
+     * Get the the audio focus
+     */
+    private OnAudioFocusChangeListener focusChangeListener = new OnAudioFocusChangeListener() {
+            public void onAudioFocusChange(int focusChange) {
+                switch (focusChange) {
+                case (AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) :
+                case (AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) :
+                case (AudioManager.AUDIOFOCUS_LOSS) :
+                    pauseAllLostFocus();
+                    break;
+                case (AudioManager.AUDIOFOCUS_GAIN):
+                    resumeAllGainedFocus();
+                    break;
+                default:
+                    break;
+                }
+            }
+        };
+
+    public void getAudioFocus() {
+        AudioManager am = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+        int result = am.requestAudioFocus(focusChangeListener,
+                                          AudioManager.STREAM_MUSIC,
+                                          AudioManager.AUDIOFOCUS_GAIN);
+
+        if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            System.out.println("AudioHandler.getAudioFocus() Error: Got " + result + " instead of " + AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
+        }
+
+    }
+
 
     /**
      * Get the audio device to be used for playback.
@@ -457,11 +514,11 @@ public class AudioHandler extends CordovaPlugin {
 
     private void promptForRecord()
     {
-        if(cordova.hasPermission(permissions[WRITE_EXTERNAL_STORAGE])  &&
-                cordova.hasPermission(permissions[RECORD_AUDIO])) {
+        if(PermissionHelper.hasPermission(this, permissions[WRITE_EXTERNAL_STORAGE])  &&
+                PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
             this.startRecordingAudio(recordId, FileHelper.stripFileProtocol(fileUriStr));
         }
-        else if(cordova.hasPermission(permissions[RECORD_AUDIO]))
+        else if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO]))
         {
             getWritePermission(WRITE_EXTERNAL_STORAGE);
         }
@@ -472,5 +529,16 @@ public class AudioHandler extends CordovaPlugin {
 
     }
 
-
+    /**
+     * Get current amplitude of recording.
+     * @param id				The id of the audio player
+     * @return 					amplitude
+     */
+    public float getCurrentAmplitudeAudio(String id) {
+        AudioPlayer audio = this.players.get(id);
+        if (audio != null) {
+            return (audio.getCurrentAmplitude());
+        }
+        return 0;
+    }
 }
