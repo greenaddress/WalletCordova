@@ -66,7 +66,6 @@
         <splash height="1242" src="res/ios/splash/Default-1242@3x~iphone6s-landscape.png" width="2048" />
         <splash height="2048" src="res/ios/splash/Default-1242@3x~iphone6s-portrait.png" width="1242" />
     </platform>
-    <plugin name="cordova-plugin-file" spec="https://github.com/apache/cordova-plugin-file.git" />
     <plugin name="cordova-plugin-media" spec="https://github.com/greenaddress/cordova-plugin-media.git#rel/2.3.0-gaperms" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />

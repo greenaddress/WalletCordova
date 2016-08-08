@@ -2,10 +2,11 @@
     "cordova-plugin-file": {
         "source": {
             "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-file.git",
-            "subdir": "."
+            "url": "https://github.com/greenaddress/cordova-plugin-file.git",
+            "subdir": ".",
+            "ref": "rel/4.2.0-gaperms"
         },
-        "is_top_level": true,
+        "is_top_level": false,
         "variables": {}
     },
     "cordova-plugin-media": {

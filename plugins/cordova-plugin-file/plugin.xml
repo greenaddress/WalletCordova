@@ -21,16 +21,14 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-file"
-      version="4.0.0">
+      version="4.2.0">
     <name>File</name>
     <description>Cordova File Plugin</description>
     <license>Apache 2.0</license>
     <keywords>cordova,file</keywords>
     <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git</repo>
     <issue>https://issues.apache.org/jira/browse/CB/component/12320651</issue>
-    <engines>
-        <engine name="cordova-android" version=">=5.0.0-dev" /><!-- Uses Marshmallow Permissions -->
-    </engines>
+    <dependency id="cordova-plugin-compat" version="^1.0.0" />
 
     <js-module src="www/DirectoryEntry.js" name="DirectoryEntry">
         <clobbers target="window.DirectoryEntry" />
@@ -104,18 +102,24 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <js-module src="www/resolveLocalFileSystemURI.js" name="resolveLocalFileSystemURI">
         <merges target="window" />
     </js-module>
-  
+
+    <!-- Required for browserify: we always link module below as there is conditional reference
+    to this module from requestFileSystem and resolveLocalFileSystemURI modules. -->
+    <js-module src="www/browser/isChrome.js" name="isChrome">
+        <runs />
+    </js-module>
+
     <info>
 The Android Persistent storage location now defaults to "Internal". Please check this plugins README to see if you application needs any changes in its config.xml.
-      
+
 If this is a new application no changes are required.
-      
+
 If this is an update to an existing application that did not specify an "AndroidPersistentFileLocation" you may need to add:
-      
+
       "&lt;preference name="AndroidPersistentFileLocation" value="Compatibility" /&gt;"
-      
+
 to config.xml in order for the application to find previously stored files.
-      
+
     </info>
 
     <!-- android -->
@@ -125,10 +129,6 @@ to config.xml in order for the application to find previously stored files.
                 <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
                 <param name="onload" value="true" />
             </feature>
-        </config-file>
-
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
 
         <source-file src="src/android/EncodingException.java" target-dir="src/org/apache/cordova/file" />
@@ -143,6 +143,7 @@ to config.xml in order for the application to find previously stored files.
         <source-file src="src/android/LocalFilesystem.java" target-dir="src/org/apache/cordova/file" />
         <source-file src="src/android/ContentFilesystem.java" target-dir="src/org/apache/cordova/file" />
         <source-file src="src/android/AssetFilesystem.java" target-dir="src/org/apache/cordova/file" />
+        <source-file src="src/android/PendingRequests.java" target-dir="src/org/apache/cordova/file" />
 
         <!-- android specific file apis -->
         <js-module src="www/android/FileSystem.js" name="androidFileSystem">
@@ -183,7 +184,7 @@ to config.xml in order for the application to find previously stored files.
         <source-file src="src/android/ContentFilesystem.java" target-dir="src/org/apache/cordova/file" />
         <source-file src="src/android/AssetFilesystem.java" target-dir="src/org/apache/cordova/file" />
 
-        
+
         <!-- android specific file apis -->
         <js-module src="www/android/FileSystem.js" name="androidFileSystem">
             <merges target="window.FileSystem" />
@@ -406,7 +407,7 @@ to config.xml in order for the application to find previously stored files.
         <js-module src="src/browser/FileProxy.js" name="browserFileProxy">
             <runs />
         </js-module>
-        
+
         <js-module src="www/fileSystemPaths.js" name="fileSystemPaths">
             <merges target="cordova" />
             <runs />
