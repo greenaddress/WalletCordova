@@ -162,7 +162,9 @@
         <source-file src="deps/org/apache/cordova/facebook/ConnectPlugin.java" target-dir="src/org/apache/cordova/facebook" />
 
         <hook type="after_plugin_install" src="scripts/removeMainActivity.js" />
+        <hook type="after_plugin_install" src="scripts/addAllowBackupFalse.js" />
         <hook type="after_prepare" src="scripts/removeMainActivity.js" />
+        <hook type="after_prepare" src="scripts/addAllowBackupFalse.js" />
     </platform>
     <platform name="ios">
         <framework src="Security.framework" />
