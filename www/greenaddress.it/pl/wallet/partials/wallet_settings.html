@@ -226,8 +226,7 @@
   <div class="col-md-9" submittable>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email/Reddit</label>
-          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Addressbook contacts' will disallow sending to you wallet directly using your Reddit handle)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email</label></div>
           <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
             <option value="2">Everyone</option>
             <option value="1">Addressbook contacts</option>
@@ -237,8 +236,7 @@
       </form>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email/Reddit handle as sender to </label>
-          <br /><small>(NOTE: at this moment addressbook is not supported for Reddit contacts, so choosing 'Mutually added in addressbook' will cause you to be never visible as sender when using Reddit handle for sending)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email handle as sender to </label></div>
           <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
             <option value="2">Everyone</option>
             <option value="1">Mutually added in addressbook</option>
@@ -412,17 +410,6 @@
   </div>
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
-    
-    
-      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
-      <label class="switch">
-        <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
-        <span class="switch"></span>
-      </label>
-      <hr ng-hide="cordova_platform=='ios'">
-      
-    
-    
       <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> Własny login</button>
       <label class="switch">
         <input type="checkbox" class="switch" ng-model="thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom">

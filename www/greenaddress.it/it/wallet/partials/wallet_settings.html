@@ -226,8 +226,7 @@
   <div class="col-md-9" submittable>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Consentire l'invio al mio portafoglio tramite e-mail/Reddit</label>
-          <br /><small>(Nota: in questo momento la rubrica non supporta i contatti di Reddit, quindi scegliendo 'Rubrica contatti' impedira' l'invio di bitcoin al vostro portafoglio direttamente al vostro user di Reddit)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email</label></div>
           <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
             <option value="2">Tutti</option>
             <option value="1">Contatti in rubrica</option>
@@ -237,8 +236,7 @@
       </form>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Mostra la mia email/user Reddit come mittente a </label>
-          <br /><small>(Nota: in questo momento la rubrica non supporta  i contatti di Reddit, quindi scegliendo 'Aggiunto reciprocamente nella rubrica' non sarai visibile come mittente quando tramite mandi bitcoin via Reddit)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email handle as sender to </label></div>
           <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
             <option value="2">Tutti</option>
             <option value="1">Reciprocamente  in rubrica</option>
@@ -412,17 +410,6 @@
   </div>
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
-    
-    
-      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
-      <label class="switch">
-        <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
-        <span class="switch"></span>
-      </label>
-      <hr ng-hide="cordova_platform=='ios'">
-      
-    
-    
       <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> Login custom</button>
       <label class="switch">
         <input type="checkbox" class="switch" ng-model="thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom">

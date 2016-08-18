@@ -226,8 +226,7 @@
   <div class="col-md-9" submittable>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Permitir enviar a mi wallet vía correo/Reddit</label>
-          <br /><small>(NOTA: en este momento la libreta de direcciones no está soportada para contactos Reddit, así que eligiendo 'Contactos de Libreta de Direcciones' rechazará el envío a tu wallet usando directamente tu título de Reddit)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_send_me">Allow sending to my wallet via email</label></div>
           <select ng-model="privacy.send_me" id="privacy_send_me" class="col-sm-4" ng-disabled="privacy.updating_send_me">
             <option value="2">Todos</option>
             <option value="1">Contactos de libreta de direcciones</option>
@@ -237,8 +236,7 @@
       </form>
       <form role="form" class="row">
         <div class="form-group">
-          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Mostrar mi correo/Título de Reddit como emisor a </label>
-          <br /><small>(NOTA: en este momento la libreta de direcciones no está soportada para contactos de Reddit, así que eligiendo 'agregado mutuamente en la libreta de direcciones' causará que nunca esté visible como emisor cuando use el título Reddit para enviar)</small></div>
+          <div class="col-sm-5"><label class="control-label" for="privacy_show_as_sender">Show my email handle as sender to </label></div>
           <select ng-model="privacy.show_as_sender" id="privacy_show_as_sender" class="col-sm-4" ng-disabled="privacy.updating_show_as_sender">
             <option value="2">Todos</option>
             <option value="1">Agregado mutuamente en la libreta de direcciones</option>
@@ -412,17 +410,6 @@
   </div>
   <div class="col-md-9">
     <form role="form" ng-show="thirdparty.loaded" ng-controller="ThirdPartyController" ng-submit="thirdparty.customstate.save()">
-    
-    
-      <button ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" class="btn btn-block-xs btn-facebook" ng-click="thirdparty.fbstate.enabled=!thirdparty.fbstate.enabled"><i class="icon-facebook"></i> Facebook</button>
-      <label class="switch">
-        <input ng-disabled="thirdparty.toggling_fb || thirdparty.fbstate.logging_in" ng-model="thirdparty.fbstate.enabled" type="checkbox" class="switch">
-        <span class="switch"></span>
-      </label>
-      <hr ng-hide="cordova_platform=='ios'">
-      
-    
-    
       <button class="btn btn-block-xs btn-default" ng-click="thirdparty.customstate.enabled=!thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom"><i class="glyphicon glyphicon-lock"></i> Sesión personalizada</button>
       <label class="switch">
         <input type="checkbox" class="switch" ng-model="thirdparty.customstate.enabled" ng-disabled="thirdparty.toggling_custom">
