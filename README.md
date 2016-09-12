@@ -1,12 +1,16 @@
 Build status: [![Build Status](https://travis-ci.org/greenaddress/WalletCordova.png?branch=master)](https://travis-ci.org/greenaddress/WalletCordova) 
 
+## How to build
+
+ 1. Run `./prepare.sh`
+ 2. Follow platform-specific instructions below
 
 ## How to build on Android
 
  1. Install Android SDK and Cordova 5.4
  2. `cd` to the WalletCordova directory
- 5. Run `cordova prepare android`
- 5. Run `cordova compile android`
+ 3. Run `cordova prepare android`
+ 4. Run `cordova compile android`
 
 After following these steps you should get a debug apk file in `platforms/android/build/outputs/apk/android-debug.apk`.
 
@@ -16,8 +20,9 @@ There's an issue with `xcode` node library causing `cordova prepare ios` to fail
 
  1. Install Xcode and Cordova 5.4
  2. `cd` to the WalletCordova directory
- 3. Run `cordova prepare ios`
- 4. Run `cordova compile ios`
+ 3. Run `git submodule update --init`
+ 4. Run `cordova prepare ios`
+ 5. Run `cordova compile ios`
 
 After following these steps you should get an .app in platforms/ios/build/emulator/GreenAddress.It.app.
 
