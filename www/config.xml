@@ -67,17 +67,17 @@
         <splash height="2048" src="res/ios/splash/Default-1242@3x~iphone6s-portrait.png" width="1242" />
     </platform>
     <plugin name="cordova-plugin-media" spec="https://github.com/greenaddress/cordova-plugin-media.git#rel/2.3.0-gaperms" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.0.1" />
-    <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
-    <plugin name="cordova-plugin-splashscreen" spec="~2.1.0" />
-    <plugin name="phonegap-nfc" />
-    <plugin name="cordova-plugin-app-preferences" />
-    <plugin name="cordova-plugin-dialogs" />
-    <plugin name="cordova-plugin-network-information" />
-    <plugin name="it.greenaddress.cordova" spec="plugins/it.greenaddress.cordova" />
+    <plugin name="cordova-plugin-inappbrowser" spec="plugins-src/cordova-plugin-inappbrowser" />
+    <plugin name="cordova-plugin-whitelist" spec="1.0.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="2.1.0" />
+    <plugin name="phonegap-nfc" spec="0.6.6" />
+    <plugin name="cordova-plugin-app-preferences" spec="plugins-src/cordova-plugin-app-preferences" />
+    <plugin name="cordova-plugin-dialogs" spec="1.1.1" />
+    <plugin name="cordova-plugin-network-information" spec="1.0.1" />
     <engine name="android" spec="~5.2.0" />
     <engine name="ios" spec="~4.0.1" />
-    <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
-    <plugin name="cordova-plugin-app-version" spec="~0.1.8" />
-    <plugin name="com.phonegap.plugins.barcodescanner" spec="https://github.com/Telerik-Verified-Plugins/BarcodeScanner.git" />
+    <plugin name="cordova-plugin-statusbar" spec="2.0.0" />
+    <plugin name="cordova-plugin-app-version" spec="0.1.8" />
+    <plugin name="com.phonegap.plugins.barcodescanner" spec="plugins-src/com.phonegap.plugins.barcodescanner" />
+    <plugin name="it.greenaddress.cordova" spec="plugins/it.greenaddress.cordova" />
 </widget>
