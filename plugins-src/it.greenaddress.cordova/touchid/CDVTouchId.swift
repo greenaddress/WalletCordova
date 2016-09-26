@@ -10,98 +10,98 @@ import Foundation
 import LocalAuthentication
 
 @objc(CDVTouchId) class CDVTouchId : CDVPlugin {
-    func isAvailable(command: CDVInvokedUrlCommand) {
+    func isAvailable(_ command: CDVInvokedUrlCommand) {
         
         let ctx = LAContext()
         var touchIDError : NSError?
         
         let available = ctx.canEvaluatePolicy(
-            LAPolicy.DeviceOwnerAuthenticationWithBiometrics,
+            LAPolicy.deviceOwnerAuthenticationWithBiometrics,
             error:&touchIDError
         )
         
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,
-            messageAsBool: available
+            messageAs: available
         )
-        commandDelegate!.sendPluginResult(
+        commandDelegate!.send(
             pluginResult, callbackId:command.callbackId
         )
     }
     
-    func setSecret(command: CDVInvokedUrlCommand) {
+    func setSecret(_ command: CDVInvokedUrlCommand) {
         let keychain = Keychain()
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
                 // Should be the secret invalidated when passcode is removed? If not then use `.WhenUnlocked`
                 try keychain
-                    .accessibility(.WhenPasscodeSetThisDeviceOnly, authenticationPolicy: .UserPresence)
+                    .accessibility(.whenPasscodeSetThisDeviceOnly, authenticationPolicy: .userPresence)
                     .authenticationPrompt("Authenticate to update your access token")
                     .set(
-                        command.argumentAtIndex(0) as! NSString as String,
+                        command.argument(at: 0) as! NSString as String,
                         key: "pin"
                     )
                 let pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_OK
                 )
-                self.commandDelegate!.sendPluginResult(
+                self.commandDelegate!.send(
                     pluginResult, callbackId: command.callbackId
                 )
             } catch let error {
                 let pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_ERROR
                 )
-                self.commandDelegate!.sendPluginResult(
+                self.commandDelegate!.send(
                     pluginResult, callbackId: command.callbackId
                 )
             }
         }
     }
     
-    func getSecret(command: CDVInvokedUrlCommand) {
+    func getSecret(_ command: CDVInvokedUrlCommand) {
         let keychain = Keychain()
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
                 // Should be the secret invalidated when passcode is removed? If not then use `.WhenUnlocked`
                 let password = try keychain
-                    .accessibility(.WhenPasscodeSetThisDeviceOnly, authenticationPolicy: .UserPresence)
+                    .accessibility(.whenPasscodeSetThisDeviceOnly, authenticationPolicy: .userPresence)
                     .authenticationPrompt("Authenticate to log in")
                     .get("pin")
                 let pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_OK,
-                    messageAsString: password
+                    messageAs: password
                 )
-                self.commandDelegate!.sendPluginResult(
+                self.commandDelegate!.send(
                     pluginResult, callbackId: command.callbackId
                 )
             } catch let error {
                 let pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_ERROR
                 )
-                self.commandDelegate!.sendPluginResult(
+                self.commandDelegate!.send(
                     pluginResult, callbackId: command.callbackId
                 )
             }
         }
     }
     
-    func removeSecret(command: CDVInvokedUrlCommand) {
+    func removeSecret(_ command: CDVInvokedUrlCommand) {
         let keychain = Keychain()
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
                 // Should be the secret invalidated when passcode is removed? If not then use `.WhenUnlocked`
                 try keychain.remove("pin");
                 let pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_OK
                 )
-                self.commandDelegate!.sendPluginResult(
+                self.commandDelegate!.send(
                     pluginResult, callbackId: command.callbackId
                 )
             } catch let error {
                 let pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_ERROR
                 )
-                self.commandDelegate!.sendPluginResult(
+                self.commandDelegate!.send(
                     pluginResult, callbackId: command.callbackId
                 )
             }

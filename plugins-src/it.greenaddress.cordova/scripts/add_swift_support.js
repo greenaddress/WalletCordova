@@ -105,6 +105,7 @@ module.exports = function(context) {
         for (config in configurations) {
             buildSettings = configurations[config].buildSettings;
             buildSettings['SWIFT_OBJC_BRIDGING_HEADER'] = '"' + headerPath + '"';
+            buildSettings['SWIFT_VERSION'] = '3.0';
         }
     }
 
