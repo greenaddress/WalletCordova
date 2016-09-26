@@ -69,6 +69,7 @@
     </platform>
     <engine name="android" spec="~5.1.0" />
     <engine name="ios" spec="~4.0.1" />
+    <plugin name="com.ququplay.websocket.WebSocket" spec="plugins-src/com.ququplay.websocket.WebSocket" />
     <plugin name="cordova-plugin-file" spec="https://github.com/apache/cordova-plugin-file.git#4.0.0" />
     <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media.git#2.0.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="plugins-src/cordova-plugin-inappbrowser" />
