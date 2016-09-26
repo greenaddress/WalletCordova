@@ -35,16 +35,20 @@ fi
 $SED -i 's/<widget\(.*\)version="[0-9.]\+"/<widget\1version="'$2'"/' \
     www/config.xml
 
-git commit -am"bump version for release $2"
+git commit -S -am"bump version for release $2"
 
 $SED -i 's|WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}|WEBFILES_BRANCH="'$1-v$2'"|' prepare.sh
 
-git commit -am"update prepare.sh for release $2"
-git tag $1-v$2
+git commit -S -am"update prepare.sh for release $2"
+git tag -s -m "release $2 for $1" $1-v$2
 git reset --hard HEAD^  # revert the release.sh change for the main branch
 
+if [ "$1" == "ios" ]; then
+    git reset --hard HEAD^  # revert the version bump for ios (master contains the Android version)
+fi
+
 cd webfiles
-git tag $1-v$2
+git tag -s -m "release $2 for $1" $1-v$2
 cd ..
 
 echo "Update and tagging done. Now please push this repo and webfiles/ with --tags."
