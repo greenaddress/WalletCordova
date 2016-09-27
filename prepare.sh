@@ -4,7 +4,7 @@ set -e
 
 WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD)
-WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
+WEBFILES_BRANCH="ios-v0.0.48"
 
 while [ $# -gt 0 ]; do
 key="$1"
