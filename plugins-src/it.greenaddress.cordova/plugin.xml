@@ -277,6 +277,9 @@
         <config-file target="*-Info.plist" parent="FacebookAppID">
             <string>1470897776471523</string>
         </config-file>
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>Used to scan QR codes</string>
+        </config-file>
         <config-file target="config.xml" parent="/*">
             <feature name="AES">
                 <param name="ios-package" value="CDVAES"/>
