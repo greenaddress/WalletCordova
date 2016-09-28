@@ -75,6 +75,7 @@ public class GreenAddressIt extends CordovaActivity
             System.out.println("Dongle detected");
             UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
             BTChip.transport = BTChipTransportAndroid.open(manager, device);
+            BTChip.vendorId = device.getVendorId();
         }
 
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) && getIntent().getBooleanExtra("continue", true)) {

@@ -13,6 +13,7 @@ import org.json.JSONException;
 public class BTChip extends CordovaPlugin
 {
     public static BTChipTransport transport;
+    public static int vendorId;
 
     boolean checkTransport(final CallbackContext callbackContext) {
         if (transport == null) {
@@ -45,6 +46,9 @@ public class BTChip extends CordovaPlugin
         } else if ("disconnect".equals(action)) {
             // not useful on Android
             // transport.close();
+        } else if ("getVendorId".equals(action)) {
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, vendorId));
+            return true;
         } else if ("getFirmwareVersion".equals(action)) {
             if (!checkTransport(callbackContext)) return true;
             try {
