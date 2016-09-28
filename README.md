@@ -10,7 +10,7 @@ Build status: [![Build Status](https://travis-ci.org/greenaddress/WalletCordova.
  1. Install Android SDK and Cordova 5.4
  2. `cd` to the WalletCordova directory
  3. Run `cordova prepare android`
- 4. Run `cordova compile android`
+ 4. Run `cordova build android`
 
 After following these steps you should get a debug apk file in `platforms/android/build/outputs/apk/android-debug.apk`.
 

@@ -41,5 +41,5 @@ script:
       cordova compile ios;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       cordova prepare android;
-      cordova compile android;
+      cordova build android;
       fi
