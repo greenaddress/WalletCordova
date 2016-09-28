@@ -12,7 +12,12 @@ module.exports = function(context) {
       throw new Error('Unable to find AndroidManifest.xml: ' + err);
     }
 
-    var result = data.replace(/<application/g, '<application android:allowBackup="false"');
+    var result;
+    if (data.indexOf('<application android:allowBackup="false"') === -1) {
+        result = data.replace(/<application/g, '<application android:allowBackup="false"');
+    } else {
+        result = data;
+    }
 
     fs.writeFile(manifestFile, result, 'utf8', function (err) {
       if (err) throw new Error('Unable to write into AndroidManifest.xml: ' + err);
