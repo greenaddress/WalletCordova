@@ -19,12 +19,12 @@
 
 package com.btchip.comm;
 
-import com.btchip.BTChipException;
+import android.content.Context;
 
-public interface BTChipTransport {
+public interface BTChipTransportFactory {
 	
-	byte[] exchange(byte[] command) throws BTChipException;
-	void close() throws BTChipException;
-	void setDebug(boolean debugFlag);
+	BTChipTransport getTransport();
+	boolean isPluggedIn();
+	boolean connect(final Context context, final BTChipTransportFactoryCallback callback);
 
 }

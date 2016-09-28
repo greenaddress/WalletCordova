@@ -5,4 +5,8 @@
     <usb-device vendor-id="9601" product-id="7036"/>
     <usb-device vendor-id="9601" product-id="15228"/>
     <usb-device vendor-id="9601" product-id="19324"/>
+    <usb-device vendor-id="9601" product-id="6151"/>
+    <usb-device vendor-id="9601" product-id="6152"/>
+    <usb-device vendor-id="11415" product-id="0"/>
+    <usb-device vendor-id="11415" product-id="1"/>
 </resources>

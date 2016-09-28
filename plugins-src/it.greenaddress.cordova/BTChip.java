@@ -143,7 +143,7 @@ public class BTChip extends CordovaPlugin
                             byte[] sequence = Dump.hexToBin(inputs_json.getString(i).substring(72, 80));
                             inputs[i] = dongle.createInput(outpoint, sequence, false);
                         }
-                        dongle.startUntrustedTransaction(args.getBoolean(0), args.getInt(1), inputs, Dump.hexToBin(args.getString(3)));
+                        dongle.startUntrustedTransaction(args.getBoolean(0), args.getLong(1), inputs, Dump.hexToBin(args.getString(3)));
                         final PluginResult result = new PluginResult(PluginResult.Status.OK, true);
                         callbackContext.sendPluginResult(result);
                     } catch(Exception e) {
@@ -160,8 +160,8 @@ public class BTChip extends CordovaPlugin
                 public void run() {
                     try {
                         BTChipDongle dongle = new BTChipDongle(transport);
-                        boolean res = dongle.finalizeInputFull(Dump.hexToBin(args.getString(0)));
-                        final PluginResult result = new PluginResult(PluginResult.Status.OK, res);
+                        dongle.finalizeInputFull(Dump.hexToBin(args.getString(0)));
+                        final PluginResult result = new PluginResult(PluginResult.Status.OK, true);
                         callbackContext.sendPluginResult(result);
                     } catch(Exception e) {
                         final PluginResult result = new PluginResult(PluginResult.Status.ERROR, e.toString());

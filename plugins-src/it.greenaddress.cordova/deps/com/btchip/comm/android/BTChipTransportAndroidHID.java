@@ -19,19 +19,19 @@
 
 package com.btchip.comm.android;
 
-import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
-
-import android.util.Log;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbRequest;
+import android.util.Log;
 
 import com.btchip.BTChipException;
 import com.btchip.comm.BTChipTransport;
 import com.btchip.comm.LedgerHelper;
 import com.btchip.utils.Dump;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 
 public class BTChipTransportAndroidHID implements BTChipTransport {
 
@@ -61,10 +61,9 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 	@Override
 	public byte[] exchange(byte[] command) throws BTChipException {
 		ByteArrayOutputStream response = new ByteArrayOutputStream();
-		byte[] responseData = null;
+		byte[] responseData;
 		int offset = 0;
 		int responseSize;
-		int result;
 		if (debug) {
 			Log.d(BTChipTransportAndroid.LOG_STRING, "=> " + Dump.dump(command));
 		}
@@ -72,23 +71,31 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 			command = LedgerHelper.wrapCommandAPDU(LEDGER_DEFAULT_CHANNEL, command, HID_BUFFER_SIZE);
 		}
 		UsbRequest request = new UsbRequest();
-		request.initialize(connection, out);
+		if (!request.initialize(connection, out)) {
+			throw new BTChipException("I/O error");
+		}
 		while(offset != command.length) {
 			int blockSize = (command.length - offset > HID_BUFFER_SIZE ? HID_BUFFER_SIZE : command.length - offset);
 			System.arraycopy(command, offset, transferBuffer, 0, blockSize);
-			request.queue(ByteBuffer.wrap(transferBuffer), HID_BUFFER_SIZE);
+			if (!request.queue(ByteBuffer.wrap(transferBuffer), HID_BUFFER_SIZE)) {
+				throw new BTChipException("I/O error");	
+			}
 			connection.requestWait();
 			offset += blockSize;
 		}
 		ByteBuffer responseBuffer = ByteBuffer.allocate(HID_BUFFER_SIZE);
 		request = new UsbRequest();
-		request.initialize(connection, in);		
+		if (!request.initialize(connection, in)) {
+			throw new BTChipException("I/O error");
+		}
 		if (!ledger) {
-			request.queue(responseBuffer, HID_BUFFER_SIZE);
+			if (!request.queue(responseBuffer, HID_BUFFER_SIZE)) {
+				throw new BTChipException("I/O error");
+			}
 			connection.requestWait();
 			responseBuffer.rewind();
-			int sw1 = (int)(responseBuffer.get() & 0xff);
-			int sw2 = (int)(responseBuffer.get() & 0xff);
+			int sw1 = responseBuffer.get() & 0xff;
+			int sw2 = responseBuffer.get() & 0xff;
 			if (sw1 != SW1_DATA_AVAILABLE) {
 				response.write(sw1);
 				response.write(sw2);
@@ -102,7 +109,9 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 				offset += blockSize;
 				while (offset != responseSize) {
 					responseBuffer.clear();
-					request.queue(responseBuffer, HID_BUFFER_SIZE);
+					if (!request.queue(responseBuffer, HID_BUFFER_SIZE)) {
+						throw new BTChipException("I/O error");
+					}
 					connection.requestWait();
 					responseBuffer.rewind();
 					blockSize = (responseSize - offset > HID_BUFFER_SIZE ? HID_BUFFER_SIZE : responseSize - offset);
@@ -117,7 +126,9 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 		else {			
 			while ((responseData = LedgerHelper.unwrapResponseAPDU(LEDGER_DEFAULT_CHANNEL, response.toByteArray(), HID_BUFFER_SIZE)) == null) {
 				responseBuffer.clear();
-				request.queue(responseBuffer, HID_BUFFER_SIZE);
+				if (!request.queue(responseBuffer, HID_BUFFER_SIZE)) {
+					throw new BTChipException("I/O error");
+				}
 				connection.requestWait();
 				responseBuffer.rewind();
 				responseBuffer.get(transferBuffer, 0, HID_BUFFER_SIZE);
@@ -125,9 +136,9 @@ public class BTChipTransportAndroidHID implements BTChipTransport {
 			}						
 		}		
 		if (debug) {
-			Log.d(BTChipTransportAndroid.LOG_STRING, "=> " + Dump.dump(responseData));
+			Log.d(BTChipTransportAndroid.LOG_STRING, "<= " + Dump.dump(responseData));
 		}
-		return responseData;				
+		return responseData;
 	}
 
 	@Override

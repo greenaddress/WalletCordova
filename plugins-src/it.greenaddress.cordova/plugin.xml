@@ -148,6 +148,14 @@
         <source-file src="deps/com/btchip/utils/CoinFormatUtils.java" target-dir="src/com/btchip/utils" />
         <source-file src="deps/com/btchip/utils/Dump.java" target-dir="src/com/btchip/utils" />
         <source-file src="deps/com/btchip/utils/VarintUtils.java" target-dir="src/com/btchip/utils" />
+        <source-file src="deps/com/btchip/comm/BTChipTransportFactory.java" target-dir="src/com/btchip/comm" />
+        <source-file src="deps/com/btchip/comm/BTChipTransportFactoryCallback.java" target-dir="src/com/btchip/comm" />
+        <source-file src="deps/com/btchip/comm/android/BTChipTransportAndroidNFC.java" target-dir="src/com/btchip/comm" />
+        <source-file src="deps/nordpol/IsoCard.java" target-dir="src/nordpol" />
+        <source-file src="deps/nordpol/OnCardErrorListener.java" target-dir="src/nordpol" />
+        <source-file src="deps/nordpol/android/AndroidCard.java" target-dir="src/nordpol" />
+        <source-file src="deps/nordpol/android/OnDiscoveredTagListener.java" target-dir="src/nordpol" />
+        <source-file src="deps/nordpol/android/TagDispatcher.java" target-dir="src/nordpol" />
         <source-file src="deps/com/lambdaworks/codec/Base64.java" target-dir="src/com/lambdaworks/codec" />
         <source-file src="deps/com/lambdaworks/crypto/PBKDF.java" target-dir="src/com/lambdaworks/crypto" />
         <source-file src="deps/com/lambdaworks/crypto/SCrypt.java" target-dir="src/com/lambdaworks/crypto" />

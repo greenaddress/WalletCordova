@@ -19,12 +19,8 @@
 
 package com.btchip.comm;
 
-import com.btchip.BTChipException;
-
-public interface BTChipTransport {
+public interface BTChipTransportFactoryCallback {
 	
-	byte[] exchange(byte[] command) throws BTChipException;
-	void close() throws BTChipException;
-	void setDebug(boolean debugFlag);
+	void onConnected(boolean success);
 
 }
