@@ -68,13 +68,13 @@ if [ -e webfiles ] && [ "$SILENT" != "1" ]; then
 fi
 
 if [ \! -e webfiles ]; then
-    git clone $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
+    git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
 if [ \! -e venv ]; then
     virtualenv venv
-    venv/bin/pip install -r webfiles/requirements.txt
 fi
+venv/bin/pip install -r webfiles/requirements.txt
 
 cd webfiles
 
