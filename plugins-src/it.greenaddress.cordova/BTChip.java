@@ -143,11 +143,14 @@ public class BTChip extends CordovaPlugin
                         JSONArray inputs_json = args.getJSONArray(2);
                         BTChipDongle.BTChipInput[] inputs = new BTChipDongle.BTChipInput[inputs_json.length()];
                         for (int i = 0; i < inputs_json.length(); i++) {
-                            byte[] outpoint = Dump.hexToBin(inputs_json.getString(i).substring(0, 72));
+                            byte[] outpointAndValue = Dump.hexToBin(
+                                inputs_json.getString(i).substring(0, 72) +
+                                inputs_json.getString(i).substring(80)
+                            );
                             byte[] sequence = Dump.hexToBin(inputs_json.getString(i).substring(72, 80));
-                            inputs[i] = dongle.createInput(outpoint, sequence, false);
+                            inputs[i] = dongle.createInput(outpointAndValue, sequence, false);
                         }
-                        dongle.startUntrustedTransaction(args.getBoolean(0), args.getLong(1), inputs, Dump.hexToBin(args.getString(3)));
+                        dongle.startUntrustedTransaction(args.getBoolean(0), args.getLong(1), inputs, Dump.hexToBin(args.getString(3)), args.getBoolean(4));
                         final PluginResult result = new PluginResult(PluginResult.Status.OK, true);
                         callbackContext.sendPluginResult(result);
                     } catch(Exception e) {

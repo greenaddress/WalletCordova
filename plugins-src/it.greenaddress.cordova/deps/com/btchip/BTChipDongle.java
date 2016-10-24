@@ -453,18 +453,18 @@ public class BTChipDongle implements BTChipConstants {
 		return new BTChipInput(value, sequence, trusted);
 	}
 	
-	public void startUntrustedTransaction(boolean newTransaction, long inputIndex, BTChipInput usedInputList[], byte[] redeemScript) throws BTChipException {
+	public void startUntrustedTransaction(boolean newTransaction, long inputIndex, BTChipInput usedInputList[], byte[] redeemScript, boolean segwit) throws BTChipException {
 		// Start building a fake transaction with the passed inputs
 		ByteArrayOutputStream data = new ByteArrayOutputStream();
 		BufferUtils.writeBuffer(data, BitcoinTransaction.DEFAULT_VERSION);
 		VarintUtils.write(data, usedInputList.length);
-		exchangeApdu(BTCHIP_CLA, BTCHIP_INS_HASH_INPUT_START, (byte)0x00, (newTransaction ? (byte)0x00 : (byte)0x80), data.toByteArray(), OK);
+		exchangeApdu(BTCHIP_CLA, BTCHIP_INS_HASH_INPUT_START, (byte)0x00, (newTransaction ? (segwit ? (byte)0x02 : (byte)0x00) : (byte)0x80), data.toByteArray(), OK);
 		// Loop for each input
 		long currentIndex = 0;
 		for (BTChipInput input : usedInputList) {
 			byte[] script = (currentIndex == inputIndex ? redeemScript : new byte[0]);
 			data = new ByteArrayOutputStream();
-			data.write(input.isTrusted() ? (byte)0x01 : (byte)0x00);
+			data.write(segwit ? 0x02 : (input.isTrusted() ? (byte)0x01 : (byte)0x00));
 			if (input.isTrusted()) {
 				// untrusted inputs have constant length
 				data.write(input.getValue().length);
