@@ -16,6 +16,7 @@ matrix:
           - '.+'
     - os: osx
       env: ANDROID_HOME=/usr/local/opt/android-sdk
+      osx_image: xcode8
 
 sudo: required
 
@@ -25,18 +26,24 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update > /dev/null;
       brew install android-sdk nvm;
-      nvm install "5.4";
-      nvm use --delete-prefix "5.4";
+      nvm install 6;
+      nvm use --delete-prefix 6;
       echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-23.0.2;
+      pip install virtualenv;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -;
-      sudo apt-get install -y nodejs;
+      curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
+      sudo apt-get install -y python-software-properties;
+      sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y;
+      sudo apt-get update;
+      sudo apt-get install -y nodejs gcc-5 g++-5;
+      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 80 --slave /usr/bin/g++ g++ /usr/bin/g++-5;
+      sudo update-alternatives --set gcc /usr/bin/gcc-5;
       fi
 
 before_script: sudo npm install -g cordova
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  - ./prepare.sh && if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       cordova prepare ios;
       cordova compile ios;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then

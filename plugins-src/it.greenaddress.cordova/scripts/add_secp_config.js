@@ -25,20 +25,29 @@ module.exports = function(context) {
 
         var buildSettings = configurations[config].buildSettings;
         var defs = buildSettings['GCC_PREPROCESSOR_DEFINITIONS'] || [];
-        if (defs.indexOf('USE_FIELD_INV_BUILTIN') != -1) {
-            // these objects have multiple references,
-            // so avoid adding the same thing twice:
-            continue;
+        var defs2 = buildSettings['GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS'] || [];
+        if (defs.indexOf('USE_FIELD_INV_BUILTIN') == -1) {
+            defs.push.apply(
+                defs,
+                ["USE_NUM_NONE",
+                 "USE_SCALAR_8X32",
+                 "USE_FIELD_10X26",
+                 "USE_SCALAR_INV_BUILTIN",
+                 "USE_FIELD_INV_BUILTIN"]
+            );
         }
-        defs.push.apply(
-            defs,
-            ["USE_NUM_NONE",
-             "USE_SCALAR_8X32",
-             "USE_FIELD_10X26",
-             "USE_SCALAR_INV_BUILTIN",
-             "USE_FIELD_INV_BUILTIN"]
-        );
+        if (defs2.indexOf('USE_FIELD_INV_BUILTIN') == -1) {
+            defs2.push.apply(
+                defs2,
+                ["USE_NUM_NONE",
+                 "USE_SCALAR_8X32",
+                 "USE_FIELD_10X26",
+                 "USE_SCALAR_INV_BUILTIN",
+                 "USE_FIELD_INV_BUILTIN"]
+            );
+        }
         buildSettings['GCC_PREPROCESSOR_DEFINITIONS'] = defs;
+        buildSettings['GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS'] = defs2;
     }
 
     // fs.writeFileSync(iosProjectPath, xcodeProject.writeSync());
