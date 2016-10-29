@@ -18,16 +18,16 @@
     <preference name="StatusBarBackgroundColor" value="#69b16e" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <platform name="android">
-        <splash density="land-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
-        <splash density="land-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
-        <splash density="land-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
-        <splash density="port-hdpi" src="res/android/drawable-hdpi/splash_land.9.png" />
-        <splash density="port-mdpi" src="res/android/drawable-mdpi/splash_land.9.png" />
-        <splash density="port-xhdpi" src="res/android/drawable-xhdpi/splash_land.9.png" />
-        <icon density="ldpi" src="res/android/drawable-ldpi/icon.png" />
-        <icon density="hdpi" src="res/android/drawable-hdpi/icon.png" />
-        <icon density="mdpi" src="res/android/drawable-mdpi/icon.png" />
-        <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
+        <splash density="land-hdpi" src="res/android/mipmap-hdpi/splash_land.9.png" />
+        <splash density="land-mdpi" src="res/android/mipmap-mdpi/splash_land.9.png" />
+        <splash density="land-xhdpi" src="res/android/mipmap-xhdpi/splash_land.9.png" />
+        <splash density="port-hdpi" src="res/android/mipmap-hdpi/splash_port.9.png" />
+        <splash density="port-mdpi" src="res/android/mipmap-mdpi/splash_port.9.png" />
+        <splash density="port-xhdpi" src="res/android/mipmap-xhdpi/splash_port.9.png" />
+        <icon density="ldpi" src="res/android/mipmap-ldpi/icon.png" />
+        <icon density="hdpi" src="res/android/mipmap-hdpi/icon.png" />
+        <icon density="mdpi" src="res/android/mipmap-mdpi/icon.png" />
+        <icon density="xhdpi" src="res/android/mipmap-xhdpi/icon.png" />
     </platform>
     <platform name="ios">
         <preference name="Orientation" value="all" />
@@ -71,12 +71,12 @@
     <plugin name="cordova-plugin-media" spec="https://github.com/greenaddress/cordova-plugin-media.git#rel/2.3.0-gaperms" />
     <plugin name="cordova-plugin-inappbrowser" spec="plugins-src/cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-whitelist" spec="1.0.0" />
-    <plugin name="cordova-plugin-splashscreen" spec="2.1.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="4.0.0" />
     <plugin name="phonegap-nfc" spec="0.6.6" />
     <plugin name="cordova-plugin-app-preferences" spec="plugins-src/cordova-plugin-app-preferences" />
     <plugin name="cordova-plugin-dialogs" spec="1.1.1" />
     <plugin name="cordova-plugin-network-information" spec="1.0.1" />
-    <engine name="android" spec="~5.2.0" />
+    <engine name="android" spec="https://github.com/greenaddress/cordova-android.git#fix-icons" />
     <engine name="ios" spec="~4.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="2.0.0" />
     <plugin name="cordova-plugin-app-version" spec="0.1.8" />
