@@ -4,7 +4,7 @@ set -e
 
 WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
-WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
+WEBFILES_BRANCH="android-v0.0.80"
 
 while [ $# -gt 0 ]; do
 key="$1"
