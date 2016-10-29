@@ -3,12 +3,13 @@ matrix:
   include:
     - os: linux
       language: android
+      jdk: oraclejdk8
       android:
         components:
           - tools
-          - build-tools-23.0.2
-          - android-23
-          - platform-tools-23
+          - build-tools-24.0.3
+          - android-24
+          - platform-tools-24
           - extra-android-support
           - extra-android-m2repository
           - extra-google-m2repository
@@ -28,7 +29,7 @@ install:
       brew install android-sdk nvm;
       nvm install 6;
       nvm use --delete-prefix 6;
-      echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-23.0.2;
+      echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-24.0.3;
       pip install virtualenv;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
