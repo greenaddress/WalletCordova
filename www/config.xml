@@ -14,7 +14,7 @@
     <preference name="webviewbounce" value="true" />
     <preference name="errorUrl" value="file:///android_asset/www/offline.html" />
     <preference name="SplashScreenDelay" value="10000" />
-    <preference name="StatusBarOverlaysWebview" value="false" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#69b16e" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <platform name="android">
@@ -77,7 +77,7 @@
     <plugin name="cordova-plugin-dialogs" spec="1.1.1" />
     <plugin name="cordova-plugin-network-information" spec="1.0.1" />
     <engine name="android" spec="https://github.com/greenaddress/cordova-android.git#fix-icons" />
-    <engine name="ios" spec="~4.0.1" />
+    <engine name="ios" spec="~4.3.0" />
     <plugin name="cordova-plugin-statusbar" spec="2.0.0" />
     <plugin name="cordova-plugin-app-version" spec="0.1.8" />
     <plugin name="com.phonegap.plugins.barcodescanner" spec="plugins-src/com.phonegap.plugins.barcodescanner" />

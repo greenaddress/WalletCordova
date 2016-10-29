@@ -46,7 +46,7 @@ before_script: sudo npm install -g cordova
 script:
   - ./prepare.sh && if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       cordova prepare ios;
-      cordova compile ios;
+      cordova build ios;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       cordova prepare android;
       cordova build android;

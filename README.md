@@ -22,7 +22,7 @@ There's an issue with `xcode` node library causing `cordova prepare ios` to fail
  2. `cd` to the WalletCordova directory
  3. Run `git submodule update --init`
  4. Run `cordova prepare ios`
- 5. Run `cordova compile ios`
+ 5. Run `cordova build ios`
 
 After following these steps you should get an .app in platforms/ios/build/emulator/GreenAddress.It.app.
 
