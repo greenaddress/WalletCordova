@@ -171,6 +171,7 @@
 
         <hook type="after_plugin_install" src="scripts/removeMainActivity.js" />
         <hook type="after_plugin_install" src="scripts/addAllowBackupFalse.js" />
+        <hook type="after_plugin_install" src="scripts/append0ToVersionCode.js" />
         <hook type="after_prepare" src="scripts/removeMainActivity.js" />
         <hook type="after_prepare" src="scripts/addAllowBackupFalse.js" />
     </platform>
