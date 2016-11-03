@@ -81,7 +81,7 @@
     <engine name="ios" spec="~4.3.0" />
     <plugin name="cordova-plugin-statusbar" spec="2.0.0" />
     <plugin name="cordova-plugin-app-version" spec="0.1.8" />
-    <plugin name="com.phonegap.plugins.barcodescanner" spec="plugins-src/com.phonegap.plugins.barcodescanner" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/greenaddress/phonegap-plugin-barcodescanner.git#6.0.3-nohistory" />
     <plugin name="cordova-universal-clipboard" spec="~0.1.0" />
     <plugin name="it.greenaddress.cordova" spec="plugins-src/it.greenaddress.cordova" />
 </widget>
