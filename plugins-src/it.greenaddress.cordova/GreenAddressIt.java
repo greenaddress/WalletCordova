@@ -184,7 +184,7 @@ public class GreenAddressIt extends CordovaActivity
             final String hash = intent.getStringExtra("hash");
             if (hash != null) {
                 if (("/send".equals(hash) || "/receive".equals(hash))) {
-                        final String js = "location.hash=\"#" +hash+"\"";
+                        final String js = "(function(){location.hash=\"#" +hash+"\"})();";
                         super.appView.loadUrl("javascript:" + js);
                 }
             }

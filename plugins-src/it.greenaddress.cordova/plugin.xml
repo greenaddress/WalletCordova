@@ -19,9 +19,6 @@
             <feature name="BTChip">
                 <param name="android-package" value="it.greenaddress.cordova.BTChip"/>
             </feature>
-            <feature name="org.apache.cordova.facebook.Connect">
-                <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
-            </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
             <intent-filter>
@@ -60,8 +57,6 @@
             </activity>
 
         </config-file>
-
-        <framework src="facebook-android-sdk-3.7/facebook" custom="true" />
 
         <!-- sources -->
         <source-file src="BIP38.java" target-dir="src/it/greenaddress/cordova" />
@@ -110,7 +105,6 @@
         <source-file src="libs/jackson-datatype-json-org-1.8.0.jar" target-dir="libs" />
         <source-file src="libs/jackson-mapper-asl-1.8.6.jar" target-dir="libs" />
         <source-file src="libs/jwamp-core-0.0.1-SNAPSHOT.jar" target-dir="libs" />
-        <source-file src="libs/jwamp-jee6-jetty-0.0.1-SNAPSHOT.jar" target-dir="libs" />
         <source-file src="libs/log4j-1.2.17.jar" target-dir="libs" />
         <source-file src="libs/slf4j-api-1.6.5.jar" target-dir="libs" />
         <source-file src="libs/slf4j-log4j12-1.6.6.jar" target-dir="libs" />
@@ -167,7 +161,8 @@
         <source-file src="deps/com/lambdaworks/jni/Platform.java" target-dir="src/com/lambdaworks/jni" />
         <source-file src="deps/com/lambdaworks/jni/SysLibraryLoader.java" target-dir="src/com/lambdaworks/jni" />
         <source-file src="deps/com/lambdaworks/jni/UnsupportedPlatformException.java" target-dir="src/com/lambdaworks/jni" />
-        <source-file src="deps/org/apache/cordova/facebook/ConnectPlugin.java" target-dir="src/org/apache/cordova/facebook" />
+	<source-file src="deps/com/github/ghetolay/jwamp/jetty/JettyConnection.java" target-dir="src/com/github/ghetolay/jwamp/jetty" />
+	<source-file src="deps/com/github/ghetolay/jwamp/jetty/WampJettyFactory.java" target-dir="src/com/github/ghetolay/jwamp/jetty" />
 
         <hook type="after_plugin_install" src="scripts/removeMainActivity.js" />
         <hook type="after_plugin_install" src="scripts/addAllowBackupFalse.js" />
@@ -177,9 +172,6 @@
     </platform>
     <platform name="ios">
         <framework src="Security.framework" />
-        <framework src="com.phonegap.plugins.facebookconnect/FacebookSDK.framework" custom="true" />
-        <source-file src="com.phonegap.plugins.facebookconnect/FacebookConnectPlugin.m" />
-        <source-file src="com.phonegap.plugins.facebookconnect/FacebookConnectPlugin.h" />
         <source-file src="bip38/bip38.h" target-dir="bip38" />
         <source-file src="bip38/bip38.m" target-dir="bip38" />
         <source-file src="bip38/c/crypto_scrypt-neon.c" target-dir="bip38/c" />
@@ -307,10 +299,6 @@
             </feature>
             <feature name="CDVTouchId">
                 <param name="ios-package" value="CDVTouchId"/>
-            </feature>
-            <feature name="org.apache.cordova.facebook.Connect">
-                <param name="ios-package" value="FacebookConnectPlugin" />
-                <param name="onload" value="true" />
             </feature>
         </config-file>
         <hook type="after_plugin_install" src="scripts/add_swift_support.js" />
