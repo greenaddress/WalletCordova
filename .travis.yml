@@ -7,9 +7,9 @@ matrix:
       android:
         components:
           - tools
-          - build-tools-24.0.3
-          - android-24
-          - platform-tools-24
+          - build-tools-25.0.2
+          - android-25
+          - platform-tools-25
           - extra-android-support
           - extra-android-m2repository
           - extra-google-m2repository
@@ -29,7 +29,7 @@ install:
       brew install android-sdk nvm;
       nvm install 6;
       nvm use --delete-prefix 6;
-      echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-24.0.3;
+      echo y | android --verbose update sdk --no-ui --all --filter platform-tools,build-tools-25.0.2;
       pip install virtualenv;
       elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
