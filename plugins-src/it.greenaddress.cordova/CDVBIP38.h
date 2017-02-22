@@ -15,5 +15,6 @@
 - (void)encrypt:(CDVInvokedUrlCommand*)command;
 
 - (void)clearCookies:(CDVInvokedUrlCommand*)command;  // TODO separate plugin?
+- (void)launchBlockstreamAppStore:(CDVInvokedUrlCommand*)command;  // TODO separate plugin?
 
 @end

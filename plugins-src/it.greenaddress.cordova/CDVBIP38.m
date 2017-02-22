@@ -10,6 +10,7 @@
 #import <CommonCrypto/CommonKeyDerivation.h>
 #import "CoreBitcoin/BTCData.h"
 #import "CoreBitcoin/BTCAddress.h"
+#import <StoreKit/StoreKit.h>
 
 @implementation CDVBIP38
 
@@ -181,5 +182,33 @@
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+static NSInteger const kAppITunesItemIdentifier = 1206035886;
+
+- (void)launchBlockstreamAppStore:(CDVInvokedUrlCommand*)command
+{
+    SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+
+    storeViewController.delegate = self;
+
+    NSNumber *identifier = [NSNumber numberWithInteger:kAppITunesItemIdentifier];
+
+    NSDictionary *parameters = @{ SKStoreProductParameterITunesItemIdentifier:identifier };
+    [storeViewController loadProductWithParameters:parameters
+                                   completionBlock:^(BOOL result, NSError *error) {
+                                       if (result)
+                                           [self.viewController presentViewController:storeViewController
+                                                              animated:YES
+                                                            completion:nil];
+                                       else NSLog(@"SKStoreProductViewController: %@", error);
+                                   }];
+}
+
+#pragma mark - SKStoreProductViewControllerDelegate
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end
