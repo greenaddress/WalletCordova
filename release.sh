@@ -34,6 +34,11 @@ fi
 
 $SED -i 's/<widget\(.*\)version="[0-9.]\+"/<widget\1version="'$2'"/' \
     www/config.xml
+if [ "$1" == "ios" ]; then
+    # iOS version is now released by Blockstream
+    $SED -i 's/<widget id="it.greenaddress.cordova"/<widget id="com.blockstream.greenaddress.cordova"/' \
+        www/config.xml
+fi
 
 git commit -S -am"bump version for release $2"
 
