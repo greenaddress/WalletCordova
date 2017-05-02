@@ -6,6 +6,8 @@ WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
 WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
 
+WEBFILES_BRANCH=electron  # TODO use the usual branches
+
 while [ $# -gt 0 ]; do
 key="$1"
 
@@ -71,6 +73,29 @@ if [ \! -e webfiles ]; then
     git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
+# Add the wally plugin:
+if [ \! -e libwally-core-cordova ]; then
+    git clone https://github.com/jkozera/libwally-core-cordova.git
+fi
+cd libwally-core-cordova
+if [ \! -e libwally-core ]; then
+    git clone https://github.com/jkozera/libwally-core.git -b wip_js
+fi
+
+./prepare_libwally_clang.sh
+cp libwally-core/src/swig_java/src/com/blockstream/libwally/Wally.java wallyplugin
+cd wallyplugin
+python ../libwally-core/src/swig_js/makewrappers/wrap.py
+mkdir -p build/Release
+echo '' > build/Release/wallycore.js  # mock wallycore which is nodejs-only
+npm i base64-js
+cd ../..
+cordova plugin add libwally-core-cordova/wallyplugin
+
+if [ "$(uname -s)" == "Darwin" ]; then
+    # TODO iOS
+fi
+
 if [ \! -e venv ]; then
     virtualenv venv
 fi
@@ -103,4 +128,3 @@ rm ../www/greenaddress.it/static/js/{greenaddress,instant}.js  # web only
 mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
 
-cd ..

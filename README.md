@@ -1,8 +1,8 @@
-Build status: [![Build Status](https://travis-ci.org/greenaddress/WalletCordova.png?branch=master)](https://travis-ci.org/greenaddress/WalletCordova) 
+Build status: [![Build Status](https://travis-ci.org/greenaddress/WalletCordova.png?branch=master)](https://travis-ci.org/greenaddress/WalletCordova)
 
 ## How to build
 
- 1. Run `./prepare.sh`
+ 1. Run `./prepare.sh` (Note that for Android it requires the environment variables `ANDROID_NDK` and `JAVA_HOME` to be set.)
  2. Follow platform-specific instructions below
 
 ## How to build on Android

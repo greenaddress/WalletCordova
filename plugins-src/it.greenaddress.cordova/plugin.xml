@@ -10,12 +10,6 @@
             <feature name="PINInput">
                 <param name="android-package" value="it.greenaddress.cordova.PINInput"/>
             </feature>
-            <feature name="BIP39">
-                <param name="android-package" value="it.greenaddress.cordova.BIP39"/>
-            </feature>
-            <feature name="BIP38">
-                <param name="android-package" value="it.greenaddress.cordova.BIP38"/>
-            </feature>
             <feature name="BTChip">
                 <param name="android-package" value="it.greenaddress.cordova.BTChip"/>
             </feature>
@@ -59,8 +53,6 @@
         </config-file>
 
         <!-- sources -->
-        <source-file src="BIP38.java" target-dir="src/it/greenaddress/cordova" />
-        <source-file src="BIP39.java" target-dir="src/it/greenaddress/cordova" />
         <source-file src="BTChip.java" target-dir="src/it/greenaddress/cordova" />
         <source-file src="GreenAddressIt.java" target-dir="src/it/greenaddress/cordova" />
         <source-file src="PINInput.java" target-dir="src/it/greenaddress/cordova" />
@@ -108,13 +100,6 @@
         <source-file src="libs/log4j-1.2.17.jar" target-dir="libs" />
         <source-file src="libs/slf4j-api-1.6.5.jar" target-dir="libs" />
         <source-file src="libs/slf4j-log4j12-1.6.6.jar" target-dir="libs" />
-        <source-file src="libs/armeabi/libscrypt.so" target-dir="libs/armeabi" />
-        <source-file src="libs/mips/libscrypt.so" target-dir="libs/mips" />
-        <source-file src="libs/x86/libscrypt.so" target-dir="libs/x86" />
-        <source-file src="libs/armeabi-v7a/libscrypt.so" target-dir="libs/armeabi-v7a" />
-        <source-file src="libs/arm64-v8a/libscrypt.so" target-dir="libs/arm64-v8a" />
-        <source-file src="libs/mips64/libscrypt.so" target-dir="libs/mips64" />
-        <source-file src="libs/x86_64/libscrypt.so" target-dir="libs/x86_64" />
         <source-file src="build-extras.gradle" target-dir="." />
 
         <!-- dependencies -->
@@ -172,92 +157,10 @@
     </platform>
     <platform name="ios">
         <framework src="Security.framework" />
-        <source-file src="bip38/bip38.h" target-dir="bip38" />
-        <source-file src="bip38/bip38.m" target-dir="bip38" />
-        <source-file src="bip38/c/crypto_scrypt-neon.c" target-dir="bip38/c" />
-        <source-file src="bip38/c/crypto_scrypt-sse.c" target-dir="bip38/c" />
-        <source-file src="bip38/c/sha256.c" target-dir="bip38/c" />
-        <source-file src="bip38/include/config.h" target-dir="bip38/include" />
-        <source-file src="bip38/include/crypto_scrypt-neon-salsa208.h" target-dir="bip38/include" />
-        <source-file src="bip38/include/crypto_scrypt.h" target-dir="bip38/include" />
-        <source-file src="bip38/include/scrypt_platform.h" target-dir="bip38/include" />
-        <source-file src="bip38/include/sha256.h" target-dir="bip38/include" />
-        <source-file src="bip38/include/sysendian.h" target-dir="bip38/include" />
         <source-file src="CDVAES.m" />
         <source-file src="CDVAES.h" />
-        <source-file src="CDVBIP32.m" />
-        <source-file src="CDVBIP32.h" />
-        <source-file src="CDVBIP38.m" />
-        <source-file src="CDVBIP38.h" />
-        <source-file src="CDVBIP39.m" />
-        <source-file src="CDVBIP39.h" />
-        <source-file src="CDVECDSA.m" />
-        <source-file src="CDVECDSA.h" />
         <source-file src="touchid/Keychain.swift" target-dir="touchid" />
         <source-file src="touchid/CDVTouchId.swift" target-dir="touchid" />
-
-        <source-file src="CoreBitcoin/BTCAddress.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCAddress.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCAddressSubclass.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCData+Tests.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCData+Tests.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCData.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCData.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCKey.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCKey.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCKeychain.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCKeychain.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCNetwork.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCNetwork.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/NSData+BTCData.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/NSData+BTCData.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCBase58+Tests.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCBase58+Tests.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCBase58.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/BTCBase58.m" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/NS+BTCBase58.h" target-dir="CoreBitcoin" />
-        <source-file src="CoreBitcoin/NS+BTCBase58.m" target-dir="CoreBitcoin" />
-
-        <source-file src="libsecp256k1/src/basic-config.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecdsa.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecdsa_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/eckey.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/eckey_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecmult.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecmult_const.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecmult_const_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecmult_gen.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecmult_gen_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/ecmult_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_10x26.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_10x26_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_5x52.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_5x52_asm_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_5x52_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_5x52_int128_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/field_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/group.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/group_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/hash.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/hash_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/num.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/num_gmp.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/num_gmp_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/num_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/scalar.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/scalar_4x64.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/scalar_4x64_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/scalar_8x32.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/scalar_8x32_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/scalar_impl.h" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/secp256k1.c" target-dir="libsecp256k1" />
-        <source-file src="libsecp256k1/src/util.h" target-dir="libsecp256k1" />
-
-        <source-file src="libsecp256k1/include/secp256k1.h" target-dir="libsecp256k1/include" />
-
-        <source-file src="libbase58/libbase58.h" />
-        <source-file src="libbase58/base58.c" />
 
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
@@ -284,18 +187,6 @@
         <config-file target="config.xml" parent="/*">
             <feature name="AES">
                 <param name="ios-package" value="CDVAES"/>
-            </feature>
-            <feature name="ECDSA">
-                <param name="ios-package" value="CDVECDSA"/>
-            </feature>
-            <feature name="BIP32">
-                <param name="ios-package" value="CDVBIP32"/>
-            </feature>
-            <feature name="BIP38">
-                <param name="ios-package" value="CDVBIP38"/>
-            </feature>
-            <feature name="BIP39">
-                <param name="ios-package" value="CDVBIP39"/>
             </feature>
             <feature name="CDVTouchId">
                 <param name="ios-package" value="CDVTouchId"/>
