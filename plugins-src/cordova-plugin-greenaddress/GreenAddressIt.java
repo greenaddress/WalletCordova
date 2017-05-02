@@ -48,14 +48,6 @@ import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 
-class CustomNativeAccess {
-    @JavascriptInterface
-    public String clearCookies() {
-        CookieManager.getInstance().removeAllCookie();
-        return "ok";
-    }
-}
-
 public class GreenAddressIt extends CordovaActivity
 {
     private Intent lastIntent = null;
@@ -113,7 +105,6 @@ public class GreenAddressIt extends CordovaActivity
         super.init();
         // Set by <content src="index.html" /> in config.xml
         ((SystemWebView)((SystemWebViewEngine)super.appView.getEngine()).getView()).getSettings().setUserAgentString("GAITCordova;" + ((SystemWebView)((SystemWebViewEngine)super.appView.getEngine()).getView()).getSettings().getUserAgentString());
-        ((SystemWebView)((SystemWebViewEngine)super.appView.getEngine()).getView()).addJavascriptInterface(new CustomNativeAccess(), "CustomNativeAccess");
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             processView(getIntent());
         } else {

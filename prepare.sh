@@ -2,6 +2,9 @@
 
 set -e
 
+# Prevent cordova prompting us to opt-in to telemetry on first use
+cordova telemetry off >/dev/null 2>&1
+
 WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
 WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
@@ -13,14 +16,11 @@ case $key in
     -h|--help)
     HELP=1
     ;;
-    -s|--silent)
-    SILENT=1
-    ;;
     -r|--webfiles-repo)
     WEBFILES_REPO="$2"
     shift # past argument
     ;;
-    # There used to be a typo so support both spelling
+    # There used to be a typo so support both spellings
     -b|--webfile-branch|--webfiles-branch)
     WEBFILES_BRANCH="$2"
     shift # past argument
@@ -37,7 +37,6 @@ then
     cat <<EOF
 Usage: ./prepare.sh [-h] [--webfiles-repo WEBFILES_REPO]
                          [--webfiles-branch WEBFILES_BRANCH]
-                         [--silent]
 
 Prepares the Cordova app. Requires npm and Python 2.x with virtualenv.
 
@@ -45,44 +44,38 @@ optional arguments:
   -h, --help                       show this help message and exit
   --webfiles-repo WEBFILES_REPO, -r WEBFILES_REPO
                                    Optional non-default git URL to clone web
-                                   files from. (Default:
-                                     $WEBFILES_REPO)
+                                   files from. (Default: $WEBFILES_REPO)
   --webfiles-branch WEBFILES_BRANCH, -b WEBFILES_BRANCH
                                    Optional non-default git URL to clone web
                                    files from. (Default: $WEBFILES_BRANCH)
-  --silent, -s                     Silently ignore already existing webfiles
-                                   directory. When not passed, the script will
-                                   ask if it should remove it.
 EOF
     exit 1
 fi
 
-if [ -e webfiles ] && [ "$SILENT" != "1" ]; then
-    echo -n "webfiles exists. do you want to remove it? (y/n) "
-    read REMOVE
-    if [ "$REMOVE" == "y" ]; then
-        rm -rf webfiles
-    else
-        echo "Exiting. Pass the --silent option if you want to ignore existing webfiles."
-        exit 1
-    fi
+if [ \! -e webfiles ]; then
+    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b electron webfiles # FIXME: Undo
+    #git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
-if [ \! -e webfiles ]; then
-    git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
+# Add the wally plugin:
+if [ \! -e libwally-core ]; then
+    git clone https://github.com/ElementsProject/libwally-core -b master --depth 1
 fi
+# Build the wally plugin
+./prepare_wally.sh
 
 if [ \! -e venv ]; then
     virtualenv venv
+    venv/bin/pip install -r webfiles/requirements.txt
 fi
-venv/bin/pip install -r webfiles/requirements.txt
 
 cd webfiles
 
 # 1. Build *.js:
-npm i
+if [ \! -e node_modules ]; then
+    npm i
+fi
 npm run build
-rm -rf node_modules
 
 # 2. Render *.html:
 ../venv/bin/python render_templates.py -a ../www/greenaddress.it
@@ -105,3 +98,4 @@ mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
 
 cd ..
+cordova plugin add plugins-src/cordova-plugin-greenaddress --save

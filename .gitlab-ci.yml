@@ -1,0 +1,26 @@
+test_debug_build:
+  image: greenaddress/android_cordova:latest
+  tags:
+    - ga
+  script:
+    - cd $CI_PROJECT_DIR
+    - ./prepare.sh
+    - cordova prepare android
+    - cordova build android
+
+build_tag_release:
+  image: greenaddress/android_cordova:latest
+  artifacts:
+    name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
+    when: on_success
+    paths:
+    - platforms/android/build/outputs/apk/*.apk
+  tags:
+    - ga
+  script:
+    - cd $CI_PROJECT_DIR
+    - ./prepare.sh
+    - cordova prepare android --release
+    - cordova build android
+  only:
+    - tags

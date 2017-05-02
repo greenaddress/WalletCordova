@@ -1,0 +1,21 @@
+{
+  "name": "cordova-plugin-greenaddress",
+  "version": "0.0.0",
+  "description": "Cordova GAIT Plugin",
+  "cordova": {
+    "id": "cordova-plugin-greenaddress",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "gait",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "",
+  "license": "LGPL-2.1"
+}
