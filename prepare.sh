@@ -82,18 +82,35 @@ if [ \! -e libwally-core ]; then
     git clone https://github.com/jkozera/libwally-core.git -b wip_js
 fi
 
-./prepare_libwally_clang.sh
-cp libwally-core/src/swig_java/src/com/blockstream/libwally/Wally.java wallyplugin
+if ./prepare_libwally_clang.sh; then
+    # Android succeeded
+    cp libwally-core/src/swig_java/src/com/blockstream/libwally/Wally.java wallyplugin
+else
+    # try building for ios only
+    (cd ./libwally-core && ./tools/autogen.sh && ./configure && make)
+fi
 cd wallyplugin
 python ../libwally-core/src/swig_js/makewrappers/wrap.py
 mkdir -p build/Release
 echo '' > build/Release/wallycore.js  # mock wallycore which is nodejs-only
 npm i base64-js
 cd ../..
-cordova plugin add libwally-core-cordova/wallyplugin
 
 if [ "$(uname -s)" == "Darwin" ]; then
-    # TODO iOS
+    # TODO move to Cordova plugin scripts
+    cp -r libwally-core-cordova/libwally-core/src/swig_js/libwally-core-ios/libwally-core-ios.xcodeproj libwally-core-cordova/wallyplugin
+    cordova prepare ios
+    # plugin add doesn't work before prepare for iOS
+    sed -i '' s/HelloCordova/GreenAddress/ libwally-core-cordova/wallyplugin/scripts/add_swift_support.js
+    cordova plugin add libwally-core-cordova/wallyplugin
+    sed -i '' s/HelloCordova/GreenAddress/ libwally-core-cordova/patch_pbxproj_with_wally.js
+    NODE_PATH=`pwd`/platforms/ios/cordova/node_modules node libwally-core-cordova/patch_pbxproj_with_wally.js > pbxproj.new
+    cp -r libwally-core-cordova/libwally-core/src/* platforms/ios/GreenAddress
+    cp -r libwally-core-cordova/libwally-core/include platforms/ios/GreenAddress
+    cp -r libwally-core-cordova/libwally-core/src/secp256k1/include/* platforms/ios/GreenAddress/include/
+    mv pbxproj.new platforms/ios/GreenAddress.xcodeproj/project.pbxproj
+else
+    cordova plugin add libwally-core-cordova/wallyplugin
 fi
 
 if [ \! -e venv ]; then
@@ -127,4 +144,3 @@ cp -r build/static/js/btchip-js-api/thirdparty/{async,class,q} ../www/greenaddre
 rm ../www/greenaddress.it/static/js/{greenaddress,instant}.js  # web only
 mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
-
