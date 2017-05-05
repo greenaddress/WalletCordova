@@ -110,3 +110,6 @@ cp -r build/static/js/btchip-js-api/thirdparty/{async,class,q} ../www/greenaddre
 rm ../www/greenaddress.it/static/js/{greenaddress,instant}.js  # web only
 mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
+
+cd ..
+cordova plugin add plugins-src/cordova-plugin-greenaddress --save
