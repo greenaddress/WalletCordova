@@ -20,7 +20,8 @@ case $key in
     WEBFILES_REPO="$2"
     shift # past argument
     ;;
-    -b|--webfile-branch)
+    # There used to be a typo so support both spelling
+    -b|--webfile-branch|--webfiles-branch)
     WEBFILES_BRANCH="$2"
     shift # past argument
     ;;
