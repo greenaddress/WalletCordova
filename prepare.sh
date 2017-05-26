@@ -6,6 +6,8 @@ WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
 WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
 
+WEBFILES_BRANCH=electron  # TODO use the usual branches
+
 while [ $# -gt 0 ]; do
 key="$1"
 
@@ -72,6 +74,12 @@ if [ \! -e webfiles ]; then
     git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
+# Add the wally plugin:
+if [ \! -e libwally-core ]; then
+    git clone https://github.com/jkozera/libwally-core.git -b wip_js
+fi
+./libwally-core/src/swig_js/cordovaplugin/plugin_add.sh
+
 if [ \! -e venv ]; then
     virtualenv venv
 fi
@@ -105,3 +113,4 @@ mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
 
 cd ..
+cordova plugin add plugins-src/cordova-plugin-greenaddress --save
