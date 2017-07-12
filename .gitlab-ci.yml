@@ -24,3 +24,13 @@ build_tag_release:
     - cordova build android
   only:
     - tags
+
+test_debug_osx_ios_build:
+  tags:
+    - osx
+  script:
+    - cd $CI_PROJECT_DIR
+    - ./prepare.sh
+    - cordova prepare ios
+    - cordova build ios
+
