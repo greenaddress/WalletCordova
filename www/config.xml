@@ -72,7 +72,6 @@
     <engine name="ios" spec="~4.3.0" />
     <plugin name="cordova-plugin-app-preferences" spec="^0.99.3" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <plugin name="cordova-plugin-greenaddress" spec="file:plugins-src/cordova-plugin-greenaddress" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.5.0" />
     <plugin name="cordova-plugin-media" spec="git+https://github.com/greenaddress/cordova-plugin-media.git#rel/2.4.0-gaperms" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
@@ -82,4 +81,5 @@
     <plugin name="cordova-universal-clipboard" spec="^0.1.0" />
     <plugin name="phonegap-nfc" spec="^0.6.6" />
     <plugin name="phonegap-plugin-barcodescanner" spec="git+https://github.com/greenaddress/phonegap-plugin-barcodescanner.git#6.0.3-nohistory" />
+    <plugin name="cordova-plugin-greenaddress" spec="plugins-src/cordova-plugin-greenaddress" />
 </widget>

@@ -1,0 +1,20 @@
+diff --git a/package.json b/package.json
+index c5ce019..6fe9df5 100644
+--- a/package.json
++++ b/package.json
+@@ -48,7 +48,6 @@
+     "bitcoinjs-lib": "^3.1.1",
+     "buffer-equals": "^1.0.3",
+     "bytebuffer": "^5.0.1",
+-    "cordova-plugin-wally": "file:libwally-core/src/wrap_js/cordovaplugin",
+     "global": "^4.3.0",
+     "has-chrome-storage": "^0.1.0",
+     "promise": "^7.1.1",
+@@ -58,7 +57,6 @@
+     "q": "^1.4.1",
+     "raf": "^3.2.0",
+     "wallet": "file:./static/js/greenwallet/wallet",
+-    "wallyjs": "file:libwally-core/src/wrap_js",
+     "xtend": "^4.0.1"
+   },
+   "semistandard": {

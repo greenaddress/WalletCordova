@@ -9,6 +9,15 @@ WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
 WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
 
+TESTNET_CHAINCODE=b60befcc619bb1c212732770fe181f2f1aa824ab89f8aab49f2e13e3a56f0f04
+TESTNET_PUBKEY=036307e560072ed6ce0aa5465534fb5c258a2ccfbc257f369e8e7a181b16d897b3
+
+function build_env {
+    sed -e "s/TEMPLATE_COIN/$1/g" network_template.js > www/greenaddress.it/static/wallet/network.js
+    sed -e "s/TEMPLATE_CHAINCODE/$2/g" -e "s/TEMPLATE_PUBKEY/$3/g" -e "s|TEMPLATE_WS|$4|g" \
+        -e "s|TEMPLATE_ROOT|$5|g" config_template.js > www/greenaddress.it/static/wallet/config.js
+}
+
 while [ $# -gt 0 ]; do
 key="$1"
 
@@ -25,8 +34,14 @@ case $key in
     WEBFILES_BRANCH="$2"
     shift # past argument
     ;;
+    --testnet)
+    build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it 
+    ;;
+    --regtest)
+    build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} ws://192.168.71.102:8080 http://192.168.71.102:9908
+    ;;
     *)
-        # unknown option
+    # unknown option
     ;;
 esac
 shift # past argument or value
@@ -53,7 +68,9 @@ EOF
 fi
 
 if [ \! -e webfiles ]; then
-    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b electron webfiles # FIXME: Undo
+    git clone --depth 1 git@gl.blockstream.io:greenaddress/webfiles.git -b electron-elements_wip_rebased webfiles # FIXME: Undo
+    patch -p1 webfiles/package.json < package.json.patch
+    rm webfiles/package-lock.json
     #git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
