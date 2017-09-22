@@ -13,9 +13,13 @@ TESTNET_CHAINCODE=b60befcc619bb1c212732770fe181f2f1aa824ab89f8aab49f2e13e3a56f0f
 TESTNET_PUBKEY=036307e560072ed6ce0aa5465534fb5c258a2ccfbc257f369e8e7a181b16d897b3
 
 function build_env {
-    sed -e "s/TEMPLATE_COIN/$1/g" network_template.js > www/greenaddress.it/static/wallet/network.js
-    sed -e "s/TEMPLATE_CHAINCODE/$2/g" -e "s/TEMPLATE_PUBKEY/$3/g" -e "s|TEMPLATE_WS|$4|g" \
-        -e "s|TEMPLATE_ROOT|$5|g" config_template.js > www/greenaddress.it/static/wallet/config.js
+    SED=sed
+    if [ "$(uname)" == "Darwin" ]; then
+        SED=gsed
+    fi
+    $SED -e "s/TEMPLATE_COIN/$1/g" network_template.js > www/greenaddress.it/static/wallet/network.js
+    $SED -e "s/TEMPLATE_CHAINCODE/$2/g" -e "s/TEMPLATE_PUBKEY/$3/g" -e "s|TEMPLATE_WS|$4|g" \
+         -e "s|TEMPLATE_ROOT|$5|g" config_template.js > www/greenaddress.it/static/wallet/config.js
 }
 
 while [ $# -gt 0 ]; do
@@ -115,4 +119,4 @@ mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
 
 cd ..
-cordova plugin add plugins-src/cordova-plugin-greenaddress --save
+cordova plugin add plugins-src/cordova-plugin-greenaddress --nosave --nofetch --noregistry
