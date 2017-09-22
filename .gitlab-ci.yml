@@ -31,6 +31,5 @@ test_debug_osx_ios_build:
   script:
     - cd $CI_PROJECT_DIR
     - ./prepare.sh
-    - cordova prepare ios
     - cordova build ios
 
