@@ -42,7 +42,8 @@ case $key in
     build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it 
     ;;
     --regtest)
-    build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} ws://192.168.71.102:8080 http://192.168.71.102:9908
+    build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} ws://"$2":8080 http://"$2":9908
+    shift
     ;;
     *)
     # unknown option
@@ -73,7 +74,6 @@ fi
 
 if [ \! -e webfiles ]; then
     git clone --depth 1 https://github.com/glslang/GreenAddressWebFiles.git -b electron_rebased webfiles # FIXME: Undo
-    #patch -p1 webfiles/package.json < package.json.patch
     rm webfiles/package-lock.json
     #git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
