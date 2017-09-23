@@ -80,8 +80,7 @@ fi
 
 # Add the wally plugin:
 if [ \! -e libwally-core ]; then
-    #git clone https://github.com/ElementsProject/libwally-core -b master --depth 1
-    git clone git@gl.blockstream.io:greenaddress/libwally-core.git -b updates --depth 1
+    git clone https://github.com/jgriffiths/libwally-core -b updates --depth 1
 fi
 # Build the wally plugin
 ./prepare_wally.sh
