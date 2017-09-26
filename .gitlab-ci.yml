@@ -1,5 +1,5 @@
 test_debug_build:
-  image: greenaddress/android_cordova:latest
+  image: greenaddress/android_cordova@sha256:cfe386fdfcb09842c11a7bc5f41f9ea9323abbd38e453512799e53decc364e5c
   tags:
     - ga
   script:
@@ -9,7 +9,7 @@ test_debug_build:
     - cordova build android
 
 build_tag_release:
-  image: greenaddress/android_cordova:latest
+  image: greenaddress/android_cordova@sha256:cfe386fdfcb09842c11a7bc5f41f9ea9323abbd38e453512799e53decc364e5c
   artifacts:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
