@@ -7,7 +7,7 @@ Build status: [![Build Status](https://travis-ci.org/greenaddress/WalletCordova.
 
 ## How to build on Android
 
- 1. Install Android SDK and Cordova
+ 1. Install Android SDK and Cordova (7.0.1)
  2. `cd` to the WalletCordova directory
  3. Run `cordova prepare android`
  4. Run `cordova build android`

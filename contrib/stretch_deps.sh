@@ -13,7 +13,7 @@ apt-get -yqq update
 apt-get -yqq install nodejs
 update-java-alternatives -s java-1.8.0-openjdk-amd64
 
-npm install -g cordova
+npm install -g cordova@7.0.1
 
 cd /opt && curl -sSO https://dl.google.com/android/repository/${SDK_FILENAME} && unzip -qq ${SDK_FILENAME} && rm ${SDK_FILENAME}
 cd /opt && curl -sSO https://dl.google.com/android/repository/${NDK_FILENAME} && unzip -qq ${NDK_FILENAME} && rm ${NDK_FILENAME}
