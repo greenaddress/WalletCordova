@@ -22,6 +22,12 @@ function build_env {
          -e "s|TEMPLATE_ROOT|$5|g" config_template.js > www/greenaddress.it/static/wallet/config.js
 }
 
+function rename_env {
+    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"it.greenaddress.cordova\"/" \
+         -e "s/<name>GreenAddress/<name>GreenAddress $2/" \
+        www/config.xml
+}
+
 while [ $# -gt 0 ]; do
 key="$1"
 
@@ -40,9 +46,11 @@ case $key in
     ;;
     --testnet)
     build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it 
+    rename_env testnet TestNet
     ;;
     --regtest)
     build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} ws://"$2":8080 http://"$2":9908
+    rename_env regtest RegTest
     shift
     ;;
     *)
