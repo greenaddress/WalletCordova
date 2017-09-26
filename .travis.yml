@@ -5,7 +5,7 @@ matrix:
       sudo: required
       services:
         - docker
-      script: docker run -v $PWD:/walletcordova greenaddress/android_cordova@sha256:cfe386fdfcb09842c11a7bc5f41f9ea9323abbd38e453512799e53decc364e5c
+      script: docker run -v $PWD:/walletcordova greenaddress/android_cordova@sha256:1632a1f7445de4650bd3d1420a08e1416e43e3ba59600dbb38fcecf7c0ae8d66
 
     - os: osx
       osx_image: xcode8.3
