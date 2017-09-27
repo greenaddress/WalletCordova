@@ -23,7 +23,21 @@ function build_env {
 }
 
 function rename_env {
-    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"it.greenaddress.cordova\"/" \
+    declare -a filenames=(".cordova/config.json"
+                          "plugins-src/cordova-plugin-greenaddress/BTChip.java"
+                          "plugins-src/cordova-plugin-greenaddress/GreenAddressIt.java"
+                          "plugins-src/cordova-plugin-greenaddress/PINInput.java"
+                          "plugins-src/cordova-plugin-greenaddress/PINInputActivity.java"
+                          "plugins-src/cordova-plugin-greenaddress/SettingsActivity.java"
+                          "plugins-src/cordova-plugin-greenaddress/WalletBalanceWidgetProvider.java"
+                          "plugins-src/cordova-plugin-greenaddress/WalletClient.java"
+                          "plugins-src/cordova-plugin-greenaddress/plugin.xml")
+    for name in "${filenames[@]}"
+    do
+      $SED -i -e "s/it\.greenaddress\.cordova/it\.greenaddress\.cordova_$1/g" "$name"
+    done
+
+    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"it.greenaddress.cordova_$1\"/" \
          -e "s/<name>GreenAddress/<name>GreenAddress $2/" \
         www/config.xml
 }
