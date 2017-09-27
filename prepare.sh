@@ -59,7 +59,7 @@ case $key in
     shift # past argument
     ;;
     --testnet)
-    build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it 
+    build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it
     rename_env testnet TestNet
     ;;
     --regtest)
