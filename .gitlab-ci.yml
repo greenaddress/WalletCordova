@@ -21,7 +21,7 @@ build_tag_release_android_mainnet:
     - cd $CI_PROJECT_DIR
     - ./prepare.sh
     - cordova prepare android
-    - cordova build android --device --release
+    - cordova build android --release
   only:
     - tags
 
@@ -38,7 +38,7 @@ build_tag_release_android_testnet:
     - cd $CI_PROJECT_DIR
     - ./prepare.sh --testnet
     - cordova prepare android
-    - cordova build android --device --release
+    - cordova build android --release
   only:
     - tags
 
