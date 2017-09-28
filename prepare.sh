@@ -38,7 +38,7 @@ function rename_env {
     done
 
     $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"it.greenaddress.cordova_$1\"/" \
-         -e "s/<name>GreenAddress/<name>GreenAddress $2/" \
+         -e "s/<name>GreenAddress/<name>GreenAddress_$2/" \
         www/config.xml
 }
 
