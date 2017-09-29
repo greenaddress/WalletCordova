@@ -67,6 +67,11 @@ case $key in
     rename_env regtest RegTest
     shift
     ;;
+    --clean)
+    git checkout plugins-src www .cordova
+    rm -rf package.json package-lock.json plugins platforms node_modules webfiles libwally-core
+    exit 0
+    ;;
     *)
     # unknown option
     ;;
