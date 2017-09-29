@@ -96,7 +96,8 @@ fi
 
 if [ \! -e webfiles ]; then
     git clone --depth 1 https://github.com/glslang/GreenAddressWebFiles.git -b electron_rebased webfiles # FIXME: Undo
-    rm webfiles/package-lock.json
+    $SED -i -e "/wallyjs/d" -e "/cordova-plugin-wally/d" webfiles/package.json
+    rm -rf webfiles/package-lock.json
     #git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
