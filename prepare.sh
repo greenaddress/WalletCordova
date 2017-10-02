@@ -12,6 +12,8 @@ WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
 TESTNET_CHAINCODE=b60befcc619bb1c212732770fe181f2f1aa824ab89f8aab49f2e13e3a56f0f04
 TESTNET_PUBKEY=036307e560072ed6ce0aa5465534fb5c258a2ccfbc257f369e8e7a181b16d897b3
 
+ID="it.greenaddress.cordova"
+
 SED=sed
 if [ "$(uname)" == "Darwin" ]; then
     SED=gsed
@@ -35,11 +37,11 @@ function rename_env {
                           "plugins-src/cordova-plugin-greenaddress/plugin.xml")
     for name in "${filenames[@]}"
     do
-      $SED -i -e "s/it\.greenaddress\.cordova/it\.greenaddress\.cordova_$1/g" "$name"
+        $SED -i -e "s/it.greenaddress.cordova/${ID}_$1/g" "$name"
     done
 
-    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"it.greenaddress.cordova_$1\"/" \
-         -e "s/<name>GreenAddress/<name>GreenAddress_$2/" \
+    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"${ID}_$1\"/" \
+            -e "s/<name>GreenAddress/<name>GreenAddress_$2/" \
         www/config.xml
 }
 
@@ -72,6 +74,13 @@ case $key in
     git checkout plugins-src www .cordova
     rm -rf package.json package-lock.json plugins platforms node_modules webfiles libwally-core
     exit 0
+    ;;
+    --ios)
+    ID="com.blockstream.greenaddress.cordova"
+    ;;
+    --team)
+    $SED -e "s/DEVELOPMENT_TEAM/$2/" build.json.template > build.json 
+    shift
     ;;
     *)
     # unknown option
