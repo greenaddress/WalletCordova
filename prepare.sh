@@ -79,7 +79,7 @@ case $key in
     ID="com.blockstream.greenaddress.cordova"
     ;;
     --team)
-    $SED -e "s/DEVELOPMENT_TEAM/$2/" build.json.template > build.json 
+    $SED -e "s/DEVELOPMENT_TEAM/$2/" build.json.template > build.json
     shift
     ;;
     *)
