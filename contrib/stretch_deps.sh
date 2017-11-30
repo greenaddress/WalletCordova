@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-export SDK_FILENAME=tools_r25.2.3-linux.zip
+export SDK_FILENAME=sdk-tools-linux-3859397.zip
 export NDK_FILENAME=android-ndk-r14b-linux-x86_64.zip
 
 sed -i 's/deb.debian.org/httpredir.debian.org/g' /etc/apt/sources.list
@@ -18,11 +18,9 @@ npm install -g cordova@7.0.1
 cd /opt && curl -sSO https://dl.google.com/android/repository/${SDK_FILENAME} && unzip -qq ${SDK_FILENAME} && rm ${SDK_FILENAME}
 cd /opt && curl -sSO https://dl.google.com/android/repository/${NDK_FILENAME} && unzip -qq ${NDK_FILENAME} && rm ${NDK_FILENAME}
 
-mkdir -p /opt/licenses
-echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > /opt/licenses/android-sdk-license
-/opt/tools/bin/sdkmanager "tools" "platform-tools"
-/opt/tools/bin/sdkmanager "build-tools;25.0.3"
-/opt/tools/bin/sdkmanager "platforms;android-25"
-/opt/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository"
 
+yes | /opt/tools/bin/sdkmanager "tools" "platform-tools"
+yes | /opt/tools/bin/sdkmanager "build-tools;26.0.2"
+yes | /opt/tools/bin/sdkmanager "platforms;android-26"
+yes | /opt/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository"
 rm -rf /var/lib/apt/lists/* /var/cache/* /tmp/* /usr/share/locale/* /usr/share/man /usr/share/doc /lib/xtables/libip6*
