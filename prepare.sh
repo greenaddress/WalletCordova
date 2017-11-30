@@ -118,8 +118,9 @@ fi
 
 # Add the wally plugin:
 if [ \! -e libwally-core ]; then
-    git clone https://github.com/ElementsProject/libwally-core -b master --depth 1
+    git clone https://github.com/ElementsProject/libwally-core -b master
     cd libwally-core
+    git checkout 3668617a9dade1a2dc24ab55217ba2a648c8ebb1
     patch -p1 < ../wally.patch
     cd ..
 fi
