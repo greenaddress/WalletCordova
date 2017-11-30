@@ -14,7 +14,7 @@ build_tag_release_android_mainnet:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
     paths:
-    - platforms/android/build/outputs/apk/*.apk
+    - platforms/android/build/outputs/apk/release/*.apk
   tags:
     - ga
   script:
@@ -31,7 +31,7 @@ build_tag_release_android_testnet:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
     paths:
-    - platforms/android/build/outputs/apk/*.apk
+    - platforms/android/build/outputs/apk/release/*.apk
   tags:
     - ga
   script:
