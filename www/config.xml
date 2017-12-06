@@ -73,7 +73,6 @@
     <plugin name="cordova-plugin-app-preferences" spec="^0.99.3" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
-    <plugin name="cordova-plugin-media" spec="git+https://github.com/greenaddress/cordova-plugin-media.git#rel/2.4.0-gaperms" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
     <plugin name="cordova-plugin-websocket" spec="^0.12.2" />
