@@ -147,6 +147,8 @@ npm run build
 cp ../www/greenaddress.it/static/wallet/{config,network}.js /tmp
 rm -rf ../www/greenaddress.it/static
 cp -r build/static ../www/greenaddress.it/static
+mkdir -p ../www/greenaddress.it/static/js/lib
+cp static/js/lib/common_cordova_handlers.js ../www/greenaddress.it/static/js/lib
 rm -rf ../www/greenaddress.it/static/js/jsqrcode  # crx only
 rm -rf ../www/greenaddress.it/static/js/btchip-js-api  # crx only
 
