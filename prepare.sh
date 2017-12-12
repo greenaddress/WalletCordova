@@ -163,4 +163,5 @@ mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
 mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
 
 cd ..
+cordova plugin add cordova-plugin-urlhandler --variable URL_SCHEME=bitcoin --nosave
 cordova plugin add plugins-src/cordova-plugin-greenaddress --nosave --nofetch --noregistry
