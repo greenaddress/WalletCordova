@@ -110,7 +110,7 @@ EOF
 fi
 
 if [ \! -e webfiles ]; then
-    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.3 webfiles
+    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.4 webfiles
     $SED -i -e "/wallyjs/d" -e "/cordova-plugin-wally/d" webfiles/package.json
     rm -rf webfiles/package-lock.json
     #git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
