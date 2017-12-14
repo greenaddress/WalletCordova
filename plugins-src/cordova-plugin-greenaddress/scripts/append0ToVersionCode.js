@@ -13,5 +13,5 @@ module.exports = function(context) {
         versionCode += '0'
     }
     var data = fs.readFileSync(buildExtrasPath)
-    fs.writeFileSync(buildExtrasPath, data+"\next.cdvVersionCode=" + versionCode, { encoding: 'utf8' });
+    //fs.writeFileSync(buildExtrasPath, data+"\next.cdvVersionCode=" + versionCode, { encoding: 'utf8' });
 };
