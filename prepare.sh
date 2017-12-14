@@ -9,6 +9,8 @@ WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
 WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
 
+MAINNET_CHAINCODE=e9a563d68686999af372a33157209c6860fe79197a4dafd9ec1dbaa49523351d
+MAINNET_PUBKEY=0322c5f5c9c4b9d1c3e22ca995e200d724c2d7d8b6953f7b38fddf9296053c961f
 TESTNET_CHAINCODE=b60befcc619bb1c212732770fe181f2f1aa824ab89f8aab49f2e13e3a56f0f04
 TESTNET_PUBKEY=036307e560072ed6ce0aa5465534fb5c258a2ccfbc257f369e8e7a181b16d897b3
 
@@ -60,6 +62,9 @@ case $key in
     -b|--webfile-branch|--webfiles-branch)
     WEBFILES_BRANCH="$2"
     shift # past argument
+    ;;
+    --mainnet)
+    build_env bitcoin ${MAINNET_CHAINCODE} ${MAINNET_PUBKEY} wss://prodwss.greenaddress.it https://greenaddress.it
     ;;
     --testnet)
     build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it

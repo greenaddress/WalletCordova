@@ -19,7 +19,7 @@ build_tag_release_android_mainnet:
     - ga
   script:
     - cd $CI_PROJECT_DIR
-    - ./prepare.sh
+    - ./prepare.sh --mainnet
     - cordova prepare android
     - cordova build android --release
   only:
