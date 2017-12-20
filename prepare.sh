@@ -142,6 +142,7 @@ cd webfiles
 # 1. Build *.js:
 if [ \! -e node_modules ]; then
     npm i
+    cp ../bech32_index.js node_modules/bech32/index.js
 fi
 npm run build
 
