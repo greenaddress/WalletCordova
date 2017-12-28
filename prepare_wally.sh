@@ -23,15 +23,21 @@ if [ -z "$OSX" ]; then
     # Require JAVA_HOME and ANDROID_NDK on Linux only, where we can't build for iOS
     echo ${JAVA_HOME:?}
     echo ${ANDROID_NDK:?}
+else
+    JAVA_HOME=""
+    ANDROID_NDK=""
 fi
 echo ${APPNAME:?}
 
 cd libwally-core
-source ./tools/android_helpers.sh
 
-all_archs=$(android_get_arch_list)
-if [ -n "$1" ]; then
-    all_archs="$1"
+if [ -z "$OSX" ]; then
+    source ./tools/android_helpers.sh
+
+    all_archs=$(android_get_arch_list)
+    if [ -n "$1" ]; then
+        all_archs="$1"
+    fi
 fi
 
 echo '============================================================'
@@ -41,7 +47,12 @@ echo '============================================================'
 tools/cleanup.sh
 tools/autogen.sh
 
-configure_opts="--disable-dependency-tracking --enable-swig-java --disable-swig-python"
+configure_opts="--disable-dependency-tracking --disable-swig-python"
+if [ -z "$OSX" ]; then
+    configure_opts="$configure_opts --enable-swig-java"
+else
+    configure_opts="$configure_opts --disable-swig-java"
+fi
 
 for arch in $all_archs; do
     if [ -z "$ANDROID_NDK" ]; then

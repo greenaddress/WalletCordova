@@ -1,18 +1,9 @@
-test_debug_build:
-  image: greenaddress/android_cordova@sha256:3e3353e63b9718fd21b312e2180a89db32280af433328a0a4bb426af60e88483
-  tags:
-    - ga
-  script:
-    - cd $CI_PROJECT_DIR
-    - ./prepare.sh
-    - cordova prepare android
-    - cordova build android
-
-build_tag_release_android_mainnet:
+android_mainnet:
   image: greenaddress/android_cordova@sha256:3e3353e63b9718fd21b312e2180a89db32280af433328a0a4bb426af60e88483
   artifacts:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
+    expire_in: 2 weeks
     paths:
     - platforms/android/build/outputs/apk/release/*.apk
   tags:
@@ -22,14 +13,13 @@ build_tag_release_android_mainnet:
     - ./prepare.sh --mainnet
     - cordova prepare android
     - cordova build android --release
-  only:
-    - tags
 
-build_tag_release_android_testnet:
+android_testnet:
   image: greenaddress/android_cordova@sha256:3e3353e63b9718fd21b312e2180a89db32280af433328a0a4bb426af60e88483
   artifacts:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
+    expire_in: 2 weeks
     paths:
     - platforms/android/build/outputs/apk/release/*.apk
   tags:
@@ -39,14 +29,31 @@ build_tag_release_android_testnet:
     - ./prepare.sh --testnet
     - cordova prepare android
     - cordova build android --release
-  only:
-    - tags
 
-test_debug_osx_ios_build:
+ios_mainnet:
+  artifacts:
+    name: "wallet-cordova-ios-release-$CI_COMMIT_REF_NAME"
+    when: on_success
+    expire_in: 2 weeks
+    paths:
+    - platforms/ios/build/device/*.ipa
   tags:
     - osx
   script:
     - cd $CI_PROJECT_DIR
-    - ./prepare.sh
-    - cordova build ios
+    - ./prepare.sh --mainnet --team $DEVELOPMENT_TEAM $MAINNET_PROVISIONING_PROFILE
+    - cordova build ios --device --release
 
+ios_testnet:
+  artifacts:
+    name: "wallet-cordova-ios-release-$CI_COMMIT_REF_NAME"
+    when: on_success
+    expire_in: 2 weeks
+    paths:
+    - platforms/ios/build/device/*.ipa
+  tags:
+    - osx
+  script:
+    - cd $CI_PROJECT_DIR
+    - ./prepare.sh --testnet --team $DEVELOPMENT_TEAM $TESTNET_PROVISIONING_PROFILE
+    - cordova build ios --device --release

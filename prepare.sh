@@ -19,6 +19,7 @@ ID="it.greenaddress.cordova"
 SED=sed
 if [ "$(uname)" == "Darwin" ]; then
     SED=gsed
+    OSX=true
 fi
 
 function build_env {
@@ -39,11 +40,11 @@ function rename_env {
                           "plugins-src/cordova-plugin-greenaddress/plugin.xml")
     for name in "${filenames[@]}"
     do
-        $SED -i -e "s/it.greenaddress.cordova/${ID}_$1/g" "$name"
+        $SED -i -e "s/it.greenaddress.cordova/${ID}$1/g" "$name"
     done
 
-    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"${ID}_$1\"/" \
-            -e "s/<name>GreenAddress/<name>GreenAddress_$2/" \
+    $SED -i -e "s/<widget id=\"it.greenaddress.cordova\"/<widget id=\"${ID}$1\"/" \
+            -e "s/<name>GreenAddress/<name>GreenAddress$2/" \
         www/config.xml
 }
 
@@ -65,26 +66,32 @@ case $key in
     ;;
     --mainnet)
     build_env bitcoin ${MAINNET_CHAINCODE} ${MAINNET_PUBKEY} wss://prodwss.greenaddress.it https://greenaddress.it
+    if [ -n "$OSX" ]; then
+        ID="com.blockstream.greenaddress.cordova"
+        rename_env "" ""
+    fi
     ;;
     --testnet)
     build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} wss://testwss.greenaddress.it https://test.greenaddress.it
-    rename_env testnet TestNet
+    if [ -z "$OSX" ]; then
+        rename_env _testnet _TestNet
+    else
+        rename_env .testnet _TestNet
+    fi
     ;;
     --regtest)
     build_env testnet ${TESTNET_CHAINCODE} ${TESTNET_PUBKEY} ws://"$2":8080 http://"$2":9908
-    rename_env regtest RegTest
+    rename_env _regtest _RegTest
     shift
     ;;
     --clean)
     git checkout plugins-src www .cordova
-    rm -rf package.json package-lock.json plugins platforms node_modules webfiles libwally-core
+    rm -rf package.json package-lock.json plugins platforms node_modules webfiles libwally-core build.json
     exit 0
     ;;
-    --ios)
-    ID="com.blockstream.greenaddress.cordova"
-    ;;
     --team)
-    $SED -e "s/DEVELOPMENT_TEAM/$2/" build.json.template > build.json
+    $SED -e "s/DEVELOPMENT_TEAM/$2/" -e "s/PROVISIONING_PROFILE/$3/" build.json.template > build.json
+    shift
     shift
     ;;
     *)
@@ -149,7 +156,8 @@ npm run build
 ../venv/bin/python render_templates.py -a ../www/greenaddress.it
 
 # 3. Copy *.js:
-cp ../www/greenaddress.it/static/wallet/{config,network}.js /tmp
+tmp_dir=`mktemp -d 2>/dev/null || mktemp -d -t cordova_build`
+cp ../www/greenaddress.it/static/wallet/{config,network}.js $tmp_dir
 rm -rf ../www/greenaddress.it/static
 cp -r build/static ../www/greenaddress.it/static
 mkdir -p ../www/greenaddress.it/static/js/lib
@@ -165,7 +173,8 @@ cp -r build/static/js/btchip-js-api/thirdparty/{async,class,q} ../www/greenaddre
 
 rm ../www/greenaddress.it/static/js/{greenaddress,instant}.js  # web only
 mkdir -p ../www/greenaddress.it/static/wallet/ >/dev/null
-mv /tmp/{config,network}.js ../www/greenaddress.it/static/wallet/
+mv $tmp_dir/{config,network}.js ../www/greenaddress.it/static/wallet/
+rmdir $tmp_dir
 
 cd ..
 cordova plugin add cordova-plugin-urlhandler --variable URL_SCHEME=bitcoin --nosave
