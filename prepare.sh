@@ -2,8 +2,6 @@
 
 set -e
 
-# Prevent cordova prompting us to opt-in to telemetry on first use
-cordova telemetry off >/dev/null 2>&1
 
 WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
 WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
@@ -107,7 +105,7 @@ then
 Usage: ./prepare.sh [-h] [--webfiles-repo WEBFILES_REPO]
                          [--webfiles-branch WEBFILES_BRANCH]
 
-Prepares the Cordova app. Requires npm and Python 2.x with virtualenv.
+Prepares the Cordova app. Requires yarn and Python 2.x with virtualenv.
 
 optional arguments:
   -h, --help                       show this help message and exit
@@ -148,9 +146,9 @@ cd webfiles
 
 # 1. Build *.js:
 if [ \! -e node_modules ]; then
-    npm i
+    yarn install
 fi
-npm run build
+yarn run build
 
 # 2. Render *.html:
 ../venv/bin/python render_templates.py -a ../www/greenaddress.it

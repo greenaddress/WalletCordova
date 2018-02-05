@@ -4,7 +4,13 @@ set -e
 
 if [ "$(uname -s)" == "Darwin" ]; then
     OSX=true
+else
+    #FIXME: for osx assume installed in a pre-script or manually until we install cordova non-globally
+    yarn global add cordova@8.0.0
 fi
+
+# Prevent cordova prompting us to opt-in to telemetry on first use
+cordova telemetry off >/dev/null 2>&1
 
 APPDIR=$PWD
 APPNAME=$(grep '<name>' config.xml www/config.xml 2>/dev/null | cut -d">" -f2 | cut -d"<" -f1)
@@ -110,5 +116,5 @@ fi
 mkdir -p plugins/cordova-plugin-wally/build/Release
 touch plugins/cordova-plugin-wally/build/Release/wallycore.js  # mock wallycore which is nodejs-only
 cd plugins/cordova-plugin-wally
-npm i base64-js
+yarn add base64-js
 cd ../..

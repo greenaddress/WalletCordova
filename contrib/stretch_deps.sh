@@ -9,11 +9,11 @@ dpkg --add-architecture i386
 apt-get -yqq update && apt-get -yqq upgrade
 apt-get -yqq install unzip git curl build-essential openjdk-8-jdk ca-certificates-java python-virtualenv python-dev python-pip make swig autoconf libtool pkg-config libc6:i386 libc6-dev:i386 libncurses5:i386 libstdc++6:i386 lib32z1 gradle
 curl -sL https://deb.nodesource.com/setup_8.x | bash -
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 apt-get -yqq update
-apt-get -yqq install nodejs
+apt-get -yqq install nodejs yarn
 update-java-alternatives -s java-1.8.0-openjdk-amd64
-
-npm install -g cordova@7.0.1
 
 cd /opt && curl -sSO https://dl.google.com/android/repository/${SDK_FILENAME} && unzip -qq ${SDK_FILENAME} && rm ${SDK_FILENAME}
 cd /opt && curl -sSO https://dl.google.com/android/repository/${NDK_FILENAME} && unzip -qq ${NDK_FILENAME} && rm ${NDK_FILENAME}
