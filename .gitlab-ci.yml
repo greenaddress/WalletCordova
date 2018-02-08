@@ -43,6 +43,7 @@ ios_mainnet:
     - cd $CI_PROJECT_DIR
     - ./prepare.sh --mainnet --team $DEVELOPMENT_TEAM $MAINNET_PROVISIONING_PROFILE
     - cordova build ios --device --release
+    - ls platforms/ios/build/device/*.ipa
 
 ios_testnet:
   artifacts:
@@ -57,3 +58,4 @@ ios_testnet:
     - cd $CI_PROJECT_DIR
     - ./prepare.sh --testnet --team $DEVELOPMENT_TEAM $TESTNET_PROVISIONING_PROFILE
     - cordova build ios --device --release
+    - ls platforms/ios/build/device/*.ipa
