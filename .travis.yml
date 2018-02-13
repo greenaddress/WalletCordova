@@ -9,7 +9,7 @@ matrix:
 
     - os: osx
       osx_image: xcode8.3
-      before_script: sudo yarn install -g cordova
+      before_script: sudo yarn global add cordova@8.0.0
       sudo: required
       install:
         - brew update &> /dev/null
