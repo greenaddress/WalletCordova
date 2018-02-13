@@ -83,19 +83,12 @@ shift # past argument or value
 done
 
 if [ \! -e webfiles ]; then
-    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.6 webfiles
+    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.7 webfiles
     $SED -i -e "/wallyjs/d" -e "/cordova-plugin-wally/d" webfiles/package.json
     rm -rf webfiles/package-lock.json
+    ./webfiles/fetch_libwally.sh
 fi
 
-# Add the wally plugin:
-if [ \! -e libwally-core ]; then
-    git clone https://github.com/ElementsProject/libwally-core -b master
-    cd libwally-core
-    git checkout 3668617a9dade1a2dc24ab55217ba2a648c8ebb1
-    patch -p1 < ../wally.patch
-    cd ..
-fi
 # Build the wally plugin
 ./prepare_wally.sh
 
