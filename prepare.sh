@@ -2,11 +2,6 @@
 
 set -e
 
-
-WEBFILES_REPO="https://github.com/greenaddress/GreenAddressWebFiles.git"
-WEBFILES_BRANCH=$(git symbolic-ref HEAD || echo $TRAVIS_BRANCH)
-WEBFILES_BRANCH=${WEBFILES_BRANCH##refs/heads/}
-
 MAINNET_CHAINCODE=e9a563d68686999af372a33157209c6860fe79197a4dafd9ec1dbaa49523351d
 MAINNET_PUBKEY=0322c5f5c9c4b9d1c3e22ca995e200d724c2d7d8b6953f7b38fddf9296053c961f
 TESTNET_CHAINCODE=b60befcc619bb1c212732770fe181f2f1aa824ab89f8aab49f2e13e3a56f0f04
@@ -50,18 +45,6 @@ while [ $# -gt 0 ]; do
 key="$1"
 
 case $key in
-    -h|--help)
-    HELP=1
-    ;;
-    -r|--webfiles-repo)
-    WEBFILES_REPO="$2"
-    shift # past argument
-    ;;
-    # There used to be a typo so support both spellings
-    -b|--webfile-branch|--webfiles-branch)
-    WEBFILES_BRANCH="$2"
-    shift # past argument
-    ;;
     --mainnet)
     build_env bitcoin ${MAINNET_CHAINCODE} ${MAINNET_PUBKEY} wss://prodwss.greenaddress.it https://greenaddress.it
     if [ -n "$OSX" ]; then
@@ -99,31 +82,10 @@ esac
 shift # past argument or value
 done
 
-if [ "$HELP" == "1" ];
-then
-    cat <<EOF
-Usage: ./prepare.sh [-h] [--webfiles-repo WEBFILES_REPO]
-                         [--webfiles-branch WEBFILES_BRANCH]
-
-Prepares the Cordova app. Requires yarn and Python 2.x with virtualenv.
-
-optional arguments:
-  -h, --help                       show this help message and exit
-  --webfiles-repo WEBFILES_REPO, -r WEBFILES_REPO
-                                   Optional non-default git URL to clone web
-                                   files from. (Default: $WEBFILES_REPO)
-  --webfiles-branch WEBFILES_BRANCH, -b WEBFILES_BRANCH
-                                   Optional non-default git URL to clone web
-                                   files from. (Default: $WEBFILES_BRANCH)
-EOF
-    exit 1
-fi
-
 if [ \! -e webfiles ]; then
     git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.6 webfiles
     $SED -i -e "/wallyjs/d" -e "/cordova-plugin-wally/d" webfiles/package.json
     rm -rf webfiles/package-lock.json
-    #git clone --depth 1 $WEBFILES_REPO -b $WEBFILES_BRANCH webfiles
 fi
 
 # Add the wally plugin:
