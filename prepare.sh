@@ -83,7 +83,7 @@ shift # past argument or value
 done
 
 if [ \! -e webfiles ]; then
-    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.7 webfiles
+    git clone --depth 1 https://github.com/greenaddress/GreenAddressWebFiles.git -b jswally-v0.0.8 webfiles
     $SED -i -e "/wallyjs/d" -e "/cordova-plugin-wally/d" webfiles/package.json
     rm -rf webfiles/package-lock.json
     ./webfiles/fetch_libwally.sh
