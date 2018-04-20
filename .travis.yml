@@ -13,7 +13,6 @@ matrix:
       sudo: required
       install:
         - brew update &> /dev/null
-        - brew upgrade &> /dev/null
         - brew install node yarn swig coreutils gnu-sed automake autoconf pkg-config &> /dev/null
         - pip2 install virtualenv
       script:
