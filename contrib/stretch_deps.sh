@@ -20,7 +20,7 @@ cd /opt && curl -sSO https://dl.google.com/android/repository/${NDK_FILENAME} &&
 
 
 yes | /opt/tools/bin/sdkmanager "tools" "platform-tools"
-yes | /opt/tools/bin/sdkmanager "build-tools;26.0.2"
-yes | /opt/tools/bin/sdkmanager "platforms;android-26"
+yes | /opt/tools/bin/sdkmanager "build-tools;27.0.3"
+yes | /opt/tools/bin/sdkmanager "platforms;android-27"
 yes | /opt/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository"
 rm -rf /var/lib/apt/lists/* /var/cache/* /tmp/* /usr/share/locale/* /usr/share/man /usr/share/doc /lib/xtables/libip6*

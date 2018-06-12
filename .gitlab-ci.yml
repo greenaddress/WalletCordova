@@ -1,5 +1,5 @@
 android_mainnet:
-  image: greenaddress/android_cordova@sha256:aab8b3a3c339beef738fbdb3f52bf8f1fd3c8f79e2f0727268adb5804c6092c5
+  image: greenaddress/android_cordova@sha256:ededcb15dd0aff7dc76d2399750efd24de5b7d52cd0c879ac3eb123e6de1be22
   artifacts:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
@@ -15,7 +15,7 @@ android_mainnet:
     - cordova build android --release
 
 android_testnet:
-  image: greenaddress/android_cordova@sha256:aab8b3a3c339beef738fbdb3f52bf8f1fd3c8f79e2f0727268adb5804c6092c5
+  image: greenaddress/android_cordova@sha256:ededcb15dd0aff7dc76d2399750efd24de5b7d52cd0c879ac3eb123e6de1be22
   artifacts:
     name: "wallet-cordova-android-release-$CI_COMMIT_REF_NAME"
     when: on_success
@@ -30,36 +30,6 @@ android_testnet:
     - cordova prepare android
     - cordova build android --release
     - mv platforms/android/build/outputs/apk/release/android-release-unsigned.apk platforms/android/build/outputs/apk/release/testnet-release-unsigned.apk
-
-ios_mainnet:
-  artifacts:
-    name: "wallet-cordova-ios-release-$CI_COMMIT_REF_NAME"
-    when: on_success
-    expire_in: 2 weeks
-    paths:
-    - platforms/ios/build/device/*.ipa
-  tags:
-    - osx
-  script:
-    - cd $CI_PROJECT_DIR
-    - ./prepare.sh --mainnet --team $DEVELOPMENT_TEAM $MAINNET_PROVISIONING_PROFILE
-    - cordova build ios --device --release
-    - ls platforms/ios/build/device/*.ipa
-
-ios_testnet:
-  artifacts:
-    name: "wallet-cordova-ios-release-$CI_COMMIT_REF_NAME"
-    when: on_success
-    expire_in: 2 weeks
-    paths:
-    - platforms/ios/build/device/*.ipa
-  tags:
-    - osx
-  script:
-    - cd $CI_PROJECT_DIR
-    - ./prepare.sh --testnet --team $DEVELOPMENT_TEAM $TESTNET_PROVISIONING_PROFILE
-    - cordova build ios --device --release
-    - ls platforms/ios/build/device/*.ipa
 
 package_release:
   tags:
